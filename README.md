@@ -39,3 +39,4 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
   <url-pattern>/ReadTestCase</url-pattern>
   ...
 ```
+You may also need to allow CORS inside your browser, I am using this one with Chrome : https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi

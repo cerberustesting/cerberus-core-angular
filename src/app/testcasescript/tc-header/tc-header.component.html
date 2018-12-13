@@ -487,15 +487,6 @@
                                                     </button>
                                                 </div>
                                             </div>
-
-                                            <div class="alert alert-info d-flex align-items-center" role="alert" *ngIf="testcaseheader_labelsList.length == 0">
-                                                <div class="flex-00-auto">
-                                                    <i class="si si-info"></i>
-                                                </div>
-                                                <div class="flex-fill ml-3">
-                                                    <p class="mb-0">There is no label attached to this testcase.</p>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="block block-transparent block-rounded block-bordered" *ngIf="!testcaseheader_labelsList.length == 0">
@@ -506,15 +497,6 @@
                                                         (click)="removeLabelFromTestCase(label.id)">
                                                         <i class="fa fa-fw fa-times mr-1"></i> {{label.label}}
                                                     </button>
-                                                </div>
-                                            </div>
-
-                                            <div class="alert alert-info d-flex align-items-center" role="alert" *ngIf="testcaseheader_labelsList.length == 0">
-                                                <div class="flex-00-auto">
-                                                    <i class="si si-info"></i>
-                                                </div>
-                                                <div class="flex-fill ml-3">
-                                                    <p class="mb-0">There is no label attached to this testcase.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -529,7 +511,8 @@
                                                     </button>
                                                 </div>
                                             </div>
-
+                                        </div>
+                                        <div class="col-md-12">
                                             <div class="alert alert-info d-flex align-items-center" role="alert" *ngIf="testcaseheader_labelsList.length == 0">
                                                 <div class="flex-00-auto">
                                                     <i class="si si-info"></i>

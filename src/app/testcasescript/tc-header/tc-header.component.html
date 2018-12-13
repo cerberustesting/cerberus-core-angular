@@ -1,0 +1,860 @@
+<div class="row" *ngIf="testcaseheader">
+    <div class="col-md-12">
+        <div class="block block-rounded block-bordered" id="testcaseheader_modal">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Testcase <small>header</small></h3>
+                <div class="block-options">
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="fullscreen_toggle"><i
+                            class="si si-size-fullscreen"></i></button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="pinned_toggle">
+                        <i class="si si-pin"></i>
+                    </button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
+                        data-action-mode="demo" (click)="refreshTestCase()">
+                        <i class="si si-refresh"></i>
+                    </button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i
+                            class="si si-arrow-up"></i></button>
+                </div>
+            </div>
+            <div class="block-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" *ngIf="testsList">
+                            <label for="testcase">New Test</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="far fa-file"></i>
+                                    </span>
+                                </div>
+                                <!-- TO DO : disable the border radius -->
+                                <select class="form-control br-tp-0" id="new_test" name="new_test" [(ngModel)]="testcaseheader.test">
+                                    <option *ngFor="let test of testsList" [value]="test.test"> {{ test.test}} :
+                                        {{ test.description }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="testcase">New Testcase ID</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="far fa-file"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control br-tp-0" id="new_testcaseid" name="new_testcaseid"
+                                    [(ngModel)]='testcaseheader.testCase'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="block block-rounded">
+                    <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+
+                        <li *ngFor="let tab of tabs" class="nav-item">
+                            <a class="nav-link" [ngClass]="selectedTab == tab ? 'active show' : ''" (click)="selectedTab = tab">
+                                {{ tab }}</a>
+                        </li>
+                    </ul>
+                    <div class="block-content tab-content plr-0">
+
+                        <div class="tab-pane active show" [id]="tabs[0]" role="tabpanel" *ngIf="selectedTab == tabs[0]">
+                            <!-- Definition tab content -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="testcase">Short description</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-file-alt"></i>
+                                                </span>
+                                            </div>
+                                            <!-- TO DO : disable the border radius -->
+                                            <input type="text" class="form-control br-tp-0" id="shortDesc" name="shortDesc"
+                                                [(ngModel)]='testcaseheader.description'>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group" *ngIf="applicationsList">
+                                        <label for="testcase">Application</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-window-maximize"></i>
+                                                </span>
+                                            </div>
+                                            <!-- TO DO : disable the border radius -->
+                                            <select class="form-control br-tp-0" id="application" name="application"
+                                                [(ngModel)]="testcaseheader.application">
+                                                <option *ngFor='let app of applicationsList' [(ngValue)]='app.application'>{{app.application}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="testcase">Status</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-check-circle"></i>
+                                                </span>
+                                            </div>
+                                            <!-- TO DO : disable the border radius -->
+                                            <select class="form-control br-tp-0" id="status" name="status" [(ngModel)]="testcaseheader.status">
+                                                <option *ngFor='let status of inv_tcstatus' [(ngValue)]='status.value'>{{status.value}}
+                                                    - {{status.description}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="testcase">Group</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-toggle-on"></i>
+                                                </span>
+                                            </div>
+                                            <!-- TO DO : disable the border radius -->
+                                            <select class="form-control br-tp-0" id="group" name="group" [(ngModel)]="testcaseheader.group">
+                                                <option *ngFor='let group of inv_group' [(ngValue)]='group.value'>{{group.value}}
+                                                    -
+                                                    {{group.description}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" *ngIf="inv_priorities">
+                                        <label for="testcase">Priority</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-star"></i>
+                                                </span>
+                                            </div>
+                                            <!-- TO DO : disable the border radius -->
+                                            <select class="form-control br-tp-0" id="priority" name="priority"
+                                                [(ngModel)]="testcaseheader.priority">
+                                                <option *ngFor='let priority of inv_priorities' [(ngValue)]='priority.valueInt'>{{priority.value}}
+                                                    - {{priority.description}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- full description here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane active show" [id]="tabs[1]" role="tabpanel" *ngIf="selectedTab == tabs[1]">
+                            <!-- Execution Tab content -->
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="form-group row">
+                                        <label class="d-block col-12">Environment Activation</label>
+                                    </div>
+
+                                    <div class="row text-center">
+                                        <div class="col-md-3">
+                                            <div class="block block-rounded block-bordered">
+                                                <div class="block-content">
+                                                    <div class="custom-control custom-switch custom-control-inline">
+                                                        <input type="checkbox" class="custom-control-input" id="tcActive"
+                                                            name="tcActive" [checked]="testcaseheader.tcActive === 'Y'"
+                                                            (change)="testcaseheader.tcActive = $event.target.checked ? 'Y' : 'N'">
+                                                        <label class="custom-control-label" for="tcActive">Active <i
+                                                                class="fa fa-info-circle ml-0"></i></label>
+                                                    </div>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="block block-rounded block-bordered">
+                                                <div class="block-content">
+                                                    <div class="custom-control custom-switch custom-switch custom-control-inline">
+                                                        <input type="checkbox" class="custom-control-input" id="activeQA"
+                                                            name="activeQA" [checked]="testcaseheader.activeQA === 'Y'"
+                                                            (change)="testcaseheader.activeQA = $event.target.checked ? 'Y' : 'N'">
+                                                        <label class="custom-control-label" for="activeQA">
+                                                            QA <i class="fa fa-info-circle ml-0"></i></label>
+                                                    </div>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="block block-rounded block-bordered">
+                                                <div class="block-content">
+                                                    <div class="custom-control custom-switch custom-control-inline">
+                                                        <input type="checkbox" class="custom-control-input" id="activeUAT"
+                                                            name="activeUAT" [checked]="testcaseheader.activeUAT === 'Y'"
+                                                            (change)="testcaseheader.activeUAT = $event.target.checked ? 'Y' : 'N'">
+                                                        <label class="custom-control-label" for="activeUAT">
+                                                            UAT <i class="fa fa-info-circle ml-0"></i></label>
+                                                    </div>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="block block-rounded block-bordered">
+                                                <div class="block-content">
+                                                    <div class="custom-control custom-switch custom-control-inline">
+                                                        <input type="checkbox" class="custom-control-input" id="activePROD"
+                                                            name="activePROD" [checked]="testcaseheader.activePROD === 'Y'"
+                                                            (change)="testcaseheader.activePROD = $event.target.checked ? 'Y' : 'N'">
+                                                        <label class="custom-control-label" for="activePROD">
+                                                            PROD <i class="fa fa-info-circle ml-0"></i></label>
+                                                    </div>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="d-block col-12">Country Activation</label>
+                                    </div>
+
+                                    <div class="row text-center" *ngIf="inv_countries">
+                                        <div class="col-md-2" *ngFor="let country of inv_countries">
+                                            <div class="custom-control block custom-block custom-control-info">
+                                                <input type="checkbox" class="custom-control-input" [id]="country.value"
+                                                    [name]="country.value" [checked]="testcaseheader_countryList_custom.indexOf(country.value) >= 0"
+                                                    (click)="updateCheckedCountries(country)">
+                                                <label class="custom-control-label" [for]="country.value">
+                                                    <span class="d-block text-center">
+                                                        {{ country.value }}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-12 d-block">Version Activation</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="testcase">Sprint</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            From
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <select class="form-control br-tp-0" id="fromSprint" name="fromSprint"
+                                                        [(ngModel)]="testcaseheader.fromBuild" *ngIf="isThereAnySprintDefined">
+                                                        <option *ngFor="let sprint of sprints" [value]="sprint.versionName">
+                                                            {{ sprint.versionName }}
+                                                        </option>
+                                                    </select>
+                                                    <input *ngIf="!isThereAnySprintDefined" type="text" class="form-control br-tp-0"
+                                                        id="fromSprint" name="fromSprint" value="There is no sprint defined."
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            To
+                                                        </span>
+                                                    </div>
+                                                    <select class="form-control br-tp-0" id="toSprint" name="toSprint"
+                                                        [(ngModel)]="testcaseheader.toBuild" *ngIf="isThereAnySprintDefined">
+                                                        <option *ngFor="let sprint of sprints" [value]="sprint.versionName">
+                                                            {{ sprint.versionName }}
+                                                        </option>
+                                                    </select>
+                                                    <input *ngIf="!isThereAnySprintDefined" type="text" class="form-control br-tp-0"
+                                                        id="toSprint" name="toSprint" value="There is no sprint defined."
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="testcase">Revision</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            From
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <select class="form-control br-tp-0" id="fromRev" name="fromRev"
+                                                        [(ngModel)]="testcaseheader.fromRev" *ngIf="isThereAnyRevDefined">
+                                                        <option *ngFor="let rev of revs" [value]="rev.versionName">
+                                                            {{ rev.versionName }}
+                                                        </option>
+                                                    </select>
+                                                    <input *ngIf="!isThereAnyRevDefined" type="text" class="form-control br-tp-0"
+                                                        id="fromRev" name="fromRev" value="There is no rev defined."
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            To
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <select class="form-control br-tp-0" id="toRev" name="toRev"
+                                                        [(ngModel)]="testcaseheader.toRev" *ngIf="isThereAnyRevDefined">
+                                                        <option *ngFor="let rev of revs" [value]="rev.versionName">
+                                                            {{ rev.versionName }}
+                                                        </option>
+                                                    </select>
+                                                    <input *ngIf="!isThereAnyRevDefined" type="text" class="form-control br-tp-0"
+                                                        id="toRev" name="toRev" value="There is no rev defined."
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="testcase">Target <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            Sprint
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <select class="form-control br-tp-0" id="targetBuild" name="targetBuild"
+                                                        [(ngModel)]="testcaseheader.targetBuild" *ngIf="isThereAnySprintDefined">
+                                                        <option *ngFor="let sprint of sprints" [value]="sprint.versionName">
+                                                            {{ sprint.versionName }}
+                                                        </option>
+                                                    </select>
+                                                    <input *ngIf="!isThereAnySprintDefined" type="text" class="form-control br-tp-0"
+                                                        id="targetBuild" name="targetBuild" value="There is no sprint defined."
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            Revision
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <select class="form-control br-tp-0" id="targetRev" name="targetRev"
+                                                        [(ngModel)]="testcaseheader.targetRev" *ngIf="isThereAnyRevDefined">
+                                                        <option *ngFor="let rev of revs" [value]="rev.versionName">
+                                                            {{ rev.versionName }}
+                                                        </option>
+                                                    </select>
+                                                    <input *ngIf="!isThereAnyRevDefined" type="text" class="form-control br-tp-0"
+                                                        id="targetRev" name="targetRev" value="There is no rev defined."
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-12 d-block">Conditionnal Activation</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            Condition
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <select class="form-control br-tp-0" id="conditionOper" name="conditionOper"
+                                                        [(ngModel)]="testcaseheader.conditionOper">
+                                                        <option *ngFor='let condition of inv_condition_oper'
+                                                            [(ngValue)]='condition.value'>{{condition.value}} -
+                                                            {{condition.description}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            Value 1
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="conditionVal1"
+                                                        name="conditionVal1" [(ngModel)]='testcaseheader.conditionVal1'>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            Value 2
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="conditionVal2"
+                                                        name="conditionVal2" [(ngModel)]='testcaseheader.conditionVal2'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-12 d-block">Robots Contraints</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">User Agent</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-user"></i>
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <input type="text" class="form-control br-tp-0" id="userAgent" name="userAgent"
+                                                        [(ngModel)]='testcaseheader.userAgent'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">Screen Size</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-object-ungroup"></i>
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <input type="text" class="form-control br-tp-0" id="screenSize"
+                                                        name="screenSize" [(ngModel)]='testcaseheader.screenSize'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane active show" [id]="tabs[2]" role="tabpanel" *ngIf="selectedTab == tabs[2]">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="form-group row">
+                                        <label class="col-12 d-block">Labels List</label>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <div class="block block-transparent block-rounded block-bordered" *ngIf="!testcaseheader_labelsList.length == 0">
+                                                <div class="block-content block-label-list">
+                                                    <div class="btn mr-1 mb-2 label-list-title">Stickers</div>
+                                                    <button type="button" class="btn label mr-1 mb-2" [ngStyle]="{'background-color': label.color}"
+                                                        *ngFor="let label of testcaseheader_labelsList | labelfiltering: 'STICKER'"
+                                                        (click)="removeLabelFromTestCase(label.id)">
+                                                        <i class="fa fa-fw fa-times mr-1"></i> {{label.label}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="alert alert-info d-flex align-items-center" role="alert" *ngIf="testcaseheader_labelsList.length == 0">
+                                                <div class="flex-00-auto">
+                                                    <i class="si si-info"></i>
+                                                </div>
+                                                <div class="flex-fill ml-3">
+                                                    <p class="mb-0">There is no label attached to this testcase.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="block block-transparent block-rounded block-bordered" *ngIf="!testcaseheader_labelsList.length == 0">
+                                                <div class="block-content block-label-list">
+                                                    <div class="btn mr-1 mb-2 label-list-title">Requirements</div>
+                                                    <button type="button" class="btn label mr-1 mb-2" [ngStyle]="{'background-color': label.color}"
+                                                        *ngFor="let label of testcaseheader_labelsList | labelfiltering: 'REQUIREMENT'"
+                                                        (click)="removeLabelFromTestCase(label.id)">
+                                                        <i class="fa fa-fw fa-times mr-1"></i> {{label.label}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="alert alert-info d-flex align-items-center" role="alert" *ngIf="testcaseheader_labelsList.length == 0">
+                                                <div class="flex-00-auto">
+                                                    <i class="si si-info"></i>
+                                                </div>
+                                                <div class="flex-fill ml-3">
+                                                    <p class="mb-0">There is no label attached to this testcase.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="block block-transparent block-rounded block-bordered" *ngIf="!testcaseheader_labelsList.length == 0">
+                                                <div class="block-content block-label-list">
+                                                    <div class="btn mr-1 mb-2 label-list-title">Batteries</div>
+                                                    <button type="button" class="btn label mr-1 mb-2" [ngStyle]="{'background-color': label.color}"
+                                                        *ngFor="let label of testcaseheader_labelsList | labelfiltering: 'BATTERY'"
+                                                        (click)="removeLabelFromTestCase(label.id)">
+                                                        <i class="fa fa-fw fa-times mr-1"></i> {{label.label}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="alert alert-info d-flex align-items-center" role="alert" *ngIf="testcaseheader_labelsList.length == 0">
+                                                <div class="flex-00-auto">
+                                                    <i class="si si-info"></i>
+                                                </div>
+                                                <div class="flex-fill ml-3">
+                                                    <p class="mb-0">There is no label attached to this testcase.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-12 d-block">Labels for System:
+                                            {{testcaseheader.system}}</label>
+                                    </div>
+
+                                    <div class="block block-rounded block-bordered">
+                                        <ul class="nav nav-tabs nav-tabs-block align-items-center js-tabs-enabled"
+                                            data-toggle="tabs" role="tablist">
+                                            <li class="nav-item" *ngFor="let tab of labels_tabs">
+                                                <a class="nav-link" [ngClass]="selectedLabelsTab == tab ? 'active show' : ''"
+                                                    (click)="selectedLabelsTab = tab">{{ tab }}</a>
+                                            </li>
+
+                                        </ul>
+                                        <div class="block-content tab-content">
+                                            <div class="tab-pane active show" [id]="labels_tabs[0]" role="tabpanel"
+                                                *ngIf="selectedLabelsTab == labels_tabs[0]">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button *ngFor="let sticky of stickersList" type="button" class="btn btn-success mr-1 mb-3 label"
+                                                            [ngStyle]="{'background-color': sticky.color}" [disabled]="isLabelPresentinTestCase(sticky.id)"
+                                                            (click)="addLabelToTestCase(sticky)" [style.color]="isLabelPresentinTestCase(sticky.id) ? sticky.color : white"
+                                                            [style.border-color]="isLabelPresentinTestCase(sticky.id) ? sticky.color : transparent">
+                                                            <i *ngIf="!isLabelPresentinTestCase(sticky.id)" class="fa fa-fw fa-plus mr-1"></i>{{
+                                                            sticky.label }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane active show" [id]="labels_tabs[1]" role="tabpanel"
+                                                *ngIf="selectedLabelsTab == labels_tabs[1]">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button *ngFor="let req of requirementsList" type="button"
+                                                            class="btn btn-success mr-1 mb-3 label" [ngStyle]="{'background-color': req.color}"
+                                                            [disabled]="isLabelPresentinTestCase(req.id)" (click)="addLabelToTestCase(req)"
+                                                            [style.color]="isLabelPresentinTestCase(req.id) ? req.color : white"
+                                                            [style.border-color]="isLabelPresentinTestCase(req.id) ? req.color : transparent">
+                                                            <i *ngIf="!isLabelPresentinTestCase(req.id)" class="fa fa-fw fa-plus mr-1"></i>{{
+                                                            req.label }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane active show" [id]="labels_tabs[2]" role="tabpanel"
+                                                *ngIf="selectedLabelsTab == labels_tabs[2]">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button *ngFor="let battery of batteriesList" type="button"
+                                                            class="btn btn-success mr-1 mb-3 label" [ngStyle]="{'background-color': battery.color}"
+                                                            [disabled]="isLabelPresentinTestCase(battery.id)" (click)="addLabelToTestCase(battery)"
+                                                            [style.color]="isLabelPresentinTestCase(battery.id) ? battery.color : white"
+                                                            [style.border-color]="isLabelPresentinTestCase(battery.id) ? battery.color : transparent">
+                                                            <i *ngIf="!isLabelPresentinTestCase(battery.id)" class="fa fa-fw fa-plus mr-1"></i>{{
+                                                            battery.label }}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane active show" [id]="tabs[3]" role="tabpanel" *ngIf="selectedTab == tabs[3]">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="form-group" *ngIf="inv_originsList">
+                                                <label for="testcase">Origin <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-clipboard"></i>
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <select class="form-control br-tp-0" id="origin" name="origin"
+                                                        [(ngModel)]="testcaseheader.origine">
+                                                        <option *ngFor='let origin of inv_originsList' [ngValue]='origin.value'>{{origin.value}}
+                                                            - {{origin.description}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">Ref Origin <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-clipboard"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="RefOrigin" name="RefOrigin"
+                                                        [(ngModel)]='testcaseheader.RefOrigine' disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="form-group" *ngIf="projectsList">
+                                                <label for="testcase">Project <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-chalkboard-teacher"></i>
+                                                        </span>
+                                                    </div>
+                                                    <!-- TO DO : disable the border radius -->
+                                                    <select class="form-control br-tp-0" id="project" name="project"
+                                                        [(ngModel)]="testcaseheader.project">
+                                                        <option *ngFor='let project of projectsList' [(ngValue)]='project.idProject'>{{project.code}}
+                                                            - {{project.description}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">Ticket <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-bug"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="ticket" name="ticket"
+                                                        [(ngModel)]='testcaseheader.ticket'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane active show" [id]="tabs[4]" role="tabpanel" *ngIf="selectedTab == tabs[4]">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <div class="form-group" *ngIf="inv_originsList">
+                                                <label for="testcase">Bug ID <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-bug"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="bugID" name="bugID"
+                                                        [(ngModel)]='testcaseheader.bugID'>
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-dark" [disabled]='!testcaseheader.bugID'
+                                                            (click)="redirectToBugID()">Link to Bug</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="testcase">Comment <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-comment-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="comment" name="comment"
+                                                        [(ngModel)]='testcaseheader.comment'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane active show" [id]="tabs[5]" role="tabpanel" *ngIf="selectedTab == tabs[5]">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">Implementer <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-user"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="implementer"
+                                                        name="implementer" [(ngModel)]='testcaseheader.implementer'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">Version <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-code-branch"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="testCaseVersion"
+                                                        name="testCaseVersion" [(ngModel)]='testcaseheader.testCaseVersion'
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="d-block col-12">Creation Information</label>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">Date <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="dateCreated"
+                                                        name="dateCreated" [(ngModel)]='testcaseheader.dateCreated'
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">Owner <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-clipboard"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="usrCreated"
+                                                        name="usrCreated" [(ngModel)]='testcaseheader.usrCreated'
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="d-block col-12">Last Modification Information</label>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">Date <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="dateModif" name="dateModif"
+                                                        [(ngModel)]='testcaseheader.dateModif' disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="testcase">Owner <i class="fa fa-info-circle ml-0"></i></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="far fa-clipboard"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control br-tp-0" id="usrModif" name="usrModif"
+                                                        [(ngModel)]='testcaseheader.usrModif' disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="content-heading"></h2>
+
+                        <div class="row">
+                            <div class="col-md-12" style="text-align: right;">
+                                <button type="button" class="btn btn-primary mr-1 mb-3" (click)="saveTestCaseHeader()">
+                                    <i class="fa fa-fw fa-save mr-1"></i> Save
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

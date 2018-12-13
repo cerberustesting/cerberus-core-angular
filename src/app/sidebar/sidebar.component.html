@@ -1,0 +1,187 @@
+<!-- Sidebar -->
+<nav id="sidebar" aria-label="Main Navigation">
+  <!-- Side Header -->
+  <div class="bg-header-dark">
+    <div class="content-header bg-white-10">
+      <!-- Logo -->
+      <a class="link-fx font-w600 font-size-lg text-white" href="index.html">
+        <span class="smini-visible">
+          <span class="text-white-75">C</span><span class="text-white">e</span>
+        </span>
+        <span class="smini-hidden">
+          <span class="text-white-75">Cerb</span><span class="text-white">erus</span>
+        </span>
+      </a>
+      <!-- END Logo -->
+
+      <!-- Options -->
+      <div>
+        <!-- Toggle Sidebar Style -->
+        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+        <!-- Class Toggle, functionality initialized in Helpers.coreToggleClass() -->
+        <a class="js-class-toggle text-white-75" data-target="#sidebar-style-toggler" data-class="fa-toggle-off fa-toggle-on"
+          data-toggle="layout" data-action="sidebar_style_toggle" href="javascript:void(0)">
+          <i class="fa fa-toggle-off" id="sidebar-style-toggler"></i>
+        </a>
+        <!-- END Toggle Sidebar Style -->
+
+        <!-- Close Sidebar, Visible only on mobile screens -->
+        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+        <a class="d-lg-none text-white ml-2" data-toggle="layout" data-action="sidebar_close" href="javascript:void(0)">
+          <i class="fa fa-times-circle"></i>
+        </a>
+        <!-- END Close Sidebar -->
+      </div>
+      <!-- END Options -->
+    </div>
+  </div>
+  <!-- END Side Header -->
+  <!-- Side Navigation -->
+  <div class="content-side content-side-full">
+    <ul class="nav-main">
+      <li class="nav-main-item">
+        <a class="nav-main-link active" routerLink="/dashboard">
+          <i class="nav-main-link-icon si si-cursor"></i>
+          <span class="nav-main-link-name">Dashboard</span>
+          <!-- <span class="nav-main-link-badge badge badge-pill badge-success">5</span> -->
+        </a>
+      </li>
+      <li class="nav-main-heading">Design</li>
+      <li class="nav-main-item" *ngFor='let menuitem of testManagementMenu'>
+        <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" [attr.data-toggle]="menuitem.submenu ? 'submenu' : ''"
+          [attr.aria-haspopup]="menuitem.hasSubMenu ? 'true' : ''" [attr.aria-expanded]="menuitem.expanded"
+          [routerLink]="menuitem.hasSubMenu ? '' : 'menuitem.link'">
+          <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
+          <span class="nav-main-link-name">{{menuitem.name}}</span>
+        </a>
+        <ul class="nav-main-submenu" *ngIf="menuitem.submenu">
+          <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
+            <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="submenuitem.link"
+              [attr.data-toggle]="submenuitem.submenu ? 'submenu' : ''" [attr.aria-haspopup]="submenuitem.hasSubMenu ? 'true' : ''"
+              [attr.aria-expanded]="submenuitem.expanded">
+              <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
+              <span class="nav-main-link-name">{{submenuitem.name}}</span>
+            </a>
+            <ul class="nav-main-submenu" *ngIf="submenuitem.submenu">
+              <li class="nav-main-item" *ngFor="let subsubmenuitem of submenuitem.submenu">
+                <a class="nav-main-link" [routerLink]="subsubmenuitem.link" [attr.aria-expanded]="subsubmenuitem.expanded">
+                  <i *ngIf="subsubmenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="subsubmenuitem.icon_class"></i>
+                  <span class="nav-main-link-name">{{subsubmenuitem.name}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-main-heading">Run</li>
+      <li class="nav-main-item" *ngFor='let menuitem of runMenu'>
+        <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" [attr.data-toggle]="menuitem.submenu ? 'submenu' : ''"
+          [attr.aria-haspopup]="menuitem.hasSubMenu ? 'true' : ''" [attr.aria-expanded]="menuitem.expanded"
+          [routerLink]="menuitem.hasSubMenu ? '' : 'menuitem.link'">
+          <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
+          <span class="nav-main-link-name">{{menuitem.name}}</span>
+        </a>
+        <ul class="nav-main-submenu" *ngIf="menuitem.submenu">
+          <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
+            <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="submenuitem.link"
+              [attr.data-toggle]="submenuitem.submenu ? 'submenu' : ''" [attr.aria-haspopup]="submenuitem.hasSubMenu ? 'true' : ''"
+              [attr.aria-expanded]="submenuitem.expanded">
+              <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
+              <span class="nav-main-link-name">{{submenuitem.name}}</span>
+            </a>
+            <ul class="nav-main-submenu" *ngIf="submenuitem.submenu">
+              <li class="nav-main-item" *ngFor="let subsubmenuitem of submenuitem.submenu">
+                <a class="nav-main-link" [routerLink]="subsubmenuitem.link" [attr.aria-expanded]="subsubmenuitem.expanded">
+                  <i *ngIf="subsubmenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="subsubmenuitem.icon_class"></i>
+                  <span class="nav-main-link-name">{{subsubmenuitem.name}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-main-heading">Analyse</li>
+      <li class="nav-main-item" *ngFor='let menuitem of analyseMenu'>
+        <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" [attr.data-toggle]="menuitem.submenu ? 'submenu' : ''"
+          [attr.aria-haspopup]="menuitem.hasSubMenu ? 'true' : ''" [attr.aria-expanded]="menuitem.expanded"
+          [routerLink]="menuitem.hasSubMenu ? '' : 'menuitem.link'">
+          <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
+          <span class="nav-main-link-name">{{menuitem.name}}</span>
+        </a>
+        <ul class="nav-main-submenu" *ngIf="menuitem.submenu">
+          <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
+            <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="submenuitem.link"
+              [attr.data-toggle]="submenuitem.submenu ? 'submenu' : ''" [attr.aria-haspopup]="submenuitem.hasSubMenu ? 'true' : ''"
+              [attr.aria-expanded]="submenuitem.expanded">
+              <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
+              <span class="nav-main-link-name">{{submenuitem.name}}</span>
+            </a>
+            <ul class="nav-main-submenu" *ngIf="submenuitem.submenu">
+              <li class="nav-main-item" *ngFor="let subsubmenuitem of submenuitem.submenu">
+                <a class="nav-main-link" [routerLink]="subsubmenuitem.link" [attr.aria-expanded]="subsubmenuitem.expanded">
+                  <i *ngIf="subsubmenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="subsubmenuitem.icon_class"></i>
+                  <span class="nav-main-link-name">{{subsubmenuitem.name}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-main-heading">Configure</li>
+      <li class="nav-main-item" *ngFor='let menuitem of configureMenu'>
+        <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" [attr.data-toggle]="menuitem.submenu ? 'submenu' : ''"
+          [attr.aria-haspopup]="menuitem.hasSubMenu ? 'true' : ''" [attr.aria-expanded]="menuitem.expanded"
+          [routerLink]="menuitem.hasSubMenu ? '' : 'menuitem.link'">
+          <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
+          <span class="nav-main-link-name">{{menuitem.name}}</span>
+        </a>
+        <ul class="nav-main-submenu" *ngIf="menuitem.submenu">
+          <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
+            <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="submenuitem.link"
+              [attr.data-toggle]="submenuitem.submenu ? 'submenu' : ''" [attr.aria-haspopup]="submenuitem.hasSubMenu ? 'true' : ''"
+              [attr.aria-expanded]="submenuitem.expanded">
+              <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
+              <span class="nav-main-link-name">{{submenuitem.name}}</span>
+            </a>
+            <ul class="nav-main-submenu" *ngIf="submenuitem.submenu">
+              <li class="nav-main-item" *ngFor="let subsubmenuitem of submenuitem.submenu">
+                <a class="nav-main-link" [routerLink]="subsubmenuitem.link" [attr.aria-expanded]="subsubmenuitem.expanded">
+                  <i *ngIf="subsubmenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="subsubmenuitem.icon_class"></i>
+                  <span class="nav-main-link-name">{{subsubmenuitem.name}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-main-item" *ngFor='let menuitem of infoMenu'>
+        <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" [attr.data-toggle]="menuitem.submenu ? 'submenu' : ''"
+          [attr.aria-haspopup]="menuitem.hasSubMenu ? 'true' : ''" [attr.aria-expanded]="menuitem.expanded"
+          [routerLink]="menuitem.hasSubMenu ? '' : 'menuitem.link'">
+          <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
+          <span class="nav-main-link-name">{{menuitem.name}}</span>
+        </a>
+        <ul class="nav-main-submenu" *ngIf="menuitem.submenu">
+          <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
+            <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="submenuitem.link"
+              [attr.data-toggle]="submenuitem.submenu ? 'submenu' : ''" [attr.aria-haspopup]="submenuitem.hasSubMenu ? 'true' : ''"
+              [attr.aria-expanded]="submenuitem.expanded">
+              <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
+              <span class="nav-main-link-name">{{submenuitem.name}}</span>
+            </a>
+            <ul class="nav-main-submenu" *ngIf="submenuitem.submenu">
+              <li class="nav-main-item" *ngFor="let subsubmenuitem of submenuitem.submenu">
+                <a class="nav-main-link" [routerLink]="subsubmenuitem.link" [attr.aria-expanded]="subsubmenuitem.expanded">
+                  <i *ngIf="subsubmenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="subsubmenuitem.icon_class"></i>
+                  <span class="nav-main-link-name">{{subsubmenuitem.name}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!-- END Side Navigation -->
+</nav>
+<!-- END Sidebar -->

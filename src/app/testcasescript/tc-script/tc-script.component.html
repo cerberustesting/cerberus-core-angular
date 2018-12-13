@@ -1,0 +1,131 @@
+<div class="block block-rounded block-bordered" *ngIf="testcase">
+  <div class="block-header block-header-default">
+    <h3 class="block-title">Testcase <small>script</small></h3>
+    <div class="block-options">
+      <button type="button" class="btn-block-option" data-toggle="block-option" data-action="fullscreen_toggle"><i
+          class="si si-size-fullscreen"></i></button>
+      <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
+        data-action-mode="demo">
+        <i class="si si-refresh"></i>
+      </button>
+      <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+    </div>
+  </div>
+  <div class="block-content">
+    <div class="row" *ngIf="testcase.stepList.length == 0">
+      <div class="col-md-12 mt-3s text-center">
+        <p>The test case is empty <i class="far fa-frown-open"></i></p>
+      </div>
+      <div class="col-md-12 text-center">
+        <div class="btn-group" role="group" aria-label="Horizontal Outline Primary">
+          <button type="button" class="btn btn-outline-primary" (click)="addAStep()"><i class="fa fa-fw fa-plus mr-1"></i>
+            Step</button>
+          <button type="button" class="btn btn-outline-primary"><i class="fa fa-fw fa-plus mr-1"></i>Use Step</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="list-group push">
+          <!-- add a pipe to order by sort -->
+          <a *ngFor='let step of testcase.stepList' class="list-group-item list-group-item-action d-flex justify-content-between align-items-center drag-step"
+            (click)="setActiveStep(step)" [ngClass]="active_step == step ? 'active white' : ''">
+            {{ step.description }}
+            <span class="badge badge-pill badge-secondary">{{step.sort}}</span>
+          </a>
+        </div>
+        <div class="list-group push" *ngIf="!testcase.stepList.length == 0">
+          <div class="btn-group" role="group" aria-label="Horizontal Outline Primary">
+            <button type="button" class="btn btn-outline-primary" (click)="addAStep()"><i class="fa fa-fw fa-plus mr-1"></i>
+              Step</button>
+            <button type="button" class="btn btn-outline-primary"><i class="fa fa-fw fa-plus mr-1"></i>Use Step</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-9">
+
+        <div class="block block-bordered" *ngIf="active_step">
+          <div class="block-header block-header-default">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  {{active_step.sort}}
+                </span>
+              </div>
+              <input type="text" [(ngModel)]="active_step.description" class="form-control" id="activeStepDescription"
+                name="activeStepDescription" placeholder="Step Description">
+            </div>
+            <button type="button" class="btn btn-primary mr-1 ml-1" (click)="toggleStepHeader()">
+              <i class="fa fa-fw" [ngClass]="activeStepHeader ? 'fa-angle-down' : 'fa-angle-up'"></i>
+            </button>
+            <button type="button" class="btn btn-danger mr-1">
+              <i class="fa fa-fw fa-times mr-1"></i> Delete
+            </button>
+          </div>
+          <div class="block-content">
+            <div id="stepHeader" *ngIf="activeStepHeader">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Loop</span>
+                      </div>
+                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Condition</span>
+                      </div>
+                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Parameter 1</span>
+                      </div>
+                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Parameter 2</span>
+                      </div>
+                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="custom-control custom-switch mb-1">
+                        <input type="checkbox" class="custom-control-input" id="forceExe" name="forceExe" [checked]="active_step.forceExe === 'Y'"
+                          (change)="active_step.forceExe = $event.target.checked ? 'Y' : 'N'">
+                        <label class="custom-control-label" for="forceExe">Force Execution</label>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <h4 class="content-heading" style="padding-top: 0px;"></h4>
+            </div>
+            <p>Bordered block with header background..</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,7 +11,8 @@ Make sure to deploy the Angular app on a different port than your local Cerberus
 - Include the following code (1) in each servlet that needs to be called (in Cerberus)
 - Also make sure to make the servlet public  by editing the web.xml (2) file (in Cerberus)
 
-> (1) to include at the end of each servlet (e.g. ReadTestCase.java) 
+> (1) to include at the end of each servlet (e.g. ReadTestCase.java)
+==> not necessary since 3.10 : just call ServletUtil.fixHeaders(response) in your servlet
 
 ```java
 private void fixHeaders(HttpServletResponse response) {

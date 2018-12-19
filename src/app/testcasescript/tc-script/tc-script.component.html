@@ -8,7 +8,6 @@
         data-action-mode="demo">
         <i class="si si-refresh"></i>
       </button>
-      <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
     </div>
   </div>
   <div class="block-content">
@@ -59,8 +58,11 @@
             <button type="button" class="btn btn-primary mr-1 ml-1" (click)="toggleStepHeader()">
               <i class="fa fa-fw" [ngClass]="activeStepHeader ? 'fa-angle-down' : 'fa-angle-up'"></i>
             </button>
+            <button type="button" class="btn mr-1" [ngClass]="active_step.forceExe === 'Y' ? 'btn-dark' : ''">
+                <i class="fa fa-fw fa-road"></i>
+              </button>
             <button type="button" class="btn btn-danger mr-1">
-              <i class="fa fa-fw fa-times mr-1"></i> Delete
+              <i class="far fa-fw fa-trash-alt"></i>
             </button>
           </div>
           <div class="block-content">
@@ -109,20 +111,21 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
+              <div class="row push">
+                <div class="col-md-12">
+                  <!-- 
                     <div class="form-group">
                       <div class="custom-control custom-switch mb-1">
                         <input type="checkbox" class="custom-control-input" id="forceExe" name="forceExe" [checked]="active_step.forceExe === 'Y'"
                           (change)="active_step.forceExe = $event.target.checked ? 'Y' : 'N'">
                         <label class="custom-control-label" for="forceExe">Force Execution</label>
                       </div>
-                    </div>
+                    </div>-->
                 </div>
               </div>
               <h4 class="content-heading" style="padding-top: 0px;"></h4>
             </div>
-            <p>Bordered block with header background..</p>
+            <p>Under construction .. <i class="fa fa-cogs"></i></p>
           </div>
         </div>
       </div>

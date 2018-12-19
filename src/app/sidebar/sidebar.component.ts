@@ -15,11 +15,11 @@ export class SidebarComponent implements OnInit {
       submenu: [
         {
           name: 'Test List',
-          link: '/dashboard'
+          link: '/tests'
         },
         {
           name: 'Testcase List',
-          link: '/dashboard'
+          link: '/testcases'
         },
         {
           name: 'Testcase Edition',
@@ -29,21 +29,20 @@ export class SidebarComponent implements OnInit {
     },
     {
       name: 'Data',
-      link: '/dashboard',
       icon_class: 'si-layers',
       expanded: false,
       submenu: [{
         name: 'Data Library',
-        link: '/dashboard'
+        link: '/datalibrary'
       },
       {
         name: 'Services',
-        link: '/dashboard'
+        link: '/servicelibrary'
       }]
     },
     {
       name: 'Labels',
-      link: '/dashboard',
+      link: '/labels',
       icon_class: 'si-tag',
       expanded: false
     }

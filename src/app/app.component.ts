@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertService, Alert } from './services/utils/alert.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+
+  constructor() { }
+
+  ngOnInit() { }
 }

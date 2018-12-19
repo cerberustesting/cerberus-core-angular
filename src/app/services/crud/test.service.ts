@@ -26,41 +26,46 @@ export class TestService {
   //project
   private projectsList: Array<IProject>;
   //observables
-  observableTestsList: any;
-  observableTestCasesList: any;
+  observableTestsList = new BehaviorSubject<ITest[]>(this.testsList);
+  observableTestCasesList = new BehaviorSubject<ITestCaseHeader[]>(this.testcasesList);
   observableTestCaseLabels: any;
   observableTestCase: any;
   observableLabels: any;
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
 
   constructor(private http: HttpClient) {
-    this.observableTestsList = new BehaviorSubject<ITest[]>(this.testsList);
-    this.observableTestCasesList = new BehaviorSubject<ITestCaseHeader[]>(this.testcasesList);
     this.observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
     this.observableTestCaseLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
     this.observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   }
 
-  getTests() {
-    this.http.get<ITest[]>('../../../assets/tests.json')
+  getTestsList() {
+    this.http.get<ITest[]>('http://localhost:8080/Cerberus-3.8-SNAPSHOT/ReadTest')
       .subscribe(response => {
         // @ts-ignore
-        this.testsList = response.contentTable;
-        this.refreshTestsList();
+        if (response.iTotalRecords > 0) {
+          // @ts-ignore
+          this.testsList = response.contentTable;
+          this.observableTestsList.next(this.testsList);
+        } else {
+          this.testsList = null;
+          this.observableTestsList.next(this.testsList);
+        }
       })
   }
 
-  getTestCasesByTest(test: string) {
+  getTestCasesList(test: string) {
     this.http.get<ITestCaseHeader[]>('http://localhost:8080/Cerberus-3.8-SNAPSHOT/ReadTestCase?test=' + test)
       .subscribe((response) => {
         // @ts-ignore
-        if (response.iTotalRecords == 0) {
-          this.testcasesList = null;
-          this.refreshTestCasesList();
-        } else {
+        if (response.iTotalRecords > 0) {
           // @ts-ignore
           this.testcasesList = response.contentTable;
-          this.refreshTestCasesList();
+          this.observableTestCasesList.next(this.testcasesList);
+        }
+        else {
+          this.testcasesList = null;
+          this.observableTestCasesList.next(this.testcasesList);
         }
       })
   }
@@ -73,7 +78,7 @@ export class TestService {
       this.http.get<ITestCase>(url)
         .subscribe((response) => {
           this.testcase = response;
-          this.refreshTestCase();
+          this.observableTestCase.next(this.testcase);
           this.getLabelsfromTestCase(test, testcase);
         })
     }
@@ -126,21 +131,9 @@ export class TestService {
         */
   }
 
-  refreshTestsList() {
-    this.observableTestsList.next(this.testsList);
-  }
-
-  refreshTestCasesList() {
-    this.observableTestCasesList.next(this.testcasesList);
-  }
-
-  refreshTestCase() {
-    this.observableTestCase.next(this.testcase);
-  }
-
-  cleanTestCase() {
+  clearTestCase() {
     this.testcase = null;
-    this.refreshTestCase();
+    this.observableTestCase.next(this.testcase);
   }
 
   getProjectsList() {

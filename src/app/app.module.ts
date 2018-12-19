@@ -14,6 +14,8 @@ import { TcSelectorComponent } from './testcasescript/tc-selector/tc-selector.co
 import { TcHeaderComponent } from './testcasescript/tc-header/tc-header.component';
 import { TcScriptComponent } from './testcasescript/tc-script/tc-script.component';
 import { LabelfilteringPipe } from './pipes/labelfiltering.pipe';
+import { LabelsComponent } from './labels/labels.component';
+import { AlertsComponent } from './headerbar/alerts/alerts.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { LabelfilteringPipe } from './pipes/labelfiltering.pipe';
     TcSelectorComponent,
     TcHeaderComponent,
     TcScriptComponent,
-    LabelfilteringPipe
+    LabelfilteringPipe,
+    LabelsComponent,
+    AlertsComponent
   ],
   imports: [
     BrowserModule,

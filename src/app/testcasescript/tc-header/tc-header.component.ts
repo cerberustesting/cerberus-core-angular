@@ -9,7 +9,8 @@ import { SystemService } from 'src/app/services/crud/system.service';
 import { IBuildRevisionInvariant } from 'src/app/model/buildrevisioninvariant.model';
 import { IApplication } from 'src/app/model/application.model';
 import { IProject } from 'src/app/model/project.model';
-import Dashmix from 'src/assets/_es6/main/app.js';
+declare function collapseBlock(block_id: string): any;
+declare function Bootstrap_initPopover(): any;
 
 @Component({
   selector: 'app-tc-header',
@@ -68,18 +69,20 @@ export class TcHeaderComponent implements OnInit {
   ) { }
 
   ngOnChanges() {
-    // DIRTY
-    this.testcaseheader_countryList_custom = new Array<string>();
-    for (var country in this.testcaseheader.countryList) {
-      this.testcaseheader_countryList_custom.push(country);
+    if (this.testcaseheader) {
+      // DIRTY
+      this.testcaseheader_countryList_custom = new Array<string>();
+      for (var country in this.testcaseheader.countryList) {
+        this.testcaseheader_countryList_custom.push(country);
+      }
+      this.originalTest = this.testcaseheader.test;
+      this.originalTestCase = this.testcaseheader.testCase;
     }
-    this.originalTest = this.testcaseheader.test;
-    this.originalTestCase = this.testcaseheader.testCase;
   }
 
   ngOnInit() {
-    // collapse the block
-    //Dashmix.block('content_hide', '#testcaseheader_modal');
+    // todo: collapse the block
+    collapseBlock('#testcaseheader_modal');
     this.TestService.observableTestsList.subscribe(response => { this.testsList = response; });
     this.TestService.observableTestCasesList.subscribe(response => { this.testcasesList = response; });
     this.TestService.observableTestCaseLabels.subscribe(response => { this.testcaseheader_labelsList = response; });
@@ -121,9 +124,9 @@ export class TcHeaderComponent implements OnInit {
   }
 
   refreshTestCase() {
-    this.TestService.getTests();
+    this.TestService.getTestsList();
     if (this.selectedTest != null) {
-      this.TestService.getTestCasesByTest(this.selectedTest);
+      this.TestService.getTestCasesList(this.selectedTest);
       if (this.selectedTestCase != null) {
         // the testcase can be refreshed
         this.TestService.getTestCase(this.selectedTest, this.selectedTestCase);
@@ -190,7 +193,7 @@ export class TcHeaderComponent implements OnInit {
   }
 
   debug() {
-    console.log(this.testcaseheader);
+    Bootstrap_initPopover();
   }
 
 }

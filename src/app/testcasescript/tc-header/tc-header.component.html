@@ -62,8 +62,8 @@
                         </li>
                     </ul>
                     <div class="block-content tab-content plr-0">
-
-                        <div class="tab-pane active show" [id]="tabs[0]" role="tabpanel" *ngIf="selectedTab == tabs[0]">
+                        <!-- Definition Tab -->
+                        <div id="definitionTab" class="tab-pane active show" [id]="tabs[0]" role="tabpanel" *ngIf="selectedTab == tabs[0]">
                             <!-- Definition tab content -->
                             <div class="row">
                                 <div class="col-md-12">
@@ -158,12 +158,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <!-- full description here -->
+                                    <!-- 
+                                    <textarea id="js-ckeditor" name="ckeditor">Hello CKEditor!</textarea>
+                                    <div id="js-ckeditor-inline">Hello inline CKEditor!</div>
+                                    -->
                                 </div>
                             </div>
                         </div>
-
-                        <div class="tab-pane active show" [id]="tabs[1]" role="tabpanel" *ngIf="selectedTab == tabs[1]">
+                        <!-- Execution Tab -->
+                        <div id="executionTab" class="tab-pane active show" [id]="tabs[1]" role="tabpanel" *ngIf="selectedTab == tabs[1]">
                             <!-- Execution Tab content -->
                             <div class="row">
                                 <div class="col-md-12">
@@ -466,8 +469,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="tab-pane active show" [id]="tabs[2]" role="tabpanel" *ngIf="selectedTab == tabs[2]">
+                        <!-- Label Tab -->
+                        <div id="labelTab" class="tab-pane active show" [id]="tabs[2]" role="tabpanel" *ngIf="selectedTab == tabs[2]">
                             <div class="row">
                                 <div class="col-md-12">
 
@@ -590,8 +593,8 @@
                             </div>
 
                         </div>
-
-                        <div class="tab-pane active show" [id]="tabs[3]" role="tabpanel" *ngIf="selectedTab == tabs[3]">
+                        <!-- Origin Tab -->
+                        <div id="originTab" class="tab-pane active show" [id]="tabs[3]" role="tabpanel" *ngIf="selectedTab == tabs[3]">
                             <div class="row">
                                 <div class="col-md-12">
 
@@ -668,8 +671,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="tab-pane active show" [id]="tabs[4]" role="tabpanel" *ngIf="selectedTab == tabs[4]">
+                        <!-- Bug Report Tab -->
+                        <div id="bugReportTab" class="tab-pane active show" [id]="tabs[4]" role="tabpanel" *ngIf="selectedTab == tabs[4]">
                             <div class="row">
                                 <div class="col-md-12">
 
@@ -711,8 +714,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="tab-pane active show" [id]="tabs[5]" role="tabpanel" *ngIf="selectedTab == tabs[5]">
+                        <!-- Tracability Tab -->
+                        <div id="tracabilityTab" class="tab-pane active show" [id]="tabs[5]" role="tabpanel" *ngIf="selectedTab == tabs[5]">
                             <div class="row">
                                 <div class="col-md-12">
 
@@ -823,16 +826,21 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- Divider -->
                         <h2 class="content-heading"></h2>
-
-                        <div class="row">
-                            <div class="col-md-12" style="text-align: right;">
-                                <button type="button" class="btn btn-primary mr-1 mb-3" (click)="saveTestCaseHeader()">
-                                    <i class="fa fa-fw fa-save mr-1"></i> Save
+                        <!-- Bottom section -->
+                        <div id="testcaseheader_modal_footer" class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-light full-width border" (click)="saveTestCaseHeader()">
+                                    Save
                                 </button>
+                                <button type="button" class="btn btn-light full-width border" (click)="debug()">
+                                    Debug
+                                </button>
+                                <button type="button" class="btn btn-block btn-primary js-popover-enabled" data-toggle="popover"
+                                    data-placement="top" title="" data-content="This is example content. You can put a description or more info here."
+                                    data-original-title="Top Popover">Top</button>
                             </div>
-
                         </div>
                     </div>
                 </div>

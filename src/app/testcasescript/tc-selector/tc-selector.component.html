@@ -6,76 +6,50 @@
       </div>
       <div class="block-content">
         <div class="row">
-
-          <div class="col-md-6">
+          <!-- Test Selection -->
+          <div class="col-md-6" *ngIf="testsList">
             <div class="form-group">
-              <!-- <label for="test">Test</label> -->
+              <label for="test">Test</label>
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="far fa-folder"></i>
-                  </span>
                 </div>
-                <!-- TO DO : disable the border radius -->
-                <select class="form-control br-tp-0" id="test" name="test" [(ngModel)]='selectedTest' (ngModelChange)='selectedTestChange()'>
+                <select class="form-control br-tp-0" id="test" name="test" [(ngModel)]='selectedTest' (ngModelChange)='selectedTestChange()'
+                  [ngClass]="selectedTest ? 'is-selected-valid' : ''">
+                  <option [ngValue]="null">Select a Test</option>
                   <option *ngFor='let test of testsList' [value]="test.test"> {{test.test}} - {{test.description}}
                   </option>
                 </select>
               </div>
             </div>
           </div>
-          <div class="col-sm-3" *ngIf="testcase">
-
-            <button type="button" class="btn btn-light mr-1 mb-3">
-              <i class="far fa-fw fa-edit mr-1"></i> Testcase Header
-            </button>
-          </div>
-
-          <div class="col-sm-3" *ngIf="testcase">
-            <div class="btn-group">
-              <button type="button" class="btn btn-primary"> <i class="far fa-fw fa-save mr-1"></i> Save</button>
-              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdown-split-primary"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdown-split-primary" x-placement="bottom-start" style="position: absolute; transform: translate3d(75px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
-                <a class="dropdown-item" href="javascript:void(0)">Save as</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)">Delete</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row">
-
+          <!-- Test Case Selection -->
           <div class="col-md-6">
-            <div class="form-group" *ngIf="selectedTest">
-              <!-- <label for="example-select">Testcase</label> -->
+            <div class="form-group" *ngIf="selectedTest && testcasesList">
+              <label for="testcase">Test Case</label>
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="far fa-file"></i>
-                  </span>
                 </div>
-                <!-- TO DO : disable the border radius -->
                 <select class="form-control br-tp-0" id="testcase" name="testcase" [(ngModel)]='selectedTestCase'
-                  (ngModelChange)='selectedTestCaseChange()'>
+                  (ngModelChange)='selectedTestCaseChange()' [ngClass]="selectedTestCase ? 'is-selected-valid' : ''">
+                  <option [ngValue]="null">Select a Test Case</option>
                   <option *ngFor="let tc of testcasesList" [value]="tc.testCase"> {{ tc.testCase}} : {{ tc.description
-                    }}
-                  </option>
+                    }} </option>
                 </select>
               </div>
             </div>
           </div>
-          <div class="col-md-3" *ngIf="testcase">
+        </div>
+
+        <div class="row push" *ngIf="testcase">
+
+          <div class="col-md-6 text-center">
             <div class="dropdown">
-              <button type="button" class="btn btn-light dropdown-toggle" id="dropdown-default-light" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-external-link-alt mr-1"></i> Go to
+              <button type="button" class="btn btn-light dropdown-toggle full-width border" id="dropdown-default-light"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Go to
               </button>
-              <div class="dropdown-menu" aria-labelledby="dropdown-default-light" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+              <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
+                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-history mr-1"></i> Last Execution</a>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Execution List</a>
                 <div class="dropdown-divider"></div>
@@ -85,13 +59,14 @@
             </div>
           </div>
 
-          <div class="col-md-3" *ngIf="testcase">
+          <div class="col-md-6 text-center">
             <div class="dropdown">
-              <button type="button" class="btn btn-light dropdown-toggle" id="dropdown-default-light" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="si si-control-play mr-1"></i> Run
+              <button type="button" class="btn btn-light dropdown-toggle full-width border" id="dropdown-default-light"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Run
               </button>
-              <div class="dropdown-menu" aria-labelledby="dropdown-default-light" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+              <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
+                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                 <a class="dropdown-item" href="javascript:void(0)"><i class="si si-control-play mr-1"></i> Run
                   Testcase</a>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="si si-control-play mr-1"></i> Rerun
@@ -104,10 +79,8 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
   </div>
 </div>

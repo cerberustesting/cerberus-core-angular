@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ITestCase } from '../model/testcase.model';
 import { ITest } from '../model/test.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,15 +11,11 @@ import { SystemService } from '../services/crud/system.service';
   templateUrl: './testcasescript.component.html',
   styleUrls: ['./testcasescript.component.scss']
 })
-export class TestcasescriptComponent implements OnInit {
+export class TestcasescriptComponent implements OnInit, OnDestroy {
 
   selectedTest: string;
   selectedTestCase: string;
-
   testcase: ITestCase;
-
-  testsList: Array<ITest>;
-  testCasesList: Array<ITestCase>;
 
   constructor(
     private router: Router,
@@ -29,29 +25,27 @@ export class TestcasescriptComponent implements OnInit {
     private SystemService: SystemService
   ) { }
 
+  ngOnDestroy() {
+    this.testcase = null;
+    this.TestService.observableTestCase.next(this.testcase);
+    this.selectedTest = null;
+    this.selectedTestCase = null;
+  }
+
   ngOnInit() {
     this.selectedTest = null;
     this.selectedTestCase = null;
     // parse query strings from URL
     this.activatedRoute.queryParams.subscribe(params => {
-      if (params['test']) { this.selectedTest = params['test']; }
-      if (params['testcase']) { this.selectedTestCase = params['testcase']; }
-    });
-    //subscription
-    this.TestService.observableTestCase.subscribe(response => {
-      this.testcase = response;
-      if (this.testcase) {
-        this.SystemService.getLabelsFromSystem(this.testcase.info.system);
-        this.SystemService.getRevFromSystem(this.testcase.info.system);
-        this.SystemService.getSprintsFromSystem(this.testcase.info.system);
-        this.SystemService.getApplicationList();
-        this.SystemService.getApplication(this.testcase.info.application);
+      if (params['test']) {
+        this.selectedTest = params['test'];
+        if (params['testcase']) {
+          this.selectedTestCase = params['testcase'];
+        }
       }
     });
-    this.TestService.getTests();
-    this.TestService.getTestCasesByTest(this.selectedTest);
+    this.TestService.getTestsList();
     this.TestService.getProjectsList();
-    this.refreshTestCase();
     // load invariant lists
     this.InvariantService.getCountries();
     this.InvariantService.getTcStatus();
@@ -60,25 +54,30 @@ export class TestcasescriptComponent implements OnInit {
     this.InvariantService.getGroupList();
     this.InvariantService.getOriginsList();
     this.InvariantService.getConditionOperList();
-  }
-
-  refreshTestCase() {
-    if (this.selectedTest != null && this.selectedTestCase != null) {
-      this.TestService.getTestCase(this.selectedTest, this.selectedTestCase);
-    } else {
-      this.testcase = null;
-    }
+    this.TestService.observableTestCase.subscribe(response => {
+      if (response) {
+        this.testcase = response;
+        this.SystemService.getLabelsFromSystem(this.testcase.info.system);
+        this.SystemService.getRevFromSystem(this.testcase.info.system);
+        this.SystemService.getSprintsFromSystem(this.testcase.info.system);
+        this.SystemService.getApplicationList();
+        this.SystemService.getApplication(this.testcase.info.application);
+      }
+    });
   }
 
   receiveTest($event) {
     this.selectedTest = $event;
-    this.refreshTestCase();
-    this.router.navigate([], { queryParams: { test: this.selectedTest } });
+    this.testcase = null;
+    if (this.selectedTestCase) {
+      this.router.navigate([], { queryParams: { test: this.selectedTest, testcase: this.selectedTestCase } });
+    } else {
+      this.router.navigate([], { queryParams: { test: this.selectedTest } });
+    }
   }
 
   receiveTestCase($event) {
     this.selectedTestCase = $event;
-    this.refreshTestCase();
     this.router.navigate([], { queryParams: { test: this.selectedTest, testcase: this.selectedTestCase } });
   }
 

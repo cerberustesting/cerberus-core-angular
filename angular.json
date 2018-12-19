@@ -28,7 +28,6 @@
             "scripts": [
               "src/assets/js/plugins/jquery-sparkline/jquery.sparkline.min.js",
               "src/assets/js/plugins/chart.js/Chart.bundle.min.js",
-              "src/assets/js/pages/be_pages_dashboard.min.js",
               "src/assets/js/custom.global.js"
             ]
           },

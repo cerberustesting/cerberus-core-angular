@@ -9,9 +9,9 @@ jQuery(function () {
 // GLOBAL JS FUNCTIONS
 // functions to be declared in component.ts and called without 'this' annotation
 
-function collapseBlock(block_id) {
+function blockAPI(mode, block_id) {
     jQuery(function () {
-        Dashmix.block('content_hide', block_id);
+        Dashmix.block(mode, "#"+block_id);
     });
 }
 

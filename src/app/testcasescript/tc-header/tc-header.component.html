@@ -1,20 +1,21 @@
 <div class="row" *ngIf="testcaseheader">
     <div class="col-md-12">
-        <div class="block block-rounded block-bordered" id="testcaseheader_modal">
+        <div class="block block-rounded block-bordered" [id]="block_id">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Testcase <small>header</small></h3>
                 <div class="block-options">
                     <button type="button" class="btn-block-option" data-toggle="block-option" data-action="fullscreen_toggle"><i
                             class="si si-size-fullscreen"></i></button>
+                    <!-- 
                     <button type="button" class="btn-block-option" data-toggle="block-option" data-action="pinned_toggle">
                         <i class="si si-pin"></i>
                     </button>
-                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
-                        data-action-mode="demo" (click)="refreshTestCase()">
+                    -->
+                    <button type="button" class="btn-block-option" data-toggle="block-option" (click)="refreshTestCase()">
                         <i class="si si-refresh"></i>
                     </button>
-                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i
-                            class="si si-arrow-up"></i></button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle">
+                        <i class="si si-arrow-up"></i></button>
                 </div>
             </div>
             <div class="block-content">
@@ -30,7 +31,7 @@
                                 </div>
                                 <!-- TO DO : disable the border radius -->
                                 <select class="form-control br-tp-0" id="new_test" name="new_test" [(ngModel)]="testcaseheader.test">
-                                    <option *ngFor="let test of testsList" [value]="test.test"> {{ test.test}} :
+                                    <option *ngFor="let test of testsList" [ngValue]="test.test"> {{ test.test}} :
                                         {{ test.description }}
                                     </option>
                                 </select>
@@ -636,7 +637,7 @@
                                     <div class="form-group row">
                                         <div class="col-md-6">
                                             <div class="form-group" *ngIf="projectsList">
-                                                <label for="testcase">Project <i class="fa fa-info-circle ml-0"></i></label>
+                                                <label for="project">Project <i class="fa fa-info-circle ml-0"></i></label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">

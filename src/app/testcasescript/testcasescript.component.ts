@@ -46,7 +46,6 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     });
     this.TestService.getTestsList();
     this.TestService.getProjectsList();
-    // load invariant lists
     this.InvariantService.getCountries();
     this.InvariantService.getTcStatus();
     this.InvariantService.getOriginsList();
@@ -54,13 +53,13 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.InvariantService.getGroupList();
     this.InvariantService.getOriginsList();
     this.InvariantService.getConditionOperList();
+    this.SystemService.getApplicationList();
     this.TestService.observableTestCase.subscribe(response => {
       if (response) {
         this.testcase = response;
         this.SystemService.getLabelsFromSystem(this.testcase.info.system);
         this.SystemService.getRevFromSystem(this.testcase.info.system);
         this.SystemService.getSprintsFromSystem(this.testcase.info.system);
-        this.SystemService.getApplicationList();
         this.SystemService.getApplication(this.testcase.info.application);
       }
     });
@@ -69,10 +68,12 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
   receiveTest($event) {
     this.selectedTest = $event;
     this.testcase = null;
-    if (this.selectedTestCase) {
-      this.router.navigate([], { queryParams: { test: this.selectedTest, testcase: this.selectedTestCase } });
-    } else {
-      this.router.navigate([], { queryParams: { test: this.selectedTest } });
+    if (this.selectedTest) {
+      if (this.selectedTestCase) {
+        this.router.navigate([], { queryParams: { test: this.selectedTest, testcase: this.selectedTestCase } });
+      } else {
+        this.router.navigate([], { queryParams: { test: this.selectedTest } });
+      }
     }
   }
 

@@ -8,8 +8,6 @@ import { AlertService, Alert } from '../services/utils/alert.service';
 })
 export class HeaderbarComponent implements OnInit {
 
-  alert_test: Alert;
-
   constructor(private AlertService: AlertService) { }
 
   ngOnInit() {

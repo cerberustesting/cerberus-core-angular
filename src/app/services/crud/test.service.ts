@@ -19,25 +19,24 @@ const httpOptions = {
 })
 export class TestService {
 
-  private testsList: Array<ITest> = new Array<ITest>();
-  private testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
-  private testcase_labels: Array<ILabel> = new Array<ILabel>();
-  private testcase: ITestCase = null;
+  testsList: Array<ITest> = new Array<ITest>();
+  testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
+  testcase_labels: Array<ILabel> = new Array<ILabel>();
+  testcase: ITestCase = null;
   //project
-  private projectsList: Array<IProject>;
+  projectsList: Array<IProject> = new Array<IProject>();
   //observables
   observableTestsList = new BehaviorSubject<ITest[]>(this.testsList);
   observableTestCasesList = new BehaviorSubject<ITestCaseHeader[]>(this.testcasesList);
-  observableTestCaseLabels: any;
-  observableTestCase: any;
-  observableLabels: any;
+  observableTestCaseLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
+  observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
+  observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
+  // boolean
+  refreshTC: boolean = false;
 
-  constructor(private http: HttpClient) {
-    this.observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
-    this.observableTestCaseLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
-    this.observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
-  }
+  constructor(private http: HttpClient) { }
+
 
   getTestsList() {
     this.http.get<ITest[]>('http://localhost:8080/Cerberus-3.8-SNAPSHOT/ReadTest')
@@ -51,7 +50,7 @@ export class TestService {
           this.testsList = null;
           this.observableTestsList.next(this.testsList);
         }
-      })
+      });
   }
 
   getTestCasesList(test: string) {
@@ -139,9 +138,8 @@ export class TestService {
   getProjectsList() {
     this.http.get<IProject[]>('http://localhost:8080/Cerberus-3.8-SNAPSHOT/ReadProject')
       .subscribe(response => {
-        this.projectsList = response;
         // @ts-ignore
-        this.projectsList = this.projectsList.contentTable
+        this.projectsList = response.contentTable;
         this.observableProjectsList.next(this.projectsList);
       });
   }

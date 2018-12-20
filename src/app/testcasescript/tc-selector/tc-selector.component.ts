@@ -28,8 +28,7 @@ export class TcSelectorComponent implements OnInit {
   constructor(
     private TestService: TestService,
     private AlertService: AlertService
-  ) {
-  }
+  ) {}
 
   ngOnDestroy() {
     this.testcase = null;
@@ -71,7 +70,7 @@ export class TcSelectorComponent implements OnInit {
               this.AlertService.displayMessage(Alert_selectedTestCaseDoesNotExist);
               this.selectedTestCase = null;
             } else {
-              this.SelectedTestChange.emit(this.selectedTest);
+              //this.SelectedTestChange.emit(this.selectedTest);
               this.refreshTestCase();
             }
           }

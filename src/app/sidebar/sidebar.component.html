@@ -6,10 +6,12 @@
       <!-- Logo -->
       <a class="link-fx font-w600 font-size-lg text-white" href="index.html">
         <span class="smini-visible">
-          <img src="/assets/media/Logo/Logo_Cerberus_Medium.png" width="35" height="35">
+          <!-- <span class="text-white-75">C</span><span class="text-white">e</span> -->
+          <img src="/assets/media/logo/Logo_Cerberus_Medium.png" width="35" height="35">
         </span>
         <span class="smini-hidden">
-            <img src="/assets/media/Logo/Logo_Cerberus_Medium.png" width="35" height="35"> <span class="text-white">Cerberus</span>
+          <!-- <span class="text-white-75">Cerb</span><span class="text-white">erus</span> -->
+          <img src="/assets/media/logo/Logo_Cerberus_Medium.png" width="35" height="35"> <span class="text-white">Cerberus</span>
         </span>
       </a>
       <!-- END Logo -->
@@ -40,7 +42,7 @@
   <div class="content-side content-side-full">
     <ul class="nav-main">
       <li class="nav-main-item">
-        <a class="nav-main-link active" routerLink="/dashboard">
+        <a class="nav-main-link" routerLink="/dashboard" routerLinkActive="active">
           <i class="nav-main-link-icon si si-cursor"></i>
           <span class="nav-main-link-name">Dashboard</span>
           <!-- <span class="nav-main-link-badge badge badge-pill badge-success">5</span> -->
@@ -49,22 +51,23 @@
       <li class="nav-main-heading">Design</li>
       <li class="nav-main-item" *ngFor='let menuitem of testManagementMenu'>
         <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" [attr.data-toggle]="menuitem.submenu ? 'submenu' : ''"
-          [attr.aria-haspopup]="menuitem.hasSubMenu ? 'true' : ''" [attr.aria-expanded]="menuitem.expanded"
-          [routerLink]="menuitem.hasSubMenu ? '' : 'menuitem.link'">
+          [attr.aria-haspopup]="menuitem.submenu ? 'true' : ''" [attr.aria-expanded]="menuitem.expanded" [routerLink]="menuitem.submenu ? null : menuitem.link"
+          routerLinkActive="active" [attr.href]="null">
           <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
           <span class="nav-main-link-name">{{menuitem.name}}</span>
         </a>
         <ul class="nav-main-submenu" *ngIf="menuitem.submenu">
           <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
-            <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="submenuitem.link"
-              [attr.data-toggle]="submenuitem.submenu ? 'submenu' : ''" [attr.aria-haspopup]="submenuitem.hasSubMenu ? 'true' : ''"
+            <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="submenuitem.submenu ? null : submenuitem.link"
+              [attr.data-toggle]="submenuitem.submenu ? 'submenu' : ''" [attr.aria-haspopup]="submenuitem.submenu ? 'true' : ''"
               [attr.aria-expanded]="submenuitem.expanded">
               <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
               <span class="nav-main-link-name">{{submenuitem.name}}</span>
             </a>
             <ul class="nav-main-submenu" *ngIf="submenuitem.submenu">
               <li class="nav-main-item" *ngFor="let subsubmenuitem of submenuitem.submenu">
-                <a class="nav-main-link" [routerLink]="subsubmenuitem.link" [attr.aria-expanded]="subsubmenuitem.expanded">
+                <a class="nav-main-link" [routerLink]="subsubmenuitem.submenu ? null : subsubmenuitem.link"
+                  [attr.aria-expanded]="subsubmenuitem.expanded">
                   <i *ngIf="subsubmenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="subsubmenuitem.icon_class"></i>
                   <span class="nav-main-link-name">{{subsubmenuitem.name}}</span>
                 </a>

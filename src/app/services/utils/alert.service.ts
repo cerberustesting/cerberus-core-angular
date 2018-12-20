@@ -6,10 +6,10 @@ export class Alert {
   message: string; // mandatory
   style: string; // mandatory
   duration: number; // 0 or less = sticky
+  icon_class?: string;
   animationIn?: string;
   animationOut?: string;
   current_animation?: string;
-  index?: number;
 }
 
 // for developers : set to true in order to avoid the alerts to disappear
@@ -25,10 +25,6 @@ export class AlertService {
   observableAlerts = new BehaviorSubject<Alert[]>(this.alertsList);
 
   constructor() { }
-
-  generateRandomIndex(): number {
-    return Math.floor(Math.random() * (999999 - 100000)) + 100000;
-  }
 
   displayMessage(alert: Alert) {
     // put the default animation value if empty

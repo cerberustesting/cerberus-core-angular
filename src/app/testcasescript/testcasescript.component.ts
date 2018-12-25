@@ -46,13 +46,6 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     });
     this.TestService.getTestsList();
     this.TestService.getProjectsList();
-    this.InvariantService.getCountries();
-    this.InvariantService.getTcStatus();
-    this.InvariantService.getOriginsList();
-    this.InvariantService.getPriorities();
-    this.InvariantService.getGroupList();
-    this.InvariantService.getOriginsList();
-    this.InvariantService.getConditionOperList();
     this.SystemService.getApplicationList();
     this.TestService.observableTestCase.subscribe(response => {
       if (response) {
@@ -63,6 +56,16 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
         this.SystemService.getApplication(this.testcase.info.application);
       }
     });
+    // public invariants
+    this.InvariantService.getCountries();
+    this.InvariantService.getTcStatus();
+    this.InvariantService.getOriginsList();
+    this.InvariantService.getPriorities();
+    this.InvariantService.getGroupList();
+    this.InvariantService.getOriginsList();
+    // private invariants : loaded once (exluded from any refresh)
+    this.InvariantService.getStepConditionOperList();
+    this.InvariantService.getStepLoopList();
   }
 
   receiveTest($event) {

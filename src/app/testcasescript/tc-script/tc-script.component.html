@@ -58,9 +58,9 @@
             <button type="button" class="btn btn-primary mr-1 ml-1" (click)="toggleStepHeader()">
               <i class="fa fa-fw" [ngClass]="activeStepHeader ? 'fa-angle-down' : 'fa-angle-up'"></i>
             </button>
-            <button type="button" class="btn mr-1" [ngClass]="active_step.forceExe === 'Y' ? 'btn-dark' : ''">
-                <i class="fa fa-fw fa-road"></i>
-              </button>
+            <button type="button" class="btn mr-1" [ngClass]="active_step.forceExe === 'Y' ? 'btn-dark' : ''" (click)="setForceExe(active_step)">
+              <i class="fa fa-fw fa-level-down-alt"></i>
+            </button>
             <button type="button" class="btn btn-danger mr-1">
               <i class="far fa-fw fa-trash-alt"></i>
             </button>
@@ -74,7 +74,9 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Loop</span>
                       </div>
-                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
+                      <select class="form-control br-tp-0" id="active_step_loop" name="activeStepLoop" [(ngModel)]="active_step.loop">
+                        <option *ngFor='let steploop of inv_step_loop' [ngValue]='steploop.value'>{{steploop.value}}</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -84,50 +86,69 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Condition</span>
                       </div>
-                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
+                      <select class="form-control br-tp-0" id="active_step_condition" name="activeStepCondition"
+                        [(ngModel)]="active_step.conditionOper">
+                        <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}</option>
+                      </select>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
+              <div class="row" *ngIf="hasConditionCrossReference(active_step.conditionOper)">
+                <div [ngClass]="findConditionCrossReference(active_step.conditionOper).conditionVal1 && findConditionCrossReference(active_step.conditionOper).conditionVal2 ? 'col-md-6' : 'col-md-12'"
+                  *ngIf="findConditionCrossReference(active_step.conditionOper).conditionVal1">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text">Parameter 1</span>
+                        <span class="input-group-text">{{
+                          findConditionCrossReference(active_step.conditionOper).conditionVal1 }}</span>
                       </div>
-                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
+                      <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1"
+                        [(ngModel)]="active_step.conditionVal1">
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div [ngClass]="findConditionCrossReference(active_step.conditionOper).conditionVal1 && findConditionCrossReference(active_step.conditionOper).conditionVal2 ? 'col-md-6' : 'col-md-12'"
+                  *ngIf="findConditionCrossReference(active_step.conditionOper).conditionVal2">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text">Parameter 2</span>
+                        <span class="input-group-text">{{
+                          findConditionCrossReference(active_step.conditionOper).conditionVal2 }}</span>
                       </div>
-                      <input type="text" class="form-control" id="example-group1-input1" name="example-group1-input1">
+                      <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2"
+                        [(ngModel)]="active_step.conditionVal2">
                     </div>
                   </div>
                 </div>
               </div>
+              <!--
               <div class="row push">
                 <div class="col-md-12">
-                  <!-- 
+                   
                     <div class="form-group">
                       <div class="custom-control custom-switch mb-1">
                         <input type="checkbox" class="custom-control-input" id="forceExe" name="forceExe" [checked]="active_step.forceExe === 'Y'"
                           (change)="active_step.forceExe = $event.target.checked ? 'Y' : 'N'">
                         <label class="custom-control-label" for="forceExe">Force Execution</label>
                       </div>
-                    </div>-->
+                    </div>
                 </div>
               </div>
+              -->
               <h4 class="content-heading" style="padding-top: 0px;"></h4>
             </div>
-            <p>Under construction .. <i class="fa fa-cogs"></i></p>
+            <div class="col-md-12 push">
+              <p>Under construction .. <i class="fa fa-cogs"></i></p>
+              <button class="btn btn-light full-width border" type="button" (click)="saveActiveStep()"> Save </button>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row push">
+      <div class="col-md-12">
+        <button class="btn btn-light full-width border" type="button"> Save All </button>
       </div>
     </div>
   </div>

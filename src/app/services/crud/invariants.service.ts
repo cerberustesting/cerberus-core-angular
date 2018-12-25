@@ -26,6 +26,7 @@ export class InvariantsService {
   observableOriginsList = new BehaviorSubject<IInvariant[]>(this.originsList);
   observableGroupsList = new BehaviorSubject<IInvariant[]>(this.groupsList);
   observableConditionOperList = new BehaviorSubject<IInvariant[]>(this.conditionOperList);
+  observableStepLoopList = new BehaviorSubject<IInvariant[]>(this.stepLoopList);
 
   constructor(private http: HttpClient) { }
 
@@ -73,11 +74,19 @@ export class InvariantsService {
       })
   }
 
-  getConditionOperList() {
+  getStepConditionOperList() {
     this.http.get<IInvariant[]>(this._url + 'stepconditionOper')
       .subscribe(response => {
         this.conditionOperList = response;
         this.observableConditionOperList.next(this.conditionOperList);
+      })
+  }
+
+  getStepLoopList() {
+    this.http.get<IInvariant[]>(this._url + 'steploop')
+      .subscribe(response => {
+        this.stepLoopList = response;
+        this.observableStepLoopList.next(this.stepLoopList);
       })
   }
 

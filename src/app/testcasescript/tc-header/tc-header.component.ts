@@ -147,7 +147,7 @@ export class TcHeaderComponent implements OnInit {
     this.InvariantService.getPriorities();
     this.InvariantService.getGroupList();
     this.InvariantService.getOriginsList();
-    this.InvariantService.getConditionOperList();
+    this.InvariantService.getStepConditionOperList();
     this.SystemService.getApplicationList();
     this.TestService.refreshTC = true;
   }

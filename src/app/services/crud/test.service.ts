@@ -5,6 +5,7 @@ import { ITest } from 'src/app/model/test.model';
 import { ITestCaseHeader, ITestCase } from 'src/app/model/testcase.model';
 import { ILabel, ITestCaseLabel } from 'src/app/model/label.model';
 import { IProject } from 'src/app/model/project.model';
+import { AppSettings } from 'src/app/app.component';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,7 +19,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TestService {
-
   testsList: Array<ITest> = new Array<ITest>();
   testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
   testcase_labels: Array<ILabel> = new Array<ILabel>();
@@ -37,9 +37,8 @@ export class TestService {
 
   constructor(private http: HttpClient) { }
 
-
   getTestsList() {
-    this.http.get<ITest[]>('http://localhost:8080/Cerberus-3.8-SNAPSHOT/ReadTest')
+    this.http.get<ITest[]>(AppSettings.API_endpoint + '/ReadTest')
       .subscribe(response => {
         // @ts-ignore
         if (response.iTotalRecords > 0) {
@@ -54,7 +53,7 @@ export class TestService {
   }
 
   getTestCasesList(test: string) {
-    this.http.get<ITestCaseHeader[]>('http://localhost:8080/Cerberus-3.8-SNAPSHOT/ReadTestCase?test=' + test)
+    this.http.get<ITestCaseHeader[]>(AppSettings.API_endpoint + '/ReadTestCase?test=' + test)
       .subscribe((response) => {
         // @ts-ignore
         if (response.iTotalRecords > 0) {
@@ -70,11 +69,10 @@ export class TestService {
   }
 
   getTestCase(test: string, testcase: string) {
-    var url = 'http://localhost:8080/Cerberus-3.8-SNAPSHOT/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withStep=true';
     if (test == null || testcase == null) {
       this.testcase = null;
     } else {
-      this.http.get<ITestCase>(url)
+      this.http.get<ITestCase>(AppSettings.API_endpoint + 'ReadTestCase?test=' + test + '&testCase=' + testcase + '&withStep=true')
         .subscribe((response) => {
           this.testcase = response;
           this.observableTestCase.next(this.testcase);
@@ -84,7 +82,7 @@ export class TestService {
   }
 
   getLabelsfromTestCase(test: string, testcase: string) {
-    var url = 'http://localhost:8080/Cerberus-3.8-SNAPSHOT/ReadTestCaseLabel?test=' + test + '&testcase=' + testcase
+    var url = AppSettings.API_endpoint + '/ReadTestCaseLabel?test=' + test + '&testcase=' + testcase
     this.http.get<ITestCaseLabel[]>(url)
       .subscribe((response) => {
         // @ts-ignore
@@ -136,7 +134,7 @@ export class TestService {
   }
 
   getProjectsList() {
-    this.http.get<IProject[]>('http://localhost:8080/Cerberus-3.8-SNAPSHOT/ReadProject')
+    this.http.get<IProject[]>(AppSettings.API_endpoint + '/ReadProject')
       .subscribe(response => {
         // @ts-ignore
         this.projectsList = response.contentTable;

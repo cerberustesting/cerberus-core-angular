@@ -66,6 +66,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     // private invariants : loaded once (exluded from any refresh)
     this.InvariantService.getStepConditionOperList();
     this.InvariantService.getStepLoopList();
+    this.InvariantService.getActionList();
   }
 
   receiveTest($event) {

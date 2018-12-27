@@ -27,10 +27,12 @@
       <div class="col-md-3">
         <div class="list-group push">
           <!-- add a pipe to order by sort -->
-          <a *ngFor='let step of testcase.stepList' class="list-group-item list-group-item-action d-flex justify-content-between align-items-center drag-step"
+          <!-- commented class(a) = justify-content-between -->
+          <a *ngFor='let step of testcase.stepList' class="list-group-item list-group-item-action d-flex align-items-center drag-step mr-1"
             (click)="setActiveStep(step)" [ngClass]="active_step == step ? 'active white' : ''">
+            <span class="badge badge-pill badge-secondary mr-2">{{ step.sort }}</span>
             {{ step.description }}
-            <span class="badge badge-pill badge-secondary">{{step.sort}}</span>
+            <span *ngIf="step.forceExe == 'Y'" class="badge badge-pill badge-secondary ml-2">Forced</span>
           </a>
         </div>
         <div class="list-group push" *ngIf="!testcase.stepList.length == 0">
@@ -56,7 +58,7 @@
                 name="activeStepDescription" placeholder="Step Description">
             </div>
             <button type="button" class="btn btn-primary mr-1 ml-1" (click)="toggleStepHeader()">
-              <i class="fa fa-fw" [ngClass]="activeStepHeader ? 'fa-angle-down' : 'fa-angle-up'"></i>
+              <i class="fa fa-fw" [ngClass]="activeStepHeader ? 'fa-angle-up' : 'fa-angle-down'"></i>
             </button>
             <button type="button" class="btn mr-1" [ngClass]="active_step.forceExe === 'Y' ? 'btn-dark' : ''" (click)="setForceExe(active_step)">
               <i class="fa fa-fw fa-level-down-alt"></i>
@@ -95,26 +97,26 @@
                 </div>
               </div>
               <div class="row" *ngIf="hasConditionCrossReference(active_step.conditionOper)">
-                <div [ngClass]="findConditionCrossReference(active_step.conditionOper).conditionVal1 && findConditionCrossReference(active_step.conditionOper).conditionVal2 ? 'col-md-6' : 'col-md-12'"
-                  *ngIf="findConditionCrossReference(active_step.conditionOper).conditionVal1">
+                <div [ngClass]="findConditionCrossReference(active_step.conditionOper).value1 && findConditionCrossReference(active_step.conditionOper).value2 ? 'col-md-6' : 'col-md-12'"
+                  *ngIf="findConditionCrossReference(active_step.conditionOper).value1">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text">{{
-                          findConditionCrossReference(active_step.conditionOper).conditionVal1 }}</span>
+                          findConditionCrossReference(active_step.conditionOper).value1 }}</span>
                       </div>
                       <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1"
                         [(ngModel)]="active_step.conditionVal1">
                     </div>
                   </div>
                 </div>
-                <div [ngClass]="findConditionCrossReference(active_step.conditionOper).conditionVal1 && findConditionCrossReference(active_step.conditionOper).conditionVal2 ? 'col-md-6' : 'col-md-12'"
-                  *ngIf="findConditionCrossReference(active_step.conditionOper).conditionVal2">
+                <div [ngClass]="findConditionCrossReference(active_step.conditionOper).value1 && findConditionCrossReference(active_step.conditionOper).value2 ? 'col-md-6' : 'col-md-12'"
+                  *ngIf="findConditionCrossReference(active_step.conditionOper).value2">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text">{{
-                          findConditionCrossReference(active_step.conditionOper).conditionVal2 }}</span>
+                          findConditionCrossReference(active_step.conditionOper).value2 }}</span>
                       </div>
                       <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2"
                         [(ngModel)]="active_step.conditionVal2">
@@ -124,8 +126,7 @@
               </div>
               <!--
               <div class="row push">
-                <div class="col-md-12">
-                   
+                <div class="col-md-12"> 
                     <div class="form-group">
                       <div class="custom-control custom-switch mb-1">
                         <input type="checkbox" class="custom-control-input" id="forceExe" name="forceExe" [checked]="active_step.forceExe === 'Y'"
@@ -139,7 +140,97 @@
               <h4 class="content-heading" style="padding-top: 0px;"></h4>
             </div>
             <div class="col-md-12 push">
-              <p>Under construction .. <i class="fa fa-cogs"></i></p>
+              <!-- <p>Under construction .. <i class="fa fa-cogs"></i></p> -->
+
+              <div class="block block-bordered action" *ngFor="let action of active_step.actionList" [id]="'action' + action.sort">
+                <div class="block-header block-header-default">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        {{ action.sort }}
+                      </span>
+                    </div>
+                    <input type="text" [(ngModel)]="action.description" class="form-control" name="test" placeholder="Action Description">
+                  </div>
+                  <div class="block-options">
+                    <button type="submit" class="btn-block-option">
+                      <i class="fa fa-fw fa-question"></i>
+                    </button>
+                    <!-- 
+                    <button type="button" class="btn btn-primary mr-1 ml-1">
+                      <i class="fa fa-fw fa-plus"></i>
+                    </button>
+                    <button type="button" class="btn btn-success mr-1 ml-1">
+                      <i class="fa fa-fw fa-plus"></i>
+                    </button>
+                    -->
+                    <button type="button" class="btn btn-primary mr-1 ml-1">
+                      <i class="fa fa-fw" [ngClass]="activeStepHeader ? 'fa-angle-up' : 'fa-angle-down'"></i>
+                    </button>
+                    <button type="button" class="btn mr-1" [ngClass]="action.forceExeStatus === 'PE' ? 'btn-dark' : ''"
+                      (click)="setForceExeStatus(action)">
+                      <i class="fa fa-fw fa-level-down-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger mr-1">
+                      <i class="far fa-fw fa-trash-alt"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="block-content">
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Action</span>
+                          </div>
+                          <select class="form-control br-tp-0" [id]="'action'+action.sort+'select'" [name]="'action'+action.sort+'select'"
+                            [(ngModel)]="action.action">
+                            <option *ngFor='let action of inv_action' [ngValue]='action.value'>{{action.value}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-8" *ngIf="hasActionCrossReference(action.action)">
+                      <div class="col-md-12" *ngIf="findActionCrossReference(action.action).value1">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">{{
+                                findActionCrossReference(action.action).value1 }}</span>
+                            </div>
+                            <input type="text" class="form-control" [id]="'action'+action.sort+'value1'" [name]="'action'+action.sort+'value1'"
+                              [(ngModel)]="action.conditionVal1">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12" *ngIf="findActionCrossReference(action.action).value2">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">{{
+                                findActionCrossReference(action.action).value2 }}</span>
+                            </div>
+                            <input type="text" class="form-control" [id]="'action'+action.sort+'value2'" [name]="'action'+action.sort+'value2'"
+                              [(ngModel)]="action.conditionVal2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="block-content block-content-full block-content-sm bg-body-light text-right">
+                    <button type="button" class="btn btn-sm btn-success mr-1">
+                        <i class="fa fa-plus"></i> Control
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary ml-1">
+                        <i class="fa fa-plus"></i> Action
+                    </button>
+                </div>
+              </div>
+
               <button class="btn btn-light full-width border" type="button" (click)="saveActiveStep()"> Save </button>
             </div>
           </div>

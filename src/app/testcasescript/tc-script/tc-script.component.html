@@ -45,7 +45,9 @@
 
       </div>
       <div class="col-md-9">
-
+        <!-- current active step -->
+        <app-step *ngIf="active_step" [step]="active_step"></app-step>
+<!--
         <div class="block block-bordered" *ngIf="active_step">
           <div class="block-header block-header-default">
             <div class="input-group">
@@ -57,10 +59,10 @@
               <input type="text" [(ngModel)]="active_step.description" class="form-control" id="activeStepDescription"
                 name="activeStepDescription" placeholder="Step Description">
             </div>
-            <button type="button" class="btn btn-primary mr-1 ml-1" (click)="toggleStepHeader()">
+            <button type="button" class="btn btn-primary mr-1 ml-1" (click)="activeStepHeader = !activeStepHeader">
               <i class="fa fa-fw" [ngClass]="activeStepHeader ? 'fa-angle-up' : 'fa-angle-down'"></i>
             </button>
-            <button type="button" class="btn mr-1" [ngClass]="active_step.forceExe === 'Y' ? 'btn-dark' : ''" (click)="setForceExe(active_step)">
+            <button type="button" class="btn mr-1" [ngClass]="active_step.forceExe === 'Y' ? 'btn-dark' : ''" (click)="active_step.forceExe == 'Y' ? active_step.forceExe = 'N' : active_step.forceExe = 'Y'">
               <i class="fa fa-fw fa-level-down-alt"></i>
             </button>
             <button type="button" class="btn btn-danger mr-1">
@@ -124,24 +126,9 @@
                   </div>
                 </div>
               </div>
-              <!--
-              <div class="row push">
-                <div class="col-md-12"> 
-                    <div class="form-group">
-                      <div class="custom-control custom-switch mb-1">
-                        <input type="checkbox" class="custom-control-input" id="forceExe" name="forceExe" [checked]="active_step.forceExe === 'Y'"
-                          (change)="active_step.forceExe = $event.target.checked ? 'Y' : 'N'">
-                        <label class="custom-control-label" for="forceExe">Force Execution</label>
-                      </div>
-                    </div>
-                </div>
-              </div>
-              -->
               <h4 class="content-heading" style="padding-top: 0px;"></h4>
             </div>
             <div class="col-md-12 push">
-              <!-- <p>Under construction .. <i class="fa fa-cogs"></i></p> -->
-
               <div class="block block-bordered action" *ngFor="let action of active_step.actionList" [id]="'action' + action.sort">
                 <div class="block-header block-header-default">
                   <div class="input-group">
@@ -156,16 +143,8 @@
                     <button type="submit" class="btn-block-option">
                       <i class="fa fa-fw fa-question"></i>
                     </button>
-                    <!-- 
                     <button type="button" class="btn btn-primary mr-1 ml-1">
-                      <i class="fa fa-fw fa-plus"></i>
-                    </button>
-                    <button type="button" class="btn btn-success mr-1 ml-1">
-                      <i class="fa fa-fw fa-plus"></i>
-                    </button>
-                    -->
-                    <button type="button" class="btn btn-primary mr-1 ml-1">
-                      <i class="fa fa-fw" [ngClass]="activeStepHeader ? 'fa-angle-up' : 'fa-angle-down'"></i>
+                      <i class="fa fa-fw fa-angle-down"></i>
                     </button>
                     <button type="button" class="btn mr-1" [ngClass]="action.forceExeStatus === 'PE' ? 'btn-dark' : ''"
                       (click)="setForceExeStatus(action)">
@@ -230,11 +209,11 @@
                     </button>
                 </div>
               </div>
-
               <button class="btn btn-light full-width border" type="button" (click)="saveActiveStep()"> Save </button>
             </div>
           </div>
         </div>
+      -->
       </div>
     </div>
     <div class="row push">

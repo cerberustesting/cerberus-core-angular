@@ -2,12 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase, IStep, IAction } from 'src/app/model/testcase.model';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
-
-export class CrossReference {
-  reference: string;
-  value1: string;
-  value2: string;
-}
+import { CrossReference } from 'src/app/model/crossreference.model';
 
 @Component({
   selector: 'app-tc-script',
@@ -99,10 +94,6 @@ export class TcScriptComponent implements OnInit {
     this.InvariantService.observableStepLoopList.subscribe(response => { this.inv_step_loop = response; });
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
     this.debug();
-  }
-
-  toggleStepHeader() {
-    this.activeStepHeader = !this.activeStepHeader;
   }
 
   setActiveStep(step: IStep) {

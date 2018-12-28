@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarComponent } from './navigation/sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';

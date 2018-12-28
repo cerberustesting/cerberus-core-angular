@@ -14,10 +14,6 @@ export class SidebarComponent implements OnInit {
       expanded: true,
       submenu: [
         {
-          name: 'Test List',
-          link: '/tests'
-        },
-        {
           name: 'Testcase List',
           link: '/testcases'
         },
@@ -39,6 +35,12 @@ export class SidebarComponent implements OnInit {
         name: 'Services',
         link: '/servicelibrary'
       }]
+    },
+    {
+      name: 'Campaigns',
+      link: '/dashboard',
+      icon_class: 'si-paper-clip',
+      expanded: false
     },
     {
       name: 'Labels',
@@ -64,12 +66,6 @@ export class SidebarComponent implements OnInit {
       name: 'Robots',
       link: '/dashboard',
       icon_class: 'si-rocket',
-      expanded: false
-    },
-    {
-      name: 'Campaigns',
-      link: '/dashboard',
-      icon_class: 'si-paper-clip',
       expanded: false
     }
   ];

@@ -13,7 +13,7 @@ const routes: Route[] = [
   { path: 'labels', component: LabelsComponent },
   { path: 'pagenotfound', component: PagenotfoundComponent },
   
-  //{ path: '**', redirectTo: '/pagenotfound'}
+  { path: '**', redirectTo: '/pagenotfound'}
 ];
 
 @NgModule({

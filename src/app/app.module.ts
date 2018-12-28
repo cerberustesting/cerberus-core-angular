@@ -18,6 +18,7 @@ import { LabelsComponent } from './labels/labels.component';
 import { AlertsComponent } from './headerbar/alerts/alerts.component';
 import { StepComponent } from './testcasescript/tc-script/step/step.component';
 import { ActionComponent } from './testcasescript/tc-script/action/action.component';
+import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ActionComponent } from './testcasescript/tc-script/action/action.compon
     LabelsComponent,
     AlertsComponent,
     StepComponent,
-    ActionComponent
+    ActionComponent,
+    PagenotfoundComponent,
   ],
   imports: [
     BrowserModule,

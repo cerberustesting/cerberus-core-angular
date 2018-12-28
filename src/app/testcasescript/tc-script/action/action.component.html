@@ -116,3 +116,6 @@
     <i class="fa fa-plus"></i> Action
   </button>
 </div>
+<div class="block block-bordered control" *ngFor="let control of action.controlList" [id]="'control' + control.sort" >
+  <app-control [control]="control"></app-control>
+</div>

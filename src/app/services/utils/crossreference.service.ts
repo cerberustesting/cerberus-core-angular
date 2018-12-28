@@ -64,6 +64,40 @@ export class CrossreferenceService {
     { reference: "mouseOverAndWait", value1: null, value2: null },
     { reference: "removeDifference", value1: null, value2: null }
   ];
+  public crossReference_ControlValue: Array<CrossReference> = [
+    { reference: "Unknown", value1: null, value2: null },
+    { reference: "verifyStringEqual", value1: "String 1", value2: "String 2" },
+    { reference: "verifyStringDifferent", value1: "String 1", value2: "String 2" },
+    { reference: "verifyStringGreater", value1: "String 1", value2: "String 2" },
+    { reference: "verifyStringMinor", value1: "String 1", value2: "String 2" },
+    { reference: "verifyStringContains", value1: "String 1", value2: "String 2" },
+    { reference: "verifyNumericEquals", value1: "Number 1", value2: "Number 2" },
+    { reference: "verifyNumericDifferent", value1: "Number 1", value2: "Number 2" },
+    { reference: "verifyNumericGreater", value1: "Number 1", value2: "Number 2" },
+    { reference: "verifyNumericGreaterOrEqual", value1: "Number 1", value2: "Number 2" },
+    { reference: "verifyNumericMinor", value1: "Number 1", value2: "Number 2" },
+    { reference: "verifyNumericMinorOrEqual", value1: "Number 1", value2: "Number 2" },
+    { reference: "verifyElementPresent", value1: "Element path", value2: null },
+    { reference: "verifyElementNotPresent", value1: "Element path", value2: null },
+    { reference: "verifyElementVisible", value1: "Element path", value2: null },
+    { reference: "verifyElementNotVisible", value1: "Element path", value2: null },
+    { reference: "verifyElementEquals", value1: "Path", value2: "Expected Element" },
+    { reference: "verifyElementDifferent", value1: "Path", value2: "Expected Element" },
+    { reference: "verifyElementInElement", value1: "Master", value2: "Sub" },
+    { reference: "verifyElementClickable", value1: "Element", value2: null },
+    { reference: "verifyElementNotClickable", value1: "Element", value2: null },
+    { reference: "verifyTextInElement", value1: "Element", value2: "Text" },
+    { reference: "verifyTextNotInElement", value1: "Element", value2: "Text" },
+    { reference: "verifyRegexInElement", value1: "Element", value2: "Regex" },
+    { reference: "verifyTextInPage", value1: "Regex", value2: null },
+    { reference: "verifyTextNotInPage", value1: "Regex", value2: null },
+    { reference: "verifyTitle", value1: "Title", value2: null },
+    { reference: "verifyUrl", value1: "URL", value2: null },
+    { reference: "verifyTextInDialog", value1: "Text", value2: null },
+    { reference: "verifyXmlTreeStructure", value1: "xPath", value2: "Tree" },
+    { reference: "takeScreenshot", value1: null, value2: null },
+    { reference: "getPageSource", value1: null, value2: null }
+  ];
 
   constructor() { }
 
@@ -80,5 +114,13 @@ export class CrossreferenceService {
   }
   findActionCrossReference(action: string): CrossReference {
     return this.crossReference_ActionValue.find(cr => cr.reference === action);
+  }
+
+  hasControlCrossReference(control: string): boolean {
+    return this.crossReference_ControlValue.filter(cr => cr.reference === control).length > 0;
+  }
+
+  findControlCrossReference(control: string): CrossReference {
+    return this.crossReference_ControlValue.find(cr => cr.reference === control);
   }
 }

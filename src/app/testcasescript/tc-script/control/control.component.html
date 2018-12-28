@@ -1,0 +1,115 @@
+<div class="block-header block-header-default">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">
+        {{ control.sort }}
+      </span>
+    </div>
+    <input type="text" [(ngModel)]="control.description" class="form-control" name="test" placeholder="Control Description">
+  </div>
+  <div class="block-options">
+    <button type="submit" class="btn-block-option" *ngIf="control.conditionOper != 'always'">
+      <i class="fa fa-fw fa-question"></i>
+    </button>
+    <button type="button" class="btn btn-primary mr-1 ml-1" (click)="showedControlHeader = !showedControlHeader">
+      <i class="fa fa-fw" [ngClass]="showedControlHeader ? 'fa-angle-up' : 'fa-angle-down'"></i>
+    </button>
+    <button type="button" class="btn btn-danger mr-1">
+      <i class="far fa-fw fa-trash-alt"></i>
+    </button>
+  </div>
+</div>
+<div class="block-content">
+  <div name="controlHeader" *ngIf="showedControlHeader">
+    <div class="row">
+      <div class="col-md-12" *ngIf="inv_condition_oper">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Condition</span>
+            </div>
+            <select class="form-control br-tp-0" id="active_step_condition" name="activeStepCondition" [(ngModel)]="control.conditionOper">
+              <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="hasConditionCrossReference(control.conditionOper)">
+      <div [ngClass]="findConditionCrossReference(control.conditionOper).value1 && findConditionCrossReference(control.conditionOper).value2 ? 'col-md-6' : 'col-md-12'"
+        *ngIf="findConditionCrossReference(control.conditionOper).value1">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{
+                findConditionCrossReference(control.conditionOper).value1 }}</span>
+            </div>
+            <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1" [(ngModel)]="control.conditionVal1">
+          </div>
+        </div>
+      </div>
+      <div [ngClass]="findConditionCrossReference(control.conditionOper).value1 && findConditionCrossReference(control.conditionOper).value2 ? 'col-md-6' : 'col-md-12'"
+        *ngIf="findConditionCrossReference(control.conditionOper).value2">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{
+                findConditionCrossReference(control.conditionOper).value2 }}</span>
+            </div>
+            <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2" [(ngModel)]="control.conditionVal2">
+          </div>
+        </div>
+      </div>
+    </div>
+    <h4 class="content-heading" style="padding-top: 0px;"></h4>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Control</span>
+          </div>
+          <select class="form-control br-tp-0" [id]="'control'+control.sort+'select'" [name]="'control'+control.sort+'select'"
+            [(ngModel)]="control.control">
+            <option *ngFor='let control of inv_control' [ngValue]='control.value'>{{control.value}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8" *ngIf="hasControlCrossReference(control.control)">
+      <div class="col-md-12" *ngIf="findControlCrossReference(control.control).value1">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{
+                findControlCrossReference(control.control).value1 }}</span>
+            </div>
+            <input type="text" class="form-control" [id]="'control'+control.sort+'value1'" [name]="'control'+control.sort+'value1'"
+              [(ngModel)]="control.conditionVal1">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12" *ngIf="findControlCrossReference(control.control).value2">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{
+                findControlCrossReference(control.control).value2 }}</span>
+            </div>
+            <input type="text" class="form-control" [id]="'control'+control.sort+'value2'" [name]="'control'+control.sort+'value2'"
+              [(ngModel)]="control.conditionVal2">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="block-content block-content-full block-content-sm bg-body-light text-right">
+  <button type="button" class="btn btn-sm btn-success mr-1">
+    <i class="fa fa-plus"></i> Control
+  </button>
+  <button type="button" class="btn btn-sm btn-primary ml-1">
+    <i class="fa fa-plus"></i> Action
+  </button>
+</div>

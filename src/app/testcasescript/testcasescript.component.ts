@@ -67,6 +67,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.InvariantService.getStepConditionOperList();
     this.InvariantService.getStepLoopList();
     this.InvariantService.getActionList();
+    this.InvariantService.getControlsList();
   }
 
   receiveTest($event) {

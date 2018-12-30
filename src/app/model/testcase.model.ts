@@ -119,4 +119,46 @@ export interface IControl {
     step: number;
     objType: string;
     testCase: string;
+    toDelete: boolean;
+}
+
+export class Control {
+
+    //test: string;
+    //testCase: string;
+    //step: number;
+    //controlSequence: number;
+    //sort: number;
+    //sequence: number;
+    description: string;
+    conditionOper: string;
+    conditionVal1: string;
+    conditionVal2: string;
+    control: string;
+    value1: string;
+    value2: string;
+    fatal: string;
+    screenshotFilename: string;
+    objType: string;
+    toDelete: boolean;
+
+    constructor(
+        public test: string,
+        public testCase: string,
+        public step: number,
+        public controlSequence: number,
+        public sort: number,
+        public sequence: number) {
+        this.description = "",
+            this.conditionOper = "always",
+            this.conditionVal1 = "",
+            this.conditionVal2 = "",
+            this.control = "Unknown",
+            this.value1 = "",
+            this.value2 = "",
+            this.fatal = "N",
+            this.screenshotFilename = "",
+            this.objType = "control",
+            this.toDelete = false
+    }
 }

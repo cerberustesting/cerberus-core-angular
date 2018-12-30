@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CrossReference } from 'src/app/model/crossreference.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { IAction } from 'src/app/model/testcase.model';
+import { IAction, ITestCase, Control } from 'src/app/model/testcase.model';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
+import { TestService } from 'src/app/services/crud/test.service';
 
 @Component({
   selector: 'app-action',
@@ -14,6 +15,7 @@ export class ActionComponent implements OnInit {
 
   @Input('action') action: IAction;
   showedActionHeader: boolean;
+  testcase: ITestCase;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;
   private crossReference_ConditionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
@@ -23,13 +25,27 @@ export class ActionComponent implements OnInit {
 
   constructor(
     private InvariantService: InvariantsService,
-    private CrossReferenceService: CrossreferenceService
+    private CrossReferenceService: CrossreferenceService,
+    private TestService: TestService
   ) { }
 
   ngOnInit() {
     this.showedActionHeader = false;
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
+    this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
+  }
+
+  addControl() {
+    var newControl = new Control(
+      this.testcase.info.test,
+      this.testcase.info.testCase,
+      this.action.step,
+      this.action.controlList.length,
+      this.action.controlList.length + 1,
+      this.action.sequence
+    )
+    console.log(newControl);
   }
 
   hasActionCrossReference(action: string): boolean { return this.CrossReferenceService.hasActionCrossReference(action); }

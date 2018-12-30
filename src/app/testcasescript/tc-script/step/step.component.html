@@ -76,9 +76,7 @@
       <h4 class="content-heading" style="padding-top: 0px;"></h4>
     </div>
     <div class="col-md-12 push">
-      <div class="block block-bordered action" *ngFor="let action of step.actionList" [id]="'action' + action.sort" >
-        <app-action [action]="action"></app-action>
-      </div>
+      <app-action *ngFor="let action of step.actionList" [action]="action"></app-action>
       <button class="btn btn-light full-width border" type="button" (click)="saveActiveStep()"> Save </button>
     </div>
   </div>

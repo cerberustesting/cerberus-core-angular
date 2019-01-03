@@ -14,7 +14,34 @@
     <!-- END Left Section -->
 
     <!-- Right Section -->
-    <div>
+      <div class="dropdown d-inline-block">
+      <span *ngFor='let badge of selectedSystems' style="cursor: pointer" class="badge badge-pill badge-light" (click)="deleteSystem(badge)">
+        x {{ badge }}
+      </span>
+      <button type="button" class="btn btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+        <span class="d-none d-sm-inline-block">Systems</span>
+        <i class="fa fa-fw fa-angle-down ml-1 d-none d-sm-inline-block"></i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">
+        <div class="bg-primary-darker rounded-top font-w600 text-white text-center p-3">
+          Select system
+        </div>
+        <div class="p-2">
+          <a class="dropdown-item">
+            <i class="far fa-fw fa-arrow-alt-circle-left mr-1"></i> All
+          </a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" *ngFor='let system of systemsList' (click)="addSystem(this.system.value)">
+            {{system.value}}
+          </a>
+
+          <!-- END Side Overlay -->
+
+
+        </div>
+      </div>
+
       <!-- User Dropdown -->
       <div class="dropdown d-inline-block">
         <button type="button" class="btn btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true"

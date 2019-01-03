@@ -22,6 +22,7 @@ import { StepComponent } from './testcasescript/tc-script/step/step.component';
 import { ActionComponent } from './testcasescript/tc-script/action/action.component';
 import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
 import { ControlComponent } from './testcasescript/tc-script/control/control.component';
+import { ExecutionsperweekComponent } from './dashboard/graph/executionsperweek/executionsperweek.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ControlComponent } from './testcasescript/tc-script/control/control.com
     ActionComponent,
     PagenotfoundComponent,
     ControlComponent,
+    ExecutionsperweekComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="block block-rounded">
+        <div class="block-header block-header-default">
+          <h3 class="block-title">Testcase <small>selection</small></h3>
+        </div>
+        <div class="block-content">
+          <div class="row">
+            <!-- Test Selection -->
+            <div class="col-md-6" *ngIf="testsList">
+              <div class="form-group">
+                <label for="test">Test</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                  </div>
+                  <select class="form-control br-tp-0" id="test" name="test" [(ngModel)]='selectedTest' (ngModelChange)='selectedTestChange()'
+                    [ngClass]="selectedTest ? 'is-selected-valid' : ''">
+                    <option [ngValue]="null">Select a Test</option>
+                    <option *ngFor='let test of testsList' [value]="test.test"> {{test.test}} - {{test.description}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- Test Case Selection -->
+            <div class="col-md-6">
+              <div class="form-group" *ngIf="selectedTest && testcasesList">
+                <label for="testcase">Test Case</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                  </div>
+                  <select class="form-control br-tp-0" id="testcase" name="testcase" [(ngModel)]='selectedTestCase'
+                    (ngModelChange)='selectedTestCaseChange()' [ngClass]="selectedTestCase ? 'is-selected-valid' : ''">
+                    <option [ngValue]="null">Select a Test Case</option>
+                    <option *ngFor="let tc of testcasesList" [value]="tc.testCase"> {{ tc.testCase}} : {{ tc.description
+                      }} </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="row push" *ngIf="testcase">
+  
+            <div class="col-md-6 text-center">
+              <div class="dropdown">
+                <button type="button" class="btn btn-light dropdown-toggle full-width border" id="dropdown-default-light"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Go to
+                </button>
+                <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
+                  style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                  <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-history mr-1"></i> Last Execution</a>
+                  <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Execution List</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Testcase List</a>
+                  <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-file-archive mr-1"></i> Logs</a>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-md-6 text-center">
+              <div class="dropdown">
+                <button type="button" class="btn btn-light dropdown-toggle full-width border" id="dropdown-default-light"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Run
+                </button>
+                <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
+                  style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                  <a class="dropdown-item" href="javascript:void(0)"><i class="si si-control-play mr-1"></i> Run
+                    Testcase</a>
+                  <a class="dropdown-item" href="javascript:void(0)"><i class="si si-control-play mr-1"></i> Rerun
+                    Testcase</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Rerun from
+                    Queue</a>
+                  <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Rerun from
+                    Queue and See</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

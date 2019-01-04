@@ -1,5 +1,5 @@
 # cerberus-angular
-Draft of a new possible Front end implementation for Cerberus
+Brand new Cerberus front-end implementation
 
 # deploy angular app
 
@@ -8,36 +8,39 @@ Draft of a new possible Front end implementation for Cerberus
 
 # connect it to your local cerberus
 Make sure to deploy the Angular app on a different port than your local Cerberus.
-- Include the following code (1) in each servlet that needs to be called (in Cerberus)
-- Also make sure to make the servlet public  by editing the web.xml (2) file (in Cerberus)
 
-> (1) to include at the end of each servlet (e.g. ReadTestCase.java)
-==> not necessary since 3.10 : just call ServletUtil.fixHeaders(response) in your servlet
+You will face CORS (Cross Origin Resource Sharing) issues because of the security rules of Cerberus.
 
-```java
-private void fixHeaders(HttpServletResponse response) {
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, OPTIONS, DELETE");
-        response.addHeader("Access-Control-Allow-Headers", "Content-Type");
-        response.addHeader("Access-Control-Max-Age", "86400");
-    }
-protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        fixHeaders(response);
-}
-```
-> then, call the fixHeaders function at the beginning of the servlet processRequest method, like so:
+To bypass it :
+- Necessary servlets needs to call the ServletUtil.fixHeaders method which add specific headers to its call.
+- Authentification constraint needs to be removed in `web.xml`.
+- A CORS plugin is needed in your web browser.
+
+All the necessary servlets have the fixHeaders method implemented. You just need to enable debug 
+
 ```java
 protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, CerberusException {
-    	fixHeaders(response);
-```
-> (2) to make the servlet public, find the servlet name under its `<web-resource-collection>` tag in `web.xml` and delete the `<url-pattern>` tag corresponding to it.
+throws ServletException, IOException, JSONException {
+            
+...
 
-```xml
-<web-resource-collection>
-  <web-resource-name>servlet</web-resource-name>
-  <description>servlet</description>
-  <url-pattern>/ReadTestCase</url-pattern>
-  ...
+// Calling Servlet Transversal Util.
+ServletUtil.servletStart(request);
+ServletUtil.fixHeaders(response);
 ```
-You may also need to allow CORS inside your browser, I am using this one with Chrome : https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi
+
+```java
+public static void fixHeaders(HttpServletResponse response) {
+        if (LOG.isDebugEnabled()) {
+	        response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, OPTIONS, DELETE");
+		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
+		response.addHeader("Access-Control-Max-Age", "86400");
+	}
+}
+
+```
+
+To bypass authentication constraints, just delete the current `web.xml` and rename the `web-angular.xml` to `web.xml`.
+
+I am using this plugin to allow CORS in my Chrome browser: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi and it works just fine!

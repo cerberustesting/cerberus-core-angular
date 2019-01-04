@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit {
     },
     {
       name: 'Campaigns',
-      link: '/dashboard',
+      link: '/campaigns',
       icon_class: 'si-paper-clip',
       expanded: false
     },
@@ -54,17 +54,17 @@ export class SidebarComponent implements OnInit {
       name: 'Run',
       icon_class: 'si-control-play',
       expanded: false,
-      link: '/dashboard'
+      link: '/run'
     },
     {
       name: 'Queue Management',
-      link: '/dashboard',
+      link: '/queue',
       icon_class: 'si-list',
       expanded: false
     },
     {
       name: 'Robots',
-      link: '/dashboard',
+      link: '/robots',
       icon_class: 'si-rocket',
       expanded: false
     }
@@ -73,7 +73,7 @@ export class SidebarComponent implements OnInit {
     {
       name: 'Executions List',
       icon_class: 'si-control-forward',
-      link: '/dashboard',
+      link: '/executions',
       expanded: false
     },
     {
@@ -87,24 +87,22 @@ export class SidebarComponent implements OnInit {
     {
       name: 'Applications',
       icon_class: 'si-screen-desktop',
-      link: '/dashboard',
       expanded: false,
       submenu: [{
         name: 'Application List',
-        link: '/dashboard'
+        link: '/applications'
       },
       {
         name: 'Application Object',
-        link: '/dashboard'
+        link: '/appobjects'
       },
       {
         name: 'Deployment Type',
-        link: '/dashboard'
+        link: '/deployment'
       }]
     },
     {
       name: 'Integration',
-      link: '/dashboard',
       icon_class: 'si-equalizer',
       expanded: false,
       submenu: [{

@@ -184,8 +184,12 @@
                                                         <input type="checkbox" class="custom-control-input" id="tcActive"
                                                             name="tcActive" [checked]="testcaseheader.tcActive === 'Y'"
                                                             (change)="testcaseheader.tcActive = $event.target.checked ? 'Y' : 'N'">
-                                                        <label class="custom-control-label" for="tcActive">Active <i
-                                                                class="fa fa-info-circle ml-0"></i></label>
+                                                        <label class="custom-control-label" for="tcActive">
+                                                            Active
+                                                            <i class="fa fa-info-circle ml-0 info" placement="top"
+                                                                ngbPopover="This field define if the test is active or not. A test case that is not active cannot be executed"
+                                                                popoverTitle="Global Activation" triggers="mouseenter:mouseleave"></i>
+                                                        </label>
                                                     </div>
                                                     <p></p>
                                                 </div>

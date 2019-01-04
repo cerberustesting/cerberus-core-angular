@@ -13,6 +13,7 @@ export class InvariantsService {
   conditionOperList: Array<IInvariant>;
   groupsList: Array<IInvariant>;
   actionsList: Array<IInvariant>;
+  controlsList: Array<IInvariant>;
   // public invariants
   countriesList: Array<IInvariant>;
   tcstatusList: Array<IInvariant>;
@@ -27,6 +28,7 @@ export class InvariantsService {
   observableConditionOperList = new BehaviorSubject<IInvariant[]>(this.conditionOperList);
   observableStepLoopList = new BehaviorSubject<IInvariant[]>(this.stepLoopList);
   observableActionsList = new BehaviorSubject<IInvariant[]>(this.actionsList);
+  observableControlsList = new BehaviorSubject<IInvariant[]>(this.controlsList);
 
   constructor(private http: HttpClient) { }
 
@@ -95,6 +97,14 @@ export class InvariantsService {
       .subscribe(response => {
         this.actionsList = response;
         this.observableActionsList.next(this.actionsList);
+      })
+  }
+
+  getControlsList() {
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=control')
+      .subscribe(response => {
+        this.controlsList = response;
+        this.observableControlsList.next(this.controlsList);
       })
   }
 

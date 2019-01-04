@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
-import { FormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +23,8 @@ import { ActionComponent } from './testcasescript/tc-script/action/action.compon
 import { ReportComponent } from './report/report.component';
 import { TagselectorComponent } from './report/tagselector/tagselector.component';
 import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
+import { ControlComponent } from './testcasescript/tc-script/control/control.component';
+import { ExecutionsperweekComponent } from './dashboard/graph/executionsperweek/executionsperweek.component';
 
 @NgModule({
   declarations: [
@@ -41,12 +45,15 @@ import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.co
     PagenotfoundComponent,
     ReportComponent,
     TagselectorComponent,
+    ControlComponent,
+    ExecutionsperweekComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbPopoverModule
   ],
   providers: [],
   bootstrap: [AppComponent]

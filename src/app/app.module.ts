@@ -18,6 +18,8 @@ import { LabelsComponent } from './labels/labels.component';
 import { AlertsComponent } from './headerbar/alerts/alerts.component';
 import { StepComponent } from './testcasescript/tc-script/step/step.component';
 import { ActionComponent } from './testcasescript/tc-script/action/action.component';
+import { ReportComponent } from './report/report.component';
+import { TagselectorComponent } from './report/tagselector/tagselector.component';
 import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
 
 @NgModule({
@@ -37,6 +39,8 @@ import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.co
     StepComponent,
     ActionComponent,
     PagenotfoundComponent,
+    ReportComponent,
+    TagselectorComponent,
   ],
   imports: [
     BrowserModule,

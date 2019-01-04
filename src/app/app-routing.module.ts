@@ -3,6 +3,7 @@ import { Routes, RouterModule, Route } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TestcasescriptComponent } from './testcasescript/testcasescript.component';
 import { LabelsComponent } from './labels/labels.component';
+import { ReportComponent } from './report/report.component';
 import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
 
 const routes: Route[] = [
@@ -11,8 +12,8 @@ const routes: Route[] = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'testcasescript', component: TestcasescriptComponent },
   { path: 'labels', component: LabelsComponent },
+  { path: 'report', component: ReportComponent },
   { path: 'pagenotfound', component: PagenotfoundComponent },
-  
   { path: '**', redirectTo: '/pagenotfound'}
 ];
 

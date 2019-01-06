@@ -88,7 +88,7 @@ $main-nav-link-icon-color:          theme-color("primary") !default;
 $main-nav-link-hover-bg:            lighten(theme-color("primary"), 52%) !default;
 $main-nav-submenu-bg:               lighten(theme-color("primary"), 56%) !default;
 
-$main-nav-link-icon-dark-color:     theme-color("primary-lighter") !default;
+$main-nav-link-icon-dark-color:     rgba($white, .45) !default;
 $main-nav-link-dark-hover-bg:       darken($sidebar-dark-bg, 10%) !default;
 $main-nav-submenu-dark-bg:          darken($sidebar-dark-bg, 5%) !default;
 

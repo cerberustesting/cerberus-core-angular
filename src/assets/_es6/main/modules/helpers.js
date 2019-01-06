@@ -6,7 +6,7 @@
  */
 
 // Import global dependencies
-import './../bootstrap.js';
+import './../bootstrap';
 
 // Import required modules
 import Tools from './tools';
@@ -49,7 +49,8 @@ export default class Helpers {
            'easy-pie-chart': () => this.easyPieChart(),
            maxlength: () => this.maxlength(),
            rangeslider: () => this.rangeslider(),
-           sparkline: () => this.sparkline()
+           sparkline: () => this.sparkline(),
+           validation: () => this.validation()
        };
 
        if (helpers instanceof Array) {
@@ -136,7 +137,7 @@ export default class Helpers {
     static coreBootstrapTabs() {
         jQuery('[data-toggle="tabs"]:not(.js-tabs-enabled)').add('.js-tabs:not(.js-tabs-enabled)').each((index, element) => {
             // Add .js-tabs-enabled class to tag it as activated and init it
-            jQuery(element).addClass('js-tabs-enabled').find('a').on('click.pixelcave.helpers.core', (e) => {
+            jQuery(element).addClass('js-tabs-enabled').find('a').on('click.pixelcave.helpers.core', e => {
                 e.preventDefault();
                 jQuery(e.currentTarget).tab('show');
             });
@@ -159,7 +160,7 @@ export default class Helpers {
             let el = jQuery(element);
 
             // Add .js-custom-file-input-enabled class to tag it as activated
-            el.addClass('js-custom-file-input-enabled').on('change', (e) => {
+            el.addClass('js-custom-file-input-enabled').on('change', e => {
                 let fileName = (e.target.files.length > 1) ? e.target.files.length + ' ' + (el.data('lang-files') || 'Files') : e.target.files[0].name;
 
                 el.next('.custom-file-label').css('overflow-x', 'hidden').html(fileName);
@@ -184,7 +185,7 @@ export default class Helpers {
     static coreToggleClass() {
         jQuery('[data-toggle="class-toggle"]:not(.js-class-toggle-enabled)')
                 .add('.js-class-toggle:not(.js-class-toggle-enabled)')
-                .on('click.pixelcave.helpers.core', (e) => {
+                .on('click.pixelcave.helpers.core', e => {
             let el = jQuery(e.currentTarget);
 
             // Add .js-class-toggle-enabled class to tag it as activated and then blur it
@@ -207,7 +208,7 @@ export default class Helpers {
      *
      */
     static coreScrollTo() {
-        jQuery('[data-toggle="scroll-to"]:not(.js-scroll-to-enabled)').on('click.pixelcave.helpers.core', (e) => {
+        jQuery('[data-toggle="scroll-to"]:not(.js-scroll-to-enabled)').on('click.pixelcave.helpers.core', e => {
             e.stopPropagation();
 
             // Set variables
@@ -301,7 +302,7 @@ export default class Helpers {
                     overflow: 'hidden',
                     position: 'relative',
                     'z-index': 1
-                }).on('click.pixelcave.helpers.core', (e) => {
+                }).on('click.pixelcave.helpers.core', e => {
                     let cssClass = 'click-ripple', ripple, d, x, y;
 
                     // If the ripple element doesn't exist in this element, add it..
@@ -383,7 +384,7 @@ export default class Helpers {
             table.addClass('js-table-sections-enabled');
 
             // When a row is clicked in tbody.js-table-sections-header
-            jQuery('.js-table-sections-header > tr', table).on('click.pixelcave.helpers', (e) => {
+            jQuery('.js-table-sections-header > tr', table).on('click.pixelcave.helpers', e => {
                 if (e.target.type !== 'checkbox'
                         && e.target.type !== 'button'
                         && e.target.tagName.toLowerCase() !== 'a'
@@ -423,7 +424,7 @@ export default class Helpers {
             table.addClass('js-table-checkable-enabled');
 
             // When a checkbox is clicked in thead
-            jQuery('thead input:checkbox', table).on('click.pixelcave.helpers', (e) => {
+            jQuery('thead input:checkbox', table).on('click.pixelcave.helpers', e => {
                 let checkedStatus = jQuery(e.currentTarget).prop('checked');
 
                 // Check or uncheck all checkboxes in tbody
@@ -436,14 +437,23 @@ export default class Helpers {
             });
 
             // When a checkbox is clicked in tbody
-            jQuery('tbody input:checkbox, tbody input + label', table).on('click.pixelcave.helpers', (e) => {
+            jQuery('tbody input:checkbox, tbody input + label', table).on('click.pixelcave.helpers', e => {
                 let checkbox = jQuery(e.currentTarget);
+                let checkedStatus  = checkbox.prop('checked');
+
+                if (!checkedStatus) {
+                    jQuery('thead input:checkbox', table).prop('checked', false);
+                } else {
+                    if (jQuery('tbody input:checkbox:checked', table).length === jQuery('tbody input:checkbox', table).length) {
+                        jQuery('thead input:checkbox', table).prop('checked', true);
+                    }
+                }
 
                 this.tableToolscheckRow(checkbox, checkbox.prop('checked'));
             });
 
             // When a row is clicked in tbody
-            jQuery('tbody > tr', table).on('click.pixelcave.helpers', (e) => {
+            jQuery('tbody > tr', table).on('click.pixelcave.helpers', e => {
                 if (e.target.type !== 'checkbox'
                         && e.target.type !== 'button'
                         && e.target.tagName.toLowerCase() !== 'a'
@@ -456,6 +466,14 @@ export default class Helpers {
 
                     checkbox.prop('checked', !checkedStatus).change();
                     this.tableToolscheckRow(checkbox, !checkedStatus);
+
+                    if (checkedStatus) {
+                        jQuery('thead input:checkbox', table).prop('checked', false);
+                    } else {
+                        if (jQuery('tbody input:checkbox:checked', table).length === jQuery('tbody input:checkbox', table).length) {
+                            jQuery('thead input:checkbox', table).prop('checked', true);
+                        }
+                    }
                 }
             });
         });
@@ -759,7 +777,7 @@ export default class Helpers {
             // Init notifications (with .js-notify class)
             jQuery('.js-notify:not(.js-notify-enabled)').each((index, element) => {
                 // Add .js-notify-enabled class to tag it as activated and init it
-                jQuery(element).addClass('js-notify-enabled').on('click.pixelcave.helpers', (e) => {
+                jQuery(element).addClass('js-notify-enabled').on('click.pixelcave.helpers', e => {
                     let el = jQuery(e.currentTarget);
 
                     // Create notification
@@ -999,6 +1017,35 @@ export default class Helpers {
                 jQuery(element).sparkline(el.data('points') || [0], options);
             } else {
                 console.log('[jQuery Sparkline JS Helper] Please add a correct type (line, bar, pie or tristate) in all your elements with \'js-sparkline\' class.')
+            }
+        });
+    }
+
+    /*
+     * jQuery Validation, for more examples you can check out https://github.com/jzaefferer/jquery-validation
+     *
+     * Helpers.run('validation');
+     *
+     * Example usage:
+     *
+     * By calling the helper, you set up the default options that will be used for jQuery Validation
+     *
+     */
+    static validation() {
+        // Set default options for jQuery Validation plugin
+        jQuery.validator.setDefaults({
+            errorClass: 'invalid-feedback animated fadeIn',
+            errorElement: 'div',
+            errorPlacement: (error, el) => {
+                jQuery(el).addClass('is-invalid');
+                jQuery(el).parents('.form-group').append(error);
+            },
+            highlight: el => {
+                jQuery(el).parents('.form-group').find('.is-invalid').removeClass('is-invalid').addClass('is-invalid');
+            },
+            success: el => {
+                jQuery(el).parents('.form-group').find('.is-invalid').removeClass('is-invalid');
+                jQuery(el).remove();
             }
         });
     }

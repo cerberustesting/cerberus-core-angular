@@ -6,7 +6,7 @@
  */
 
 // Import global dependencies
-import './../bootstrap.js';
+import './../bootstrap';
 
 // Tools
 export default class Tools {

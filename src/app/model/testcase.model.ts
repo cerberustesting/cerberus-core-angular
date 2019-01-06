@@ -58,29 +58,29 @@ export interface ITestCase {
 }
 
 export interface IStep {
+    objType: string;
+    useStep: string;
     isStepInUseByOtherTestCase: boolean;
-    conditionVal2: string;
     useStepTestCase: string;
-    test: string;
-    conditionOper: string;
-    conditionVal1: string;
-    usrModif: string;
     inLibrary: string;
     useStepTest: string;
+    initialStep: number;
+    useStepStep: number;
+    conditionOper: string;
+    conditionVal1: string;
+    conditionVal2: string;
+    test: string;
+    testCase: string;
+    usrModif: string;
+    usrCreated: string;
     description: string;
     actionList: [IAction];
     sort: number;
-    usrCreated: string;
-    forceExe: string;
-    dateCreated: string;
-    initialStep: number;
-    loop: string;
     step: number;
+    dateCreated: string;
     dateModif: string;
-    useStepStep: number;
-    objType: string;
-    useStep: string;
-    testCase: string;
+    forceExe: string;
+    loop: string;
 }
 
 export interface IAction {

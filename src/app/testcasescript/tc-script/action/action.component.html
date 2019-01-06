@@ -1,4 +1,5 @@
-<div class="block block-bordered action mb-0" [id]="'action' + action.sort" [ngClass]="action.toDelete ? 'toDelete' : ''">
+<div class="block block-bordered action mb-0" [id]="'action' + action.sort" [ngClass]="action.toDelete ? 'toDelete' : ''"
+  (mouseenter)="mouseEnter() " (mouseleave)="mouseLeave()">
   <div class="block-header block-header-default" [ngClass]="action.toDelete ? 'toDelete' : ''">
     <div class="input-group">
       <div class="input-group-prepend">
@@ -123,14 +124,14 @@
       </div>
     </div>
   </div>
-</div>
-<div class="block-content block-content-full block-content-sm text-right">
-  <button type="button" class="btn btn-sm btn-success mr-1" (click)="addControl()">
-    <i class="fa fa-plus"></i> Control
-  </button>
-  <button type="button" class="btn btn-sm btn-primary ml-1">
-    <i class="fa fa-plus"></i> Action
-  </button>
+  <div *ngIf="showedActionFooter" class="block-content block-content-full block-content-sm text-right">
+    <button type="button" class="btn btn-sm btn-success mr-1" (click)="addControl()">
+      <i class="fa fa-plus"></i> Control
+    </button>
+    <button type="button" class="btn btn-sm btn-primary ml-1">
+      <i class="fa fa-plus"></i> Action
+    </button>
+  </div>
 </div>
 <!-- TODO : add a pipe to order by sequence -->
 <app-control *ngFor="let control of action.controlList" [control]="control"></app-control>

@@ -1,5 +1,5 @@
-<div class="block block-bordered action mb-0" [id]="'action' + action.sort">
-  <div class="block-header block-header-default">
+<div class="block block-bordered action mb-0" [id]="'action' + action.sort" [ngClass]="action.toDelete ? 'toDelete' : ''">
+  <div class="block-header block-header-default" [ngClass]="action.toDelete ? 'toDelete' : ''">
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text">
@@ -7,15 +7,22 @@
         </span>
       </div>
       <input type="text" [(ngModel)]="action.description" class="form-control" name="test" placeholder="Action Description">
+      <div *ngIf="action.conditionOper != 'always'" class="input-group-append">
+        <button type="button" class="btn btn-sm btn-secondary" [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution has been conditioned'" placement="bottom">
+          <i class="fa fa-fw" [ngClass]="action.conditionOper == 'never' ? 'fa-times' : 'fa-question-circle' "></i>
+        </button>
+      </div>
+      <div *ngIf="action.forceExeStatus == 'PE'" class="input-group-append" ngbPopover="This action execution has been forced" placement="bottom">
+        <button type="button" class="btn btn-sm btn-dark">
+          <i class="fa fa-fw fa-level-down-alt"></i>
+        </button>
+      </div>
     </div>
     <div class="block-options pl-0">
       <button type="button" class="btn btn-primary mr-1 ml-1" (click)="showedActionHeader = !showedActionHeader">
         <i class="fa fa-fw" [ngClass]="showedActionHeader ? 'fa-angle-up' : 'fa-angle-down'"></i>
       </button>
-      <button type="button" class="btn mr-1" [ngClass]="action.forceExeStatus == 'PE' ? 'btn-dark' : ''" (click)="action.forceExeStatus == 'PE' ? action.forceExeStatus = '' : action.forceExeStatus = 'PE'">
-        <i class="fa fa-fw fa-level-down-alt"></i>
-      </button>
-      <button type="button" class="btn btn-danger mr-1">
+      <button type="button" class="btn btn-danger mr-1" (click)="action.toDelete = !action.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>
       </button>
     </div>
@@ -62,6 +69,17 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="custom-control custom-switch custom-control-inline">
+              <input type="checkbox" class="custom-control-input" [id]="'action'+action.sort+'forceExeStatus'" [name]="'action'+action.sort+'forceExeStatus'"
+                [checked]="action.forceExeStatus == 'PE'" (change)="action.forceExeStatus = $event.target.checked ? 'PE' : ''">
+              <label class="custom-control-label" [for]="'action'+action.sort+'forceExeStatus'">Force Execution</label>
+            </div>
+          </div>
+        </div>
+      </div>
       <h4 class="content-heading" style="padding-top: 0px;"></h4>
     </div>
     <div class="row">
@@ -83,11 +101,15 @@
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text">{{
-                  findActionCrossReference(action.action).value1 }}</span>
+                <span class="input-group-text">
+                  <i *ngIf="findActionCrossReference(action.action).info_title1 && findActionCrossReference(action.action).description1"
+                    class="fa fa-fw fa-question-circle info mr-1" [ngbPopover]="findActionCrossReference(action.action).description1"
+                    [popoverTitle]="findActionCrossReference(action.action).info_title1" placement="top"></i>
+                  {{ findActionCrossReference(action.action).value1 }}
+                </span>
               </div>
               <input type="text" class="form-control" [id]="'action'+action.sort+'value1'" [name]="'action'+action.sort+'value1'"
-                [(ngModel)]="action.conditionVal1">
+                [(ngModel)]="action.value1">
             </div>
           </div>
         </div>
@@ -99,22 +121,21 @@
                   findActionCrossReference(action.action).value2 }}</span>
               </div>
               <input type="text" class="form-control" [id]="'action'+action.sort+'value2'" [name]="'action'+action.sort+'value2'"
-                [(ngModel)]="action.conditionVal2">
+                [(ngModel)]="action.value2">
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="block-content block-content-full block-content-sm text-right">
-    <div *ngIf="action.conditionOper != 'always'" class="btn btn-sm mr-1"><i class="fa fa-fw fa-question mr-1"></i>Condition</div>
-    <button type="button" class="btn btn-sm btn-success mr-1" (click)="addControl()">
-      <i class="fa fa-plus"></i> Control
-    </button>
-    <button type="button" class="btn btn-sm btn-primary ml-1">
-      <i class="fa fa-plus"></i> Action
-    </button>
-  </div>
+</div>
+<div class="block-content block-content-full block-content-sm text-right">
+  <button type="button" class="btn btn-sm btn-success mr-1" (click)="addControl()">
+    <i class="fa fa-plus"></i> Control
+  </button>
+  <button type="button" class="btn btn-sm btn-primary ml-1">
+    <i class="fa fa-plus"></i> Action
+  </button>
 </div>
 <!-- TODO : add a pipe to order by sequence -->
 <app-control *ngFor="let control of action.controlList" [control]="control"></app-control>

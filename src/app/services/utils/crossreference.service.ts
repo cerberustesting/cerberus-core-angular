@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
-import { CrossReference } from 'src/app/model/crossreference.model';
+
+export class CrossReference {
+  reference: string;
+  value1: string;
+  value2: string;
+  description1?: string;
+  description2?: string;
+  info_title1?: string;
+  info_title2?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +37,7 @@ export class CrossreferenceService {
   ];
   public crossReference_ActionValue: Array<CrossReference> = [
     { reference: "Unknown", value1: null, value2: null },
-    { reference: "click", value1: "Element path", value2: null },
+    { reference: "click", value1: "Element", value2: null, info_title1: "Element Path", description1: "Path to the element that you want to click in. You can use xPath or predefined selector such as id or data-cerberus." },
     { reference: "mouseLeftButtonPress", value1: "Element path", value2: null },
     { reference: "mouseLeftButtonRelease", value1: "Element path", value2: null },
     { reference: "doubleClick", value1: "Element path", value2: null },

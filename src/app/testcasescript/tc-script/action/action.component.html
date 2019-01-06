@@ -2,7 +2,7 @@
   <div class="block-header block-header-default" [ngClass]="action.toDelete ? 'toDelete' : ''">
     <div class="input-group">
       <div class="input-group-prepend">
-        <span class="input-group-text"> {{ action.sort }} </span>
+        <span class="input-group-text actionHeaderSort"> {{ action.sort }} </span>
       </div>
       <input type="text" [(ngModel)]="action.description" class="form-control" name="test" placeholder="Action Description">
     </div>

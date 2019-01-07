@@ -72,7 +72,7 @@ export class TestService {
     if (test == null || testcase == null) {
       this.testcase = null;
     } else {
-      this.http.get<ITestCase>(AppSettings.API_endpoint + 'ReadTestCase?test=' + test + '&testCase=' + testcase + '&withStep=true')
+      this.http.get<ITestCase>(AppSettings.API_endpoint + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withStep=true')
         .subscribe((response) => {
           this.testcase = response;
           this.observableTestCase.next(this.testcase);

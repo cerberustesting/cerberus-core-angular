@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { AlertService, Alert } from './services/utils/alert.service';
 
 export class AppSettings {
-  public static API_endpoint='http://localhost:8080/Cerberus/';
+  // URL of the Cerberus back-end application
+  // e.g: http://localhost:8080/Cerberus
+  public static API_endpoint: string ='http://localhost:8080/Cerberus';  
 }
 
 @Component({

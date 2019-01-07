@@ -37,14 +37,14 @@ export class InvariantsService {
   constructor(private http: HttpClient) { }
 
   getCountries() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=country')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=country')
       .subscribe(response => {
         this.countriesList = response;
         this.observableCountries.next(this.countriesList);
       })
   }
     getSystems() {
-        this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=system')
+        this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=system')
             .subscribe(response => {
                 this.systemsList = response;
                 this.observableSystems.next(this.systemsList);
@@ -66,7 +66,7 @@ export class InvariantsService {
     }
 
   getTcStatus() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=tcStatus')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=tcStatus')
       .subscribe(response => {
         this.tcstatusList = response;
         this.observableTcStatus.next(this.tcstatusList);
@@ -74,7 +74,7 @@ export class InvariantsService {
   }
 
   getPriorities() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=priority')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=priority')
       .subscribe(response => {
         this.prioritiesList = response;
         // DIRTY : add a new field in Invariant model to have the value in Integer
@@ -86,7 +86,7 @@ export class InvariantsService {
   }
 
   getOriginsList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=origin')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=origin')
       .subscribe(response => {
         this.originsList = response;
         this.observableOriginsList.next(this.originsList);
@@ -94,7 +94,7 @@ export class InvariantsService {
   }
 
   getGroupList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=group')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=group')
       .subscribe(response => {
         this.groupsList = response;
         this.observableGroupsList.next(this.groupsList);
@@ -102,7 +102,7 @@ export class InvariantsService {
   }
 
   getStepConditionOperList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=stepconditionOper')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=stepconditionOper')
       .subscribe(response => {
         this.conditionOperList = response;
         this.observableConditionOperList.next(this.conditionOperList);
@@ -110,7 +110,7 @@ export class InvariantsService {
   }
 
   getStepLoopList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=steploop')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=steploop')
       .subscribe(response => {
         this.stepLoopList = response;
         this.observableStepLoopList.next(this.stepLoopList);
@@ -118,7 +118,7 @@ export class InvariantsService {
   }
 
   getActionList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=action')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=action')
       .subscribe(response => {
         this.actionsList = response;
         this.observableActionsList.next(this.actionsList);
@@ -126,7 +126,7 @@ export class InvariantsService {
   }
 
   getControlsList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=control')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=control')
       .subscribe(response => {
         this.controlsList = response;
         this.observableControlsList.next(this.controlsList);

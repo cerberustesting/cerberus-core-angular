@@ -29,7 +29,7 @@ export class SystemService {
   constructor(private http: HttpClient) { }
 
   getSprintsFromSystem(system: string) {
-    this.http.get<IBuildRevisionInvariant[]>(AppSettings.API_endpoint + 'ReadBuildRevisionInvariant?system=' + system + '&level=1')
+    this.http.get<IBuildRevisionInvariant[]>(AppSettings.API_endpoint + '/ReadBuildRevisionInvariant?system=' + system + '&level=1')
       .subscribe(response => {
         this.sprints = response;
         // @ts-ignore
@@ -39,7 +39,7 @@ export class SystemService {
   }
 
   getRevFromSystem(system: string) {
-    this.http.get<IBuildRevisionInvariant[]>(AppSettings.API_endpoint + 'ReadBuildRevisionInvariant?system=' + system + '&level=2')
+    this.http.get<IBuildRevisionInvariant[]>(AppSettings.API_endpoint + '/ReadBuildRevisionInvariant?system=' + system + '&level=2')
       .subscribe(response => {
         this.revs = response;
         // @ts-ignore
@@ -49,7 +49,7 @@ export class SystemService {
   }
 
   getLabelsFromSystem(system: string) {
-    this.http.get<ILabel[]>(AppSettings.API_endpoint + 'ReadLabel?system=' + system)
+    this.http.get<ILabel[]>(AppSettings.API_endpoint + '/ReadLabel?system=' + system)
       .subscribe(response => {
         this.labels = response;
         // @ts-ignore

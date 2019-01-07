@@ -791,8 +791,25 @@
         background-color: transparent;
     }
 
+    // Nav Main Horizontal
+    @include media-breakpoint-up(lg) {
+        .nav-main-horizontal {
+            // Menu variations
+            &.nav-main-hover {
+                .nav-main-item:hover {
+                    > .nav-main-link-submenu {
+                        color: $black;
+                        background-color: $main-nav-link-hover-bg;
+                    }
+                }
+            }
+        }
+    }
+
     // Dark Sidebar Variation
-    .sidebar-dark #sidebar {
+    .nav-main-dark,
+    .sidebar-dark #sidebar,
+    .page-header-dark #page-header {
         // Headings
         .nav-main-heading {
             color: darken($body-color-light, 20%);
@@ -842,6 +859,27 @@
 
         .nav-main-submenu .nav-main-item.open .nav-main-link {
             background-color: transparent;
+        }
+    }
+
+    @include media-breakpoint-up(lg) {
+        .nav-main-dark.nav-main-horizontal.nav-main-hover,
+        .sidebar-dark #sidebar .nav-main-horizontal.nav-main-hover,
+        .page-header-dark #page-header .nav-main-horizontal.nav-main-hover {
+            .nav-main-item:hover {
+                > .nav-main-link-submenu {
+                    color: $white;
+                    background-color: $main-nav-link-dark-hover-bg;
+                }
+
+                > .nav-main-submenu {
+                    background-color: $main-nav-submenu-dark-bg;
+                }
+            }
+
+            .nav-main-submenu .nav-main-item:hover .nav-main-link {
+                background-color: transparent;
+            }
         }
     }
 

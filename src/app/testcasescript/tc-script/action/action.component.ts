@@ -15,6 +15,7 @@ export class ActionComponent implements OnInit {
 
   @Input('action') action: IAction;
   showedActionHeader: boolean;
+  showedActionFooter: boolean;
   testcase: ITestCase;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;
@@ -31,6 +32,7 @@ export class ActionComponent implements OnInit {
 
   ngOnInit() {
     this.showedActionHeader = false;
+    this.showedActionFooter = false;
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
@@ -53,4 +55,6 @@ export class ActionComponent implements OnInit {
   hasConditionCrossReference(condition: string): boolean { return this.CrossReferenceService.hasConditionCrossReference(condition); }
   findConditionCrossReference(condition: string): CrossReference { return this.CrossReferenceService.findConditionCrossReference(condition); }
 
+  mouseEnter() { this.showedActionFooter = true; }
+  mouseLeave() { this.showedActionFooter = false; }
 }

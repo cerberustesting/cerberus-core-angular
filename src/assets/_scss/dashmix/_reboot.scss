@@ -53,6 +53,10 @@ a {
             transform: scale(1);
         }
     }
+
+    &:focus {
+        outline-style: none !important;
+    }
 }
 
 // Paragraphs

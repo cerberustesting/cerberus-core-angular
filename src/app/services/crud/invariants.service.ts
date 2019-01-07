@@ -19,9 +19,13 @@ export class InvariantsService {
   tcstatusList: Array<IInvariant>;
   prioritiesList: Array<IInvariant>;
   originsList: Array<IInvariant>;
+  systemsList: Array<IInvariant>;
+  systemsSelected = [];
   // observables
   observableCountries = new BehaviorSubject<IInvariant[]>(this.countriesList);
   observableTcStatus = new BehaviorSubject<IInvariant[]>(this.tcstatusList);
+  observableSystems = new BehaviorSubject<IInvariant[]>(this.systemsList);
+  observableSystemsSelected = new BehaviorSubject<any[]>(this.systemsSelected);
   observablePriorities = new BehaviorSubject<IInvariant[]>(this.prioritiesList);
   observableOriginsList = new BehaviorSubject<IInvariant[]>(this.originsList);
   observableGroupsList = new BehaviorSubject<IInvariant[]>(this.groupsList);
@@ -39,6 +43,27 @@ export class InvariantsService {
         this.observableCountries.next(this.countriesList);
       })
   }
+    getSystems() {
+        this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=system')
+            .subscribe(response => {
+                this.systemsList = response;
+                this.observableSystems.next(this.systemsList);
+            })
+    }
+    selectSystem(system) {
+        // @ts-ignore
+        if (!this.systemsSelected.includes(system)) {
+            this.systemsSelected.push(system);
+            console.log('new badge is : ' + system );
+        } else { console.log('System already selected : ' + system ); }
+    }
+    removeSystem(badge) {
+        if (this.systemsSelected.indexOf(badge) != null) {
+            console.log('deleting badge : ' + badge );
+            this.systemsSelected.splice(this.systemsSelected.indexOf(badge),1);
+        }
+        console.log(this.systemsSelected);
+    }
 
   getTcStatus() {
     this.http.get<IInvariant[]>(AppSettings.API_endpoint + 'FindInvariantByID?idName=tcStatus')

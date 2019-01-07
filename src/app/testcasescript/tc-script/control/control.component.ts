@@ -15,6 +15,7 @@ export class ControlComponent implements OnInit {
 
   @Input('control') control: IControl;
   showedControlHeader: boolean;
+  showedControlFooter: boolean;
   testcase: ITestCase;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;
@@ -31,6 +32,7 @@ export class ControlComponent implements OnInit {
 
   ngOnInit() {
     this.showedControlHeader = false;
+    this.showedControlFooter = false;
     this.control.toDelete = false;
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
@@ -41,7 +43,7 @@ export class ControlComponent implements OnInit {
 
   addControl() {
     // WORK IN PROGRESS
-    console.log(this.testcase.stepList[this.control.step-1].actionList[(this.control.sequence)-1].controlList.length);
+    console.log(this.testcase.stepList[this.control.step - 1].actionList[(this.control.sequence) - 1].controlList.length);
     /*
     var newControl = new Control(
       this.testcase.info.test,
@@ -59,6 +61,9 @@ export class ControlComponent implements OnInit {
   findConditionCrossReference(condition: string): CrossReference { return this.CrossReferenceService.findConditionCrossReference(condition); }
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasControlCrossReference(control); }
   findControlCrossReference(control: string): CrossReference { return this.CrossReferenceService.findControlCrossReference(control); }
+
+  mouseEnter() { this.showedControlFooter = true; }
+  mouseLeave() { this.showedControlFooter = false; }
 
   debug() { console.log(this.control); }
 }

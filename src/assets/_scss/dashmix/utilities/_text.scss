@@ -36,9 +36,11 @@
 
 @include text-emphasis-variant('.text-muted', $text-muted);
 @include text-emphasis-variant('.text-white', $white);
-@include text-emphasis-variant('.text-white-50', rgba($white,.50));
+@include text-emphasis-variant('.text-white-25', rgba($white,.25));
+@include text-emphasis-variant('.text-white-50', rgba($white,.5));
 @include text-emphasis-variant('.text-white-75', rgba($white,.75));
 @include text-emphasis-variant('.text-black', $black);
+@include text-emphasis-variant('.text-black-25', rgba($black,.25));
 @include text-emphasis-variant('.text-black-50', rgba($black,.5));
 @include text-emphasis-variant('.text-black-75', rgba($black,.75));
 
@@ -91,9 +93,30 @@
 @include text-emphasis-variant('.text-xsmooth-light', $theme-xsmooth-light);
 @include text-emphasis-variant('.text-xsmooth-lighter', $theme-xsmooth-lighter);
 
-// xinspire Color Theme
+// xInspire Color Theme
 @include text-emphasis-variant('.text-xinspire', $theme-xinspire-primary);
 @include text-emphasis-variant('.text-xinspire-dark', $theme-xinspire-dark);
 @include text-emphasis-variant('.text-xinspire-darker', $theme-xinspire-darker);
 @include text-emphasis-variant('.text-xinspire-light', $theme-xinspire-light);
 @include text-emphasis-variant('.text-xinspire-lighter', $theme-xinspire-lighter);
+
+// xDream Color Theme
+@include text-emphasis-variant('.text-xdream', $theme-xdream-primary);
+@include text-emphasis-variant('.text-xdream-dark', $theme-xdream-dark);
+@include text-emphasis-variant('.text-xdream-darker', $theme-xdream-darker);
+@include text-emphasis-variant('.text-xdream-light', $theme-xdream-light);
+@include text-emphasis-variant('.text-xdream-lighter', $theme-xdream-lighter);
+
+// xPro Color Theme
+@include text-emphasis-variant('.text-xpro', $theme-xpro-primary);
+@include text-emphasis-variant('.text-xpro-dark', $theme-xpro-dark);
+@include text-emphasis-variant('.text-xpro-darker', $theme-xpro-darker);
+@include text-emphasis-variant('.text-xpro-light', $theme-xpro-light);
+@include text-emphasis-variant('.text-xpro-lighter', $theme-xpro-lighter);
+
+// xPlay Color Theme
+@include text-emphasis-variant('.text-xplay', $theme-xplay-primary);
+@include text-emphasis-variant('.text-xplay-dark', $theme-xplay-dark);
+@include text-emphasis-variant('.text-xplay-darker', $theme-xplay-darker);
+@include text-emphasis-variant('.text-xplay-light', $theme-xplay-light);
+@include text-emphasis-variant('.text-xplay-lighter', $theme-xplay-lighter);

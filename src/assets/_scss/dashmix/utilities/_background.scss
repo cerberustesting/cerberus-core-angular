@@ -60,6 +60,11 @@
 @include bg-variant('.bg-info-light', theme-color("info-light"));
 @include bg-variant('.bg-danger-light', theme-color("danger-light"));
 
+@include bg-variant('.bg-success-lighter', lighten(theme-color("success-light"), 15%));
+@include bg-variant('.bg-warning-lighter', lighten(theme-color("warning-light"), 15%));
+@include bg-variant('.bg-info-lighter', lighten(theme-color("info-light"), 15%));
+@include bg-variant('.bg-danger-lighter', lighten(theme-color("danger-light"), 15%));
+
 @include bg-variant('.bg-success-op', rgba(theme-color("success-light"), .95));
 @include bg-variant('.bg-warning-op', rgba(theme-color("warning-light"), .95));
 @include bg-variant('.bg-info-op', rgba(theme-color("info-light"), .95));
@@ -166,3 +171,33 @@
 @include bg-variant('.bg-xinspire-light', $theme-xinspire-light);
 @include bg-variant('.bg-xinspire-lighter', $theme-xinspire-lighter);
 @include bg-gradient-variant-linear('.bg-gd-xinspire', 135deg, $theme-xinspire-primary, lighten($theme-xinspire-primary, 15%));
+
+// xDream Color Theme
+@include bg-variant('.bg-xdream', $theme-xdream-primary);
+@include bg-variant('.bg-xdream-op', rgba($theme-xdream-primary, .75));
+@include bg-variant('.bg-xdream-dark', $theme-xdream-dark);
+@include bg-variant('.bg-xdream-dark-op', rgba($theme-xdream-dark, .8));
+@include bg-variant('.bg-xdream-darker', $theme-xdream-darker);
+@include bg-variant('.bg-xdream-light', $theme-xdream-light);
+@include bg-variant('.bg-xdream-lighter', $theme-xdream-lighter);
+@include bg-gradient-variant-linear('.bg-gd-xdream', 135deg, $theme-xdream-primary, lighten($theme-xdream-primary, 15%));
+
+// xPro Color Theme
+@include bg-variant('.bg-xpro', $theme-xpro-primary);
+@include bg-variant('.bg-xpro-op', rgba($theme-xpro-primary, .75));
+@include bg-variant('.bg-xpro-dark', $theme-xpro-dark);
+@include bg-variant('.bg-xpro-dark-op', rgba($theme-xpro-dark, .8));
+@include bg-variant('.bg-xpro-darker', $theme-xpro-darker);
+@include bg-variant('.bg-xpro-light', $theme-xpro-light);
+@include bg-variant('.bg-xpro-lighter', $theme-xpro-lighter);
+@include bg-gradient-variant-linear('.bg-gd-xpro', 135deg, $theme-xpro-primary, lighten($theme-xpro-primary, 15%));
+
+// xPlay Color Theme
+@include bg-variant('.bg-xplay', $theme-xplay-primary);
+@include bg-variant('.bg-xplay-op', rgba($theme-xplay-primary, .75));
+@include bg-variant('.bg-xplay-dark', $theme-xplay-dark);
+@include bg-variant('.bg-xplay-dark-op', rgba($theme-xplay-dark, .8));
+@include bg-variant('.bg-xplay-darker', $theme-xplay-darker);
+@include bg-variant('.bg-xplay-light', $theme-xplay-light);
+@include bg-variant('.bg-xplay-lighter', $theme-xplay-lighter);
+@include bg-gradient-variant-linear('.bg-gd-xplay', 135deg, $theme-xplay-primary, lighten($theme-xplay-primary, 15%));

@@ -9,20 +9,40 @@
       <input type="text" [(ngModel)]="step.description" class="form-control" id="activeStepDescription" name="activeStepDescription"
         placeholder="Step Description">
     </div>
-    <button type="button" class="btn btn-primary mr-1 ml-1" (click)="showedStepHeader = !showedStepHeader">
-      <i class="fa fa-fw" [ngClass]="showedStepHeader ? 'fa-angle-up' : 'fa-angle-down'"></i>
-    </button>
-    <button type="button" class="btn mr-1" [ngClass]="step.forceExe === 'Y' ? 'btn-dark' : ''" (click)="step.forceExe == 'Y' ? step.forceExe = 'N' : step.forceExe = 'Y'">
-      <i class="fa fa-fw fa-level-down-alt"></i>
-    </button>
-    <button type="button" class="btn btn-danger mr-1">
-      <i class="far fa-fw fa-trash-alt"></i>
-    </button>
+    <div class="block-options">
+      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This step execution is looped">
+        <i class="far fa-fw fa-bell"></i>
+      </button>
+      <button *ngIf="step.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
+        [ngbPopover]="step.conditionOper == 'never' ? 'This step is disabled' : 'This step execution is conditioned'">
+        <i class="far fa-fw" [ngClass]="step.conditionOper == 'never' ? 'fa-times-circle' : 'fa-question-circle' "></i>
+      </button>
+      <button *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options" ngbPopover="This step execution is forced">
+        <i class="far fa-fw fa-arrow-alt-circle-down"></i>
+      </button>
+      <button type="button" class="btn-block-option" (click)="showedStepHeader = !showedStepHeader">
+        <i class="far fa-fw" [ngClass]="showedStepHeader ? 'fa-minus-square' : 'fa-plus-square'"></i>
+      </button>
+      <button type="button" class="btn-block-option">
+        <i class="far fa-fw fa-trash-alt"></i>
+      </button>
+    </div>
   </div>
   <div class="block-content">
     <div id="stepHeader" *ngIf="showedStepHeader">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <div class="custom-control custom-block custom-control-info push">
+            <input type="checkbox" class="custom-control-input" id="currentStepforceExeStatus" name="currentStepforceExeStatus"
+              [checked]="step.forceExe == 'Y'" (change)="step.forceExe = $event.target.checked ? 'Y' : 'N'">
+            <label class="custom-control-label" for="currentStepforceExeStatus">
+              <span class="d-block text-center"> Force Execution </span>
+            </label>
+            <span class="custom-block-indicator"> <i class="fa fa-check"></i> </span>
+          </div>
+        </div>
+        <div class="col-md-4">
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -34,7 +54,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-prepend">

@@ -1,21 +1,25 @@
-<div class="block block-bordered action mb-0" [id]="'action' + action.sort">
-  <div class="block-header block-header-default">
+<div class="block block-bordered action mb-0" [id]="'action' + action.sort" [ngClass]="action.toDelete ? 'toDelete' : ''"
+  (mouseenter)="mouseEnter() " (mouseleave)="mouseLeave()">
+  <div class="block-header block-header-default" [ngClass]="action.toDelete ? 'toDelete' : ''">
     <div class="input-group">
       <div class="input-group-prepend">
-        <span class="input-group-text">
-          {{ action.sort }}
-        </span>
+        <span class="input-group-text actionHeaderSort"> {{ action.sort }} </span>
       </div>
       <input type="text" [(ngModel)]="action.description" class="form-control" name="test" placeholder="Action Description">
     </div>
-    <div class="block-options pl-0">
-      <button type="button" class="btn btn-primary mr-1 ml-1" (click)="showedActionHeader = !showedActionHeader">
-        <i class="fa fa-fw" [ngClass]="showedActionHeader ? 'fa-angle-up' : 'fa-angle-down'"></i>
+    <div class="block-options">
+      <button *ngIf="action.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
+        [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'">
+        <i class="far fa-fw" [ngClass]="action.conditionOper == 'never' ? 'fa-times-circle' : 'fa-question-circle' "></i>
       </button>
-      <button type="button" class="btn mr-1" [ngClass]="action.forceExeStatus == 'PE' ? 'btn-dark' : ''" (click)="action.forceExeStatus == 'PE' ? action.forceExeStatus = '' : action.forceExeStatus = 'PE'">
-        <i class="fa fa-fw fa-level-down-alt"></i>
+      <button *ngIf="action.forceExeStatus == 'PE'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This action execution is forced">
+        <i class="far fa-fw fa-arrow-alt-circle-down"></i>
       </button>
-      <button type="button" class="btn btn-danger mr-1">
+      <button type="button" class="btn-block-option" (click)="showedActionHeader = !showedActionHeader">
+        <i class="far fa-fw" [ngClass]="showedActionHeader ? 'fa-minus-square' : 'fa-plus-square'"></i>
+      </button>
+      <button type="button" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>
       </button>
     </div>
@@ -23,7 +27,17 @@
   <div class="block-content">
     <div name="actionHeader" *ngIf="showedActionHeader">
       <div class="row">
-        <div class="col-md-12" *ngIf="inv_condition_oper">
+        <div class="col-md-6">
+          <div class="custom-control custom-block custom-control-info push">
+            <input type="checkbox" class="custom-control-input" [id]="'action'+action.sort+'forceExeStatus'" [name]="'action'+action.sort+'forceExeStatus'"
+              [checked]="action.forceExeStatus == 'PE'" (change)="action.forceExeStatus = $event.target.checked ? 'PE' : ''">
+            <label class="custom-control-label" [for]="'action'+action.sort+'forceExeStatus'">
+              <span class="d-block text-center"> Force Execution </span>
+            </label>
+            <span class="custom-block-indicator"> <i class="fa fa-check"></i> </span>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="inv_condition_oper">
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -35,29 +49,29 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="row" *ngIf="hasConditionCrossReference(action.conditionOper)">
-        <div [ngClass]="findConditionCrossReference(action.conditionOper).value1 && findConditionCrossReference(action.conditionOper).value2 ? 'col-md-6' : 'col-md-12'"
-          *ngIf="findConditionCrossReference(action.conditionOper).value1">
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">{{
-                  findConditionCrossReference(action.conditionOper).value1 }}</span>
+        <div class="col-md-12">
+          <div class="col-md-12" *ngIf="findConditionCrossReference(action.conditionOper).value1">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">{{
+                    findConditionCrossReference(action.conditionOper).value1 }}</span>
+                </div>
+                <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1"
+                  [(ngModel)]="action.conditionVal1">
               </div>
-              <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1" [(ngModel)]="action.conditionVal1">
             </div>
           </div>
-        </div>
-        <div [ngClass]="findConditionCrossReference(action.conditionOper).value1 && findConditionCrossReference(action.conditionOper).value2 ? 'col-md-6' : 'col-md-12'"
-          *ngIf="findConditionCrossReference(action.conditionOper).value2">
-          <div class="form-group">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">{{
-                  findConditionCrossReference(action.conditionOper).value2 }}</span>
+          <div class="col-md-12" *ngIf="findConditionCrossReference(action.conditionOper).value2">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">{{
+                    findConditionCrossReference(action.conditionOper).value2 }}</span>
+                </div>
+                <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2"
+                  [(ngModel)]="action.conditionVal2">
               </div>
-              <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2" [(ngModel)]="action.conditionVal2">
             </div>
           </div>
         </div>
@@ -65,7 +79,7 @@
       <h4 class="content-heading" style="padding-top: 0px;"></h4>
     </div>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="inv_action">
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-prepend">
@@ -83,11 +97,15 @@
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text">{{
-                  findActionCrossReference(action.action).value1 }}</span>
+                <span class="input-group-text">
+                  <i *ngIf="findActionCrossReference(action.action).info_title1 && findActionCrossReference(action.action).description1"
+                    class="fa fa-fw fa-question-circle info mr-1" [ngbPopover]="findActionCrossReference(action.action).description1"
+                    [popoverTitle]="findActionCrossReference(action.action).info_title1" placement="top"></i>
+                  {{ findActionCrossReference(action.action).value1 }}
+                </span>
               </div>
               <input type="text" class="form-control" [id]="'action'+action.sort+'value1'" [name]="'action'+action.sort+'value1'"
-                [(ngModel)]="action.conditionVal1">
+                [(ngModel)]="action.value1">
             </div>
           </div>
         </div>
@@ -99,15 +117,14 @@
                   findActionCrossReference(action.action).value2 }}</span>
               </div>
               <input type="text" class="form-control" [id]="'action'+action.sort+'value2'" [name]="'action'+action.sort+'value2'"
-                [(ngModel)]="action.conditionVal2">
+                [(ngModel)]="action.value2">
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="block-content block-content-full block-content-sm text-right">
-    <div *ngIf="action.conditionOper != 'always'" class="btn btn-sm mr-1"><i class="fa fa-fw fa-question mr-1"></i>Condition</div>
+  <div *ngIf="showedActionFooter" class="block-content block-content-full block-content-sm text-right">
     <button type="button" class="btn btn-sm btn-success mr-1" (click)="addControl()">
       <i class="fa fa-plus"></i> Control
     </button>

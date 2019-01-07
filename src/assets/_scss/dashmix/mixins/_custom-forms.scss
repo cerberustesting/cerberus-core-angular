@@ -5,6 +5,10 @@
 // Custom control variant
 @mixin custom-control-variant($background, $background-checked) {
     &.custom-block {
+        .custom-block-indicator {
+            background-color: $background-checked;
+        }
+
         .custom-control-input:checked ~ .custom-control-label {
             background-color: $background;
             border-color: $background-checked;

@@ -1,14 +1,3 @@
-// Page JS Helpers
-/*
-jQuery(function () {
-    Dashmix.helpers('sparkline'); // jQuery Sparkline plugin
-    Dashmix.helpers('core-bootstrap-tooltip'); // Tooltip
-    Dashmix.helpers('core-bootstrap-popover'); // Popover
-    console.log('popover initialized!');
-    //Dashmix.helpers(['sparkline', 'core-bootstrap-tooltip', 'core-bootstrap-popover']);  
-});
-*/
-
 // GLOBAL JS FUNCTIONS
 // functions to be declared in component.ts and called without 'this' annotation
 

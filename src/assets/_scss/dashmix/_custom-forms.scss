@@ -59,6 +59,22 @@
         }
     }
 
+    .custom-block-indicator {
+        position: absolute;
+        display: none;
+        top: -.5rem;
+        right: -.5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        color: $white;
+        font-size: .75rem;
+        text-align: center;
+        background-color: darken(theme-color('light'), 30%);
+        border-radius: .75rem;
+        z-index: 1;
+    }
+
     .custom-control-input:checked ~ .custom-control-label {
         background-color: darken(theme-color('light'), 5%);
         border-color: darken(theme-color('light'), 30%);
@@ -67,19 +83,18 @@
     .custom-control-input:focus ~ .custom-control-label {
         box-shadow: 0 0 .5rem rgba(0,0,0,.15);
     }
+
+    .custom-control-input:checked ~ .custom-block-indicator {
+        display: block;
+    }
 }
 
-// Add transition to icons
+// Add transitions to custom controls
 .custom-control-label::after {
     transition: transform .15s ease-out;
-    transform: rotate(-90deg);
 }
 
-.custom-control-input:checked ~ .custom-control-label::after {
-    transform: rotate(0deg);
-}
-
-// Checkboxes shape variants
+// Checkboxes shape variants and icon rotate transforms
 .custom-checkbox {
     &.custom-checkbox-square {
         .custom-control-label::before {
@@ -91,6 +106,14 @@
         .custom-control-label::before {
             border-radius: 1rem;
         }
+    }
+
+    .custom-control-label::after {
+        transform: rotate(-90deg);
+    }
+
+    .custom-control-input:checked ~ .custom-control-label::after {
+        transform: rotate(0deg);
     }
 }
 

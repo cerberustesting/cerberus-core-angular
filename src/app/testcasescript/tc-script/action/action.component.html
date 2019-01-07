@@ -1,25 +1,26 @@
-<div class="block block-bordered action mb-0" [id]="'action' + action.sort" [ngClass]="action.toDelete ? 'toDelete' : ''"
+<div class="block block-bordered action mb-1" [id]="'action' + action.sort" [ngClass]="action.toDelete ? 'toDelete' : ''"
   (mouseenter)="mouseEnter() " (mouseleave)="mouseLeave()">
   <div class="block-header block-header-default" [ngClass]="action.toDelete ? 'toDelete' : ''">
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text actionHeaderSort"> {{ action.sort }} </span>
       </div>
-      <input type="text" [(ngModel)]="action.description" class="form-control" name="test" placeholder="Action Description">
+      <input type="text" [(ngModel)]="action.description" class="form-control" [id]="'action' + action.sort +'description'"
+        [name]="'action' + action.sort +'description'" placeholder="Action Description">
     </div>
     <div class="block-options">
-      <button *ngIf="action.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
-        [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'">
+      <button type="button" [id]="'action' + action.sort +'conditionOper'" *ngIf="action.conditionOper != 'always'"
+        class="btn-block-option info_block_options" [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'">
         <i class="far fa-fw" [ngClass]="action.conditionOper == 'never' ? 'fa-times-circle' : 'fa-question-circle' "></i>
       </button>
-      <button *ngIf="action.forceExeStatus == 'PE'" type="button" class="btn-block-option info_block_options"
+      <button type="button" [id]="'action' + action.sort +'forceExeStatus'" *ngIf="action.forceExeStatus == 'PE'" class="btn-block-option info_block_options"
         ngbPopover="This action execution is forced">
         <i class="far fa-fw fa-arrow-alt-circle-down"></i>
       </button>
-      <button type="button" class="btn-block-option" (click)="showedActionHeader = !showedActionHeader">
+      <button type="button" [id]="'action' + action.sort +'showActionHeader'" class="btn-block-option" (click)="showedActionHeader = !showedActionHeader">
         <i class="far fa-fw" [ngClass]="showedActionHeader ? 'fa-minus-square' : 'fa-plus-square'"></i>
       </button>
-      <button type="button" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
+      <button type="button" [id]="'action' + action.sort +'deleteAction'" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>
       </button>
     </div>
@@ -29,7 +30,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="custom-control custom-block custom-control-info push">
-            <input type="checkbox" class="custom-control-input" [id]="'action'+action.sort+'forceExeStatus'" [name]="'action'+action.sort+'forceExeStatus'"
+            <input type="checkbox" [id]="'action'+action.sort+'forceExeStatus'" class="custom-control-input" [name]="'action'+action.sort+'forceExeStatus'"
               [checked]="action.forceExeStatus == 'PE'" (change)="action.forceExeStatus = $event.target.checked ? 'PE' : ''">
             <label class="custom-control-label" [for]="'action'+action.sort+'forceExeStatus'">
               <span class="d-block text-center"> Force Execution </span>
@@ -43,7 +44,8 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">Condition</span>
               </div>
-              <select class="form-control br-tp-0" id="active_step_condition" name="activeStepCondition" [(ngModel)]="action.conditionOper">
+              <select [id]="'action'+action.sort+'conditionOper'" [name]="'action'+action.sort+'conditionOper'" class="form-control br-tp-0"
+                [(ngModel)]="action.conditionOper">
                 <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}</option>
               </select>
             </div>
@@ -57,8 +59,8 @@
                   <span class="input-group-text">{{
                     findConditionCrossReference(action.conditionOper).value1 }}</span>
                 </div>
-                <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1"
-                  [(ngModel)]="action.conditionVal1">
+                <input type="text" [id]="'action'+action.sort+'conditionVal1'" class="form-control" id="activeStepParameter1"
+                  [name]="'action'+action.sort+'conditionVal1'" [(ngModel)]="action.conditionVal1">
               </div>
             </div>
           </div>
@@ -69,7 +71,7 @@
                   <span class="input-group-text">{{
                     findConditionCrossReference(action.conditionOper).value2 }}</span>
                 </div>
-                <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2"
+                <input type="text" [id]="'action'+action.sort+'conditionVal2'" class="form-control" [name]="'action'+action.sort+'conditionVal2'"
                   [(ngModel)]="action.conditionVal2">
               </div>
             </div>
@@ -85,7 +87,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Action</span>
             </div>
-            <select class="form-control br-tp-0" [id]="'action'+action.sort+'select'" [name]="'action'+action.sort+'select'"
+            <select class="form-control br-tp-0" [id]="'action'+action.sort+'action'" [name]="'action'+action.sort+'action'"
               [(ngModel)]="action.action">
               <option *ngFor='let action of inv_action' [ngValue]='action.value'>{{action.value}}</option>
             </select>
@@ -125,10 +127,10 @@
     </div>
   </div>
   <div *ngIf="showedActionFooter" class="block-content block-content-full block-content-sm text-right">
-    <button type="button" class="btn btn-sm btn-success mr-1" (click)="addControl()">
+    <button type="button" [id]="'action'+action.sort+'addControl'" class="btn btn-sm btn-success mr-1" (click)="addControl()">
       <i class="fa fa-plus"></i> Control
     </button>
-    <button type="button" class="btn btn-sm btn-primary ml-1">
+    <button type="button" [id]="'action'+action.sort+'addAction'" class="btn btn-sm btn-primary ml-1">
       <i class="fa fa-plus"></i> Action
     </button>
   </div>

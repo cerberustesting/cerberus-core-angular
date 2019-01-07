@@ -1,4 +1,4 @@
-<div class="block block-bordered mb-0 ml-2" [id]="'control' + control.sort" [ngClass]="control.toDelete ? 'toDelete' : ''"
+<div class="block block-bordered mb-1 ml-2" [id]="'control' + control.sort" [ngClass]="control.toDelete ? 'toDelete' : ''"
   (mouseenter)="mouseEnter() " (mouseleave)="mouseLeave()">
   <div class="block-header block-header-default" [ngClass]="control.toDelete ? 'toDelete' : ''">
     <div class="input-group">
@@ -28,7 +28,17 @@
   <div class="block-content">
     <div name="controlHeader" *ngIf="showedControlHeader">
       <div class="row">
-        <div class="col-md-12" *ngIf="inv_condition_oper">
+          <div class="col-md-6">
+              <div class="custom-control custom-block custom-control-info push">
+                <input type="checkbox" class="custom-control-input" [id]="'control'+control.sort+'fatal'" [name]="'control'+control.sort+'fatal'"
+                  [checked]="control.fatal == 'Y'" (change)="control.fatal = $event.target.checked ? 'Y' : 'N'">
+                <label class="custom-control-label" [for]="'control'+control.sort+'fatal'">
+                  <span class="d-block text-center">Fatal</span>
+                </label>
+                <span class="custom-block-indicator"> <i class="fa fa-check"></i> </span>
+              </div>
+            </div>
+        <div class="col-md-6" *ngIf="inv_condition_oper">
           <div class="form-group">
             <div class="input-group">
               <div class="input-group-prepend">

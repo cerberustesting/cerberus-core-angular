@@ -1,3 +1,142 @@
+<div class="block block-rounded block-bordered mb-1">
+  <div class="block-header block-header-default" role="tab" [id]="'step'+step.sort" [ngClass]="step.toDelete ? 'toDelete' : '' ">
+    <a class="full-width" data-toggle="collapse" data-parent="#stepList" [href]="'#step'+step.sort+'toggle'"
+      aria-expanded="false" [attr.aria-controls]="'step'+step.sort+'toggle'" (click)="focusOnStep()">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> {{step.sort}} </span>
+        </div>
+        <input type="text" [(ngModel)]="step.description" class="form-control" [id]="'step'+step.sort+'description'"
+          name="activeStepDescription" placeholder="Step Description">
+      </div>
+    </a>
+    <div class="block-options">
+      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This step execution is looped">
+        <i class="far fa-fw fa-bell"></i>
+      </button>
+      <button *ngIf="step.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
+        [ngbPopover]="step.conditionOper == 'never' ? 'This step is disabled' : 'This step execution is conditioned'">
+        <i class="far fa-fw" [ngClass]="step.conditionOper == 'never' ? 'fa-times-circle' : 'fa-question-circle' "></i>
+      </button>
+      <button *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options" ngbPopover="This step execution is forced">
+        <i class="far fa-fw fa-arrow-alt-circle-down"></i>
+      </button>
+      <button type="button" class="btn-block-option" (click)="step.toDelete = !step.toDelete">
+        <i class="far fa-fw fa-trash-alt"></i>
+      </button>
+    </div>
+  </div>
+  <div [id]="'step'+step.sort+'toggle'" class="collapse" role="tabpanel" [attr.aria-labelledby]="'step'+step.sort"
+    data-parent="#stepList">
+    <app-action *ngFor="let action of step.actionList" [action]="action"></app-action>
+  </div>
+</div>
+<!-- OLD V2 -->
+<!-- 
+<div [id]="'step'+step.sort" class="block block-bordered" *ngIf="step">
+  <div class="block-header block-header-default">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          {{step.sort}}
+        </span>
+      </div>
+      <input type="text" [(ngModel)]="step.description" class="form-control" [id]="'step'+step.sort+'description'" name="activeStepDescription"
+        placeholder="Step Description">
+    </div>
+    <div class="block-options">
+      <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This step execution is looped">
+        <i class="far fa-fw fa-bell"></i>
+      </button>
+      <button *ngIf="step.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
+        [ngbPopover]="step.conditionOper == 'never' ? 'This step is disabled' : 'This step execution is conditioned'">
+        <i class="far fa-fw" [ngClass]="step.conditionOper == 'never' ? 'fa-times-circle' : 'fa-question-circle' "></i>
+      </button>
+      <button *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options" ngbPopover="This step execution is forced">
+        <i class="far fa-fw fa-arrow-alt-circle-down"></i>
+      </button>
+      <button type="button" class="btn-block-option" (click)="showedStepHeader = !showedStepHeader">
+        <i class="far fa-fw" [ngClass]="showedStepHeader ? 'fa-minus-square' : 'fa-plus-square'"></i>
+      </button>
+      <button type="button" class="btn-block-option">
+        <i class="far fa-fw fa-trash-alt"></i>
+      </button>
+    </div>
+  </div>
+  <div class="block-content">
+    <div id="stepHeader" *ngIf="showedStepHeader">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="custom-control custom-block custom-control-info push">
+            <input type="checkbox" class="custom-control-input" id="currentStepforceExeStatus" name="currentStepforceExeStatus"
+              [checked]="step.forceExe == 'Y'" (change)="step.forceExe = $event.target.checked ? 'Y' : 'N'">
+            <label class="custom-control-label" for="currentStepforceExeStatus">
+              <span class="d-block text-center">Force Execution</span>
+            </label>
+            <span class="custom-block-indicator"> <i class="fa fa-check"></i> </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Loop</span>
+              </div>
+              <select class="form-control br-tp-0" id="active_step_loop" name="activeStepLoop" [(ngModel)]="step.loop">
+                <option *ngFor='let steploop of inv_step_loop' [ngValue]='steploop.value'>{{steploop.value}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Condition</span>
+              </div>
+              <select class="form-control br-tp-0" id="active_step_condition" name="activeStepCondition" [(ngModel)]="step.conditionOper">
+                <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="hasConditionCrossReference(step.conditionOper)">
+        <div [ngClass]="findConditionCrossReference(step.conditionOper).value1 && findConditionCrossReference(step.conditionOper).value2 ? 'col-md-6' : 'col-md-12'"
+          *ngIf="findConditionCrossReference(step.conditionOper).value1">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{
+                  findConditionCrossReference(step.conditionOper).value1 }}</span>
+              </div>
+              <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1" [(ngModel)]="step.conditionVal1">
+            </div>
+          </div>
+        </div>
+        <div [ngClass]="findConditionCrossReference(step.conditionOper).value1 && findConditionCrossReference(step.conditionOper).value2 ? 'col-md-6' : 'col-md-12'"
+          *ngIf="findConditionCrossReference(step.conditionOper).value2">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{
+                  findConditionCrossReference(step.conditionOper).value2 }}</span>
+              </div>
+              <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2" [(ngModel)]="step.conditionVal2">
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="content-heading" style="padding-top: 0px;"></h4>
+    </div>
+  </div>
+</div>
+-->
+<!-- OLD -->
+<!-- 
 <div class="block block-bordered" *ngIf="step">
   <div class="block-header block-header-default">
     <div class="input-group">
@@ -101,3 +240,4 @@
     </div>
   </div>
 </div>
+-->

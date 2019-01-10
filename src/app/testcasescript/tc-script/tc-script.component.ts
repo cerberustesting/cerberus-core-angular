@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase, IStep, IAction } from 'src/app/model/testcase.model';
-import { IInvariant } from 'src/app/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { CrossReference } from 'src/app/model/crossreference.model';
+declare function blockAPI(mode: string, block_id: string): void;
 
 @Component({
   selector: 'app-tc-script',
@@ -44,6 +43,10 @@ export class TcScriptComponent implements OnInit {
     this.testcase.stepList.push(newStep);
     // focus on the new step
     this.active_step = newStep;
+  }
+
+  receiveStep($event): void {
+    console.log('step received: ', $event);
   }
 
   saveActiveStep() {

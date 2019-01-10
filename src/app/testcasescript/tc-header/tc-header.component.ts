@@ -10,7 +10,6 @@ import { IBuildRevisionInvariant } from 'src/app/model/buildrevisioninvariant.mo
 import { IApplication } from 'src/app/model/application.model';
 import { IProject } from 'src/app/model/project.model';
 // JS Functions
-declare function Bootstrap_initPopover(): void;
 declare function blockAPI(mode, id): void;
 
 @Component({
@@ -196,8 +195,6 @@ export class TcHeaderComponent implements OnInit {
     this.TestService.updateTestCase(this.testcaseheader, this.originalTest, this.originalTestCase);
   }
 
-  debug() {
-    Bootstrap_initPopover();
-  }
+  debug() { }
 
 }

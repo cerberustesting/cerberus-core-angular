@@ -8,6 +8,7 @@ export class CrossReference {
   description2?: string;
   info_title1?: string;
   info_title2?: string;
+  icon?: string;
 }
 
 @Injectable({
@@ -37,7 +38,14 @@ export class CrossreferenceService {
   ];
   public crossReference_ActionValue: Array<CrossReference> = [
     { reference: "Unknown", value1: null, value2: null },
-    { reference: "click", value1: "Element", value2: null, info_title1: "Element Path", description1: "Path to the element that you want to click in. You can use xPath or predefined selector such as id or data-cerberus." },
+    {
+      reference: "click",
+      value1: "Element",
+      value2: null,
+      info_title1: "Element Path",
+      description1: "Path to the element that you want to click in. You can use xPath or predefined selector such as id or data-cerberus.",
+      icon: "fa fa-mouse-pointer"
+    },
     { reference: "mouseLeftButtonPress", value1: "Element path", value2: null },
     { reference: "mouseLeftButtonRelease", value1: "Element path", value2: null },
     { reference: "doubleClick", value1: "Element path", value2: null },
@@ -57,7 +65,7 @@ export class CrossreferenceService {
     { reference: "dragAndDrop", value1: "Element Path", value2: "Destination Path" },
     { reference: "select", value1: "Element", value2: "option" },
     { reference: "keypress", value1: "Element", value2: "Key" },
-    { reference: "type", value1: "Element", value2: "Text" },
+    { reference: "type", value1: "Element", value2: "Text", icon: "fa fa-font" },
     { reference: "hideKeyboard", value1: null, value2: null },
     { reference: "swipe", value1: "Action", value2: "Direction" },
     { reference: "scrollTo", value1: "Element", value2: "Text" },
@@ -75,7 +83,7 @@ export class CrossreferenceService {
   ];
   public crossReference_ControlValue: Array<CrossReference> = [
     { reference: "Unknown", value1: null, value2: null },
-    { reference: "verifyStringEqual", value1: "String 1", value2: "String 2" },
+    { reference: "verifyStringEqual", value1: "String 1", value2: "String 2", icon: "fa fa-highlighter" },
     { reference: "verifyStringDifferent", value1: "String 1", value2: "String 2" },
     { reference: "verifyStringGreater", value1: "String 1", value2: "String 2" },
     { reference: "verifyStringMinor", value1: "String 1", value2: "String 2" },
@@ -107,7 +115,6 @@ export class CrossreferenceService {
     { reference: "takeScreenshot", value1: null, value2: null },
     { reference: "getPageSource", value1: null, value2: null }
   ];
-
   constructor() { }
 
   hasConditionCrossReference(condition: string): boolean {

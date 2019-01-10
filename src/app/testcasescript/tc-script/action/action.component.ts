@@ -5,6 +5,7 @@ import { IAction, ITestCase, Control } from 'src/app/model/testcase.model';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
 import { TestService } from 'src/app/services/crud/test.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Component({
   selector: 'app-action',
@@ -14,8 +15,8 @@ import { TestService } from 'src/app/services/crud/test.service';
 export class ActionComponent implements OnInit {
 
   @Input('action') action: IAction;
-  showedActionHeader: boolean;
-  showedActionFooter: boolean;
+  showActionAddButtons: boolean;
+  showControlList: boolean;
   testcase: ITestCase;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;
@@ -27,12 +28,15 @@ export class ActionComponent implements OnInit {
   constructor(
     private InvariantService: InvariantsService,
     private CrossReferenceService: CrossreferenceService,
-    private TestService: TestService
+    private TestService: TestService,
+    private SettingsService: SettingsService
   ) { }
 
   ngOnInit() {
-    this.showedActionHeader = false;
-    this.showedActionFooter = false;
+    this.showActionAddButtons = false;
+    this.showActionAddButtons = false;
+    // @ts-ignore
+    if (this.action.controlList.length == 0) { this.showControlList = false; } else { this.showControlList = true; }
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
@@ -50,11 +54,18 @@ export class ActionComponent implements OnInit {
     console.log(newControl);
   }
 
+  focusOnAction(): void {
+    // send the action to the settings service and thus, to the settings component
+    this.SettingsService.editActionSettings(this.action);
+  }
+
   hasActionCrossReference(action: string): boolean { return this.CrossReferenceService.hasActionCrossReference(action); }
   findActionCrossReference(action: string): CrossReference { return this.CrossReferenceService.findActionCrossReference(action); }
   hasConditionCrossReference(condition: string): boolean { return this.CrossReferenceService.hasConditionCrossReference(condition); }
   findConditionCrossReference(condition: string): CrossReference { return this.CrossReferenceService.findConditionCrossReference(condition); }
+  hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasControlCrossReference(control); }
+  findControlCrossReference(control: string): CrossReference { return this.CrossReferenceService.findControlCrossReference(control); }
 
-  mouseEnter() { this.showedActionFooter = true; }
-  mouseLeave() { this.showedActionFooter = false; }
+  mouseEnter() { this.showActionAddButtons = true; }
+  mouseLeave() { this.showActionAddButtons = false; }
 }

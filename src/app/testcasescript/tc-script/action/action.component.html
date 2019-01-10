@@ -1,3 +1,43 @@
+<div class="block block-bordered action mb-0" *ngIf="action">
+  <div class="block-header" (mouseenter)="mouseEnter() " (mouseleave)="mouseLeave()">
+    <div class="block-options">
+      <button type="button" class="btn-block-option" (click)="showControlList = !showControlList">
+        <i class="si" [ngClass]="showControlList ? 'si-arrow-down' : 'si-arrow-right'"></i></button>
+    </div>
+    <div class="input-group" (click)="focusOnAction()">
+      <div class="input-group-prepend">
+        <span class="input-group-text custom">
+          {{action.sort}}
+        </span>
+      </div>
+      <div class="input-group-prepend" *ngIf="findActionCrossReference(action.action).icon">
+        <span class="input-group-text custom">
+          <i [ngClass]="findActionCrossReference(action.action).icon"></i>
+        </span>
+      </div>
+      <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0" [id]="'step'+action.step+'action'+action.sort"
+        name="activeStepDescription" placeholder="Action Description">
+    </div>
+    <div class="block-options">
+      <button type="button" [id]="'action' + action.sort +'conditionOper'" *ngIf="action.conditionOper != 'always'"
+        class="btn-block-option info_block_options" [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'">
+        <i class="far fa-fw" [ngClass]="action.conditionOper == 'never' ? 'fa-times-circle' : 'fa-question-circle' "></i>
+      </button>
+      <button type="button" [id]="'action' + action.sort +'forceExeStatus'" *ngIf="action.forceExeStatus == 'PE'" class="btn-block-option info_block_options"
+        ngbPopover="This action execution is forced">
+        <i class="far fa-fw fa-arrow-alt-circle-down"></i>
+      </button>
+      <button type="button" [id]="'action' + action.sort +'deleteAction'" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
+        <i class="far fa-fw fa-trash-alt"></i>
+      </button>
+    </div>
+    <div *ngIf="showActionAddButtons" class="block-options">
+      <button type="button" class="btn btn-sm btn-outline-success mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
+      <button type="button" class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
+    </div>
+  </div>
+</div>
+<!-- OLD
 <div class="block block-bordered action mb-1" [id]="'action' + action.sort" [ngClass]="action.toDelete ? 'toDelete' : ''"
   (mouseenter)="mouseEnter() " (mouseleave)="mouseLeave()">
   <div class="block-header block-header-default" [ngClass]="action.toDelete ? 'toDelete' : ''">
@@ -135,5 +175,8 @@
     </button>
   </div>
 </div>
+-->
 <!-- TODO : add a pipe to order by sequence -->
-<app-control *ngFor="let control of action.controlList" [control]="control"></app-control>
+<div *ngIf="showControlList">
+  <app-control *ngFor="let control of action.controlList; let last = last" [control]="control" [isLast]="last"></app-control>
+</div>

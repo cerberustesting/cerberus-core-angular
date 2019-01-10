@@ -59,6 +59,13 @@ export interface ITestCase {
 
 export interface IStep {
     objType: string;
+    test: string;
+    testCase: string;
+    conditionOper: string;
+    conditionVal1: string;
+    conditionVal2: string;
+    forceExe: string;
+    loop: string;
     useStep: string;
     isStepInUseByOtherTestCase: boolean;
     useStepTestCase: string;
@@ -66,11 +73,6 @@ export interface IStep {
     useStepTest: string;
     initialStep: number;
     useStepStep: number;
-    conditionOper: string;
-    conditionVal1: string;
-    conditionVal2: string;
-    test: string;
-    testCase: string;
     usrModif: string;
     usrCreated: string;
     description: string;
@@ -79,11 +81,11 @@ export interface IStep {
     step: number;
     dateCreated: string;
     dateModif: string;
-    forceExe: string;
-    loop: string;
+    toDelete: boolean;
 }
 
 export interface IAction {
+    objType: string;
     forceExeStatus: string;
     conditionVal2: string;
     test: string;
@@ -98,27 +100,26 @@ export interface IAction {
     sequence: number;
     action: string;
     step: number;
-    objType: string;
     testCase: string;
 }
 
 export interface IControl {
-    conditionVal2: string;
+    objType: string;
     test: string;
+    testCase: string;
     conditionOper: string;
     conditionVal1: string;
-    value2: string;
-    value1: string;
-    screenshotFilename: string;
+    conditionVal2: string;
     description: string;
     control: string;
-    sort: number;
+    value2: string;
+    value1: string;
     fatal: string;
+    screenshotFilename: string;
+    sort: number;
     sequence: number;
     controlSequence: number;
     step: number;
-    objType: string;
-    testCase: string;
     toDelete: boolean;
 }
 

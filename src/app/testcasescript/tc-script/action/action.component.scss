@@ -9,3 +9,22 @@
     background-color: #3c90df;
     border-color: #3c90df;
 }
+.action {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+.input-group-text.custom {
+    border: 0;
+    background-color: transparent;
+}
+.b-0 {
+    border:0;
+}
+.bg-transparent{
+    background-color: transparent;
+}
+.br-lr-1 {
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}

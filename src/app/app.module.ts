@@ -25,6 +25,7 @@ import { TagselectorComponent } from './report/tagselector/tagselector.component
 import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
 import { ControlComponent } from './testcasescript/tc-script/control/control.component';
 import { ExecutionsperweekComponent } from './dashboard/graph/executionsperweek/executionsperweek.component';
+import { SettingsComponent } from './testcasescript/tc-script/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ExecutionsperweekComponent } from './dashboard/graph/executionsperweek/
     TagselectorComponent,
     ControlComponent,
     ExecutionsperweekComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

@@ -240,12 +240,12 @@
   <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm" *ngIf="step || action || control">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb pt-0 pb-0">
-        <li class="breadcrumb-item" *ngIf="step">step {{ step.sort}}</li>
-        <li class="breadcrumb-item" *ngIf="action">step {{ action.step}}</li>
-        <li class="breadcrumb-item" *ngIf="action">action {{ action.sort}}</li>
-        <li class="breadcrumb-item" *ngIf="control">step {{ control.step}}</li>
-        <li class="breadcrumb-item" *ngIf="control">action {{ control.sequence}}</li>
-        <li class="breadcrumb-item" *ngIf="control">control {{ control.sort}}</li>
+        <li class="breadcrumb-item" *ngIf="step">step #{{ step.sort}}</li>
+        <li class="breadcrumb-item" *ngIf="action">step #{{ action.step}}</li>
+        <li class="breadcrumb-item" *ngIf="action">action #{{ action.sort}}</li>
+        <li class="breadcrumb-item" *ngIf="control">step #{{ control.step}}</li>
+        <li class="breadcrumb-item" *ngIf="control">action #{{ control.sequence}}</li>
+        <li class="breadcrumb-item" *ngIf="control">control #{{ control.sort}}</li>
       </ol>
     </nav>
   </div>

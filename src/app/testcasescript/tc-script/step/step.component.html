@@ -11,16 +11,16 @@
       </div>
     </a>
     <div class="block-options">
-      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button" class="btn-block-option info_block_options"
-        ngbPopover="This step execution is looped">
-        <i class="far fa-fw fa-bell"></i>
-      </button>
       <button *ngIf="step.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
         [ngbPopover]="step.conditionOper == 'never' ? 'This step is disabled' : 'This step execution is conditioned'">
-        <i class="far fa-fw" [ngClass]="step.conditionOper == 'never' ? 'fa-times-circle' : 'fa-question-circle' "></i>
+        <i class="fa fa-fw" [ngClass]="step.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
+      </button>
+      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This step execution is looped">
+        <i class="fa fa-fw fa-redo"></i>
       </button>
       <button *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options" ngbPopover="This step execution is forced">
-        <i class="far fa-fw fa-arrow-alt-circle-down"></i>
+        <i class="fa fa-fw fa fa-arrow-down"></i>
       </button>
       <button type="button" class="btn-block-option" (click)="step.toDelete = !step.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>

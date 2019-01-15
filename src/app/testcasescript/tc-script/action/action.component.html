@@ -1,6 +1,6 @@
 <div class="block block-bordered action mb-0" *ngIf="action">
   <div class="block-header" (mouseenter)="mouseEnter() " (mouseleave)="mouseLeave()">
-    <div class="block-options">
+    <div *ngIf="action.controlList.length > 0" class="block-options">
       <button type="button" class="btn-block-option" (click)="showControlList = !showControlList">
         <i class="si" [ngClass]="showControlList ? 'si-arrow-down' : 'si-arrow-right'"></i></button>
     </div>
@@ -19,8 +19,8 @@
         name="activeStepDescription" placeholder="Action Description">
     </div>
     <div *ngIf="showActionAddButtons" class="block-options">
-        <button type="button" class="btn btn-sm btn-outline-success mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
         <button type="button" class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
+        <button type="button" class="btn btn-sm btn-outline-success mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
       </div>
     <div class="block-options">
       <button type="button" [id]="'action' + action.sort +'conditionOper'" *ngIf="action.conditionOper != 'always'"

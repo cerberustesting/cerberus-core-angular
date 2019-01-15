@@ -34,7 +34,6 @@ export class ActionComponent implements OnInit {
 
   ngOnInit() {
     this.showActionAddButtons = false;
-    this.showActionAddButtons = false;
     // @ts-ignore
     if (this.action.controlList.length == 0) { this.showControlList = false; } else { this.showControlList = true; }
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });

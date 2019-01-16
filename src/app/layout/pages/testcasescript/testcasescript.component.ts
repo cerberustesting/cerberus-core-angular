@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ITestCase } from '../model/testcase.model';
-import { ITest } from '../model/test.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TestService } from '../services/crud/test.service';
-import { InvariantsService } from '../services/crud/invariants.service';
-import { SystemService } from '../services/crud/system.service';
+import { ITestCase } from 'src/app/model/testcase.model';
+import { TestService } from 'src/app/services/crud/test.service';
+import { InvariantsService } from 'src/app/services/crud/invariants.service';
+import { SystemService } from 'src/app/services/crud/system.service';
 
 @Component({
   selector: 'app-testcasescript',

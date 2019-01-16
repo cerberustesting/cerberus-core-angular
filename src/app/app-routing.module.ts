@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Route } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { TestcasescriptComponent } from './testcasescript/testcasescript.component';
-import { LabelsComponent } from './labels/labels.component';
-import { ReportComponent } from './report/report.component';
-import { PagenotfoundComponent } from './navigation/pagenotfound/pagenotfound.component';
+import { DashboardComponent } from './layout/pages/dashboard/dashboard.component';
+import { TestcasescriptComponent } from './layout/pages/testcasescript/testcasescript.component';
+import { LabelsComponent } from './layout/pages/labels/labels.component';
+import { ReportComponent } from './layout/pages/report/report.component';
+import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
 
 const routes: Route[] = [
   // HOME ROUTING

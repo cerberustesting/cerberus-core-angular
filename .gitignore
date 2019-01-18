@@ -1,12 +1,5 @@
-
-.DS_Store
-src/.DS_Store
-src/app/.DS_Store
-src/app/testcasescript/.DS_Store
-src/assets/media/.DS_Store
-src/assets/media/favicons/.DS_Store
-src/.DS_Store
-.DS_Store
-.DS_Store
-src/.DS_Store
+# ignore the node_modules folder
 node_modules/
+
+# ignore all the .DS_Store files in any folders and its children
+.DS_Store .

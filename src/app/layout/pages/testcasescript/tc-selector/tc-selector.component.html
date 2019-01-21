@@ -20,6 +20,12 @@
                  -->
               <ng-select [items]="testsList" (change)="selectedTestChange()" bindLabel="test" bindValue="test"
                 placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
+                <ng-template ng-label-tmp let-item="item">
+                  {{item.test}} : {{item.description}}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item">
+                  {{item.test}} : {{item.description}}
+                </ng-template>
               </ng-select>
             </div>
           </div>
@@ -29,6 +35,9 @@
               <label for="testcase">Test Case</label>
               <ng-select [items]="testcasesList" (change)="selectedTestCaseChange()" bindLabel="testCase" bindValue="testCase"
                 placeholder="Select a Test Case" [(ngModel)]='selectedTestCase' [clearable]="false" [searchFn]="customSearchFn">
+                <ng-template ng-label-tmp let-item="item">
+                  {{item.testCase}} : {{item.description}}
+                </ng-template>
                 <ng-template ng-option-tmp let-item="item">
                   <div>#{{item.testCase}} :<span> {{item.description}}</span></div>
                   <small><b>Priority: </b>{{item.priority}} | <b>Status:</b> {{item.status}}</small>

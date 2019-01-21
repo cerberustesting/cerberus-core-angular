@@ -4,6 +4,7 @@ import { ITestCase } from 'src/app/model/testcase.model';
 import { TestService } from 'src/app/services/crud/test.service';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 import { SystemService } from 'src/app/services/crud/system.service';
+import { AlertService } from 'src/app/services/utils/alert.service';
 
 @Component({
   selector: 'app-testcasescript',

@@ -10,32 +10,38 @@
           <div class="col-md-6" *ngIf="testsList">
             <div class="form-group">
               <label for="test">Test</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                </div>
+              <!--
                 <select class="form-control br-tp-0" id="test" name="test" [(ngModel)]='selectedTest' (ngModelChange)='selectedTestChange()'
                   [ngClass]="selectedTest ? 'is-selected-valid' : ''">
                   <option [ngValue]="null">Select a Test</option>
                   <option *ngFor='let test of testsList' [value]="test.test"> {{test.test}} - {{test.description}}
                   </option>
                 </select>
-              </div>
+                 -->
+              <ng-select [items]="testsList" (change)="selectedTestChange()" bindLabel="test" bindValue="test"
+                placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
+              </ng-select>
             </div>
           </div>
           <!-- Test Case Selection -->
           <div class="col-md-6">
             <div class="form-group" *ngIf="selectedTest && testcasesList">
               <label for="testcase">Test Case</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                </div>
+              <ng-select [items]="testcasesList" (change)="selectedTestCaseChange()" bindLabel="testCase" bindValue="testCase"
+                placeholder="Select a Test Case" [(ngModel)]='selectedTestCase' [clearable]="false" [searchFn]="customSearchFn">
+                <ng-template ng-option-tmp let-item="item">
+                  <div>#{{item.testCase}} :<span> {{item.description}}</span></div>
+                  <small><b>Priority: </b>{{item.priority}} | <b>Status:</b> {{item.status}}</small>
+                </ng-template>
+              </ng-select>
+              <!--
                 <select class="form-control br-tp-0" id="testcase" name="testcase" [(ngModel)]='selectedTestCase'
                   (ngModelChange)='selectedTestCaseChange()' [ngClass]="selectedTestCase ? 'is-selected-valid' : ''">
                   <option [ngValue]="null">Select a Test Case</option>
                   <option *ngFor="let tc of testcasesList" [value]="tc.testCase"> {{ tc.testCase}} : {{ tc.description
                     }} </option>
                 </select>
-              </div>
+              -->
             </div>
           </div>
         </div>

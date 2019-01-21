@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="block-content">
-    <div class="row" *ngIf="testcase.stepList.length == 0">
+    <div class="row push" *ngIf="testcase.stepList.length == 0">
       <div class="col-md-12 mt-3s text-center">
         <p>The test case is empty <i class="far fa-frown-open"></i></p>
       </div>
@@ -124,7 +124,7 @@
       </div>
 -->
     </div>
-    <div class="row push">
+    <div class="row push" *ngIf="!testcase.stepList.length == 0">
       <div class="col-md-12">
         <button class="btn btn-light full-width border" type="button"> Save All </button>
       </div>

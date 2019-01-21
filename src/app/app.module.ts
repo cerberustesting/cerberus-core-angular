@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -55,7 +55,8 @@ import { SettingsComponent } from './layout/pages/testcasescript/tc-script/setti
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbPopoverModule
+    NgbPopoverModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

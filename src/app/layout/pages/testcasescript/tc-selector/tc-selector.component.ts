@@ -28,7 +28,7 @@ export class TcSelectorComponent implements OnInit {
   constructor(
     private TestService: TestService,
     private AlertService: AlertService
-  ) {}
+  ) { }
 
   ngOnDestroy() {
     this.testcase = null;
@@ -114,6 +114,11 @@ export class TcSelectorComponent implements OnInit {
       this.testcase = null;
       this.TestService.observableTestCase.next(this.testcase);
     }
+  }
+
+  customSearchFn(term: string, item: ITestCaseHeader) {
+    term = term.toLocaleLowerCase();
+    return item.testCase.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1 || item.status.toLocaleLowerCase() === term;
   }
 
   debug() {

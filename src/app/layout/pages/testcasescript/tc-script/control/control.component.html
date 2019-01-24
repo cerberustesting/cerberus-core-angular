@@ -6,7 +6,8 @@
           {{control.sort}}
         </span>
       </div>
-      <div class="input-group-prepend" *ngIf="findControlCrossReference(control.control).icon"  [ngbPopover]="control.control" triggers="mouseenter:mouseleave">
+      <div class="input-group-prepend" *ngIf="findControlCrossReference(control.control).icon" [ngbPopover]="control.control"
+        triggers="mouseenter:mouseleave">
         <span class="input-group-text custom">
           <i [ngClass]="findControlCrossReference(control.control).icon"></i>
         </span>
@@ -19,15 +20,20 @@
       <button type="button" class="btn btn-sm btn-outline-success mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
     </div>
     <div class="block-options">
-      <button *ngIf="control.fatal == 'Y'" type="button" class="btn-block-option info_block_options" ngbPopover="This control is fatal">
+      <button *ngIf="control.fatal == 'Y'" type="button" class="btn-block-option info_block_options" ngbPopover="This control is fatal"
+        triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-exclamation"></i>
       </button>
       <button *ngIf="control.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
-        [ngbPopover]="control.conditionOper == 'never' ? 'This control is disabled' : 'This control execution is conditioned'">
+        [ngbPopover]="control.conditionOper == 'never' ? 'This control is disabled' : 'This control execution is conditioned'"
+        triggers="mouseenter:mouseleave">
         <i class="fa fa-fw" [ngClass]="control.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
       </button>
       <button type="button" class="btn-block-option" (click)="control.toDelete = !control.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>
+      </button>
+      <button type="button" [id]="'control' + control.sort +'dragControl'" class="btn-block-option">
+        <i class="fa fa-arrows-alt-v"></i>
       </button>
     </div>
   </div>

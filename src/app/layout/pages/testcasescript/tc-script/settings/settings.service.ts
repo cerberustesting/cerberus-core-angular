@@ -17,31 +17,38 @@ export class SettingsService {
 
   constructor() { }
 
-  editStepSettings(step: IStep) {
+  editStepSettings(step: IStep): void {
     this.selectedStep = step;
     this.selectedAction = null;
     this.selectedControl = null;
     this.refreshVariable();
   }
 
-  editActionSettings(action: IAction) {
+  editActionSettings(action: IAction): void {
     this.selectedStep = null;
     this.selectedAction = action;
     this.selectedControl = null;
     this.refreshVariable();
   }
 
-  editControlSettings(control: IControl) {
+  editControlSettings(control: IControl): void {
     this.selectedStep = null;
     this.selectedAction = null;
     this.selectedControl = control;
     this.refreshVariable();
   }
 
-  refreshVariable() {
+  refreshVariable(): void {
     this.observableStep.next(this.selectedStep);
     this.observableAction.next(this.selectedAction);
     this.observableControl.next(this.selectedControl);
+  }
+
+  clearFocus(): void {
+    this.selectedStep = null;
+    this.selectedAction = null;
+    this.selectedControl = null;
+    this.refreshVariable();
   }
 
 }

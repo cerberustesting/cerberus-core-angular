@@ -10,7 +10,8 @@
           {{action.sort}}
         </span>
       </div>
-      <div class="input-group-prepend" *ngIf="findActionCrossReference(action.action).icon" [ngbPopover]="action.action" triggers="mouseenter:mouseleave">
+      <div class="input-group-prepend" *ngIf="findActionCrossReference(action.action).icon" [ngbPopover]="action.action"
+        triggers="mouseenter:mouseleave">
         <span class="input-group-text custom">
           <i [ngClass]="findActionCrossReference(action.action).icon"></i>
         </span>
@@ -19,20 +20,24 @@
         name="activeStepDescription" placeholder="Action Description">
     </div>
     <div *ngIf="showActionAddButtons" class="block-options">
-        <button type="button" class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
-        <button type="button" class="btn btn-sm btn-outline-success mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
-      </div>
+      <button type="button" class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
+      <button type="button" class="btn btn-sm btn-outline-success mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
+    </div>
     <div class="block-options">
       <button type="button" [id]="'action' + action.sort +'conditionOper'" *ngIf="action.conditionOper != 'always'"
-        class="btn-block-option info_block_options" [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'">
+        class="btn-block-option info_block_options" [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'"
+        triggers="mouseenter:mouseleave">
         <i class="fa fa-fw" [ngClass]="action.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
       </button>
       <button type="button" [id]="'action' + action.sort +'forceExeStatus'" *ngIf="action.forceExeStatus == 'PE'" class="btn-block-option info_block_options"
-        ngbPopover="This action execution is forced">
+        ngbPopover="This action execution is forced" triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa fa-arrow-down"></i>
       </button>
       <button type="button" [id]="'action' + action.sort +'deleteAction'" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>
+      </button>
+      <button type="button" [id]="'action' + action.sort +'dragAction'" class="btn-block-option">
+        <i class="fa fa-arrows-alt-v"></i>
       </button>
     </div>
   </div>

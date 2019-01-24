@@ -14,6 +14,7 @@ import { SettingsService } from '../settings/settings.service';
 export class StepComponent implements OnInit {
 
   @Input('step') step: IStep;
+  showActionList: boolean;
 
   constructor(
     private SettingsService: SettingsService
@@ -24,6 +25,12 @@ export class StepComponent implements OnInit {
   focusOnStep(): void {
     // send the step to the settings service and thus, to the settings component
     this.SettingsService.editStepSettings(this.step);
+    this.showActionList = !this.showActionList;
+  }
+
+  clearFocus(): void {
+    console.log("focus out");
+    //this.SettingsService.clearFocus();
   }
 
 }

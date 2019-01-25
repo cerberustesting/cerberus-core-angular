@@ -11,21 +11,16 @@ declare function blockAPI(mode: string, block_id: string): void;
 export class TcScriptComponent implements OnInit {
 
   @Input('testcase') testcase: ITestCase;
-  active_step: IStep;
 
   constructor(private InvariantService: InvariantsService) { }
 
   ngOnChanges() {
-    //@ts-ignore
-    if (this.testcase.stepList.length == 0) {
-      this.active_step = null;
-    } else { this.active_step = this.testcase.stepList[0]; }
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+  }
 
   setActiveStep(step: IStep) {
-    this.active_step = step;
   }
 
   addAStep() {
@@ -41,8 +36,6 @@ export class TcScriptComponent implements OnInit {
       forceExe: 'N'
     };
     this.testcase.stepList.push(newStep);
-    // focus on the new step
-    this.active_step = newStep;
   }
 
   receiveStep($event): void {

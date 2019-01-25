@@ -1,9 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IStep } from 'src/app/model/testcase.model';
-import { IInvariant } from 'src/app/model/invariants.model';
-import { CrossReference } from 'src/app/model/crossreference.model';
-import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
 import { SettingsService } from '../settings/settings.service';
 
 @Component({
@@ -14,13 +10,20 @@ import { SettingsService } from '../settings/settings.service';
 export class StepComponent implements OnInit {
 
   @Input('step') step: IStep;
+  @Input('isfirstStep') isFirstStep: boolean;
   showActionList: boolean;
 
   constructor(
     private SettingsService: SettingsService
   ) { }
 
-  ngOnInit() { this.step.toDelete = false; }
+  ngOnInit() {
+    // if (this.isFirstStep) { this.showActionList = true; }
+    // cause some misleading UI problem
+    // solution A : ask for a API for accordion 
+    // solution B : go full Angular with only *ngIf but the sweet animation will disappear
+    this.step.toDelete = false;
+  }
 
   focusOnStep(): void {
     // send the step to the settings service and thus, to the settings component

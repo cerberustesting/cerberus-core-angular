@@ -20,14 +20,14 @@
         placeholder="Step Description">
     </div>
     <div class="block-options">
+      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This step execution is looped" triggers="mouseenter:mouseleave">
+        <i class="fa fa-fw fa-redo"></i>
+      </button>
       <button *ngIf="step.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
         [ngbPopover]="step.conditionOper == 'never' ? 'This step is disabled' : 'This step execution is conditioned'"
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw" [ngClass]="step.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
-      </button>
-      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button" class="btn-block-option info_block_options"
-        ngbPopover="This step execution is looped" triggers="mouseenter:mouseleave">
-        <i class="fa fa-fw fa-redo"></i>
       </button>
       <button *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options" ngbPopover="This step execution is forced"
         triggers="mouseenter:mouseleave">

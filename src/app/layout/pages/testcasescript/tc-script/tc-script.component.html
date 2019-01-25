@@ -27,7 +27,7 @@
     <div class="row" *ngIf="testcase.stepList.length != 0">
       <div class="col-md-7">
         <div id="stepList" role="tablist" aria-multiselectable="true">
-          <app-step *ngFor='let step of testcase.stepList' (stepFocused)="receiveStep($event)" [step]="step"></app-step>
+          <app-step *ngFor='let step of testcase.stepList; first as isFirst' (stepFocused)="receiveStep($event)" [step]="step" [isfirstStep]="isFirst"></app-step>
           <!-- 
           <div class="block block-rounded mb-1">
             <a data-toggle="collapse" data-parent="#stepList" href="#accordion_q1" aria-expanded="false" aria-controls="accordion_q1">

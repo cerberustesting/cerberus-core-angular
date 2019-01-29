@@ -20,12 +20,11 @@ import { LabelsComponent } from './layout/pages/labels/labels.component';
 import { AlertsComponent } from './layout/shared/headerbar/alerts/alerts.component';
 import { StepComponent } from './layout/pages/testcasescript/tc-script/step/step.component';
 import { ActionComponent } from './layout/pages/testcasescript/tc-script/action/action.component';
-import { ReportComponent } from './layout/pages/report/report.component';
-import { TagselectorComponent } from './layout/pages/report/tagselector/tagselector.component';
 import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
 import { ControlComponent } from './layout/pages/testcasescript/tc-script/control/control.component';
 import { ExecutionsperweekComponent } from './layout/pages/dashboard/graph/executionsperweek/executionsperweek.component';
 import { SettingsComponent } from './layout/pages/testcasescript/tc-script/settings/settings.component';
+import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.component';
 
 @NgModule({
   declarations: [
@@ -44,11 +43,10 @@ import { SettingsComponent } from './layout/pages/testcasescript/tc-script/setti
     StepComponent,
     ActionComponent,
     PagenotfoundComponent,
-    ReportComponent,
-    TagselectorComponent,
     ControlComponent,
     ExecutionsperweekComponent,
     SettingsComponent,
+    ReportbytagComponent,
   ],
   imports: [
     BrowserModule,

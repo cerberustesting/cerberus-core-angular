@@ -3,8 +3,8 @@ import { Routes, RouterModule, Route } from '@angular/router';
 import { DashboardComponent } from './layout/pages/dashboard/dashboard.component';
 import { TestcasescriptComponent } from './layout/pages/testcasescript/testcasescript.component';
 import { LabelsComponent } from './layout/pages/labels/labels.component';
-import { ReportComponent } from './layout/pages/report/report.component';
 import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
+import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.component';
 
 const routes: Route[] = [
   // HOME ROUTING
@@ -12,9 +12,9 @@ const routes: Route[] = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'testcasescript', component: TestcasescriptComponent },
   { path: 'labels', component: LabelsComponent },
-  { path: 'report', component: ReportComponent },
   { path: 'pagenotfound', component: PagenotfoundComponent },
-  { path: '**', redirectTo: '/pagenotfound'}
+  { path: 'report', component: ReportbytagComponent },
+  { path: '**', redirectTo: '/pagenotfound' }
 ];
 
 @NgModule({

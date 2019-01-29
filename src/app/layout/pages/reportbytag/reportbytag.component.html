@@ -1,0 +1,44 @@
+<!-- title section -->
+<div class="bg-body-light">
+  <div class="content content-full">
+    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+      <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Execution Report</h1>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row" *ngIf="tagsList">
+    <div class="col-md-12">
+      <ng-select [items]="tagsBuffer" [virtualScroll]="true" [loading]="loading" bindLabel="tag" bindValue="id"
+        placeholder="Select a Tag" (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()">
+        <ng-template ng-header-tmp>
+          <small class="form-text text-muted">Loaded {{tagsBuffer.length}} of {{tagsList.length}}</small>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+          <!-- <b>{{item.id}}</b> {{item.tag}} -->
+          <div class="block block-rounded block-bordered mb-0">
+            <div class="block-header block-header-default">
+              <h3 class="block-title font-size-sm">{{item.tag}}</h3>
+              <div class="block-options">
+                  <span *ngIf="item.campaign" class="flex-fill text-muted font-size-sm font-w600 mr-1">
+                      <i class="fa fa-tags mr-1"></i> {{item.campaign}}
+                    </span>
+                  <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
+                      <i class="fa fa-list mr-1"></i> {{item.nbExeUsefull}} Exe(s)
+                    </span>
+                <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
+                  <i class="fa fa-calendar-alt mr-1"></i> September 25
+                </span>
+                <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
+                  <i class="fa fa-clock mr-1"></i> 14:02
+                </span>
+                <button *ngIf="item.ciResult" type="button" class="btn btn-sm btn-success">{{item.ciResult}}</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+</div>

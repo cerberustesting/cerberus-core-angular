@@ -14,6 +14,7 @@ export class ReportbytagComponent implements OnInit {
   private bufferSize = 50;
   private numberOfItemsFromEndBeforeFetchingMore = 10;
   private loading = false;
+  private selectedTag: ITag = null;
 
   constructor(private http: HttpClient, private ReportingService: ReportingService) { }
 
@@ -46,4 +47,5 @@ export class ReportbytagComponent implements OnInit {
       this.tagsBuffer = this.tagsBuffer.concat(more);
     }, 200)
   }
+
 }

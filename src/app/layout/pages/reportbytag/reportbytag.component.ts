@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ReportingService } from 'src/app/services/crud/reporting.service';
 import { HttpClient } from '@angular/common/http';
 import { ITag } from 'src/app/model/reporting.model';
+import { ActivatedRoute, Router } from '@angular/router';
+declare function initChartJS();
 
 @Component({
   selector: 'app-reportbytag',
@@ -9,6 +11,7 @@ import { ITag } from 'src/app/model/reporting.model';
   styleUrls: ['./reportbytag.component.scss']
 })
 export class ReportbytagComponent implements OnInit {
+  // ng-select configuration
   private tagsList: Array<ITag> = new Array();
   private tagsBuffer: Array<ITag> = new Array();
   private bufferSize = 50;
@@ -16,7 +19,10 @@ export class ReportbytagComponent implements OnInit {
   private loading = false;
   private selectedTag: ITag = null;
 
-  constructor(private http: HttpClient, private ReportingService: ReportingService) { }
+  constructor(private http: HttpClient,
+    private ReportingService: ReportingService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router, ) { }
 
   ngOnInit() {
     this.ReportingService.getTagList();
@@ -24,12 +30,26 @@ export class ReportbytagComponent implements OnInit {
       if (response) {
         this.tagsList = response;
         this.tagsBuffer = this.tagsList.slice(0, this.bufferSize)
+        // parse query strings from URL
+        this.activatedRoute.queryParams.subscribe(params => {
+          var tagFromURL = params['tag'];
+          if (tagFromURL) {
+            if (this.ReportingService.tagExists(tagFromURL)) {
+              this.selectedTag = this.ReportingService.findTag(tagFromURL);
+            }
+          }
+        });
       }
     });
+    initChartJS();
   }
 
   onScrollToEnd() {
     this.fetchMore();
+  }
+
+  selectedTagChange() {
+    this.router.navigate([], { queryParams: { tag: this.selectedTag.tag } });
   }
 
   onScroll({ end }) {

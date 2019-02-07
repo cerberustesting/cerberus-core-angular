@@ -1,0 +1,62 @@
+<div class="block block-rounded block-bordered">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">Report by Status</h3>
+    </div>
+    <div class="block-content block-content-full text-center">
+        <div class="row">
+            <div class="col-md-12 push">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
+                        style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                        <span class="font-size-sm font-w600">100% : all executions are done</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="block block-rounded">
+                    <div class="block-content">
+                        <div class="input-group push">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text input-group-text-alt ok-bg">OK</span>
+                            </div>
+                            <span type="text" class="form-control form-control-alt text-center" id="fas">999
+                                (100%)</span>
+                            <div class="input-group-append">
+                                <span class="input-group-text input-group-text-alt">
+                                    <i class="fa fa-check ok-color"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-group push">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text input-group-text-alt ko-bg">KO</span>
+                            </div>
+                            <span type="text" class="form-control form-control-alt text-center" id="fas">999
+                                (100%)</span>
+                            <div class="input-group-append">
+                                <span class="input-group-text input-group-text-alt">
+                                    <i class="fa fa-times ko-color"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-group push">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text input-group-text-alt fa-bg">FA</span>
+                            </div>
+                            <span type="text" class="form-control form-control-alt text-center" id="fas">999
+                                (100%)</span>
+                            <div class="input-group-append">
+                                <span class="input-group-text input-group-text-alt">
+                                    <i class="fa fa-robot fa-color"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <canvas [id]="graphID" class="js-chartjs-pie"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

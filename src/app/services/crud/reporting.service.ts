@@ -23,4 +23,13 @@ export class ReportingService {
         this.observableTagsList.next(this.tagsList);
       })
   }
+
+  tagExists(tag: string) {
+    if (tag != null) { return this.tagsList.filter(t => t.tag === tag).length > 0; }
+    else { return false; }
+  }
+
+  findTag(tag: string): ITag{
+    return this.tagsList.find(t => t.tag === tag);
+  }
 }

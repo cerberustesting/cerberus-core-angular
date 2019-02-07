@@ -21,10 +21,9 @@ export class ExecutionsperweekComponent implements OnInit {
   public initChartJSLines() {
     jQuery(() => {
       // Get Chart Containers
-      let chartLinesCon = jQuery('#graph_executionperweek');
+      let chartLinesCon = jQuery('#'+this.graphID);
       // Set Chart and Chart Data variables
-      let chartLines;
-      let chartLinesBarsRadarData, chartPolarPieDonutData;
+      let chartLinesBarsRadarData;
       // Lines/Bar/Radar Chart Data
       chartLinesBarsRadarData = {
         labels: ['07/12','08/12','09/12','10/12','11/12','14/12','15/12','16/12','17/12','18/12','21/12','22/12','23/12','24/12','28/12','29/12','30/12','31/12', '02/01', '03/01', 'TODAY'],

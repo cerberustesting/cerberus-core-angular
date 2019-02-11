@@ -57,7 +57,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
       }
     });
     // public invariants
-    this.InvariantService.getCountries();
+    this.InvariantService.getCountriesList();
     this.InvariantService.getTcStatus();
     this.InvariantService.getOriginsList();
     this.InvariantService.getPriorities();

@@ -3,6 +3,8 @@ import { ReportingService } from 'src/app/services/crud/reporting.service';
 import { HttpClient } from '@angular/common/http';
 import { ITag } from 'src/app/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { InvariantsService } from 'src/app/services/crud/invariants.service';
+import { IInvariant } from 'src/app/model/invariants.model';
 declare function initChartJS();
 
 @Component({
@@ -18,10 +20,41 @@ export class ReportbytagComponent implements OnInit {
   private numberOfItemsFromEndBeforeFetchingMore = 10;
   private loading = false;
   private selectedTag: ITag = null;
+  // variables
+  private countriesList: Array<IInvariant> = new Array();
+  private tceStatusList: Array<IInvariant> = new Array();
+  // DIRTY : need to create custom CSS class for earch TCE Status
+  private TceStatus_Class: Array<any> = new Array(
+    {
+      status: "OK",
+      class: "success"
+    },
+    {
+      status: "KO",
+      class: "danger"
+    },
+    {
+      status: "FA",
+      class: "warning"
+    },
+    {
+      status: "PE",
+      class: "info"
+    },
+    {
+      status: "NA",
+      class: "warning"
+    },
+    {
+      status: "CA",
+      class: "light"
+    }
+  );
 
   constructor(private http: HttpClient,
     private ReportingService: ReportingService,
     private activatedRoute: ActivatedRoute,
+    private InvariantsService: InvariantsService,
     private router: Router, ) { }
 
   ngOnInit() {
@@ -42,6 +75,10 @@ export class ReportbytagComponent implements OnInit {
       }
     });
     initChartJS();
+    this.InvariantsService.getCountriesList();
+    this.InvariantsService.getTceStatus();
+    this.InvariantsService.observableCountriesList.subscribe(response => { this.countriesList = response; });
+    this.InvariantsService.observableTceStatusList.subscribe(response => { this.tceStatusList = response; });
   }
 
   onScrollToEnd() {
@@ -49,7 +86,9 @@ export class ReportbytagComponent implements OnInit {
   }
 
   selectedTagChange() {
-    this.router.navigate([], { queryParams: { tag: this.selectedTag.tag } });
+    if (this.selectedTag) {
+      this.router.navigate([], { queryParams: { tag: this.selectedTag.tag } });
+    }
   }
 
   onScroll({ end }) {
@@ -66,6 +105,10 @@ export class ReportbytagComponent implements OnInit {
       this.loading = false;
       this.tagsBuffer = this.tagsBuffer.concat(more);
     }, 200)
+  }
+
+  findStatusClass(status: string) {
+    return this.TceStatus_Class.find(tces => tces.status === status).class;
   }
 
 }

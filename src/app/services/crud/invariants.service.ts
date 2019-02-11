@@ -14,6 +14,7 @@ export class InvariantsService {
   groupsList: Array<IInvariant>;
   actionsList: Array<IInvariant>;
   controlsList: Array<IInvariant>;
+  tcestatusList: Array<IInvariant>;
   // public invariants
   countriesList: Array<IInvariant>;
   tcstatusList: Array<IInvariant>;
@@ -22,7 +23,7 @@ export class InvariantsService {
   systemsList: Array<IInvariant>;
   systemsSelected = [];
   // observables
-  observableCountries = new BehaviorSubject<IInvariant[]>(this.countriesList);
+  observableCountriesList = new BehaviorSubject<IInvariant[]>(this.countriesList);
   observableTcStatus = new BehaviorSubject<IInvariant[]>(this.tcstatusList);
   observableSystems = new BehaviorSubject<IInvariant[]>(this.systemsList);
   observableSystemsSelected = new BehaviorSubject<any[]>(this.systemsSelected);
@@ -33,38 +34,38 @@ export class InvariantsService {
   observableStepLoopList = new BehaviorSubject<IInvariant[]>(this.stepLoopList);
   observableActionsList = new BehaviorSubject<IInvariant[]>(this.actionsList);
   observableControlsList = new BehaviorSubject<IInvariant[]>(this.controlsList);
+  observableTceStatusList = new BehaviorSubject<IInvariant[]>(this.tcestatusList);
 
   constructor(private http: HttpClient) { }
 
-  getCountries() {
+  getCountriesList() {
     this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=country')
       .subscribe(response => {
         this.countriesList = response;
-        this.observableCountries.next(this.countriesList);
+        this.observableCountriesList.next(this.countriesList);
       })
   }
-    getSystems() {
-        this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=system')
-            .subscribe(response => {
-                this.systemsList = response;
-                this.observableSystems.next(this.systemsList);
-            })
+  getSystems() {
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=system')
+      .subscribe(response => {
+        this.systemsList = response;
+        this.observableSystems.next(this.systemsList);
+      })
+  }
+  selectSystem(system) {
+    // @ts-ignore
+    if (!this.systemsSelected.includes(system)) {
+      this.systemsSelected.push(system);
+      console.log('new badge is : ' + system);
+    } else { console.log('System already selected : ' + system); }
+  }
+  removeSystem(badge) {
+    if (this.systemsSelected.indexOf(badge) != null) {
+      console.log('deleting badge : ' + badge);
+      this.systemsSelected.splice(this.systemsSelected.indexOf(badge), 1);
     }
-    selectSystem(system) {
-        // @ts-ignore
-        if (!this.systemsSelected.includes(system)) {
-            this.systemsSelected.push(system);
-            console.log('new badge is : ' + system );
-        } else { console.log('System already selected : ' + system ); }
-    }
-    removeSystem(badge) {
-        if (this.systemsSelected.indexOf(badge) != null) {
-            console.log('deleting badge : ' + badge );
-            this.systemsSelected.splice(this.systemsSelected.indexOf(badge),1);
-        }
-        console.log(this.systemsSelected);
-    }
-
+    console.log(this.systemsSelected);
+  }
   getTcStatus() {
     this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=tcStatus')
       .subscribe(response => {
@@ -72,7 +73,13 @@ export class InvariantsService {
         this.observableTcStatus.next(this.tcstatusList);
       })
   }
-
+  getTceStatus() {
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=tceStatus')
+      .subscribe(response => {
+        this.tcestatusList = response;
+        this.observableTceStatusList.next(this.tcestatusList);
+      })
+  }
   getPriorities() {
     this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=priority')
       .subscribe(response => {

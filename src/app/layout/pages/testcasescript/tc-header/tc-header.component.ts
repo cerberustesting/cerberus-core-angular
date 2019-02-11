@@ -97,7 +97,7 @@ export class TcHeaderComponent implements OnInit {
     this.TestService.observableTestCasesList.subscribe(response => { this.testcasesList = response; });
     this.TestService.observableTestCaseLabels.subscribe(response => { this.testcaseheader_labelsList = response; });
     this.TestService.observableProjectsList.subscribe(response => { this.projectsList = response; });
-    this.InvariantService.observableCountries.subscribe(response => { this.inv_countries = response; });
+    this.InvariantService.observableCountriesList.subscribe(response => { this.inv_countries = response; });
     this.InvariantService.observableTcStatus.subscribe(response => { this.inv_tcstatus = response; });
     this.InvariantService.observableGroupsList.subscribe(response => { this.inv_group = response; });
     this.InvariantService.observablePriorities.subscribe(response => { this.inv_priorities = response; });
@@ -140,7 +140,7 @@ export class TcHeaderComponent implements OnInit {
     this.SystemService.getSprintsFromSystem(this.testcaseheader.system);
     this.SystemService.getApplication(this.testcaseheader.application);
     this.TestService.getProjectsList();
-    this.InvariantService.getCountries();
+    this.InvariantService.getCountriesList();
     this.InvariantService.getTcStatus();
     this.InvariantService.getOriginsList();
     this.InvariantService.getPriorities();

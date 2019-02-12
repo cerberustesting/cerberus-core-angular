@@ -2,7 +2,7 @@
   <div class="col-md-12 mt-2 mb-2 pl-5 pr-5">
     <div *ngFor="let alert of alertsList; let i = index" class="alert alert-dismissable mb-2 animated" [ngClass]="[alert.current_animation, alert.style]"
       role="alert" style="animation-duration: 0.5s !important;">
-      <button type="button" class="close" (click)="AlertService.closeMessage(alert,i)">
+      <button *ngIf="alert.dismissable" type="button" class="close" (click)="AlertService.closeMessage(alert,i)">
         <span aria-hidden="true">×</span>
       </button>
       <p class="mb-0">{{ alert.message }}</p>

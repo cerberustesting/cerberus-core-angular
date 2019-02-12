@@ -3,6 +3,7 @@ import { IInvariant } from 'src/app/model/invariants.model';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AppSettings } from 'src/app/app.component';
+import { AlertService, Alert } from '../utils/alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -36,21 +37,21 @@ export class InvariantsService {
   observableControlsList = new BehaviorSubject<IInvariant[]>(this.controlsList);
   observableTceStatusList = new BehaviorSubject<IInvariant[]>(this.tcestatusList);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private AlertService: AlertService) { }
 
   getCountriesList() {
     this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=country')
       .subscribe(response => {
         this.countriesList = response;
         this.observableCountriesList.next(this.countriesList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
   getSystems() {
     this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=system')
       .subscribe(response => {
         this.systemsList = response;
         this.observableSystems.next(this.systemsList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
   selectSystem(system) {
     // @ts-ignore
@@ -71,14 +72,14 @@ export class InvariantsService {
       .subscribe(response => {
         this.tcstatusList = response;
         this.observableTcStatus.next(this.tcstatusList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
   getTceStatus() {
     this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=tceStatus')
       .subscribe(response => {
         this.tcestatusList = response;
         this.observableTceStatusList.next(this.tcestatusList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
   getPriorities() {
     this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=priority')
@@ -89,7 +90,7 @@ export class InvariantsService {
           this.prioritiesList[key].valueInt = Number(this.prioritiesList[key].value);
         }
         this.observablePriorities.next(this.prioritiesList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
 
   getOriginsList() {
@@ -97,7 +98,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.originsList = response;
         this.observableOriginsList.next(this.originsList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
 
   getGroupList() {
@@ -105,7 +106,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.groupsList = response;
         this.observableGroupsList.next(this.groupsList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
 
   getStepConditionOperList() {
@@ -113,7 +114,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.conditionOperList = response;
         this.observableConditionOperList.next(this.conditionOperList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
 
   getStepLoopList() {
@@ -121,7 +122,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.stepLoopList = response;
         this.observableStepLoopList.next(this.stepLoopList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
 
   getActionList() {
@@ -129,7 +130,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.actionsList = response;
         this.observableActionsList.next(this.actionsList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
 
   getControlsList() {
@@ -137,7 +138,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.controlsList = response;
         this.observableControlsList.next(this.controlsList);
-      })
+      }, (err) => this.AlertService.APIError(err));
   }
 
 }

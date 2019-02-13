@@ -15,65 +15,165 @@
           <h3 class="block-title">Tag <small>selection</small></h3>
         </div>
         <div class="block-content row">
-          <div class="col-md-12 push">
-            <ng-select [items]="tagsBuffer" [virtualScroll]="true" [loading]="loading" bindLabel="tag"
-              placeholder="Select a Tag" (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()"
-              [(ngModel)]='selectedTag' (change)="selectedTagChange()">
-              <ng-template ng-header-tmp>
-                <small class="form-text text-muted">Loaded {{tagsBuffer.length}} of {{tagsList.length}}</small>
-              </ng-template>
-              <ng-template ng-option-tmp let-item="item" let-index="index">
-                <!-- <b>{{item.id}}</b> {{item.tag}} -->
-                <div class="block block-rounded block-bordered mb-0">
-                  <div class="block-header block-header-default">
-                    <h3 class="block-title font-size-sm">{{item.tag}}</h3>
-                    <div class="block-options">
-                      <span *ngIf="item.campaign" class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                        <i class="fa fa-tags mr-1"></i> {{item.campaign}}
-                      </span>
-                      <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                        <i class="fa fa-list mr-1"></i> {{item.nbExeUsefull}} Exe(s)
-                      </span>
-                      <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                        <i class="fa fa-calendar-alt mr-1"></i> September 25
-                      </span>
-                      <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                        <i class="fa fa-clock mr-1"></i> 14:02
-                      </span>
-                      <button *ngIf="item.ciResult" type="button"
-                        class="btn btn-sm btn-success">{{item.ciResult}}</button>
+          <!-- tag selection section -->
+          <div class="col-md-12 row push">
+            <div class="col-md-11 pr-0">
+              <ng-select [items]="tagsBuffer" [virtualScroll]="true" [loading]="loading" bindLabel="tag"
+                placeholder="Select a Tag" (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()"
+                [(ngModel)]='selectedTag' (change)="selectedTagChange()" (clear)="clearTag()">
+                <ng-template ng-header-tmp>
+                  <small class="form-text text-muted">Loaded {{tagsBuffer.length}} of {{tagsList.length}}</small>
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  <!-- <b>{{item.id}}</b> {{item.tag}} -->
+                  <div class="block block-rounded block-bordered mb-0">
+                    <div class="block-header block-header-default">
+                      <h3 class="block-title font-size-sm">{{item.tag}}</h3>
+                      <div class="block-options">
+                        <span *ngIf="item.campaign" class="flex-fill text-muted font-size-sm font-w600 mr-1">
+                          <i class="fa fa-tags mr-1"></i> {{item.campaign}}
+                        </span>
+                        <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
+                          <i class="fa fa-list mr-1"></i> {{item.nbExeUsefull}} Exe(s)
+                        </span>
+                        <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
+                          <i class="fa fa-calendar-alt mr-1"></i> September 25
+                        </span>
+                        <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
+                          <i class="fa fa-clock mr-1"></i> 14:02
+                        </span>
+                        <button *ngIf="item.ciResult" type="button"
+                          class="btn btn-sm btn-success">{{item.ciResult}}</button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </ng-template>
-            </ng-select>
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="col-md-1">
+              <button type="button" class="btn btn-outline-secondary heigthNgSelect"
+                (click)="filtersShowed = !filtersShowed" [ngClass]="selectedTag ? '' : 'disabled'"
+                [disabled]="!selectedTag">
+                <span *ngIf="filtersShowed">Hide</span>
+                <span *ngIf="!filtersShowed">Show</span>
+                <span> Filters</span>
+              </button>
+            </div>
           </div>
-          <div *ngIf="selectedTag" class="col-md-6">
+          <!-- filters section -->
+          <div *ngIf="filtersShowed && selectedTag && countriesList" class="col-md-6"
+            (mouseenter)="mouseEnterCountriesFilter() " (mouseleave)="mouseLeaveCountriesFilter()">
             <div class="block block-rounded block-bordered">
+              <div class="block-header">
+                <h3 class="block-title">Filter <small>by countries</small></h3>
+                <div *ngIf="showCountriesFilterOptions" class="block-options">
+                  <button type="button" class="btn btn-sm btn-primary pt-0 pb-0 mr-2"
+                    (click)="selectAllCountries()">Select All</button>
+                  <button type="button" class="btn btn-sm btn-primary pt-0 pb-0" (click)="UnselectAllCountries()">Select
+                    None</button>
+                </div>
+              </div>
               <div class="block-content">
                 <div class="form-group">
-                  <label class="d-block">Filter by Countries</label>
-                  <div *ngFor="let country of countriesList"
+                  <!-- <label class="d-block">Filter by Countries</label> -->
+                  <div *ngFor="let country of countriesList; let i = index"
                     class="custom-control custom-checkbox custom-control-lg custom-control-inline">
                     <input type="checkbox" class="custom-control-input" [id]="country.value" [name]="country.value"
-                      checked>
+                      [checked]="isCountrySelected(country.value)" (change)="updateCountriesList($event,country.value)">
                     <label class="custom-control-label" [for]="country.value">{{country.value}}</label>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div *ngIf="selectedTag" class="col-md-6">
+          <div *ngIf="filtersShowed && selectedTag" class="col-md-6">
             <div class="block block-rounded block-bordered">
+              <div class="block-header">
+                <h3 class="block-title">Filter <small>by status</small></h3>
+                <div class="block-options">
+                  <button type="button" class="btn btn-sm btn-primary pt-0 pb-0 mr-2"
+                    (click)="selectAllTCEStatus()">Select All</button>
+                  <button type="button" class="btn btn-sm btn-primary pt-0 pb-0" (click)="UnselectAllTCEStatus()">Select
+                    None</button>
+                </div>
+              </div>
               <div class="block-content">
                 <div class="form-group">
-                  <label class="d-block">Filter by Status</label>
                   <div *ngFor="let tceStatus of tceStatusList"
                     class="custom-control custom-checkbox custom-control-lg custom-control-inline"
                     [ngClass]="'custom-control-'+findStatusClass(tceStatus.value)">
                     <input type="checkbox" class="custom-control-input" [id]="tceStatus.value" [name]="tceStatus.value"
-                      checked>
+                      [checked]="isTCEStatusSelected(tceStatus.value)"
+                      (change)="updateTCEStatusList($event,tceStatus.value)">
                     <label class="custom-control-label" [for]="tceStatus.value">{{tceStatus.value}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="filtersShowed && selectedTag" class="col-md-12 push">
+            <div class="block block-rounded block-bordered">
+              <div class="block-header">
+                <h3 class="block-title">Widget <small>selection</small></h3>
+              </div>
+              <div class="block-content row">
+                <div class="col-md-12 mb-0 pl-0 pr-0 form-group">
+                </div>
+                <div class="col-md-3">
+                  <div class="custom-control custom-block custom-control-info">
+                    <input type="checkbox" class="custom-control-input" id="example-cb-custom-block6"
+                      name="example-cb-custom-block6" checked="">
+                    <label class="custom-control-label" for="example-cb-custom-block6">
+                      <span class="d-block text-center">
+                        <i class="fa fa-info fa-2x mb-2 text-black-50"></i><br>
+                        Report By Function/Test
+                      </span>
+                    </label>
+                    <span class="custom-block-indicator">
+                      <i class="fa fa-check"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="custom-control custom-block custom-control-info">
+                    <input type="checkbox" class="custom-control-input" id="block2" name="block2" checked="">
+                    <label class="custom-control-label" for="block2">
+                      <span class="d-block text-center">
+                        <i class="fa fa-cubes fa-2x mb-2 text-black-50"></i><br>
+                        Report By Application
+                      </span>
+                    </label>
+                    <span class="custom-block-indicator">
+                      <i class="fa fa-check"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="custom-control custom-block custom-control-info">
+                    <input type="checkbox" class="custom-control-input" id="block3" name="block3" checked="">
+                    <label class="custom-control-label" for="block3">
+                      <span class="d-block text-center">
+                        <i class="fa fa-tag fa-2x mb-2 text-black-50"></i><br>
+                        Report By Label
+                      </span>
+                    </label>
+                    <span class="custom-block-indicator">
+                      <i class="fa fa-check"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="custom-control custom-block custom-control-info">
+                    <input type="checkbox" class="custom-control-input" id="block4" name="block4" checked="">
+                    <label class="custom-control-label" for="block4">
+                      <span class="d-block text-center">
+                        <i class="fa fa-list-ul fa-2x mb-2 text-black-50"></i><br>
+                        Executions List
+                      </span>
+                    </label>
+                    <span class="custom-block-indicator">
+                      <i class="fa fa-check"></i>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -97,8 +197,8 @@
               <i class="si si-refresh"></i>
             </button>
             <!-- idea : export to pdf -->
-            <button type="button" class="btn-block-option"><i
-              class="si si-doc"></i></button>
+            <button type="button" class="btn-block-option" ngbPopover="Export PDF" triggers="mouseenter:mouseleave"><i
+                class="si si-doc"></i></button>
           </div>
         </div>
         <div class="block-content">
@@ -174,6 +274,17 @@
                       </div>
                       <span type="text" class="form-control form-control-alt text-center" id="StartTime">
                         <i class="fa fa-user mr-1"></i> admin</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text input-group-text-alt">
+                          Latest
+                        </span>
+                      </div>
+                      <span type="text" class="form-control form-control-alt text-center" id="LatestExecution">
+                        <i class="fa fa-calendar-alt mr-1"></i> 03 September 2018 </span>
                     </div>
                   </div>
                 </div>

@@ -119,7 +119,7 @@ export class ReportbytagComponent implements OnInit {
     setTimeout(() => {
       this.loading = false;
       this.tagsBuffer = this.tagsBuffer.concat(more);
-    }, 200)
+    }, 1)
   }
 
   clearTag() {

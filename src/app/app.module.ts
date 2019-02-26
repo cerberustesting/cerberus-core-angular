@@ -26,6 +26,7 @@ import { ExecutionsperweekComponent } from './layout/pages/dashboard/graph/execu
 import { SettingsComponent } from './layout/pages/testcasescript/tc-script/settings/settings.component';
 import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.component';
 import { ReportbystatusComponent } from './layout/pages/reportbytag/graph/reportbystatus/reportbystatus.component';
+import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugreport.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ReportbystatusComponent } from './layout/pages/reportbytag/graph/report
     SettingsComponent,
     ReportbytagComponent,
     ReportbystatusComponent,
+    BugreportComponent,
   ],
   imports: [
     BrowserModule,

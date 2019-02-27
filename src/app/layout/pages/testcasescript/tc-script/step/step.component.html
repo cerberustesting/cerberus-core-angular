@@ -1,6 +1,7 @@
 <div class="block block-rounded block-bordered mb-2">
-  <div class="block-header block-header-default" role="tab" [id]="'step'+step.sort" [ngClass]="step.toDelete ? 'toDelete' : '' ">
-    <div class="input-group">
+  <div class="block-header block-header-default" role="tab" [id]="'step'+step.sort"
+    [ngClass]="step.toDelete ? 'toDelete' : '' ">
+    <div class="input-group" (click)="focusOnStep()">
       <div class="input-group-prepend">
         <!-- <span class="input-group-text"><i class="fa fa-arrows-alt-v"></i></span> -->
         <button type="button" class="btn btn-primary">
@@ -12,16 +13,17 @@
       </div>
       <div class="input-group-prepend">
         <a class="input-group-text" data-toggle="collapse" data-parent="#stepList" [href]="'#step'+step.sort+'toggle'"
-          aria-expanded="false" [attr.aria-controls]="'step'+step.sort+'toggle'" (click)="focusOnStep()">
+          aria-expanded="false" [attr.aria-controls]="'step'+step.sort+'toggle'" (click)="showActionList = !showActionList">
           <i class="si" [ngClass]="showActionList ? 'si-arrow-down' : 'si-arrow-right'"></i>
         </a>
       </div>
-      <input type="text" [(ngModel)]="step.description" class="form-control" [id]="'step'+step.sort+'description'" name="activeStepDescription"
-        placeholder="Step Description">
+      <input type="text" [(ngModel)]="step.description" class="form-control" [id]="'step'+step.sort+'description'"
+        name="activeStepDescription" placeholder="Step Description">
     </div>
     <div class="block-options">
-      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button" class="btn-block-option info_block_options"
-        ngbPopover="This step execution is looped" triggers="mouseenter:mouseleave">
+      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button"
+        class="btn-block-option info_block_options" ngbPopover="This step execution is looped"
+        triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-redo"></i>
       </button>
       <button *ngIf="step.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
@@ -29,16 +31,29 @@
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw" [ngClass]="step.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
       </button>
-      <button *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options" ngbPopover="This step execution is forced"
-        triggers="mouseenter:mouseleave">
+      <button *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This step execution is forced" triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa fa-arrow-down"></i>
+      </button>
+      <button *ngIf="libraryState() == 'locked'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This step is imported from Library" triggers="mouseenter:mouseleave">
+        <i class="fa fa-fw fa-lock"></i>
+      </button>
+      <button *ngIf="libraryState() == 'reference'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This step is a library step" triggers="mouseenter:mouseleave">
+        <i class="fa fa-fw fa-book"></i>
+      </button>
+      <button *ngIf="libraryState() == 'clear'" type="button" class="btn-block-option"
+        ngbPopover="Save this step in Library" triggers="mouseenter:mouseleave">
+        <i class="fa fa-fw fa-book"></i>
       </button>
       <button type="button" class="btn-block-option" (click)="step.toDelete = !step.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>
       </button>
     </div>
   </div>
-  <div *ngIf="showActionList" [id]="'step'+step.sort+'toggle'" class="collapse" role="tabpanel" [attr.aria-labelledby]="'step'+step.sort">
+  <div *ngIf="showActionList" [id]="'step'+step.sort+'toggle'" class="collapse" role="tabpanel"
+    [attr.aria-labelledby]="'step'+step.sort">
     <div *ngIf="step.actionList.length > 0">
       <app-action *ngFor="let action of step.actionList" [action]="action"></app-action>
     </div>

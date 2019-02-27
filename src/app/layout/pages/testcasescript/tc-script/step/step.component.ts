@@ -28,7 +28,21 @@ export class StepComponent implements OnInit {
   focusOnStep(): void {
     // send the step to the settings service and thus, to the settings component
     this.SettingsService.editStepSettings(this.step);
-    this.showActionList = !this.showActionList;
+  }
+
+  // Depedending on the combination of useStep and inLibrary,
+  // return a state used by the view for rendering
+  libraryState(): string {
+    if (this.step.useStep == 'Y' && this.step.inLibrary == 'N') {
+      return "locked"
+    } else if (this.step.useStep == 'N' && this.step.inLibrary == 'Y') {
+      return "reference"
+    } else if (this.step.useStep == 'N' && this.step.inLibrary == 'N') {
+      return "clear"
+    } else {
+      console.log("ERROR on libraryState() call");
+      return null;
+    }
   }
 
   clearFocus(): void {

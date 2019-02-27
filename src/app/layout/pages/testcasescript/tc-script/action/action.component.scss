@@ -29,3 +29,6 @@
     border-top-left-radius: 0.25rem !important;
     border-bottom-left-radius: 0.25rem !important;
 }
+.btn-block-option:disabled i {
+    color:transparent;
+}

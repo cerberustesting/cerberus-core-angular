@@ -16,6 +16,7 @@ export class ControlComponent implements OnInit {
 
   @Input('control') control: IControl;
   @Input('isLast') isLast: boolean;
+  @Input('readonly') readonly: boolean;
 
   showControlAddButtons: boolean;
   testcase: ITestCase;
@@ -39,6 +40,7 @@ export class ControlComponent implements OnInit {
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
     this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
+    console.log(this.control);
   }
 
   flagForDeletion(control: IControl) { this.control.toDelete = !this.control.toDelete; this.debug(); }
@@ -61,7 +63,7 @@ export class ControlComponent implements OnInit {
 
   focusOnControl(): void {
     // send the control to the settings service and thus, to the settings component
-    this.SettingsService.editControlSettings(this.control);
+    this.SettingsService.editControlSettings(this.control, this.readonly);
   }
 
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasControlCrossReference(control); }

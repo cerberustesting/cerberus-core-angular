@@ -17,7 +17,7 @@
         </span>
       </div>
       <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0" [id]="'step'+action.step+'action'+action.sort"
-        name="activeStepDescription" placeholder="Action Description">
+        name="activeStepDescription" placeholder="Action Description" [readonly]="readonly">
     </div>
     <div *ngIf="showActionAddButtons" class="block-options">
       <button type="button" class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
@@ -183,5 +183,5 @@
 -->
 <!-- TODO : add a pipe to order by sequence -->
 <div *ngIf="showControlList">
-  <app-control *ngFor="let control of action.controlList; let last = last" [control]="control" [isLast]="last"></app-control>
+  <app-control *ngFor="let control of action.controlList; let last = last" [control]="control" [isLast]="last" [readonly]="readonly"></app-control>
 </div>

@@ -15,6 +15,7 @@ import { SettingsService } from '../settings/settings.service';
 export class ActionComponent implements OnInit {
 
   @Input('action') action: IAction;
+  @Input('readonly') readonly: boolean;
   showActionAddButtons: boolean;
   showControlList: boolean;
   testcase: ITestCase;
@@ -55,7 +56,7 @@ export class ActionComponent implements OnInit {
 
   focusOnAction(): void {
     // send the action to the settings service and thus, to the settings component
-    this.SettingsService.editActionSettings(this.action);
+    this.SettingsService.editActionSettings(this.action, this.readonly);
   }
 
   hasActionCrossReference(action: string): boolean { return this.CrossReferenceService.hasActionCrossReference(action); }

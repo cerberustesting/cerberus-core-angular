@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
   step: IStep;
   action: IAction;
   control: IControl;
+  readonly: boolean;
   // private invariants
   private inv_condition_oper: Array<IInvariant>;
   private inv_step_loop: Array<IInvariant>;
@@ -43,6 +44,7 @@ export class SettingsComponent implements OnInit {
     this.InvariantService.observableStepLoopList.subscribe(response => { this.inv_step_loop = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
+    this.SettingsService.observableReadOnlyMode.subscribe(response => { this.readonly = response; });
   }
 
   hasConditionCrossReference(condition: string): boolean { return this.CrossReferenceService.hasConditionCrossReference(condition); }

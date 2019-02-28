@@ -13,7 +13,7 @@
         </span>
       </div>
       <input type="text" [id]="'step'+control.step+'action'+control.sequence+'control'+control.sort" [(ngModel)]="control.description"
-        class="form-control br-lr-1 bg-transparent b-0" name="activeStepDescription" placeholder="Control Description">
+        class="form-control br-lr-1 bg-transparent b-0" name="activeStepDescription" placeholder="Control Description" [readonly]="readonly">
     </div>
     <div *ngIf="showControlAddButtons" class="block-options">
       <button type="button" class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-fw fa-plus"></i> </button>

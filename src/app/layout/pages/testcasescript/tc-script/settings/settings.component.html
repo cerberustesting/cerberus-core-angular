@@ -1,4 +1,4 @@
-<div class="block block-bordered block-rounded sticky-top sticky-offset">
+<div id="settings" class="block block-bordered block-rounded sticky-top sticky-offset">
   <div class="block-header block-header-default">
     <h3 class="block-title">
       <span *ngIf="step">Step</span>
@@ -13,12 +13,14 @@
     </div>
   </div>
   <div class="block-content">
+    <!-- STEP -->
     <div id="activeStepSettings" *ngIf="step">
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
             <label for="activeStepLoop"><i class="fa fa-redo mr-1"></i> Loop</label>
-            <select class="form-control br-tp-0" id="activeStepLoop" name="activeStepLoop" [(ngModel)]="step.loop">
+            <select class="form-control br-tp-0" id="activeStepLoop" name="activeStepLoop" [(ngModel)]="step.loop"
+              [disabled]="readonly">
               <option *ngFor='let steploop of inv_step_loop' [ngValue]='steploop.value'>{{steploop.value}}</option>
             </select>
           </div>
@@ -26,8 +28,10 @@
         <div class="col-md-12">
           <div class="form-group">
             <label for="activeStepCondition"><i class="fa fa-question mr-1"></i> Condition</label>
-            <select class="form-control br-tp-0" id="activeStepCondition" name="activeStepCondition" [(ngModel)]="step.conditionOper">
-              <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}</option>
+            <select class="form-control br-tp-0" id="activeStepCondition" name="activeStepCondition"
+              [(ngModel)]="step.conditionOper" [disabled]="readonly">
+              <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}
+              </option>
             </select>
           </div>
         </div>
@@ -40,7 +44,8 @@
                 <span class="input-group-text">{{
                   findConditionCrossReference(step.conditionOper).value1 }}</span>
               </div>
-              <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1" [(ngModel)]="step.conditionVal1">
+              <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1"
+                [(ngModel)]="step.conditionVal1" [readonly]="readonly">
             </div>
           </div>
         </div>
@@ -51,20 +56,21 @@
                 <span class="input-group-text">{{
                   findConditionCrossReference(step.conditionOper).value2 }}</span>
               </div>
-              <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2" [(ngModel)]="step.conditionVal2">
+              <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2"
+                [(ngModel)]="step.conditionVal2" [readonly]="readonly">
             </div>
           </div>
         </div>
       </div>
       <div class="row text-center">
-
         <div class="col-md-12">
           <div class="block block-rounded block-bordered">
             <div class="block-header block-header-default">
               <div class="custom-control custom-switch custom-control-inline">
-                <input type="checkbox" class="custom-control-input" id="currentStepforceExeStatus" name="currentStepforceExeStatus"
-                  [checked]="step.forceExe == 'Y'" (change)="step.forceExe = $event.target.checked ? 'Y' : 'N'">
-                <label class="custom-control-label" for="currentStepforceExeStatus">
+                <input type="checkbox" class="custom-control-input" id="activeStepforceExecution"
+                  name="activeStepforceExecution" [checked]="step.forceExe == 'Y'"
+                  (change)="step.forceExe = $event.target.checked ? 'Y' : 'N'" [disabled]="readonly">
+                <label class="custom-control-label" for="activeStepforceExecution">
                   Force Execution
                 </label>
               </div>
@@ -78,13 +84,15 @@
         </div>
       </div>
     </div>
+    <!-- END STEP -->
+    <!-- ACTION -->
     <div id="activeActionSettings" *ngIf="action">
       <div class="row">
         <div class="col-md-12" *ngIf="inv_action">
           <div class="form-group">
-            <label for="activeActionCondition"><i class="fa fa-bolt mr-1"></i> Action</label>
-            <select class="form-control br-tp-0" [id]="'action'+action.sort+'action'" [name]="'action'+action.sort+'action'"
-              [(ngModel)]="action.action">
+            <label for="activeAction"><i class="fa fa-bolt mr-1"></i> Action</label>
+            <select class="form-control br-tp-0" id="activeAction" name="activeAction" [(ngModel)]="action.action"
+              [disabled]="readonly">
               <option *ngFor='let action of inv_action' [ngValue]='action.value'>{{action.value}}</option>
             </select>
           </div>
@@ -96,13 +104,14 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">
                     <i *ngIf="findActionCrossReference(action.action).info_title1 && findActionCrossReference(action.action).description1"
-                      class="fa fa-fw fa-question-circle info mr-1" [ngbPopover]="findActionCrossReference(action.action).description1"
+                      class="fa fa-fw fa-question-circle info mr-1"
+                      [ngbPopover]="findActionCrossReference(action.action).description1"
                       [popoverTitle]="findActionCrossReference(action.action).info_title1" placement="top"></i>
                     {{ findActionCrossReference(action.action).value1 }}
                   </span>
                 </div>
-                <input type="text" class="form-control" [id]="'action'+action.sort+'value1'" [name]="'action'+action.sort+'value1'"
-                  [(ngModel)]="action.value1">
+                <input type="text" class="form-control" id="activeActionValue1" name="activeActionValue1"
+                  [(ngModel)]="action.value1" [readonly]="readonly">
               </div>
             </div>
           </div>
@@ -113,8 +122,8 @@
                   <span class="input-group-text">{{
                     findActionCrossReference(action.action).value2 }}</span>
                 </div>
-                <input type="text" class="form-control" [id]="'action'+action.sort+'value2'" [name]="'action'+action.sort+'value2'"
-                  [(ngModel)]="action.value2">
+                <input type="text" class="form-control" id="activeActionValue2" name="activeActionValue2"
+                  [(ngModel)]="action.value2" [readonly]="readonly">
               </div>
             </div>
           </div>
@@ -122,8 +131,10 @@
         <div class="col-md-12" *ngIf="inv_condition_oper">
           <div class="form-group">
             <label for="activeActionCondition"><i class="fa fa-question mr-1"></i> Condition</label>
-            <select class="form-control br-tp-0" id="activeActionCondition" name="activeActionCondition" [(ngModel)]="action.conditionOper">
-              <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}</option>
+            <select class="form-control br-tp-0" id="activeActionCondition" name="activeActionCondition"
+              [(ngModel)]="action.conditionOper" [disabled]="readonly">
+              <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}
+              </option>
             </select>
           </div>
         </div>
@@ -134,8 +145,8 @@
                 <span class="input-group-text">{{
                   findConditionCrossReference(action.conditionOper).value1 }}</span>
               </div>
-              <input type="text" [id]="'action'+action.sort+'conditionVal1'" class="form-control" id="activeStepParameter1"
-                [name]="'action'+action.sort+'conditionVal1'" [(ngModel)]="action.conditionVal1">
+              <input type="text" id="activeActionConditionValue1" class="form-control"
+                name="activeActionConditionValue1" [(ngModel)]="action.conditionVal1" [readonly]="readonly">
             </div>
           </div>
         </div>
@@ -146,8 +157,8 @@
                 <span class="input-group-text">{{
                   findConditionCrossReference(action.conditionOper).value2 }}</span>
               </div>
-              <input type="text" [id]="'action'+action.sort+'conditionVal2'" class="form-control" [name]="'action'+action.sort+'conditionVal2'"
-                [(ngModel)]="action.conditionVal2">
+              <input type="text" id="activeActionConditionValue2" class="form-control"
+                name="activeActionConditionValue2" [(ngModel)]="action.conditionVal2" [readonly]="readonly">
             </div>
           </div>
         </div>
@@ -155,8 +166,9 @@
           <div class="block block-rounded block-bordered">
             <div class="block-header block-header-default">
               <div class="custom-control custom-switch custom-control-inline">
-                <input type="checkbox" class="custom-control-input" id="currentActionforceExeStatus" name="currentActionforceExeStatus"
-                  [checked]="action.forceExeStatus == 'PE'" (change)="action.forceExeStatus = $event.target.checked ? 'PE' : ''">
+                <input type="checkbox" class="custom-control-input" id="currentActionforceExeStatus"
+                  name="currentActionforceExeStatus" [checked]="action.forceExeStatus == 'PE'"
+                  (change)="action.forceExeStatus = $event.target.checked ? 'PE' : ''" [disabled]="readonly">
                 <label class="custom-control-label" for="currentActionforceExeStatus">
                   Force Execution
                 </label>
@@ -171,13 +183,15 @@
         </div>
       </div>
     </div>
+    <!-- END ACTION -->
+    <!-- CONTROL -->
     <div id="activeControlSettings" *ngIf="control">
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
-            <label for="activeControlValue"><i class="fa fa-search mr-1"></i> Control</label>
-            <select class="form-control br-tp-0" id="activeControlValue" [name]="'control'+control.sort+'select'"
-              [(ngModel)]="control.control">
+            <label for="activeControl"><i class="fa fa-search mr-1"></i> Control</label>
+            <select class="form-control br-tp-0" id="activeControl" name="activeControl" [(ngModel)]="control.control"
+              [disabled]="readonly">
               <option *ngFor='let control of inv_control' [ngValue]='control.value'>{{control.value}}</option>
             </select>
           </div>
@@ -190,8 +204,8 @@
                   <span class="input-group-text">{{
                     findControlCrossReference(control.control).value1 }}</span>
                 </div>
-                <input type="text" class="form-control" [id]="'control'+(control.sequence)+'_'+control.sort+'value1'"
-                  [name]="'control'+(control.sequence)+'_'+control.sort+'value1'" [(ngModel)]="control.conditionVal1">
+                <input type="text" class="form-control" id="activeControlValue1" name="activeControlValue1"
+                  [(ngModel)]="control.value1" [readonly]="readonly">
               </div>
             </div>
           </div>
@@ -202,17 +216,19 @@
                   <span class="input-group-text">{{
                     findControlCrossReference(control.control).value2 }}</span>
                 </div>
-                <input type="text" class="form-control" [id]="'control'+(control.sequence)+'_'+control.sort+'value2'"
-                  [name]="'control'+(control.sequence)+'_'+control.sort+'value2'" [(ngModel)]="control.conditionVal2">
+                <input type="text" class="form-control" id="activeControlValue2" name="activeControlValue2"
+                  [(ngModel)]="control.value2" [readonly]="readonly">
               </div>
             </div>
           </div>
         </div>
         <div class="col-md-12" *ngIf="inv_condition_oper">
           <div class="form-group">
-            <label for="activeActionCondition"><i class="fa fa-question mr-1"></i> Condition</label>
-            <select class="form-control br-tp-0" id="active_step_condition" name="activeStepCondition" [(ngModel)]="control.conditionOper">
-              <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}</option>
+            <label for="activeControlCondition"><i class="fa fa-question mr-1"></i> Condition</label>
+            <select class="form-control br-tp-0" id="activeControlCondition" name="activeControlCondition"
+              [(ngModel)]="control.conditionOper" [disabled]="readonly">
+              <option *ngFor='let condition of inv_condition_oper' [ngValue]='condition.value'>{{condition.value}}
+              </option>
             </select>
           </div>
         </div>
@@ -224,8 +240,8 @@
                   <span class="input-group-text">{{
                     findConditionCrossReference(control.conditionOper).value1 }}</span>
                 </div>
-                <input type="text" class="form-control" id="activeStepParameter1" name="activeStepParameter1"
-                  [(ngModel)]="control.conditionVal1">
+                <input type="text" class="form-control" id="activeControlConditionValue1" name="activeControlConditionValue1"
+                  [(ngModel)]="control.conditionVal1" [readonly]="readonly">
               </div>
             </div>
           </div>
@@ -236,8 +252,8 @@
                   <span class="input-group-text">{{
                     findConditionCrossReference(control.conditionOper).value2 }}</span>
                 </div>
-                <input type="text" class="form-control" id="activeStepParameter2" name="activeStepParameter2"
-                  [(ngModel)]="control.conditionVal2">
+                <input type="text" class="form-control" id="activeControlConditionValue2" name="activeControlConditionValue2"
+                  [(ngModel)]="control.conditionVal2" [readonly]="readonly">
               </div>
             </div>
           </div>
@@ -246,9 +262,10 @@
           <div class="block block-rounded block-bordered">
             <div class="block-header block-header-default">
               <div class="custom-control custom-switch custom-control-inline">
-                <input type="checkbox" class="custom-control-input" id="currentControlfatal" name="currentControlfatal"
-                  [checked]="control.fatal == 'Y'" (change)="control.fatal = $event.target.checked ? 'Y' : 'N'">
-                <label class="custom-control-label" for="currentControlfatal">
+                <input type="checkbox" class="custom-control-input" id="activeControlFatal" name="activeControlFatal"
+                  [checked]="control.fatal == 'Y'" (change)="control.fatal = $event.target.checked ? 'Y' : 'N'"
+                  [disabled]="readonly">
+                <label class="custom-control-label" for="activeControlFatal">
                   Fatal
                 </label>
               </div>
@@ -262,16 +279,18 @@
         </div>
       </div>
     </div>
+    <!-- END CONTROL -->
   </div>
-  <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm" *ngIf="step || action || control">
+  <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm"
+    *ngIf="step || action || control">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb pt-0 pb-0">
-        <li class="breadcrumb-item" *ngIf="step">step #{{ step.sort}}</li>
-        <li class="breadcrumb-item" *ngIf="action">step #{{ action.step}}</li>
-        <li class="breadcrumb-item" *ngIf="action">action #{{ action.sort}}</li>
-        <li class="breadcrumb-item" *ngIf="control">step #{{ control.step}}</li>
-        <li class="breadcrumb-item" *ngIf="control">action #{{ control.sequence}}</li>
-        <li class="breadcrumb-item" *ngIf="control">control #{{ control.sort}}</li>
+        <li id="stepIndex" class="breadcrumb-item" *ngIf="step">step #{{ step.sort}}</li>
+        <li id="stepIndex" class="breadcrumb-item" *ngIf="action">step #{{ action.step}}</li>
+        <li id="actionIndex" class="breadcrumb-item" *ngIf="action">action #{{ action.sort}}</li>
+        <li id="stepIndex" class="breadcrumb-item" *ngIf="control">step #{{ control.step}}</li>
+        <li id="actionIndex" class="breadcrumb-item" *ngIf="control">action #{{ control.sequence}}</li>
+        <li id="controlIndex" class="breadcrumb-item" *ngIf="control">control #{{ control.sort}}</li>
       </ol>
     </nav>
   </div>

@@ -18,7 +18,7 @@
         </a>
       </div>
       <input type="text" [(ngModel)]="step.description" class="form-control" [id]="'step'+step.sort+'description'"
-        name="activeStepDescription" placeholder="Step Description">
+        name="activeStepDescription" placeholder="Step Description" [readonly]="stepIsReadOnly">
     </div>
     <div class="block-options">
       <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button"
@@ -55,7 +55,7 @@
   <div *ngIf="showActionList" [id]="'step'+step.sort+'toggle'" class="collapse" role="tabpanel"
     [attr.aria-labelledby]="'step'+step.sort">
     <div *ngIf="step.actionList.length > 0">
-      <app-action *ngFor="let action of step.actionList" [action]="action"></app-action>
+      <app-action *ngFor="let action of step.actionList" [action]="action" [readonly]="stepIsReadOnly"></app-action>
     </div>
     <div *ngIf="step.actionList.length == 0" class="push mt-2">
       <div class="col-md-12 text-center">

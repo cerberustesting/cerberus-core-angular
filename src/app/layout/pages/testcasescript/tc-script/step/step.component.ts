@@ -12,6 +12,7 @@ export class StepComponent implements OnInit {
   @Input('step') step: IStep;
   @Input('isfirstStep') isFirstStep: boolean;
   showActionList: boolean;
+  stepIsReadOnly: boolean;
 
   constructor(
     private SettingsService: SettingsService
@@ -23,17 +24,19 @@ export class StepComponent implements OnInit {
     // solution A : ask for a API for accordion 
     // solution B : go full Angular with only *ngIf but the sweet animation will disappear
     this.step.toDelete = false;
+    this.stepIsReadOnly = false;
   }
 
   focusOnStep(): void {
     // send the step to the settings service and thus, to the settings component
-    this.SettingsService.editStepSettings(this.step);
+    this.SettingsService.editStepSettings(this.step, this.stepIsReadOnly);
   }
 
   // Depedending on the combination of useStep and inLibrary,
   // return a state used by the view for rendering
   libraryState(): string {
     if (this.step.useStep == 'Y' && this.step.inLibrary == 'N') {
+      this.stepIsReadOnly = true;
       return "locked"
     } else if (this.step.useStep == 'N' && this.step.inLibrary == 'Y') {
       return "reference"

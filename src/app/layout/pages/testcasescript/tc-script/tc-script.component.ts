@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase, IStep, IAction } from 'src/app/model/testcase.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 declare function blockAPI(mode: string, block_id: string): void;
 
 @Component({
@@ -44,6 +45,11 @@ export class TcScriptComponent implements OnInit {
 
   saveActiveStep() {
     console.log(this.testcase.stepList);
+  }
+
+  drop(event: CdkDragDrop<{title: string, poster: string}[]>) {
+    moveItemInArray(this.testcase.stepList, event.previousIndex, event.currentIndex);
+    // todo: update the array sequence
   }
 
   debug() {

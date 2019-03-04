@@ -40,7 +40,6 @@ export class ControlComponent implements OnInit {
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
     this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
-    console.log(this.control);
   }
 
   flagForDeletion(control: IControl) { this.control.toDelete = !this.control.toDelete; this.debug(); }

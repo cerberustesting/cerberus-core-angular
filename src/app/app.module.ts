@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -50,7 +51,7 @@ import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugrepo
     SettingsComponent,
     ReportbytagComponent,
     ReportbystatusComponent,
-    BugreportComponent,
+    BugreportComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +59,8 @@ import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugrepo
     HttpClientModule,
     FormsModule,
     NgbPopoverModule,
-    NgSelectModule
+    NgSelectModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

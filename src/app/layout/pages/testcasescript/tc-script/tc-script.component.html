@@ -17,81 +17,26 @@
       </div>
       <div class="col-md-12 text-center">
         <div class="btn-group" role="group" aria-label="Horizontal Outline Primary">
-          <button type="button" class="btn btn-outline-primary" (click)="addAStep()"><i class="fa fa-fw fa-plus mr-1"></i>
+          <button type="button" class="btn btn-outline-primary" (click)="addAStep()"><i
+              class="fa fa-fw fa-plus mr-1"></i>
             Step</button>
           <button type="button" class="btn btn-outline-primary"><i class="fa fa-fw fa-plus mr-1"></i>Use Step</button>
         </div>
       </div>
     </div>
-
     <div class="row" *ngIf="testcase.stepList.length != 0">
       <div class="col-md-7">
-        <div id="stepList" role="tablist" aria-multiselectable="true">
-          <app-step *ngFor='let step of testcase.stepList; first as isFirst' (stepFocused)="receiveStep($event)" [step]="step" [isfirstStep]="isFirst"></app-step>
-          <!-- 
-          <div class="block block-rounded mb-1">
-            <a data-toggle="collapse" data-parent="#stepList" href="#accordion_q1" aria-expanded="false" aria-controls="accordion_q1">
-              <div class="block-header block-header-default" role="tab" id="accordion_h1">
-                <h3 class="block-title">Title <small>Subtitle</small></h3>
-                <div class="block-options">
-                  <button type="button" class="btn-block-option">
-                    <i class="far fa-fw fa-bell"></i>
-                  </button>
-                  <button type="button" class="btn-block-option">
-                    <i class="far fa-fw fa-arrow-alt-circle-left"></i>
-                  </button>
-                  <button type="button" class="btn-block-option">
-                    <i class="far fa-fw fa-arrow-alt-circle-right"></i>
-                  </button>
-                  <button type="button" class="btn-block-option">
-                    <i class="far fa-fw fa-trash-alt"></i>
-                  </button>
-                </div>
-              </div>
-            </a>
-            <div id="accordion_q1" class="collapse" role="tabpanel" aria-labelledby="accordion_h1" data-parent="#stepList"
-              style="">
-              <div class="block-content">
-                <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus
-                  mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt
-                  himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit
-                  varius lorem sit metus mi.</p>
-              </div>
-            </div>
+        <div id="stepList" role="tablist" aria-multiselectable="true" cdkDropList (cdkDropListDropped)="drop($event)">
+          <div *ngFor='let step of testcase.stepList; first as isFirst' cdkDragLockAxis="y" cdkDrag>
+            <app-step (stepFocused)="receiveStep($event)" [step]="step" [isfirstStep]="isFirst">
+              <button slot="drag-handle" type="button" class="btn btn-primary" cdkDragHandle>
+                <i class="fa fa-arrows-alt-v"></i>
+              </button>
+            </app-step>
           </div>
-          <div class="block block-rounded mb-1">
-            <div class="block-header block-header-default" role="tab" id="accordion_h2">
-              <a class="font-w600 collapsed" data-toggle="collapse" data-parent="#stepList" href="#accordion_q2"
-                aria-expanded="false" aria-controls="accordion_q2">1.2 Accordion Title</a>
-            </div>
-            <div id="accordion_q2" class="collapse" role="tabpanel" aria-labelledby="accordion_h2" data-parent="#stepList"
-              style="">
-              <div class="block-content">
-                <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus
-                  mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt
-                  himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit
-                  varius lorem sit metus mi.</p>
-              </div>
-            </div>
-          </div>
-          <div class="block block-rounded mb-1">
-            <div class="block-header block-header-default" role="tab" id="accordion_h3">
-              <a class="font-w600 collapsed" data-toggle="collapse" data-parent="#stepList" href="#accordion_q3"
-                aria-expanded="false" aria-controls="accordion_q3">1.3 Accordion Title</a>
-            </div>
-            <div id="accordion_q3" class="collapse" role="tabpanel" aria-labelledby="accordion_h3" data-parent="#stepList"
-              style="">
-              <div class="block-content">
-                <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus
-                  mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt
-                  himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit
-                  varius lorem sit metus mi.</p>
-              </div>
-            </div>
-          </div>
-        -->
           <div class="push">
-            <button type="button" class="col-md-4 mr-2 btn btn-outline-primary" (click)="addAStep()"><i class="fa fa-fw fa-plus mr-1"></i>Step</button>
+            <button type="button" class="col-md-4 mr-2 btn btn-outline-primary" (click)="addAStep()"><i
+                class="fa fa-fw fa-plus mr-1"></i>Step</button>
             <button type="button" class="col-md-4 btn btn-outline-primary"><i class="fa fa-fw fa-plus mr-1"></i>Use
               Step</button>
           </div>
@@ -100,34 +45,6 @@
       <div class="col-md-5">
         <app-settings></app-settings>
       </div>
-      <!-- OLD -->
-      <!-- 
-
-      -->
-      <!-- 
-      <div class="col-md-3">
-        <div class="list-group push">
-
-          <a *ngFor='let step of testcase.stepList' class="list-group-item list-group-item-action d-flex align-items-center drag-step mr-1"
-            (click)="setActiveStep(step)" [ngClass]="active_step == step ? 'active white' : ''">
-            <span class="badge badge-pill badge-secondary mr-2">{{ step.sort }}</span>
-            {{ step.description }}
-            <span *ngIf="step.forceExe == 'Y'" class="badge badge-pill badge-secondary ml-2">Forced</span>
-          </a>
-        </div>
-        <div class="list-group push" *ngIf="!testcase.stepList.length == 0">
-          <div class="btn-group" role="group" aria-label="Horizontal Outline Primary">
-            <button type="button" class="btn btn-outline-primary" (click)="addAStep()"><i class="fa fa-fw fa-plus mr-1"></i>
-              Step</button>
-            <button type="button" class="btn btn-outline-primary"><i class="fa fa-fw fa-plus mr-1"></i>Use Step</button>
-          </div>
-        </div>
-
-      </div>
-      <div class="col-md-9">
-        <app-step *ngIf="active_step" [step]="active_step"></app-step>
-      </div>
--->
     </div>
     <div class="row push" *ngIf="!testcase.stepList.length == 0">
       <div class="col-md-12">

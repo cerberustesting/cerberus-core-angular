@@ -4,6 +4,7 @@
     <div class="input-group" (click)="focusOnStep()">
       <div class="input-group-prepend">
         <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
+        <!-- current workaround : move cdkDragHandle out of child component -->
         <ng-content select="[slot=drag-handle]"></ng-content>
       </div>
       <div class="input-group-prepend">

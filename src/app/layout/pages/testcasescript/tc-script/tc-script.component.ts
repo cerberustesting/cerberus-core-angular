@@ -47,7 +47,7 @@ export class TcScriptComponent implements OnInit {
     console.log(this.testcase.stepList);
   }
 
-  dropStep(event: CdkDragDrop<{ title: string, poster: string }[]>) {
+  dropStep(event: CdkDragDrop<IStep[]>) {
     moveItemInArray(this.testcase.stepList, event.previousIndex, event.currentIndex);
     // todo: update the array sequence
   }

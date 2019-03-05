@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IStep } from 'src/app/model/testcase.model';
+import { IStep, IAction } from 'src/app/model/testcase.model';
 import { SettingsService } from '../settings/settings.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
@@ -57,9 +57,8 @@ export class StepComponent implements OnInit {
     //this.SettingsService.clearFocus();
   }
 
-  dropAction(event: CdkDragDrop<{ title: string, poster: string }[]>) {
+  dropAction(event: CdkDragDrop<IAction[]>) {
     moveItemInArray(this.step.actionList, event.previousIndex, event.currentIndex);
-    this.showControls = true;
     // todo: update the array sequence
   }
 

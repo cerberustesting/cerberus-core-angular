@@ -1,11 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CrossReference } from 'src/app/model/crossreference.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { IAction, ITestCase, Control } from 'src/app/model/testcase.model';
+import { IAction, ITestCase, Control, IControl } from 'src/app/model/testcase.model';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
 import { TestService } from 'src/app/services/crud/test.service';
 import { SettingsService } from '../settings/settings.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { DraganddropService } from '../draganddrop.service';
+import { generate } from 'rxjs';
 
 @Component({
   selector: 'app-action',
@@ -19,6 +22,8 @@ export class ActionComponent implements OnInit {
   @Input('showContent') showControlList: boolean;
   showActionAddButtons: boolean;
   testcase: ITestCase;
+  DragAndAdropAreaId: string;
+  private DragAndDropControlIDList: Array<string>;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;
   private crossReference_ConditionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
@@ -30,11 +35,14 @@ export class ActionComponent implements OnInit {
     private InvariantService: InvariantsService,
     private CrossReferenceService: CrossreferenceService,
     private TestService: TestService,
-    private SettingsService: SettingsService
+    private SettingsService: SettingsService,
+    private DragAndDropService: DraganddropService
   ) { }
 
   ngOnInit() {
     this.showActionAddButtons = false;
+    this.DragAndAdropAreaId = this.generateID();
+    this.DragAndDropService.observableControlsIdList.subscribe(r => { this.DragAndDropControlIDList = r; });
     // @ts-ignore
     if (this.action.controlList.length == 0) { this.showControlList = false; } else { this.showControlList = true; }
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
@@ -51,12 +59,32 @@ export class ActionComponent implements OnInit {
       this.action.controlList.length + 1,
       this.action.sequence
     )
-    console.log(newControl);
   }
 
   focusOnAction(): void {
     // send the action to the settings service and thus, to the settings component
     this.SettingsService.editActionSettings(this.action, this.readonly);
+  }
+
+  dropControl(event: CdkDragDrop<IControl[]>) {
+    moveItemInArray(this.action.controlList, event.previousIndex, event.currentIndex);
+    // todo: update the array sequence
+    /*
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+    */
+  }
+
+  generateID() {
+    var id = 'cdk-drop-list-' + this.DragAndDropService.getID();
+    this.DragAndDropService.addIDToControlList(id);
+    return id;
   }
 
   hasActionCrossReference(action: string): boolean { return this.CrossReferenceService.hasActionCrossReference(action); }

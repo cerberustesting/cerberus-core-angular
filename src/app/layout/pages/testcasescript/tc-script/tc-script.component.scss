@@ -2,23 +2,8 @@
   color: white !important;
 }
 
-.drag-step {
-  cursor: move;
-}
-
-.example-list {
-  display: block;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.example-box {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: move;
+.drag-cursor {
+  cursor: move !important;
 }
 
 .cdk-drag-placeholder {

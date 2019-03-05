@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IStep } from 'src/app/model/testcase.model';
 import { SettingsService } from '../settings/settings.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-step',
@@ -13,12 +14,15 @@ export class StepComponent implements OnInit {
   @Input('isfirstStep') isFirstStep: boolean;
   showActionList: boolean;
   stepIsReadOnly: boolean;
+  showControls: boolean;
 
   constructor(
     private SettingsService: SettingsService
   ) { }
 
   ngOnInit() {
+    this.showActionList = false;
+    this.showControls = true;
     // if (this.isFirstStep) { this.showActionList = true; }
     // cause some misleading UI problem
     // solution A : ask for a API for accordion 
@@ -51,6 +55,27 @@ export class StepComponent implements OnInit {
   clearFocus(): void {
     console.log("focus out");
     //this.SettingsService.clearFocus();
+  }
+
+  dropAction(event: CdkDragDrop<{ title: string, poster: string }[]>) {
+    moveItemInArray(this.step.actionList, event.previousIndex, event.currentIndex);
+    this.showControls = true;
+    // todo: update the array sequence
+  }
+
+  toggleContent() {
+    this.showActionList = !this.showActionList;
+    console.log("boolean has been toggled to "+this.showActionList);
+  }
+
+  mdown() {
+    console.log("mdown");
+    this.showControls = false;
+  }
+
+  mup(){
+    console.log("mup");
+    this.showControls = true;
   }
 
 }

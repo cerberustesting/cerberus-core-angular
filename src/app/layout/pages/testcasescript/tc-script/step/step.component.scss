@@ -4,3 +4,23 @@
 .full-width { width: 100%; }
 .toDelete { background-color: #f2dede !important; }
 .input-group-text.custom { border: 0; background-color: transparent; }
+
+.drag-cursor {
+    cursor: move !important;
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .example-box:last-child {
+    border: none;
+  }
+  
+  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }

@@ -1,4 +1,4 @@
-<div class="block block-bordered action mb-0" *ngIf="action">
+<div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+action.step+'action'+action.sort">
   <div class="block-header" (mouseenter)="mouseEnter() " (mouseleave)="mouseLeave()">
     <div class="block-options">
       <button type="button" class="btn-block-option" (click)="showControlList = !showControlList" [disabled]="!action.controlList.length > 0">
@@ -36,13 +36,14 @@
       <button type="button" [id]="'action' + action.sort +'deleteAction'" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>
       </button>
-      <button type="button" [id]="'action' + action.sort +'dragAction'" class="btn-block-option">
-        <i class="fa fa-arrows-alt-v"></i>
-      </button>
+      <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
+      <!-- current workaround : move cdkDragHandle out of child component -->
+      <ng-content select="[slot=drag-action]"></ng-content>
     </div>
   </div>
 </div>
 <!-- TODO : add a pipe to order by sequence -->
 <div *ngIf="showControlList">
-  <app-control *ngFor="let control of action.controlList; let last = last" [control]="control" [isLast]="last" [readonly]="readonly"></app-control>
+  <app-control *ngFor="let control of action.controlList; let last = last" [control]="control" [isLast]="last"
+    [readonly]="readonly"></app-control>
 </div>

@@ -16,8 +16,8 @@ export class ActionComponent implements OnInit {
 
   @Input('action') action: IAction;
   @Input('readonly') readonly: boolean;
+  @Input('showContent') showControlList: boolean;
   showActionAddButtons: boolean;
-  showControlList: boolean;
   testcase: ITestCase;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;

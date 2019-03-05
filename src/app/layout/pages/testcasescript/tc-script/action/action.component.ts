@@ -66,6 +66,4 @@ export class ActionComponent implements OnInit {
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasControlCrossReference(control); }
   findControlCrossReference(control: string): CrossReference { return this.CrossReferenceService.findControlCrossReference(control); }
 
-  mouseEnter() { this.showActionAddButtons = true; }
-  mouseLeave() { this.showActionAddButtons = false; }
 }

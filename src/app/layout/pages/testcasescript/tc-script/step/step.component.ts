@@ -63,19 +63,4 @@ export class StepComponent implements OnInit {
     // todo: update the array sequence
   }
 
-  toggleContent() {
-    this.showActionList = !this.showActionList;
-    console.log("boolean has been toggled to "+this.showActionList);
-  }
-
-  mdown() {
-    console.log("mdown");
-    this.showControls = false;
-  }
-
-  mup(){
-    console.log("mup");
-    this.showControls = true;
-  }
-
 }

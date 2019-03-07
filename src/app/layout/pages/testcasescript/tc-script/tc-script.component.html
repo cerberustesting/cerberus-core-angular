@@ -26,8 +26,8 @@
     </div>
     <div class="row" *ngIf="testcase.stepList.length != 0">
       <div class="col-md-7">
-        <div id="stepList" role="tablist" aria-multiselectable="true" cdkDropList (cdkDropListDropped)="dropStep($event)">
-          <div *ngFor='let step of testcase.stepList; first as isFirst' cdkDragLockAxis="y" cdkDrag>
+        <div id="stepList" role="tablist" aria-multiselectable="true" class="stepList" cdkDropList [cdkDropListData]="testcase.stepList" (cdkDropListDropped)="dropStep($event)">
+          <div *ngFor="let step of testcase.stepList; first as isFirst" class="stepDrag" cdkDrag cdkDragLockAxis="y">
             <app-step (stepFocused)="receiveStep($event)" [step]="step" [isfirstStep]="isFirst">
               <button slot="drag-step" type="button" class="btn btn-primary drag-cursor" cdkDragHandle>
                 <i class="fa fa-arrows-alt-v"></i>

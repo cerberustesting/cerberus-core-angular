@@ -42,7 +42,7 @@ export class ActionComponent implements OnInit {
   ngOnInit() {
     this.showActionAddButtons = false;
     this.DragAndAdropAreaId = this.generateID();
-    this.DragAndDropService.observableControlsIdList.subscribe(r => { this.DragAndDropControlIDList = r; });
+    this.DragAndDropService.observableControlsIdList.subscribe(r => { this.DragAndDropControlIDList = r; console.log(r); });
     // @ts-ignore
     if (this.action.controlList.length == 0) { this.showControlList = false; } else { this.showControlList = true; }
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
@@ -67,9 +67,7 @@ export class ActionComponent implements OnInit {
   }
 
   dropControl(event: CdkDragDrop<IControl[]>) {
-    moveItemInArray(this.action.controlList, event.previousIndex, event.currentIndex);
     // todo: update the array sequence
-    /*
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -78,11 +76,10 @@ export class ActionComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
-    */
   }
 
   generateID() {
-    var id = 'cdk-drop-list-' + this.DragAndDropService.getID();
+    var id = 'control-droplist-' + this.DragAndDropService.getID();
     this.DragAndDropService.addIDToControlList(id);
     return id;
   }

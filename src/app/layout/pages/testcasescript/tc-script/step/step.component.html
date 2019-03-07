@@ -1,6 +1,5 @@
 <div class="block block-rounded block-bordered mb-2">
-  <div class="block-header block-header-default" role="tab" [id]="'step'+step.sort"
-    [ngClass]="step.toDelete ? 'toDelete' : '' ">
+  <div class="block-header block-header-default" role="tab" [id]="'step'+step.sort" [ngClass]="step.toDelete ? 'toDelete' : '' ">
     <div class="input-group" (click)="focusOnStep()">
       <div class="input-group-prepend" (mousedown)="showActionList = false">
         <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
@@ -12,8 +11,7 @@
       </div>
       <div class="input-group-prepend">
         <a class="input-group-text" data-toggle="collapse" data-parent="#stepList" [href]="'#step'+step.sort+'toggle'"
-          aria-expanded="false" [attr.aria-controls]="'step'+step.sort+'toggle'"
-          (click)="showActionList = !showActionList">
+          aria-expanded="false" [attr.aria-controls]="'step'+step.sort+'toggle'" (click)="showActionList = !showActionList">
           <i class="si" [ngClass]="showActionList ? 'si-arrow-down' : 'si-arrow-right'"></i>
         </a>
       </div>
@@ -21,9 +19,8 @@
         [name]="'step'+step.sort+'description'" placeholder="Step Description" [readonly]="stepIsReadOnly">
     </div>
     <div class="block-options">
-      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button"
-        class="btn-block-option info_block_options" ngbPopover="This step execution is looped"
-        triggers="mouseenter:mouseleave">
+      <button *ngIf="step.loop != 'onceIfConditionTrue' && step.loop != 'onceIfConditionFalse'" type="button" class="btn-block-option info_block_options"
+        ngbPopover="This step execution is looped" triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-redo"></i>
       </button>
       <button *ngIf="step.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"
@@ -31,20 +28,20 @@
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw" [ngClass]="step.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
       </button>
-      <button *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options"
-        ngbPopover="This step execution is forced" triggers="mouseenter:mouseleave">
+      <button *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options" ngbPopover="This step execution is forced"
+        triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa fa-arrow-down"></i>
       </button>
-      <button *ngIf="libraryState() == 'locked'" type="button" class="btn-block-option info_block_options"
-        ngbPopover="This step is imported from Library" triggers="mouseenter:mouseleave">
+      <button *ngIf="libraryState() == 'locked'" type="button" class="btn-block-option info_block_options" ngbPopover="This step is imported from Library"
+        triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-lock"></i>
       </button>
       <button *ngIf="libraryState() == 'reference'" type="button" class="btn-block-option info_block_options"
         ngbPopover="This step is a library step" triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-book"></i>
       </button>
-      <button *ngIf="libraryState() == 'clear'" type="button" class="btn-block-option"
-        ngbPopover="Save this step in Library" triggers="mouseenter:mouseleave">
+      <button *ngIf="libraryState() == 'clear'" type="button" class="btn-block-option" ngbPopover="Save this step in Library"
+        triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-book"></i>
       </button>
       <button type="button" class="btn-block-option" (click)="step.toDelete = !step.toDelete">
@@ -53,8 +50,7 @@
     </div>
   </div>
   <!-- STEP CONTENT -->
-  <div *ngIf="showActionList" [id]="'step'+step.sort+'toggle'" class="collapse" role="tabpanel"
-    [attr.aria-labelledby]="'step'+step.sort">
+  <div *ngIf="showActionList" [id]="'step'+step.sort+'toggle'" class="collapse" role="tabpanel" [attr.aria-labelledby]="'step'+step.sort">
     <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm text-right">
       <button type="button" class="btn btn-sm btn-secondary mr-1" (click)="showControls = false">
         <i class="si fa-fw si-arrow-right mr-1"></i> Collapse All
@@ -64,11 +60,11 @@
       </button>
     </div>
     <div>
-      <div *ngIf="step.actionList.length > 0" cdkDropList (cdkDropListDropped)="dropAction($event)">
-        <div *ngFor="let action of step.actionList" cdkDragLockAxis="y" cdkDrag>
+      <div *ngIf="step.actionList.length > 0" cdkDropList [cdkDropListData]="step.actionList" (cdkDropListDropped)="dropAction($event)" class="actionList">
+        <div *ngFor="let action of step.actionList" class="actionDrag" cdkDrag cdkDragLockAxis="y">
           <app-action [action]="action" [readonly]="stepIsReadOnly" [showContent]="showControls">
-            <button slot="drag-action" type="button" [id]="'action' + action.sort +'dragAction'"
-              class="btn-block-option" cdkDragHandle>
+            <button slot="drag-action" type="button" [id]="'action' + action.sort +'dragAction'" class="btn-block-option"
+              cdkDragHandle>
               <i class="fa fa-arrows-alt-v"></i>
             </button>
           </app-action>

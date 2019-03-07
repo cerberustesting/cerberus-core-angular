@@ -1,8 +1,7 @@
 <div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+action.step+'action'+action.sort">
   <div class="block-header" (mouseenter)="showActionAddButtons = true" (mouseleave)="showActionAddButtons = false">
     <div class="block-options">
-      <button type="button" class="btn-block-option" (click)="showControlList = !showControlList"
-        [disabled]="!action.controlList.length > 0">
+      <button type="button" class="btn-block-option" (click)="showControlList = !showControlList" [disabled]="!action.controlList.length > 0">
         <i class="si" [ngClass]="showControlList ? 'si-arrow-down' : 'si-arrow-right'"></i></button>
     </div>
     <div class="input-group" (click)="focusOnAction()">
@@ -17,9 +16,8 @@
           <i [ngClass]="findActionCrossReference(action.action).icon"></i>
         </span>
       </div>
-      <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0"
-        [id]="'step'+action.step+'action'+action.sort" name="activeStepDescription" placeholder="Action Description"
-        [readonly]="readonly">
+      <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0" [id]="'step'+action.step+'action'+action.sort"
+        name="activeStepDescription" placeholder="Action Description" [readonly]="readonly">
     </div>
     <div *ngIf="showActionAddButtons" class="block-options">
       <button type="button" class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
@@ -27,18 +25,15 @@
     </div>
     <div class="block-options">
       <button type="button" [id]="'action' + action.sort +'conditionOper'" *ngIf="action.conditionOper != 'always'"
-        class="btn-block-option info_block_options"
-        [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'"
+        class="btn-block-option info_block_options" [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'"
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw" [ngClass]="action.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
       </button>
-      <button type="button" [id]="'action' + action.sort +'forceExeStatus'" *ngIf="action.forceExeStatus == 'PE'"
-        class="btn-block-option info_block_options" ngbPopover="This action execution is forced"
-        triggers="mouseenter:mouseleave">
+      <button type="button" [id]="'action' + action.sort +'forceExeStatus'" *ngIf="action.forceExeStatus == 'PE'" class="btn-block-option info_block_options"
+        ngbPopover="This action execution is forced" triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa fa-arrow-down"></i>
       </button>
-      <button type="button" [id]="'action' + action.sort +'deleteAction'" class="btn-block-option"
-        (click)="action.toDelete = !action.toDelete">
+      <button type="button" [id]="'action' + action.sort +'deleteAction'" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>
       </button>
       <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
@@ -49,11 +44,12 @@
 </div>
 <!-- TODO : add a pipe to order by sequence -->
 <div *ngIf="showControlList && action.controlList.length > 0">
-  <div cdkDropList (cdkDropListDropped)="dropControl($event)" [id]="DragAndAdropAreaId" >
-    <div *ngFor="let control of action.controlList; let last = last" cdkDragLockAxis="y" cdkDrag>
+  <div [id]="DragAndAdropAreaId" class="controlList" cdkDropList [cdkDropListData]="action.controlList" [cdkDropListConnectedTo]="DragAndDropControlIDList"
+    (cdkDropListDropped)="dropControl($event)">
+    <div *ngFor="let control of action.controlList; let last = last" class="controlDrag" cdkDrag cdkDragLockAxis="y">
       <app-control [control]="control" [isLast]="last" [readonly]="readonly">
-        <button type="button" [id]="'control' + control.sort +'dragControl'" class="btn-block-option"
-          slot="drag-control" cdkDragHandle>
+        <button type="button" [id]="'control' + control.sort +'dragControl'" class="btn-block-option" slot="drag-control"
+          cdkDragHandle>
           <i class="fa fa-arrows-alt-v"></i>
         </button>
       </app-control>

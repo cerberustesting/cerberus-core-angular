@@ -58,7 +58,7 @@ export class StepComponent implements OnInit {
   }
 
   dropAction(event: CdkDragDrop<IAction[]>) {
-    moveItemInArray(this.step.actionList, event.previousIndex, event.currentIndex);
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     // todo: update the array sequence
   }
 

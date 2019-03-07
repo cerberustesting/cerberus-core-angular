@@ -42,7 +42,7 @@ export class ActionComponent implements OnInit {
   ngOnInit() {
     this.showActionAddButtons = false;
     this.DragAndAdropAreaId = this.generateID();
-    this.DragAndDropService.observableControlsIdList.subscribe(r => { this.DragAndDropControlIDList = r; console.log(r); });
+    this.DragAndDropService.observableControlsIdList.subscribe(r => { this.DragAndDropControlIDList = r; });
     // @ts-ignore
     if (this.action.controlList.length == 0) { this.showControlList = false; } else { this.showControlList = true; }
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
@@ -66,6 +66,7 @@ export class ActionComponent implements OnInit {
     this.SettingsService.editActionSettings(this.action, this.readonly);
   }
 
+  // TO DO : manage properly the drop zone for action without control
   dropControl(event: CdkDragDrop<IControl[]>) {
     // todo: update the array sequence
     if (event.previousContainer === event.container) {

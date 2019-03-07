@@ -42,8 +42,11 @@
     </div>
   </div>
 </div>
-<!-- TODO : add a pipe to order by sequence -->
-<div *ngIf="showControlList && action.controlList.length > 0">
+<!-- TODO : 
+  - add a pipe to order by sequence 
+  - check the behaviour of the D&D ID : is this generated even if the action contains no control ?
+-->
+<div *ngIf="showControlList">
   <div [id]="DragAndAdropAreaId" class="controlList" cdkDropList [cdkDropListData]="action.controlList" [cdkDropListConnectedTo]="DragAndDropControlIDList"
     (cdkDropListDropped)="dropControl($event)">
     <div *ngFor="let control of action.controlList; let last = last" class="controlDrag" cdkDrag cdkDragLockAxis="y">

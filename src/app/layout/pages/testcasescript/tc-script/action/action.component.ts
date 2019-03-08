@@ -8,7 +8,6 @@ import { TestService } from 'src/app/services/crud/test.service';
 import { SettingsService } from '../settings/settings.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DraganddropService } from '../draganddrop.service';
-import { generate } from 'rxjs';
 
 @Component({
   selector: 'app-action',
@@ -20,9 +19,10 @@ export class ActionComponent implements OnInit {
   @Input('action') action: IAction;
   @Input('readonly') readonly: boolean;
   @Input('showContent') showControlList: boolean;
-  showActionAddButtons: boolean;
-  testcase: ITestCase;
-  DragAndAdropAreaId: string;
+  private isDragging: boolean;
+  private showActionAddButtons: boolean;
+  private testcase: ITestCase;
+  private DragAndAdropAreaId: string;
   private DragAndDropControlIDList: Array<string>;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;
@@ -41,6 +41,7 @@ export class ActionComponent implements OnInit {
 
   ngOnInit() {
     this.showActionAddButtons = false;
+    this.isDragging = false;
     this.DragAndAdropAreaId = this.generateID();
     this.DragAndDropService.observableControlsIdList.subscribe(r => { this.DragAndDropControlIDList = r; });
     // @ts-ignore
@@ -77,6 +78,8 @@ export class ActionComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+    // show the control List when dragging to an action without control
+    if (this.showControlList == false) { this.showControlList = true }
   }
 
   generateID() {
@@ -91,5 +94,23 @@ export class ActionComponent implements OnInit {
   findConditionCrossReference(condition: string): CrossReference { return this.CrossReferenceService.findConditionCrossReference(condition); }
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasControlCrossReference(control); }
   findControlCrossReference(control: string): CrossReference { return this.CrossReferenceService.findControlCrossReference(control); }
+
+  controlEntered() {
+    // make sure show the controls list when dragging a control from another list in the action
+    console.log("controlEntered in " + this.DragAndAdropAreaId);
+    if (this.showControlList == false) {
+      this.showControlList = true;
+      this.isDragging = true;
+    }
+  }
+
+  controlExited() {
+    console.log("controlExited from " + this.DragAndAdropAreaId);
+    this.isDragging = false;
+    /*if (this.isDragging == true){
+      this.showControlList = false;
+    }*/
+  }
+
 
 }

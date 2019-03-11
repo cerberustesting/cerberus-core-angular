@@ -3,3 +3,4 @@ node_modules/
 
 # ignore all the .DS_Store files in any folders and its children
 .DS_Store .
+.vscode/settings.json

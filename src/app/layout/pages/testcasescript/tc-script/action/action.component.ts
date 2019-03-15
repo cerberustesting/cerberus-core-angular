@@ -52,14 +52,6 @@ export class ActionComponent implements OnInit {
   }
 
   addControl() {
-    var newControl = new Control(
-      this.testcase.info.test,
-      this.testcase.info.testCase,
-      this.action.step,
-      this.action.controlList.length,
-      this.action.controlList.length + 1,
-      this.action.sequence
-    )
   }
 
   focusOnAction(): void {

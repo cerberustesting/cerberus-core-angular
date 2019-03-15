@@ -15,8 +15,8 @@ import { SettingsService } from '../settings/settings.service';
 export class ControlComponent implements OnInit {
 
   @Input('control') control: IControl;
-  @Input('isLast') isLast: boolean;
   @Input('readonly') readonly: boolean;
+  @Input('parentAction') parentAction: IAction;
 
   showControlAddButtons: boolean;
   testcase: ITestCase;
@@ -40,24 +40,18 @@ export class ControlComponent implements OnInit {
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
     this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
+    this.debug();
   }
 
   flagForDeletion(control: IControl) { this.control.toDelete = !this.control.toDelete; this.debug(); }
 
-  addControl() {
-    // WORK IN PROGRESS
-    console.log(this.testcase.stepList[this.control.step - 1].actionList[(this.control.sequence) - 1].controlList.length);
-    /*
-    var newControl = new Control(
-      this.testcase.info.test,
-      this.testcase.info.testCase,
-      this.control.step,
-      this.testcase.stepList[this.control.step].actionList[(this.control.sequence/10)].controlList.length,
-      this.testcase.stepList[this.control.step].actionList[(this.control.sequence/10)].controlList.length + 1,
-      this.control.sequence
-    )
+  addControl(): void {
+    var newControl = new Control(this.testcase.info.test, this.testcase.info.testCase, this.control.sort + 1, this.control.sequence + 1, this.control.controlSequence + 1, this.control.step);
+    this.parentAction.controlList.splice(this.control.sort, 0, newControl);
+    // TO DO : update the sorts after
+    // idea : service method that update all the sorts for an action
+    console.log("control added: ");
     console.log(newControl);
-    */
   }
 
   focusOnControl(): void {

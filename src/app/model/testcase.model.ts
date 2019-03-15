@@ -103,7 +103,7 @@ export interface IAction {
     testCase: string;
 }
 
-export interface IControl {
+export class Control {
     objType: string;
     test: string;
     testCase: string;
@@ -121,45 +121,28 @@ export interface IControl {
     controlSequence: number;
     step: number;
     toDelete: boolean;
-}
 
-export class Control {
-
-    //test: string;
-    //testCase: string;
-    //step: number;
-    //controlSequence: number;
-    //sort: number;
-    //sequence: number;
-    description: string;
-    conditionOper: string;
-    conditionVal1: string;
-    conditionVal2: string;
-    control: string;
-    value1: string;
-    value2: string;
-    fatal: string;
-    screenshotFilename: string;
-    objType: string;
-    toDelete: boolean;
-
-    constructor(
-        public test: string,
-        public testCase: string,
-        public step: number,
-        public controlSequence: number,
-        public sort: number,
-        public sequence: number) {
-        this.description = "",
+    constructor(test: string, testCase: string, sort: number, sequence: number, controlSequence: number, step: number) {
+        this.objType = "control",
+            this.test = test,
+            this.testCase = testCase,
             this.conditionOper = "always",
             this.conditionVal1 = "",
             this.conditionVal2 = "",
+            this.description = "",
             this.control = "Unknown",
             this.value1 = "",
             this.value2 = "",
             this.fatal = "N",
             this.screenshotFilename = "",
-            this.objType = "control",
+            this.sort = sort,
+            this.sequence = sequence,
+            this.controlSequence = controlSequence,
+            this.step = step,
             this.toDelete = false
     }
+}
+
+export interface IControl extends Control {
+
 }

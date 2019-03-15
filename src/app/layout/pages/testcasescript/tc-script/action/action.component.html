@@ -51,7 +51,7 @@
   <!-- CONTROL LIST -->
   <div *ngIf="showControlList">
     <div *ngFor="let control of action.controlList; let last = last" class="controlDrag" cdkDrag cdkDragLockAxis="y">
-      <app-control [control]="control" [isLast]="last" [readonly]="readonly">
+      <app-control [control]="control" [readonly]="readonly" [parentAction]="action">
         <button type="button" [id]="'control' + control.sort +'dragControl'" class="btn-block-option" slot="drag-control"
           cdkDragHandle>
           <i class="fa fa-arrows-alt-v"></i>

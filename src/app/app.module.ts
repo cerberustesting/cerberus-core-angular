@@ -28,6 +28,9 @@ import { SettingsComponent } from './layout/pages/testcasescript/tc-script/setti
 import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.component';
 import { ReportbystatusComponent } from './layout/pages/reportbytag/graph/reportbystatus/reportbystatus.component';
 import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugreport.component';
+import {TestcaselistComponent} from './layout/pages/testcaselist/testcaselist.component';
+import {TableComponent} from './layout/shared/table/table.component';
+import {MatTableModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,9 @@ import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugrepo
     SettingsComponent,
     ReportbytagComponent,
     ReportbystatusComponent,
-    BugreportComponent
+    BugreportComponent,
+    TestcaselistComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,8 @@ import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugrepo
     FormsModule,
     NgbPopoverModule,
     NgSelectModule,
-    DragDropModule
+    DragDropModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

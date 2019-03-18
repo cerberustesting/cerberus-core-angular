@@ -5,11 +5,13 @@ import { TestcasescriptComponent } from './layout/pages/testcasescript/testcases
 import { LabelsComponent } from './layout/pages/labels/labels.component';
 import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
 import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.component';
+import {TestcaselistComponent} from './layout/pages/testcaselist/testcaselist.component';
 
 const routes: Route[] = [
   // HOME ROUTING
   //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'testcaselist', component: TestcaselistComponent },
   { path: 'testcasescript', component: TestcasescriptComponent },
   { path: 'labels', component: LabelsComponent },
   { path: 'pagenotfound', component: PagenotfoundComponent },

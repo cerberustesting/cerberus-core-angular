@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ITestCaseHeader } from 'src/app/model/testcase.model';
 import {TestService} from '../../../services/crud/test.service';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 export interface PeriodicElement {
   name: string;
@@ -9,8 +10,7 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-
-const ELEMENT_DATA: PeriodicElement[] = [
+const  ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
@@ -30,18 +30,20 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class TableComponent implements OnInit {
-  selectedTest = '';
-  public testcasesList: Array<ITestCaseHeader> = [];
-  dataSource = this.testcasesList;
-  displayedColumns: string[] = ['testCase', 'status', 'application', 'description'];
+  @Input() dataSource: any[] = [];
+  @Input() displayedColumns: any[] = [];
+  // selectedTest = '';
+  // public testcasesList: Array<ITestCaseHeader>;
+  // dataSource = this.testcasesList;
+  // displayedColumns: string[] = ['testCase', 'status', 'application', 'description'];
   // dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   constructor(
-      private TestService: TestService,
+      // private TestService: TestService,
     ) { }
 
   ngOnInit() {
-    this.TestService.getTestCasesList(this.selectedTest);
+ /*   this.TestService.getTestCasesList(this.selectedTest);
 
     this.TestService.observableTestCasesList.subscribe(response => {
       if (response) {
@@ -54,7 +56,7 @@ export class TableComponent implements OnInit {
         this.testcasesList = null;
       }
     });
-  }
+  */}
 }
 
 

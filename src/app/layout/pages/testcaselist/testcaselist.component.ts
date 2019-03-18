@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {TestService} from '../../../services/crud/test.service';
+import {ITestCaseHeader} from '../../../model/testcase.model';
 
 @Component({
   selector: 'app-testcaselist',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestcaselistComponent implements OnInit {
 
-  constructor() { }
+  selectedTest = '';
+  public testcasesList: Array<ITestCaseHeader>;
+  dataSource = this.testcasesList;
+  displayedColumns: string[] = ['testCase', 'status', 'application', 'description'];
+
+  constructor( private TestService: TestService) { }
 
   ngOnInit() {
-  }
+    this.TestService.getTestCasesList(this.selectedTest);
 
+    this.TestService.observableTestCasesList.subscribe(response => {
+      if (response) {
+        if (response.length > 0) {
+          this.testcasesList = response;
+          console.log(this.testcasesList);
+          console.log(this.dataSource);
+        }
+      } else {
+        this.testcasesList = null;
+      }
+    });
+  }
 }

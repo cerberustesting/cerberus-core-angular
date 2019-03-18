@@ -1,24 +1,23 @@
-<div class="data-table">
-  <input (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+<!--<div class="data-table">
   <table mat-table [dataSource]="testcasesList" class="mat-elevation-z8">
     <ng-container matColumnDef="testCase">
       <th mat-header-cell *matHeaderCellDef> Test Case ID </th>
       <td mat-cell *matCellDef="let element"> {{element.testCase}} </td>
     </ng-container>
 
-    <!-- Name Column -->
+    &lt;!&ndash; Name Column &ndash;&gt;
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status </th>
       <td mat-cell *matCellDef="let element"> {{element.status}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
+    &lt;!&ndash; Weight Column &ndash;&gt;
     <ng-container matColumnDef="application">
       <th mat-header-cell *matHeaderCellDef> Application </th>
       <td mat-cell *matCellDef="let element"> {{element.application}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
+    &lt;!&ndash; Symbol Column &ndash;&gt;
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef> Description </th>
       <td mat-cell *matCellDef="let element"> {{element.description}} </td>
@@ -28,6 +27,16 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-</div>
+</div>-->
 
 <!--<div>{{testcasesList | json}}</div>-->
+<div class ="data-table">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
+      <th mat-header-cell *matHeaderCellDef> {{col}} </th>
+      <td mat-cell *matCellDef="let row"> {{row[col]}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

@@ -192,7 +192,7 @@ export class TcHeaderComponent implements OnInit {
       Object.assign(this.testcaseheader_countryList, { [country]: country });
     }
     this.testcaseheader.countryList = this.testcaseheader_countryList;
-    this.TestService.updateTestCase(this.testcaseheader, this.originalTest, this.originalTestCase);
+    this.TestService.saveTestCaseHeader(this.testcaseheader, this.originalTest, this.originalTestCase);
   }
 
   debug() { }

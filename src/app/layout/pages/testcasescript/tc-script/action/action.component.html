@@ -3,7 +3,7 @@
   [cdkDropListConnectedTo]="DragAndDropControlIDList" (cdkDropListDropped)="dropControl($event)" (cdkDropListEntered)="controlEntered()" (cdkDropListExited)="controlExited()"
   >
   <!-- ACTION CONTENT SECTION -->
-  <div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+action.step+'action'+action.sort">
+  <div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+action.step+'action'+stepNumber">
     <div class="block-header" (mouseenter)="showActionAddButtons = true" (mouseleave)="showActionAddButtons = false">
       <div class="block-options">
         <button type="button" class="btn-block-option" (click)="showControlList = !showControlList" [disabled]="!action.controlList.length > 0">
@@ -12,7 +12,7 @@
       <div class="input-group" (click)="focusOnAction()">
         <div class="input-group-prepend">
           <span class="input-group-text custom">
-            {{action.sort}}
+            {{actionNumber}}
           </span>
         </div>
         <div class="input-group-prepend" *ngIf="findActionCrossReference(action.action).icon" [ngbPopover]="action.action"
@@ -21,24 +21,24 @@
             <i [ngClass]="findActionCrossReference(action.action).icon"></i>
           </span>
         </div>
-        <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0" [id]="'step'+action.step+'action'+action.sort"
+        <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0" [id]="'step'+action.step+'action'+stepNumber"
           name="activeStepDescription" placeholder="Action Description" [readonly]="readonly">
       </div>
       <div *ngIf="showActionAddButtons" class="block-options">
-        <button type="button" class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
-        <button type="button" class="btn btn-sm btn-outline-success mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
+        <button type="button" class="btn btn-sm btn-outline-primary mr-1" (click)="addAction(actionNumber)"> <i class="fa fa-fw fa-plus"></i> </button>
+        <button type="button" class="btn btn-sm btn-outline-success mr-1" (click)="addControl(action.controlList.length+1)"> <i class="fa fa-fw fa-plus"></i> </button>
       </div>
       <div class="block-options">
-        <button type="button" [id]="'action' + action.sort +'conditionOper'" *ngIf="action.conditionOper != 'always'"
+        <button type="button" [id]="'action' + stepNumber +'conditionOper'" *ngIf="action.conditionOper != 'always'"
           class="btn-block-option info_block_options" [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'"
           triggers="mouseenter:mouseleave">
           <i class="fa fa-fw" [ngClass]="action.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
         </button>
-        <button type="button" [id]="'action' + action.sort +'forceExeStatus'" *ngIf="action.forceExeStatus == 'PE'"
+        <button type="button" [id]="'action' + stepNumber +'forceExeStatus'" *ngIf="action.forceExeStatus == 'PE'"
           class="btn-block-option info_block_options" ngbPopover="This action execution is forced" triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa fa-arrow-down"></i>
         </button>
-        <button type="button" [id]="'action' + action.sort +'deleteAction'" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
+        <button type="button" [id]="'action' + stepNumber +'deleteAction'" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
           <i class="far fa-fw fa-trash-alt"></i>
         </button>
         <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
@@ -50,8 +50,8 @@
   <!-- END ACTION CONTENT SECTION -->
   <!-- CONTROL LIST -->
   <div *ngIf="showControlList">
-    <div *ngFor="let control of action.controlList; let last = last" class="controlDrag" cdkDrag cdkDragLockAxis="y">
-      <app-control [control]="control" [readonly]="readonly" [parentAction]="action">
+    <div *ngFor="let control of action.controlList; let index = index" class="controlDrag" cdkDrag cdkDragLockAxis="y">
+      <app-control [control]="control" [readonly]="readonly" [controlNumber]="index+1" (controlAdded)="addControl($event)" (actionAddedFromControl)="addAction($event)" [actionNumber]="actionNumber">
         <button type="button" [id]="'control' + control.sort +'dragControl'" class="btn-block-option" slot="drag-control"
           cdkDragHandle>
           <i class="fa fa-arrows-alt-v"></i>
@@ -61,7 +61,3 @@
   </div>
 </div>
 <!-- END CONTROL LIST -->
-
-<!-- TODO : 
-  - add a pipe to order by sequence ?
--->

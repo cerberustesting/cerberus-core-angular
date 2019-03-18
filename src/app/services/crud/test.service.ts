@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { ITest } from 'src/app/model/test.model';
-import { ITestCaseHeader, ITestCase } from 'src/app/model/testcase.model';
+import { ITestCaseHeader, ITestCase, IStep, IAction, IControl } from 'src/app/model/testcase.model';
 import { ILabel, ITestCaseLabel } from 'src/app/model/label.model';
 import { IProject } from 'src/app/model/project.model';
 import { AppSettings } from 'src/app/app.component';
@@ -109,7 +109,7 @@ export class TestService {
     return this.testcasesList.filter(tc => tc.testCase === testcase).length > 0;
   }
 
-  updateTestCase(testcaseheader: ITestCaseHeader, originalTest, originalTestCase) {
+  saveTestCaseHeader(testcaseheader: ITestCaseHeader, originalTest, originalTestCase) {
     var data: ITestCaseHeader
     data = testcaseheader;
     // add the original test and testcase to the data to send
@@ -126,6 +126,41 @@ export class TestService {
       .subscribe((response) => {
         con
         */
+  }
+
+  debug(testcase: ITestCase) {
+    for (let step of testcase.stepList) {
+      console.log("iterating on step#" + step.sort + " which is the step " + step.description);
+    }
+  }
+
+  refreshStepSort(stepList: Array<IStep>): void {
+    stepList.forEach((step, index) => {
+      var newIndex = index + 1;
+      step.sort = newIndex;
+    });
+  }
+
+  refreshActionSort(actionList: Array<IAction>): void {
+    actionList.forEach((action, index) => {
+      var newIndex = index + 1;
+      action.sort = newIndex;
+    });
+  }
+
+  refreshControlSort(controlList: Array<IControl>): void {
+    controlList.forEach((control, index) => {
+      var newIndex = index + 1;
+      control.sort = newIndex;
+    });
+  }
+
+  saveTestCase(testcase: ITestCase) {
+    //this.refreshStepSortSequence(testcase.stepList);
+    console.log("TestCase Object to be saved");
+    console.log(testcase.stepList);
+    this.debug(testcase);
+
   }
 
   clearTestCase() {

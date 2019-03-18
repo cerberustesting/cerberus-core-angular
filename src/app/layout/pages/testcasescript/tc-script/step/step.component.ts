@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IStep, IAction } from 'src/app/model/testcase.model';
+import { IStep, IAction, Action } from 'src/app/model/testcase.model';
 import { SettingsService } from '../settings/settings.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { TestService } from 'src/app/services/crud/test.service';
 
 @Component({
   selector: 'app-step',
@@ -11,13 +12,15 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 export class StepComponent implements OnInit {
 
   @Input('step') step: IStep;
-  @Input('isfirstStep') isFirstStep: boolean;
+  @Input('stepNumber') stepNumber: number;
+  //@Input('isfirstStep') isFirstStep: boolean;
   showActionList: boolean;
   stepIsReadOnly: boolean;
   showControls: boolean;
 
   constructor(
-    private SettingsService: SettingsService
+    private SettingsService: SettingsService,
+    private TestService: TestService
   ) { }
 
   ngOnInit() {
@@ -29,6 +32,12 @@ export class StepComponent implements OnInit {
     // solution B : go full Angular with only *ngIf but the sweet animation will disappear
     this.step.toDelete = false;
     this.stepIsReadOnly = false;
+  }
+
+  addAction(destinationIndex: number) {
+    var newAction = new Action(this.step.test, this.step.testCase, destinationIndex);
+    this.step.actionList.splice(destinationIndex, 0, newAction);
+    this.TestService.refreshActionSort(this.step.actionList);
   }
 
   focusOnStep(): void {
@@ -47,19 +56,18 @@ export class StepComponent implements OnInit {
     } else if (this.step.useStep == 'N' && this.step.inLibrary == 'N') {
       return "clear"
     } else {
-      console.log("ERROR on libraryState() call");
+      console.log("WARN: ERROR on libraryState() call, please report this issue on github");
       return null;
     }
   }
 
-  clearFocus(): void {
-    console.log("focus out");
-    //this.SettingsService.clearFocus();
-  }
-
   dropAction(event: CdkDragDrop<IAction[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    // todo: update the array sequence
+    this.TestService.refreshActionSort(this.step.actionList);
+  }
+
+  debug(event) {
+    console.log("debug : " + event);
   }
 
 }

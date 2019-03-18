@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CrossReference } from 'src/app/model/crossreference.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { IAction, ITestCase, Control, IControl } from 'src/app/model/testcase.model';
+import { IAction, ITestCase, Control, IControl, Action } from 'src/app/model/testcase.model';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
 import { TestService } from 'src/app/services/crud/test.service';
@@ -19,6 +19,10 @@ export class ActionComponent implements OnInit {
   @Input('action') action: IAction;
   @Input('readonly') readonly: boolean;
   @Input('showContent') showControlList: boolean;
+  @Input('actionNumber') actionNumber: number;
+
+  @Output() actionAdded = new EventEmitter<number>();
+
   private isDragging: boolean;
   private showActionAddButtons: boolean;
   private testcase: ITestCase;
@@ -51,7 +55,17 @@ export class ActionComponent implements OnInit {
     this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
   }
 
-  addControl() {
+  addAction(destinationIndex: number) {
+    // send the desired position for the new Action to the Step component
+    this.actionAdded.emit(destinationIndex);
+  }
+
+  addControl(destinationIndex: number): void {
+    var newControl = new Control(this.testcase.info.test, this.testcase.info.testCase, destinationIndex);
+    this.action.controlList.splice(destinationIndex, 0, newControl);
+    this.TestService.refreshControlSort(this.action.controlList);
+    // force the control list to be displayed when adding a control
+    this.showControlList = true;
   }
 
   focusOnAction(): void {

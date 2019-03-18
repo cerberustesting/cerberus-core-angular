@@ -1,7 +1,7 @@
 export interface ITestCaseHeader {
     conditionOper: string;
     howTo: string;
-    // project: string;
+    project?: string;
     description: string;
     fromRev: string;
     implementer: string;
@@ -23,7 +23,7 @@ export interface ITestCaseHeader {
     usrModif: string;
     toBuild: string;
     userAgent: string;
-    // origin: string;
+    origin?: string;
     priority: number;
     countryList: any;
     testCaseVersion: number;
@@ -47,17 +47,17 @@ export interface ITestCaseHeader {
 
 export interface ITestCase {
     info: ITestCaseHeader;
-    inheritedProp: [string];
+    inheritedProp: Array<string>;
     hasPermissionsUpdate: boolean;
     messageType: string;
     hasPermissionsStepLibrary: boolean;
-    stepList: [IStep];
+    stepList: Array<IStep>;
     message: string;
     hasPermissionsDelete: boolean;
     sEcho: number;
 }
 
-export interface IStep {
+export class Step {
     objType: string;
     test: string;
     testCase: string;
@@ -68,40 +68,91 @@ export interface IStep {
     loop: string;
     useStep: string;
     isStepInUseByOtherTestCase: boolean;
+    useStepTest: string;
     useStepTestCase: string;
     inLibrary: string;
-    useStepTest: string;
     initialStep: number;
     useStepStep: number;
-    usrModif: string;
-    usrCreated: string;
     description: string;
-    actionList: [IAction];
+    actionList: Array<IAction>;
     sort: number;
     step: number;
+    toDelete: boolean;
+    usrModif: string;
+    usrCreated: string;
     dateCreated: string;
     dateModif: string;
-    toDelete: boolean;
+
+    constructor(test: string, testCase: string, sort: number) {
+        this.objType = "step";
+        this.test = test;
+        this.testCase = testCase;
+        this.conditionOper = "always";
+        this.conditionVal1 = "";
+        this.conditionVal2 = "";
+        this.forceExe = "N";
+        this.loop = "onceIfConditionTrue";
+        this.useStep = "N";
+        this.isStepInUseByOtherTestCase = false;
+        this.useStepTest = "";
+        this.useStepTestCase = "";
+        this.inLibrary = "N";
+        this.initialStep = 0;
+        this.useStepStep = 0;
+        this.toDelete = false;
+        this.description = "";
+        this.actionList = new Array<IAction>();
+        this.sort = sort;
+        this.step = null;
+        this.dateCreated = "";
+        this.dateModif = "";
+        this.usrModif = "";
+        this.usrCreated = "";
+    }
 }
 
-export interface IAction {
+export interface IStep extends Step { }
+
+export class Action {
     objType: string;
-    forceExeStatus: string;
-    conditionVal2: string;
     test: string;
+    testCase: string;
     conditionOper: string;
     conditionVal1: string;
-    value2: string;
-    controlList: [IControl];
+    conditionVal2: string;
+    action: string;
     value1: string;
-    screenshotFilename: string
+    value2: string;
     description: string;
     sort: number;
     sequence: number;
-    action: string;
     step: number;
-    testCase: string;
+    forceExeStatus: string;
+    screenshotFilename: string;
+    controlList: Array<IControl>;
+
+    constructor(test: string, testcase: string, sort: number) {
+        this.objType = "action";
+        this.forceExeStatus = "";
+        this.test = test;
+        this.testCase = testcase;
+        this.conditionOper = "always";
+        this.conditionVal1 = "";
+        this.conditionVal2 = "";
+        this.action = "doNothing";
+        this.value1 = "";
+        this.value2 = "";
+        this.description = "";
+        this.sort = sort;
+        this.sequence = null;
+        this.step = null;
+        this.forceExeStatus = ""
+        this.screenshotFilename = "";
+        this.controlList = new Array<IControl>();
+    }
 }
+
+export interface IAction extends Action { }
 
 export class Control {
     objType: string;
@@ -122,27 +173,25 @@ export class Control {
     step: number;
     toDelete: boolean;
 
-    constructor(test: string, testCase: string, sort: number, sequence: number, controlSequence: number, step: number) {
-        this.objType = "control",
-            this.test = test,
-            this.testCase = testCase,
-            this.conditionOper = "always",
-            this.conditionVal1 = "",
-            this.conditionVal2 = "",
-            this.description = "",
-            this.control = "Unknown",
-            this.value1 = "",
-            this.value2 = "",
-            this.fatal = "N",
-            this.screenshotFilename = "",
-            this.sort = sort,
-            this.sequence = sequence,
-            this.controlSequence = controlSequence,
-            this.step = step,
-            this.toDelete = false
+    constructor(test: string, testCase: string, sort: number) {
+        this.objType = "control";
+        this.test = test;
+        this.testCase = testCase;
+        this.conditionOper = "always";
+        this.conditionVal1 = "";
+        this.conditionVal2 = "";
+        this.description = "";
+        this.control = "Unknown";
+        this.value1 = "";
+        this.value2 = "";
+        this.fatal = "N";
+        this.screenshotFilename = "";
+        this.sort = sort;
+        this.sequence = null;
+        this.controlSequence = null;
+        this.step = null;
+        this.toDelete = false;
     }
 }
 
-export interface IControl extends Control {
-
-}
+export interface IControl extends Control { }

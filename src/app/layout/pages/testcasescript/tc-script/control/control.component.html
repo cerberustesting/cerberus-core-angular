@@ -3,7 +3,7 @@
     <div class="input-group" (click)="focusOnControl()">
       <div class="input-group-prepend">
         <span class="input-group-text custom">
-          {{control.sort}}
+          {{controlNumber}}
         </span>
       </div>
       <div class="input-group-prepend" *ngIf="findControlCrossReference(control.control).icon"
@@ -12,13 +12,15 @@
           <i [ngClass]="findControlCrossReference(control.control).icon"></i>
         </span>
       </div>
-      <input type="text" [id]="'step'+control.step+'action'+control.sequence+'control'+control.sort"
+      <input type="text" [id]="'step'+control.step+'action'+control.sequence+'control' + controlNumber"
         [(ngModel)]="control.description" class="form-control br-lr-1 bg-transparent b-0" name="activeStepDescription"
         placeholder="Control Description" [readonly]="readonly">
     </div>
     <div *ngIf="showControlAddButtons" class="block-options">
-      <button type="button" id="addActionFromControl" class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-fw fa-plus"></i> </button>
-      <button type="button" id="addControlFromControl" class="btn btn-sm btn-outline-success mr-1" (click)="addControl()"> <i class="fa fa-fw fa-plus"></i> </button>
+      <button type="button" id="addActionFromControl" class="btn btn-sm btn-outline-primary mr-1"
+        (click)="addAction(actionNumber+1)"> <i class="fa fa-fw fa-plus"></i> </button>
+      <button type="button" id="addControlFromControl" class="btn btn-sm btn-outline-success mr-1"
+        (click)="addControl(controlNumber)"> <i class="fa fa-fw fa-plus"></i> </button>
     </div>
     <div class="block-options">
       <button *ngIf="control.conditionOper != 'always'" type="button" class="btn-block-option info_block_options"

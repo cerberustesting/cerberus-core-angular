@@ -24,21 +24,27 @@
         </div>
       </div>
     </div>
+    <!-- STEP LIST -->
     <div class="row" *ngIf="testcase.stepList.length != 0">
       <div class="col-md-7">
-        <div id="stepList" role="tablist" aria-multiselectable="true" class="stepList" cdkDropList [cdkDropListData]="testcase.stepList" (cdkDropListDropped)="dropStep($event)">
-          <div *ngFor="let step of testcase.stepList; first as isFirst" class="stepDrag" cdkDrag cdkDragLockAxis="y">
-            <app-step (stepFocused)="receiveStep($event)" [step]="step" [isfirstStep]="isFirst">
+        <div [id]="stepListBlockId" role="tablist" aria-multiselectable="true" class="stepList" cdkDropList
+          [cdkDropListData]="testcase.stepList" (cdkDropListDropped)="dropStep($event)">
+          <div *ngFor="let step of testcase.stepList; let index = index" class="stepDrag" cdkDrag cdkDragLockAxis="y">
+            <app-step [step]="step" [stepNumber]="index+1">
               <button slot="drag-step" type="button" class="btn btn-primary drag-cursor" cdkDragHandle>
                 <i class="fa fa-arrows-alt-v"></i>
               </button>
             </app-step>
           </div>
           <div class="push">
-            <button type="button" class="col-md-4 mr-2 btn btn-outline-primary" (click)="addAStep()"><i
-                class="fa fa-fw fa-plus mr-1"></i>Step</button>
-            <button type="button" class="col-md-4 btn btn-outline-primary"><i class="fa fa-fw fa-plus mr-1"></i>Use
-              Step</button>
+            <div class="col-md-12 text-center">
+              <button type="button" class="btn btn-outline-primary mr-3" (click)="addAStep()">
+                <i class="fa fa-fw fa-plus mr-1"></i>Step
+              </button>
+              <button type="button" class="btn btn-outline-primary">
+                <i class="fa fa-fw fa-plus mr-1"></i>Use Step
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -46,9 +52,12 @@
         <app-settings></app-settings>
       </div>
     </div>
-    <div class="row push" *ngIf="!testcase.stepList.length == 0">
-      <div class="col-md-12">
-        <button class="btn btn-light full-width border" type="button"> Save All </button>
+    <!-- END STEP LIST -->
+    <div id="testcasescript_modal_footer" class="row push">
+      <div class="col-md-12 text-center">
+        <button type="button" class="btn btn-info mr-1" (click)="saveTestCase()">
+          <i class="fa fa-fw fa-check mr-1"></i> Save
+        </button>
       </div>
     </div>
   </div>

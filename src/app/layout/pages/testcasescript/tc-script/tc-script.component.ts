@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ITestCase, IStep, IAction } from 'src/app/model/testcase.model';
-import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-declare function blockAPI(mode: string, block_id: string): void;
+import { ITestCase, IStep, Step } from 'src/app/model/testcase.model';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { TestService } from 'src/app/services/crud/test.service';
 
 @Component({
   selector: 'app-tc-script',
@@ -13,47 +12,36 @@ export class TcScriptComponent implements OnInit {
 
   @Input('testcase') testcase: ITestCase;
 
-  constructor(private InvariantService: InvariantsService) { }
+  private stepListBlockId: string;
 
-  ngOnChanges() {
+  constructor(private TestService: TestService) {
+    this.stepListBlockId = "stepList";
   }
 
   ngOnInit() {
   }
 
-  setActiveStep(step: IStep) {
-  }
-
   addAStep() {
-    var newStep = <IStep>{
-      isStepInUseByOtherTestCase: false,
-      description: '',
-      test: this.testcase.info.test,
-      sort: this.testcase.stepList.length + 1,
-      conditionOper: '',
-      conditionVal2: '',
-      conditionVal1: '',
-      actionList: null,
-      forceExe: 'N'
-    };
+    var newStep = new Step(this.testcase.info.testCase, this.testcase.info.test, this.testcase.stepList.length + 1);
     this.testcase.stepList.push(newStep);
-  }
-
-  receiveStep($event): void {
-    console.log('step received: ', $event);
-  }
-
-  saveActiveStep() {
-    console.log(this.testcase.stepList);
+    // useless to refresh the step sort here since we can only add at the end.
+    // if later modification (e.g. adding a step after any step), please consider
+    // - using splice() instead of push
+    // - call TestService.refreshStepSort(this.testcase.stepList)
   }
 
   dropStep(event: CdkDragDrop<IStep[]>) {
-    // todo: update the array sequence
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    this.TestService.refreshStepSort(this.testcase.stepList);
   }
 
   debug() {
     console.log(this.testcase);
+  }
+
+  saveTestCase() {
+    // send the testcase to the data service
+    this.TestService.saveTestCase(this.testcase);
   }
 
 }

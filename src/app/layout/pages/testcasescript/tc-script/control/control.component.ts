@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IControl, ITestCase, IAction, Control } from 'src/app/model/testcase.model';
 import { CrossReference } from 'src/app/model/crossreference.model';
 import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
@@ -16,7 +16,13 @@ export class ControlComponent implements OnInit {
 
   @Input('control') control: IControl;
   @Input('readonly') readonly: boolean;
-  @Input('parentAction') parentAction: IAction;
+  @Input('actionNumber') actionNumber: number;
+  @Input('controlNumber') controlNumber: number;
+
+  // the component doens't have access to any List (Action or Step)
+  // so it will send the add "order" to Step component (for Action List) or Action component (for Control List)
+  @Output() controlAdded = new EventEmitter<number>();
+  @Output() actionAddedFromControl = new EventEmitter<number>();
 
   showControlAddButtons: boolean;
   testcase: ITestCase;
@@ -40,18 +46,18 @@ export class ControlComponent implements OnInit {
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
     this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
-    this.debug();
   }
 
   flagForDeletion(control: IControl) { this.control.toDelete = !this.control.toDelete; this.debug(); }
 
-  addControl(): void {
-    var newControl = new Control(this.testcase.info.test, this.testcase.info.testCase, this.control.sort + 1, this.control.sequence + 1, this.control.controlSequence + 1, this.control.step);
-    this.parentAction.controlList.splice(this.control.sort, 0, newControl);
-    // TO DO : update the sorts after
-    // idea : service method that update all the sorts for an action
-    console.log("control added: ");
-    console.log(newControl);
+  addControl(destinationIndex: number): void {
+    // send the desired position for the new Control to the Action component
+    this.controlAdded.emit(destinationIndex);
+  }
+
+  addAction(destinationIndex: number) {
+    // send the desired position for the new Action to the Action component
+    this.actionAddedFromControl.emit(destinationIndex);
   }
 
   focusOnControl(): void {

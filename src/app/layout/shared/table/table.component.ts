@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ITestCaseHeader } from 'src/app/model/testcase.model';
+import {TestService} from '../../../services/crud/test.service';
 
 export interface PeriodicElement {
   name: string;
@@ -6,6 +8,7 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
 }
+
 
 const ELEMENT_DATA: PeriodicElement[] = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -27,15 +30,31 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class TableComponent implements OnInit {
+  selectedTest = '';
+  public testcasesList: Array<ITestCaseHeader> = [];
+  dataSource = this.testcasesList;
+  displayedColumns: string[] = ['testCase', 'status', 'application', 'description'];
+  // dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
-
-  constructor() { }
+  constructor(
+      private TestService: TestService,
+    ) { }
 
   ngOnInit() {
-  }
+    this.TestService.getTestCasesList(this.selectedTest);
 
+    this.TestService.observableTestCasesList.subscribe(response => {
+      if (response) {
+        if (response.length > 0) {
+          this.testcasesList = response;
+          console.log(this.testcasesList);
+          console.log(this.dataSource);
+        }
+      } else {
+        this.testcasesList = null;
+      }
+    });
+  }
 }
 
 

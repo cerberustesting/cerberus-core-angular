@@ -2,7 +2,10 @@
   margin: auto;
 }
 .data-table table {
-  margin: auto;
-  width: 80%;
+  margin: 30px auto;
   box-shadow: none;
+}
+
+.data-table th {
+  width: 50px;
 }

@@ -1,7 +1,7 @@
 export interface ITestCaseHeader {
     conditionOper: string;
     howTo: string;
-    project: string;
+    // project: string;
     description: string;
     fromRev: string;
     implementer: string;
@@ -23,7 +23,7 @@ export interface ITestCaseHeader {
     usrModif: string;
     toBuild: string;
     userAgent: string;
-    origin: string;
+    // origin: string;
     priority: number;
     countryList: any;
     testCaseVersion: number;

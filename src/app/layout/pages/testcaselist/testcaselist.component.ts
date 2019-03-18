@@ -11,20 +11,17 @@ export class TestcaselistComponent implements OnInit {
 
   selectedTest = '';
   public testcasesList: Array<ITestCaseHeader>;
-  dataSource = this.testcasesList;
   displayedColumns: string[] = ['testCase', 'status', 'application', 'description'];
 
-  constructor( private TestService: TestService) { }
+  constructor( private testService: TestService) { }
 
   ngOnInit() {
-    this.TestService.getTestCasesList(this.selectedTest);
+    this.testService.getTestCasesList(this.selectedTest);
 
-    this.TestService.observableTestCasesList.subscribe(response => {
+    this.testService.observableTestCasesList.subscribe(response => {
       if (response) {
         if (response.length > 0) {
           this.testcasesList = response;
-          console.log(this.testcasesList);
-          console.log(this.dataSource);
         }
       } else {
         this.testcasesList = null;

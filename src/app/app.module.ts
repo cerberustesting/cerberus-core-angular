@@ -30,7 +30,8 @@ import { ReportbystatusComponent } from './layout/pages/reportbytag/graph/report
 import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugreport.component';
 import {TestcaselistComponent} from './layout/pages/testcaselist/testcaselist.component';
 import {TableComponent} from './layout/shared/table/table.component';
-import {MatTableModule} from '@angular/material';
+import {MatPaginatorModule, MatTableModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,9 @@ import {MatTableModule} from '@angular/material';
     NgbPopoverModule,
     NgSelectModule,
     DragDropModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

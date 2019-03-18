@@ -1,27 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import { ITestCaseHeader } from 'src/app/model/testcase.model';
 import {TestService} from '../../../services/crud/test.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const  ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
 
 @Component({
   selector: 'app-table',
@@ -30,33 +11,24 @@ const  ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class TableComponent implements OnInit {
-  @Input() dataSource: any[] = [];
+  @Input() dataSource: any = [];
   @Input() displayedColumns: any[] = [];
-  // selectedTest = '';
-  // public testcasesList: Array<ITestCaseHeader>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   // dataSource = this.testcasesList;
   // displayedColumns: string[] = ['testCase', 'status', 'application', 'description'];
   // dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  constructor(
-      // private TestService: TestService,
-    ) { }
+  constructor() {
+  }
 
   ngOnInit() {
- /*   this.TestService.getTestCasesList(this.selectedTest);
-
-    this.TestService.observableTestCasesList.subscribe(response => {
-      if (response) {
-        if (response.length > 0) {
-          this.testcasesList = response;
-          console.log(this.testcasesList);
-          console.log(this.dataSource);
-        }
-      } else {
-        this.testcasesList = null;
-      }
-    });
-  */}
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
+    console.log(this.dataSource);
+  }
 }
 
 

@@ -1,37 +1,5 @@
-<!--<div class="data-table">
-  <table mat-table [dataSource]="testcasesList" class="mat-elevation-z8">
-    <ng-container matColumnDef="testCase">
-      <th mat-header-cell *matHeaderCellDef> Test Case ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.testCase}} </td>
-    </ng-container>
-
-    &lt;!&ndash; Name Column &ndash;&gt;
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-    </ng-container>
-
-    &lt;!&ndash; Weight Column &ndash;&gt;
-    <ng-container matColumnDef="application">
-      <th mat-header-cell *matHeaderCellDef> Application </th>
-      <td mat-cell *matCellDef="let element"> {{element.application}} </td>
-    </ng-container>
-
-    &lt;!&ndash; Symbol Column &ndash;&gt;
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef> Description </th>
-      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-    </ng-container>
-
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>-->
-
-<!--<div>{{testcasesList | json}}</div>-->
 <div class ="data-table">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
     <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
       <th mat-header-cell *matHeaderCellDef> {{col}} </th>
       <td mat-cell *matCellDef="let row"> {{row[col]}} </td>
@@ -39,4 +7,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <mat-paginator [pageSizeOptions]="[2, 10, 25, 100]"></mat-paginator>
 </div>

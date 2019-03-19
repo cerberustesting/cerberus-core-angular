@@ -240,8 +240,8 @@
                   <span class="input-group-text">{{
                     findConditionCrossReference(control.conditionOper).value1 }}</span>
                 </div>
-                <input type="text" class="form-control" id="activeControlConditionValue1" name="activeControlConditionValue1"
-                  [(ngModel)]="control.conditionVal1" [readonly]="readonly">
+                <input type="text" class="form-control" id="activeControlConditionValue1"
+                  name="activeControlConditionValue1" [(ngModel)]="control.conditionVal1" [readonly]="readonly">
               </div>
             </div>
           </div>
@@ -252,8 +252,8 @@
                   <span class="input-group-text">{{
                     findConditionCrossReference(control.conditionOper).value2 }}</span>
                 </div>
-                <input type="text" class="form-control" id="activeControlConditionValue2" name="activeControlConditionValue2"
-                  [(ngModel)]="control.conditionVal2" [readonly]="readonly">
+                <input type="text" class="form-control" id="activeControlConditionValue2"
+                  name="activeControlConditionValue2" [(ngModel)]="control.conditionVal2" [readonly]="readonly">
               </div>
             </div>
           </div>
@@ -285,11 +285,14 @@
     *ngIf="step || action || control">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb pt-0 pb-0">
-        <li id="stepIndex" class="breadcrumb-item" *ngIf="step">step #{{ step.sort}}</li>
-        <li id="stepIndex" class="breadcrumb-item" *ngIf="action">step #{{ action.step}}</li>
-        <li id="actionIndex" class="breadcrumb-item" *ngIf="action">action #{{ action.sort}}</li>
-        <li id="stepIndex" class="breadcrumb-item" *ngIf="control">step #{{ control.step}}</li>
-        <li id="actionIndex" class="breadcrumb-item" *ngIf="control">action #{{ control.sequence}}</li>
+        <!-- If a step is selected -->
+        <li id="stepIndex" class="breadcrumb-item" *ngIf="step">step #{{ step.sort }}</li>
+        <!-- If an action is selected -->
+        <li id="stepIndex" class="breadcrumb-item" *ngIf="action">step #{{ parentStepIndex }}</li>
+        <li id="actionIndex" class="breadcrumb-item" *ngIf="action">action #{{ action.sort }}</li>
+        <!-- If a control is selected -->
+        <li id="stepIndex" class="breadcrumb-item" *ngIf="control">step #{{ parentStepIndex }}</li>
+        <li id="actionIndex" class="breadcrumb-item" *ngIf="control">action #{{ parentActionIndex }}</li>
         <li id="controlIndex" class="breadcrumb-item" *ngIf="control">control #{{ control.sort}}</li>
       </ol>
     </nav>

@@ -73,7 +73,7 @@ export class ActionComponent implements OnInit {
 
   focusOnAction(): void {
     // send the action to the settings service and thus, to the settings component
-    this.SettingsService.editActionSettings(this.action, this.readonly);
+    this.SettingsService.editActionSettings(this.action, this.readonly, this.parentStepIndex);
   }
 
   dropControl(event: CdkDragDrop<IControl[]>) {

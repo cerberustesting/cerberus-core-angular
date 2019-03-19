@@ -63,7 +63,7 @@ export class ControlComponent implements OnInit {
 
   focusOnControl(): void {
     // send the control to the settings service and thus, to the settings component
-    this.SettingsService.editControlSettings(this.control, this.readonly);
+    this.SettingsService.editControlSettings(this.control, this.readonly, this.parentStepIndex, this.parentActionIndex);
   }
 
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasControlCrossReference(control); }

@@ -13,10 +13,12 @@ import { InvariantsService } from 'src/app/services/crud/invariants.service';
 })
 export class SettingsComponent implements OnInit {
 
-  step: IStep;
-  action: IAction;
-  control: IControl;
-  readonly: boolean;
+  private step: IStep;
+  private action: IAction;
+  private control: IControl;
+  private readonly: boolean;
+  private parentStepIndex: number;
+  private parentActionIndex: number;
   // private invariants
   private inv_condition_oper: Array<IInvariant>;
   private inv_step_loop: Array<IInvariant>;
@@ -40,6 +42,9 @@ export class SettingsComponent implements OnInit {
     this.SettingsService.observableStep.subscribe(response => { this.step = response; });
     this.SettingsService.observableAction.subscribe(response => { this.action = response; });
     this.SettingsService.observableControl.subscribe(response => { this.control = response; });
+    this.SettingsService.observableParentStepIndex.subscribe(response => { this.parentStepIndex = response; });
+    this.SettingsService.observableParentActionIndex.subscribe(response => { this.parentActionIndex = response; });
+    // invariants subscription
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.InvariantService.observableStepLoopList.subscribe(response => { this.inv_step_loop = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });

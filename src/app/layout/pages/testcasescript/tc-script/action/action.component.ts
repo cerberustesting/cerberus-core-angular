@@ -19,8 +19,11 @@ export class ActionComponent implements OnInit {
   @Input('action') action: IAction;
   @Input('readonly') readonly: boolean;
   @Input('showContent') showControlList: boolean;
-  @Input('actionNumber') actionNumber: number;
+  @Input('parentStepIndex') parentStepIndex: number;
+  @Input('actionIndex') actionIndex: number;
 
+  // the component doens't have access to the Action list
+  // so it will call the addAction method from Step component
   @Output() actionAdded = new EventEmitter<number>();
 
   private isDragging: boolean;
@@ -73,9 +76,7 @@ export class ActionComponent implements OnInit {
     this.SettingsService.editActionSettings(this.action, this.readonly);
   }
 
-  // TO DO : manage properly the drop zone for action without control
   dropControl(event: CdkDragDrop<IControl[]>) {
-    // todo: update the array sequence
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -84,6 +85,7 @@ export class ActionComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+    this.TestService.refreshControlSort(this.action.controlList);
     // show the control List when dragging to an action without control
     if (this.showControlList == false) { this.showControlList = true }
   }

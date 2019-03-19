@@ -6,6 +6,7 @@ import { ITestCaseHeader, ITestCase, IStep, IAction, IControl } from 'src/app/mo
 import { ILabel, ITestCaseLabel } from 'src/app/model/label.model';
 import { IProject } from 'src/app/model/project.model';
 import { AppSettings } from 'src/app/app.component';
+import { TrueindexPipe } from 'src/app/pipes/trueindex.pipe';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -35,7 +36,10 @@ export class TestService {
   // boolean
   refreshTC: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private TrueindexPipe: TrueindexPipe
+  ) { }
 
   getTestsList() {
     this.http.get<ITest[]>(AppSettings.API_endpoint + '/ReadTest')
@@ -136,21 +140,24 @@ export class TestService {
 
   refreshStepSort(stepList: Array<IStep>): void {
     stepList.forEach((step, index) => {
-      var newIndex = index + 1;
+      var newIndex = this.TrueindexPipe.transform(index);
+      //console.log("step #"+newIndex+' descripton: '+step.description);
       step.sort = newIndex;
     });
   }
 
   refreshActionSort(actionList: Array<IAction>): void {
     actionList.forEach((action, index) => {
-      var newIndex = index + 1;
+      var newIndex = this.TrueindexPipe.transform(index);
+      //console.log("action #"+newIndex+' descripton: '+action.description);
       action.sort = newIndex;
     });
   }
 
   refreshControlSort(controlList: Array<IControl>): void {
     controlList.forEach((control, index) => {
-      var newIndex = index + 1;
+      var newIndex = this.TrueindexPipe.transform(index);
+      //console.log("control #"+newIndex+' descripton: '+control.description);
       control.sort = newIndex;
     });
   }

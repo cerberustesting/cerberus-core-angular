@@ -1,44 +1,51 @@
 <!-- CONTROL DROP AREA -->
 <div [id]="DragAndAdropAreaId" class="controlList" cdkDropList [cdkDropListData]="action.controlList"
-  [cdkDropListConnectedTo]="DragAndDropControlIDList" (cdkDropListDropped)="dropControl($event)" (cdkDropListEntered)="controlEntered()" (cdkDropListExited)="controlExited()"
-  >
+  [cdkDropListConnectedTo]="DragAndDropControlIDList" (cdkDropListDropped)="dropControl($event)"
+  (cdkDropListEntered)="controlEntered()" (cdkDropListExited)="controlExited()">
   <!-- ACTION CONTENT SECTION -->
-  <div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+action.step+'action'+stepNumber">
+  <div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+parentStepIndex+'action'+actionIndex">
     <div class="block-header" (mouseenter)="showActionAddButtons = true" (mouseleave)="showActionAddButtons = false">
       <div class="block-options">
-        <button type="button" class="btn-block-option" (click)="showControlList = !showControlList" [disabled]="!action.controlList.length > 0">
+        <button name="showControlList" type="button" class="btn-block-option"
+          (click)="showControlList = !showControlList" [disabled]="!action.controlList.length > 0">
           <i class="si" [ngClass]="showControlList ? 'si-arrow-down' : 'si-arrow-right'"></i></button>
       </div>
       <div class="input-group" (click)="focusOnAction()">
         <div class="input-group-prepend">
-          <span class="input-group-text custom">
-            {{actionNumber}}
+          <span name="actionIndex" class="input-group-text custom">
+            {{actionIndex}}
           </span>
         </div>
-        <div class="input-group-prepend" *ngIf="findActionCrossReference(action.action).icon" [ngbPopover]="action.action"
-          triggers="mouseenter:mouseleave">
+        <div class="input-group-prepend" *ngIf="findActionCrossReference(action.action).icon"
+          [ngbPopover]="action.action" triggers="mouseenter:mouseleave">
           <span class="input-group-text custom">
             <i [ngClass]="findActionCrossReference(action.action).icon"></i>
           </span>
         </div>
-        <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0" [id]="'step'+action.step+'action'+stepNumber"
-          name="activeStepDescription" placeholder="Action Description" [readonly]="readonly">
+        <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0"
+          [id]="'step'+parentStepIndex+'action'+actionIndex+'description'" placeholder="Action Description"
+          [readonly]="readonly">
       </div>
-      <div *ngIf="showActionAddButtons" class="block-options">
-        <button type="button" class="btn btn-sm btn-outline-primary mr-1" (click)="addAction(actionNumber)"> <i class="fa fa-fw fa-plus"></i> </button>
-        <button type="button" class="btn btn-sm btn-outline-success mr-1" (click)="addControl(action.controlList.length+1)"> <i class="fa fa-fw fa-plus"></i> </button>
+      <div *ngIf="showActionAddButtons && !readonly" class="block-options">
+        <button type="button" name="addActionFromAction" class="btn btn-sm btn-outline-primary mr-1"
+          (click)="addAction(actionIndex)"> <i class="fa fa-fw fa-plus"></i> </button>
+        <button type="button" name="addControlFromAction" class="btn btn-sm btn-outline-success mr-1"
+          (click)="addControl(action.controlList.length+1)"> <i class="fa fa-fw fa-plus"></i> </button>
       </div>
       <div class="block-options">
-        <button type="button" [id]="'action' + stepNumber +'conditionOper'" *ngIf="action.conditionOper != 'always'"
-          class="btn-block-option info_block_options" [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'"
+        <button type="button" name="conditionOper" *ngIf="action.conditionOper != 'always'"
+          class="btn-block-option info_block_options"
+          [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'"
           triggers="mouseenter:mouseleave">
           <i class="fa fa-fw" [ngClass]="action.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
         </button>
-        <button type="button" [id]="'action' + stepNumber +'forceExeStatus'" *ngIf="action.forceExeStatus == 'PE'"
-          class="btn-block-option info_block_options" ngbPopover="This action execution is forced" triggers="mouseenter:mouseleave">
+        <button type="button" name="forceExeStatus" *ngIf="action.forceExeStatus == 'PE'"
+          class="btn-block-option info_block_options" ngbPopover="This action execution is forced"
+          triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa fa-arrow-down"></i>
         </button>
-        <button type="button" [id]="'action' + stepNumber +'deleteAction'" class="btn-block-option" (click)="action.toDelete = !action.toDelete">
+        <button *ngIf="!readonly" type="button" name="delete" class="btn-block-option"
+          (click)="action.toDelete = !action.toDelete">
           <i class="far fa-fw fa-trash-alt"></i>
         </button>
         <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
@@ -51,9 +58,10 @@
   <!-- CONTROL LIST -->
   <div *ngIf="showControlList">
     <div *ngFor="let control of action.controlList; let index = index" class="controlDrag" cdkDrag cdkDragLockAxis="y">
-      <app-control [control]="control" [readonly]="readonly" [controlNumber]="index+1" (controlAdded)="addControl($event)" (actionAddedFromControl)="addAction($event)" [actionNumber]="actionNumber">
-        <button type="button" [id]="'control' + control.sort +'dragControl'" class="btn-block-option" slot="drag-control"
-          cdkDragHandle>
+      <app-control [control]="control" [readonly]="readonly" [parentStepIndex]="parentStepIndex"
+        [parentActionIndex]="actionIndex" [controlIndex]="index | trueindex" (controlAdded)="addControl($event)"
+        (actionAddedFromControl)="addAction($event)">
+        <button *ngIf="!readonly" type="button" name="dragControl" class="btn-block-option" slot="drag-control" cdkDragHandle>
           <i class="fa fa-arrows-alt-v"></i>
         </button>
       </app-control>

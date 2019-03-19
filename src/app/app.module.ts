@@ -32,6 +32,7 @@ import {TestcaselistComponent} from './layout/pages/testcaselist/testcaselist.co
 import {TableComponent} from './layout/shared/table/table.component';
 import {MatPaginatorModule, MatTableModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { TrueindexPipe } from './pipes/trueindex.pipe';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ReportbystatusComponent,
     BugreportComponent,
     TestcaselistComponent,
-    TableComponent
+    TableComponent,
+    TrueindexPipe
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatPaginatorModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [TrueindexPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

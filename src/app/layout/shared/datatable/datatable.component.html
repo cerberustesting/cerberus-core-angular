@@ -2,12 +2,12 @@
   <ngx-datatable class="material"
                  [rows]="rows"
                  [columns]="columns"
+                 [columnMode]="'force'"
                  [rowHeight]="50"
-                 [limit]="5"
+                 [limit]="10"
                  [footerHeight]="50"
                  [headerHeight]="50"
                  [loadingIndicator]="isLoading"
-                 [displayCheck]="displayCheck"
                  (activate)="onActivate($event)"
                  (select)='onSelect($event)'>
     <ngx-datatable-column
@@ -16,8 +16,27 @@
             [draggable]="false"
             [resizeable]="false"
             [headerCheckboxable]="true"
-            [checkboxable]="true">
+            [checkboxable]="true"
+            [width]="50">
     </ngx-datatable-column>
-    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name"></ngx-datatable-column>
+    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [width]="100">
+    </ngx-datatable-column>
+      <ngx-datatable-column name="countryList">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              {{column.name}}
+          </ng-template>
+          <ng-template let-value="value" ngx-datatable-cell-template>
+              <strong>{{value.FR}}</strong>
+          </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="labels">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              {{column.name}}
+          </ng-template>
+          <ng-template let-value="value" ngx-datatable-cell-template>
+              <strong>{{value.name | json}}</strong>
+          </ng-template>
+      </ngx-datatable-column>
   </ngx-datatable>
+
 </div>

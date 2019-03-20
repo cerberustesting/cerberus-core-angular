@@ -17,12 +17,10 @@ export class TestcaselistComponent implements OnInit {
     { name: 'application' },
     { name: 'description' },
     { name: 'system' },
-    { name: 'tcActive' },
-    { name: 'countryList' }
+    { name: 'tcActive' }
   ];
   selectedTest = '';
   public testcasesList: Array<ITestCaseHeader>;
-
   constructor( private testService: TestService) { }
 
   ngOnInit() {
@@ -32,6 +30,7 @@ export class TestcaselistComponent implements OnInit {
       if (response) {
         if (response.length > 0) {
           this.testcasesList = response;
+          console.log(this.testcasesList);
         }
       } else {
         this.testcasesList = null;

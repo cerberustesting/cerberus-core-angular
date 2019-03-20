@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IControl, ITestCase, IAction, Control } from 'src/app/model/testcase.model';
+import { IControl, ITestCase } from 'src/app/model/testcase.model';
 import { CrossReference } from 'src/app/model/crossreference.model';
 import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
 import { IInvariant } from 'src/app/model/invariants.model';
@@ -16,11 +16,12 @@ export class ControlComponent implements OnInit {
 
   @Input('control') control: IControl;
   @Input('readonly') readonly: boolean;
-  @Input('actionNumber') actionNumber: number;
-  @Input('controlNumber') controlNumber: number;
+  @Input('parentStepIndex') parentStepIndex: number;
+  @Input('parentActionIndex') parentActionIndex: number;
+  @Input('controlIndex') controlIndex: number;
 
   // the component doens't have access to any List (Action or Step)
-  // so it will send the add "order" to Step component (for Action List) or Action component (for Control List)
+  // so it will call the corresponding add() method from Step component (for Action List) or Action component (for Control List)
   @Output() controlAdded = new EventEmitter<number>();
   @Output() actionAddedFromControl = new EventEmitter<number>();
 
@@ -62,7 +63,7 @@ export class ControlComponent implements OnInit {
 
   focusOnControl(): void {
     // send the control to the settings service and thus, to the settings component
-    this.SettingsService.editControlSettings(this.control, this.readonly);
+    this.SettingsService.editControlSettings(this.control, this.readonly, this.parentStepIndex, this.parentActionIndex);
   }
 
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasControlCrossReference(control); }

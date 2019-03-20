@@ -30,8 +30,8 @@
         <div [id]="stepListBlockId" role="tablist" aria-multiselectable="true" class="stepList" cdkDropList
           [cdkDropListData]="testcase.stepList" (cdkDropListDropped)="dropStep($event)">
           <div *ngFor="let step of testcase.stepList; let index = index" class="stepDrag" cdkDrag cdkDragLockAxis="y">
-            <app-step [step]="step" [stepNumber]="index+1">
-              <button slot="drag-step" type="button" class="btn btn-primary drag-cursor" cdkDragHandle>
+            <app-step [step]="step" [stepIndex]="index | trueindex">
+              <button slot="drag-step" type="button" id="step{{ index | trueindex }}drag" class="btn btn-primary drag-cursor" cdkDragHandle>
                 <i class="fa fa-arrows-alt-v"></i>
               </button>
             </app-step>

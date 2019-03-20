@@ -29,6 +29,7 @@ import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.com
 import { ReportbystatusComponent } from './layout/pages/reportbytag/graph/reportbystatus/reportbystatus.component';
 import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugreport.component';
 import {TestcaselistComponent} from './layout/pages/testcaselist/testcaselist.component';
+import { TrueindexPipe } from './pipes/trueindex.pipe';
 import { DatatableComponent } from './layout/shared/datatable/datatable.component';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 
@@ -56,7 +57,8 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
     ReportbystatusComponent,
     BugreportComponent,
     TestcaselistComponent,
-    DatatableComponent
+    DatatableComponent,
+    TrueindexPipe
   ],
   imports: [
     BrowserModule,
@@ -68,7 +70,7 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
     DragDropModule,
     NgxDatatableModule
   ],
-  providers: [],
+  providers: [TrueindexPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

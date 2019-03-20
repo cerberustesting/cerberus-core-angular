@@ -8,10 +8,8 @@ import { ILabel } from '../model/label.model';
 export class LabelfilteringPipe implements PipeTransform {
 
   transform(items: ILabel[], labelid: string): any {
-    if (!items || !labelid) {
-        return items;
-    }
+    if (!items || !labelid) { return items; }
     return items.filter(items => items.type === labelid);
-}
+  }
 
 }

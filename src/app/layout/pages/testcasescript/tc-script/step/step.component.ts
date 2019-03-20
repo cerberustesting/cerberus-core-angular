@@ -12,7 +12,7 @@ import { TestService } from 'src/app/services/crud/test.service';
 export class StepComponent implements OnInit {
 
   @Input('step') step: IStep;
-  @Input('stepNumber') stepNumber: number;
+  @Input('stepIndex') stepIndex: number;
   //@Input('isfirstStep') isFirstStep: boolean;
   showActionList: boolean;
   stepIsReadOnly: boolean;

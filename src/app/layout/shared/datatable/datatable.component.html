@@ -1,0 +1,23 @@
+<div class="data-table">
+  <ngx-datatable class="material"
+                 [rows]="rows"
+                 [columns]="columns"
+                 [rowHeight]="50"
+                 [limit]="5"
+                 [footerHeight]="50"
+                 [headerHeight]="50"
+                 [loadingIndicator]="isLoading"
+                 [displayCheck]="displayCheck"
+                 (activate)="onActivate($event)"
+                 (select)='onSelect($event)'>
+    <ngx-datatable-column
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            [headerCheckboxable]="true"
+            [checkboxable]="true">
+    </ngx-datatable-column>
+    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name"></ngx-datatable-column>
+  </ngx-datatable>
+</div>

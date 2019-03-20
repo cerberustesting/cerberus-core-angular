@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {TestService} from '../../../services/crud/test.service';
 import {ITestCaseHeader} from '../../../model/testcase.model';
+
 
 @Component({
   selector: 'app-testcaselist',
@@ -9,9 +10,18 @@ import {ITestCaseHeader} from '../../../model/testcase.model';
 })
 export class TestcaselistComponent implements OnInit {
 
+  rows = [];
+  columns = [
+    { name: 'testCase' },
+    { name: 'status' },
+    { name: 'application' },
+    { name: 'description' },
+    { name: 'system' },
+    { name: 'tcActive' },
+    { name: 'countryList' }
+  ];
   selectedTest = '';
   public testcasesList: Array<ITestCaseHeader>;
-  displayedColumns: string[] = ['testCase', 'status', 'application', 'description'];
 
   constructor( private testService: TestService) { }
 

@@ -29,9 +29,8 @@ import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.com
 import { ReportbystatusComponent } from './layout/pages/reportbytag/graph/reportbystatus/reportbystatus.component';
 import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugreport.component';
 import {TestcaselistComponent} from './layout/pages/testcaselist/testcaselist.component';
-import {TableComponent} from './layout/shared/table/table.component';
-import {MatPaginatorModule, MatTableModule} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { DatatableComponent } from './layout/shared/datatable/datatable.component';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -57,7 +56,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ReportbystatusComponent,
     BugreportComponent,
     TestcaselistComponent,
-    TableComponent
+    DatatableComponent
   ],
   imports: [
     BrowserModule,
@@ -67,9 +66,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     NgbPopoverModule,
     NgSelectModule,
     DragDropModule,
-    MatTableModule,
-    MatPaginatorModule,
-    BrowserAnimationsModule
+    NgxDatatableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

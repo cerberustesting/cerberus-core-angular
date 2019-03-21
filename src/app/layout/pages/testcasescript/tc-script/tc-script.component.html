@@ -11,48 +11,127 @@
     </div>
   </div>
   <div class="block-content">
-    <div class="row push" *ngIf="testcase.stepList.length == 0">
-      <div class="col-md-12 mt-3s text-center">
-        <p>The test case is empty <i class="far fa-frown-open"></i></p>
-      </div>
-      <div class="col-md-12 text-center">
-        <div class="btn-group" role="group" aria-label="Horizontal Outline Primary">
-          <button type="button" class="btn btn-outline-primary" (click)="addAStep()"><i
-              class="fa fa-fw fa-plus mr-1"></i>
-            Step</button>
-          <button type="button" class="btn btn-outline-primary"><i class="fa fa-fw fa-plus mr-1"></i>Use Step</button>
-        </div>
-      </div>
-    </div>
-    <!-- STEP LIST -->
-    <div class="row" *ngIf="testcase.stepList.length != 0">
-      <div class="col-md-7">
-        <div [id]="stepListBlockId" role="tablist" aria-multiselectable="true" class="stepList" cdkDropList
-          [cdkDropListData]="testcase.stepList" (cdkDropListDropped)="dropStep($event)">
-          <div *ngFor="let step of testcase.stepList; let index = index" class="stepDrag" cdkDrag cdkDragLockAxis="y">
-            <app-step [step]="step" [stepIndex]="index | trueindex">
-              <button slot="drag-step" type="button" id="step{{ index | trueindex }}drag" class="btn btn-primary drag-cursor" cdkDragHandle>
-                <i class="fa fa-arrows-alt-v"></i>
-              </button>
-            </app-step>
+    <!-- TABS -->
+    <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+      <li *ngFor="let tab of tabs" class="nav-item">
+        <a class="nav-link" [ngClass]="selectedTab == tab ? 'active show' : ''" (click)="selectedTab = tab">{{tab}}</a>
+      </li>
+    </ul>
+    <div class="block-content tab-content">
+      <!-- SCRIPT TAB -->
+      <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="scriptTab" role="tabpanel">
+        <!-- SCRIPT CONTENT -->
+        <div class="row push" *ngIf="testcase.stepList.length == 0">
+          <div class="col-md-12 mt-3s text-center">
+            <p>The test case is empty <i class="far fa-frown-open"></i></p>
           </div>
-          <div class="push">
-            <div class="col-md-12 text-center">
-              <button type="button" class="btn btn-outline-primary mr-3" (click)="addAStep()">
-                <i class="fa fa-fw fa-plus mr-1"></i>Step
-              </button>
-              <button type="button" class="btn btn-outline-primary">
-                <i class="fa fa-fw fa-plus mr-1"></i>Use Step
-              </button>
+          <div class="col-md-12 text-center">
+            <div class="btn-group" role="group" aria-label="Horizontal Outline Primary">
+              <button type="button" class="btn btn-outline-primary" (click)="addAStep()"><i
+                  class="fa fa-fw fa-plus mr-1"></i>
+                Step</button>
+              <button type="button" class="btn btn-outline-primary"><i class="fa fa-fw fa-plus mr-1"></i>Use
+                Step</button>
             </div>
           </div>
         </div>
+        <div class="row" *ngIf="testcase.stepList.length != 0">
+          <!-- STEP LIST -->
+          <div class="col-md-7">
+            <div [id]="stepListBlockId" role="tablist" aria-multiselectable="true" class="stepList" cdkDropList
+              [cdkDropListData]="testcase.stepList" (cdkDropListDropped)="dropStep($event)">
+              <div *ngFor="let step of testcase.stepList; let index = index" class="stepDrag" cdkDrag
+                cdkDragLockAxis="y">
+                <app-step [step]="step" [stepIndex]="index | trueindex">
+                  <button slot="drag-step" type="button" id="step{{ index | trueindex }}drag"
+                    class="btn btn-primary drag-cursor" cdkDragHandle>
+                    <i class="fa fa-arrows-alt-v"></i>
+                  </button>
+                </app-step>
+              </div>
+              <div class="push">
+                <div class="col-md-12 text-center">
+                  <button type="button" class="btn btn-outline-primary mr-3" (click)="addAStep()">
+                    <i class="fa fa-fw fa-plus mr-1"></i>Step
+                  </button>
+                  <button type="button" class="btn btn-outline-primary">
+                    <i class="fa fa-fw fa-plus mr-1"></i>Use Step
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END STEP LIST -->
+          <!-- SETTINGS TOOLBAR -->
+          <div class="col-md-5">
+            <app-settings></app-settings>
+          </div>
+          <!-- END SETTINGS TOOLBAR -->
+        </div>
+        <!-- END SCRIPT CONTENT -->
       </div>
-      <div class="col-md-5">
-        <app-settings></app-settings>
+      <!-- END SCRIPT TAB -->
+      <!-- PROPERTIES TAB -->
+      <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
+        <!-- PROPERTIES CONTENT -->
+        <div class="row">
+          <!-- PROPERTY LIST -->
+          <div class="col-md-4">
+            <ul class="list-group push">
+              <li class="list-group-item active">Property 1</li>
+              <li class="list-group-item">Property 2</li>
+              <li class="list-group-item">Property 3</li>
+              <li class="list-group-item">Property 4</li>
+            </ul>
+          </div>
+          <!-- END PROPERTY LIST -->
+          <!-- PROPERTY CONTENT -->
+          <!-- TO DO : new component for the property -->
+          <div class="col-md-8">
+            <div class="block block-rounded block-bordered">
+              <div class="block-header block-header-default">
+                <h3 class="block-title">Property 1<small> text</small></h3>
+              </div>
+              <div class="block-content">
+
+                  <div class="block block-rounded block-bordered">
+                      <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+                          <li class="nav-item">
+                              <a class="nav-link" href="#btabs-alt-static-home">All</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link active" href="#btabs-alt-static-profile">Profile</a>
+                          </li>
+                          <li class="nav-item ml-auto">
+                              <a class="nav-link" href="#btabs-alt-static-settings"><i class="si si-settings"></i></a>
+                          </li>
+                      </ul>
+                      <div class="block-content tab-content">
+                          <div class="tab-pane" id="btabs-alt-static-home" role="tabpanel">
+                              <h4 class="font-w400">Home Content</h4>
+                              <p>...</p>
+                          </div>
+                          <div class="tab-pane active" id="btabs-alt-static-profile" role="tabpanel">
+                              <h4 class="font-w400">Profile Content</h4>
+                              <p>...</p>
+                          </div>
+                          <div class="tab-pane" id="btabs-alt-static-settings" role="tabpanel">
+                              <h4 class="font-w400">Settings Content</h4>
+                              <p>...</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <!-- PROPERTY CONTENT -->
+        </div>
+        <!-- END PROPERTIES CONTENT -->
       </div>
+      <!-- END PROPERTIES TAB -->
     </div>
-    <!-- END STEP LIST -->
+    <!-- END TABS -->
+
     <div id="testcasescript_modal_footer" class="row push">
       <div class="col-md-12 text-center">
         <button type="button" class="btn btn-info mr-1" (click)="saveTestCase()">

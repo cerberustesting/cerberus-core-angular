@@ -7,6 +7,7 @@ import { ILabel, ITestCaseLabel } from 'src/app/model/label.model';
 import { IProject } from 'src/app/model/project.model';
 import { AppSettings } from 'src/app/app.component';
 import { TrueindexPipe } from 'src/app/pipes/trueindex.pipe';
+import { IProperty } from 'src/app/model/property.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,6 +24,7 @@ export class TestService {
   testsList: Array<ITest> = new Array<ITest>();
   testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
   testcase_labels: Array<ILabel> = new Array<ILabel>();
+  testcase_properties: Array<IProperty> = new Array<IProperty>();
   testcase: ITestCase = null;
   //project
   projectsList: Array<IProject> = new Array<IProject>();
@@ -33,6 +35,7 @@ export class TestService {
   observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
   observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
+  observableTestCaseProperties = new BehaviorSubject<IProperty[]>(this.testcase_properties);
   // boolean
   refreshTC: boolean = false;
 
@@ -113,6 +116,16 @@ export class TestService {
     return this.testcasesList.filter(tc => tc.testCase === testcase).length > 0;
   }
 
+  getProperties(test: string, testcase: string) {
+    var url = AppSettings.API_endpoint + '/GetPropertiesForTestCase?test=' + test + '&testcase=' + testcase
+    this.http.get<IProperty[]>(url)
+      .subscribe((response) => {
+        this.testcase_properties = response;
+        this.observableTestCaseProperties.next(this.testcase_properties);
+        console.log(this.testcase_properties);
+      })
+  }
+
   saveTestCaseHeader(testcaseheader: ITestCaseHeader, originalTest, originalTestCase) {
     var data: ITestCaseHeader
     data = testcaseheader;
@@ -129,7 +142,7 @@ export class TestService {
     this.http.post('http://localhost:8080/Cerberus-3.8-SNAPSHOT/UpdateTestCase', body.toString(), httpOptions)
       .subscribe((response) => {
         con
-        */
+    */
   }
 
   debug(testcase: ITestCase) {

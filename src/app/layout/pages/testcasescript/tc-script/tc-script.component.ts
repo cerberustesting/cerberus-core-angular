@@ -12,6 +12,9 @@ export class TcScriptComponent implements OnInit {
 
   @Input('testcase') testcase: ITestCase;
 
+  private tabs: string[] = ['Script', 'Properties'];
+  private selectedTab: string;
+
   private stepListBlockId: string;
 
   constructor(private TestService: TestService) {
@@ -19,6 +22,8 @@ export class TcScriptComponent implements OnInit {
   }
 
   ngOnInit() {
+    // show Script tab by default = tabs[0]
+    this.selectedTab = this.tabs[0];
   }
 
   addAStep() {

@@ -32,6 +32,7 @@ import {TestcaselistComponent} from './layout/pages/testcaselist/testcaselist.co
 import { TrueindexPipe } from './pipes/trueindex.pipe';
 import { DatatableComponent } from './layout/shared/datatable/datatable.component';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import { PropertyComponent } from './layout/pages/testcasescript/tc-script/property/property.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {NgxDatatableModule} from '@swimlane/ngx-datatable';
     BugreportComponent,
     TestcaselistComponent,
     DatatableComponent,
-    TrueindexPipe
+    TrueindexPipe,
+    PropertyComponent
   ],
   imports: [
     BrowserModule,

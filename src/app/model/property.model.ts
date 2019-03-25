@@ -33,3 +33,7 @@ export class Property {
 }
 
 export interface IProperty extends Property { }
+
+export interface IPropertyByName {
+    [property: string]: Array<IProperty>
+}

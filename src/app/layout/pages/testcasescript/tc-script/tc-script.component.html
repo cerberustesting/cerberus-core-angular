@@ -18,6 +18,7 @@
       </li>
     </ul>
     <div class="block-content tab-content">
+
       <!-- SCRIPT TAB -->
       <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="scriptTab" role="tabpanel">
         <!-- SCRIPT CONTENT -->
@@ -71,6 +72,7 @@
         <!-- END SCRIPT CONTENT -->
       </div>
       <!-- END SCRIPT TAB -->
+
       <!-- PROPERTIES TAB -->
       <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
         <!-- PROPERTIES CONTENT -->
@@ -78,14 +80,16 @@
           <!-- PROPERTY LIST -->
           <div class="col-md-4">
             <ul *ngIf="propertiesList" class="list-group push">
-              <li *ngFor="let property of propertiesList" class="list-group-item" [ngClass]="property == activeProperty ? 'active' : ''" (click)="activeProperty = property">{{ property.property }}</li>
+              <li *ngFor="let property of propertiesList" class="list-group-item"
+                [ngClass]="property == activeProperty ? 'active' : ''" (click)="activeProperty = property">
+                {{ property[0].property }}</li>
             </ul>
           </div>
           <!-- END PROPERTY LIST -->
           <!-- PROPERTY CONTENT -->
           <!-- TO DO : new component for the property -->
           <div *ngIf="activeProperty" class="col-md-8">
-            <app-property [property]="activeProperty"></app-property>
+            <app-property [propertiesByCountry]="activeProperty"></app-property>
           </div>
           <!-- PROPERTY CONTENT -->
         </div>

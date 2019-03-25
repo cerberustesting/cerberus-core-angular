@@ -1,44 +1,48 @@
 <div class="block block-rounded block-bordered">
   <div class="block-header block-header-default">
-    <input type="text" class="form-control" name="shortDesc" [(ngModel)]="property.property">
+    <input type="text" class="form-control" name="propertyName" [(ngModel)]="propertiesByCountry[0].property">
     <div class="block-options">
-        <button type="button" class="btn-block-option">
-            <i class="si si-settings"></i>
-        </button>
+      <button type="button" class="btn-block-option">
+        <i class="si si-settings"></i>
+      </button>
     </div>
   </div>
   <div class="block-content">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="testcase">Description</label>
-          <div class="input-group">
-            <input type="text" class="form-control" name="shortDesc" [(ngModel)]="property.description">
-          </div>
-        </div>
+    <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="selectedPropertyByCountry == 'All' ? 'active' :''"
+          (click)="selectedCountry = 'All'">All</a>
+      </li>
+      <li *ngFor="let property of propertiesByCountry" class="nav-item"
+        (click)="selectedPropertyByCountry = property">
+        <a class="nav-link" [ngClass]="selectedPropertyByCountry == property ? 'active' :''">{{property.country[0]}}</a>
+      </li>
+    </ul>
+    <div class="block-content tab-content">
+      <div *ngIf="selectedPropertyByCountry == 'All'" class="tab-pane active show" role="tabpanel">
+        <h4 class="font-w400">Default value</h4>
       </div>
-    </div>
-    <div class="block block-rounded block-bordered">
-      <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link">All</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active">FR</a>
-        </li>
-      </ul>
-      <div class="block-content tab-content">
-        <div class="tab-pane" id="btabs-alt-static-home" role="tabpanel">
-          <h4 class="font-w400">Home Content</h4>
-          <p>...</p>
-        </div>
-        <div class="tab-pane active" id="btabs-alt-static-profile" role="tabpanel">
-          <h4 class="font-w400">Profile Content</h4>
-          <p>...</p>
-        </div>
-        <div class="tab-pane" id="btabs-alt-static-settings" role="tabpanel">
-          <h4 class="font-w400">Settings Content</h4>
-          <p>...</p>
+      <div *ngFor="let property of propertiesByCountry">
+        <div *ngIf="selectedPropertyByCountry == property" class="tab-pane active show" role="tabpanel">
+          <h4 class="font-w400">Specfic value for {{property.country[0]}}</h4>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="testcase">Description</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" name="shortDesc" [(ngModel)]="property.description">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                  <label for="testcase">Value</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="value" [(ngModel)]="property.value1">
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
       </div>
     </div>

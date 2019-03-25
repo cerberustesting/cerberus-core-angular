@@ -2,7 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase, IStep, Step } from 'src/app/model/testcase.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestService } from 'src/app/services/crud/test.service';
-import { IProperty } from 'src/app/model/property.model';
+import { IProperty, IPropertyByName } from 'src/app/model/property.model';
+import { IInvariant } from 'src/app/model/invariants.model';
+import { InvariantsService } from 'src/app/services/crud/invariants.service';
+import { IOptionsValues } from 'selenium-webdriver/chrome';
 
 @Component({
   selector: 'app-tc-script',
@@ -12,24 +15,30 @@ import { IProperty } from 'src/app/model/property.model';
 export class TcScriptComponent implements OnInit {
 
   @Input('testcase') testcase: ITestCase;
+  private inv_countriesList: Array<IInvariant>;
 
   private tabs: string[] = ['Script', 'Properties'];
   private selectedTab: string;
 
   private stepListBlockId: string;
 
-  private propertiesList: Array<IProperty>;
-  private activeProperty: IProperty;
+  private propertiesList: Array<Array<IProperty>>;
+  private activeProperty: Array<IProperty>;
 
-  constructor(private TestService: TestService) {
+  constructor(private TestService: TestService, private InvariantsService: InvariantsService) {
     this.stepListBlockId = "stepList";
   }
 
   ngOnInit() {
-    // show Script tab by default = tabs[0]
-    this.selectedTab = this.tabs[1];
     this.TestService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
-    this.TestService.observableTestCaseProperties.subscribe(r => { this.propertiesList = r; this.activeProperty = this.propertiesList[0]; });
+    this.TestService.observableTestCaseProperties.subscribe(r => {
+      this.propertiesList = r;
+      if (r) {
+        this.propertiesList[0]
+        this.activeProperty = this.propertiesList[0];
+      }
+    });
+    this.selectedTab = this.tabs[1];
   }
 
   addAStep() {

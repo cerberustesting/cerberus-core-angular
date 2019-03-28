@@ -21,6 +21,7 @@ export class InvariantsService {
   tcstatusList: Array<IInvariant>;
   prioritiesList: Array<IInvariant>;
   originsList: Array<IInvariant>;
+  propertyTypeList: Array<IInvariant>;
   systemsList: Array<IInvariant>;
   systemsSelected = [];
   // observables
@@ -36,6 +37,7 @@ export class InvariantsService {
   observableActionsList = new BehaviorSubject<IInvariant[]>(this.actionsList);
   observableControlsList = new BehaviorSubject<IInvariant[]>(this.controlsList);
   observableTceStatusList = new BehaviorSubject<IInvariant[]>(this.tcestatusList);
+  observablePropertyTypeList = new BehaviorSubject<IInvariant[]>(this.propertyTypeList);
 
   constructor(private http: HttpClient, private AlertService: AlertService) { }
 
@@ -138,6 +140,14 @@ export class InvariantsService {
       .subscribe(response => {
         this.controlsList = response;
         this.observableControlsList.next(this.controlsList);
+      }, (err) => this.AlertService.APIError(err));
+  }
+
+  getPropertyTypeList() {
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=propertyType')
+      .subscribe(response => {
+        this.propertyTypeList = response;
+        this.observablePropertyTypeList.next(this.propertyTypeList);
       }, (err) => this.AlertService.APIError(err));
   }
 

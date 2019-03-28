@@ -126,7 +126,6 @@ export class TestService {
       .subscribe((response) => {
         // split the properties by country (one per country) 
         this.testcase_properties = this.groupPropertiesByName(this.splitPropertiesByCountry(response));
-        console.log(this.testcase_properties);
         this.observableTestCaseProperties.next(this.testcase_properties);
       })
   }

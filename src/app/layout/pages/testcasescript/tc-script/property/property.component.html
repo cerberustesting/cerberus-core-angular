@@ -3,30 +3,72 @@
     <input type="text" class="form-control" name="propertyName" [(ngModel)]="propertiesByCountry[0].property">
     <div class="block-options">
       <button type="button" class="btn-block-option">
-        <i class="si si-settings"></i>
+        <i class="si si-settings" (click)="debug()"></i>
       </button>
     </div>
   </div>
   <div class="block-content">
     <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" role="tablist">
       <li class="nav-item">
-        <a class="nav-link" [ngClass]="selectedPropertyByCountry == 'All' ? 'active' :''"
+        <a class="nav-link" [ngClass]="selectedCountry == 'All' ? 'active' :''"
           (click)="selectedCountry = 'All'">All</a>
       </li>
-      <li *ngFor="let property of propertiesByCountry" class="nav-item"
-        (click)="selectedPropertyByCountry = property">
-        <a class="nav-link" [ngClass]="selectedPropertyByCountry == property ? 'active' :''">{{property.country[0]}}</a>
+      <li *ngFor="let property of propertiesByCountry" class="nav-item" (click)="selectedCountry = property.country[0]">
+        <a class="nav-link" [ngClass]="selectedCountry == property.country[0] ? 'active' :''">{{property.country[0]}}
+          <i *ngIf="!isPropertyEquals(defaultProperty, property)" class="fa fa-check"></i></a>
       </li>
     </ul>
     <div class="block-content tab-content">
-      <div *ngIf="selectedPropertyByCountry == 'All'" class="tab-pane active show" role="tabpanel">
-        <h4 class="font-w400">Default value</h4>
+      <!-- DEFAULT TAB -->
+      <div *ngIf="selectedCountry == 'All'" class="tab-pane active show" role="tabpanel">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="testcase">Type</label>
+              <div class="input-group">
+                <select class="form-control br-tp-0" name="ptype" [(ngModel)]="defaultProperty.type">
+                  <option *ngFor="let ptype of inv_propertyTypeList" [value]="ptype.value">
+                    {{ ptype.value }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label for="testcase">Description</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="shortDesc" [(ngModel)]="defaultProperty.description">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="testcase">Value</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="value" [(ngModel)]="defaultProperty.value1">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- COUNTRIES TABS -->
       <div *ngFor="let property of propertiesByCountry">
-        <div *ngIf="selectedPropertyByCountry == property" class="tab-pane active show" role="tabpanel">
-          <h4 class="font-w400">Specfic value for {{property.country[0]}}</h4>
+        <div *ngIf="selectedCountry == property.country[0]" class="tab-pane active show" role="tabpanel">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="testcase">Type</label>
+                <div class="input-group">
+                  <select class="form-control br-tp-0" name="ptype" [(ngModel)]="property.type">
+                    <option *ngFor="let ptype of inv_propertyTypeList" [value]="ptype.value">
+                      {{ ptype.value }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
               <div class="form-group">
                 <label for="testcase">Description</label>
                 <div class="input-group">
@@ -35,13 +77,48 @@
               </div>
             </div>
             <div class="col-md-12">
+              <div class="form-group">
+                <label for="testcase">Value</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" name="value" [(ngModel)]="property.value1">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 text-right push">
+              <button class="btn btn-sm btn-secondary" name="expandOptions" type="button"
+                (click)="showPropertyOptions = !showPropertyOptions">
+                <i class="si fa-fw si-arrow-right mr-1"></i>
+                <span>Show</span> details
+              </button>
+            </div>
+            <div class="row col-md-12" *ngIf="showPropertyOptions">
+              <div class="col-md-4 ml-0">
                 <div class="form-group">
-                  <label for="testcase">Value</label>
+                  <label for="testcase">Length</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" name="value" [(ngModel)]="property.value1">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="fa fa-arrows-alt-h"></i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control" name="value" [(ngModel)]="property.length">
                   </div>
                 </div>
               </div>
+              <div class="col-md-4 ml-0">
+                <div class="form-group">
+                  <label for="testcase">Cache Expire</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="fa fa-user-clock"></i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control" name="value" [(ngModel)]="property.cacheExpire">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

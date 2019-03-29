@@ -1,0 +1,16 @@
+<div>
+  <ng-select [items]="labelList"
+             [selectableGroup]="true"
+             [multiple]="true"
+             [closeOnSelect]="false"
+             bindLabel="label"
+             bindValue=""
+             placeholder="Select a label" [(ngModel)]='selectedLabels' [clearable]="true">
+    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+      <div [ngModel]="item$.label" [style.background-color]="item.color" class="label">{{item.label | uppercase}}</div>
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+      <div [ngModel]="item$.label" [style.background-color]="item.color" class="label">{{item.label}}</div>
+    </ng-template>
+  </ng-select>
+</div>

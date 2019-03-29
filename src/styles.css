@@ -5,3 +5,15 @@
 .mlr-1 {
     margin: 0px 5px !important;
   }
+
+
+.label{
+    display: inline;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+    background: #0b0b0b;
+    padding: 2px 4px 2px;
+    max-width: fit-content;
+    margin: 2px;
+}

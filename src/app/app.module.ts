@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import {NgPipesModule} from 'ngx-pipes';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +35,8 @@ import { DatatableComponent } from './layout/shared/datatable/datatable.componen
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import { PropertyComponent } from './layout/pages/testcasescript/tc-script/property/property.component';
 import { UniquePropertyPipe } from './pipes/unique-property.pipe';
+import { FiltersComponent } from './layout/pages/testcaselist/filters/filters.component';
+import { LabelFilterComponent } from './layout/pages/testcaselist/filters/label-filter/label-filter.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +65,9 @@ import { UniquePropertyPipe } from './pipes/unique-property.pipe';
     DatatableComponent,
     TrueindexPipe,
     PropertyComponent,
-    UniquePropertyPipe
+    UniquePropertyPipe,
+    FiltersComponent,
+    LabelFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +77,8 @@ import { UniquePropertyPipe } from './pipes/unique-property.pipe';
     NgbPopoverModule,
     NgSelectModule,
     DragDropModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgPipesModule
   ],
   providers: [TrueindexPipe],
   bootstrap: [AppComponent]

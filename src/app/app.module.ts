@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {NgPipesModule} from 'ngx-pipes';
+import { NgPipesModule } from 'ngx-pipes';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,12 +29,12 @@ import { SettingsComponent } from './layout/pages/testcasescript/tc-script/setti
 import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.component';
 import { ReportbystatusComponent } from './layout/pages/reportbytag/graph/reportbystatus/reportbystatus.component';
 import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugreport.component';
-import {TestcaselistComponent} from './layout/pages/testcaselist/testcaselist.component';
+import { TestcaselistComponent } from './layout/pages/testcaselist/testcaselist.component';
 import { TrueindexPipe } from './pipes/trueindex.pipe';
 import { DatatableComponent } from './layout/shared/datatable/datatable.component';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PropertyComponent } from './layout/pages/testcasescript/tc-script/property/property.component';
-import { UniquePropertyPipe } from './pipes/unique-property.pipe';
+import { PropertyvalueComponent } from './layout/pages/testcasescript/tc-script/property/propertyvalue/propertyvalue.component';
 import { FiltersComponent } from './layout/pages/testcaselist/filters/filters.component';
 import { LabelFilterComponent } from './layout/pages/testcaselist/filters/label-filter/label-filter.component';
 
@@ -65,9 +65,9 @@ import { LabelFilterComponent } from './layout/pages/testcaselist/filters/label-
     DatatableComponent,
     TrueindexPipe,
     PropertyComponent,
-    UniquePropertyPipe,
     FiltersComponent,
-    LabelFilterComponent
+    LabelFilterComponent,
+    PropertyvalueComponent
   ],
   imports: [
     BrowserModule,

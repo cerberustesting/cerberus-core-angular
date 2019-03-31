@@ -7,7 +7,7 @@ import { ILabel, ITestCaseLabel } from 'src/app/model/label.model';
 import { IProject } from 'src/app/model/project.model';
 import { AppSettings } from 'src/app/app.component';
 import { TrueindexPipe } from 'src/app/pipes/trueindex.pipe';
-import { IProperty, IPropertyByName } from 'src/app/model/property.model';
+import { IProperty } from 'src/app/model/property.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,7 +24,7 @@ export class TestService {
   testsList: Array<ITest> = new Array<ITest>();
   testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
   testcase_labels: Array<ILabel> = new Array<ILabel>();
-  testcase_properties: Array<Array<IProperty>>;
+  testcase_properties: Array<IProperty>;
   testcase: ITestCase = null;
   private testcaseheader_countriesList_format = new Array<string>();
   //project
@@ -36,7 +36,7 @@ export class TestService {
   observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
   observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
-  observableTestCaseProperties = new BehaviorSubject<Array<Array<IProperty>>>(this.testcase_properties);
+  observableTestCaseProperties = new BehaviorSubject<IProperty[]>(this.testcase_properties);
   // boolean
   refreshTC: boolean = false;
 
@@ -125,59 +125,71 @@ export class TestService {
     this.http.get<IProperty[]>(url)
       .subscribe((response) => {
         // split the properties by country (one per country) 
-        this.testcase_properties = this.groupPropertiesByName(this.splitPropertiesByCountry(response));
+        this.testcase_properties = response;
         this.observableTestCaseProperties.next(this.testcase_properties);
       })
+  }
+
+  getUniquePropertiesNameList(propertiesList: Array<IProperty>): Array<string> {
+    let propertiesNameList = new Array<string>();
+    propertiesList.forEach((prop, index) => {
+      if (!propertiesNameList.includes(prop.property)) {
+        propertiesNameList.push(prop.property);
+      }
+    });
+    return propertiesNameList;
   }
 
   filterPropertyByName(propertiesList: Array<IProperty>, property: string): Array<IProperty> {
     return propertiesList.filter(prop => prop.property == property)
   }
 
-  splitPropertiesByCountry(propertyList: Array<IProperty>): Array<IProperty> {
-    var propertiesListByCountry = new Array<IProperty>();
-    for (let property of propertyList) {
-      for (let country of property.country) {
-        // a more compact syntax could be found here
-        var PropByCountry = {
-          property: property.property,
-          description: property.description,
-          type: property.type,
-          value1: property.value1,
-          value2: property.value2,
-          database: property.database,
-          country: new Array<string>(),
-          nature: property.nature,
-          length: property.length,
-          rowLimit: property.rowLimit,
-          cacheExpire: property.cacheExpire,
-          retryPeriod: property.retryPeriod,
-          retryNb: property.retryNb,
-          rank: property.rank
+  /*
+    splitPropertiesByCountry(propertyList: Array<IProperty>): Array<IProperty> {
+      var propertiesListByCountry = new Array<IProperty>();
+      for (let property of propertyList) {
+        for (let country of property.country) {
+          // a more compact syntax could be found here
+          var PropByCountry = {
+            property: property.property,
+            description: property.description,
+            type: property.type,
+            value1: property.value1,
+            value2: property.value2,
+            database: property.database,
+            country: new Array<string>(),
+            nature: property.nature,
+            length: property.length,
+            rowLimit: property.rowLimit,
+            cacheExpire: property.cacheExpire,
+            retryPeriod: property.retryPeriod,
+            retryNb: property.retryNb,
+            rank: property.rank
+          }
+          Object.assign(PropByCountry.country, [country]);
+          propertiesListByCountry.push(PropByCountry);
         }
-        Object.assign(PropByCountry.country, [country]);
-        propertiesListByCountry.push(PropByCountry);
       }
+      return propertiesListByCountry;
     }
-    return propertiesListByCountry;
-  }
-
-  groupPropertiesByName(propertyList: Array<IProperty>): Array<Array<IProperty>> {
-    let propertiesListByName: Array<Array<IProperty>>;
-    propertiesListByName = [];
-    // get the distinct list of properties
-    var uniquePropertiesList = new Array<string>();
-    for (let property of propertyList) {
-      if (!uniquePropertiesList.includes(property.property)) {
-        uniquePropertiesList.push(property.property);
+  
+    groupPropertiesByName(propertyList: Array<IProperty>): Array<Array<IProperty>> {
+      let propertiesListByName: Array<Array<IProperty>>;
+      propertiesListByName = [];
+      // get the distinct list of properties
+      var uniquePropertiesList = new Array<string>();
+      for (let property of propertyList) {
+        if (!uniquePropertiesList.includes(property.property)) {
+          uniquePropertiesList.push(property.property);
+        }
       }
+      for (let property of uniquePropertiesList) {
+        //propertiesListByName[property] = this.filterPropertyByName(propertyList, property);
+        propertiesListByName.push(this.filterPropertyByName(propertyList, property));
+      }
+      return propertiesListByName;
     }
-    for (let property of uniquePropertiesList) {
-      //propertiesListByName[property] = this.filterPropertyByName(propertyList, property);
-      propertiesListByName.push(this.filterPropertyByName(propertyList, property));
-    }
-    return propertiesListByName;
-  }
+    */
 
   convertCountriesList(testcaseheader: ITestCaseHeader): Array<string> {
     var countriesList = new Array<string>();

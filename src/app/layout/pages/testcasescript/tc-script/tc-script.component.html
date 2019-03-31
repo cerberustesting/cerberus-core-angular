@@ -80,16 +80,16 @@
           <!-- PROPERTY LIST -->
           <div class="col-md-4">
             <ul *ngIf="propertiesList" class="list-group push">
-              <li *ngFor="let property of propertiesList" class="list-group-item"
-                [ngClass]="property == activeProperty ? 'active' : ''" (click)="activeProperty = property">
-                {{ property[0].property }}</li>
+              <li *ngFor="let propertyName of getUniquePropertiesNameList(propertiesList)" class="list-group-item"
+                [ngClass]="propertyName == activePropertyName ? 'active' : ''" (click)="setActiveProperty(propertyName)">
+                {{ propertyName }}</li>
             </ul>
           </div>
           <!-- END PROPERTY LIST -->
           <!-- PROPERTY CONTENT -->
           <!-- TO DO : new component for the property -->
           <div *ngIf="activeProperty" class="col-md-8">
-            <app-property [propertiesByCountry]="activeProperty"></app-property>
+            <app-property [propertiesByName]="activeProperty"></app-property>
           </div>
           <!-- PROPERTY CONTENT -->
         </div>

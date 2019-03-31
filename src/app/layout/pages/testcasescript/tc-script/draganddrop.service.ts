@@ -12,13 +12,18 @@ export class DraganddropService {
   controlsIdList: Array<string>;
   observableControlsIdList = new BehaviorSubject<string[]>(this.controlsIdList);
 
+  propCountriesIdCount: number;
+  propCountriesIdList: Array<string>;
+  observablePropCountriesList = new BehaviorSubject<string[]>(this.propCountriesIdList);
 
   constructor() {
     this.controlsIdCount = 0;
+    this.propCountriesIdCount = 0;
+    this.propCountriesIdList = new Array<string>();
     this.controlsIdList = new Array<string>();
   }
 
-  getID(){
+  getControlsListID() {
     this.controlsIdCount++;
     return this.controlsIdCount;
   }
@@ -26,6 +31,15 @@ export class DraganddropService {
   addIDToControlList(id: string) {
     this.controlsIdList.push(id);
     this.observableControlsIdList.next(this.controlsIdList);
+  }
+
+  addIDToPropCountriesList(id: string) {
+    if (!this.propCountriesIdList.includes(id)) { this.propCountriesIdList.push(id); }
+    this.observablePropCountriesList.next(this.propCountriesIdList);
+  }
+
+  deleteIDFromPropCountriesList(id: string) {
+    if (this.propCountriesIdList.includes(id)) { this.propCountriesIdList.splice(this.propCountriesIdList.indexOf(id), 1); }
   }
 
 }

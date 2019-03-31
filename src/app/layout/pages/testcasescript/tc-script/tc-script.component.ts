@@ -2,10 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase, IStep, Step } from 'src/app/model/testcase.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestService } from 'src/app/services/crud/test.service';
-import { IProperty, IPropertyByName } from 'src/app/model/property.model';
+import { IProperty } from 'src/app/model/property.model';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { IOptionsValues } from 'selenium-webdriver/chrome';
 
 @Component({
   selector: 'app-tc-script',
@@ -22,7 +21,8 @@ export class TcScriptComponent implements OnInit {
 
   private stepListBlockId: string;
 
-  private propertiesList: Array<Array<IProperty>>;
+  private propertiesList: Array<IProperty>;
+  private activePropertyName: string;
   private activeProperty: Array<IProperty>;
 
   constructor(private TestService: TestService, private InvariantsService: InvariantsService) {
@@ -32,10 +32,9 @@ export class TcScriptComponent implements OnInit {
   ngOnInit() {
     this.TestService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
     this.TestService.observableTestCaseProperties.subscribe(r => {
-      this.propertiesList = r;
       if (r) {
-        this.propertiesList[0]
-        this.activeProperty = this.propertiesList[0];
+        this.propertiesList = r;
+        this.setActiveProperty(this.propertiesList[0].property);
       }
     });
     this.selectedTab = this.tabs[1];
@@ -62,6 +61,15 @@ export class TcScriptComponent implements OnInit {
   saveTestCase() {
     // send the testcase to the data service
     this.TestService.saveTestCase(this.testcase);
+  }
+
+  setActiveProperty(propName: string) {
+    this.activePropertyName = propName;
+    this.activeProperty = this.TestService.filterPropertyByName(this.propertiesList, propName);
+  }
+
+  getUniquePropertiesNameList(propList: Array<IProperty>): Array<string> {
+    return this.TestService.getUniquePropertiesNameList(propList);
   }
 
 }

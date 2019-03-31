@@ -50,6 +50,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.TestService.observableTestCase.subscribe(response => {
       if (response) {
         this.testcase = response;
+        this.TestService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
         this.SystemService.getLabelsFromSystem(this.testcase.info.system);
         this.SystemService.getRevFromSystem(this.testcase.info.system);
         this.SystemService.getSprintsFromSystem(this.testcase.info.system);

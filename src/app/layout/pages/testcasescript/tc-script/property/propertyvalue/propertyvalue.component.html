@@ -1,0 +1,37 @@
+<div *ngIf="prop.country.length > 0" class="block block-bordered">
+  <ul [id]="DragAndDropId" cdkDropList cdkDropListOrientation="horizontal" cdkDragLockAxis="x"
+    [cdkDropListData]="prop.country" [cdkDropListConnectedTo]="DragAndDropList"
+    (cdkDropListDropped)="dropCountry($event)" class="nav nav-tabs nav-tabs-block">
+    <li *ngFor="let country of prop.country" class="nav-item example-box" cdkDrag>
+      <a class="nav-link">{{country}}</a>
+    </li>
+  </ul>
+  <div class="block-content">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="testcase">Type</label>
+          <div class="input-group">
+            <select class="form-control br-tp-0" name="propType" [(ngModel)]="prop.type">
+              <option *ngFor="let ptype of inv_propertyTypeList" [value]="ptype.value">
+                {{ ptype.value }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="testcase">Description</label>
+          <div class="input-group">
+            <input type="text" class="form-control" name="propDesc" [(ngModel)]="prop.description">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 push">
+        <textarea class="form-control" name="propValue1" rows="4"
+          placeholder="Textarea content..">{{prop.value1}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>

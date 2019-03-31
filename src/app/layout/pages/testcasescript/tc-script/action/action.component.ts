@@ -91,7 +91,7 @@ export class ActionComponent implements OnInit {
   }
 
   generateID() {
-    var id = 'control-droplist-' + this.DragAndDropService.getID();
+    var id = 'control-droplist-' + this.DragAndDropService.getControlsListID();
     this.DragAndDropService.addIDToControlList(id);
     return id;
   }

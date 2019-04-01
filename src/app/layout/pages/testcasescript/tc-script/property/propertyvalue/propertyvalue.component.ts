@@ -17,6 +17,7 @@ export class PropertyvalueComponent implements OnInit {
   private inv_propertyTypeList: Array<IInvariant>;
   private DragAndDropId: string;
   private DragAndDropList: Array<string>;
+  private isCountriesListEmpty: boolean;
 
   constructor(
     private InvariantsService: InvariantsService,
@@ -24,6 +25,7 @@ export class PropertyvalueComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isCountriesListEmpty = false;
     this.InvariantsService.observablePropertyTypeList.subscribe(r => { this.inv_propertyTypeList = r; });
     this.DragAndDropId = "propcountries-droplist-" + this.index;
     this.DragAndDropService.addIDToPropCountriesList(this.DragAndDropId);
@@ -37,6 +39,7 @@ export class PropertyvalueComponent implements OnInit {
   }
 
   dropCountry(event: CdkDragDrop<string[]>) {
+    // called when the item is dropped (click released)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -44,6 +47,23 @@ export class PropertyvalueComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+    }
+  }
+
+  dropOutPropCountry(event: CdkDragDrop<string[]>) {
+    // when the item leaves the component (still dragging)
+    if (event.container.data.length <= 1) {
+      // if this is the last item 
+      // or we leave a element without country
+      this.isCountriesListEmpty = true;
+    }
+  }
+
+  dropInPropCountry(event: CdkDragDrop<string[]>) {
+    // when the item enter the component (still dragging)
+    if (this.isCountriesListEmpty == true) {
+      // if we are entering a empty component
+      this.isCountriesListEmpty = false;
     }
   }
 

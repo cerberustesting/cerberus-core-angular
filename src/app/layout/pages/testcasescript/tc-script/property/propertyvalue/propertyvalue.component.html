@@ -1,9 +1,13 @@
-<div *ngIf="prop.country.length > 0" class="block block-bordered">
+<div class="block block-bordered block-rounded">
   <ul [id]="DragAndDropId" cdkDropList cdkDropListOrientation="horizontal" cdkDragLockAxis="x"
     [cdkDropListData]="prop.country" [cdkDropListConnectedTo]="DragAndDropList"
-    (cdkDropListDropped)="dropCountry($event)" class="nav nav-tabs nav-tabs-block">
-    <li *ngFor="let country of prop.country" class="nav-item example-box" cdkDrag>
+    (cdkDropListDropped)="dropCountry($event)" (cdkDropListExited)="dropOutPropCountry($event)"
+    (cdkDropListEntered)="dropInPropCountry($event)" class="nav nav-tabs nav-tabs-block align-items-center js-tabs-enabled">
+    <li *ngFor="let country of prop.country" class="nav-item" cdkDrag>
       <a class="nav-link">{{country}}</a>
+    </li>
+    <li *ngIf="isCountriesListEmpty" class="nav-item empty">
+      <a class="nav-link text-muted">Empty</a>
     </li>
   </ul>
   <div class="block-content">

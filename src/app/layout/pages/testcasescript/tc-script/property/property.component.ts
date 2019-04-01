@@ -50,6 +50,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
     this.InvariantsService.observablePropertyTypeList.subscribe(r => { this.inv_propertyTypeList = r; });
     this.InvariantsService.observableCountriesList.subscribe(r => { this.inv_countriesList = r; if (r) { this.defineUnassginedCountries(); } });
     this.DragAndDropId = "propcountries-droplist-unassigned";
+    this.DragAndDropService.addIDToPropCountriesList(this.DragAndDropId);
     this.showPropertyOptions = false;
   }
 

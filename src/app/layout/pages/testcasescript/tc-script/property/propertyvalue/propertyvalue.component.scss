@@ -9,6 +9,10 @@
   cursor: move;
 }
 
+.nav-item.empty {
+  cursor: default !important;
+}
+
 .nav-tabs-block.cdk-drop-list-dragging .nav-item:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

@@ -68,6 +68,13 @@ export class TcScriptComponent implements OnInit {
     this.activeProperty = this.TestService.filterPropertyByName(this.propertiesList, propName);
   }
 
+  setPropertyName(props: Array<IProperty>, newName: string) {
+    props.forEach((prop) => {
+      prop.property = newName;
+    });
+    this.activePropertyName = newName;
+  }
+
   getUniquePropertiesNameList(propList: Array<IProperty>): Array<string> {
     return this.TestService.getUniquePropertiesNameList(propList);
   }

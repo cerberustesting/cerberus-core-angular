@@ -1,6 +1,6 @@
 <div class="block block-rounded block-bordered">
   <div class="block-header block-header-default">
-    <input type="text" class="form-control" name="propertyName" [value]="propertiesByName[0].property">
+    <ng-content select="[slot=prop-name]"></ng-content>
     <div class="block-options">
       <button type="button" class="btn-block-option" (click)="debug()">
         <i class="fa fa-bug"></i>

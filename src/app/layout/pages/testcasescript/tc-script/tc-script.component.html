@@ -81,7 +81,8 @@
           <div class="col-md-4">
             <ul *ngIf="propertiesList" class="list-group push">
               <li *ngFor="let propertyName of getUniquePropertiesNameList(propertiesList)" class="list-group-item"
-                [ngClass]="propertyName == activePropertyName ? 'active' : ''" (click)="setActiveProperty(propertyName)">
+                [ngClass]="propertyName == activePropertyName ? 'active' : ''"
+                (click)="setActiveProperty(propertyName)">
                 {{ propertyName }}</li>
             </ul>
           </div>
@@ -89,7 +90,11 @@
           <!-- PROPERTY CONTENT -->
           <!-- TO DO : new component for the property -->
           <div *ngIf="activeProperty" class="col-md-8">
-            <app-property [propertiesByName]="activeProperty"></app-property>
+            <app-property [propertiesByName]="activeProperty">
+              <input type="text" slot="prop-name" class="form-control" name="propertyName"
+                [(ngModel)]="activeProperty[0].property"
+                (ngModelChange)="setPropertyName(activeProperty,activeProperty[0].property)">
+            </app-property>
           </div>
           <!-- PROPERTY CONTENT -->
         </div>

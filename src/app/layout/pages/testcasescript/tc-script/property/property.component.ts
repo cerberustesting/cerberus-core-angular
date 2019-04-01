@@ -46,7 +46,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
   ngOnInit() {
     this.unassignedCountriesList = new Array<string>();
     this.TestService.observableTestCase.subscribe(r => { this.testcaseheader = r.info; });
-    //this.DragAndDropService.observablePropCountriesList.subscribe(r => { if (r) { this.DragAndDropList = r; } });
+    this.DragAndDropService.observablePropCountriesList.subscribe(r => { if (r) { this.DragAndDropList = r; } });
     this.InvariantsService.observablePropertyTypeList.subscribe(r => { this.inv_propertyTypeList = r; });
     this.InvariantsService.observableCountriesList.subscribe(r => { this.inv_countriesList = r; if (r) { this.defineUnassginedCountries(); } });
     this.DragAndDropId = "propcountries-droplist-unassigned";
@@ -65,7 +65,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
   }
 
   debug() {
-    console.log(this.propertiesByName);
+    console.log("debug");
   }
 
   defineUnassginedCountries() {

@@ -6,7 +6,11 @@
 .nav-item {
   display: flex;
   flex-direction: row;
-  cursor: move;
+  cursor: grab;
+}
+
+.nav-item.default-cursor {
+  cursor: default !important;
 }
 
 .nav-tabs-block.cdk-drop-list-dragging .nav-item:not(.cdk-drag-placeholder) {

@@ -16,7 +16,7 @@
             [cdkDropListData]="unassignedCountriesList" [cdkDropListConnectedTo]="DragAndDropList"
             (cdkDropListDropped)="dropCountry($event)" class="nav nav-tabs nav-tabs-block" data-toggle="tabs"
             role="tablist">
-            <li class="nav-item">
+            <li class="nav-item default-cursor">
               <a class="nav-link active">Unassigned:</a>
             </li>
             <li *ngFor="let country of unassignedCountriesList" class="nav-item" cdkDrag>
@@ -24,12 +24,29 @@
             </li>
           </ul>
         </div>
+        <div class="block-content block-content-full block-content-sm font-size-sm text-right">
+          <button class="btn btn-sm btn-secondary mr-1" name="collapseAll" type="button"
+            (click)="showPropCountriesMainContent = false">
+            <i class="si fa-fw si-arrow-right mr-1"></i> Collapse All
+          </button>
+          <button class="btn btn-sm btn-secondary mr-1" name="expandAll" type="button"
+            (click)="showPropCountriesMainContent = true">
+            <i class="si fa-fw si-arrow-down mr-1"></i> Expand All
+          </button>
+        </div>
         <!-- END UNASSIGNED COUNTRIES LIST -->
         <!-- PROPERTY VALUES LIST -->
         <div *ngFor="let prop of propertiesByName; let index = index">
-          <app-propertyvalue [propertyvalue]="prop" [index]="index | trueindex"></app-propertyvalue>
+          <app-propertyvalue [propertyvalue]="prop" [index]="index | trueindex"
+            [showMainContent]="showPropCountriesMainContent">
+          </app-propertyvalue>
         </div>
         <!-- END PROPERTY VALUES LIST -->
+        <div class="text-center push">
+          <button type="button" class="btn btn-outline-primary mr-1" (click)="addAProperty()">
+            <i class="fa fa-fw fa-plus mr-1"></i> New
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -6,10 +6,10 @@
 .nav-item {
   display: flex;
   flex-direction: row;
-  cursor: move;
+  cursor: grab;
 }
 
-.nav-item.empty {
+.nav-item.default-cursor {
   cursor: default !important;
 }
 

@@ -16,6 +16,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   @Input('propertiesByName') propertiesByName: Array<IProperty>;
   private unassignedCountriesList: Array<String>;
+  private showPropCountriesMainContent: boolean;
   private inv_countriesList: Array<IInvariant>;
   private inv_propertyTypeList: Array<IInvariant>;
 
@@ -44,6 +45,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.showPropCountriesMainContent = true;
     this.unassignedCountriesList = new Array<string>();
     this.TestService.observableTestCase.subscribe(r => { this.testcaseheader = r.info; });
     this.DragAndDropService.observablePropCountriesList.subscribe(r => { if (r) { this.DragAndDropList = r; } });
@@ -80,6 +82,11 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
       })
       if (!assigned) { this.unassignedCountriesList.push(country.value); }
     });
+  }
+
+  addAProperty() {
+    let newProp = new Property();
+    this.propertiesByName.push(newProp);
   }
 
 }

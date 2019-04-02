@@ -22,6 +22,7 @@ export class InvariantsService {
   prioritiesList: Array<IInvariant>;
   originsList: Array<IInvariant>;
   propertyTypeList: Array<IInvariant>;
+  propertyNatureList: Array<IInvariant>;
   systemsList: Array<IInvariant>;
   systemsSelected = [];
   // observables
@@ -38,6 +39,7 @@ export class InvariantsService {
   observableControlsList = new BehaviorSubject<IInvariant[]>(this.controlsList);
   observableTceStatusList = new BehaviorSubject<IInvariant[]>(this.tcestatusList);
   observablePropertyTypeList = new BehaviorSubject<IInvariant[]>(this.propertyTypeList);
+  observablePropertyNatureList = new BehaviorSubject<IInvariant[]>(this.propertyNatureList);
 
   constructor(private http: HttpClient, private AlertService: AlertService) { }
 
@@ -148,6 +150,14 @@ export class InvariantsService {
       .subscribe(response => {
         this.propertyTypeList = response;
         this.observablePropertyTypeList.next(this.propertyTypeList);
+      }, (err) => this.AlertService.APIError(err));
+  }
+
+  getPropertyNatureList(): void {
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=propertyNature')
+      .subscribe(response => {
+        this.propertyNatureList = response;
+        this.observablePropertyNatureList.next(this.propertyNatureList);
       }, (err) => this.AlertService.APIError(err));
   }
 

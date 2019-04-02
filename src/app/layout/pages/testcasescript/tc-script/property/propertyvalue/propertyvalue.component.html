@@ -10,7 +10,7 @@
     <li *ngFor="let country of prop.country" class="nav-item" cdkDrag>
       <a class="nav-link">{{country}}</a>
     </li>
-    <li *ngIf="prop.country == 0 && showEmpty" class="nav-item default-cursor">
+    <li *ngIf="prop.country == 0 && showEmptyCountryList" class="nav-item default-cursor">
       <a class="nav-link text-muted">Empty</a>
     </li>
   </ul>
@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="testcase">Type</label>
+          <label for="propType">Type</label>
           <div class="input-group">
             <select class="form-control br-tp-0" name="propType" [(ngModel)]="prop.type">
               <option *ngFor="let ptype of inv_propertyTypeList" [value]="ptype.value">
@@ -30,15 +30,68 @@
       </div>
       <div class="col-md-8">
         <div class="form-group">
-          <label for="testcase">Description</label>
+          <label for="propDesc">Description</label>
           <div class="input-group">
             <input type="text" class="form-control" name="propDesc" [(ngModel)]="prop.description">
           </div>
         </div>
       </div>
-      <div class="col-md-12 push">
-        <textarea class="form-control" name="propValue1" rows="4"
-          placeholder="Textarea content..">{{prop.value1}}</textarea>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="example-textarea-input">Value</label>
+          <textarea class="form-control" name="propValue1" rows="4"
+            placeholder="Textarea content..">{{prop.value1}}</textarea>
+        </div>
+      </div>
+      <div class="col-md-12 text-right push">
+        <button type="button" class="btn btn-sm btn-secondary mr-1" (click)="showAdvanced = !showAdvanced">
+          <i class="si fa-fw mr-1" [ngClass]="showAdvanced ? 'si-arrow-down' : 'si-arrow-right'"></i> Parameters
+        </button>
+      </div>
+      <div class="row col-md-12" *ngIf="showAdvanced">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="propLength">Length</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-arrows-alt-h"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" name="propLength" [(ngModel)]="prop.length">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="propNature">Nature</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-database"></i>
+                </span>
+              </div>
+              <select class="form-control br-tp-0" name="propNature" [(ngModel)]="prop.nature">
+                <option *ngFor="let nature of inv_propertyNatureList" [value]="nature.value">
+                  {{ nature.value }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="propCacheExpire">Cache Expire</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-history"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" name="propCacheExpire" [(ngModel)]="prop.cacheExpire">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

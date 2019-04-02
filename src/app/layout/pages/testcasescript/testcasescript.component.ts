@@ -70,6 +70,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.InvariantService.getActionList();
     this.InvariantService.getControlsList();
     this.InvariantService.getPropertyTypeList();
+    this.InvariantService.getPropertyNatureList();
   }
 
   receiveTest($event) {

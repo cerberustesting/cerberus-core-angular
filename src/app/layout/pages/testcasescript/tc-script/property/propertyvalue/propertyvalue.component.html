@@ -5,17 +5,18 @@
     (cdkDropListEntered)="dropInPropCountry($event)"
     class="nav nav-tabs nav-tabs-block align-items-center js-tabs-enabled">
     <li class="nav-item default-cursor">
-      <a class="nav-link">Countries: </a>
+      <a class="nav-link active text-muted"><i class="fa fa-flag"></i></a>
     </li>
     <li *ngFor="let country of prop.country" class="nav-item" cdkDrag>
       <a class="nav-link">{{country}}</a>
     </li>
     <li *ngIf="prop.country == 0 && showEmptyCountryList" class="nav-item default-cursor">
-      <a class="nav-link text-muted">Empty</a>
+      <a class="nav-link active text-muted">Empty</a>
     </li>
   </ul>
   <div *ngIf="showMainContent" class="block-content">
     <div class="row">
+      <!-- TYPE -->
       <div class="col-md-4">
         <div class="form-group">
           <label for="propType">Type</label>
@@ -28,6 +29,8 @@
           </div>
         </div>
       </div>
+      <!-- END TYPE -->
+      <!-- DESCRIPTION -->
       <div class="col-md-8">
         <div class="form-group">
           <label for="propDesc">Description</label>
@@ -36,18 +39,46 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12">
+      <!-- END DESCRIPTION -->
+      <!-- VALUE 2 (currently, only DB) -->
+      <div *ngIf="findPropertyTypeCrossReference(prop.type).value2" class="col-md-3">
         <div class="form-group">
-          <label for="example-textarea-input">Value</label>
+          <label for="propValue2">
+            {{ findPropertyTypeCrossReference(prop.type).value2 }}
+            <i class="fa fa-info-circle ml-1 info" placement="top"
+              [ngbPopover]="findPropertyTypeCrossReference(prop.type).description2"
+              triggers="mouseenter:mouseleave"></i>
+          </label>
+          <select class="form-control br-tp-0" name="propValue2" [(ngModel)]="prop.value2">
+            <option *ngFor="let db of inv_propertyDatabaseList" [value]="db.value">
+              {{ db.value }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!-- END VALUE 2 -->
+      <!-- VALUE 1 -->
+      <div [ngClass]="findPropertyTypeCrossReference(prop.type).value2 ? 'col-md-9' : 'col-md-12'">
+        <div class="form-group">
+          <label for="propValue1">
+            {{ findPropertyTypeCrossReference(prop.type).value1 }}
+            <i class="fa fa-info-circle ml-1 info" placement="top"
+              [ngbPopover]="findPropertyTypeCrossReference(prop.type).description1"
+              triggers="mouseenter:mouseleave"></i>
+          </label>
           <textarea class="form-control" name="propValue1" rows="4"
             placeholder="Textarea content..">{{prop.value1}}</textarea>
         </div>
       </div>
+      <!-- END VALUE 1 -->
+      <!-- SHOW / HIDE ADVANCED BUTTON -->
       <div class="col-md-12 text-right push">
         <button type="button" class="btn btn-sm btn-secondary mr-1" (click)="showAdvanced = !showAdvanced">
-          <i class="si fa-fw mr-1" [ngClass]="showAdvanced ? 'si-arrow-down' : 'si-arrow-right'"></i> Parameters
+          <i class="si fa-fw mr-1" [ngClass]="showAdvanced ? 'si-arrow-down' : 'si-arrow-right'"></i>Advanced
         </button>
       </div>
+      <!-- END SHOW / HIDE ADVANCED BUTTON -->
+      <!-- ADVANCED SECTION -->
       <div class="row col-md-12" *ngIf="showAdvanced">
         <div class="col-md-4">
           <div class="form-group">
@@ -92,7 +123,21 @@
             </div>
           </div>
         </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="propCacheExpire">Rank</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-trophy"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" name="propRank" [(ngModel)]="prop.rank">
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- END ADVANCED SECTION -->
     </div>
   </div>
 </div>

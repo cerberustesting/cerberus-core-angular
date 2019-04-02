@@ -118,7 +118,7 @@ export class CrossreferenceService {
     { reference: "executeCommand", value1: "Command", value2: "Arguments", icon: "fa fa-code" },
     { reference: "openApp", value1: "Path", value2: "Activity", icon: "fa fa-file" },
     { reference: "closeApp", value1: "Path", value2: null, icon: "fa fa-file" },
-    { reference: "dragAndDrop", value1: "Element Path", value2: "Destination Path", icon:"fa fa-arrows-alt" },
+    { reference: "dragAndDrop", value1: "Element Path", value2: "Destination Path", icon: "fa fa-arrows-alt" },
     { reference: "select", value1: "Element", value2: "option", icon: "fa fa-list-ul" },
     { reference: "keypress", value1: "Element", value2: "Key", icon: "fa fa-keyboard" },
     { reference: "type", value1: "Element", value2: "Text", icon: "fa fa-i-cursor" },
@@ -127,12 +127,12 @@ export class CrossreferenceService {
     { reference: "scrollTo", value1: "Element", value2: "Text", icon: "fa fa-scroll" },
     { reference: "installApp", value1: "Path", value2: null, icon: "fa fa-file" },
     { reference: "removeApp", value1: "Package", value2: null, icon: "fa fa-file" },
-    { reference: "wait", value1: "Duration", value2: null, icon:"fa fa-clock" },
-    { reference: "waitVanish", value1: "Element", value2: null, icon:"fa fa-clock" },
-    { reference: "callService", value1: "Service", value2: null, icon:"fa fa-exchange-alt"},
+    { reference: "wait", value1: "Duration", value2: null, icon: "fa fa-clock" },
+    { reference: "waitVanish", value1: "Element", value2: null, icon: "fa fa-clock" },
+    { reference: "callService", value1: "Service", value2: null, icon: "fa fa-exchange-alt" },
     { reference: "executeSqlUpdate", value1: "DB", value2: "Script", icon: "fa fa-code" },
     { reference: "executeSqlStoredProcedure", value1: "DB", value2: "Procedure", icon: "fa fa-code" },
-    { reference: "calculateProperty", value1: "Property", value2: "Override with", icon:"fa fa-cog" },
+    { reference: "calculateProperty", value1: "Property", value2: "Override with", icon: "fa fa-cog" },
     { reference: "doNothing", value1: null, value2: null },
     { reference: "mouseOverAndWait", value1: null, value2: null },
     { reference: "removeDifference", value1: null, value2: null }
@@ -171,6 +171,24 @@ export class CrossreferenceService {
     { reference: "takeScreenshot", value1: null, value2: null, icon: "fa fa-camera" },
     { reference: "getPageSource", value1: null, value2: null, icon: "fa fa-code" }
   ];
+  public crossReference_PropertyTypeValue: Array<CrossReference> = [
+    { reference: "text", value1: "Text", value2: null, description1: "Type plain text here." },
+    { reference: "getFromDataLib", value1: "Data Library Name", value2: null, description1: "Type the Data Library name." },
+    { reference: "getFromSql", value1: "Query", value2: "Database", description1: "Type the query according to its DB language.", description2: "Database Invariant defined in Cerberus" },
+    { reference: "getFromHtml", value1: "Element Path", value2: null, description1: "Type the path to the desired element using xPath." },
+    { reference: "getFromHtmlVisible", value1: "Element Path", value2: null, description1: "Type the path to the desired element using xPath. It must be visible though." },
+    { reference: "getFromJS", value1: "JavaScript script", value2: null, description1: "Type the JS script. To actually get the result, you must use 'return' method." },
+    { reference: "getAttributeFromHtml", value1: "Element Path", value2: null, description1: "Type the Data Library name." },
+    { reference: "getFromCookie", value1: "Cookie name", value2: null, description1: "Type the Data Library name." },
+    { reference: "getFromXml", value1: "Element path", value2: null, description1: "Type the path to the desired element using xPath." },
+    { reference: "getDifferencesFromXml", value1: "Whatever you want", value2: null, description1: "I have no idea on how this works.." },
+    { reference: "getFromJson", value1: "Element Path", value2: null, description1: "Type the path to the desired element using JSON." },
+    { reference: "getFromCommand", value1: "Shell command", value2: null, description1: "Type the Shell command that you want to get value from." },
+    { reference: "getFromGroovy", value1: "Script", value2: null, description1: "Type the Groovy script. The actual result is the latest defined variable." },
+    { reference: "executeSoapFromLib", value1: "Service Library Name", value2: null, description1: "DEPRECATED" },
+    { reference: "executeSqlFromLib", value1: "SQL Library Name", value2: null, description1: "DEPRECATED" }
+  ];
+
   constructor() { }
 
   hasConditionCrossReference(condition: string): boolean {
@@ -195,4 +213,13 @@ export class CrossreferenceService {
   findControlCrossReference(control: string): CrossReference {
     return this.crossReference_ControlValue.find(cr => cr.reference === control);
   }
+
+  hasPropertyTypeCrossReference(property_type: string): boolean {
+    return this.crossReference_PropertyTypeValue.filter(cr => cr.reference === property_type).length > 0;
+  }
+
+  findPropertyTypeCrossReference(property_type: string): CrossReference {
+    return this.crossReference_PropertyTypeValue.find(cr => cr.reference === property_type);
+  }
+
 }

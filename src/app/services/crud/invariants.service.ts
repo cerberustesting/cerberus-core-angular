@@ -23,6 +23,7 @@ export class InvariantsService {
   originsList: Array<IInvariant>;
   propertyTypeList: Array<IInvariant>;
   propertyNatureList: Array<IInvariant>;
+  propertyDatabaseList: Array<IInvariant>;
   systemsList: Array<IInvariant>;
   systemsSelected = [];
   // observables
@@ -40,6 +41,7 @@ export class InvariantsService {
   observableTceStatusList = new BehaviorSubject<IInvariant[]>(this.tcestatusList);
   observablePropertyTypeList = new BehaviorSubject<IInvariant[]>(this.propertyTypeList);
   observablePropertyNatureList = new BehaviorSubject<IInvariant[]>(this.propertyNatureList);
+  observablePropertyDatabaseList = new BehaviorSubject<IInvariant[]>(this.propertyDatabaseList);
 
   constructor(private http: HttpClient, private AlertService: AlertService) { }
 
@@ -158,6 +160,14 @@ export class InvariantsService {
       .subscribe(response => {
         this.propertyNatureList = response;
         this.observablePropertyNatureList.next(this.propertyNatureList);
+      }, (err) => this.AlertService.APIError(err));
+  }
+
+  getPropertyDatabaseList(): void {
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=propertyDatabase')
+      .subscribe(response => {
+        this.propertyDatabaseList = response;
+        this.observablePropertyDatabaseList.next(this.propertyDatabaseList);
       }, (err) => this.AlertService.APIError(err));
   }
 

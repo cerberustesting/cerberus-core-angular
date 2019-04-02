@@ -4,6 +4,8 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { IInvariant } from 'src/app/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 import { DraganddropService } from '../../draganddrop.service';
+import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
+import { CrossReference } from 'src/app/model/crossreference.model';
 
 @Component({
   selector: 'app-propertyvalue',
@@ -19,12 +21,15 @@ export class PropertyvalueComponent implements OnInit {
   private DragAndDropList: Array<string>;
   private showEmptyCountryList: boolean;
   private showAdvanced: boolean;
-  // inavariants    
+  // public inavariants
+  private inv_propertyDatabaseList: Array<IInvariant>;
+  // private inavariants    
   private inv_propertyTypeList: Array<IInvariant>;
   private inv_propertyNatureList: Array<IInvariant>;
   constructor(
     private InvariantsService: InvariantsService,
-    private DragAndDropService: DraganddropService
+    private DragAndDropService: DraganddropService,
+    private CrossReferenceService: CrossreferenceService
   ) { }
 
   ngOnInit() {
@@ -32,6 +37,7 @@ export class PropertyvalueComponent implements OnInit {
     this.showAdvanced = false;
     this.InvariantsService.observablePropertyTypeList.subscribe(r => { this.inv_propertyTypeList = r; });
     this.InvariantsService.observablePropertyNatureList.subscribe(r => { this.inv_propertyNatureList = r; });
+    this.InvariantsService.observablePropertyDatabaseList.subscribe(r => { this.inv_propertyDatabaseList = r; });
     this.DragAndDropId = "propcountries-droplist-" + this.index;
     this.DragAndDropService.addIDToPropCountriesList(this.DragAndDropId);
     this.DragAndDropService.observablePropCountriesList.subscribe(r => { this.DragAndDropList = r; });
@@ -78,5 +84,8 @@ export class PropertyvalueComponent implements OnInit {
   ngOnDestroy() {
     this.DragAndDropService.deleteIDFromPropCountriesList(this.DragAndDropId);
   }
+
+  hasPropertyTypeCrossReference(ptype: string): boolean { return this.CrossReferenceService.hasPropertyTypeCrossReference(ptype); }
+  findPropertyTypeCrossReference(ptype: string): CrossReference { return this.CrossReferenceService.findPropertyTypeCrossReference(ptype); }
 
 }

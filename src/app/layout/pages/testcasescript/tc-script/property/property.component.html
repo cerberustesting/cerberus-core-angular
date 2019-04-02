@@ -17,7 +17,9 @@
             (cdkDropListDropped)="dropCountry($event)" class="nav nav-tabs nav-tabs-block" data-toggle="tabs"
             role="tablist">
             <li class="nav-item default-cursor">
-              <a class="nav-link active">Unassigned:</a>
+              <a class="nav-link active">
+                <i class="fa fa-times"></i>
+              </a>
             </li>
             <li *ngFor="let country of unassignedCountriesList" class="nav-item" cdkDrag>
               <a class="nav-link">{{country}}</a>

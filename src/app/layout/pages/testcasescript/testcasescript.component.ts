@@ -64,6 +64,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.InvariantService.getPriorities();
     this.InvariantService.getGroupList();
     this.InvariantService.getOriginsList();
+    this.InvariantService.getPropertyDatabaseList();
     // private invariants : loaded once (exluded from any refresh)
     this.InvariantService.getStepConditionOperList();
     this.InvariantService.getStepLoopList();

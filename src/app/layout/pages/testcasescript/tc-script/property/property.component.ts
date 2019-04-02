@@ -68,7 +68,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
   }
 
   debug() {
-    console.log("debug");
+    console.log(this.propertiesByName);
   }
 
   defineUnassginedCountries() {

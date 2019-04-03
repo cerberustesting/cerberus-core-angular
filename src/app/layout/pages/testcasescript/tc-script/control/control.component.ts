@@ -66,8 +66,8 @@ export class ControlComponent implements OnInit {
     this.SettingsService.editControlSettings(this.control, this.readonly, this.parentStepIndex, this.parentActionIndex);
   }
 
-  hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasControlCrossReference(control); }
-  findControlCrossReference(control: string): CrossReference { return this.CrossReferenceService.findControlCrossReference(control); }
+  hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
+  findControlCrossReference(control: string): CrossReference { return this.CrossReferenceService.findCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
 
   mouseEnter() { this.showControlAddButtons = true; }
   mouseLeave() { this.showControlAddButtons = false; }

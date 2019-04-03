@@ -32,7 +32,7 @@ export class PropertyvalueComponent implements OnInit {
   private inv_propertyTypeList: Array<IInvariant>;
   private inv_propertyNatureList: Array<IInvariant>;
   // cross reference between Property Types and displayed Fields
-  
+
   constructor(
     private InvariantsService: InvariantsService,
     private DragAndDropService: DraganddropService,
@@ -92,7 +92,18 @@ export class PropertyvalueComponent implements OnInit {
     this.DragAndDropService.deleteIDFromPropCountriesList(this.DragAndDropId);
   }
 
-  hasPropertyTypeCrossReference(ptype: string): boolean { return this.CrossReferenceService.hasPropertyTypeCrossReference(ptype); }
-  findPropertyTypeCrossReference(ptype: string): CrossReference { return this.CrossReferenceService.findPropertyTypeCrossReference(ptype); }
+  hasPropertyTypeCrossReference(ptype: string): boolean {
+    return this.CrossReferenceService.hasCrossReference(ptype, this.CrossReferenceService.crossReference_PropertyTypeValue);
+  }
+  findPropertyTypeCrossReference(ptype: string): CrossReference {
+    return this.CrossReferenceService.findCrossReference(ptype, this.CrossReferenceService.crossReference_PropertyTypeValue);
+  }
+
+  getValue1Width(type: string): string {
+    switch (type) {
+      case 'getFromSql': { return '9' }
+      default: { return '12' }
+    }
+  }
 
 }

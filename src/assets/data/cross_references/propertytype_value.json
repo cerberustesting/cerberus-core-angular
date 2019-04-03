@@ -1,0 +1,93 @@
+[
+    {
+        "reference": "text",
+        "value1": "Text",
+        "value2": null,
+        "description1": "Type plain text here."
+    },
+    {
+        "reference": "getFromDataLib",
+        "value1": "Data Library Name",
+        "value2": null,
+        "description1": "Type the Data Library name."
+    },
+    {
+        "reference": "getFromSql",
+        "value1": "Query",
+        "value2": "Database",
+        "description1": "Type the query according to its DB language.",
+        "description2": "Database Invariant defined in Cerberus"
+    },
+    {
+        "reference": "getFromHtml",
+        "value1": "Element Path",
+        "value2": null,
+        "description1": "Type the path to the desired element using xPath."
+    },
+    {
+        "reference": "getFromHtmlVisible",
+        "value1": "Element Path",
+        "value2": null,
+        "description1": "Type the path to the desired element using xPath. It must be visible though."
+    },
+    {
+        "reference": "getFromJS",
+        "value1": "JavaScript script",
+        "value2": null,
+        "description1": "Type the JS script. To actually get the result, you must use 'return' method."
+    },
+    {
+        "reference": "getAttributeFromHtml",
+        "value1": "Element Path",
+        "value2": null,
+        "description1": "Type the Data Library name."
+    },
+    {
+        "reference": "getFromCookie",
+        "value1": "Cookie name",
+        "value2": null,
+        "description1": "Type the Data Library name."
+    },
+    {
+        "reference": "getFromXml",
+        "value1": "Element path",
+        "value2": null,
+        "description1": "Type the path to the desired element using xPath."
+    },
+    {
+        "reference": "getDifferencesFromXml",
+        "value1": "Whatever you want",
+        "value2": null,
+        "description1": "I have no idea on how this works.."
+    },
+    {
+        "reference": "getFromJson",
+        "value1": "Element Path",
+        "value2": null,
+        "description1": "Type the path to the desired element using JSON."
+    },
+    {
+        "reference": "getFromCommand",
+        "value1": "Shell command",
+        "value2": null,
+        "description1": "Type the Shell command that you want to get value from."
+    },
+    {
+        "reference": "getFromGroovy",
+        "value1": "Script",
+        "value2": null,
+        "description1": "Type the Groovy script. The actual result is the latest defined variable."
+    },
+    {
+        "reference": "executeSoapFromLib",
+        "value1": "Service Library Name",
+        "value2": null,
+        "description1": "DEPRECATED"
+    },
+    {
+        "reference": "executeSqlFromLib",
+        "value1": "SQL Library Name",
+        "value2": null,
+        "description1": "DEPRECATED"
+    }
+]

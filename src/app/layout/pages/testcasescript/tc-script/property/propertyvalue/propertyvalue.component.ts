@@ -7,6 +7,11 @@ import { DraganddropService } from '../../draganddrop.service';
 import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
 import { CrossReference } from 'src/app/model/crossreference.model';
 
+export class PropertyType_Fields_CrossReference {
+  type: string;
+  fields: Array<string>;
+}
+
 @Component({
   selector: 'app-propertyvalue',
   templateUrl: './propertyvalue.component.html',
@@ -26,6 +31,8 @@ export class PropertyvalueComponent implements OnInit {
   // private inavariants    
   private inv_propertyTypeList: Array<IInvariant>;
   private inv_propertyNatureList: Array<IInvariant>;
+  // cross reference between Property Types and displayed Fields
+  
   constructor(
     private InvariantsService: InvariantsService,
     private DragAndDropService: DraganddropService,

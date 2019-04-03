@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import propertytype_value from 'src/assets/data/cross_references/propertytype_value.json'
 
 export class CrossReference {
   reference: string;
@@ -171,6 +172,7 @@ export class CrossreferenceService {
     { reference: "takeScreenshot", value1: null, value2: null, icon: "fa fa-camera" },
     { reference: "getPageSource", value1: null, value2: null, icon: "fa fa-code" }
   ];
+  /*
   public crossReference_PropertyTypeValue: Array<CrossReference> = [
     { reference: "text", value1: "Text", value2: null, description1: "Type plain text here." },
     { reference: "getFromDataLib", value1: "Data Library Name", value2: null, description1: "Type the Data Library name." },
@@ -188,6 +190,9 @@ export class CrossreferenceService {
     { reference: "executeSoapFromLib", value1: "Service Library Name", value2: null, description1: "DEPRECATED" },
     { reference: "executeSqlFromLib", value1: "SQL Library Name", value2: null, description1: "DEPRECATED" }
   ];
+  */
+
+  public crossReference_PropertyTypeValue: Array<CrossReference> = propertytype_value;
 
   constructor() { }
 

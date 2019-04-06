@@ -37,7 +37,7 @@ export class TcScriptComponent implements OnInit {
         this.setActiveProperty(this.propertiesList[0].property);
       }
     });
-    this.selectedTab = this.tabs[1];
+    this.selectedTab = this.tabs[0];
   }
 
   addAStep() {

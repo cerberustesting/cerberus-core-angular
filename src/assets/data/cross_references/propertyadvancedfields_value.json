@@ -1,0 +1,36 @@
+[
+    {
+        "reference": "length",
+        "description1": "Maximum length of the returned result.",
+        "icon": "fa fa-arrows-alt-h"
+    },
+    {
+        "reference": "rowLimit",
+        "description1": "Maximum number of the returned set of lines.",
+        "icon": "fa fa-list-ul"
+    },
+    {
+        "reference": "nature",
+        "icon": "fa fa-arrows-alt-h"
+    },
+    {
+        "reference": "cacheExpire",
+        "description1": "Duration (in seconds) allowing the variable be persitent.",
+        "icon": "fa fa-arrows-alt-h"
+    },
+    {
+        "reference": "retryNb",
+        "description1": "Number of retry iteration.",
+        "icon": "fa fa-arrows-alt-h"
+    },
+    {
+        "reference": "retryPeriod",
+        "description1": "Duration when the request can be retried.",
+        "icon": "fa fa-arrows-alt-h"
+    },
+    {
+        "reference": "rank",
+        "description1": "Authority of the property: affect the display.",
+        "icon": "fa fa-arrows-alt-h"
+    }
+]

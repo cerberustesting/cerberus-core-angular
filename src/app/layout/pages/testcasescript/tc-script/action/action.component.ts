@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CrossReference } from 'src/app/model/crossreference.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 import { IAction, ITestCase, Control, IControl, Action } from 'src/app/model/testcase.model';
 import { IInvariant } from 'src/app/model/invariants.model';
-import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
+import { CrossreferenceService, ICrossReference } from 'src/app/services/utils/crossreference.service';
 import { TestService } from 'src/app/services/crud/test.service';
 import { SettingsService } from '../settings/settings.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -32,8 +31,8 @@ export class ActionComponent implements OnInit {
   private DragAndAdropAreaId: string;
   private DragAndDropControlIDList: Array<string>;
   // Cross Reference array to display the correct input fields according to the selected condition
-  private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;
-  private crossReference_ConditionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
+  private crossReference_ActionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ActionValue;
+  private crossReference_ConditionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
   // private invariants
   private inv_action: Array<IInvariant>;
   private inv_condition_oper: Array<IInvariant>;
@@ -97,11 +96,11 @@ export class ActionComponent implements OnInit {
   }
 
   hasActionCrossReference(action: string): boolean { return this.CrossReferenceService.hasCrossReference(action, this.CrossReferenceService.crossReference_ActionValue); }
-  findActionCrossReference(action: string): CrossReference { return this.CrossReferenceService.findCrossReference(action, this.CrossReferenceService.crossReference_ActionValue); }
+  findActionCrossReference(action: string): ICrossReference { return this.CrossReferenceService.findCrossReference(action, this.CrossReferenceService.crossReference_ActionValue); }
   hasConditionCrossReference(condition: string): boolean { return this.CrossReferenceService.hasCrossReference(condition, this.CrossReferenceService.crossReference_ConditionValue); }
-  findConditionCrossReference(condition: string): CrossReference { return this.CrossReferenceService.findCrossReference(condition, this.CrossReferenceService.crossReference_ConditionValue); }
+  findConditionCrossReference(condition: string): ICrossReference { return this.CrossReferenceService.findCrossReference(condition, this.CrossReferenceService.crossReference_ConditionValue); }
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
-  findControlCrossReference(control: string): CrossReference { return this.CrossReferenceService.findCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
+  findControlCrossReference(control: string): ICrossReference { return this.CrossReferenceService.findCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
 
   controlEntered() {
     // make sure show the controls list when dragging a control from another list in the action

@@ -109,14 +109,20 @@
 
       <!-- ADVANCED SECTION -->
       <div class="row col-md-12" *ngIf="showAdvanced && findPropertyTypeCrossReference(prop.type).fields">
+
         <!-- LENGTH -->
         <div class="col-md-4" *ngIf="findPropertyTypeCrossReference(prop.type).fields.includes('length')">
           <div class="form-group">
-            <label for="propLength">Length</label>
+            <label for="propLength">
+              Length
+              <i class="fa fa-info-circle info" placement="top"
+                [ngbPopover]="findPropertyAdvancedFieldCrossReference('length').description1"
+                triggers="mouseenter:mouseleave"></i>
+            </label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  <i class="fa fa-arrows-alt-h"></i>
+                  <i [ngClass]="findPropertyAdvancedFieldCrossReference('length').icon"></i>
                 </span>
               </div>
               <input type="number" class="form-control" name="propLength" [(ngModel)]="prop.length">
@@ -124,14 +130,20 @@
           </div>
         </div>
         <!-- END LENGTH -->
+
         <!-- ROW LIMIT -->
         <div class="col-md-4" *ngIf="findPropertyTypeCrossReference(prop.type).fields.includes('rowLimit')">
           <div class="form-group">
-            <label for="propRowLimit">Row Limit</label>
+            <label for="propRowLimit">
+              Row Limit
+              <i class="fa fa-info-circle info" placement="top"
+                [ngbPopover]="findPropertyAdvancedFieldCrossReference('rowLimit').description1"
+                triggers="mouseenter:mouseleave"></i>
+            </label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  <i class="fa fa-list-ul"></i>
+                  <i [ngClass]="findPropertyAdvancedFieldCrossReference('length').icon"></i>
                 </span>
               </div>
               <input type="number" class="form-control" name="propRowLimit" [(ngModel)]="prop.rowLimit">
@@ -139,10 +151,21 @@
           </div>
         </div>
         <!-- END ROW LIMIT -->
+
         <!-- NATURE -->
         <div class="col-md-4" *ngIf="findPropertyTypeCrossReference(prop.type).fields.includes('nature')">
           <div class="form-group">
-            <label for="propNature">Nature</label>
+            <label for="propNature">
+              Nature
+              <ng-template #naturePopContent>
+                STATIC: select always the same Data Library <br>
+                RANDOM : select randomly a Data Library with the same name, country, sytem and env <br>
+                RANDOM NEW : select randomly a Data Library value that hasn't been selected yet. <br>
+                NOT IN USE : select a Data Library value that isn't used by another test case at the same time.
+              </ng-template>
+              <i class="fa fa-info-circle info" placement="top" [ngbPopover]="naturePopContent"
+                triggers="mouseenter:mouseleave"></i>
+            </label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
@@ -158,10 +181,16 @@
           </div>
         </div>
         <!-- END NATURE -->
+
         <!-- CACHE EXPIRE -->
         <div class="col-md-4" *ngIf="findPropertyTypeCrossReference(prop.type).fields.includes('cacheExpire')">
           <div class="form-group">
-            <label for="propCacheExpire">Cache Expire</label>
+            <label for="propCacheExpire">
+              Cache Expire
+              <i class="fa fa-info-circle info" placement="top"
+                [ngbPopover]="findPropertyAdvancedFieldCrossReference('cacheExpire').description1"
+                triggers="mouseenter:mouseleave"></i>
+            </label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
@@ -173,10 +202,58 @@
           </div>
         </div>
         <!-- END CACHE EXPIRE -->
-        <!-- RANK -->
-        <div class="col-md-4" *ngIf="findPropertyTypeCrossReference(prop.type).fields.includes('cacheExpire')">
+
+        <!-- RETRY NB -->
+        <div class="col-md-4" *ngIf="findPropertyTypeCrossReference(prop.type).fields.includes('retryNb')">
           <div class="form-group">
-            <label for="propCacheExpire">Rank</label>
+            <label for="propRetryNumber">
+              Retry Number
+              <i class="fa fa-info-circle info" placement="top"
+                [ngbPopover]="findPropertyAdvancedFieldCrossReference('retryNb').description1"
+                triggers="mouseenter:mouseleave"></i>
+            </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-redo"></i>
+                </span>
+              </div>
+              <input type="number" class="form-control" name="propRetryNumber" [(ngModel)]="prop.retryNb">
+            </div>
+          </div>
+        </div>
+        <!-- END RETRY NB -->
+
+        <!-- RETRY PERIOD -->
+        <div class="col-md-4" *ngIf="findPropertyTypeCrossReference(prop.type).fields.includes('retryPeriod')">
+          <div class="form-group">
+            <label for="propRetryPeriod">
+              Retry Period
+              <i class="fa fa-info-circle info" placement="top"
+                [ngbPopover]="findPropertyAdvancedFieldCrossReference('retryPeriod').description1"
+                triggers="mouseenter:mouseleave"></i>
+            </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="fa fa-redo"></i>
+                </span>
+              </div>
+              <input type="number" class="form-control" name="propRetryPeriod" [(ngModel)]="prop.retryPeriod">
+            </div>
+          </div>
+        </div>
+        <!-- END RETRY PERIOD -->
+
+        <!-- RANK -->
+        <div class="col-md-4" *ngIf="findPropertyTypeCrossReference(prop.type).fields.includes('rank')">
+          <div class="form-group">
+            <label for="propCacheExpire">
+              Rank
+              <i class="fa fa-info-circle info" placement="top"
+                [ngbPopover]="findPropertyAdvancedFieldCrossReference('rank').description1"
+                triggers="mouseenter:mouseleave"></i>
+            </label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
@@ -188,6 +265,7 @@
           </div>
         </div>
         <!-- END RANK -->
+
       </div>
       <!-- END ADVANCED SECTION -->
 

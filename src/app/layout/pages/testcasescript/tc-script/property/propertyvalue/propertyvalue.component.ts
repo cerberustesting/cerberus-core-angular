@@ -4,8 +4,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { IInvariant } from 'src/app/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 import { DraganddropService } from '../../draganddrop.service';
-import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
-import { CrossReference } from 'src/app/model/crossreference.model';
+import { CrossreferenceService, ICrossReference } from 'src/app/services/utils/crossreference.service';
 
 export class PropertyType_Fields_CrossReference {
   type: string;
@@ -31,7 +30,6 @@ export class PropertyvalueComponent implements OnInit {
   // private inavariants    
   private inv_propertyTypeList: Array<IInvariant>;
   private inv_propertyNatureList: Array<IInvariant>;
-  // cross reference between Property Types and displayed Fields
 
   constructor(
     private InvariantsService: InvariantsService,
@@ -95,8 +93,17 @@ export class PropertyvalueComponent implements OnInit {
   hasPropertyTypeCrossReference(ptype: string): boolean {
     return this.CrossReferenceService.hasCrossReference(ptype, this.CrossReferenceService.crossReference_PropertyTypeValue);
   }
-  findPropertyTypeCrossReference(ptype: string): CrossReference {
+
+  findPropertyTypeCrossReference(ptype: string): ICrossReference {
     return this.CrossReferenceService.findCrossReference(ptype, this.CrossReferenceService.crossReference_PropertyTypeValue);
+  }
+
+  hasPropertyAdvancedFieldCrossReference(field_name: string) {
+    return this.CrossReferenceService.hasCrossReference(field_name, this.CrossReferenceService.crossReference_PropertyAdvancedFields);
+  }
+  
+  findPropertyAdvancedFieldCrossReference(field_name: string): ICrossReference {
+    return this.CrossReferenceService.findCrossReference(field_name, this.CrossReferenceService.crossReference_PropertyAdvancedFields);
   }
 
   getValue1Width(type: string): string {

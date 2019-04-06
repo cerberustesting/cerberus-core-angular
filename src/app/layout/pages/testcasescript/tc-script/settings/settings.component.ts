@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IStep, IAction, IControl } from 'src/app/model/testcase.model';
 import { SettingsService } from './settings.service';
-import { CrossReference } from 'src/app/model/crossreference.model';
-import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
+import { CrossreferenceService, ICrossReference } from 'src/app/services/utils/crossreference.service';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 
@@ -25,9 +24,9 @@ export class SettingsComponent implements OnInit {
   private inv_control: Array<IInvariant>;
   private inv_action: Array<IInvariant>;
   // Cross Reference array to display the correct input fields according to the selected condition
-  private crossReference_ConditionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
-  private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;
-  private crossReference_ControlValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ControlValue;
+  private crossReference_ConditionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
+  private crossReference_ActionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ActionValue;
+  private crossReference_ControlValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ControlValue;
 
   constructor(
     private InvariantService: InvariantsService,
@@ -53,10 +52,10 @@ export class SettingsComponent implements OnInit {
   }
 
   hasConditionCrossReference(condition: string): boolean { return this.CrossReferenceService.hasCrossReference(condition, this.CrossReferenceService.crossReference_ConditionValue); }
-  findConditionCrossReference(condition: string): CrossReference { return this.CrossReferenceService.findCrossReference(condition, this.CrossReferenceService.crossReference_ConditionValue); }
+  findConditionCrossReference(condition: string): ICrossReference { return this.CrossReferenceService.findCrossReference(condition, this.CrossReferenceService.crossReference_ConditionValue); }
   hasActionCrossReference(action: string): boolean { return this.CrossReferenceService.hasCrossReference(action, this.CrossReferenceService.crossReference_ActionValue); }
-  findActionCrossReference(action: string): CrossReference { return this.CrossReferenceService.findCrossReference(action, this.CrossReferenceService.crossReference_ActionValue); }
+  findActionCrossReference(action: string): ICrossReference { return this.CrossReferenceService.findCrossReference(action, this.CrossReferenceService.crossReference_ActionValue); }
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
-  findControlCrossReference(control: string): CrossReference { return this.CrossReferenceService.findCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
+  findControlCrossReference(control: string): ICrossReference { return this.CrossReferenceService.findCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
 
 }

@@ -78,14 +78,22 @@
         "value1": "Element Path",
         "value2": "Attribute Name",
         "description1": "Type the path to the desired element using xPath.",
-        "icon_value2": "fa fa-equals"
+        "icon_value2": "fa fa-at",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
     },
     {
         "reference": "getFromCookie",
         "value1": "Cookie name",
         "value2": "Cookie Attribute",
         "description1": "Type Cookie name.",
-        "icon_value2": "fa fa-equals"
+        "icon_value2": "fa fa-cookie",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
     },
     {
         "reference": "getFromXml",
@@ -93,42 +101,73 @@
         "value2": "XML file or URL",
         "description1": "Type the path to the desired element using xPath.",
         "description2": "Optionnal",
-        "icon_value2": "fa fa-equals"
+        "icon_value2": "fa fa-code",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
     },
     {
         "reference": "getDifferencesFromXml",
-        "value1": "Whatever you want",
-        "value2": null,
-        "description1": "I have no idea on how this works.."
+        "value1": "value1",
+        "value2": "value2",
+        "description1": "?",
+        "description2": "?",
+        "icon_value2": "",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
     },
     {
         "reference": "getFromJson",
         "value1": "Element Path",
-        "value2": null,
-        "description1": "Type the path to the desired element using JSON."
+        "value2": "JSON file or URL",
+        "description1": "Type the path to the desired element using JSON.",
+        "icon_value2": "fa fa-code",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
     },
     {
         "reference": "getFromCommand",
         "value1": "Shell command",
         "value2": null,
-        "description1": "Type the Shell command that you want to get value from."
+        "description1": "Type the Shell command that you want to get value from.",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
     },
     {
         "reference": "getFromGroovy",
         "value1": "Script",
         "value2": null,
-        "description1": "Type the Groovy script. The actual result is the latest defined variable."
+        "description1": "Type the Groovy script. The actual result is the latest defined variable.",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
     },
     {
         "reference": "executeSoapFromLib",
         "value1": "Service Library Name",
         "value2": null,
-        "description1": "DEPRECATED"
+        "description1": "DEPRECATED",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
     },
     {
         "reference": "executeSqlFromLib",
         "value1": "SQL Library Name",
         "value2": null,
-        "description1": "DEPRECATED"
+        "description1": "DEPRECATED",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
     }
 ]

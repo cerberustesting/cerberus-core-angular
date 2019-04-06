@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IControl, ITestCase } from 'src/app/model/testcase.model';
-import { CrossReference } from 'src/app/model/crossreference.model';
-import { CrossreferenceService } from 'src/app/services/utils/crossreference.service';
+import { CrossreferenceService, ICrossReference } from 'src/app/services/utils/crossreference.service';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 import { TestService } from 'src/app/services/crud/test.service';
@@ -28,8 +27,8 @@ export class ControlComponent implements OnInit {
   showControlAddButtons: boolean;
   testcase: ITestCase;
   // Cross Reference array to display the correct input fields according to the selected condition
-  private crossReference_ActionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ActionValue;
-  private crossReference_ConditionValue: Array<CrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
+  private crossReference_ActionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ActionValue;
+  private crossReference_ConditionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
   // private invariants
   private inv_condition_oper: Array<IInvariant>;
   private inv_control: Array<IInvariant>;
@@ -67,7 +66,7 @@ export class ControlComponent implements OnInit {
   }
 
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
-  findControlCrossReference(control: string): CrossReference { return this.CrossReferenceService.findCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
+  findControlCrossReference(control: string): ICrossReference { return this.CrossReferenceService.findCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
 
   mouseEnter() { this.showControlAddButtons = true; }
   mouseLeave() { this.showControlAddButtons = false; }

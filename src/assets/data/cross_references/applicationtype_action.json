@@ -1,0 +1,52 @@
+[
+    {
+        "reference": "GUI",
+        "fields": [
+            "Unknown",
+            "click",
+            "mouseLeftButtonPress",
+            "mouseLeftButtonRelease",
+            "doubleClick",
+            "rightClick",
+            "mouseOver",
+            "focusToIframe",
+            "focusDefaultIframe",
+            "switchToWindow",
+            "manageDialog",
+            "openUrlWithBase",
+            "openUrlLogin",
+            "openUrl",
+            "executeJS",
+            "executeCommand",
+            "dragAndDrop",
+            "select",
+            "keypress",
+            "type",
+            "scrollTo",
+            "wait",
+            "waitVanish",
+            "callService",
+            "executeSqlUpdate",
+            "executeSqlStoredProcedure",
+            "calculateProperty",
+            "doNothing"
+        ]
+    },
+    {
+        "reference": "SRV",
+        "fields": [
+            "Unknown",
+            "openUrlWithBase",
+            "openUrlLogin",
+            "openUrl",
+            "executeJS",
+            "executeCommand",
+            "wait",
+            "callService",
+            "executeSqlUpdate",
+            "executeSqlStoredProcedure",
+            "calculateProperty",
+            "doNothing"
+        ]
+    }
+]

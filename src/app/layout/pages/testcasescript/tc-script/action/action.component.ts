@@ -27,6 +27,7 @@ export class ActionComponent implements OnInit {
 
   private isDragging: boolean;
   private showActionAddButtons: boolean;
+  private isFocused: boolean;
   private testcase: ITestCase;
   private DragAndAdropAreaId: string;
   private DragAndDropControlIDList: Array<string>;
@@ -55,6 +56,13 @@ export class ActionComponent implements OnInit {
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
+    this.SettingsService.observableAction.subscribe(r => {
+      if (this.action == r) {
+        this.isFocused = true;
+      } else {
+        this.isFocused = false;
+      }
+    });
   }
 
   addAction(destinationIndex: number) {
@@ -104,7 +112,6 @@ export class ActionComponent implements OnInit {
 
   controlEntered() {
     // make sure show the controls list when dragging a control from another list in the action
-    console.log("controlEntered in " + this.DragAndAdropAreaId);
     if (this.showControlList == false) {
       this.showControlList = true;
       this.isDragging = true;
@@ -112,11 +119,7 @@ export class ActionComponent implements OnInit {
   }
 
   controlExited() {
-    console.log("controlExited from " + this.DragAndAdropAreaId);
     this.isDragging = false;
-    /*if (this.isDragging == true){
-      this.showControlList = false;
-    }*/
   }
 
 

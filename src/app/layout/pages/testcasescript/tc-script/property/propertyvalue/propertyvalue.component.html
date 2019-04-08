@@ -115,14 +115,13 @@
           <div class="form-group">
             <label for="propLength">
               Length
-              <i class="fa fa-info-circle info" placement="top"
-                [ngbPopover]="findPropertyAdvancedFieldCrossReference('length').description1"
+              <i class="fa fa-info-circle info" placement="top" ngbPopover="Maximum length of the returned result."
                 triggers="mouseenter:mouseleave"></i>
             </label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  <i [ngClass]="findPropertyAdvancedFieldCrossReference('length').icon"></i>
+                  <i class="fa fa-arrows-alt-h"></i>
                 </span>
               </div>
               <input type="number" class="form-control" name="propLength" [(ngModel)]="prop.length">
@@ -137,13 +136,13 @@
             <label for="propRowLimit">
               Row Limit
               <i class="fa fa-info-circle info" placement="top"
-                [ngbPopover]="findPropertyAdvancedFieldCrossReference('rowLimit').description1"
+                ngbPopover="Maximum number of the returned set of lines."
                 triggers="mouseenter:mouseleave"></i>
             </label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  <i [ngClass]="findPropertyAdvancedFieldCrossReference('length').icon"></i>
+                  <i class="fa fa-list-ul"></i>
                 </span>
               </div>
               <input type="number" class="form-control" name="propRowLimit" [(ngModel)]="prop.rowLimit">
@@ -188,7 +187,7 @@
             <label for="propCacheExpire">
               Cache Expire
               <i class="fa fa-info-circle info" placement="top"
-                [ngbPopover]="findPropertyAdvancedFieldCrossReference('cacheExpire').description1"
+                ngbPopover="Duration (in seconds) allowing the variable be persitent."
                 triggers="mouseenter:mouseleave"></i>
             </label>
             <div class="input-group">
@@ -209,7 +208,7 @@
             <label for="propRetryNumber">
               Retry Number
               <i class="fa fa-info-circle info" placement="top"
-                [ngbPopover]="findPropertyAdvancedFieldCrossReference('retryNb').description1"
+                ngbPopover="Number of retry iteration."
                 triggers="mouseenter:mouseleave"></i>
             </label>
             <div class="input-group">
@@ -230,7 +229,7 @@
             <label for="propRetryPeriod">
               Retry Period
               <i class="fa fa-info-circle info" placement="top"
-                [ngbPopover]="findPropertyAdvancedFieldCrossReference('retryPeriod').description1"
+                ngbPopover="Duration when the request can be retried."
                 triggers="mouseenter:mouseleave"></i>
             </label>
             <div class="input-group">
@@ -251,7 +250,7 @@
             <label for="propCacheExpire">
               Rank
               <i class="fa fa-info-circle info" placement="top"
-                [ngbPopover]="findPropertyAdvancedFieldCrossReference('rank').description1"
+                ngbPopover="Authority of the property: affect the display."
                 triggers="mouseenter:mouseleave"></i>
             </label>
             <div class="input-group">

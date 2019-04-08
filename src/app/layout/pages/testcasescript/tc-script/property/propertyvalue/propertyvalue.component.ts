@@ -98,14 +98,6 @@ export class PropertyvalueComponent implements OnInit {
     return this.CrossReferenceService.findCrossReference(ptype, this.CrossReferenceService.crossReference_PropertyTypeValue);
   }
 
-  hasPropertyAdvancedFieldCrossReference(field_name: string) {
-    return this.CrossReferenceService.hasCrossReference(field_name, this.CrossReferenceService.crossReference_PropertyAdvancedFields);
-  }
-  
-  findPropertyAdvancedFieldCrossReference(field_name: string): ICrossReference {
-    return this.CrossReferenceService.findCrossReference(field_name, this.CrossReferenceService.crossReference_PropertyAdvancedFields);
-  }
-
   getValue1Width(type: string): string {
     switch (type) {
       case 'getFromSql': { return '9' }

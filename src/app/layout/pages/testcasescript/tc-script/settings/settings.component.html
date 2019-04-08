@@ -1,18 +1,46 @@
 <div id="settings" class="block block-bordered block-rounded sticky-top sticky-offset">
-  <div class="block-header block-header-default">
+
+  <!-- STEP HEADER -->
+  <div *ngIf="step" class="block-header block-header-default" style="background-color: #d6d8d9;">
     <h3 class="block-title">
-      <span *ngIf="step">Step</span>
-      <span *ngIf="action">Action</span>
-      <span *ngIf="control">Control</span>
-      <small *ngIf="step || action || control"> Settings</small>
-      <small *ngIf="!step && !action && !control">Select an element</small>
+      <span>Step</span>
+      <small class="ml-1">Settings</small>
     </h3>
-    <div *ngIf="step || action || control" class="block-options">
+    <div class="block-options">
       <button type="button" class="btn btn-sm btn-outline-primary mr-1">Copy</button>
       <button type="button" class="btn btn-sm btn-outline-secondary">Paste after</button>
     </div>
   </div>
+  <!-- END STEP HEADER -->
+
+  <!-- ACTION HEADER -->
+  <div *ngIf="action" class="block-header block-header-default" style="background-color: #cde0f6;">
+    <h3 class="block-title">
+      <span>Action</span>
+      <small class="ml-1">Settings</small>
+    </h3>
+    <div class="block-options">
+      <button type="button" class="btn btn-sm btn-outline-primary mr-1">Copy</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary">Paste after</button>
+    </div>
+  </div>
+  <!-- END ACTION HEADER -->
+
+  <!-- CONTROL HEADER -->
+  <div *ngIf="control" class="block-header block-header-default" style="background-color: #e6f0db;">
+    <h3 class="block-title">
+      <span>Control</span>
+      <small class="ml-1">Settings</small>
+    </h3>
+    <div class="block-options">
+      <button type="button" class="btn btn-sm btn-outline-primary mr-1">Copy</button>
+      <button type="button" class="btn btn-sm btn-outline-secondary">Paste after</button>
+    </div>
+  </div>
+  <!-- END CONTROL HEADER -->
+
   <div class="block-content">
+
     <!-- STEP -->
     <div id="activeStepSettings" *ngIf="step">
       <div class="row">
@@ -85,6 +113,7 @@
       </div>
     </div>
     <!-- END STEP -->
+
     <!-- ACTION -->
     <div id="activeActionSettings" *ngIf="action">
       <div class="row">
@@ -184,6 +213,7 @@
       </div>
     </div>
     <!-- END ACTION -->
+
     <!-- CONTROL -->
     <div id="activeControlSettings" *ngIf="control">
       <div class="row">
@@ -280,7 +310,10 @@
       </div>
     </div>
     <!-- END CONTROL -->
+
   </div>
+
+  <!-- BREADCRUMB -->
   <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm"
     *ngIf="step || action || control">
     <nav aria-label="breadcrumb">
@@ -297,3 +330,4 @@
       </ol>
     </nav>
   </div>
+  <!-- END BREADCRUMB -->

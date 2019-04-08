@@ -10,9 +10,6 @@
 .full-width {
   width: 100%;
 }
-.toDelete {
-  background-color: #f2dede !important;
-}
 .input-group-text.custom {
   border: 0;
   background-color: transparent;
@@ -34,4 +31,20 @@
   box-sizing: border-box;
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.focused {
+  background-color: #d6d8d9;
+}
+
+.focused_border {
+  border-color: #d6d8d9;
+}
+
+.toDelete {
+  background-color: #f2dede !important;
+}
+
+.toDelete_border {
+  border-color: #f2dede !important;
 }

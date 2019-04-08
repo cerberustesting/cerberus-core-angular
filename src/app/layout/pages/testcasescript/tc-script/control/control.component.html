@@ -1,45 +1,80 @@
 <div [id]="'step'+ parentStepIndex +'action'+ parentActionIndex +'control' + controlIndex"
-  class="block block-bordered control mb-0" *ngIf="control">
+  class="block block-bordered control mb-0" *ngIf="control"
+  [ngClass]="[control.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
   <div class="block-header ml-6" (mouseenter)="mouseEnter() " (mouseleave)="mouseLeave()">
+
     <div class="input-group" (click)="focusOnControl()">
+
+      <!-- INDEX -->
       <div class="input-group-prepend">
         <span name="controlIndex" class="input-group-text custom">
           {{controlIndex}}
         </span>
       </div>
+      <!-- END INDEX -->
+
+      <!-- CONTROL ICON -->
       <div class="input-group-prepend" *ngIf="findControlCrossReference(control.control).icon"
         [ngbPopover]="control.control" triggers="mouseenter:mouseleave">
         <span class="input-group-text custom">
           <i [ngClass]="findControlCrossReference(control.control).icon"></i>
         </span>
       </div>
+      <!-- END CONTROL ICON -->
+
+      <!-- CONTROL DESCRIPTION -->
       <input type="text"
         [id]="'step'+ parentStepIndex +'action'+ parentActionIndex +'control' + controlIndex + 'description'"
         [(ngModel)]="control.description" class="form-control br-lr-1 bg-transparent b-0" name="activeStepDescription"
         placeholder="Control Description" [readonly]="readonly">
+      <!-- END CONTROL DESCRIPTION -->
+
     </div>
+
+    <!-- ADD ACTION OR CONTROLS BUTTONS -->
     <div *ngIf="showControlAddButtons && !readonly" class="block-options">
+
       <button type="button" name="addActionFromControl" class="btn btn-sm btn-outline-primary mr-1"
-        (click)="addAction(parentActionIndex+1)"> <i class="fa fa-fw fa-plus"></i> </button>
+        (click)="addAction(parentActionIndex+1)"> <i class="fa fa-fw fa-plus"></i>
+      </button>
+
       <button type="button" name="addControlFromControl" class="btn btn-sm btn-outline-success mr-1"
-        (click)="addControl(controlIndex)"> <i class="fa fa-fw fa-plus"></i> </button>
+        (click)="addControl(controlIndex)"> <i class="fa fa-fw fa-plus"></i>
+      </button>
+
     </div>
+    <!-- END ADD ACTION OR CONTROLS BUTTONS -->
+
     <div class="block-options">
-      <button *ngIf="control.conditionOper != 'always'" type="button" name="conditionOper" class="btn-block-option info_block_options"
+
+      <!-- CONDITION ICON -->
+      <button *ngIf="control.conditionOper != 'always'" type="button" name="conditionOper"
+        class="btn-block-option info_block_options"
         [ngbPopover]="control.conditionOper == 'never' ? 'This control is disabled' : 'This control execution is conditioned'"
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw" [ngClass]="control.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
       </button>
+      <!-- END CONDITION ICON -->
+
+      <!-- FATAL ICON -->
       <button *ngIf="control.fatal == 'Y'" type="button" name="fatal" class="btn-block-option info_block_options"
         ngbPopover="This control is fatal" triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-exclamation"></i>
       </button>
-      <button *ngIf="!readonly" type="button" name="delete" class="btn-block-option" (click)="control.toDelete = !control.toDelete">
+      <!-- END FATAL ICON -->
+
+      <!-- DELETE ACTION -->
+      <button *ngIf="!readonly" type="button" name="delete" class="btn-block-option"
+        (click)="control.toDelete = !control.toDelete">
         <i class="far fa-fw fa-trash-alt"></i>
       </button>
+      <!-- END DELETE ACTION -->
+
       <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
       <!-- current workaround : move cdkDragHandle out of child component -->
       <ng-content select="[slot=drag-control]"></ng-content>
+
     </div>
+
   </div>
 </div>

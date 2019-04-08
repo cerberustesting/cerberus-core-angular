@@ -24,8 +24,9 @@ export class ControlComponent implements OnInit {
   @Output() controlAdded = new EventEmitter<number>();
   @Output() actionAddedFromControl = new EventEmitter<number>();
 
-  showControlAddButtons: boolean;
-  testcase: ITestCase;
+  private showControlAddButtons: boolean;
+  private isFocused: boolean;
+  private testcase: ITestCase;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ActionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ActionValue;
   private crossReference_ConditionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
@@ -46,6 +47,13 @@ export class ControlComponent implements OnInit {
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
     this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
+    this.SettingsService.observableControl.subscribe(r => {
+      if (this.control == r) {
+        this.isFocused = true;
+      } else {
+        this.isFocused = false;
+      }
+    });
   }
 
   flagForDeletion(control: IControl) { this.control.toDelete = !this.control.toDelete; this.debug(); }

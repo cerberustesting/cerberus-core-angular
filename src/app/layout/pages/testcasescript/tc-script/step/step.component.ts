@@ -14,9 +14,10 @@ export class StepComponent implements OnInit {
   @Input('step') step: IStep;
   @Input('stepIndex') stepIndex: number;
   //@Input('isfirstStep') isFirstStep: boolean;
-  showActionList: boolean;
-  stepIsReadOnly: boolean;
-  showControls: boolean;
+  private showActionList: boolean;
+  private stepIsReadOnly: boolean;
+  private showControls: boolean;
+  private isFocused: boolean;
 
   constructor(
     private SettingsService: SettingsService,
@@ -24,6 +25,7 @@ export class StepComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isFocused = false;
     this.showActionList = false;
     this.showControls = true;
     // if (this.isFirstStep) { this.showActionList = true; }
@@ -32,6 +34,13 @@ export class StepComponent implements OnInit {
     // solution B : go full Angular with only *ngIf but the sweet animation will disappear
     this.step.toDelete = false;
     this.stepIsReadOnly = false;
+    this.SettingsService.observableStep.subscribe(r => {
+      if (this.step == r) {
+        this.isFocused = true;
+      } else {
+        this.isFocused = false;
+      }
+    });
   }
 
   addAction(destinationIndex: number) {

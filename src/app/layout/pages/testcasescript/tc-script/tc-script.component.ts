@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase, IStep, Step } from 'src/app/model/testcase.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestService } from 'src/app/services/crud/test.service';
-import { IProperty } from 'src/app/model/property.model';
+import { IProperty, Property } from 'src/app/model/property.model';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 
@@ -49,6 +49,20 @@ export class TcScriptComponent implements OnInit {
     // - call TestService.refreshStepSort(this.testcase.stepList)
   }
 
+  // TO DO : allow to add several empty properties in the array.
+  addProperty() {
+    var newProp = new Property();
+    this.propertiesList.push(newProp);
+  }
+
+  deleteProperty(propertyName: string) {
+    this.propertiesList.forEach(element => {
+      if (element.property == propertyName) {
+        this.propertiesList.splice(this.propertiesList.indexOf(element), 1);
+      }
+    });
+  }
+
   dropStep(event: CdkDragDrop<IStep[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     this.TestService.refreshStepSort(this.testcase.stepList);
@@ -69,6 +83,9 @@ export class TcScriptComponent implements OnInit {
   }
 
   setPropertyName(props: Array<IProperty>, newName: string) {
+    if (this.propertiesList.find(p => p.property == newName)) {
+      // TODO : property name already exists
+    }
     props.forEach((prop) => {
       prop.property = newName;
     });

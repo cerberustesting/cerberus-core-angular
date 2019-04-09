@@ -1,4 +1,5 @@
-<div id="settings" class="block block-bordered block-rounded sticky-top sticky-offset">
+<div id="settings" class="block block-bordered block-rounded sticky-top sticky-offset"
+  *ngIf="step || action || control">
 
   <!-- STEP HEADER -->
   <div *ngIf="step" class="block-header block-header-default" style="background-color: #d6d8d9;">

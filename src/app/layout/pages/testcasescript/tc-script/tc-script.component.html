@@ -11,7 +11,7 @@
       </button>
     </div>
   </div>
-  
+
   <div class="block-content">
     <!-- TABS -->
     <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
@@ -85,8 +85,16 @@
               <li *ngFor="let propertyName of getUniquePropertiesNameList(propertiesList)" class="list-group-item"
                 [ngClass]="propertyName == activePropertyName ? 'active' : ''"
                 (click)="setActiveProperty(propertyName)">
-                {{ propertyName }}</li>
+                {{ propertyName ? propertyName : 'Property Name' }}
+                <button class="btn-block-option" name="deleteProp" type="button" style="float: right;" (click)="deleteProperty(propertyName)">
+                  <i class="far fa-fw fa-trash-alt"></i>
+                </button>
+              </li>
             </ul>
+            <button type="button" class="btn btn-outline-primary" (click)="addProperty()">
+              <i class="fa fa-fw fa-plus mr-1"></i>
+              Property
+            </button>
           </div>
           <!-- END PROPERTY LIST -->
           <!-- PROPERTY CONTENT -->
@@ -94,7 +102,7 @@
           <div *ngIf="activeProperty" class="col-md-8">
             <app-property [propertiesByName]="activeProperty">
               <input type="text" slot="prop-name" class="form-control" name="propertyName"
-                [(ngModel)]="activeProperty[0].property"
+                [(ngModel)]="activeProperty[0].property" placeholder="Property Name"
                 (ngModelChange)="setPropertyName(activeProperty,activeProperty[0].property)">
             </app-property>
           </div>

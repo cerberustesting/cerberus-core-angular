@@ -17,7 +17,8 @@ export class TestcaselistComponent implements OnInit {
     { name: 'application' },
     { name: 'description' },
     { name: 'system' },
-    { name: 'tcActive' }
+    { name: 'tcActive' },
+    { name: 'priority' },
   ];
   selectedTest = '';
   public testcasesList: Array<ITestCaseHeader>;

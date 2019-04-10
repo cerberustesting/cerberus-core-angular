@@ -37,6 +37,8 @@ import { PropertyComponent } from './layout/pages/testcasescript/tc-script/prope
 import { PropertyvalueComponent } from './layout/pages/testcasescript/tc-script/property/propertyvalue/propertyvalue.component';
 import { FiltersComponent } from './layout/pages/testcaselist/filters/filters.component';
 import { LabelFilterComponent } from './layout/pages/testcaselist/filters/label-filter/label-filter.component';
+import { ApplicationFilterComponent } from './layout/pages/testcaselist/filters/application-filter/application-filter.component';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { LabelFilterComponent } from './layout/pages/testcaselist/filters/label-
     PropertyComponent,
     FiltersComponent,
     LabelFilterComponent,
-    PropertyvalueComponent
+    PropertyvalueComponent,
+    ApplicationFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +81,8 @@ import { LabelFilterComponent } from './layout/pages/testcaselist/filters/label-
     NgSelectModule,
     DragDropModule,
     NgxDatatableModule,
-    NgPipesModule
+    NgPipesModule,
+    FilterPipeModule
   ],
   providers: [TrueindexPipe],
   bootstrap: [AppComponent]

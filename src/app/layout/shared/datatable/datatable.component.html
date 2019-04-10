@@ -8,6 +8,9 @@
                  [footerHeight]="50"
                  [headerHeight]="50"
                  [loadingIndicator]="isLoading"
+                 [selected]="selected"
+                 [selectionType]="'checkbox'"
+                 [selectAllRowsOnPage]="false"
                  (activate)="onActivate($event)"
                  (select)='onSelect($event)'>
     <ngx-datatable-column
@@ -26,15 +29,18 @@
               {{column.name}}
           </ng-template>
           <ng-template let-value="value" ngx-datatable-cell-template>
-              <strong>{{value.FR}}</strong>
+              <a *ngFor="let item of value | keyvalue">
+                 <b>{{item.value}} </b></a>
           </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="labels">
+      <ngx-datatable-column [width]="250" name="labels">
           <ng-template let-column="column" ngx-datatable-header-template>
               {{column.name}}
           </ng-template>
           <ng-template let-value="value" ngx-datatable-cell-template>
-              <strong>{{value.name | json}}</strong>
+              <div class="label" *ngFor="let item of value">
+                  <div [style.background-color]="tag.key=='color' ? tag.value : ''" *ngFor="let tag of item | keyvalue"><a *ngIf="tag.key=='name'">{{tag.value}}</a></div>
+              </div>
           </ng-template>
       </ngx-datatable-column>
   </ngx-datatable>

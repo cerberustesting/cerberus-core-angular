@@ -59,6 +59,7 @@
     "jvectormap-next": "^3.0.0",
     "magnific-popup": "^1.1.0",
     "moment": "^2.24.0",
+    "ngx-filter-pipe": "^2.1.2",
     "ngx-pipes": "^2.4.6",
     "popper.js": "^1.14.7",
     "raty-js": "^2.8.0",

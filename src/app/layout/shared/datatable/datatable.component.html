@@ -1,4 +1,9 @@
 <div class="data-table">
+    <div class="actions-container">
+        <button class="btn-block-option"><i class="far fa-fw fa-trash-alt mr-1"></i></button>
+        <button class="btn-block-option"><i class="si si-control-play mr-1"></i></button>
+        <button class="btn-block-option"><i class="si si-settings"></i></button>
+    </div>
   <ngx-datatable class="material"
                  [rows]="rows"
                  [columns]="columns"
@@ -39,10 +44,9 @@
           </ng-template>
           <ng-template let-value="value" ngx-datatable-cell-template>
               <div class="label" *ngFor="let item of value">
-                  <div [style.background-color]="tag.key=='color' ? tag.value : ''" *ngFor="let tag of item | keyvalue"><a *ngIf="tag.key=='name'">{{tag.value}}</a></div>
+                  <div  *ngFor="let tag of item | keyvalue"><a [style.background-color]="tag.key=='color' ? tag.value : ''" >{{tag.value}}</a></div>
               </div>
           </ng-template>
       </ngx-datatable-column>
   </ngx-datatable>
-
 </div>

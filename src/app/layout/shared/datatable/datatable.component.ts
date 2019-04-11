@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {ILabel} from '../../../model/label.model';
 
 @Component({
   selector: 'app-table-new',

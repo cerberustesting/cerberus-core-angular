@@ -1,6 +1,12 @@
 <div class="block block-rounded block-bordered block-rounded">
   <div class="block-header block-header-default">
-    <ng-content select="[slot=prop-name]"></ng-content>
+    <div class="form-group row col-md-12">
+      <input type="text" #propName class="form-control" name="propertyName" [ngModel]="propertyName"
+        placeholder="Property Name" [ngClass]="propertyNameIsInvalid ? 'is-invalid' : ''"
+        (ngModelChange)="setPropertyName(propName.value)">
+      <div *ngIf="propertyNameIsInvalid" class="invalid-feedback">Property name already
+        exists</div>
+    </div>
   </div>
   <div class="block-content">
     <div class="row">
@@ -13,7 +19,7 @@
             role="tablist">
             <li class="nav-item default-cursor">
               <a class="nav-link active">
-                <i class="fa fa-times"></i>
+                <i class="fa fa-arrows-alt-v"></i>
               </a>
             </li>
             <li *ngFor="let country of unassignedCountriesList" class="nav-item" cdkDrag>
@@ -22,14 +28,15 @@
           </ul>
         </div>
         <div class="block-content block-content-full block-content-sm font-size-sm text-right">
-          <button class="btn btn-sm btn-secondary mr-1" name="collapseAll" type="button"
-            (click)="showPropCountriesMainContent = false">
-            <i class="si fa-fw si-arrow-right mr-1"></i> Collapse All
+
+          <button class="btn btn-sm btn-secondary mr-1" name="toggleProperties" type="button"
+            (click)="showPropCountriesMainContent = !showPropCountriesMainContent">
+            <i class="si fa-fw mr-1" [ngClass]="showPropCountriesMainContent ? 'si-arrow-right' : 'si-arrow-down'"></i>
+            <span *ngIf="showPropCountriesMainContent">Collapse</span>
+            <span *ngIf="!showPropCountriesMainContent">Expand</span>
+            All
           </button>
-          <button class="btn btn-sm btn-secondary mr-1" name="expandAll" type="button"
-            (click)="showPropCountriesMainContent = true">
-            <i class="si fa-fw si-arrow-down mr-1"></i> Expand All
-          </button>
+
         </div>
         <!-- END UNASSIGNED COUNTRIES LIST -->
         <!-- PROPERTY VALUES LIST -->
@@ -40,7 +47,7 @@
         </div>
         <!-- END PROPERTY VALUES LIST -->
         <div class="text-center push">
-          <button type="button" class="btn btn-outline-primary mr-1" (click)="addAProperty()">
+          <button type="button" class="btn btn-outline-primary mr-1" (click)="addAPropertyValue()">
             <i class="fa fa-fw fa-plus mr-1"></i> New
           </button>
         </div>

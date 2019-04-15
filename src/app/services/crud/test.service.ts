@@ -7,7 +7,7 @@ import { ILabel, ITestCaseLabel } from 'src/app/model/label.model';
 import { IProject } from 'src/app/model/project.model';
 import { AppSettings } from 'src/app/app.component';
 import { TrueindexPipe } from 'src/app/pipes/trueindex.pipe';
-import { IProperty } from 'src/app/model/property.model';
+import { IProperty, Property } from 'src/app/model/property.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -128,6 +128,14 @@ export class TestService {
         this.testcase_properties = response;
         this.observableTestCaseProperties.next(this.testcase_properties);
       })
+  }
+
+  renameProperty(oldName: string, newName: string) {
+    this.testcase_properties.forEach((prop) => {
+      if (prop.property == oldName) {
+        prop.property = newName;
+      }
+    });
   }
 
   getUniquePropertiesNameList(propertiesList: Array<IProperty>): Array<string> {

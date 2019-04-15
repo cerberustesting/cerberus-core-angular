@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ITestCase, IStep, Step } from 'src/app/model/testcase.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestService } from 'src/app/services/crud/test.service';
 import { IProperty, Property } from 'src/app/model/property.model';
 import { IInvariant } from 'src/app/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
+// import { PropertyComponent } from 'src/app/layout/pages/testcasescript/tc-script/property/property.component'
 
 @Component({
   selector: 'app-tc-script',
@@ -24,8 +25,14 @@ export class TcScriptComponent implements OnInit {
   private propertiesList: Array<IProperty>;
   private activePropertyName: string;
   private activeProperty: Array<IProperty>;
+  private propertyNameIsInvalid: boolean;
 
-  constructor(private TestService: TestService, private InvariantsService: InvariantsService) {
+  //@ViewChild(ChildComponent) child;
+
+  constructor(
+    private TestService: TestService,
+    private InvariantsService: InvariantsService
+  ) {
     this.stepListBlockId = "stepList";
   }
 
@@ -38,6 +45,7 @@ export class TcScriptComponent implements OnInit {
       }
     });
     this.selectedTab = this.tabs[0];
+    this.propertyNameIsInvalid = false;
   }
 
   addAStep() {
@@ -50,9 +58,11 @@ export class TcScriptComponent implements OnInit {
   }
 
   // TO DO : allow to add several empty properties in the array.
-  addProperty() {
+  addProperty(propName?: string) {
     var newProp = new Property();
+    if (propName) { newProp.property = propName; }
     this.propertiesList.push(newProp);
+    this.setActiveProperty(newProp.property);
   }
 
   deleteProperty(propertyName: string) {
@@ -68,10 +78,6 @@ export class TcScriptComponent implements OnInit {
     this.TestService.refreshStepSort(this.testcase.stepList);
   }
 
-  debug() {
-    console.log(this.testcase);
-  }
-
   saveTestCase() {
     // send the testcase to the data service
     this.TestService.saveTestCase(this.testcase);
@@ -82,18 +88,16 @@ export class TcScriptComponent implements OnInit {
     this.activeProperty = this.TestService.filterPropertyByName(this.propertiesList, propName);
   }
 
-  setPropertyName(props: Array<IProperty>, newName: string) {
-    if (this.propertiesList.find(p => p.property == newName)) {
-      // TODO : property name already exists
-    }
-    props.forEach((prop) => {
-      prop.property = newName;
-    });
-    this.activePropertyName = newName;
-  }
-
   getUniquePropertiesNameList(propList: Array<IProperty>): Array<string> {
     return this.TestService.getUniquePropertiesNameList(propList);
+  }
+
+  try(p: string) {
+    this.setActiveProperty(p);
+  }
+
+  debug() {
+    console.log(this.propertiesList);
   }
 
 }

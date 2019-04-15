@@ -86,8 +86,9 @@
                 [ngClass]="propertyName == activePropertyName ? 'active' : ''"
                 (click)="setActiveProperty(propertyName)">
                 {{ propertyName ? propertyName : 'Property Name' }}
-                <button class="btn-block-option" name="deleteProp" type="button" style="float: right;" (click)="deleteProperty(propertyName)">
-                  <i class="far fa-fw fa-trash-alt"></i>
+                <button class="btn-block-option" name="deleteProp" type="button" style="float: right;"
+                  (click)="deleteProperty(propertyName)">
+                  <i class="far fa-fw fa-trash-alt" [ngClass]="propertyName == activePropertyName ? 'white' : ''"></i>
                 </button>
               </li>
             </ul>
@@ -97,16 +98,13 @@
             </button>
           </div>
           <!-- END PROPERTY LIST -->
-          <!-- PROPERTY CONTENT -->
-          <!-- TO DO : new component for the property -->
+          <!-- ACTIVE PROPERTY CONTENT -->
           <div *ngIf="activeProperty" class="col-md-8">
-            <app-property [propertiesByName]="activeProperty">
-              <input type="text" slot="prop-name" class="form-control" name="propertyName"
-                [(ngModel)]="activeProperty[0].property" placeholder="Property Name"
-                (ngModelChange)="setPropertyName(activeProperty,activeProperty[0].property)">
+            <app-property [propertiesByName]="activeProperty" (propertyValueAdded)="addProperty($event)"
+              (propertyNameChanged)="setActiveProperty($event)">
             </app-property>
           </div>
-          <!-- PROPERTY CONTENT -->
+          <!-- END ACTIVE PROPERTY CONTENT -->
         </div>
         <!-- END PROPERTIES CONTENT -->
       </div>

@@ -5,7 +5,7 @@
     (cdkDropListEntered)="dropInPropCountry($event)"
     class="nav nav-tabs nav-tabs-block align-items-center js-tabs-enabled">
     <li class="nav-item default-cursor">
-      <a class="nav-link active text-muted"><i class="fa fa-flag"></i></a>
+      <a class="nav-link active text-muted"><i class="fa fa-arrows-alt-v"></i></a>
     </li>
     <li *ngFor="let country of prop.country" class="nav-item" cdkDrag>
       <a class="nav-link">{{country}}</a>
@@ -101,7 +101,7 @@
 
       <!-- SHOW / HIDE ADVANCED BUTTON -->
       <div class="col-md-12 text-right push">
-        <button type="button" class="btn btn-sm btn-secondary mr-1" (click)="showAdvanced = !showAdvanced">
+        <button type="button" class="btn btn-sm btn-light mr-1" (click)="showAdvanced = !showAdvanced">
           <i class="si fa-fw mr-1" [ngClass]="showAdvanced ? 'si-arrow-down' : 'si-arrow-right'"></i>Advanced
         </button>
       </div>

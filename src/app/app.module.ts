@@ -39,6 +39,7 @@ import { FiltersComponent } from './layout/pages/testcaselist/filters/filters.co
 import { LabelFilterComponent } from './layout/pages/testcaselist/filters/label-filter/label-filter.component';
 import { ApplicationFilterComponent } from './layout/pages/testcaselist/filters/application-filter/application-filter.component';
 import { FilterPipeModule } from 'ngx-filter-pipe';
+import { FilterComponent } from './layout/pages/testcaselist/filters/filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
     FiltersComponent,
     LabelFilterComponent,
     PropertyvalueComponent,
-    ApplicationFilterComponent
+    ApplicationFilterComponent,
+    FilterComponent
   ],
   imports: [
     BrowserModule,

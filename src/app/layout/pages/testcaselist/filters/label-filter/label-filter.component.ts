@@ -19,7 +19,6 @@ export class LabelFilterComponent implements OnInit {
       if (response) {
         if (response.length > 0) {
           this.labelList = response;
-          console.log(this.labelList);
         }
       } else {
         this.labelList = null;

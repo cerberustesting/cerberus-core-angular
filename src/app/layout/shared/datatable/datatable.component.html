@@ -43,8 +43,8 @@
               {{column.name}}
           </ng-template>
           <ng-template let-value="value" ngx-datatable-cell-template>
-              <div class="label" *ngFor="let item of value">
-                  <div  *ngFor="let tag of item | keyvalue"><a [style.background-color]="tag.key=='color' ? tag.value : ''" >{{tag.value}}</a></div>
+              <div class="label" *ngFor="let item of value" [style.background-color]="item.color"> {{item.name}}
+                  <!--<div  *ngFor="let tag of item | keyvalue"><a [style.background-color]="tag.key=='color' ? tag.value : ''" >{{tag.value}}</a></div>-->
               </div>
           </ng-template>
       </ngx-datatable-column>

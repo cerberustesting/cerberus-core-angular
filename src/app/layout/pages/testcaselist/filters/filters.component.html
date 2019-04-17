@@ -1,24 +1,9 @@
 <div class="row">
   <div class="col-md-6 filter-container">
+      <app-filter [dataList]="testList" [field]="'test'" (dataSelected)="updateTest($event)"></app-filter>
+      <app-filter [dataList]="applicationList" [field]="'application'" (dataSelected)="updateApplication($event)"></app-filter>
+      <app-filter [dataList]="statusList" [field]="'value'" (dataSelected)="updateStatus($event)"></app-filter>
 
-<!--  <div class="col-md-2">
-    <ng-select [items]="testcasesList | unique: 'status'"
-               [selectableGroup]="true"
-               [multiple]="true"
-               [closeOnSelect]="false"
-               bindLabel="status"
-               bindValue="status"
-               placeholder="Select a status" [(ngModel)]='selectedStatus' [clearable]="true">
-      <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
-        <input type="checkbox" [ngModel]="item$.selected"/> {{item.status | uppercase}}
-      </ng-template>
-      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-        <input type="checkbox" [ngModel]="item$.application"/> {{item.status}}
-      </ng-template>
-    </ng-select>
-  </div>-->
-    <app-application-filter (applicationSelected)="filterApplicationHandler($event)"></app-application-filter>
-    <app-label-filter></app-label-filter>
-
+        <button (click)="sendFilter($event)">TATA</button>
   </div>
 </div>

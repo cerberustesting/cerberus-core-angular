@@ -16,18 +16,7 @@ export class ApplicationFilterComponent implements OnInit {
   constructor( private systemService: SystemService) { }
 
   ngOnInit() {
-    this.systemService.getApplicationList();
 
-    this.systemService.observableApplicationList.subscribe(response => {
-      if (response) {
-        if (response.length > 0) {
-          this.applicationList = response;
-          console.log(this.applicationList);
-        }
-      } else {
-        this.applicationList = null;
-      }
-    });
     console.log('applicationSelected:', this.applicationSelected);
   }
 

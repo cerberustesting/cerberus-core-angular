@@ -21,6 +21,7 @@ export class TestcaselistComponent implements OnInit {
     { name: 'priority' },
   ];
   selectedTest = '';
+  filterTest: any;
   public testcasesList: Array<ITestCaseHeader>;
   constructor( private testService: TestService) { }
 
@@ -37,5 +38,11 @@ export class TestcaselistComponent implements OnInit {
         this.testcasesList = null;
       }
     });
+  }
+
+  updateTest(statusSelected) {
+    this.filterTest = statusSelected;
+    console.log(this.filterTest);
+    this.testService.getTestCasesList(this.filterTest);
   }
 }

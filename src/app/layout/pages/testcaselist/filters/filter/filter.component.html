@@ -1,0 +1,17 @@
+<ng-select [items]="dataList"
+           [selectableGroup]="true"
+           [multiple]="true"
+           [closeOnSelect]="false"
+           bindLabel="{{field}}"
+           bindValue="{{field}}"
+           placeholder="Select {{field}}"
+           [(ngModel)]='data'
+           (close)="sendValues(data)"
+           (remove)="sendValues(data)"
+           [clearable]="true">
+  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+    <input type="checkbox" *ngIf="field=='application'"/> {{item.application}}
+    <input type="checkbox" *ngIf="field=='status'"/> {{item.value}}
+    <input type="checkbox" *ngIf="field=='test'"/> {{item.test}}
+  </ng-template>
+</ng-select>

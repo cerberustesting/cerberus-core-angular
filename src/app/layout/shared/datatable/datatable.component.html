@@ -29,7 +29,7 @@
     </ngx-datatable-column>
     <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [width]="100">
     </ngx-datatable-column>
-      <ngx-datatable-column name="countryList">
+      <ngx-datatable-column *ngIf="testcaseslist" name="countryList">
           <ng-template let-column="column" ngx-datatable-header-template>
               {{column.name}}
           </ng-template>
@@ -38,14 +38,12 @@
                  <b>{{item.value}} </b></a>
           </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [width]="250" name="labels">
+      <ngx-datatable-column *ngIf="testcaseslist" [width]="250" name="labels">
           <ng-template let-column="column" ngx-datatable-header-template>
               {{column.name}}
           </ng-template>
           <ng-template let-value="value" ngx-datatable-cell-template>
-              <div class="label" *ngFor="let item of value" [style.background-color]="item.color"> {{item.name}}
-                  <!--<div  *ngFor="let tag of item | keyvalue"><a [style.background-color]="tag.key=='color' ? tag.value : ''" >{{tag.value}}</a></div>-->
-              </div>
+              <div class="label" *ngFor="let item of value" [style.background-color]="item.color">{{item.name}}</div>
           </ng-template>
       </ngx-datatable-column>
   </ngx-datatable>

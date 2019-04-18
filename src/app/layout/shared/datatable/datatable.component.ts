@@ -10,28 +10,14 @@ export class DatatableComponent implements OnInit {
 
   @Input() rows: any[];
   @Input() columns: any[];
+  @Input() testcaseslist: boolean;
   selected = [];
   isLoading: boolean;
 
   ngOnInit() {
   }
   constructor() {
-/*    this.fetch((data) => {
-      this.rows = data;
-    });*/
   }
-
-
-  /*  fetch(cb) {
-      const req = new XMLHttpRequest();
-      req.open('GET', `assets/data/company.json`);
-
-      req.onload = () => {
-        cb(JSON.parse(req.response));
-      };
-
-      req.send();
-    }*/
 
   onSelect({ selected }) {
     console.log('Select Event', selected, this.selected);

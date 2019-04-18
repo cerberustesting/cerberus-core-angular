@@ -44,3 +44,15 @@ public static void fixHeaders(HttpServletResponse response) {
 To bypass authentication constraints, just delete the current `web.xml` and rename the `web-angular.xml` to `web.xml`.
 
 I am using this plugin to allow CORS in my Chrome browser: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi and it works just fine!
+
+# Docker
+
+In order to run it inside a docker container you can use :
+```bash
+# Build the image
+sudo docker build -t cerberus-angular .
+# Run it
+sudo docker run -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules -p 4200:4200 --rm cerberus-angular
+```
+
+

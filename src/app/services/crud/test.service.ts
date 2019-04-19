@@ -130,12 +130,23 @@ export class TestService {
       })
   }
 
+  // rename several property values that have the same name
   renameProperty(oldName: string, newName: string) {
     this.testcase_properties.forEach((prop) => {
       if (prop.property == oldName) {
         prop.property = newName;
       }
     });
+    this.observableTestCaseProperties.next(this.testcase_properties);
+  }
+
+  // remove from the properties model a single propValue
+  removeProperty(prop: IProperty) {
+    var propValue = this.testcase_properties.find(p => p == prop);
+    console.log("prop removed:");
+    console.log(propValue);
+    this.testcase_properties.splice(this.testcase_properties.indexOf(propValue), 1);
+    this.observableTestCaseProperties.next(this.testcase_properties);
   }
 
   getUniquePropertiesNameList(propertiesList: Array<IProperty>): Array<string> {

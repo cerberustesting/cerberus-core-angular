@@ -37,11 +37,17 @@ export class TcScriptComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.activePropertyName = null;
     this.TestService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
     this.TestService.observableTestCaseProperties.subscribe(r => {
       if (r) {
         this.propertiesList = r;
-        this.setActiveProperty(this.propertiesList[0].property);
+        if (this.activePropertyName == null) {
+          this.setActiveProperty(this.propertiesList[0].property);
+        } else {
+          // refresh the content of the active property
+          this.setActiveProperty(this.activePropertyName);
+        }
       }
     });
     this.selectedTab = this.tabs[0];
@@ -90,10 +96,6 @@ export class TcScriptComponent implements OnInit {
 
   getUniquePropertiesNameList(propList: Array<IProperty>): Array<string> {
     return this.TestService.getUniquePropertiesNameList(propList);
-  }
-
-  try(p: string) {
-    this.setActiveProperty(p);
   }
 
   debug() {

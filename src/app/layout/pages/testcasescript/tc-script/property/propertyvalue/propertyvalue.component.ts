@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ComponentRef } from '@angular/core';
 import { IProperty } from 'src/app/model/property.model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { IInvariant } from 'src/app/model/invariants.model';
@@ -16,11 +16,16 @@ export class PropertyType_Fields_CrossReference {
   templateUrl: './propertyvalue.component.html',
   styleUrls: ['./propertyvalue.component.scss']
 })
-export class PropertyvalueComponent implements OnInit {
+export class PropertyvalueComponent implements OnInit, OnDestroy {
 
   @Input('propertyvalue') prop: IProperty;
   @Input('index') index: number;
   @Input('showMainContent') showMainContent: boolean;
+
+  // propertyValueDeleted : sent when the component is destroyed
+  // in order to refresh the unassigned countries list
+  @Output() propertyValueDeleted = new EventEmitter<boolean>();
+
   private DragAndDropId: string;
   private DragAndDropList: Array<string>;
   private showEmptyCountryList: boolean;
@@ -86,10 +91,6 @@ export class PropertyvalueComponent implements OnInit {
     }
   }
 
-  ngOnDestroy() {
-    this.DragAndDropService.deleteIDFromPropCountriesList(this.DragAndDropId);
-  }
-
   hasPropertyTypeCrossReference(ptype: string): boolean {
     return this.CrossReferenceService.hasCrossReference(ptype, this.CrossReferenceService.crossReference_PropertyTypeValue);
   }
@@ -103,6 +104,14 @@ export class PropertyvalueComponent implements OnInit {
       case 'getFromSql': { return '9' }
       default: { return '12' }
     }
+  }
+
+  ngOnDestroy() {
+    // remove the component ID from the drag & drop list
+    // not mandatory but cleaner
+    this.DragAndDropService.deleteIDFromPropCountriesList(this.DragAndDropId);
+    // clean the model 
+    this.propertyValueDeleted.emit(true);
   }
 
 }

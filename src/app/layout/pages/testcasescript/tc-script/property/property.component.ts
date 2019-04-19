@@ -25,18 +25,21 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
   // in order to set the new propertyName as active
   @Output() propertyNameChanged = new EventEmitter<string>();
 
+  // unassigned country list
+  private propertiesList: Array<IProperty>;
   private unassignedCountriesList: Array<String>;
-  private showPropCountriesMainContent: boolean;
+
+  // invariants
   private inv_countriesList: Array<IInvariant>;
   private inv_propertyTypeList: Array<IInvariant>;
-  private propertiesList: Array<IProperty>;
+
+  // drag & drop
+  private DragAndDropList: Array<string>;
+  private DragAndDropId: string;
 
   private testcaseheader: ITestCaseHeader;
   private showPropertyOptions: boolean;
-
-  // unassigned country list
-  private DragAndDropList: Array<string>;
-  private DragAndDropId: string;
+  private showPropCountriesMainContent: boolean;
 
   constructor(
     private InvariantsService: InvariantsService,
@@ -97,6 +100,12 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   addAPropertyValue() {
     this.propertyValueAdded.emit(this.propertyName);
+  }
+
+  removeAPropertyValue(propValue: IProperty) {
+    //var propValue = this.propertiesByName.find(p => p == propValue);
+    //this.propertiesByName.splice(this.propertiesByName.indexOf(propValue), 1);
+    this.TestService.removeProperty(propValue);
   }
 
   // one way data binding has been implemented 

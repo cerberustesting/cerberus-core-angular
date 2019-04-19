@@ -104,6 +104,7 @@
         <button type="button" class="btn btn-sm btn-light mr-1" (click)="showAdvanced = !showAdvanced">
           <i class="si fa-fw mr-1" [ngClass]="showAdvanced ? 'si-arrow-down' : 'si-arrow-right'"></i>Advanced
         </button>
+        <ng-content select="[slot=removeButton]"></ng-content>
       </div>
       <!-- END SHOW / HIDE ADVANCED BUTTON -->
 

@@ -40,15 +40,15 @@
         </div>
         <div class="row" *ngIf="testcase.stepList.length != 0">
           <!-- STEP LIST -->
-          <div class="col-md-7">
+          <div class="col-md-6">
             <div [id]="stepListBlockId" role="tablist" aria-multiselectable="true" class="stepList" cdkDropList
               [cdkDropListData]="testcase.stepList" (cdkDropListDropped)="dropStep($event)">
               <div *ngFor="let step of testcase.stepList; let index = index" class="stepDrag" cdkDrag
                 cdkDragLockAxis="y">
                 <app-step [step]="step" [stepIndex]="index | trueindex">
                   <button slot="drag-step" type="button" id="step{{ index | trueindex }}drag"
-                    class="btn btn-primary drag-cursor" cdkDragHandle>
-                    <i class="fa fa-arrows-alt-v"></i>
+                    class="btn btn-sm btn-light drag-cursor" cdkDragHandle>
+                    <i class="fa fa-ellipsis-v"></i>
                   </button>
                 </app-step>
               </div>
@@ -66,7 +66,7 @@
           </div>
           <!-- END STEP LIST -->
           <!-- SETTINGS TOOLBAR -->
-          <div class="col-md-5">
+          <div class="col-md-6">
             <app-settings></app-settings>
           </div>
           <!-- END SETTINGS TOOLBAR -->

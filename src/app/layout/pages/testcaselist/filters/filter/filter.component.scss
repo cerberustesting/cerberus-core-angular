@@ -1,0 +1,17 @@
+.ng-dropdown-panel, .ng-select-bottom {
+  z-index: 1000;
+}
+
+ng-select, .ng-select-container {
+  width: 200px;
+  display: inline-block;
+  margin: 5px 5px 5px;
+  background-color: yellow;
+}
+
+
+.custom {
+  z-index: 9999;
+  background-color: yellow;
+  border: none;
+}

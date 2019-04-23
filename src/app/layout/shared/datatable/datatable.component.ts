@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ILabel} from '../../../model/label.model';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-table-new',
@@ -26,9 +25,11 @@ export class DatatableComponent implements OnInit {
     this.selected.push(...selected);
   }
 
+/*
   onActivate(event) {
     console.log('Activate Event', event);
   }
+*/
 
 
 

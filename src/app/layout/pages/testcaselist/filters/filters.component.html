@@ -1,9 +1,8 @@
-<div class="row">
-  <div class="col-md-6 filter-container">
-      <app-filter [dataList]="testList" [field]="'test'" (dataSelected)="updateTest($event)"></app-filter>
-      <app-filter [dataList]="applicationList" [field]="'application'" (dataSelected)="updateApplication($event)"></app-filter>
-      <app-filter [dataList]="statusList" [field]="'value'" (dataSelected)="updateStatus($event)"></app-filter>
+<div class="filter-container">
+  <input class="input-search" placeholder="Search">
+  <app-filter [dataList]="testList" [field]="'test'" (dataSelected)="updateTest($event)"></app-filter>
+  <app-filter [dataList]="applicationList" [field]="'application'" (dataSelected)="updateApplication($event)"></app-filter>
+  <app-filter [dataList]="statusList" [field]="'value'" (dataSelected)="updateStatus($event)"></app-filter>
 
-        <button (click)="sendFilter($event)">TATA</button>
-  </div>
+    <button (click)="sendFilter($event)">TATA</button>
 </div>

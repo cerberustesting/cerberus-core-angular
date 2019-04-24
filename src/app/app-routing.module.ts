@@ -11,7 +11,7 @@ const routes: Route[] = [
   // HOME ROUTING
   //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'testcaselist', component: TestcaselistComponent },
+  { path: 'testcaseslist', component: TestcaselistComponent },
   { path: 'testcasescript', component: TestcasescriptComponent },
   { path: 'labels', component: LabelsComponent },
   { path: 'pagenotfound', component: PagenotfoundComponent },

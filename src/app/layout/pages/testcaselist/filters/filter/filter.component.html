@@ -1,9 +1,8 @@
-<ng-select [items]="dataList"
+<ng-select class="custom"           [items]="dataList"
            [selectableGroup]="true"
            [multiple]="true"
            [closeOnSelect]="false"
            bindLabel="{{field}}"
-           bindValue="{{field}}"
            placeholder="Select {{field}}"
            [(ngModel)]='data'
            (close)="sendValues(data)"

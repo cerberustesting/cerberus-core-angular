@@ -46,6 +46,16 @@
     <div id="activeStepSettings" *ngIf="step">
       <div class="row">
         <div class="col-md-12">
+            <div class="form-group">
+ <!-- STEP DESCRIPTION -->
+ <input type="text" [id]="'step'+stepIndex+'description'" [(ngModel)]="step.description" class="form-control"
+ [name]="'step'+stepIndex+'description'" placeholder="Step Description" [readonly]="stepIsReadOnly">
+<!-- END STEP DESCRIPTION -->
+</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
           <div class="form-group">
             <label for="activeStepLoop"><i class="fa fa-redo mr-1"></i> Loop</label>
             <select class="form-control br-tp-0" id="activeStepLoop" name="activeStepLoop" [(ngModel)]="step.loop"

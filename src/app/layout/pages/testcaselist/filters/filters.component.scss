@@ -1,8 +1,19 @@
 .filter-container {
-  margin-top: 5px;
-  margin-left: 20px;
-  background-color: white;
+  position: fixed;
+  background-color: #d9e8f5;
+  width: 100%;
   padding: 5px;
   display: inline-block;
-  //border: 1px solid #3b5998;
+  z-index: 1000;
+}
+
+.input-search {
+  margin-right: 5px;
+  border-radius: 3px;
+  border: 1px solid #b3b3b3;
+  height: 35px;
+  padding: 5px;
+  margin-left: 5px;
+  outline: none;
+  overflow: hidden;
 }

@@ -1,9 +1,4 @@
 <div class="data-table">
-    <div class="actions-container">
-        <button class="btn-block-option"><i class="far fa-fw fa-trash-alt mr-1"></i></button>
-        <button class="btn-block-option"><i class="si si-control-play mr-1"></i></button>
-        <button class="btn-block-option"><i class="si si-settings"></i></button>
-    </div>
   <ngx-datatable class="material"
                  [rows]="rows"
                  [columns]="columns"
@@ -16,8 +11,8 @@
                  [selected]="selected"
                  [selectionType]="'checkbox'"
                  [selectAllRowsOnPage]="false"
-                 (activate)="onActivate($event)"
                  (select)='onSelect($event)'>
+      <!--(activate)="onActivate($event)"-->
     <ngx-datatable-column
             [sortable]="false"
             [canAutoResize]="false"
@@ -27,9 +22,9 @@
             [checkboxable]="true"
             [width]="50">
     </ngx-datatable-column>
-    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [width]="100">
+    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name | uppercase" [width]="100">
     </ngx-datatable-column>
-      <ngx-datatable-column *ngIf="testcaseslist" name="countryList">
+      <ngx-datatable-column *ngIf="testcaseslist" name="COUNTRYLIST">
           <ng-template let-column="column" ngx-datatable-header-template>
               {{column.name}}
           </ng-template>
@@ -38,7 +33,7 @@
                  <b>{{item.value}} </b></a>
           </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column *ngIf="testcaseslist" [width]="250" name="labels">
+      <ngx-datatable-column *ngIf="testcaseslist" [width]="250" name="LABELS">
           <ng-template let-column="column" ngx-datatable-header-template>
               {{column.name}}
           </ng-template>

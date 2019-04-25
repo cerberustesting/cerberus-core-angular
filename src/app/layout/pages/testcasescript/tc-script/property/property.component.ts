@@ -24,7 +24,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   // propertyValueRemoved: sent when a new property value is removed
   // in order to kill the component if it is the last value
-  @Output() propertyValueRemoved = new EventEmitter<boolean>();
+  @Output() propertyValueRemoved = new EventEmitter<IProperty>();
 
   // unassigned country list
   private propertiesList: Array<IProperty>;
@@ -111,7 +111,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   removeAPropertyValue(propValue: IProperty) {
     // TO DO : si c'est la dernière: on prévient le parent component de refaire le focus sur une autre prop
-    this.TestService.removePropertyValue(propValue);
+    this.propertyValueRemoved.emit(propValue);
   }
 
   // one way data binding has been implemented 

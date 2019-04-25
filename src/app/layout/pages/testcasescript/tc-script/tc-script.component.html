@@ -103,7 +103,7 @@
           <!-- ACTIVE PROPERTY CONTENT -->
           <div *ngIf="activeProperty" class="col-md-8">
             <app-property [propertiesById]="activeProperty" (propertyValueAdded)="addPropertyValue($event)"
-              (propertyNameChanged)="setActiveProperty($event)">
+              (propertyValueRemoved)="removePropertyValue($event)">
             </app-property>
           </div>
           <!-- END ACTIVE PROPERTY CONTENT -->

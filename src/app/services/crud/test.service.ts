@@ -183,10 +183,10 @@ export class TestService {
   }
 
   // remove from the properties model a single propValue
-  removePropertyValue(prop: IProperty) {
-    var propValue = this.testcase_properties.find(p => p == prop);
-    this.testcase_properties.splice(this.testcase_properties.indexOf(propValue), 1);
-    this.observableTestCaseProperties.next(this.testcase_properties);
+  removePropertyValue(propList: Array<IProperty>, prop: IProperty): Array<IProperty> {
+    let propValue = propList.find(p => p == prop);
+    propList.splice(this.testcase_properties.indexOf(propValue), 1);
+    return propList;
   }
 
   filterPropertiesByid(propertiesList: Array<IProperty>, id: number): Array<IProperty> {

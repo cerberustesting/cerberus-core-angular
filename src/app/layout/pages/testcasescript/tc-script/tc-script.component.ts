@@ -88,6 +88,16 @@ export class TcScriptComponent implements OnInit {
     }
   }
 
+  removePropertyValue(prop: IProperty) {
+    console.log(this.TestService.filterPropertiesByid(this.propertiesList, prop.property_id).length);
+    if (this.TestService.filterPropertiesByid(this.propertiesList, prop.property_id).length == 1) {
+      // this is the last property value
+      console.log("this is the last prop value");
+    }
+    this.TestService.removePropertyValue(this.propertiesList, prop);
+    this.setActiveProperty(prop.property_id);
+  }
+
   dropStep(event: CdkDragDrop<IStep[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     this.TestService.refreshStepSort(this.testcase.stepList);
@@ -99,7 +109,7 @@ export class TcScriptComponent implements OnInit {
   }
 
   setActiveProperty(propId: number) {
-    console.log("setActiveProperty for id: " + propId);
+    //console.log("setActiveProperty for id: " + propId);
     this.activePropertyId = propId;
     this.activeProperty = this.TestService.filterPropertiesByid(this.propertiesList, propId);
   }

@@ -1,17 +1,28 @@
 <div class="block block-rounded block-bordered block-rounded">
   <div class="block-header block-header-default">
+
+    <!-- PROPERTY NAME INPUT -->
     <div class="form-group row col-md-12">
       <input type="text" #propName class="form-control" name="propertyName" [ngModel]="propertyName"
         placeholder="Property Name" [ngClass]="propertyNameIsInvalid ? 'is-invalid' : ''"
         (ngModelChange)="setPropertyName(propName.value)">
       <div *ngIf="propertyNameIsInvalid" class="invalid-feedback">Property name already
-        exists</div>
+        exists or is empty</div>
     </div>
+    <!-- END PROPERTY NAME INPUT -->
+
   </div>
   <div class="block-content">
     <div class="row">
       <div class="col-md-12">
         <!-- UNASSIGNED COUNTRIES LIST -->
+
+        <!-- Label -->
+        <div class="form-group mb-0">
+          <label for="example-text-input">Countries to assign</label>
+        </div>
+
+        <!-- drag and drop list-->
         <div *ngIf="unassignedCountriesList" class="block block-bordered block-rounded">
           <ul [id]="DragAndDropId" cdkDropList cdkDropListOrientation="horizontal"
             [cdkDropListData]="unassignedCountriesList" [cdkDropListConnectedTo]="DragAndDropList"
@@ -27,8 +38,21 @@
             </li>
           </ul>
         </div>
-        <div class="block-content block-content-full block-content-sm font-size-sm text-right">
 
+        <!-- Alert section -->
+        <div *ngIf="unassignedCountriesList.length == 0" class="alert alert-info d-flex align-items-center">
+          <div class="flex-00-auto">
+            <i class="fa fa-fw fa-info-circle"></i>
+          </div>
+          <div class="flex-fill ml-3">
+            <p class="mb-0">All countries have been defined in the property value(s)</p>
+          </div>
+        </div>
+
+        <!-- END UNASSIGNED COUNTRIES LIST -->
+
+        <!-- EXPAND / COLLAPSE BUTTON -->
+        <div class="block-content block-content-full block-content-sm font-size-sm text-right">
           <button class="btn btn-sm btn-secondary mr-1" name="toggleProperties" type="button"
             (click)="showPropCountriesMainContent = !showPropCountriesMainContent">
             <i class="si fa-fw mr-1" [ngClass]="showPropCountriesMainContent ? 'si-arrow-right' : 'si-arrow-down'"></i>
@@ -36,11 +60,11 @@
             <span *ngIf="!showPropCountriesMainContent">Expand</span>
             All
           </button>
-
         </div>
-        <!-- END UNASSIGNED COUNTRIES LIST -->
+        <!-- END EXPAND / COLLAPSE BUTTON -->
+
         <!-- PROPERTY VALUES LIST -->
-        <div *ngFor="let prop of propertiesByName; let index = index">
+        <div *ngFor="let prop of propertiesById; let index = index">
           <div *ngIf="prop">
             <app-propertyvalue [propertyvalue]="prop" [index]="index | trueindex"
               [showMainContent]="showPropCountriesMainContent" (propertyValueDeleted)="defineUnassginedCountries()">
@@ -57,9 +81,11 @@
           <button type="button" class="btn btn-outline-primary mr-1" (click)="addAPropertyValue()">
             <i class="fa fa-fw fa-plus mr-1"></i> New
           </button>
+
           <button type="button" class="btn btn-outline-secondary mr-1" (click)="debug()">
             <i class="fa fa-fw fa-bug mr-1"></i> Debug
           </button>
+
         </div>
       </div>
     </div>

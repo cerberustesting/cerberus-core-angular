@@ -14,16 +14,17 @@ import { DraganddropService } from '../draganddrop.service';
 })
 export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
-  @Input('propertiesByName') propertiesByName: Array<IProperty>;
+  @Input('propertiesById') propertiesById: Array<IProperty>;
   private propertyName: string;
   private propertyNameIsInvalid: boolean;
 
   // propertyValueAdded: sent when a new property value is added
-  // in order to call addProperty() from parent component
-  @Output() propertyValueAdded = new EventEmitter<string>();
-  // propertyNameChanged: sent when the property name changed
-  // in order to set the new propertyName as active
-  @Output() propertyNameChanged = new EventEmitter<string>();
+  // in order to call addPropertyValue() from parent component
+  @Output() propertyValueAdded = new EventEmitter<number>();
+
+  // propertyValueRemoved: sent when a new property value is removed
+  // in order to kill the component if it is the last value
+  @Output() propertyValueRemoved = new EventEmitter<boolean>();
 
   // unassigned country list
   private propertiesList: Array<IProperty>;
@@ -56,11 +57,12 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   ngOnChanges() {
     this.propertyNameIsInvalid = false;
-    this.propertyName = this.propertiesByName[0].property;
+    console.log("ngOnChanges, current prop name:" + this.propertiesById[0].property);
+    this.propertyName = this.propertiesById[0].property;
   }
 
   ngOnInit() {
-    this.propertyName = this.propertiesByName[0].property;
+    this.propertyName = this.propertiesById[0].property;
     this.showPropCountriesMainContent = true;
     this.unassignedCountriesList = new Array<string>();
     this.TestService.observableTestCase.subscribe(r => { this.testcaseheader = r.info; });
@@ -88,45 +90,50 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
   defineUnassginedCountries() {
     this.unassignedCountriesList = new Array<string>();
     this.inv_countriesList.forEach((country) => {
-      let assigned = false;
-      this.propertiesByName.forEach((prop) => {
-        if (prop.country.includes(country.value)) {
-          assigned = true;
+      // consider the country only if it is enabled in the TC header
+      if (this.TestService.convertCountriesList(this.testcaseheader).includes(country.value)) {
+        let isCountryAssigned = false;
+        this.propertiesById.forEach((prop) => {
+          if (prop.country.includes(country.value)) {
+            isCountryAssigned = true;
+          }
+        })
+        if (isCountryAssigned == false) {
+          this.unassignedCountriesList.push(country.value);
         }
-      })
-      if (!assigned) { this.unassignedCountriesList.push(country.value); }
+      }
     });
   }
 
   addAPropertyValue() {
-    this.propertyValueAdded.emit(this.propertyName);
+    this.propertyValueAdded.emit(this.propertiesById[0].property_id);
   }
 
   removeAPropertyValue(propValue: IProperty) {
-    //var propValue = this.propertiesByName.find(p => p == propValue);
-    //this.propertiesByName.splice(this.propertiesByName.indexOf(propValue), 1);
-    this.TestService.removeProperty(propValue);
+    // TO DO : si c'est la dernière: on prévient le parent component de refaire le focus sur une autre prop
+    this.TestService.removePropertyValue(propValue);
   }
 
   // one way data binding has been implemented 
   // since we must ensure the property name that we are trying to insert
   // isn't already an existing property
   setPropertyName(newName: string) {
-    var oldName = this.propertyName;
+    console.log("setPropertyName with name: " + newName);
+    var id = this.propertiesById[0].property_id;
     if (this.propertiesList.find(p => p.property == newName)) {
       // property name already exists
       this.propertyNameIsInvalid = true;
+    } else if (newName == "") {
+      this.propertyNameIsInvalid = true;
     } else {
       // feeded property name doesn't exist 
-      this.TestService.renameProperty(oldName, newName);
-      this.propertyName = newName;
+      this.TestService.renameProperty(this.propertiesById, id, newName);
       this.propertyNameIsInvalid = false;
-      this.propertyNameChanged.emit(this.propertyName);
     }
   }
 
   debug() {
-    console.log(this.propertiesByName);
+    console.log(this.propertiesById);
   }
 
 }

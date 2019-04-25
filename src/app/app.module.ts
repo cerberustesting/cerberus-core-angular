@@ -40,6 +40,7 @@ import { LabelFilterComponent } from './layout/pages/testcaselist/filters/label-
 import { ApplicationFilterComponent } from './layout/pages/testcaselist/filters/application-filter/application-filter.component';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { FilterComponent } from './layout/pages/testcaselist/filters/filter/filter.component';
+import { UniqueproplistPipe } from './pipes/uniqueproplist.pipe';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { FilterComponent } from './layout/pages/testcaselist/filters/filter/filt
     LabelFilterComponent,
     PropertyvalueComponent,
     ApplicationFilterComponent,
-    FilterComponent
+    FilterComponent,
+    UniqueproplistPipe
   ],
   imports: [
     BrowserModule,

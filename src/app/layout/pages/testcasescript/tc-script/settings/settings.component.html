@@ -8,9 +8,10 @@
       <small class="ml-1">Settings</small>
     </h3>
     <div class="block-options">
-      <button type="button" class="btn btn-sm btn-outline-primary mr-1">Copy</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary">Paste after</button>
-    </div>
+        <button class="btn-block-option" ngbPopover="Click to duplicate this step" triggers="mouseenter:mouseleave">
+          <i class="fa fa-fw fa-copy"></i>
+        </button>
+   </div>
   </div>
   <!-- END STEP HEADER -->
 
@@ -21,9 +22,10 @@
       <small class="ml-1">Settings</small>
     </h3>
     <div class="block-options">
-      <button type="button" class="btn btn-sm btn-outline-primary mr-1">Copy</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary">Paste after</button>
-    </div>
+        <button class="btn-block-option" ngbPopover="Click to duplicate this action" triggers="mouseenter:mouseleave">
+          <i class="fa fa-fw fa-copy"></i>
+        </button>
+   </div>
   </div>
   <!-- END ACTION HEADER -->
 
@@ -34,9 +36,10 @@
       <small class="ml-1">Settings</small>
     </h3>
     <div class="block-options">
-      <button type="button" class="btn btn-sm btn-outline-primary mr-1">Copy</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary">Paste after</button>
-    </div>
+        <button class="btn-block-option" ngbPopover="Click to duplicate this control" triggers="mouseenter:mouseleave">
+          <i class="fa fa-fw fa-copy"></i>
+        </button>
+   </div>
   </div>
   <!-- END CONTROL HEADER -->
 
@@ -49,7 +52,7 @@
             <div class="form-group">
  <!-- STEP DESCRIPTION -->
  <input type="text" [id]="'step'+stepIndex+'description'" [(ngModel)]="step.description" class="form-control"
- [name]="'step'+stepIndex+'description'" placeholder="Step Description" [readonly]="stepIsReadOnly">
+ [name]="'step'+stepIndex+'description'" placeholder="Step Description" [disabled]="readonly">
 <!-- END STEP DESCRIPTION -->
 </div>
         </div>

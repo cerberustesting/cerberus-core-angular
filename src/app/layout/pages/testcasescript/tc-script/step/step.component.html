@@ -1,4 +1,5 @@
-<div [id]="'step'+stepIndex" class="block block-rounded block-bordered mb-2" [ngClass]="[step.toDelete ? 'toDelete_border' : '',  isFocused ? 'focused_border' : '']">
+<div [id]="'step'+stepIndex" class="block block-rounded block-bordered mb-2"
+  [ngClass]="[step.toDelete ? 'toDelete_border' : '',  isFocused ? 'focused_border' : '']">
 
   <!-- HEADER -->
   <div class="block-header block-header-default" role="tab"
@@ -20,16 +21,19 @@
       </div>
       <!-- END STEP INDEX -->
 
-      <!-- HIDE / SHOW ACTIONS LIST -->
-      <!-- STEP DESCRIPTION -->
+      <!-- STEP DESCRIPTION 
       <div class="input-group-prepend">
-          <a [id]="'step'+stepIndex+'description'" class="input-group-text" data-toggle="collapse"
-          data-parent="#stepList" [href]="'#step'+stepIndex+'toggle'" aria-expanded="false"
-          [attr.aria-controls]="'step'+stepIndex+'toggle'" (click)="showActionList = !showActionList" 
-         >
+        <a [id]="'step'+stepIndex+'description'" class="input-group-text" data-toggle="collapse" data-parent="#stepList"
+          [href]="'#step'+stepIndex+'toggle'" aria-expanded="false" [attr.aria-controls]="'step'+stepIndex+'toggle'"
+          (click)="showActionList = !showActionList">
           {{step.description}}</a>
-    </div>
-      <!-- END HIDE / SHOW ACTIONS LIST -->
+      </div>
+      END STEP DESCRIPTION -->
+
+      <!-- STEP DESCRIPTION -->
+      <input type="text" [id]="'step'+stepIndex+'description'" [(ngModel)]="step.description" class="form-control"
+        [name]="'step'+stepIndex+'description'" placeholder="Step Description" [readonly]="stepIsReadOnly"
+        (click)="showActionList = !showActionList">
       <!-- END STEP DESCRIPTION -->
 
     </div>
@@ -80,13 +84,13 @@
       <!-- SAVE AS LIBRARY ACTION -->
       <button name="saveAsLibrary" *ngIf="libraryState() == 'clear'" type="button" class="btn-block-option"
         ngbPopover="Save this step in Library" triggers="mouseenter:mouseleave">
-        <i class="fa fa-fw fa-book" [ngClass]="[step.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']"></i>
+        <i class="fa fa-fw fa-book" [ngClass]="[step.toDelete ? 'toDelete' : '']"></i>
       </button>
       <!-- END SAVE AS LIBRARY ACTION -->
 
       <!-- DELETE ACTION -->
       <button type="button" name="delete" class="btn-block-option" (click)="step.toDelete = !step.toDelete">
-        <i class="far fa-fw fa-trash-alt" [ngClass]="[step.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']"></i>
+        <i class="far fa-fw fa-trash-alt" [ngClass]="[step.toDelete ? 'toDelete' : '']"></i>
       </button>
       <!-- END DELETE ACTION -->
 
@@ -96,7 +100,7 @@
   <!-- END HEADER -->
 
   <!-- STEP CONTENT -->
-  <div *ngIf="showActionList" [id]="'step'+stepIndex+'toggle'" class="collapse" role="tabpanel"
+  <div *ngIf="showActionList" [id]="'step'+stepIndex+'toggle'" role="tabpanel"
     [attr.aria-labelledby]="'step'+stepIndex">
     <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm text-right">
       <button type="button" name="collapseAction" class="btn btn-sm btn-secondary mr-1" (click)="showControls = false">

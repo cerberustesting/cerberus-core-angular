@@ -101,10 +101,17 @@
           <!-- END PROPERTY LIST -->
 
           <!-- ACTIVE PROPERTY CONTENT -->
-          <div *ngIf="activeProperty" class="col-md-8">
+          <div *ngIf="activeProperty.length > 0" class="col-md-8">
             <app-property [propertiesById]="activeProperty" (propertyValueAdded)="addPropertyValue($event)"
               (propertyValueRemoved)="removePropertyValue($event)">
             </app-property>
+          </div>
+          <div *ngIf="activeProperty.length == 0" class="col-md-8">
+            <div class="block block-rounded block-bordered block-rounded">
+              <div class="block-header block-header-default">
+                <h3 class="block-title text-center"><small>No property selected</small></h3>
+              </div>
+            </div>
           </div>
           <!-- END ACTIVE PROPERTY CONTENT -->
 
@@ -119,9 +126,11 @@
         <button type="button" class="btn btn-info mr-1" (click)="saveTestCase()">
           <i class="fa fa-fw fa-check mr-1"></i> Save
         </button>
+        <!-- 
         <button type="button" class="btn btn-secondary mr-1" (click)="debug()">
           <i class="fa fa-fw fa-bug mr-1"></i> Debug
         </button>
+        -->
       </div>
     </div>
   </div>

@@ -83,6 +83,9 @@ export class TcScriptComponent implements OnInit {
 
   removePropertiesById(id: number) {
     this.TestService.removePropertiesById(this.propertiesList, id);
+    if (this.propertiesList.length == 0) {
+      this.setActiveProperty(undefined);
+    }
     if (this.activePropertyId == id) {
       this.setActiveProperty(this.propertiesList[0].property_id);
     }
@@ -91,8 +94,9 @@ export class TcScriptComponent implements OnInit {
   removePropertyValue(prop: IProperty) {
     console.log(this.TestService.filterPropertiesByid(this.propertiesList, prop.property_id).length);
     if (this.TestService.filterPropertiesByid(this.propertiesList, prop.property_id).length == 1) {
-      // this is the last property value
-      console.log("this is the last prop value");
+      if (this.propertiesList.length >= 1) {
+        this.setActiveProperty(undefined);
+      }
     }
     this.TestService.removePropertyValue(this.propertiesList, prop);
     this.setActiveProperty(prop.property_id);
@@ -108,14 +112,18 @@ export class TcScriptComponent implements OnInit {
     this.TestService.saveTestCase(this.testcase);
   }
 
-  setActiveProperty(propId: number) {
+  setActiveProperty(propId?: number) {
+    if (!propId) {
+      this.activeProperty = new Array<IProperty>();
+      this.activePropertyId = null;
+    }
     //console.log("setActiveProperty for id: " + propId);
     this.activePropertyId = propId;
     this.activeProperty = this.TestService.filterPropertiesByid(this.propertiesList, propId);
   }
 
   debug() {
-    console.log(this.propertiesList);
+    console.log(this.activeProperty);
   }
 
 }

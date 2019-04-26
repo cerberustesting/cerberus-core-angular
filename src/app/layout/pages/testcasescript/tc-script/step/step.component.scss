@@ -34,12 +34,12 @@
 }
 
 .focused {
-  background-color: #3b5998;
-  color:#fff;
+  background-color: #d6d8d9;
+  color: #fff;
 }
 
 .focused_border {
-  border-color: #3b5998;
+  border-color: #d6d8d9;
 }
 
 .toDelete {
@@ -55,15 +55,20 @@
 }
 
 .input-group-text {
-  border:none;
-  background-color:inherit;
-  color:inherit;
+  border: none;
+  background-color: inherit;
+  color: inherit;
 }
 .input-group-text:focus {
   background-color: #3b5998;
-  color:#fff;
+  color: #fff;
 }
 
 i.fa.fa-ellipsis-v {
   font-size: 0.8em;
+}
+
+.form-control:focus {
+  border-color: transparent;
+  box-shadow: none;
 }

@@ -68,7 +68,7 @@ import { FilterComponent } from './layout/pages/testcaselist/filters/filter/filt
     PropertyComponent,
     FiltersComponent,
     PropertyvalueComponent,
-    FilterComponent
+    FilterComponent,
   ],
   imports: [
     BrowserModule,

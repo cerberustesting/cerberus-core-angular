@@ -21,8 +21,10 @@ export class TestcaselistComponent implements OnInit {
     { name: 'priority' },
   ];
   selectedTest = '';
+  searchTerm =  { $or: [{ testCase: '' }, { status: '' }, { application: '' }, { description: '' }, { system: '' }] };
   filterTest: any;
-  public testcasesList: Array<ITestCaseHeader>;
+  testcasesList: Array<ITestCaseHeader>;
+
   constructor( private testService: TestService) { }
 
   ngOnInit() {
@@ -40,9 +42,16 @@ export class TestcaselistComponent implements OnInit {
     });
   }
 
-  updateTest(statusSelected) {
-    this.filterTest = statusSelected;
-    console.log(this.filterTest);
+  updateTest(selection) {
+    this.filterTest = selection;
     this.testService.getTestCasesList(this.filterTest);
   }
+  updateSearch(search) {
+    this.searchTerm.$or[0].testCase = search;
+    this.searchTerm.$or[1].status = search;
+    this.searchTerm.$or[2].application = search;
+    this.searchTerm.$or[3].description = search;
+    this.searchTerm.$or[4].system = search;
+    console.log(this.searchTerm);
+    }
 }

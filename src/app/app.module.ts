@@ -36,8 +36,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PropertyComponent } from './layout/pages/testcasescript/tc-script/property/property.component';
 import { PropertyvalueComponent } from './layout/pages/testcasescript/tc-script/property/propertyvalue/propertyvalue.component';
 import { FiltersComponent } from './layout/pages/testcaselist/filters/filters.component';
-import { LabelFilterComponent } from './layout/pages/testcaselist/filters/label-filter/label-filter.component';
-import { ApplicationFilterComponent } from './layout/pages/testcaselist/filters/application-filter/application-filter.component';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { FilterComponent } from './layout/pages/testcaselist/filters/filter/filter.component';
 
@@ -69,9 +67,7 @@ import { FilterComponent } from './layout/pages/testcaselist/filters/filter/filt
     TrueindexPipe,
     PropertyComponent,
     FiltersComponent,
-    LabelFilterComponent,
     PropertyvalueComponent,
-    ApplicationFilterComponent,
     FilterComponent
   ],
   imports: [

@@ -15,13 +15,15 @@ import {ITest} from '../../../../model/test.model';
 export class FiltersComponent implements OnInit {
 
   @Output() test = new EventEmitter<string>();
-  public labelList: Array<ILabel>;
+  @Output() searchTerm = new EventEmitter<string>();
+  labelList: Array<ILabel>;
   applicationList: Array<IApplication>;
   applicationSelected: any;
   statusList: Array<IInvariant>;
   statusSelected: any;
   testList: Array<ITest>;
   testSelected: any;
+  userSearch: any;
 
   constructor( private systemService: SystemService,
                private invariantService: InvariantsService,
@@ -76,21 +78,20 @@ export class FiltersComponent implements OnInit {
 
   updateStatus(statusSelected) {
     this.statusSelected = statusSelected;
-    console.log(this.statusSelected);
   }
   updateApplication(applicationSelected) {
     this.applicationSelected = applicationSelected;
-    console.log(this.applicationSelected);
   }
   updateTest(testSelected) {
     this.testSelected = testSelected;
-    console.log(this.testSelected);
+  }
+  updateSearch() {
+      this.searchTerm.emit(this.userSearch);
   }
 
 
   sendFilter(data) {
     data = this.testSelected;
     this.test.emit(data);
-    console.log(this.test);
   }
 }

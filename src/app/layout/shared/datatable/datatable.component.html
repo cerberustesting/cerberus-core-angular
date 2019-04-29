@@ -3,7 +3,7 @@
                  [rows]="rows"
                  [columns]="columns"
                  [columnMode]="'force'"
-                 [rowHeight]="50"
+                 [rowHeight]="'auto'"
                  [limit]="10"
                  [footerHeight]="50"
                  [headerHeight]="50"
@@ -20,11 +20,11 @@
             [resizeable]="false"
             [headerCheckboxable]="true"
             [checkboxable]="true"
-            [width]="50">
+            [width]="80">
     </ngx-datatable-column>
-    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name | uppercase" [width]="100">
+    <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [width]="100">
     </ngx-datatable-column>
-      <ngx-datatable-column *ngIf="testcaseslist" name="COUNTRYLIST">
+      <ngx-datatable-column *ngIf="testcaseslist" name="CountryList">
           <ng-template let-column="column" ngx-datatable-header-template>
               {{column.name}}
           </ng-template>
@@ -33,7 +33,7 @@
                  <b>{{item.value}} </b></a>
           </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column *ngIf="testcaseslist" [width]="250" name="LABELS">
+      <ngx-datatable-column *ngIf="testcaseslist" [width]="200" name="LABELS">
           <ng-template let-column="column" ngx-datatable-header-template>
               {{column.name}}
           </ng-template>

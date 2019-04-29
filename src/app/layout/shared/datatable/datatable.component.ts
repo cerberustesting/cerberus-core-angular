@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
 @Component({
-  selector: 'app-table-new',
+  selector: 'app-table',
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.scss']
 })

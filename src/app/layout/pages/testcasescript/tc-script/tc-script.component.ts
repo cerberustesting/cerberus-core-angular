@@ -23,7 +23,7 @@ export class TcScriptComponent implements OnInit {
   private stepListBlockId: string;
 
   private propertiesList: Array<IProperty>;
-  private activePropertyName: string;
+  private activePropertyId: number;
   private activeProperty: Array<IProperty>;
   private propertyNameIsInvalid: boolean;
 
@@ -37,16 +37,16 @@ export class TcScriptComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activePropertyName = null;
+    this.activePropertyId = null;
     this.TestService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
     this.TestService.observableTestCaseProperties.subscribe(r => {
       if (r) {
         this.propertiesList = r;
-        if (this.activePropertyName == null) {
-          this.setActiveProperty(this.propertiesList[0].property);
+        if (this.activePropertyId == null) {
+          this.setActiveProperty(this.propertiesList[0].property_id);
         } else {
           // refresh the content of the active property
-          this.setActiveProperty(this.activePropertyName);
+          this.setActiveProperty(this.activePropertyId);
         }
       }
     });
@@ -63,20 +63,43 @@ export class TcScriptComponent implements OnInit {
     // - call TestService.refreshStepSort(this.testcase.stepList)
   }
 
-  // TO DO : allow to add several empty properties in the array.
-  addProperty(propName?: string) {
-    var newProp = new Property();
-    if (propName) { newProp.property = propName; }
-    this.propertiesList.push(newProp);
-    this.setActiveProperty(newProp.property);
+  // pass the name of the property to insert a property
+  addProperty() {
+    var newProp = new Property(this.TestService.getNewPropertyID());
+    // add the countries from TC header to the new property
+    this.TestService.convertCountriesList(this.testcase.info).forEach((country) => {
+      newProp.country.push(country);
+    })
+    this.TestService.addProperty(this.propertiesList, newProp);
+    this.setActiveProperty(newProp.property_id);
   }
 
-  deleteProperty(propertyName: string) {
-    this.propertiesList.forEach(element => {
-      if (element.property == propertyName) {
-        this.propertiesList.splice(this.propertiesList.indexOf(element), 1);
+  addPropertyValue(propId: number) {
+    let newProp = new Property(propId);
+    newProp.property = this.TestService.findPropertyNameById(this.propertiesList, propId);
+    this.TestService.addProperty(this.propertiesList, newProp);
+    this.setActiveProperty(propId);
+  }
+
+  removePropertiesById(id: number) {
+    this.TestService.removePropertiesById(this.propertiesList, id);
+    if (this.propertiesList.length == 0) {
+      this.setActiveProperty(undefined);
+    }
+    if (this.activePropertyId == id) {
+      this.setActiveProperty(this.propertiesList[0].property_id);
+    }
+  }
+
+  removePropertyValue(prop: IProperty) {
+    console.log(this.TestService.filterPropertiesByid(this.propertiesList, prop.property_id).length);
+    if (this.TestService.filterPropertiesByid(this.propertiesList, prop.property_id).length == 1) {
+      if (this.propertiesList.length >= 1) {
+        this.setActiveProperty(undefined);
       }
-    });
+    }
+    this.TestService.removePropertyValue(this.propertiesList, prop);
+    this.setActiveProperty(prop.property_id);
   }
 
   dropStep(event: CdkDragDrop<IStep[]>) {
@@ -89,17 +112,18 @@ export class TcScriptComponent implements OnInit {
     this.TestService.saveTestCase(this.testcase);
   }
 
-  setActiveProperty(propName: string) {
-    this.activePropertyName = propName;
-    this.activeProperty = this.TestService.filterPropertyByName(this.propertiesList, propName);
-  }
-
-  getUniquePropertiesNameList(propList: Array<IProperty>): Array<string> {
-    return this.TestService.getUniquePropertiesNameList(propList);
+  setActiveProperty(propId?: number) {
+    if (!propId) {
+      this.activeProperty = new Array<IProperty>();
+      this.activePropertyId = null;
+    }
+    //console.log("setActiveProperty for id: " + propId);
+    this.activePropertyId = propId;
+    this.activeProperty = this.TestService.filterPropertiesByid(this.propertiesList, propId);
   }
 
   debug() {
-    console.log(this.propertiesList);
+    console.log(this.activeProperty);
   }
 
 }

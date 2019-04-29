@@ -38,6 +38,7 @@ import { PropertyvalueComponent } from './layout/pages/testcasescript/tc-script/
 import { FiltersComponent } from './layout/pages/testcaselist/filters/filters.component';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { FilterComponent } from './layout/pages/testcaselist/filters/filter/filter.component';
+import { UniqueproplistPipe } from './pipes/uniqueproplist.pipe';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,8 @@ import { FilterComponent } from './layout/pages/testcaselist/filters/filter/filt
     FiltersComponent,
     PropertyvalueComponent,
     FilterComponent,
+    FilterComponent,
+    UniqueproplistPipe
   ],
   imports: [
     BrowserModule,

@@ -125,91 +125,79 @@ export class TestService {
     this.http.get<IProperty[]>(url)
       .subscribe((response) => {
         // split the properties by country (one per country) 
-        this.testcase_properties = response;
+        this.testcase_properties = this.sanitizePropertiesList(response);
         this.observableTestCaseProperties.next(this.testcase_properties);
       })
   }
 
-  // rename several property values that have the same name
-  renameProperty(oldName: string, newName: string) {
-    this.testcase_properties.forEach((prop) => {
-      if (prop.property == oldName) {
-        prop.property = newName;
+  // DIRTY : add angular managed ids to separate properties uniquely
+  sanitizePropertiesList(propList: Array<IProperty>): Array<IProperty> {
+    let id = 0;
+    propList.forEach((prop1) => {
+      let propName = prop1.property
+      id = id + 1;
+      if (propName == "") {
+        prop1.property_id = id;
+      } else {
+        propList.forEach((prop2) => {
+          if (prop2.property == propName) {
+            prop2.property_id = id;
+          }
+        });
       }
     });
-    this.observableTestCaseProperties.next(this.testcase_properties);
+    return propList;
+  }
+
+  // compute all the current properties and return a unique ID
+  getNewPropertyID(): number {
+    let idsArray = new Array<number>();
+    this.testcase_properties.forEach((prop) => {
+      if (prop.property_id) { idsArray.push(prop.property_id); }
+    });
+    if (idsArray.length == 0) { return 1; }
+    else { return Math.max(...idsArray) + 1; }
+  }
+
+  // rename several property values with the same property_id
+  renameProperty(propList: Array<IProperty>, id: number, newName: string): Array<IProperty> {
+    propList.forEach((prop) => { if (prop.property_id == id) { prop.property = newName; } });
+    return propList;
+  }
+
+  // add a property
+  addProperty(propList: Array<IProperty>, prop: IProperty): Array<IProperty> {
+    propList.push(prop);
+    return propList;
+  }
+
+  removePropertiesById(propList: Array<IProperty>, id: number): Array<IProperty> {
+    // must loop backward to avoid having indexes problem when calling splice()
+    for (let i = propList.length - 1; i >= 0; i--) {
+      let prop = propList[i];
+      if (prop.property_id == id) {
+        propList.splice(propList.indexOf(prop), 1);
+      }
+    }
+    return propList;
   }
 
   // remove from the properties model a single propValue
-  removeProperty(prop: IProperty) {
-    var propValue = this.testcase_properties.find(p => p == prop);
-    console.log("prop removed:");
-    console.log(propValue);
-    this.testcase_properties.splice(this.testcase_properties.indexOf(propValue), 1);
-    this.observableTestCaseProperties.next(this.testcase_properties);
+  removePropertyValue(propList: Array<IProperty>, prop: IProperty): Array<IProperty> {
+    let propValue = propList.find(p => p == prop);
+    propList.splice(this.testcase_properties.indexOf(propValue), 1);
+    return propList;
   }
 
-  getUniquePropertiesNameList(propertiesList: Array<IProperty>): Array<string> {
-    let propertiesNameList = new Array<string>();
-    propertiesList.forEach((prop, index) => {
-      if (!propertiesNameList.includes(prop.property)) {
-        propertiesNameList.push(prop.property);
-      }
-    });
-    return propertiesNameList;
+  filterPropertiesByid(propertiesList: Array<IProperty>, id: number): Array<IProperty> {
+    return propertiesList.filter(prop => prop.property_id == id);
   }
 
-  filterPropertyByName(propertiesList: Array<IProperty>, property: string): Array<IProperty> {
-    return propertiesList.filter(prop => prop.property == property)
+  findPropertyNameById(propList: Array<IProperty>, id: number): string {
+    return propList.find(prop => prop.property_id == id).property
   }
 
-  /*
-    splitPropertiesByCountry(propertyList: Array<IProperty>): Array<IProperty> {
-      var propertiesListByCountry = new Array<IProperty>();
-      for (let property of propertyList) {
-        for (let country of property.country) {
-          // a more compact syntax could be found here
-          var PropByCountry = {
-            property: property.property,
-            description: property.description,
-            type: property.type,
-            value1: property.value1,
-            value2: property.value2,
-            database: property.database,
-            country: new Array<string>(),
-            nature: property.nature,
-            length: property.length,
-            rowLimit: property.rowLimit,
-            cacheExpire: property.cacheExpire,
-            retryPeriod: property.retryPeriod,
-            retryNb: property.retryNb,
-            rank: property.rank
-          }
-          Object.assign(PropByCountry.country, [country]);
-          propertiesListByCountry.push(PropByCountry);
-        }
-      }
-      return propertiesListByCountry;
-    }
-  
-    groupPropertiesByName(propertyList: Array<IProperty>): Array<Array<IProperty>> {
-      let propertiesListByName: Array<Array<IProperty>>;
-      propertiesListByName = [];
-      // get the distinct list of properties
-      var uniquePropertiesList = new Array<string>();
-      for (let property of propertyList) {
-        if (!uniquePropertiesList.includes(property.property)) {
-          uniquePropertiesList.push(property.property);
-        }
-      }
-      for (let property of uniquePropertiesList) {
-        //propertiesListByName[property] = this.filterPropertyByName(propertyList, property);
-        propertiesListByName.push(this.filterPropertyByName(propertyList, property));
-      }
-      return propertiesListByName;
-    }
-    */
-
+  // DIRTY : correct the model mistake
   convertCountriesList(testcaseheader: ITestCaseHeader): Array<string> {
     var countriesList = new Array<string>();
     for (var index in testcaseheader.countryList) {

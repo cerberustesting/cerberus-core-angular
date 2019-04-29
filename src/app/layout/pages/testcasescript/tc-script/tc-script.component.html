@@ -40,15 +40,15 @@
         </div>
         <div class="row" *ngIf="testcase.stepList.length != 0">
           <!-- STEP LIST -->
-          <div class="col-md-7">
+          <div class="col-md-6">
             <div [id]="stepListBlockId" role="tablist" aria-multiselectable="true" class="stepList" cdkDropList
               [cdkDropListData]="testcase.stepList" (cdkDropListDropped)="dropStep($event)">
               <div *ngFor="let step of testcase.stepList; let index = index" class="stepDrag" cdkDrag
                 cdkDragLockAxis="y">
                 <app-step [step]="step" [stepIndex]="index | trueindex">
                   <button slot="drag-step" type="button" id="step{{ index | trueindex }}drag"
-                    class="btn btn-primary drag-cursor" cdkDragHandle>
-                    <i class="fa fa-arrows-alt-v"></i>
+                    class="btn btn-sm btn-light drag-cursor" cdkDragHandle>
+                    <i class="fa fa-ellipsis-v"></i>
                   </button>
                 </app-step>
               </div>
@@ -66,7 +66,7 @@
           </div>
           <!-- END STEP LIST -->
           <!-- SETTINGS TOOLBAR -->
-          <div class="col-md-5">
+          <div class="col-md-6">
             <app-settings></app-settings>
           </div>
           <!-- END SETTINGS TOOLBAR -->
@@ -82,13 +82,14 @@
           <!-- PROPERTY LIST -->
           <div class="col-md-4">
             <ul *ngIf="propertiesList" class="list-group push">
-              <li *ngFor="let propertyName of getUniquePropertiesNameList(propertiesList)" class="list-group-item"
-                [ngClass]="propertyName == activePropertyName ? 'active' : ''"
-                (click)="setActiveProperty(propertyName)">
-                {{ propertyName ? propertyName : 'Property Name' }}
+              <li *ngFor="let property of propertiesList | uniqueproplist" class="list-group-item"
+                [ngClass]="property.property_id == activePropertyId ? 'active' : ''"
+                (click)="setActiveProperty(property.property_id)">
+                {{ property.property ? property.property : 'Property Name' }} (id: {{ property.property_id }})
                 <button class="btn-block-option" name="deleteProp" type="button" style="float: right;"
-                  (click)="deleteProperty(propertyName)">
-                  <i class="far fa-fw fa-trash-alt" [ngClass]="propertyName == activePropertyName ? 'white' : ''"></i>
+                  (click)="removePropertiesById(property.property_id)">
+                  <i class="far fa-fw fa-trash-alt"
+                    [ngClass]="property.property_id == activePropertyId ? 'white' : ''"></i>
                 </button>
               </li>
             </ul>
@@ -98,13 +99,22 @@
             </button>
           </div>
           <!-- END PROPERTY LIST -->
+
           <!-- ACTIVE PROPERTY CONTENT -->
-          <div *ngIf="activeProperty" class="col-md-8">
-            <app-property [propertiesByName]="activeProperty" (propertyValueAdded)="addProperty($event)"
-              (propertyNameChanged)="setActiveProperty($event)">
+          <div *ngIf="activeProperty.length > 0" class="col-md-8">
+            <app-property [propertiesById]="activeProperty" (propertyValueAdded)="addPropertyValue($event)"
+              (propertyValueRemoved)="removePropertyValue($event)">
             </app-property>
           </div>
+          <div *ngIf="activeProperty.length == 0" class="col-md-8">
+            <div class="block block-rounded block-bordered block-rounded">
+              <div class="block-header block-header-default">
+                <h3 class="block-title text-center"><small>No property selected</small></h3>
+              </div>
+            </div>
+          </div>
           <!-- END ACTIVE PROPERTY CONTENT -->
+
         </div>
         <!-- END PROPERTIES CONTENT -->
       </div>
@@ -116,9 +126,11 @@
         <button type="button" class="btn btn-info mr-1" (click)="saveTestCase()">
           <i class="fa fa-fw fa-check mr-1"></i> Save
         </button>
+        <!-- 
         <button type="button" class="btn btn-secondary mr-1" (click)="debug()">
           <i class="fa fa-fw fa-bug mr-1"></i> Debug
         </button>
+        -->
       </div>
     </div>
   </div>

@@ -1,12 +1,12 @@
-# cerberus-tomcat-mysql Cerberus Docker compositions
+# cerberus-angular-standalone Cerberus Docker compositions
 
 [Cerberus](http://www.cerberus-testing.org/) is an user-friendly automated testing framework.
 
-Here you will find information about the `cerberus-tomcat-mysql` Docker composition
+Here you will find information about the `cerberus-angular-standalone` Docker composition
 
 ## standalone
 
-The `cerberus-tomcat-mysql` Docker composition runs Cerberus Front under the [NodeJS](https://nodejs.org) application server.
+The `cerberus-angular-standalone` Docker composition runs Cerberus Front under the [NodeJS](https://nodejs.org) application server.
 
 ### Get started
 

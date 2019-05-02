@@ -10,8 +10,8 @@ Hereafter the set of available Cerberus Docker compositions:
 
 Name                                                                                                                                | Description
 ------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------
-[`standalone`](https://github.com/cerberustesting/cerberus-source/tree/master/docker/compositions/cerberus-tomcat-mysql)  | Run Cerberus Front under the [Node](https://nodejs.org/) application server.
-[`cerberus-tomcat-angular`](https://github.com/cerberustesting/cerberus-source/tree/master/docker/compositions/cerberus-tomcat-keycloak-mysql)  | Run Cerberus Front under the [Node](https://nodejs.org/) application server & Cerberus Back under the [Tomcat](http://tomcat.apache.org/) application server.
+[`standalone`](https://github.com/cerberustesting/cerberus-angular/tree/master/compositions/standalone)  | Run Cerberus Front under the [Node](https://nodejs.org/) application server.
+[`cerberus-keycloak-angular`](https://github.com/cerberustesting/cerberus-angular/tree/master/compositions/cerberus-keycloak-angular)  | Run Cerberus Front under the [Node](https://nodejs.org/) application server & Cerberus Back under the [Tomcat](http://tomcat.apache.org/) application server configured for Keycloak.
 
 ## License
 

@@ -1,0 +1,9 @@
+version: '3.5'
+
+services:
+
+  front:
+    container_name: front
+    build: ../../
+    ports:
+     - "4200:4200"

@@ -32,7 +32,6 @@ export class AlertService {
     if (!alert.animationIn) { alert.current_animation = "fadeInDown"; } else { alert.current_animation = alert.animationIn; }
     if (alert.dismissable === undefined) { alert.dismissable = true; }
     // add the message in the list, if it isn't a duplicate (same message)
-    console.log('is present : '+this.isAlertPresent(alert));
     if (!this.isAlertPresent(alert)) {
       this.alertsList.push(alert);
       this.observableAlerts.next(this.alertsList);

@@ -1,7 +1,11 @@
 .dropdown-menu {
- // position: fixed;
+  // position: fixed;
 }
 
 .dropdown-menu:hover {
   display: block;
+}
+
+.link-cursor {
+  cursor: pointer;
 }

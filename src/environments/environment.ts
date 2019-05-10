@@ -2,8 +2,21 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// KEYCLOAK INFORMATION
+let keycloakConfig: any = {
+  url: 'http://172.17.175.33:38080/auth',
+  realm: 'Cerberus',
+  clientId: 'cerberus'
+};
+
+// CERBERUS API ENDPOINT
+let API_URL: string = "http://localhost:8080";
+
 export const environment = {
-  production: false
+  production: false,
+  cerberus_api_url: API_URL,
+  keycloakActive: false,
+  keycloak: keycloakConfig
 };
 
 /*

@@ -57,6 +57,7 @@
     "jquery.maskedinput": "^1.4.1",
     "js-cookie": "^2.2.0",
     "jvectormap-next": "^3.0.0",
+    "keycloak-js": "^6.0.1",
     "magnific-popup": "^1.1.0",
     "moment": "^2.24.0",
     "ngx-filter-pipe": "^2.1.2",

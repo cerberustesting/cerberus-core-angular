@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { AlertService, Alert } from './services/utils/alert.service';
+import { Component, OnInit } from '@angular/core';
+import { KeycloakService } from './services/auth/keycloak.service';
+import { KeycloakInstance } from 'keycloak-js';
 
 export class AppSettings {
   // URL of the Cerberus back-end application
   // e.g: http://localhost:8080/Cerberus
-  public static API_endpoint: string ='http://localhost:8080/Cerberus';  
+  public static API_endpoint: string = 'http://localhost:8080';
 }
 
 @Component({
@@ -12,9 +13,13 @@ export class AppSettings {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor() { }
+  public keycloakAuth: KeycloakInstance;
 
-  ngOnInit() { }
+  constructor(private keycloak: KeycloakService) { }
+
+  ngOnInit() {
+    this.keycloakAuth = this.keycloak.getKeycloakAuth();
+  }
 }

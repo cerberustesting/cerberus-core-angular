@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -39,6 +39,7 @@ import { FiltersComponent } from './layout/pages/testcaselist/filters/filters.co
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { FilterComponent } from './layout/pages/testcaselist/filters/filter/filter.component';
 import { UniqueproplistPipe } from './pipes/uniqueproplist.pipe';
+import { KeycloakInterceptorService } from './services/auth/keycloak.interceptor.service';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,12 @@ import { UniqueproplistPipe } from './pipes/uniqueproplist.pipe';
     NgPipesModule,
     FilterPipeModule
   ],
-  providers: [TrueindexPipe],
+  providers: [TrueindexPipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeycloakInterceptorService,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

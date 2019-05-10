@@ -3,10 +3,17 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { KeycloakService } from 'src/app/services/auth/keycloak.service'
 
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));
+if (environment.keycloakActive) {
+  KeycloakService.init()
+    .then(() => platformBrowserDynamic().bootstrapModule(AppModule))
+    .catch(e => window.location.reload());
+} else {
+  platformBrowserDynamic().bootstrapModule(AppModule)
+    .catch(err => console.log(err));
+}

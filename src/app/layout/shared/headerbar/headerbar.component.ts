@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/services/utils/alert.service';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 import { IInvariant } from 'src/app/model/invariants.model';
+import { KeycloakService } from 'src/app/services/auth/keycloak.service';
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-headerbar',
@@ -16,9 +18,13 @@ export class HeaderbarComponent implements OnInit {
   selectedSystems: any[];
   systemSubscription: Subscription;
 
+  // user
+  userFullName: string;
+
   constructor(
     private AlertService: AlertService,
-    private InvariantService: InvariantsService
+    private InvariantService: InvariantsService,
+    private KeycloakService: KeycloakService
   ) { }
 
   ngOnInit() {
@@ -35,6 +41,11 @@ export class HeaderbarComponent implements OnInit {
       }
     );
     // this.InvariantService.emitSystemsSubject();
+    if (environment.keycloakActive) {
+      this.userFullName = this.KeycloakService.getFullName();
+    } else {
+      this.userFullName = "No user";
+    }
   }
 
   addSystem(system) {
@@ -58,5 +69,9 @@ export class HeaderbarComponent implements OnInit {
     }
   }
 
+  logout() {
+    if (environment.keycloakActive) { this.KeycloakService.logout(); }
+    else { console.log("Keycloak must be activated to log out"); }
+  }
 
 }

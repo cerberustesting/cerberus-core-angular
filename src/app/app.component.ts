@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from './services/auth/keycloak.service';
 import { KeycloakInstance } from 'keycloak-js';
+import { environment } from 'src/environments/environment';
 
 export class AppSettings {
-  // URL of the Cerberus back-end application
-  // e.g: http://localhost:8080/Cerberus
-  public static API_endpoint: string = 'http://localhost:8080';
+  public static API_endpoint: string = environment.cerberus_api_url;
 }
 
 @Component({

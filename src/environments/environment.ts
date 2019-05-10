@@ -4,18 +4,18 @@
 
 // KEYCLOAK INFORMATION
 let keycloakConfig: any = {
-  url: 'http://172.17.175.33:38080/auth',
+  url: 'http://172.18.32.129:38080/auth',
   realm: 'Cerberus',
   clientId: 'cerberus'
 };
 
 // CERBERUS API ENDPOINT
-let API_URL: string = "http://localhost:8080";
+let API_endpoint: string = "http://localhost:8080";
 
 export const environment = {
   production: false,
-  cerberus_api_url: API_URL,
-  keycloakActive: false,
+  cerberus_api_url: API_endpoint,
+  keycloakActive: true,
   keycloak: keycloakConfig
 };
 

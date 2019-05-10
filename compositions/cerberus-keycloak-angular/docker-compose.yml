@@ -38,8 +38,7 @@ services:
     environment:
       - DATABASE_HOST=database
       - DATABASE_PORT=3306
-# self ip. TO DO: dynamically handle keycloak URL
-      - KEYCLOACK_URL=http://172.17.175.33:38080/auth
+      - KEYCLOACK_URL=http://172.18.32.129:38080/auth
       - KEYCLOACK_REALM=Cerberus
       - KEYCLOACK_CLIENT=cerberus
     ports:

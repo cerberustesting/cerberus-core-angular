@@ -12,7 +12,8 @@ if (environment.production) {
 if (environment.keycloakActive) {
   KeycloakService.init()
     .then(() => platformBrowserDynamic().bootstrapModule(AppModule))
-    .catch(e => window.location.reload());
+    //.catch(e => window.location.reload());
+    .catch(err => console.log(err));
 } else {
   platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.log(err));

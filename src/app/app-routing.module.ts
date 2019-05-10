@@ -16,7 +16,11 @@ const routes: Route[] = [
   { path: 'labels', component: LabelsComponent },
   { path: 'pagenotfound', component: PagenotfoundComponent },
   { path: 'report', component: ReportbytagComponent },
-  { path: '**', redirectTo: '/pagenotfound' }
+  { path: '**', redirectTo: '/pagenotfound' },
+  {
+    path: 'design',
+    loadChildren: './design/design.module#DesignModule'
+  }
 ];
 
 @NgModule({

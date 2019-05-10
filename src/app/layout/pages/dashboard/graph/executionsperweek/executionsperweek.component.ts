@@ -20,6 +20,7 @@ export class ExecutionsperweekComponent implements OnInit {
 
   public initChartJSLines() {
     jQuery(() => {
+      let chartLines;
       // Get Chart Containers
       let chartLinesCon = jQuery('#'+this.graphID);
       // Set Chart and Chart Data variables

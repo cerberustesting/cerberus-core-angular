@@ -5,26 +5,45 @@ import { TestcasescriptComponent } from './layout/pages/testcasescript/testcases
 import { LabelsComponent } from './layout/pages/labels/labels.component';
 import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
 import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.component';
-import {TestcaselistComponent} from './layout/pages/testcaselist/testcaselist.component';
+import {TestcaselistComponent} from './feat-design/testcaselist/testcaselist.component';
 
-const routes: Route[] = [
+const appRoutes: Route[] = [
   // HOME ROUTING
   //{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'testcaseslist', component: TestcaselistComponent },
+ // { path: 'testcaseslist', component: TestcaselistComponent },
   { path: 'testcasescript', component: TestcasescriptComponent },
   { path: 'labels', component: LabelsComponent },
   { path: 'pagenotfound', component: PagenotfoundComponent },
   { path: 'report', component: ReportbytagComponent },
-  { path: '**', redirectTo: '/pagenotfound' },
+  // { path: '**', redirectTo: '/pagenotfound' },
   {
     path: 'design',
-    loadChildren: './design/design.module#DesignModule'
+    loadChildren: './feat-design/design.module#DesignModule'
+  },
+/*  {
+    path: 'run',
+    loadChildren: '../app/feat-run/run.module#RunModule'
+  },*/
+  {
+    path: 'analyse',
+    loadChildren: './feat-analyse/analyse.module#AnalyseModule'
+  },
+  /*{
+    path: 'configure',
+    loadChildren: './feat-configure/configure.module#ConfigureModule'
+  },*/
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes,
+    { enableTracing: true }
+    )],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

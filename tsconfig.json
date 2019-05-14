@@ -18,5 +18,8 @@
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true
+  },
+  "angularCompilerOptions": {
+    "entryModule": "app/app.module#AppModule"
   }
 }

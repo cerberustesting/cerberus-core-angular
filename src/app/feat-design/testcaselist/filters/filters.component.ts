@@ -1,11 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {SystemService} from '../../../../services/crud/system.service';
-import {ILabel} from '../../../../model/label.model';
-import {IApplication} from '../../../../model/application.model';
-import {InvariantsService} from '../../../../services/crud/invariants.service';
-import {IInvariant} from '../../../../model/invariants.model';
-import {TestService} from '../../../../services/crud/test.service';
-import {ITest} from '../../../../model/test.model';
+import {SystemService} from '../../../services/crud/system.service';
+import {ILabel} from '../../../model/label.model';
+import {IApplication} from '../../../model/application.model';
+import {InvariantsService} from '../../../services/crud/invariants.service';
+import {IInvariant} from '../../../model/invariants.model';
+import {TestService} from '../../../services/crud/test.service';
+import {ITest} from '../../../model/test.model';
 
 @Component({
   selector: 'app-filters',

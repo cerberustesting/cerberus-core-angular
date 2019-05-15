@@ -5,15 +5,15 @@ import { TestcasescriptComponent } from './layout/pages/testcasescript/testcases
 import { LabelsComponent } from './feat-design/labels/labels.component';
 import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
 import { ReportbytagComponent } from './feat-analyse/reportbytag/reportbytag.component';
-import {TestcaselistComponent} from './feat-design/testcaselist/testcaselist.component';
+import { TestcaselistComponent } from './feat-design/testcaselist/testcaselist.component';
 
 const appRoutes: Route[] = [
   // HOME ROUTING
   { path: '', redirectTo: '/analyse/dashboard', pathMatch: 'full' },
-//  { path: 'dashboard', component: DashboardComponent },
- // { path: 'testcaseslist', component: TestcaselistComponent },
+  //  { path: 'dashboard', component: DashboardComponent },
+  // { path: 'testcaseslist', component: TestcaselistComponent },
   { path: 'testcasescript', component: TestcasescriptComponent },
- // { path: 'labels', component: LabelsComponent },
+  // { path: 'labels', component: LabelsComponent },
   { path: 'pagenotfound', component: PagenotfoundComponent },
   // { path: 'report', component: ReportbytagComponent },
   // { path: '**', redirectTo: '/pagenotfound' },
@@ -33,17 +33,17 @@ const appRoutes: Route[] = [
     path: 'configure',
     loadChildren: './feat-configure/configure.module#ConfigureModule'
   },
-/*  {
-    path: '',
-    redirectTo: '',
-    pathMatch: 'full'
-  }*/
+  /*  {
+      path: '',
+      redirectTo: '',
+      pathMatch: 'full'
+    }*/
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes,
     { enableTracing: true }
-    )],
+  )],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

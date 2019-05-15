@@ -6,6 +6,7 @@
 }
 .info_block_options {
   color: #495057;
+  cursor: default;
 }
 .full-width {
   width: 100%;
@@ -51,7 +52,7 @@
 }
 
 .block-header {
-  padding: 0.10rem;
+  padding: 0.1rem;
 }
 
 .input-group-text {
@@ -71,4 +72,20 @@ i.fa.fa-ellipsis-v {
 .form-control:focus {
   border-color: transparent;
   box-shadow: none;
+}
+
+.drag-step-area {
+  background-color: transparent;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.block.block-bordered {
+  border-color: #bcc0ce;
 }

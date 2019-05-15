@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ComponentRef } from '@angular/core';
-import { IProperty } from 'src/app/model/property.model';
+import { IProperty } from 'src/app/shared/model/property.model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { IInvariant } from 'src/app/model/invariants.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 import { DraganddropService } from '../../draganddrop.service';
 import { CrossreferenceService, ICrossReference } from 'src/app/services/utils/crossreference.service';

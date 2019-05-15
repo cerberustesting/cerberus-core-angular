@@ -12,23 +12,23 @@ import { AppComponent } from './app.component';
 import { SidebarComponent } from './layout/shared/sidebar/sidebar.component';
 import { FooterComponent } from './layout/shared/footer/footer.component';
 import { HeaderbarComponent } from './layout/shared/headerbar/headerbar.component';
-import { DashboardComponent } from './layout/pages/dashboard/dashboard.component';
+// import { DashboardComponent } from './feat-analyse/dashboard/dashboard.component';
 import { TestcasescriptComponent } from './layout/pages/testcasescript/testcasescript.component';
 import { TcSelectorComponent } from './layout/pages/testcasescript/tc-selector/tc-selector.component';
 import { TcHeaderComponent } from './layout/pages/testcasescript/tc-header/tc-header.component';
 import { TcScriptComponent } from './layout/pages/testcasescript/tc-script/tc-script.component';
 import { LabelfilteringPipe } from './pipes/labelfiltering.pipe';
-import { LabelsComponent } from './layout/pages/labels/labels.component';
+import { LabelsComponent } from './feat-design/labels/labels.component';
 import { AlertsComponent } from './layout/shared/headerbar/alerts/alerts.component';
 import { StepComponent } from './layout/pages/testcasescript/tc-script/step/step.component';
 import { ActionComponent } from './layout/pages/testcasescript/tc-script/action/action.component';
 import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
 import { ControlComponent } from './layout/pages/testcasescript/tc-script/control/control.component';
-import { ExecutionsperweekComponent } from './layout/pages/dashboard/graph/executionsperweek/executionsperweek.component';
+import { ExecutionsperweekComponent } from './feat-analyse/dashboard/graph/executionsperweek/executionsperweek.component';
 import { SettingsComponent } from './layout/pages/testcasescript/tc-script/settings/settings.component';
-import { ReportbytagComponent } from './layout/pages/reportbytag/reportbytag.component';
-import { ReportbystatusComponent } from './layout/pages/reportbytag/graph/reportbystatus/reportbystatus.component';
-import { BugreportComponent } from './layout/pages/reportbytag/bugreport/bugreport.component';
+import { ReportbytagComponent } from './feat-analyse/reportbytag/reportbytag.component';
+import { ReportbystatusComponent } from './feat-analyse/reportbytag/graph/reportbystatus/reportbystatus.component';
+import { BugreportComponent } from './feat-analyse/reportbytag/bugreport/bugreport.component';
 // import { TestcaselistComponent } from './feat-design/testcaselist/testcaselist.component';
 import { TrueindexPipe } from './pipes/trueindex.pipe';
 // import { DatatableComponent } from './layout/shared/datatable/datatable.component';
@@ -40,7 +40,7 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
 // import { FilterComponent } from './feat-design/testcaselist/filters/filter/filter.component';
 import { UniqueproplistPipe } from './pipes/uniqueproplist.pipe';
 import { KeycloakInterceptorService } from './services/auth/keycloak.interceptor.service';
-import {SharedModule} from "./shared/shared.module";
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -48,23 +48,23 @@ import {SharedModule} from "./shared/shared.module";
     SidebarComponent,
     FooterComponent,
     HeaderbarComponent,
-    DashboardComponent,
+   // DashboardComponent,
     TestcasescriptComponent,
     TcSelectorComponent,
     TcHeaderComponent,
     TcScriptComponent,
     LabelfilteringPipe,
-    LabelsComponent,
+    //LabelsComponent,
     AlertsComponent,
     StepComponent,
     ActionComponent,
     PagenotfoundComponent,
     ControlComponent,
-    ExecutionsperweekComponent,
+    // ExecutionsperweekComponent,
     SettingsComponent,
-    ReportbytagComponent,
-    ReportbystatusComponent,
-    BugreportComponent,
+    //ReportbytagComponent,
+    //ReportbystatusComponent,
+    //BugreportComponent,
   //  TestcaselistComponent,
     //DatatableComponent,
     TrueindexPipe,

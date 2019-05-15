@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IInvariant } from 'src/app/model/invariants.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AppSettings } from 'src/app/app.component';

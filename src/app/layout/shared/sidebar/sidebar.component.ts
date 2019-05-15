@@ -78,7 +78,7 @@ export class SidebarComponent implements OnInit {
     },
     {
       name: 'Report',
-      link: '/report',
+      link: '/analyse/report',
       icon_class: 'si-pie-chart',
       expanded: false
     }

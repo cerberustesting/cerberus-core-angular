@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnChanges, AfterViewChecked, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import { IProperty, Property } from 'src/app/model/property.model';
+import { IProperty, Property } from 'src/app/shared/model/property.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { IInvariant } from 'src/app/model/invariants.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { TestService } from 'src/app/services/crud/test.service';
-import { ITestCaseHeader } from 'src/app/model/testcase.model';
+import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DraganddropService } from '../draganddrop.service';
 

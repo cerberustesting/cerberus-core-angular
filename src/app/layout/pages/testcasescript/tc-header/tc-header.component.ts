@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { TestService } from 'src/app/services/crud/test.service';
-import { ITestCaseHeader } from 'src/app/model/testcase.model';
-import { ITest } from 'src/app/model/test.model';
-import { IInvariant } from 'src/app/model/invariants.model';
+import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { ITest } from 'src/app/shared/model/test.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { ILabel } from 'src/app/model/label.model';
+import { ILabel } from 'src/app/shared/model/label.model';
 import { SystemService } from 'src/app/services/crud/system.service';
-import { IBuildRevisionInvariant } from 'src/app/model/buildrevisioninvariant.model';
-import { IApplication } from 'src/app/model/application.model';
-import { IProject } from 'src/app/model/project.model';
+import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
+import { IApplication } from 'src/app/shared/model/application.model';
+import { IProject } from 'src/app/shared/model/project.model';
 // JS Functions
 declare function blockAPI(mode, id): void;
 

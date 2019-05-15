@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ITestCase, IStep, Step } from 'src/app/model/testcase.model';
+import { ITestCase, IStep, Step } from 'src/app/shared/model/testcase.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestService } from 'src/app/services/crud/test.service';
-import { IProperty, Property } from 'src/app/model/property.model';
-import { IInvariant } from 'src/app/model/invariants.model';
+import { IProperty, Property } from 'src/app/shared/model/property.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 // import { PropertyComponent } from 'src/app/layout/pages/testcasescript/tc-script/property/property.component'
 

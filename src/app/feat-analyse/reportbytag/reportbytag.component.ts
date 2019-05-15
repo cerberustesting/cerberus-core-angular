@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportingService } from 'src/app/services/crud/reporting.service';
 import { HttpClient } from '@angular/common/http';
-import { ITag } from 'src/app/model/reporting.model';
+import { ITag } from 'src/app/shared/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
-import { IInvariant } from 'src/app/model/invariants.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 declare function initChartJS();
 
 @Component({

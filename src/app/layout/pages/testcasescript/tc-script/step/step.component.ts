@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IStep, IAction, Action } from 'src/app/model/testcase.model';
+import { IStep, IAction, Action } from 'src/app/shared/model/testcase.model';
 import { SettingsService } from '../settings/settings.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestService } from 'src/app/services/crud/test.service';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ITag } from 'src/app/model/reporting.model';
+import { ITag } from 'src/app/shared/model/reporting.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { AppSettings } from 'src/app/app.component';

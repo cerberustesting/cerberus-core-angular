@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IBuildRevisionInvariant } from 'src/app/model/buildrevisioninvariant.model';
-import { ILabel } from 'src/app/model/label.model';
+import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
+import { ILabel } from 'src/app/shared/model/label.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { IApplication } from 'src/app/model/application.model';
+import { IApplication } from 'src/app/shared/model/application.model';
 import { AppSettings } from 'src/app/app.component';
 
 @Injectable({

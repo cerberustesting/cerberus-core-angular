@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { ITestCase, ITestCaseHeader } from 'src/app/model/testcase.model';
-import { ITest } from 'src/app/model/test.model';
+import { ITestCase, ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { ITest } from 'src/app/shared/model/test.model';
 import { TestService } from 'src/app/services/crud/test.service';
 import { AlertService, Alert } from 'src/app/services/utils/alert.service';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IControl, ITestCase } from 'src/app/model/testcase.model';
+import { IControl, ITestCase } from 'src/app/shared/model/testcase.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/services/utils/crossreference.service';
-import { IInvariant } from 'src/app/model/invariants.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 import { TestService } from 'src/app/services/crud/test.service';
 import { SettingsService } from '../settings/settings.service';

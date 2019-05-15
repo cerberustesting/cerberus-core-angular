@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { ITest } from 'src/app/model/test.model';
-import { ITestCaseHeader, ITestCase, IStep, IAction, IControl } from 'src/app/model/testcase.model';
-import { ILabel, ITestCaseLabel } from 'src/app/model/label.model';
-import { IProject } from 'src/app/model/project.model';
+import { ITest } from 'src/app/shared/model/test.model';
+import { ITestCaseHeader, ITestCase, IStep, IAction, IControl } from 'src/app/shared/model/testcase.model';
+import { ILabel, ITestCaseLabel } from 'src/app/shared/model/label.model';
+import { IProject } from 'src/app/shared/model/project.model';
 import { AppSettings } from 'src/app/app.component';
 import { TrueindexPipe } from 'src/app/pipes/trueindex.pipe';
-import { IProperty, Property } from 'src/app/model/property.model';
+import { IProperty, Property } from 'src/app/shared/model/property.model';
 
 const httpOptions = {
   headers: new HttpHeaders({

@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import {TestService} from '../../services/crud/test.service';
-import {ITestCaseHeader} from '../../model/testcase.model';
+import {ITestCaseHeader} from '../../shared/model/testcase.model';
 
 
 @Component({

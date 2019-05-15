@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IStep, IAction, IControl } from 'src/app/model/testcase.model';
+import { IStep, IAction, IControl } from 'src/app/shared/model/testcase.model';
 import { SettingsService } from './settings.service';
 import { CrossreferenceService, ICrossReference } from 'src/app/services/utils/crossreference.service';
-import { IInvariant } from 'src/app/model/invariants.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/services/crud/invariants.service';
 
 @Component({

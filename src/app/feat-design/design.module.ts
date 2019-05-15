@@ -9,13 +9,14 @@ import { FiltersComponent } from "./testcaselist/filters/filters.component";
 import { FilterPipeModule } from "ngx-filter-pipe";
 // import { NgSelectModule} from "@ng-select/ng-select";
 import { SharedModule } from "../shared/shared.module";
-import {FormsModule} from "@angular/forms";
+import { LabelsComponent } from "./labels/labels.component";
 
 @NgModule({
   declarations: [
       TestcaselistComponent,
       FilterComponent,
       FiltersComponent,
+      LabelsComponent
     //  DatatableComponent,
   ],
   imports: [
@@ -24,7 +25,7 @@ import {FormsModule} from "@angular/forms";
     FilterPipeModule,
     SharedModule,
 //    NgSelectModule,
-    FormsModule
+    //FormsModule
   ],
   exports: [SharedModule]
 })

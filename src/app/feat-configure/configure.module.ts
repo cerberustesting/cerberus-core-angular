@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FeatConfigureRoutingModule } from './feat-configure-routing.module';
+import { ConfigureRoutingModule } from './configure-routing.module';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    FeatConfigureRoutingModule
+    ConfigureRoutingModule
   ]
 })
 export class FeatConfigureModule { }

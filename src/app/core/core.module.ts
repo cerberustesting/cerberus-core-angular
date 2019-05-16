@@ -1,16 +1,25 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderbarComponent } from "./headerbar/headerbar.component";
+import { FooterComponent } from "./footer/footer.component";
+import { SidebarComponent } from "./sidebar/sidebar.component";
+import { AppRoutingModule } from "../app-routing.module";
 
 @NgModule({
   declarations: [
-      HeaderbarComponent
+      HeaderbarComponent,
+      FooterComponent,
+      SidebarComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    AppRoutingModule
   ],
   exports : [
-      HeaderbarComponent
+      HeaderbarComponent,
+      FooterComponent,
+      SidebarComponent,
+      AppRoutingModule
   ]
 })
 export class CoreModule {

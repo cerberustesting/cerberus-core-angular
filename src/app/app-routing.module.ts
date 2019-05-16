@@ -1,19 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Route } from '@angular/router';
-// import { DashboardComponent } from './feat-analyse/dashboard/dashboard.component';
 import { TestcasescriptComponent } from './layout/pages/testcasescript/testcasescript.component';
-import { LabelsComponent } from './feat-design/labels/labels.component';
 import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
-import { ReportbytagComponent } from './feat-analyse/reportbytag/reportbytag.component';
-import { TestcaselistComponent } from './feat-design/testcaselist/testcaselist.component';
 
 const appRoutes: Route[] = [
   // HOME ROUTING
   { path: '', redirectTo: '/analyse/dashboard', pathMatch: 'full' },
-//  { path: 'dashboard', component: DashboardComponent },
- // { path: 'testcaseslist', component: TestcaselistComponent },
   { path: 'testcasescript', component: TestcasescriptComponent },
-
   {
     path: 'design',
     loadChildren: './feat-design/design.module#DesignModule'

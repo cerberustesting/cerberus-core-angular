@@ -9,8 +9,8 @@ import { NgPipesModule } from 'ngx-pipes';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SidebarComponent } from './layout/shared/sidebar/sidebar.component';
-import { FooterComponent } from './layout/shared/footer/footer.component';
+import { SidebarComponent } from './core/sidebar/sidebar.component';
+import { FooterComponent } from './core/footer/footer.component';
 import { HeaderbarComponent } from './core/headerbar/headerbar.component';
 // import { DashboardComponent } from './feat-analyse/dashboard/dashboard.component';
 import { TestcasescriptComponent } from './layout/pages/testcasescript/testcasescript.component';
@@ -46,8 +46,8 @@ import {CoreModule} from "./core/core.module";
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
-    FooterComponent,
+    // SidebarComponent,
+    // FooterComponent,
     // HeaderbarComponent,
    // DashboardComponent,
     TestcasescriptComponent,

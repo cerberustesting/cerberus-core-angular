@@ -5,11 +5,13 @@ import { TestcasescriptComponent } from './layout/pages/testcasescript/testcases
 import { LabelsComponent } from './feat-design/labels/labels.component';
 import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
 import { ReportbytagComponent } from './feat-analyse/reportbytag/reportbytag.component';
-import {TestcaselistComponent} from './feat-design/testcaselist/testcaselist.component';
+import { TestcaselistComponent } from './feat-design/testcaselist/testcaselist.component';
 
 const appRoutes: Route[] = [
   // HOME ROUTING
   { path: '', redirectTo: '/analyse/dashboard', pathMatch: 'full' },
+//  { path: 'dashboard', component: DashboardComponent },
+ // { path: 'testcaseslist', component: TestcaselistComponent },
   { path: 'testcasescript', component: TestcasescriptComponent },
 
   {
@@ -35,7 +37,7 @@ const appRoutes: Route[] = [
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes,
     { enableTracing: true }
-    )],
+  )],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

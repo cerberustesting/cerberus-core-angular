@@ -5,10 +5,10 @@
   <div class="block-header block-header-default" role="tab"
     [ngClass]="[step.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
 
-    <div class="input-group" (click)="focusOnStep()">
+    <div class="input-group cursor-pointer" (click)="focusOnStep()">
 
       <!-- DRAG CONTROL -->
-      <div class="input-group-prepend" (mousedown)="showActionList = false">
+      <div name="dragControl" class="input-group-prepend drag-step-area" (mousedown)="showActionList = false">
         <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
         <!-- current workaround : move cdkDragHandle out of child component -->
         <ng-content select="[slot=drag-step]"></ng-content>
@@ -17,7 +17,7 @@
 
       <!-- STEP INDEX -->
       <div class="input-group-prepend">
-        <span name="stepIndex" class="input-group-text"> {{stepIndex}} </span>
+        <span name="stepIndex" class="input-group-text cursor-default"> {{stepIndex}} </span>
       </div>
       <!-- END STEP INDEX -->
 
@@ -30,10 +30,14 @@
       </div>
       END STEP DESCRIPTION -->
 
-      <!-- STEP DESCRIPTION -->
+      <!-- STEP DESCRIPTION 
       <input type="text" [id]="'step'+stepIndex+'description'" [(ngModel)]="step.description" class="form-control"
         [name]="'step'+stepIndex+'description'" placeholder="Step Description" [readonly]="stepIsReadOnly"
         (click)="showActionList = !showActionList">
+      END STEP DESCRIPTION -->
+
+      <!-- STEP DESCRIPTION -->
+      <h3 class="input-group-text">{{step.description}}</h3>
       <!-- END STEP DESCRIPTION -->
 
     </div>
@@ -102,14 +106,18 @@
   <!-- STEP CONTENT -->
   <div *ngIf="showActionList" [id]="'step'+stepIndex+'toggle'" role="tabpanel"
     [attr.aria-labelledby]="'step'+stepIndex">
+
+    <!-- EXPAND / COLLAPSE BUTTON -->
     <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm text-right">
-      <button type="button" name="collapseAction" class="btn btn-sm btn-secondary mr-1" (click)="showControls = false">
-        <i class="si fa-fw si-arrow-right mr-1"></i> Collapse All
-      </button>
-      <button type="button" name="expandAction" class="btn btn-sm btn-secondary mr-1" (click)="showControls = true">
-        <i class="si fa-fw si-arrow-down mr-1"></i> Expand All
+      <button type="button" name="toggleActionsList" class="btn btn-sm btn-secondary mr-1"
+        (click)="showControls = !showControls">
+        <i class="si fa-fw mr-1" [ngClass]="showControls ? 'si-arrow-down' : 'si-arrow-right'"></i>
+        <span *ngIf="showControls == true">Collapse</span>
+        <span *ngIf="showControls == false">Expand</span>
+        All
       </button>
     </div>
+    <!-- END EXPAND / COLLAPSE BUTTON -->
 
     <!-- ACTION LIST -->
     <div *ngIf="step.actionList.length > 0" cdkDropList [cdkDropListData]="step.actionList"

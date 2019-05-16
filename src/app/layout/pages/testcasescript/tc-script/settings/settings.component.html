@@ -8,10 +8,10 @@
       <small class="ml-1">Settings</small>
     </h3>
     <div class="block-options">
-        <button class="btn-block-option" ngbPopover="Click to duplicate this step" triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa-copy"></i>
-        </button>
-   </div>
+      <button class="btn-block-option" ngbPopover="Click to duplicate this step" triggers="mouseenter:mouseleave">
+        <i class="fa fa-fw fa-copy"></i>
+      </button>
+    </div>
   </div>
   <!-- END STEP HEADER -->
 
@@ -22,10 +22,10 @@
       <small class="ml-1">Settings</small>
     </h3>
     <div class="block-options">
-        <button class="btn-block-option" ngbPopover="Click to duplicate this action" triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa-copy"></i>
-        </button>
-   </div>
+      <button class="btn-block-option" ngbPopover="Click to duplicate this action" triggers="mouseenter:mouseleave">
+        <i class="fa fa-fw fa-copy"></i>
+      </button>
+    </div>
   </div>
   <!-- END ACTION HEADER -->
 
@@ -36,10 +36,10 @@
       <small class="ml-1">Settings</small>
     </h3>
     <div class="block-options">
-        <button class="btn-block-option" ngbPopover="Click to duplicate this control" triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa-copy"></i>
-        </button>
-   </div>
+      <button class="btn-block-option" ngbPopover="Click to duplicate this control" triggers="mouseenter:mouseleave">
+        <i class="fa fa-fw fa-copy"></i>
+      </button>
+    </div>
   </div>
   <!-- END CONTROL HEADER -->
 
@@ -49,12 +49,20 @@
     <div id="activeStepSettings" *ngIf="step">
       <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
- <!-- STEP DESCRIPTION -->
- <input type="text" [id]="'step'+stepIndex+'description'" [(ngModel)]="step.description" class="form-control"
- [name]="'step'+stepIndex+'description'" placeholder="Step Description" [disabled]="readonly">
-<!-- END STEP DESCRIPTION -->
-</div>
+
+          <div *ngIf="step.description == ''" class="alert alert-warning alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <p class="mb-0">You should consider giving this step a description !</p>
+          </div>
+
+          <div class="form-group">
+            <!-- STEP DESCRIPTION -->
+            <input type="text" [id]="'step'+stepIndex+'description'" [(ngModel)]="step.description" class="form-control"
+              [name]="'step'+stepIndex+'description'" placeholder="Step Description" [disabled]="readonly">
+            <!-- END STEP DESCRIPTION -->
+          </div>
         </div>
       </div>
       <div class="row">

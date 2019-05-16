@@ -52,6 +52,7 @@ export class StepComponent implements OnInit {
   focusOnStep(): void {
     // send the step to the settings service and thus, to the settings component
     this.SettingsService.editStepSettings(this.step, this.stepIsReadOnly);
+    this.showActionList = !this.showActionList;
   }
 
   // Depedending on the combination of useStep and inLibrary,

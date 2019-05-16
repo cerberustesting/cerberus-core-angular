@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import {TestService} from '../../services/crud/test.service';
+import {TestService} from '../../core/services/crud/test.service';
 import {ITestCaseHeader} from '../../shared/model/testcase.model';
 
 

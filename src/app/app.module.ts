@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './layout/shared/sidebar/sidebar.component';
 import { FooterComponent } from './layout/shared/footer/footer.component';
-import { HeaderbarComponent } from './layout/shared/headerbar/headerbar.component';
+import { HeaderbarComponent } from './core/headerbar/headerbar.component';
 // import { DashboardComponent } from './feat-analyse/dashboard/dashboard.component';
 import { TestcasescriptComponent } from './layout/pages/testcasescript/testcasescript.component';
 import { TcSelectorComponent } from './layout/pages/testcasescript/tc-selector/tc-selector.component';
@@ -19,7 +19,7 @@ import { TcHeaderComponent } from './layout/pages/testcasescript/tc-header/tc-he
 import { TcScriptComponent } from './layout/pages/testcasescript/tc-script/tc-script.component';
 import { LabelfilteringPipe } from './pipes/labelfiltering.pipe';
 import { LabelsComponent } from './feat-design/labels/labels.component';
-import { AlertsComponent } from './layout/shared/headerbar/alerts/alerts.component';
+import { AlertsComponent } from './core/headerbar/alerts/alerts.component';
 import { StepComponent } from './layout/pages/testcasescript/tc-script/step/step.component';
 import { ActionComponent } from './layout/pages/testcasescript/tc-script/action/action.component';
 import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
@@ -41,13 +41,14 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
 import { UniqueproplistPipe } from './pipes/uniqueproplist.pipe';
 import { KeycloakInterceptorService } from './services/auth/keycloak.interceptor.service';
 import { SharedModule } from "./shared/shared.module";
+import {CoreModule} from "./core/core.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
     FooterComponent,
-    HeaderbarComponent,
+    // HeaderbarComponent,
    // DashboardComponent,
     TestcasescriptComponent,
     TcSelectorComponent,
@@ -81,7 +82,7 @@ import { SharedModule } from "./shared/shared.module";
     HttpClientModule,
     FormsModule,
     NgbPopoverModule,
-    //NgSelectModule,
+    CoreModule,
     DragDropModule,
   //  NgxDatatableModule,
     NgPipesModule,

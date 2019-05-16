@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { TestService } from 'src/app/services/crud/test.service';
+import { TestService } from 'src/app/core/services/crud/test.service';
 import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { ITest } from 'src/app/shared/model/test.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
-import { InvariantsService } from 'src/app/services/crud/invariants.service';
+import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { ILabel } from 'src/app/shared/model/label.model';
-import { SystemService } from 'src/app/services/crud/system.service';
+import { SystemService } from 'src/app/core/services/crud/system.service';
 import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
 import { IApplication } from 'src/app/shared/model/application.model';
 import { IProject } from 'src/app/shared/model/project.model';

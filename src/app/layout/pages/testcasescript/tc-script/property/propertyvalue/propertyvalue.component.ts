@@ -2,9 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ComponentRef
 import { IProperty } from 'src/app/shared/model/property.model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
-import { InvariantsService } from 'src/app/services/crud/invariants.service';
+import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { DraganddropService } from '../../draganddrop.service';
-import { CrossreferenceService, ICrossReference } from 'src/app/services/utils/crossreference.service';
+import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 
 export class PropertyType_Fields_CrossReference {
   type: string;

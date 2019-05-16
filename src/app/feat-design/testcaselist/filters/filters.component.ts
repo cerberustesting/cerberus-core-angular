@@ -1,10 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {SystemService} from '../../../services/crud/system.service';
+import {SystemService} from '../../../core/services/crud/system.service';
 import {ILabel} from '../../../shared/model/label.model';
 import {IApplication} from '../../../shared/model/application.model';
-import {InvariantsService} from '../../../services/crud/invariants.service';
+import {InvariantsService} from '../../../core/services/crud/invariants.service';
 import {IInvariant} from '../../../shared/model/invariants.model';
-import {TestService} from '../../../services/crud/test.service';
+import {TestService} from '../../../core/services/crud/test.service';
 import {ITest} from '../../../shared/model/test.model';
 
 @Component({

@@ -10,13 +10,8 @@ import {TestcaselistComponent} from './feat-design/testcaselist/testcaselist.com
 const appRoutes: Route[] = [
   // HOME ROUTING
   { path: '', redirectTo: '/analyse/dashboard', pathMatch: 'full' },
-//  { path: 'dashboard', component: DashboardComponent },
- // { path: 'testcaseslist', component: TestcaselistComponent },
   { path: 'testcasescript', component: TestcasescriptComponent },
- // { path: 'labels', component: LabelsComponent },
-  { path: 'pagenotfound', component: PagenotfoundComponent },
-  // { path: 'report', component: ReportbytagComponent },
-  // { path: '**', redirectTo: '/pagenotfound' },
+
   {
     path: 'design',
     loadChildren: './feat-design/design.module#DesignModule'
@@ -33,11 +28,8 @@ const appRoutes: Route[] = [
     path: 'configure',
     loadChildren: './feat-configure/configure.module#ConfigureModule'
   },
-/*  {
-    path: '',
-    redirectTo: '',
-    pathMatch: 'full'
-  }*/
+  { path: '**', redirectTo: '/pagenotfound' },
+  { path: 'pagenotfound', component: PagenotfoundComponent },
 ];
 
 @NgModule({

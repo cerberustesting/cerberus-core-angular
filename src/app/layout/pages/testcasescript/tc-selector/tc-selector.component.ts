@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ITestCase, ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { ITest } from 'src/app/shared/model/test.model';
-import { TestService } from 'src/app/services/crud/test.service';
-import { AlertService, Alert } from 'src/app/services/utils/alert.service';
+import { TestService } from 'src/app/core/services/crud/test.service';
+import { AlertService, Alert } from 'src/app/core/services/utils/alert.service';
 
 const Alert_selectedTestDoesNotExist: Alert = { message: "The selected test doesn't exist", style: "alert-danger", duration: 5000, animationIn: "shake" }
 const Alert_selectedTestCaseDoesNotExist: Alert = { message: "The selected test case doesn't exist", style: "alert-danger", duration: 5000, animationIn: "shake" }

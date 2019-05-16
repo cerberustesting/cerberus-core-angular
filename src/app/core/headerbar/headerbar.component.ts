@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AlertService } from 'src/app/services/utils/alert.service';
-import { InvariantsService } from 'src/app/services/crud/invariants.service';
+import { AlertService } from 'src/app/core/services/utils/alert.service';
+import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { KeycloakService } from 'src/app/services/auth/keycloak.service';
 import { environment } from 'src/environments/environment'

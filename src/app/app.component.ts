@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from './services/auth/keycloak.service';
+import { KeycloakService } from './core/services/auth/keycloak.service';
 import { KeycloakInstance } from 'keycloak-js';
 import { environment } from 'src/environments/environment';
 

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IProperty } from '../shared/model/property.model';
+import { IProperty } from '../model/property.model';
 
 @Pipe({
   name: 'uniqueproplist',

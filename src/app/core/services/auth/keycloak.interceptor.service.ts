@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { KeycloakService } from 'src/app/services/auth/keycloak.service';
+import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 
 @Injectable({
     providedIn: 'root'

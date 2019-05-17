@@ -13,33 +13,33 @@ import { SidebarComponent } from './core/sidebar/sidebar.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { HeaderbarComponent } from './core/headerbar/headerbar.component';
 // import { DashboardComponent } from './feat-analyse/dashboard/dashboard.component';
-import { TestcasescriptComponent } from './layout/pages/testcasescript/testcasescript.component';
-import { TcSelectorComponent } from './layout/pages/testcasescript/tc-selector/tc-selector.component';
-import { TcHeaderComponent } from './layout/pages/testcasescript/tc-header/tc-header.component';
-import { TcScriptComponent } from './layout/pages/testcasescript/tc-script/tc-script.component';
-import { LabelfilteringPipe } from './pipes/labelfiltering.pipe';
+import { TestcasescriptComponent } from './feat-design/testcasescript/testcasescript.component';
+import { TcSelectorComponent } from './feat-design/testcasescript/tc-selector/tc-selector.component';
+import { TcHeaderComponent } from './feat-design/testcasescript/tc-header/tc-header.component';
+import { TcScriptComponent } from './feat-design/testcasescript/tc-script/tc-script.component';
+import { LabelfilteringPipe } from './shared/pipes/labelfiltering.pipe';
 import { LabelsComponent } from './feat-design/labels/labels.component';
-import { AlertsComponent } from './core/headerbar/alerts/alerts.component';
-import { StepComponent } from './layout/pages/testcasescript/tc-script/step/step.component';
-import { ActionComponent } from './layout/pages/testcasescript/tc-script/action/action.component';
-import { PagenotfoundComponent } from './layout/shared/pagenotfound/pagenotfound.component';
-import { ControlComponent } from './layout/pages/testcasescript/tc-script/control/control.component';
+import { AlertsComponent } from './shared/alerts/alerts.component';
+import { StepComponent } from './feat-design/testcasescript/tc-script/step/step.component';
+import { ActionComponent } from './feat-design/testcasescript/tc-script/action/action.component';
+import { PagenotfoundComponent } from './core/pagenotfound/pagenotfound.component';
+import { ControlComponent } from './feat-design/testcasescript/tc-script/control/control.component';
 import { ExecutionsperweekComponent } from './feat-analyse/dashboard/graph/executionsperweek/executionsperweek.component';
-import { SettingsComponent } from './layout/pages/testcasescript/tc-script/settings/settings.component';
+import { SettingsComponent } from './feat-design/testcasescript/tc-script/settings/settings.component';
 import { ReportbytagComponent } from './feat-analyse/reportbytag/reportbytag.component';
 import { ReportbystatusComponent } from './feat-analyse/reportbytag/graph/reportbystatus/reportbystatus.component';
 import { BugreportComponent } from './feat-analyse/reportbytag/bugreport/bugreport.component';
 // import { TestcaselistComponent } from './feat-design/testcaselist/testcaselist.component';
-import { TrueindexPipe } from './pipes/trueindex.pipe';
+import { TrueindexPipe } from './shared/pipes/trueindex.pipe';
 // import { DatatableComponent } from './layout/shared/datatable/datatable.component';
 // import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { PropertyComponent } from './layout/pages/testcasescript/tc-script/property/property.component';
-import { PropertyvalueComponent } from './layout/pages/testcasescript/tc-script/property/propertyvalue/propertyvalue.component';
+import { PropertyComponent } from './feat-design/testcasescript/tc-script/property/property.component';
+import { PropertyvalueComponent } from './feat-design/testcasescript/tc-script/property/propertyvalue/propertyvalue.component';
 // import { FiltersComponent } from './feat-design/testcaselist/filters/filters.component';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 // import { FilterComponent } from './feat-design/testcaselist/filters/filter/filter.component';
-import { UniqueproplistPipe } from './pipes/uniqueproplist.pipe';
-import { KeycloakInterceptorService } from './services/auth/keycloak.interceptor.service';
+import { UniqueproplistPipe } from './shared/pipes/uniqueproplist.pipe';
+import { KeycloakInterceptorService } from './core/services/auth/keycloak.interceptor.service';
 import { SharedModule } from "./shared/shared.module";
 import {CoreModule} from "./core/core.module";
 
@@ -50,47 +50,46 @@ import {CoreModule} from "./core/core.module";
     // FooterComponent,
     // HeaderbarComponent,
    // DashboardComponent,
-    TestcasescriptComponent,
-    TcSelectorComponent,
-    TcHeaderComponent,
-    TcScriptComponent,
-    LabelfilteringPipe,
+    //TestcasescriptComponent,
+    //TcSelectorComponent,
+    //TcHeaderComponent,
+    //TcScriptComponent,
+    // LabelfilteringPipe,
     //LabelsComponent,
-    AlertsComponent,
-    StepComponent,
-    ActionComponent,
+    //AlertsComponent,
+    //StepComponent,
+    //ActionComponent,
     PagenotfoundComponent,
-    ControlComponent,
+    //ControlComponent,
     // ExecutionsperweekComponent,
-    SettingsComponent,
+    // SettingsComponent,
     //ReportbytagComponent,
     //ReportbystatusComponent,
     //BugreportComponent,
   //  TestcaselistComponent,
     //DatatableComponent,
-    TrueindexPipe,
-    PropertyComponent,
+    //TrueindexPipe,
+    //PropertyComponent,
     //FiltersComponent,
-    PropertyvalueComponent,
+    //PropertyvalueComponent,
     //FilterComponent,
     //FilterComponent,
-    UniqueproplistPipe
+    // UniqueproplistPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbPopoverModule,
     CoreModule,
     DragDropModule,
   //  NgxDatatableModule,
-    NgPipesModule,
+  //  NgPipesModule,
     FilterPipeModule,
     SharedModule
 
   ],
-  providers: [TrueindexPipe,
+  providers: [//TrueindexPipe,
 /*    {
       provide: HTTP_INTERCEPTORS,
       useClass: KeycloakInterceptorService,

@@ -19,7 +19,7 @@ export class SidebarComponent implements OnInit {
         },
         {
           name: 'Testcase Edition',
-          link: '/testcasescript'
+          link: '/design/testcasescript'
         }
       ]
     },

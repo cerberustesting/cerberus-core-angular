@@ -20,6 +20,13 @@ import { AppRoutingModule } from "../app-routing.module";
       FooterComponent,
       SidebarComponent,
       AppRoutingModule
+  ],
+  providers : [
+    /*    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: KeycloakInterceptorService,
+    multi: true
+  }*/
   ]
 })
 export class CoreModule {

@@ -6,7 +6,7 @@ import { ITestCaseHeader, ITestCase, IStep, IAction, IControl } from 'src/app/sh
 import { ILabel, ITestCaseLabel } from 'src/app/shared/model/label.model';
 import { IProject } from 'src/app/shared/model/project.model';
 import { AppSettings } from 'src/app/app.component';
-import { TrueindexPipe } from 'src/app/pipes/trueindex.pipe';
+import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
 import { IProperty, Property } from 'src/app/shared/model/property.model';
 
 const httpOptions = {

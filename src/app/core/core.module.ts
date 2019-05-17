@@ -4,12 +4,14 @@ import { HeaderbarComponent } from "./headerbar/headerbar.component";
 import { FooterComponent } from "./footer/footer.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { AppRoutingModule } from "../app-routing.module";
+import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
 
 @NgModule({
   declarations: [
       HeaderbarComponent,
       FooterComponent,
-      SidebarComponent
+      SidebarComponent,
+      PagenotfoundComponent
   ],
   imports: [
     CommonModule,

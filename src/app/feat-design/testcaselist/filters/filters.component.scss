@@ -1,9 +1,10 @@
 .filter-container {
+  display: flex;
+  flex-direction: row;
   position: fixed;
   background-color: #d9e8f5;
   width: 100%;
   padding: 5px;
-  display: inline-block;
   z-index: 1000;
 }
 
@@ -16,4 +17,29 @@
   margin-left: 5px;
   outline: none;
   overflow: hidden;
+}
+
+.add-filter{
+  //padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  background-color: white;
+  outline: none;
+  max-height: 36px;
+  padding: 0 10px 0 10px;
+  //vertical-align: middle;
+  margin: 5px 0 5px 5px
+}
+
+.add-filter:hover {
+  border: 1px solid #b3b3b3;
+}
+
+.add-filter:focus{
+  background-color: #ebf5ff;
+}
+
+.ng-select {
+  margin-top: 5px ;
+  width: 150px;
 }

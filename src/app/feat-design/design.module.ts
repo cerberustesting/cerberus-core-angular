@@ -18,6 +18,7 @@ import { PropertyComponent } from "./testcasescript/tc-script/property/property.
 import { PropertyvalueComponent } from "./testcasescript/tc-script/property/propertyvalue/propertyvalue.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { SettingsComponent } from "./testcasescript/tc-script/settings/settings.component";
+import { ActionsComponent } from './testcaselist/actions/actions.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SettingsComponent } from "./testcasescript/tc-script/settings/settings.
       PropertyComponent,
       PropertyvalueComponent,
       SettingsComponent,
+      ActionsComponent,
   ],
   imports: [
     CommonModule,

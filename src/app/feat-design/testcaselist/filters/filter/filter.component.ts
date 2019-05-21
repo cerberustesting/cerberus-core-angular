@@ -11,12 +11,22 @@ export class FilterComponent implements OnInit {
   @Output() dataSelected = new EventEmitter<string>();
   data: any;
 
+  @Input() param : {
+              multiple: boolean,
+              field: any,
+              placeholder: any,
+              bindLabel: any,
+              bindValue: any,
+          };
+
   constructor() { }
 
-  ngOnInit() {
-  }
   sendValues(data) {
     this.dataSelected.emit(data);
     console.log(this.dataSelected);
   }
+
+  ngOnInit() {
+  }
+
 }

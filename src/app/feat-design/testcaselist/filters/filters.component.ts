@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SystemService} from '../../../core/services/crud/system.service';
 import {ILabel} from '../../../shared/model/label.model';
 import {IApplication} from '../../../shared/model/application.model';
@@ -24,6 +24,40 @@ export class FiltersComponent implements OnInit {
   testList: Array<ITest>;
   testSelected: any;
   userSearch: any;
+
+  labelFilter = {
+    multiple:  true,
+    field: 'label',
+    placeholder: 'Select labels',
+    bindLabel: 'label',
+    bindValue: 'label',
+  };
+
+  applicationFilter = {
+    multiple:  true,
+    field: 'application',
+    placeholder: 'Select applications',
+    bindLabel: 'application',
+    bindValue: 'application',
+  };
+
+  statusFilter = {
+    multiple:  true,
+    field: 'status',
+    placeholder: 'Select status',
+    bindLabel: '',
+    bindValue: 'value',
+  };
+
+  testFilter = {
+    multiple:  true,
+    field: 'test',
+    placeholder: 'Select test',
+    bindLabel: 'test',
+    bindValue: 'test',
+  };
+
+  list = ['System','Active'];
 
   constructor( private systemService: SystemService,
                private invariantService: InvariantsService,

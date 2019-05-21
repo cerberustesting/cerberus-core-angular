@@ -1,19 +1,31 @@
 <ng-select class="custom"
            [items]="dataList"
            [selectableGroup]="true"
-           [multiple]="true"
+           [multiple]="param.multiple"
            [closeOnSelect]="false"
-           bindLabel="{{field}}"
-           bindValue="{{field}}"
-           placeholder="Select {{field}}"
+           bindValue="{{param.bindValue}}"
+           bindLabel="{{param.bindLabel}}"
+           placeholder="{{param.placeholder}}"
            [(ngModel)]='data'
            (close)="sendValues(data)"
            (remove)="sendValues(data)"
            [clearable]="true">
   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-    <div *ngIf="field=='application'">{{item.application}}</div>
-    <div *ngIf="field=='status'">{{item.value}}</div>
-    <div *ngIf="field=='test'">{{item.test}}</div>
-    <div *ngIf="field=='label'"><div class="label" [style.background-color]="item.color">{{item.label}}</div></div>
+    <div *ngIf="param.field=='application'">{{item.application}}</div>
+    <div *ngIf="param.field=='status'">{{item.value}}</div>
+    <div *ngIf="param.field=='test'">{{item.test}}</div>
+    <div *ngIf="param.field=='label'"><div class="label" [style.background-color]="item.color">{{item.label}}</div></div>
   </ng-template>
+    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of (items ? items.slice(0,1): [])">
+            <span *ngIf="field=='label'" class="label" [style.background-color]="item.color"> {{item.label}}</span>
+            <span class="ng-value-label" *ngIf="param.field=='status'">{{item.value}}</span>
+            <span class="ng-value-label" *ngIf="param.field=='test'">{{item.test}}</span>
+            <span class="ng-value-label" *ngIf="param.field=='application'">{{item.application}}</span>
+            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 1" >
+            <span class="ng-value-label">{{items.length - 1}} more...</span>
+        </div>
+    </ng-template>
 </ng-select>

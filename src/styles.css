@@ -6,6 +6,9 @@
     margin: 0px 5px !important;
   }
 
+body {
+    background-color: #ebedf5;
+}
 
 .label{
     display: inline-block;

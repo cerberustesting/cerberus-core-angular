@@ -10,4 +10,4 @@ import { ConfigureRoutingModule } from './configure-routing.module';
     ConfigureRoutingModule
   ]
 })
-export class FeatConfigureModule { }
+export class ConfigureModule { }

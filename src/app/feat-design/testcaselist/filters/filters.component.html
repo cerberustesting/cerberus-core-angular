@@ -1,10 +1,34 @@
 <div class="filter-container">
-<!--    <input class="input-search" placeholder="Search" [(ngModel)]="userSearch" (keyup)="updateSearch()" (change)="updateSearch()" >-->
+    <!--    <input class="input-search" placeholder="Search" [(ngModel)]="userSearch" (keyup)="updateSearch()" (change)="updateSearch()" >-->
+
+    <!-- <div class="dropdown">
+        <button type="button" class="btn btn-hero-primary dropdown-toggle" id="columnDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Columns
+        </button>
+        <div class="dropdown-menu" aria-libelledby="columnDropdown">
+            <ng-template ngFor let-column [ngForOf]="columns">
+                <a class="dropdown-item" [ngClass]="{'selected': column.active}" (click)="toggleColumn(column)">{{ column.name }}</a>
+            </ng-template>
+            
+        </div>
+    </div> -->
+
+    <ng-select class="column-selector custom" bindLabel="name" placeholder="Select Columns"
+        [(ngModel)]="columnActive" [items]="columns" [closeOnSelect]="false">
+        <ng-template ng-label-tmp>
+        </ng-template>
+
+        <ng-template ng-option-tmp let-item="item" let-index="index">                
+                <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">{{item.name}}</div>
+        </ng-template>
+
+    </ng-select>
+
     <app-filter [dataList]="testList" [param]="testFilter" (dataSelected)="updateTest($event)"></app-filter>
-    <app-filter [dataList]="applicationList" [param]="applicationFilter" (dataSelected)="updateApplication($event)"></app-filter>
+    <app-filter [dataList]="applicationList" [param]="applicationFilter" (dataSelected)="updateApplication($event)">
+    </app-filter>
     <app-filter [dataList]="statusList" [param]="statusFilter" (dataSelected)="updateStatus($event)"></app-filter>
     <app-filter [dataList]="labelList" [param]="labelFilter" [field]="'label'"></app-filter>
     <!--<button (click)="sendFilter($event)">TATA</button>-->
     <button class="add-filter">+</button>
 </div>
-

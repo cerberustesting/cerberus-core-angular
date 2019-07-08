@@ -6,6 +6,7 @@ import {InvariantsService} from '../../../core/services/crud/invariants.service'
 import {IInvariant} from '../../../shared/model/invariants.model';
 import {TestService} from '../../../core/services/crud/test.service';
 import {ITest} from '../../../shared/model/test.model';
+import { ColumnService } from '../column.service';
 
 @Component({
   selector: 'app-filters',
@@ -24,6 +25,8 @@ export class FiltersComponent implements OnInit {
   testList: Array<ITest>;
   testSelected: any;
   userSearch: any;
+  columns: any;
+  columnActive: any;
 
   labelFilter = {
     multiple:  true,
@@ -31,6 +34,14 @@ export class FiltersComponent implements OnInit {
     placeholder: 'Select labels',
     bindLabel: 'label',
     bindValue: 'label',
+  };
+
+  columnFilter = {
+    multiple:  true,
+    field: 'column',
+    placeholder: 'Select columns',
+    bindLabel: 'column',
+    bindValue: 'column',
   };
 
   applicationFilter = {
@@ -61,7 +72,8 @@ export class FiltersComponent implements OnInit {
 
   constructor( private systemService: SystemService,
                private invariantService: InvariantsService,
-               private testService: TestService ) { }
+               private testService: TestService,
+               private columnService: ColumnService ) { }
 
   ngOnInit() {
 
@@ -69,7 +81,7 @@ export class FiltersComponent implements OnInit {
     this.systemService.getApplicationList();
     this.invariantService.getTcStatus();
     this.testService.getTestsList();
-
+    this.columns = this.columnService.columns;
 
     this.systemService.observableLabelsList.subscribe(response => {
       if (response) {
@@ -110,19 +122,22 @@ export class FiltersComponent implements OnInit {
     });
   }
 
-  updateStatus(statusSelected) {
+  updateStatus(statusSelected): void {
     this.statusSelected = statusSelected;
   }
-  updateApplication(applicationSelected) {
+  updateApplication(applicationSelected): void {
     this.applicationSelected = applicationSelected;
   }
-  updateTest(testSelected) {
+  updateTest(testSelected): void {
     this.testSelected = testSelected;
   }
   updateSearch() {
       this.searchTerm.emit(this.userSearch);
   }
 
+  toggleColumn(column): void {
+    column.active = !column.active;
+  }
 
   sendFilter(data) {
     data = this.testSelected;

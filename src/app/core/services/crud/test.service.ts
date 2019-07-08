@@ -60,8 +60,15 @@ export class TestService {
       });
   }
 
-  getTestCasesList(test: string) {
-    this.http.get<ITestCaseHeader[]>(AppSettings.API_endpoint + '/ReadTestCase?test=' + test)
+  getTestCasesList(test?: string, systems?: string[]) {
+    let query = AppSettings.API_endpoint + '/ReadTestCase?' + ((test) ? 'test=' + test + '&' : '');
+    if (systems) {
+      for (let system of systems) {
+        query += 'system=' + system + '&';
+      }
+    }
+
+    this.http.get<ITestCaseHeader[]>(query)
       .subscribe((response) => {
         // @ts-ignore
         if (response.iTotalRecords > 0) {

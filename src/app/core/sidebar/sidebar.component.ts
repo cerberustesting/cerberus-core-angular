@@ -178,6 +178,13 @@ export class SidebarComponent implements OnInit {
     }
   ];
 
+  menus =  [
+    { name: 'Design', data: this.testManagementMenu },
+    { name: 'Run', data: this.runMenu },
+    { name: 'Analyse', data: this.analyseMenu },
+    { name: 'Configure', data: this.configureMenu }
+  ]
+
   constructor() { }
 
   ngOnInit() {

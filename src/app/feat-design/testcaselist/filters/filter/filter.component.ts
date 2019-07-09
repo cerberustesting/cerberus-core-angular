@@ -25,6 +25,10 @@ export class FilterComponent implements OnInit {
     this.dataSelected.emit(data);
     console.log(this.dataSelected);
   }
+  applyFilter() {
+    console.log("Not impletmented yet");
+    
+  }
 
   ngOnInit() {
   }

@@ -19,10 +19,12 @@
         </ng-template>
 
         <ng-template ng-option-tmp let-item="item" let-index="index">                
-                <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">{{item.name}}</div>
+                <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">{{item.displayName}}</div>
         </ng-template>
 
     </ng-select>
+
+    
 
     <app-filter [dataList]="testList" [param]="testFilter" (dataSelected)="updateTest($event)"></app-filter>
     <app-filter [dataList]="applicationList" [param]="applicationFilter" (dataSelected)="updateApplication($event)">
@@ -30,5 +32,8 @@
     <app-filter [dataList]="statusList" [param]="statusFilter" (dataSelected)="updateStatus($event)"></app-filter>
     <app-filter [dataList]="labelList" [param]="labelFilter" [field]="'label'"></app-filter>
     <!--<button (click)="sendFilter($event)">TATA</button>-->
-    <button class="add-filter">+</button>
+    <button class="add-filter" data-toggle="modal" data-target="#filterModal">+</button>
+    <app-filter-modal [ngStyle]="{'display': 'block'}"></app-filter-modal>
+
+    <button class="btn btn-info" (click)="applySystem()">Apply Systems</button>
 </div>

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import { Column } from '../model/column.model';
 
 @Component({
   selector: 'app-table',
@@ -8,7 +9,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 export class DatatableComponent implements OnInit {
 
   @Input() rows: any[];
-  @Input() columns: any[];
+  @Input() columns: Array<Column>
   @Input() testcaseslist: boolean;
   selected = [];
   isLoading: boolean;

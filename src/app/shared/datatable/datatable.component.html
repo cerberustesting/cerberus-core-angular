@@ -1,7 +1,8 @@
 <div class="data-table">
-    <ngx-datatable class="material" [rows]="rows" [columns]="columns" [columnMode]="flex" [rowHeight]="'auto'"
+    <ngx-datatable class="material fullscreen" [rows]="rows" [columns]="columns" [columnMode]="'force'" [rowHeight]="'auto'"
         [limit]="10" [footerHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading" [selected]="selected"
-        [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" (select)='onSelect($event)'>
+        [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" (select)='onSelect($event)'
+        [scrollbarH]="false">
         <!--(activate)="onActivate($event)"-->
 
         <!--CheckBox Column-->
@@ -11,15 +12,22 @@
 
         <!--Column from column array-->
         <ng-template ngFor let-column [ngForOf]="columns">
-            <ngx-datatable-column *ngIf="column.active" [name]="column.name" [flexGrow]="column.grow">
+            <ngx-datatable-column *ngIf="column.active" [name]="column.contentName" [width]="column.width">
+                <!--Country column-->
+                <ng-template ngx-datatable-header-template>
+                    <span>{{ column.displayName }}</span>
+                </ng-template>
 
-                <ng-template *ngIf="column.name=='countryList'" let-value="value" ngx-datatable-cell-template>
+                <ng-template *ngIf="column.displayContentFunction" let-value ngx-datatable-cell-template>  
+                    {{ column.displayContentFunction(value) }}         
+                </ng-template>
+                <ng-template *ngIf="column.contentName=='countryList'" let-value="value" ngx-datatable-cell-template>
                     <a *ngFor="let item of value | keyvalue">
                         <b>{{item.value}} </b>
                     </a>
                 </ng-template>
-
-                <ng-template *ngIf="column.name=='LABELS'" let-value="value" ngx-datatable-cell-template>
+                <!--Label column-->
+                <ng-template *ngIf="column.contentName=='LABELS'" let-value="value" ngx-datatable-cell-template>
                     <div class="label" *ngFor="let item of value" [style.background-color]="item.color">{{ item.name }}</div>
                 </ng-template>
 

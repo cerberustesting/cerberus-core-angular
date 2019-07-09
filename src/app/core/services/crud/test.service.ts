@@ -61,6 +61,8 @@ export class TestService {
   }
 
   getTestCasesList(test?: string, systems?: string[]) {
+    if(!test && !systems) return;
+
     let query = AppSettings.API_endpoint + '/ReadTestCase?' + ((test) ? 'test=' + test + '&' : '');
     if (systems) {
       for (let system of systems) {
@@ -81,6 +83,13 @@ export class TestService {
           this.observableTestCasesList.next(this.testcasesList);
         }
       })
+  }
+  getTestCasesFilterList(...filter) {
+    let query = AppSettings.API_endpoint + '/ReadTestCase?columnName=app.system';
+    this.http.post(query, "cerberus")
+      .subscribe(response => {
+        console.log(response);
+      });     
   }
 
   getTestCase(test: string, testcase: string) {

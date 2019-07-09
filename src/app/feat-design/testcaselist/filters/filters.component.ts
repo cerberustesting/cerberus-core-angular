@@ -6,7 +6,6 @@ import {InvariantsService} from '../../../core/services/crud/invariants.service'
 import {IInvariant} from '../../../shared/model/invariants.model';
 import {TestService} from '../../../core/services/crud/test.service';
 import {ITest} from '../../../shared/model/test.model';
-import { ColumnService } from '../column.service';
 
 @Component({
   selector: 'app-filters',
@@ -15,8 +14,12 @@ import { ColumnService } from '../column.service';
 })
 export class FiltersComponent implements OnInit {
 
+  @Input('columns') columns: Array<any>;
+
   @Output() test = new EventEmitter<string>();
   @Output() searchTerm = new EventEmitter<string>();
+  @Output() systemApply = new EventEmitter<string>();
+
   labelList: Array<ILabel>;
   applicationList: Array<IApplication>;
   applicationSelected: any;
@@ -25,7 +28,6 @@ export class FiltersComponent implements OnInit {
   testList: Array<ITest>;
   testSelected: any;
   userSearch: any;
-  columns: any;
   columnActive: any;
 
   labelFilter = {
@@ -34,14 +36,6 @@ export class FiltersComponent implements OnInit {
     placeholder: 'Select labels',
     bindLabel: 'label',
     bindValue: 'label',
-  };
-
-  columnFilter = {
-    multiple:  true,
-    field: 'column',
-    placeholder: 'Select columns',
-    bindLabel: 'column',
-    bindValue: 'column',
   };
 
   applicationFilter = {
@@ -72,8 +66,13 @@ export class FiltersComponent implements OnInit {
 
   constructor( private systemService: SystemService,
                private invariantService: InvariantsService,
-               private testService: TestService,
-               private columnService: ColumnService ) { }
+               private testService: TestService ) { }
+
+  
+  // sendMyFilter() {
+  //   this.testService.getTestCasesFilterList();
+  //   this.testService.getTestCasesList();
+  // }
 
   ngOnInit() {
 
@@ -81,7 +80,6 @@ export class FiltersComponent implements OnInit {
     this.systemService.getApplicationList();
     this.invariantService.getTcStatus();
     this.testService.getTestsList();
-    this.columns = this.columnService.columns;
 
     this.systemService.observableLabelsList.subscribe(response => {
       if (response) {
@@ -142,5 +140,9 @@ export class FiltersComponent implements OnInit {
   sendFilter(data) {
     data = this.testSelected;
     this.test.emit(data);
+  }
+  applySystem() {
+    
+    this.systemApply.emit('nouveaux systems');
   }
 }

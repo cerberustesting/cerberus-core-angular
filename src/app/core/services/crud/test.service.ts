@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ITest } from 'src/app/shared/model/test.model';
 import { ITestCaseHeader, ITestCase, IStep, IAction, IControl } from 'src/app/shared/model/testcase.model';
 import { ILabel, ITestCaseLabel } from 'src/app/shared/model/label.model';
@@ -23,6 +23,7 @@ const httpOptions = {
 export class TestService {
   testsList: Array<ITest> = new Array<ITest>();
   testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
+  testcasesListLength: number;
   testcase_labels: Array<ILabel> = new Array<ILabel>();
   testcase_properties: Array<IProperty>;
   testcase: ITestCase = null;
@@ -32,6 +33,7 @@ export class TestService {
   //observables
   observableTestsList = new BehaviorSubject<ITest[]>(this.testsList);
   observableTestCasesList = new BehaviorSubject<ITestCaseHeader[]>(this.testcasesList);
+  observableTestCasesListLength = new BehaviorSubject<number>(this.testcasesListLength);
   observableTestCaseLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
   observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
@@ -39,6 +41,7 @@ export class TestService {
   observableTestCaseProperties = new BehaviorSubject<IProperty[]>(this.testcase_properties);
   // boolean
   refreshTC: boolean = false;
+  
 
   constructor(
     private http: HttpClient,
@@ -60,23 +63,31 @@ export class TestService {
       });
   }
 
-  getTestCasesList(test?: string, systems?: string[]) {
-    if(!test && !systems) return;
+  getTestCasesList(test?: string, systems?: Array<string>, size?: number, start?: number) {
+    
+    if(!size) size = 10;
+    if(!start) start = 0;
 
-    let query = AppSettings.API_endpoint + '/ReadTestCase?' + ((test) ? 'test=' + test + '&' : '');
+    let query = AppSettings.API_endpoint + '/ReadTestCase?iDisplayLength=' + size + '&iDisplayStart=' + (size * start).toString() + '&' + ((test) ? 'test=' + test + '&' : '');
     if (systems) {
       for (let system of systems) {
         query += 'system=' + system + '&';
       }
     }
+    console.log('query: ', query);
+    
 
-    this.http.get<ITestCaseHeader[]>(query)
+    this.http.get<ITestCaseHeader>(query)
       .subscribe((response) => {
+        
         // @ts-ignore
         if (response.iTotalRecords > 0) {
           // @ts-ignore
-          this.testcasesList = response.contentTable;
+          this.testcasesList = response.contentTable;    
+          //this.testcasesListLength = response.iTotalRecords;     
+          
           this.observableTestCasesList.next(this.testcasesList);
+          //this.observableTestCasesListLength.next(this.testcasesListLength);
         }
         else {
           this.testcasesList = null;
@@ -84,12 +95,12 @@ export class TestService {
         }
       })
   }
-  getTestCasesFilterList(...filter) {
+  getTestCasesFilterList(...filter): Observable<any> {
     let query = AppSettings.API_endpoint + '/ReadTestCase?columnName=app.system';
-    this.http.post(query, "cerberus")
-      .subscribe(response => {
-        console.log(response);
-      });     
+    return this.http.post(query, "cerberus");   
+  }
+  postTestCasesList(): Observable<any> {
+    return this.http.post(AppSettings.API_endpoint + '/ReadTestCase', '');   
   }
 
   getTestCase(test: string, testcase: string) {

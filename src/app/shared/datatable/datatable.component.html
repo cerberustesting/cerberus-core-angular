@@ -2,7 +2,7 @@
     <ngx-datatable class="material fullscreen" [rows]="rows" [columns]="columns" [columnMode]="'force'" [rowHeight]="'auto'"
         [limit]="10" [footerHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading" [selected]="selected"
         [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" (select)='onSelect($event)'
-        [scrollbarH]="false">
+        [scrollbarH]="false" [count]="page.totalCount" [offset]="page.number" [limit]="page.size" [externalPaging]="true" (page)='setPage($event)'>
         <!--(activate)="onActivate($event)"-->
 
         <!--CheckBox Column-->
@@ -13,7 +13,7 @@
         <!--Column from column array-->
         <ng-template ngFor let-column [ngForOf]="columns">
             <ngx-datatable-column *ngIf="column.active" [name]="column.contentName" [width]="column.width">
-                <!--Country column-->
+                
                 <ng-template ngx-datatable-header-template>
                     <span>{{ column.displayName }}</span>
                 </ng-template>
@@ -21,6 +21,7 @@
                 <ng-template *ngIf="column.displayContentFunction" let-value ngx-datatable-cell-template>  
                     {{ column.displayContentFunction(value) }}         
                 </ng-template>
+                <!--Country column-->
                 <ng-template *ngIf="column.contentName=='countryList'" let-value="value" ngx-datatable-cell-template>
                     <a *ngFor="let item of value | keyvalue">
                         <b>{{item.value}} </b>
@@ -28,7 +29,10 @@
                 </ng-template>
                 <!--Label column-->
                 <ng-template *ngIf="column.contentName=='LABELS'" let-value="value" ngx-datatable-cell-template>
-                    <div class="label" *ngFor="let item of value" [style.background-color]="item.color">{{ item.name }}</div>
+                    <div *ngIf="value">
+                            <div class="label" *ngFor="let item of value" [style.background-color]="item.color">{{ item?.name }}</div>
+                    </div>
+                                                                                
                 </ng-template>
 
             </ngx-datatable-column>

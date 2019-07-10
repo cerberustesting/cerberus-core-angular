@@ -15,6 +15,7 @@ import {ITest} from '../../../shared/model/test.model';
 export class FiltersComponent implements OnInit {
 
   @Input('columns') columns: Array<any>;
+  @Input('page') page: any;
 
   @Output() test = new EventEmitter<string>();
   @Output() searchTerm = new EventEmitter<string>();
@@ -69,10 +70,12 @@ export class FiltersComponent implements OnInit {
                private testService: TestService ) { }
 
   
-  // sendMyFilter() {
-  //   this.testService.getTestCasesFilterList();
-  //   this.testService.getTestCasesList();
-  // }
+  sendMyFilter() {
+    this.testService.getTestCasesFilterList().subscribe(response => {
+      console.log("server response: ", response);      
+    });
+    //this.testService.getTestCasesList();
+  }
 
   ngOnInit() {
 

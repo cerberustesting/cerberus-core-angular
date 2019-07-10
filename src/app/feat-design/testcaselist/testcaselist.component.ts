@@ -39,8 +39,13 @@ export class TestcaselistComponent implements OnInit {
     { displayName: 'TestCase Version', contentName: 'testCaseVersion',  active: false },
     { displayName: 'Date Modification', contentName: 'dateModif',  active: false },
     { displayName: 'User Modification', contentName: 'usrModif',  active: false },
-
   ];
+  page =  {
+    size: 10,
+    number: 0,
+    totalCount: 20000
+  };
+
   selectedTest = '';
   searchTerm =  { $or: [{ testCase: '' }, { status: '' }, { application: '' }, { description: '' }, { system: '' }] };
 
@@ -50,7 +55,9 @@ export class TestcaselistComponent implements OnInit {
   constructor( private testService: TestService, private invariantsService: InvariantsService ) { }
 
   ngOnInit() {
-    this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected);
+    console.log({test: this.selectedTest, systems: this.invariantsService.systemsSelected, size: this.page.size, start: this.page.number});
+    
+    this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected, this.page.size, this.page.number);
     
     this.testService.observableTestCasesList.subscribe(response => {      
       if (response) {
@@ -60,6 +67,11 @@ export class TestcaselistComponent implements OnInit {
       } else {
         this.testcasesList = null;
       }
+    });
+    this.testService.observableTestCasesListLength.subscribe(response => {      
+      if (response) {        
+        this.page.totalCount = response;
+      }      
     });
 
   }
@@ -78,18 +90,35 @@ export class TestcaselistComponent implements OnInit {
   }
 
   appplySystemChange() {
-    this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected);
+    console.log({test: this.selectedTest, systems: this.invariantsService.systemsSelected, size: this.page.size, start: this.page.number});
+
+    this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected, this.page.size, this.page.number);
     
     this.testService.observableTestCasesList.subscribe(response => {
       
       if (response) {
         if (response.length > 0) {
           this.testcasesList = response;
+          console.log("updating row");
+          
+          console.log(this.testcasesList);
         }
       } else {
         this.testcasesList = null;
       }
     });
+    this.testService.observableTestCasesListLength.subscribe(response => {      
+      if (response) {        
+        this.page.totalCount = response;
+      }      
+    });
+  }
+
+  pageUpdate(newPage) {
+    console.log('offset: ', newPage);
+    
+    this.page.number = newPage;
+    this.appplySystemChange();
   }
 
 }

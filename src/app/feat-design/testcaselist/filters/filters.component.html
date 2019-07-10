@@ -24,6 +24,15 @@
 
     </ng-select>
 
+    <ng-select class="column-selector custom" bindLabel="name" placeholder="Line number"
+        [(ngModel)]="page.size" [items]="[10, 25, 50, 100]" [closeOnSelect]="false">
+
+        <ng-template ng-option-tmp let-item="item" let-index="index">                
+                <div>{{item}}</div>
+        </ng-template>
+
+    </ng-select>
+
     
 
     <app-filter [dataList]="testList" [param]="testFilter" (dataSelected)="updateTest($event)"></app-filter>

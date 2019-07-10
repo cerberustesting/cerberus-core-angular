@@ -43,7 +43,7 @@ export class TestcaselistComponent implements OnInit {
   page =  {
     size: 10,
     number: 0,
-    totalCount: 20000
+    totalCount: 0
   };
 
   selectedTest = '';
@@ -99,9 +99,6 @@ export class TestcaselistComponent implements OnInit {
       if (response) {
         if (response.length > 0) {
           this.testcasesList = response;
-          console.log("updating row");
-          
-          console.log(this.testcasesList);
         }
       } else {
         this.testcasesList = null;

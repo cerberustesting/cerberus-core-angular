@@ -1,8 +1,8 @@
 <div class="data-table">
     <ngx-datatable class="material fullscreen" [rows]="rows" [columns]="columns" [columnMode]="'force'" [rowHeight]="'auto'"
-        [limit]="10" [footerHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading" [selected]="selected"
+        [footerHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading" [selected]="selected"
         [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" (select)='onSelect($event)'
-        [scrollbarH]="false" [count]="page.totalCount" [offset]="page.number" [limit]="page.size" [externalPaging]="true" (page)='setPage($event)'>
+        [scrollbarH]="false" [count]="page.totalCount" [offset]="page.number" [externalPaging]="true" (page)='setPage($event)'>
         <!--(activate)="onActivate($event)"-->
 
         <!--CheckBox Column-->

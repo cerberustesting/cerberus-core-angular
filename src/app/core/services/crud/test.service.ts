@@ -84,10 +84,11 @@ export class TestService {
         if (response.iTotalRecords > 0) {
           // @ts-ignore
           this.testcasesList = response.contentTable;    
-          //this.testcasesListLength = response.iTotalRecords;     
+          this.testcasesListLength = response.iTotalRecords;     
+          console.log(this.testcasesList.length);
           
           this.observableTestCasesList.next(this.testcasesList);
-          //this.observableTestCasesListLength.next(this.testcasesListLength);
+          this.observableTestCasesListLength.next(this.testcasesListLength);
         }
         else {
           this.testcasesList = null;

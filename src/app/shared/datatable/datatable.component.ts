@@ -35,8 +35,6 @@ export class DatatableComponent implements OnInit {
   }
 
   setPage(pageInfo){
-    console.log(pageInfo.offset);
-    
     this.page.number = pageInfo.offset;
     this.pageUpdate.emit(pageInfo.offset);
   }

@@ -8,6 +8,7 @@ import { IProject } from 'src/app/shared/model/project.model';
 import { AppSettings } from 'src/app/app.component';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
 import { IProperty, Property } from 'src/app/shared/model/property.model';
+import { Filter } from 'src/app/shared/model/filter.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -41,7 +42,7 @@ export class TestService {
   observableTestCaseProperties = new BehaviorSubject<IProperty[]>(this.testcase_properties);
   // boolean
   refreshTC: boolean = false;
-  
+
 
   constructor(
     private http: HttpClient,
@@ -64,9 +65,9 @@ export class TestService {
   }
 
   getTestCasesList(test?: string, systems?: Array<string>, size?: number, start?: number) {
-    
-    if(!size) size = 10;
-    if(!start) start = 0;
+
+    if (!size) size = 10;
+    if (!start) start = 0;
 
     let query = AppSettings.API_endpoint + '/ReadTestCase?iDisplayLength=' + size + '&iDisplayStart=' + (size * start).toString() + '&' + ((test) ? 'test=' + test + '&' : '');
     if (systems) {
@@ -75,18 +76,18 @@ export class TestService {
       }
     }
     console.log('query: ', query);
-    
+
 
     this.http.get<ITestCaseHeader>(query)
       .subscribe((response) => {
-        
+
         // @ts-ignore
         if (response.iTotalRecords > 0) {
           // @ts-ignore
-          this.testcasesList = response.contentTable;    
-          this.testcasesListLength = response.iTotalRecords;     
+          this.testcasesList = response.contentTable;
+          this.testcasesListLength = response.iTotalRecords;
           console.log(this.testcasesList.length);
-          
+
           this.observableTestCasesList.next(this.testcasesList);
           this.observableTestCasesListLength.next(this.testcasesListLength);
         }
@@ -96,12 +97,40 @@ export class TestService {
         }
       })
   }
-  getTestCasesFilterList(...filter): Observable<any> {
-    let query = AppSettings.API_endpoint + '/ReadTestCase?columnName=app.system';
-    return this.http.post(query, "cerberus");   
+  getTestCasesFilterList(length, filters: Array<Filter>) {
+    let query = AppSettings.API_endpoint + '/ReadTestCase?filter=true&length=' + length + '&';
+    for (let filter of filters) {
+      query += filter.name + '=' + filter.value + '&';
+    }
+    console.log(query);
+    this.http.get<ITestCaseHeader>(query)
+      .subscribe((response) => {
+        console.log(response);
+        if (response.contentTable) {
+          // @ts-ignore
+          if (response.contentTable.length > 0) {
+            // @ts-ignore
+            this.testcasesList = response.contentTable;
+
+            this.observableTestCasesList.next(this.testcasesList);
+            this.observableTestCasesListLength.next(this.testcasesListLength);
+          }
+          else {
+            this.testcasesList = null;
+            this.observableTestCasesList.next(this.testcasesList);
+          }
+        }
+
+
+      })
   }
-  postTestCasesList(): Observable<any> {
-    return this.http.post(AppSettings.API_endpoint + '/ReadTestCase', '');   
+
+  filtreTestCase(filterTable): Observable<ITestCaseHeader> {
+    return this.http.post<ITestCaseHeader>(AppSettings.API_endpoint + '/ReadTestCase', filterTable, httpOptions);
+  }
+
+  postTestCasesList(formData): Observable<any> {
+    return this.http.post(AppSettings.API_endpoint + '/ReadTestCase', '');
   }
 
   getTestCase(test: string, testcase: string) {

@@ -36,7 +36,8 @@ import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
     NgbPopoverModule
   ],
   providers : [
-    TrueindexPipe
+    TrueindexPipe,
+    LabelfilteringPipe
   ]
 })
 export class SharedModule { }

@@ -1,11 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SystemService} from '../../../core/services/crud/system.service';
-import {ILabel} from '../../../shared/model/label.model';
-import {IApplication} from '../../../shared/model/application.model';
-import {InvariantsService} from '../../../core/services/crud/invariants.service';
-import {IInvariant} from '../../../shared/model/invariants.model';
-import {TestService} from '../../../core/services/crud/test.service';
-import {ITest} from '../../../shared/model/test.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SystemService } from '../../../core/services/crud/system.service';
+import { ILabel } from '../../../shared/model/label.model';
+import { IApplication } from '../../../shared/model/application.model';
+import { InvariantsService } from '../../../core/services/crud/invariants.service';
+import { IInvariant } from '../../../shared/model/invariants.model';
+import { TestService } from '../../../core/services/crud/test.service';
+import { ITest } from '../../../shared/model/test.model';
+import { Column } from 'src/app/shared/model/column.model';
+import { FilterService } from './filter.service';
+import { Filter } from 'src/app/shared/model/filter.model';
 
 @Component({
   selector: 'app-filters',
@@ -14,12 +17,18 @@ import {ITest} from '../../../shared/model/test.model';
 })
 export class FiltersComponent implements OnInit {
 
-  @Input('columns') columns: Array<any>;
+  @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
+  @Input('filterList') filterList: Array<Filter>;
 
   @Output() test = new EventEmitter<string>();
   @Output() searchTerm = new EventEmitter<string>();
   @Output() systemApply = new EventEmitter<string>();
+  @Output() searchServe = new EventEmitter<string>();
+
+  resetColumnDrop() {
+    this.columnActive = null;
+  }
 
   labelList: Array<ILabel>;
   applicationList: Array<IApplication>;
@@ -29,10 +38,11 @@ export class FiltersComponent implements OnInit {
   testList: Array<ITest>;
   testSelected: any;
   userSearch: any;
-  columnActive: any;
+  columnActive: number;
+  searchableColumns: Array<Column>
 
   labelFilter = {
-    multiple:  true,
+    multiple: true,
     field: 'label',
     placeholder: 'Select labels',
     bindLabel: 'label',
@@ -40,7 +50,7 @@ export class FiltersComponent implements OnInit {
   };
 
   applicationFilter = {
-    multiple:  true,
+    multiple: true,
     field: 'application',
     placeholder: 'Select applications',
     bindLabel: 'application',
@@ -48,7 +58,7 @@ export class FiltersComponent implements OnInit {
   };
 
   statusFilter = {
-    multiple:  true,
+    multiple: true,
     field: 'status',
     placeholder: 'Select status',
     bindLabel: '',
@@ -56,28 +66,42 @@ export class FiltersComponent implements OnInit {
   };
 
   testFilter = {
-    multiple:  true,
+    multiple: true,
     field: 'test',
     placeholder: 'Select test',
     bindLabel: 'test',
     bindValue: 'test',
   };
 
-  list = ['System','Active'];
+  list = ['System', 'Active'];
 
-  constructor( private systemService: SystemService,
-               private invariantService: InvariantsService,
-               private testService: TestService ) { }
+  constructor(private systemService: SystemService,
+    private invariantService: InvariantsService,
+    private testService: TestService) { 
+      this.filterList = [];      
+    }
 
   
-  sendMyFilter() {
-    this.testService.getTestCasesFilterList().subscribe(response => {
-      console.log("server response: ", response);      
-    });
-    //this.testService.getTestCasesList();
+
+  addfilter(property: string, value: string, like?: boolean) {
+    this.filterList.push({
+      name: property,
+      value: value,
+      like: like
+    })
   }
 
+  // sendMyFilter() {
+  //   this.testService.getTestCasesFilterList().subscribe(response => {
+  //     console.log("server response: ", response);      
+  //   });
+  //   //this.testService.getTestCasesList();
+  // }
+
   ngOnInit() {
+
+    this.columnActive = this.columns.filter(a => a.active).length;
+    this.searchableColumns = this.columns.filter(a => a.searchable);
 
     this.systemService.getLabelsFromSystem('DEFAULT');
     this.systemService.getApplicationList();
@@ -88,6 +112,7 @@ export class FiltersComponent implements OnInit {
       if (response) {
         if (response.length > 0) {
           this.labelList = response;
+          console.log(response[0]);
         }
       } else {
         this.labelList = null;
@@ -133,19 +158,40 @@ export class FiltersComponent implements OnInit {
     this.testSelected = testSelected;
   }
   updateSearch() {
-      this.searchTerm.emit(this.userSearch);
+    this.searchTerm.emit(this.userSearch);
+  }
+
+  updateFilters(data) {
+    console.log("update : ", data);
+    
+    this.filterList.push(data)
   }
 
   toggleColumn(column): void {
     column.active = !column.active;
+    this.columnActive = this.columns.filter(a => a.active).length;
+    console.log('Active columns', this.columnActive);
+
   }
 
   sendFilter(data) {
     data = this.testSelected;
     this.test.emit(data);
   }
+
+
   applySystem() {
-    
-    this.systemApply.emit('nouveaux systems');
+    this.systemApply.emit('');
+  }
+
+  triggerFilter() {
+    this.searchServe.emit('');
+  }
+
+  remove(filter) {
+    const index = this.filterList.indexOf(filter, 0);
+    if (index > -1) {
+      this.filterList.splice(index, 1);
+    }
   }
 }

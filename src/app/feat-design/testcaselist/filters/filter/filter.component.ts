@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { FilterService } from '../filter.service';
+import { Filter } from 'src/app/shared/model/filter.model';
 
 @Component({
   selector: 'app-filter',
@@ -9,6 +11,7 @@ export class FilterComponent implements OnInit {
   @Input() dataList: any;
   @Input() field: any;
   @Output() dataSelected = new EventEmitter<string>();
+  @Output() updateFilters = new EventEmitter<Filter>();
   data: any;
 
   @Input() param : {
@@ -19,14 +22,23 @@ export class FilterComponent implements OnInit {
               bindValue: any,
           };
 
-  constructor() { }
+  constructor(private filterService: FilterService) { }
 
-  sendValues(data) {
-    this.dataSelected.emit(data);
-    console.log(this.dataSelected);
-  }
+  // sendValues(data) {
+  //   this.dataSelected.emit(data);
+  //   console.log(this.dataSelected);
+  // }
   applyFilter() {
-    console.log("Not impletmented yet");
+    console.log(this.data);
+    
+    for(let filter of this.data) {
+      // this.filterService.addfilter(this.param.field, filter);
+      this.updateFilters.emit({
+        name: this.param.field,
+        value: filter,
+        like: false
+      })
+    }
     
   }
 

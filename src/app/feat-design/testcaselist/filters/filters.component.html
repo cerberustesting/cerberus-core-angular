@@ -13,36 +13,85 @@
         </div>
     </div> -->
 
-    <ng-select class="column-selector custom" bindLabel="name" placeholder="Select Columns"
-        [(ngModel)]="columnActive" [items]="columns" [closeOnSelect]="false">
+    <!--Column Selector-->
+    <ng-select class="column-selector custom" 
+        bindLabel="name" 
+        placeholder="Selected : {{ columnActive }}"
+        [items]="columns" 
+        [closeOnSelect]="false" 
+        (change)="resetColumnDrop" 
+        [searchable]="false"
+        [clearable]="false">
+
+        <!--Content in the top container-->
         <ng-template ng-label-tmp>
+            <div>Selected : {{ columnActive }}</div>
         </ng-template>
 
+        <!--List of columns (underline if selected)-->
         <ng-template ng-option-tmp let-item="item" let-index="index">                
                 <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">{{item.displayName}}</div>
         </ng-template>
 
     </ng-select>
 
-    <ng-select class="column-selector custom" bindLabel="name" placeholder="Line number"
-        [(ngModel)]="page.size" [items]="[10, 25, 50, 100]" [closeOnSelect]="false">
+    <!--Page size selector-->
+    <ng-select class="column-selector custom page-size" 
+        bindLabel="name" 
+        placeholder="Show : {{ page.size }}"
+        [(ngModel)]="page.size" 
+        [items]="[10, 25, 50, 100]" 
+        [closeOnSelect]="true"
+        [clearable]="false"
+        (change)="applySystem()"	>
 
+        <!--Content in the top container-->
+        <ng-template ng-label-tmp>
+            <div>Show : {{ page.size }}</div>
+        </ng-template>
+        
+        <!--Items list-->
         <ng-template ng-option-tmp let-item="item" let-index="index">                
-                <div>{{item}}</div>
+                <div>Show : {{ item }}</div>
         </ng-template>
 
     </ng-select>
 
     
-
-    <app-filter [dataList]="testList" [param]="testFilter" (dataSelected)="updateTest($event)"></app-filter>
-    <app-filter [dataList]="applicationList" [param]="applicationFilter" (dataSelected)="updateApplication($event)">
+    <!--Filters-->
+    <app-filter [dataList]="testList" [param]="testFilter" (updateFilters)="updateFilters($event)"></app-filter>
+    <app-filter [dataList]="applicationList" [param]="applicationFilter" (updateFilters)="updateFilters($event)">
     </app-filter>
-    <app-filter [dataList]="statusList" [param]="statusFilter" (dataSelected)="updateStatus($event)"></app-filter>
+    <app-filter [dataList]="statusList" [param]="statusFilter" (updateFilters)="updateFilters($event)"></app-filter>
     <app-filter [dataList]="labelList" [param]="labelFilter" [field]="'label'"></app-filter>
     <!--<button (click)="sendFilter($event)">TATA</button>-->
-    <button class="add-filter" data-toggle="modal" data-target="#filterModal">+</button>
-    <app-filter-modal [ngStyle]="{'display': 'block'}"></app-filter-modal>
 
+    <!--Add filter button-->
+    <!-- <button class="add-filter" (click)="triggerFilter()">+</button> -->
+    <ng-select
+        class="custom addFilters" 
+        bindLabel="name" 
+        placeholder="Add filter"
+        [items]="searchableColumns" 
+        [closeOnSelect]="false" 
+        (change)="resetColumnDrop" 
+        [searchable]="false"
+        [clearable]="false">
+
+        <ng-template ng-option-tmp let-item="item" let-index="index">                
+               <span>{{ item.displayName }} </span><i class="fa fa-check" style="float: right;"></i>
+        </ng-template>
+
+
+    </ng-select>
+
+    <!--Apply button-->
     <button class="btn btn-info" (click)="applySystem()">Apply Systems</button>
+    <button (click)="save()" class="filter-preference btn btn-primary"><i class="fa fa-save"></i></button>
+    <button (click)="load()" class="filter-preference btn btn-primary"><i class="fa fa-arrow-alt-circle-down"></i></button>
+    
+</div>
+
+<div class="filter-list">    
+    <span *ngFor="let filter of filterList" class="badge badge-secondary filter-badge">{{ filter.name }} : {{ filter.value }} <i class="far fa-times-circle" (click)=remove(filter)></i></span>
 </div>

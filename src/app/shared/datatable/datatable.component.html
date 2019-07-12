@@ -1,45 +1,87 @@
 <div class="data-table">
-    <ngx-datatable class="material fullscreen" [rows]="rows" [columns]="columns" [columnMode]="'force'" [rowHeight]="'auto'"
-        [footerHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading" [selected]="selected"
-        [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" (select)='onSelect($event)'
-        [scrollbarH]="false" [count]="page.totalCount" [offset]="page.number" [externalPaging]="true" (page)='setPage($event)'>
+    <ngx-datatable class="material fullscreen" 
+        [rows]="rows" 
+        [columns]="columns" 
+        [columnMode]="'force'" 
+        [rowHeight]="'auto'"
+        [footerHeight]="50" 
+        [headerHeight]="50" 
+        [loadingIndicator]="isLoading" 
+        [selected]="selected"
+        [selectionType]="'checkbox'" 
+        [selectAllRowsOnPage]="true"     
+        [scrollbarH]="false" 
+        [count]="page.totalCount" 
+        [offset]="page.number" 
+        [externalPaging]="true"
+        (select)='onSelect($event)'
+        (page)='setPage($event)'>
+
         <!--(activate)="onActivate($event)"-->
+        
 
         <!--CheckBox Column-->
-        <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
-            [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
+        <ngx-datatable-column 
+            [sortable]="false" 
+            [canAutoResize]="false" 
+            [draggable]="false" 
+            [resizeable]="false"
+            [headerCheckboxable]="true" 
+            [checkboxable]="true" 
+            [width]="80"
+            >
         </ngx-datatable-column>
+
+        <!-- <ngx-datatable-column 
+            [sortable]="false" 
+            [canAutoResize]="false" 
+            [draggable]="false" 
+            [resizeable]="false"
+            name="Actions"
+            [width]="90"
+            >
+            
+            <ng-template let-row='row' let-value ngx-datatable-cell-template>  
+                <button class="action btn btn-dark far fa-edit"></button>
+                <button class="action btn btn-primary js-tooltip-enabled"></button>
+                <button class="action btn btn-warning far fa-clone js-tooltip-enabled"></button>
+                <button class="action btn btn-danger far fa-trash-alt js-tooltip-enabled"></button>        
+            </ng-template>
+        </ngx-datatable-column> -->
 
         <!--Column from column array-->
         <ng-template ngFor let-column [ngForOf]="columns">
             <ngx-datatable-column *ngIf="column.active" [name]="column.contentName" [width]="column.width">
                 
+                <!--Header row-->
                 <ng-template ngx-datatable-header-template>
                     <span>{{ column.displayName }}</span>
                 </ng-template>
 
-                <ng-template *ngIf="column.displayContentFunction" let-value ngx-datatable-cell-template>  
-                    {{ column.displayContentFunction(value) }}         
+                <!--If the content need a function to be display-->
+                <ng-template *ngIf="column.displayContentFunction" let-row='row' let-value ngx-datatable-cell-template>  
+                    {{ column.displayContentFunction(row) }}         
                 </ng-template>
+
                 <!--Country column-->
-                <ng-template *ngIf="column.contentName=='countryList'" let-value="value" ngx-datatable-cell-template>
+                <ng-template *ngIf="column.contentName=='countryList'" let-value="value"  ngx-datatable-cell-template>
                     <a *ngFor="let item of value | keyvalue">
                         <b>{{item.value}} </b>
                     </a>
                 </ng-template>
+
                 <!--Label column-->
-                <ng-template *ngIf="column.contentName=='LABELS'" let-value="value" ngx-datatable-cell-template>
-                    <div *ngIf="value">
-                            <div class="label" *ngFor="let item of value" [style.background-color]="item.color">{{ item?.name }}</div>
-                    </div>
-                                                                                
+                <ng-template *ngIf="column.type==='label'" let-row='row' let-value="value" ngx-datatable-cell-template>
+                    <div *ngIf="row[column.contentName]">
+                        <div class="label" *ngFor="let item of row[column.contentName]" [style.background-color]="item.color">{{ item?.name }}</div>
+                    </div>                                                                                
                 </ng-template>
 
             </ngx-datatable-column>
         </ng-template>
 
 
-
+        <!----------------------OLD VERSION----------------------->
 
         <!--Country column-->
         <!-- <ngx-datatable-column *ngIf="testcaseslist" name="CountryList">

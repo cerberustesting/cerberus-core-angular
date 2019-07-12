@@ -21,6 +21,8 @@ import { SettingsComponent } from "./testcasescript/tc-script/settings/settings.
 import { ActionsComponent } from './testcaselist/actions/actions.component';
 import { FilterModalComponent } from './testcaselist/filters/filter-modal/filter-modal.component';
 
+
+
 @NgModule({
   declarations: [
       TestcaselistComponent,
@@ -45,7 +47,7 @@ import { FilterModalComponent } from './testcaselist/filters/filter-modal/filter
     DesignRoutingModule,
     FilterPipeModule,
     SharedModule,
-    DragDropModule,
+    DragDropModule
   ],
   exports: [SharedModule]
 })

@@ -1,8 +1,32 @@
 .data-table {
   margin: 20px;
+  margin-top: 40px;
 }
 
 .material {
   margin: 80px 0 20px;
   box-shadow: none;
+}
+
+.ngx-datatable .datatable-footer-inner {
+  position: absolute;
+  top: 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.ngx-datatable .datatable-header {
+  position: absolute;
+  top: 70px;
+}
+
+.ngx-datatable .datatable-body {
+  margin-top: 100px;
+}
+.action {
+  width: 20px;
+  height: 20px;
+  font-size: 15px;
+  padding: 0;
+  line-height: 20px;
+  margin-right: 3px;
 }

@@ -1,4 +1,4 @@
-.filter-container {
+.filter-container, .filter-list {
   display: flex;
   flex-direction: row;
   position: fixed;
@@ -6,6 +6,10 @@
   width: 100%;
   padding: 5px;
   z-index: 1000;
+}
+.filter-list {
+  top: 125px;
+  z-index: 5;
 }
 
 .input-search {
@@ -53,4 +57,32 @@
 
 .modal-backdrop {
   display: none;
+}
+
+ng-select.typeahead .ng-value {
+  display: none !important;
+}
+
+.pageSize {
+  margin-left: 20px;
+}
+
+.ui-select-choices {
+  position: fixed;
+  top: auto;
+  left: auto;
+  width: inherit;
+}
+.badge {
+  margin: 5px !important;
+}
+
+.filter-badge {
+  i {
+    margin-left: 3px;
+  }
+}
+
+.addFilters {
+  width: 200px;
 }

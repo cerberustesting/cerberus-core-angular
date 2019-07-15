@@ -44,21 +44,23 @@ export class TestcaselistComponent implements OnInit {
       displayName: 'Application', 
       databaseName: 'tec.application', 
       contentName: 'application', 
-      active: true 
+      active: true,
+      searchable: true 
     },
     { 
       displayName: 'Description', 
       databaseName: 'tec.description', 
       contentName: 'description', 
       width: 300, 
-      active: false,
+      active: true,
       like: true 
     },
     { 
       displayName: 'System', 
       databaseName: 'app.system', 
       contentName: 'system', 
-      active: true 
+      active: true,
+      searchable: true
     },
     { 
       displayName: 'Global Activation', 
@@ -70,7 +72,8 @@ export class TestcaselistComponent implements OnInit {
       displayName: 'Priority', 
       databaseName: 'tec.priority', 
       contentName: 'priority', 
-      active: false 
+      active: true,
+      searchable: true
     },
     { 
       displayName: 'CountryList', 
@@ -86,6 +89,7 @@ export class TestcaselistComponent implements OnInit {
       type: 'label', 
       active: true,
       sortable: false, 
+      searchable: true
     },
     /****/
     { 
@@ -94,7 +98,6 @@ export class TestcaselistComponent implements OnInit {
       contentName: 'labelsSTICKER', 
       type: 'label', 
       active: false, 
-      //displayContentFunction: testcase => "not implemented yet",
       sortable: false,
     },//
     { 

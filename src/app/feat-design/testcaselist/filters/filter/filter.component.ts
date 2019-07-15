@@ -30,15 +30,18 @@ export class FilterComponent implements OnInit {
   // }
   applyFilter() {
     console.log(this.data);
-    
-    for(let filter of this.data) {
-      // this.filterService.addfilter(this.param.field, filter);
-      this.updateFilters.emit({
-        name: this.param.field,
-        value: filter,
-        like: false
-      })
+    if (this.data) {
+      for(let filter of this.data) {
+        // this.filterService.addfilter(this.param.field, filter);
+        this.updateFilters.emit({
+          name: this.param.field,
+          value: filter,
+          like: false
+        })
+      }
     }
+    
+    
     
   }
 

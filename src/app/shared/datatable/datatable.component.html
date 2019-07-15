@@ -51,12 +51,15 @@
 
         <!--Column from column array-->
         <ng-template ngFor let-column [ngForOf]="columns">
-            <ngx-datatable-column *ngIf="column.active" [name]="column.contentName" [width]="column.width">
+            <ngx-datatable-column *ngIf="column.active" [name]="column.displayName" [prop]="column.contentName" [width]="column.width" [draggable]="true" >
                 
-                <!--Header row-->
+                <!-- Header row
                 <ng-template ngx-datatable-header-template>
-                    <span>{{ column.displayName }}</span>
-                </ng-template>
+                    <span class="datatable-header-cell-wrapper">
+                            <span class="datatable-header-cell-label draggable">{{ column.displayName }}</span>
+                    </span>
+                    
+                </ng-template> -->
 
                 <!--If the content need a function to be display-->
                 <ng-template *ngIf="column.displayContentFunction" let-row='row' let-value ngx-datatable-cell-template>  

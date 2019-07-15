@@ -84,11 +84,16 @@ export class FiltersComponent implements OnInit {
   
 
   addfilter(property: string, value: string, like?: boolean) {
-    this.filterList.push({
+    let filter = {
       name: property,
       value: value,
       like: like
-    })
+    };
+    console.log("findIndex :",this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ));
+    
+    if (this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ) ===-1) {
+      this.filterList.push(filter);
+    }
   }
 
   // sendMyFilter() {
@@ -122,6 +127,8 @@ export class FiltersComponent implements OnInit {
       if (response) {
         if (response.length > 0) {
           this.applicationList = response;
+          console.log("application : ", this.applicationList);
+          
         }
       } else {
         this.applicationList = null;
@@ -163,8 +170,18 @@ export class FiltersComponent implements OnInit {
 
   updateFilters(data) {
     console.log("update : ", data);
+    let filter = {
+      name: data.name,
+      value: data.value,
+      like: data.like
+    };
+    console.log("findIndex :",this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ));
     
-    this.filterList.push(data)
+    if (this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ) ===-1) {
+      this.filterList.push(filter);
+    }
+    
+    //this.filterList.push(data)
   }
 
   toggleColumn(column): void {

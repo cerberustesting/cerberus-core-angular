@@ -18,8 +18,6 @@ export class FiltersComponent implements OnInit {
 
   @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
-  @Input('filterList') filterList: Array<Filter>;
-  @Input('filterMenus') filterMenus: Array<any>;
 
   @Output() test = new EventEmitter<string>();
   @Output() searchTerm = new EventEmitter<string>();
@@ -41,115 +39,15 @@ export class FiltersComponent implements OnInit {
   columnActive: number;
   searchableColumns: Array<Column>
 
-  // labelFilter = {
-  //   multiple: true,
-  //   field: 'label',
-  //   placeholder: 'Select labels',
-  //   bindLabel: 'label',
-  //   bindValue: 'label',
-  // };
-
-  // applicationFilter = {
-  //   multiple: true,
-  //   field: 'application',
-  //   placeholder: 'Select applications',
-  //   bindLabel: 'application',
-  //   bindValue: 'application',
-  // };
-
-  // statusFilter = {
-  //   multiple: true,
-  //   field: 'status',
-  //   placeholder: 'Select status',
-  //   bindLabel: '',
-  //   bindValue: 'value',
-  // };
-
-  // testFilter = {
-  //   multiple: true,
-  //   field: 'test',
-  //   placeholder: 'Select test',
-  //   bindLabel: 'test',
-  //   bindValue: 'test',
-  // };
-
-  // list = ['System', 'Active'];
 
   constructor(private systemService: SystemService,
     private invariantService: InvariantsService,
-    private testService: TestService) { 
-      this.filterList = [];      
-    }
-
-  
-
-  // addfilter(property: string, value: string, like?: boolean) {
-  //   let filter = {
-  //     name: property,
-  //     value: value,
-  //     like: like
-  //   };
-  //   console.log("findIndex :",this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ));
-    
-  //   if (this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ) ===-1) {
-  //     this.filterList.push(filter);
-  //   }
-  // }
-
-  // sendMyFilter() {
-  //   this.testService.getTestCasesFilterList().subscribe(response => {
-  //     console.log("server response: ", response);      
-  //   });
-  //   //this.testService.getTestCasesList();
-  // }
+    private testService: TestService) { }
 
   ngOnInit() {
 
     this.columnActive = this.columns.filter(a => a.active).length;
     this.searchableColumns = this.columns.filter(a => a.searchable);
-
-    this.systemService.getLabelsFromSystem('DEFAULT');
-    this.systemService.getApplicationList();
-    this.invariantService.getTcStatus();
-    this.testService.getTestsList();
-
-    this.systemService.observableLabelsList.subscribe(response => {
-      if (response) {
-        if (response.length > 0) {
-          this.labelList = response;
-        }
-      } else {
-        this.labelList = null;
-      }
-    });
-    this.systemService.observableApplicationList.subscribe(response => {
-      if (response) {
-        if (response.length > 0) {
-          this.applicationList = response;
-          
-        }
-      } else {
-        this.applicationList = null;
-      }
-    });
-    this.invariantService.observableTcStatus.subscribe(response => {
-      if (response) {
-        if (response.length > 0) {
-          this.statusList = response;
-        }
-      } else {
-        this.statusList = null;
-      }
-    });
-    this.testService.observableTestsList.subscribe(response => {
-      if (response) {
-        if (response.length > 0) {
-          this.testList = response;
-        }
-      } else {
-        this.testList = null;
-      }
-    });
   }
 
   updateStatus(statusSelected): void {
@@ -161,22 +59,10 @@ export class FiltersComponent implements OnInit {
   updateTest(testSelected): void {
     this.testSelected = testSelected;
   }
-  updateSearch() {
-    this.searchTerm.emit(this.userSearch);
-  }
-
-  updateFilters(filter: Filter) {    
-    if (this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ) ===-1) {
-      this.filterList.push(filter);
-    }   
-    //this.filterList.push(data)
-  }
 
   toggleColumn(column): void {
     column.active = !column.active;
     this.columnActive = this.columns.filter(a => a.active).length;
-    console.log('Active columns', this.columnActive);
-
   }
 
   sendFilter(data) {
@@ -194,11 +80,10 @@ export class FiltersComponent implements OnInit {
   }
 
   remove(column: Column, value: string) {
-    console.log(column);
-    const index = column.filterItem.sSearch.indexOf(value, 0);
+    const columnIndex = this.columns.indexOf(column);
+    const index = column.filterItem.sSearch.indexOf(value);
     if (index > -1) {
-      column.filterItem.sSearch.splice(index, 1);
+      this.columns[columnIndex].filterItem.sSearch.splice(index, 1);
     }
-    console.log(column);
   }
 }

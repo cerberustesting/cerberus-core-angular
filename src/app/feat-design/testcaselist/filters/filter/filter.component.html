@@ -3,32 +3,19 @@
            [selectableGroup]="true"
            [multiple]="column.filterItem.param.multiple"
            [closeOnSelect]="false"
-           bindValue="{{column.filterItem.param.bindValue}}"
-           bindLabel="{{column.filterItem.param.bindLabel}}"
            placeholder="{{column.filterItem.param.placeholder}}"
-           [(ngModel)]='column.filterItem.sSearch'
-           (close)="applyFilter(column.filterItem.sSearch)"
-           (remove)="applyFilter(column.filterItem.sSearch)"
-           (change)="applyFilter(column.filterItem.sSearch)"
+           [(ngModel)]='model'
+           (open)="dbg(column.filterItem.sSearch)"
+           (add)="add($event)"
+           (remove)="remove($event)"
            [clearable]="true">
-  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+  <!-- <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
     {{item}}
     <div *ngIf="column.filterItem.param.field=='label'"><div class="label" [style.background-color]="item.color">{{item.label}}</div></div>
-  </ng-template>
-    <!-- <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-        <div class="ng-value" *ngFor="let item of (items ? items.slice(0,1): [])" style="z-index: auto">
-            <span *ngIf="field=='label'" class="label" [style.background-color]="item.color"> {{item.label}}</span>
-            <span class="ng-value-label" *ngIf="param.field=='status'">{{item.value}}</span>
-            <span class="ng-value-label" *ngIf="param.field=='test'">{{item.test}}</span>
-            <span class="ng-value-label" *ngIf="param.field=='application'">{{item.application}}</span>
-            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-        </div>
-        <div class="ng-value" *ngIf="items.length > 1" >
-            <span class="ng-value-label">{{items.length - 1}} more...</span>
-        </div>
-    </ng-template> -->
+  </ng-template> -->
+
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-            <span>{{column.filterItem.param.field | titlecase }} Selected : {{items.length}}</span>
+            <span>{{column.displayName | titlecase }} Selected : {{column.filterItem.sSearch.length}}</span>
     </ng-template>
     <ng-template ng-footer-tmp>
       <button class="btn btn-outline-info" (click)="applyFilter()">Apply</button>

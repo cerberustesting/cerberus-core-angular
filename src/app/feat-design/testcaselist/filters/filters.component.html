@@ -1,17 +1,4 @@
 <div class="filter-container">
-    <!--    <input class="input-search" placeholder="Search" [(ngModel)]="userSearch" (keyup)="updateSearch()" (change)="updateSearch()" >-->
-
-    <!-- <div class="dropdown">
-        <button type="button" class="btn btn-hero-primary dropdown-toggle" id="columnDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Select Columns
-        </button>
-        <div class="dropdown-menu" aria-libelledby="columnDropdown">
-            <ng-template ngFor let-column [ngForOf]="columns">
-                <a class="dropdown-item" [ngClass]="{'selected': column.active}" (click)="toggleColumn(column)">{{ column.name }}</a>
-            </ng-template>
-            
-        </div>
-    </div> -->
 
     <!--Column Selector-->
     <ng-select class="column-selector custom" 
@@ -20,7 +7,7 @@
         [items]="columns" 
         [closeOnSelect]="false" 
         (change)="resetColumnDrop" 
-        [searchable]="false"
+        [searchable]="false" 
         [clearable]="false">
 
         <!--Content in the top container-->
@@ -29,8 +16,8 @@
         </ng-template>
 
         <!--List of columns (underline if selected)-->
-        <ng-template ng-option-tmp let-item="item" let-index="index">                
-                <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">{{item.displayName}}</div>
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">{{item.displayName}}</div>
         </ng-template>
 
     </ng-select>
@@ -41,7 +28,7 @@
         placeholder="Show : {{ page.size }}"
         [(ngModel)]="page.size" 
         [items]="[10, 25, 50, 100]" 
-        [closeOnSelect]="true"
+        [closeOnSelect]="true" 
         [clearable]="false"
         (change)="applySystem()">
 
@@ -49,62 +36,37 @@
         <ng-template ng-label-tmp>
             <div>Show : {{ page.size }}</div>
         </ng-template>
-        
+
         <!--Items list-->
-        <ng-template ng-option-tmp let-item="item" let-index="index">                
-                <div>Show : {{ item }}</div>
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div>Show : {{ item }}</div>
         </ng-template>
 
     </ng-select>
-    <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal">Block Design</button> -->
-
-    
-    <!--Filters-->
-    <!-- <app-filter [dataList]="testList" [param]="testFilter" (updateFilters)="updateFilters($event)"></app-filter>
-    <app-filter [dataList]="applicationList" [param]="applicationFilter" (updateFilters)="updateFilters($event)">
-    </app-filter>
-    <app-filter [dataList]="statusList" [param]="statusFilter" (updateFilters)="updateFilters($event)"></app-filter>
-    <app-filter [dataList]="labelList" [param]="labelFilter" [field]="'label'"></app-filter> -->
-    <!--<button (click)="sendFilter($event)">TATA</button>-->
-
-    <!--Add filter button-->
-    <!-- <button class="add-filter" (click)="triggerFilter()">+</button> -->
-    <!-- <ng-select
-        class="custom addFilters" 
-        bindLabel="name" 
-        placeholder="Add filter"
-        [items]="searchableColumns" 
-        [closeOnSelect]="false" 
-        (change)="resetColumnDrop" 
-        [searchable]="false"
-        [clearable]="false">
-
-        <ng-template ng-option-tmp let-item="item" let-index="index">                
-               <span>{{ item.displayName }} </span><i class="fa fa-check" style="float: right;"></i>
-        </ng-template>
-
-
-    </ng-select> -->
 
     <!--Apply button-->
     <button class="btn btn-info" (click)="applySystem()">Apply Systems</button>
     <button (click)="save()" class="filter-preference btn btn-primary"><i class="fa fa-save"></i></button>
     <button (click)="load()" class="filter-preference btn btn-primary"><i class="fa fa-arrow-alt-circle-down"></i></button>
     <!-- <input type="text" class="form-control" id="global-search" name="global-search" placeholder="Search..."> -->
-   
-    <ng-template ngFor let-column [ngForOf]="columns">
-        <app-filter *ngIf="column.dropActive" [column]="column" (updateFilters)="updateFilters($event)"></app-filter>
-    </ng-template>
 
-    
-    
+    <!--Distinct filters-->
+    <ng-template ngFor let-column [ngForOf]="columns">
+        <app-filter *ngIf="column.dropActive" [column]="column"></app-filter>
+    </ng-template>
+    <!--Like filters-->
+    <ng-template ngFor let-column [ngForOf]="columns">
+        <app-filterlike *ngIf="column.fieldActive" [column]="column"></app-filterlike>
+    </ng-template>
 </div>
 
+<!--active filter list-->
 <div class="filter-list">
     <ng-template ngFor let-column [ngForOf]="columns">
         <ng-template [ngIf]="column.filterItem">
-            <span *ngFor="let value of column.filterItem.sSearch" class="badge badge-secondary filter-badge">{{ column.displayName }} : {{ value }} <i class="far fa-times-circle" (click)="remove(column, value)"></i></span>
+            <span *ngFor="let value of column.filterItem.sSearch" class="badge badge-secondary filter-badge">{{ column.displayName }} : {{ value }} 
+                <i class="far fa-times-circle" (click)="remove(column, value)"></i>
+            </span>
         </ng-template>
-        
-    </ng-template>    
+    </ng-template>
 </div>

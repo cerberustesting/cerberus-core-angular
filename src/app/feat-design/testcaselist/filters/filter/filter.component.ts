@@ -13,9 +13,8 @@ export class FilterComponent implements OnInit {
   dataList: any;
   @Input() field: any;
   @Input() column: Column;
-  @Output() dataSelected = new EventEmitter<string>();
-  @Output() updateFilters = new EventEmitter<Filter>();
   data: any;
+  model = [];
 
   // @Input() param: {
   //   multiple: boolean,
@@ -35,24 +34,18 @@ export class FilterComponent implements OnInit {
   applyFilter() {
     //this.filterItem.sSearch = this.data;
     console.log(this.column.filterItem.sSearch);
-    if (this.column.filterItem.sSearch) {
-      for (let filter of this.column.filterItem.sSearch) {
-        // this.filterService.addfilter(this.param.field, filter);
-        this.updateFilters.emit({
-          name: this.column.filterItem.param.field,
-          value: filter,
-          like: false
-        })
-      }
-    }
+  }
+  add(value) {
+    this.column.filterItem.sSearch.push(value)
+  }
+  remove(value) {
+    this.column.filterItem.sSearch.splice(this.column.filterItem.sSearch.indexOf(value))
+  }
+  dbg(smth) {
+    this.model = this.column.filterItem.sSearch;
   }
 
   ngOnInit() {
-    // this.filterItem.data = this.data;
-    console.log(this.column);
-    
-    console.log("filterItem [filter.c.ts] :", this.column.filterItem);
-
     this.testService.getColumnData(this.column.databaseName).subscribe(response => {
       if (response) {
         if (response.distinctValues.length > 0) {

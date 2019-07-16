@@ -14,13 +14,11 @@ export class FilterService {
     //generate request header
     let formData = {
       // "sEcho": 1, //
-      "iColumns": columnList.length,
+      "iColumns": columnList.length, 
       "sColumns": columnList.map(column => column.databaseName).join(','),
       "iDisplayStart": pageInformation.number,
       "iDisplayLength": pageInformation.size,
     }
-
-
     for (let column in columnList) {
       formData["mDataProp_" + column] = columnList[column].contentName;
       formData["sSearch_" + column] = (columnList[column].filterItem)? columnList[column].filterItem.sSearch.join(',') : '';
@@ -33,7 +31,7 @@ export class FilterService {
     // formData["iSortingCols"]= 1;
     formData["sLike"]= 'tec.testCase,tec.description,tec.function,tec.refOrigine,tec.dateCreated,tec.dateModif';
     for(let item in formData){
-      queryParameter+= encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&'
+      queryParameter+= encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&';
     }
 
     return queryParameter

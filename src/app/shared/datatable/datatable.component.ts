@@ -42,11 +42,13 @@ export class DatatableComponent implements OnInit {
   }
 
   addFilter(column) {
-    console.log("searchItem:", column);
     column.dropActive = !column.dropActive;
-    console.log("searchItem:", column);
     
     //this.addFilterMenu.emit(column);
+  }
+
+  addFilterLike(column: Column) {
+    column.fieldActive = !column.fieldActive;
   }
 
 /*

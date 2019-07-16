@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Column } from 'src/app/shared/model/column.model';
 
 @Component({
   selector: 'app-filterlike',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterlikeComponent implements OnInit {
 
+  @Input() column: Column;
+  data: string;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  validField() : void {  
+    this.column.filterItem.sSearch.push(this.data);
   }
 
 }

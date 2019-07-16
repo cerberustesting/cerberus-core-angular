@@ -1,5 +1,6 @@
-import {Component, Input, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, Output, EventEmitter, HostBinding} from '@angular/core';
 import { Column } from '../model/column.model';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-table',
@@ -17,6 +18,7 @@ export class DatatableComponent implements OnInit {
     totalCount: number
   };
   @Output() pageUpdate = new EventEmitter<number>();
+  @Output() addFilterMenu = new EventEmitter<any>();
   selected = [];
   isLoading: boolean;
 
@@ -37,6 +39,14 @@ export class DatatableComponent implements OnInit {
   setPage(pageInfo){
     this.page.number = pageInfo.offset;
     this.pageUpdate.emit(pageInfo.offset);
+  }
+
+  addFilter(column) {
+    console.log("searchItem:", column);
+    column.dropActive = !column.dropActive;
+    console.log("searchItem:", column);
+    
+    //this.addFilterMenu.emit(column);
   }
 
 /*

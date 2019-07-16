@@ -8,5 +8,10 @@ export interface Column {
     like?: boolean,
     sortable?: boolean,
     searchable?: boolean,
-    displayContentFunction?: (any) => string
+    displayContentFunction?: (any) => string,
+    dropActive?: boolean
+    filterItem?: {
+        param?: any,
+        sSearch?: Array<string>
+    }
 }

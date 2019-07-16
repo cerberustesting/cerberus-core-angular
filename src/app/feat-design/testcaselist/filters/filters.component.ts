@@ -7,7 +7,6 @@ import { IInvariant } from '../../../shared/model/invariants.model';
 import { TestService } from '../../../core/services/crud/test.service';
 import { ITest } from '../../../shared/model/test.model';
 import { Column } from 'src/app/shared/model/column.model';
-import { FilterService } from './filter.service';
 import { Filter } from 'src/app/shared/model/filter.model';
 
 @Component({
@@ -20,6 +19,7 @@ export class FiltersComponent implements OnInit {
   @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
   @Input('filterList') filterList: Array<Filter>;
+  @Input('filterMenus') filterMenus: Array<any>;
 
   @Output() test = new EventEmitter<string>();
   @Output() searchTerm = new EventEmitter<string>();
@@ -41,39 +41,39 @@ export class FiltersComponent implements OnInit {
   columnActive: number;
   searchableColumns: Array<Column>
 
-  labelFilter = {
-    multiple: true,
-    field: 'label',
-    placeholder: 'Select labels',
-    bindLabel: 'label',
-    bindValue: 'label',
-  };
+  // labelFilter = {
+  //   multiple: true,
+  //   field: 'label',
+  //   placeholder: 'Select labels',
+  //   bindLabel: 'label',
+  //   bindValue: 'label',
+  // };
 
-  applicationFilter = {
-    multiple: true,
-    field: 'application',
-    placeholder: 'Select applications',
-    bindLabel: 'application',
-    bindValue: 'application',
-  };
+  // applicationFilter = {
+  //   multiple: true,
+  //   field: 'application',
+  //   placeholder: 'Select applications',
+  //   bindLabel: 'application',
+  //   bindValue: 'application',
+  // };
 
-  statusFilter = {
-    multiple: true,
-    field: 'status',
-    placeholder: 'Select status',
-    bindLabel: '',
-    bindValue: 'value',
-  };
+  // statusFilter = {
+  //   multiple: true,
+  //   field: 'status',
+  //   placeholder: 'Select status',
+  //   bindLabel: '',
+  //   bindValue: 'value',
+  // };
 
-  testFilter = {
-    multiple: true,
-    field: 'test',
-    placeholder: 'Select test',
-    bindLabel: 'test',
-    bindValue: 'test',
-  };
+  // testFilter = {
+  //   multiple: true,
+  //   field: 'test',
+  //   placeholder: 'Select test',
+  //   bindLabel: 'test',
+  //   bindValue: 'test',
+  // };
 
-  list = ['System', 'Active'];
+  // list = ['System', 'Active'];
 
   constructor(private systemService: SystemService,
     private invariantService: InvariantsService,
@@ -83,18 +83,18 @@ export class FiltersComponent implements OnInit {
 
   
 
-  addfilter(property: string, value: string, like?: boolean) {
-    let filter = {
-      name: property,
-      value: value,
-      like: like
-    };
-    console.log("findIndex :",this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ));
+  // addfilter(property: string, value: string, like?: boolean) {
+  //   let filter = {
+  //     name: property,
+  //     value: value,
+  //     like: like
+  //   };
+  //   console.log("findIndex :",this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ));
     
-    if (this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ) ===-1) {
-      this.filterList.push(filter);
-    }
-  }
+  //   if (this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ) ===-1) {
+  //     this.filterList.push(filter);
+  //   }
+  // }
 
   // sendMyFilter() {
   //   this.testService.getTestCasesFilterList().subscribe(response => {
@@ -117,7 +117,6 @@ export class FiltersComponent implements OnInit {
       if (response) {
         if (response.length > 0) {
           this.labelList = response;
-          console.log(response[0]);
         }
       } else {
         this.labelList = null;
@@ -127,7 +126,6 @@ export class FiltersComponent implements OnInit {
       if (response) {
         if (response.length > 0) {
           this.applicationList = response;
-          console.log("application : ", this.applicationList);
           
         }
       } else {
@@ -147,7 +145,6 @@ export class FiltersComponent implements OnInit {
       if (response) {
         if (response.length > 0) {
           this.testList = response;
-          console.log(this.testList);
         }
       } else {
         this.testList = null;
@@ -168,19 +165,10 @@ export class FiltersComponent implements OnInit {
     this.searchTerm.emit(this.userSearch);
   }
 
-  updateFilters(data) {
-    console.log("update : ", data);
-    let filter = {
-      name: data.name,
-      value: data.value,
-      like: data.like
-    };
-    console.log("findIndex :",this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ));
-    
+  updateFilters(filter: Filter) {    
     if (this.filterList.findIndex(a => a.name == filter.name && a.value == filter.value ) ===-1) {
       this.filterList.push(filter);
-    }
-    
+    }   
     //this.filterList.push(data)
   }
 
@@ -205,10 +193,12 @@ export class FiltersComponent implements OnInit {
     this.searchServe.emit('');
   }
 
-  remove(filter) {
-    const index = this.filterList.indexOf(filter, 0);
+  remove(column: Column, value: string) {
+    console.log(column);
+    const index = column.filterItem.sSearch.indexOf(value, 0);
     if (index > -1) {
-      this.filterList.splice(index, 1);
+      column.filterItem.sSearch.splice(index, 1);
     }
+    console.log(column);
   }
 }

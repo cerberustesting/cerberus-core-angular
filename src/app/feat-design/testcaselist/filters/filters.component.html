@@ -43,7 +43,7 @@
         [items]="[10, 25, 50, 100]" 
         [closeOnSelect]="true"
         [clearable]="false"
-        (change)="applySystem()"	>
+        (change)="applySystem()">
 
         <!--Content in the top container-->
         <ng-template ng-label-tmp>
@@ -56,19 +56,20 @@
         </ng-template>
 
     </ng-select>
+    <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#filterModal">Block Design</button> -->
 
     
     <!--Filters-->
-    <app-filter [dataList]="testList" [param]="testFilter" (updateFilters)="updateFilters($event)"></app-filter>
+    <!-- <app-filter [dataList]="testList" [param]="testFilter" (updateFilters)="updateFilters($event)"></app-filter>
     <app-filter [dataList]="applicationList" [param]="applicationFilter" (updateFilters)="updateFilters($event)">
     </app-filter>
     <app-filter [dataList]="statusList" [param]="statusFilter" (updateFilters)="updateFilters($event)"></app-filter>
-    <app-filter [dataList]="labelList" [param]="labelFilter" [field]="'label'"></app-filter>
+    <app-filter [dataList]="labelList" [param]="labelFilter" [field]="'label'"></app-filter> -->
     <!--<button (click)="sendFilter($event)">TATA</button>-->
 
     <!--Add filter button-->
     <!-- <button class="add-filter" (click)="triggerFilter()">+</button> -->
-    <ng-select
+    <!-- <ng-select
         class="custom addFilters" 
         bindLabel="name" 
         placeholder="Add filter"
@@ -83,15 +84,27 @@
         </ng-template>
 
 
-    </ng-select>
+    </ng-select> -->
 
     <!--Apply button-->
     <button class="btn btn-info" (click)="applySystem()">Apply Systems</button>
     <button (click)="save()" class="filter-preference btn btn-primary"><i class="fa fa-save"></i></button>
     <button (click)="load()" class="filter-preference btn btn-primary"><i class="fa fa-arrow-alt-circle-down"></i></button>
+    <!-- <input type="text" class="form-control" id="global-search" name="global-search" placeholder="Search..."> -->
+   
+    <ng-template ngFor let-column [ngForOf]="columns">
+        <app-filter *ngIf="column.dropActive" [column]="column" (updateFilters)="updateFilters($event)"></app-filter>
+    </ng-template>
+
+    
     
 </div>
 
-<div class="filter-list">    
-    <span *ngFor="let filter of filterList" class="badge badge-secondary filter-badge">{{ filter.name }} : {{ filter.value }} <i class="far fa-times-circle" (click)=remove(filter)></i></span>
+<div class="filter-list">
+    <ng-template ngFor let-column [ngForOf]="columns">
+        <ng-template [ngIf]="column.filterItem">
+            <span *ngFor="let value of column.filterItem.sSearch" class="badge badge-secondary filter-badge">{{ column.displayName }} : {{ value }} <i class="far fa-times-circle" (click)="remove(column, value)"></i></span>
+        </ng-template>
+        
+    </ng-template>    
 </div>

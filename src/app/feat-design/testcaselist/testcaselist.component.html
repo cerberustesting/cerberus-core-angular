@@ -1,3 +1,3 @@
-<app-filters (test)="updateTest($event)" (searchServe)="search()" (searchTerm)="updateSearch($event)"  (systemApply)="appplySystemChange()" [filterList]="filterList" [page]="page" [columns]="columns"></app-filters>
+<app-filters (test)="updateTest($event)" (searchServe)="search()" (searchTerm)="updateSearch($event)"  (systemApply)="appplySystemChange()" [filterMenus]="filterMenus" [filterList]="filterList" [page]="page" [columns]="columns"></app-filters>
 <!--<app-actions></app-actions>-->
-<app-table [rows]="testcasesList | filterBy: searchTerm" [columns]="columns" [testcaseslist]="true" [page]="page" (pageUpdate)="pageUpdate($event)"></app-table>
+<app-table [rows]="testcasesList | filterBy: searchTerm" [columns]="columns" [testcaseslist]="true" [page]="page" (addFilterMenu)="addFilterMenu($event)" (pageUpdate)="pageUpdate($event)"></app-table>

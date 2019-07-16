@@ -1,20 +1,19 @@
 <ng-select class="custom"
            [items]="dataList"
            [selectableGroup]="true"
-           [multiple]="param.multiple"
+           [multiple]="column.filterItem.param.multiple"
            [closeOnSelect]="false"
-           bindValue="{{param.bindValue}}"
-           bindLabel="{{param.bindLabel}}"
-           placeholder="{{param.placeholder}}"
-           [(ngModel)]='data'
-           (close)="applyFilter(data)"
-           (remove)="applyFilter(data)"
+           bindValue="{{column.filterItem.param.bindValue}}"
+           bindLabel="{{column.filterItem.param.bindLabel}}"
+           placeholder="{{column.filterItem.param.placeholder}}"
+           [(ngModel)]='column.filterItem.sSearch'
+           (close)="applyFilter(column.filterItem.sSearch)"
+           (remove)="applyFilter(column.filterItem.sSearch)"
+           (change)="applyFilter(column.filterItem.sSearch)"
            [clearable]="true">
   <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-    <div *ngIf="param.field=='application'">{{item.application}}</div>
-    <div *ngIf="param.field=='status'">{{item.value}}</div>
-    <div *ngIf="param.field=='test'">{{item.test}}</div>
-    <div *ngIf="param.field=='label'"><div class="label" [style.background-color]="item.color">{{item.label}}</div></div>
+    {{item}}
+    <div *ngIf="column.filterItem.param.field=='label'"><div class="label" [style.background-color]="item.color">{{item.label}}</div></div>
   </ng-template>
     <!-- <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
         <div class="ng-value" *ngFor="let item of (items ? items.slice(0,1): [])" style="z-index: auto">
@@ -29,7 +28,7 @@
         </div>
     </ng-template> -->
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-            <span>Selected : {{items.length}}</span>
+            <span>{{column.filterItem.param.field | titlecase }} Selected : {{items.length}}</span>
     </ng-template>
     <ng-template ng-footer-tmp>
       <button class="btn btn-outline-info" (click)="applyFilter()">Apply</button>

@@ -1,35 +1,16 @@
 <div class="data-table">
-    <ngx-datatable class="material fullscreen" 
-        [rows]="rows" 
-        [columns]="columns" 
-        [columnMode]="'force'" 
-        [rowHeight]="'auto'"
-        [footerHeight]="50" 
-        [headerHeight]="50" 
-        [loadingIndicator]="isLoading" 
-        [selected]="selected"
-        [selectionType]="'checkbox'" 
-        [selectAllRowsOnPage]="true"     
-        [scrollbarH]="false" 
-        [count]="page.totalCount" 
-        [offset]="page.number" 
-        [externalPaging]="true"
-        (select)='onSelect($event)'
+    <ngx-datatable class="material fullscreen" [rows]="rows" [columns]="columns" [columnMode]="'force'"
+        [rowHeight]="'auto'" [footerHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading"
+        [selected]="selected" [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" [scrollbarH]="false"
+        [count]="page.totalCount" [offset]="page.number" [externalPaging]="true" (select)='onSelect($event)'
         (page)='setPage($event)'>
 
         <!--(activate)="onActivate($event)"-->
-        
+
 
         <!--CheckBox Column-->
-        <ngx-datatable-column 
-            [sortable]="false" 
-            [canAutoResize]="false" 
-            [draggable]="false" 
-            [resizeable]="false"
-            [headerCheckboxable]="true" 
-            [checkboxable]="true" 
-            [width]="80"
-            >
+        <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
+            [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
         </ngx-datatable-column>
 
         <!-- <ngx-datatable-column 
@@ -51,23 +32,26 @@
 
         <!--Column from column array-->
         <ng-template ngFor let-column [ngForOf]="columns">
-            <ngx-datatable-column *ngIf="column.active" [name]="column.displayName" [prop]="column.contentName" [width]="column.width" [draggable]="true" >
-                
-                <!-- Header row
+            <ngx-datatable-column *ngIf="column.active" [name]="column.displayName" [prop]="column.contentName"
+                [width]="column.width" [draggable]="true">
+
+                <!-- Header row -->
                 <ng-template ngx-datatable-header-template>
                     <span class="datatable-header-cell-wrapper">
-                            <span class="datatable-header-cell-label draggable">{{ column.displayName }}</span>
+                        <span class="datatable-header-cell-label draggable">{{ column.displayName }}</span>
+                        <i *ngIf="column.searchable" class="fa fa-filter btn filter-btn" [ngClass]="(column.dropActive)? 'btn-success' : 'btn-warning'" (click)="addFilter(column)"></i>
+                        <i *ngIf="column.like" class="fa fa-search btn btn-info filter-btn" (click)="addFilterLike(column)"></i>
                     </span>
-                    
-                </ng-template> -->
+
+                </ng-template>
 
                 <!--If the content need a function to be display-->
-                <ng-template *ngIf="column.displayContentFunction" let-row='row' let-value ngx-datatable-cell-template>  
-                    {{ column.displayContentFunction(row) }}         
+                <ng-template *ngIf="column.displayContentFunction" let-row='row' let-value ngx-datatable-cell-template>
+                    {{ column.displayContentFunction(row) }}
                 </ng-template>
 
                 <!--Country column-->
-                <ng-template *ngIf="column.contentName=='countryList'" let-value="value"  ngx-datatable-cell-template>
+                <ng-template *ngIf="column.contentName=='countryList'" let-value="value" ngx-datatable-cell-template>
                     <a *ngFor="let item of value | keyvalue">
                         <b>{{item.value}} </b>
                     </a>
@@ -76,8 +60,9 @@
                 <!--Label column-->
                 <ng-template *ngIf="column.type==='label'" let-row='row' let-value="value" ngx-datatable-cell-template>
                     <div *ngIf="row[column.contentName]">
-                        <div class="label" *ngFor="let item of row[column.contentName]" [style.background-color]="item.color">{{ item?.name }}</div>
-                    </div>                                                                                
+                        <div class="label" *ngFor="let item of row[column.contentName]"
+                            [style.background-color]="item.color">{{ item?.name }}</div>
+                    </div>
                 </ng-template>
 
             </ngx-datatable-column>

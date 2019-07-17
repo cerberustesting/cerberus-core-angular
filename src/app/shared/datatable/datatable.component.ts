@@ -15,6 +15,7 @@ export class DatatableComponent implements OnInit {
   @Input() page: {
     size: number,
     number: number,
+    sort: number,
     totalCount: number
   };
   @Output() pageUpdate = new EventEmitter<number>();
@@ -49,6 +50,12 @@ export class DatatableComponent implements OnInit {
 
   addFilterLike(column: Column) {
     column.fieldActive = !column.fieldActive;
+  }
+  onSort(event) {
+    this.isLoading = true;
+    this.page.sort = event.sorts;  
+    this.pageUpdate.emit(this.page.number);
+    this.isLoading = false;
   }
 
 /*

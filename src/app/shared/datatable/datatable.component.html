@@ -14,8 +14,10 @@
         [count]="page.totalCount" 
         [offset]="page.number" 
         [externalPaging]="true" 
+        [externalSorting]="true"
         (select)='onSelect($event)'
-        (page)='setPage($event)'>
+        (page)='setPage($event)'
+        (sort)="onSort($event)">
 
 
         <!--CheckBox Column-->
@@ -24,13 +26,13 @@
         </ngx-datatable-column>
 
         <!--Column from column array-->
-        <ng-template ngFor let-column [ngForOf]="columns">
+        <ng-template ngFor let-column let-index="index" [ngForOf]="columns">
             <ngx-datatable-column *ngIf="column.active" [name]="column.displayName" [prop]="column.contentName"
-                [width]="column.width" [draggable]="true">
+                [width]="column.width" [draggable]="true" [sortable]="true">
 
                 <!-- Header row -->
-                <ng-template ngx-datatable-header-template>
-                    <span class="datatable-header-cell-wrapper">
+                <ng-template ngx-datatable-header-template let-sort="sortFn">
+                    <span class="datatable-header-cell-wrapper" (click)="sort(index)">
                         <span class="datatable-header-cell-label draggable">{{ column.displayName }}</span>
                         <i *ngIf="column.searchable" class="fa fa-filter btn filter-btn" [ngClass]="(column.dropActive)? 'btn-success' : 'btn-warning'" (click)="addFilter(column)"></i>
                         <i *ngIf="column.like" class="fa fa-search btn filter-btn" [ngClass]="(column.fieldActive)? 'btn-success' : 'btn-info'" (click)="addFilterLike(column)"></i>
@@ -55,6 +57,9 @@
                         <div class="label" *ngFor="let item of row[column.contentName]"
                             [style.background-color]="item.color">{{ item?.name }}</div>
                     </div>
+                </ng-template>
+                <ng-template *ngIf="column.type==='boolean'" let-value="value" ngx-datatable-cell-template>
+                     <!--{{ value }}--> <i class="fa fa-check" *ngIf="value==='Y'"></i><i class="fa fa-times" *ngIf="value==='N'"></i>
                 </ng-template>
 
             </ngx-datatable-column>

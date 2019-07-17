@@ -1,21 +1,20 @@
 <ng-select class="custom"
            [items]="dataList"
            [selectableGroup]="true"
-           [multiple]="column.filterItem.param.multiple"
+           [multiple]="column.param.multiple"
            [closeOnSelect]="false"
-           placeholder="{{column.filterItem.param.placeholder}}"
+           placeholder="{{column.param.placeholder}}"
            [(ngModel)]='model'
-           (open)="dbg(column.filterItem.sSearch)"
+           (open)="dbg(column.sSearch)"
            (add)="add($event)"
            (remove)="remove($event)"
            [clearable]="true">
-  <!-- <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-    {{item}}
-    <div *ngIf="column.filterItem.param.field=='label'"><div class="label" [style.background-color]="item.color">{{item.label}}</div></div>
+  <!-- <ng-template *ngIf="column.type==='label'" ng-option-tmp let-item="item" let-index="index">
+    <div class="label" [style.background-color]="item.color">{{item.label}}</div>
   </ng-template> -->
 
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-            <span>{{column.displayName | titlecase }} Selected : {{column.filterItem.sSearch.length}}</span>
+            <span>{{column.displayName | titlecase }} Selected : {{column.sSearch.length}}</span>
     </ng-template>
     <ng-template ng-footer-tmp>
       <button class="btn btn-outline-info" (click)="applyFilter()">Apply</button>

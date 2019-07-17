@@ -3,6 +3,7 @@ import { Filter } from 'src/app/shared/model/filter.model';
 import { filter } from 'rxjs/operators';
 import { Column } from 'src/app/shared/model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
+import { SystemService } from 'src/app/core/services/crud/system.service';
 
 @Component({
   selector: 'app-filter',
@@ -24,7 +25,7 @@ export class FilterComponent implements OnInit {
   //   bindValue: any,
   // };
 
-  constructor(private testService: TestService) {
+  constructor(private testService: TestService, private systemService: SystemService) {
   }
 
   // sendValues(data) {
@@ -33,28 +34,43 @@ export class FilterComponent implements OnInit {
   // }
   applyFilter() {
     //this.filterItem.sSearch = this.data;
-    console.log(this.column.filterItem.sSearch);
+    console.log(this.column.sSearch);
   }
   add(value) {
-    this.column.filterItem.sSearch.push(value)
+    this.column.sSearch.push(value);
   }
   remove(value) {
-    this.column.filterItem.sSearch.splice(this.column.filterItem.sSearch.indexOf(value))
+    this.column.sSearch.splice(this.column.sSearch.indexOf(value))
   }
   dbg(smth) {
-    this.model = this.column.filterItem.sSearch;
+    this.model = this.column.sSearch;
   }
 
   ngOnInit() {
-    this.testService.getColumnData(this.column.databaseName).subscribe(response => {
-      if (response) {
-        if (response.distinctValues.length > 0) {
-          this.dataList = response.distinctValues;       
+    if(this.column.type==='label'){
+      this.systemService.getLabelsFromSystem('DEFAULT');
+      this.systemService.observableLabelsList.subscribe(response => {
+        if (response) {
+          if (response.length > 0) {
+            this.dataList = response;
+          }
+        } else {
+          this.dataList = null;
         }
-      } else {
-        this.dataList = null;
-      }
-    });
+      });
+
+    } else {
+      this.testService.getColumnData(this.column.databaseName).subscribe(response => {
+        if (response) {
+          if (response.distinctValues.length > 0) {
+            this.dataList = response.distinctValues;       
+          }
+        } else {
+          this.dataList = null;
+        }
+      });
+    }
+    
   }
 
 }

@@ -28,14 +28,13 @@ export class TestcaselistComponent implements OnInit {
       searchable: true,
       like: true,
       dropActive: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'test',
-          placeholder: 'Select test',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'test',
+        placeholder: 'Select test',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'TestCase ID',
@@ -53,14 +52,13 @@ export class TestcaselistComponent implements OnInit {
       active: true,
       searchable: true,
       dropActive: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'status',
-          placeholder: 'Select status',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'status',
+        placeholder: 'Select status',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Application',
@@ -69,14 +67,13 @@ export class TestcaselistComponent implements OnInit {
       active: true,
       searchable: true,
       dropActive: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'application',
-          placeholder: 'Select applications',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'application',
+        placeholder: 'Select applications',
+      },
+      sSearch: []
+
 
     },
     {
@@ -87,14 +84,13 @@ export class TestcaselistComponent implements OnInit {
       active: true,
       dropActive: false,
       like: true,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'description',
-          placeholder: 'Search Description...',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'description',
+        placeholder: 'Search Description...',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'System',
@@ -103,14 +99,13 @@ export class TestcaselistComponent implements OnInit {
       active: true,
       dropActive: false,
       searchable: true,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'description',
-          placeholder: 'Search Description...',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'description',
+        placeholder: 'Search Description...',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Global Activation',
@@ -119,14 +114,14 @@ export class TestcaselistComponent implements OnInit {
       searchable: true,
       active: true,
       dropActive: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'tcActive',
-          placeholder: 'Select Gloabl Activation',
-        },
-        sSearch: []
-      }
+      type: 'boolean',
+      param: {
+        multiple: true,
+        field: 'tcActive',
+        placeholder: 'Select Gloabl Activation',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Priority',
@@ -135,14 +130,13 @@ export class TestcaselistComponent implements OnInit {
       active: true,
       dropActive: false,
       searchable: true,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'priority',
-          placeholder: 'Select Priority',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'priority',
+        placeholder: 'Select Priority',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'CountryList',
@@ -151,14 +145,14 @@ export class TestcaselistComponent implements OnInit {
       width: 200,
       dropActive: false,
       active: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'countryList',
-          placeholder: 'Select Country',
-        },
-        sSearch: []
-      }
+      searchable: true,
+      param: {
+        multiple: true,
+        field: 'countryList',
+        placeholder: 'Select Country',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Labels',
@@ -169,14 +163,13 @@ export class TestcaselistComponent implements OnInit {
       sortable: false,
       searchable: true,
       dropActive: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'label',
-          placeholder: 'Select labels',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'label',
+        placeholder: 'Select labels',
+      },
+      sSearch: []
+
 
     },
     /****/
@@ -188,14 +181,13 @@ export class TestcaselistComponent implements OnInit {
       active: false,
       sortable: false,
       dropActive: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'labelsSTICKER',
-          placeholder: 'Select Stickers',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'labelsSTICKER',
+        placeholder: 'Select Stickers',
+      },
+      sSearch: []
+
     },//
     {
       displayName: 'Requirements',
@@ -204,16 +196,15 @@ export class TestcaselistComponent implements OnInit {
       type: 'label',
       active: false,
       dropActive: false,
-      //displayContentFunction: testcase => "not implemented yet",
       sortable: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'labelsREQUIREMENT',
-          placeholder: 'Select Requirement',
-        },
-        sSearch: []
-      }
+
+      param: {
+        multiple: true,
+        field: 'labelsREQUIREMENT',
+        placeholder: 'Select Requirement',
+      },
+      sSearch: []
+
     },//
     {
       displayName: 'Batteries',
@@ -229,24 +220,25 @@ export class TestcaselistComponent implements OnInit {
       databaseName: 'tec.tcactive',
       contentName: 'activePROD',
       active: false,
-      dropActive: false
+      dropActive: false,
+      type: 'boolean'
     },
     {
       displayName: 'UAT Activation',
       databaseName: 'tec.tcactive',
       contentName: 'activeQA',
       active: false,
-      dropActive: false
+      dropActive: false,
+      type: 'boolean'
     },
     {
       displayName: 'PROD Activation',
       databaseName: 'tec.tcactive',
       contentName: 'activeUAT',
       active: false,
-      dropActive: false
+      dropActive: false,
+      type: 'boolean'
     },
-
-    // (testcase.activePROD === "Y" && testcase.activeQA === "Y" && testcase.activeUAT === "Y")? "Yes" : "No" }
     {
       displayName: 'Function',
       databaseName: 'tec.function',
@@ -254,14 +246,14 @@ export class TestcaselistComponent implements OnInit {
       active: false,
       dropActive: false,
       like: true,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'function',
-          placeholder: 'Select Function',
-        },
-        sSearch: []
-      }
+
+      param: {
+        multiple: true,
+        field: 'function',
+        placeholder: 'Select Function',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Project',
@@ -269,14 +261,14 @@ export class TestcaselistComponent implements OnInit {
       contentName: 'Project',
       dropActive: false,
       active: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'Project',
-          placeholder: 'Select Project',
-        },
-        sSearch: []
-      }
+
+      param: {
+        multiple: true,
+        field: 'Project',
+        placeholder: 'Select Project',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Origine',
@@ -284,14 +276,14 @@ export class TestcaselistComponent implements OnInit {
       contentName: 'origine',
       dropActive: false,
       active: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'origine',
-          placeholder: 'Select Origine',
-        },
-        sSearch: []
-      }
+
+      param: {
+        multiple: true,
+        field: 'origine',
+        placeholder: 'Select Origine',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Reference Origine',
@@ -300,14 +292,13 @@ export class TestcaselistComponent implements OnInit {
       active: false,
       dropActive: false,
       like: true,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'refOrigin',
-          placeholder: 'Select Reference Origine',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'refOrigin',
+        placeholder: 'Select Reference Origine',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Type',
@@ -315,14 +306,13 @@ export class TestcaselistComponent implements OnInit {
       contentName: 'group',
       searchable: true,
       active: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'group',
-          placeholder: 'Select Type',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'group',
+        placeholder: 'Select Type',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Date Created',
@@ -331,14 +321,13 @@ export class TestcaselistComponent implements OnInit {
       active: false,
       dropActive: false,
       like: true,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'dateCreated',
-          placeholder: 'Select Date Created',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'dateCreated',
+        placeholder: 'Select Date Created',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'User Created',
@@ -347,14 +336,13 @@ export class TestcaselistComponent implements OnInit {
       dropActive: false,
       searchable: true,
       active: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'user',
-          placeholder: 'Select User',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'user',
+        placeholder: 'Select User',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'TestCase Version',
@@ -362,14 +350,13 @@ export class TestcaselistComponent implements OnInit {
       contentName: 'testCaseVersion',
       dropActive: false,
       active: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'testCaseVersion',
-          placeholder: 'Select TestCase Version',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'testCaseVersion',
+        placeholder: 'Select TestCase Version',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'Date Modification',
@@ -378,14 +365,13 @@ export class TestcaselistComponent implements OnInit {
       active: false,
       dropActive: false,
       like: true,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'dateModif',
-          placeholder: 'Select Date Modification',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'dateModif',
+        placeholder: 'Select Date Modification',
+      },
+      sSearch: []
+
     },
     {
       displayName: 'User Modification',
@@ -393,19 +379,19 @@ export class TestcaselistComponent implements OnInit {
       contentName: 'usrModif',
       dropActive: false,
       active: false,
-      filterItem: {
-        param: {
-          multiple: true,
-          field: 'usrModif',
-          placeholder: 'Select User Modification',
-        },
-        sSearch: []
-      }
+      param: {
+        multiple: true,
+        field: 'usrModif',
+        placeholder: 'Select User Modification',
+      },
+      sSearch: []
+
     },];
 
   page = {
     size: 10, //maximum element per page
     number: 0, //number of current page
+    sort: [{dir: "asc", prop : "testcase"}],
     totalCount: 0 //total count of element in database
   };
 

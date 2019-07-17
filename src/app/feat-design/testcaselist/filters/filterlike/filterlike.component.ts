@@ -17,7 +17,7 @@ export class FilterlikeComponent implements OnInit {
   }
 
   validField() : void {  
-    this.column.filterItem.sSearch.push(this.data);
+    this.column.sSearch.push(this.data);
   }
 
 }

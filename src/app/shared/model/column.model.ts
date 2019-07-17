@@ -4,15 +4,15 @@ export interface Column {
     active: boolean,
     databaseName: string,
     width?: number, //default is 150
-    type?: string, //for exemple 'label'
-    like?: boolean,
+    type?: string, //for exemple 'label' or 'boolean'
+    like?: boolean, //
     sortable?: boolean,
     searchable?: boolean,
     displayContentFunction?: (any) => string,
-    dropActive?: boolean,
+    dropActive?: boolean, //the dropdown is active 
     fieldActive?: boolean,
-    filterItem?: {
-        param?: any,
-        sSearch?: Array<string>
-    }
+    booleanColumn?: boolean,
+    param?: any,
+    sSearch?: Array<any>
+    
 }

@@ -81,9 +81,9 @@ export class FiltersComponent implements OnInit {
 
   remove(column: Column, value: string) {
     const columnIndex = this.columns.indexOf(column);
-    const index = column.filterItem.sSearch.indexOf(value);
+    const index = column.sSearch.indexOf(value);
     if (index > -1) {
-      this.columns[columnIndex].filterItem.sSearch.splice(index, 1);
+      this.columns[columnIndex].sSearch.splice(index, 1);
     }
   }
 }

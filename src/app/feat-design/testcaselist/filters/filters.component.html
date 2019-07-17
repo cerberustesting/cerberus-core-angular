@@ -63,8 +63,10 @@
 <!--active filter list-->
 <div class="filter-list">
     <ng-template ngFor let-column [ngForOf]="columns">
-        <ng-template [ngIf]="column.filterItem">
-            <span *ngFor="let value of column.filterItem.sSearch" class="badge badge-secondary filter-badge">{{ column.displayName }} : {{ value }} 
+        <ng-template [ngIf]="column.sSearch">
+            <span *ngFor="let value of column.sSearch" class="badge badge-secondary filter-badge">
+                {{ column.displayName }} : <div *ngIf="value.color; else elseValue" class="label" [style.background-color]="value.color">{{value.label}}</div>
+                <ng-template #elseValue>{{ value }}</ng-template>
                 <i class="far fa-times-circle" (click)="remove(column, value)"></i>
             </span>
         </ng-template>

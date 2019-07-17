@@ -65,6 +65,8 @@ export class TestService {
   }
 
   getTestCasesList(test?: string, systems?: Array<string>, size?: number, start?: number) {
+    
+    // ? Remove if not used
 
     if (!size) size = 10;
     if (!start) start = 0;
@@ -96,7 +98,7 @@ export class TestService {
         }
       })
   }
-  getTestCasesFilterList(/*length, filters: Array<Filter>*/queryParameters: string) {
+  getTestCasesFilterList(queryParameters: string) {
     this.http.get<ITestCaseHeader>(AppSettings.API_endpoint + '/ReadTestCase?'+queryParameters)
       .subscribe((response) => {
 
@@ -116,32 +118,6 @@ export class TestService {
           this.observableTestCasesList.next(this.testcasesList);
         }
       });
-    // let query = AppSettings.API_endpoint + '/ReadTestCase?filter=true&length=' + length + '&';
-    // for (let filter of filters) {
-    //   query += filter.name + '=' + filter.value + '&';
-    // }
-    // console.log(query);
-    // this.http.get<ITestCaseHeader>(query)
-    //   .subscribe((response) => {
-    //     console.log(response);
-    //     if (response.contentTable) {
-    //       // @ts-ignore
-    //       if (response.contentTable.length > 0) {
-    //         // @ts-ignore
-    //         this.testcasesList = response.contentTable;
-    //         this.testcasesListLength = response.iTotalRecords;
-
-    //         this.observableTestCasesList.next(this.testcasesList);
-    //         this.observableTestCasesListLength.next(this.testcasesListLength);
-    //       }
-    //       else {
-    //         this.testcasesList = null;
-    //         this.observableTestCasesList.next(this.testcasesList);
-    //       }
-    //     }
-
-
-    //   })
   }
   getColumnData(columnName: string) {
     let query = AppSettings.API_endpoint + '/ReadTestCase?columnName='+columnName;

@@ -18,6 +18,7 @@ export class FiltersComponent implements OnInit {
 
   @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
+  @Input('globalSearch') globalSearch: string;
 
   @Output() test = new EventEmitter<string>();
   @Output() searchTerm = new EventEmitter<string>();
@@ -31,15 +32,10 @@ export class FiltersComponent implements OnInit {
   }
 
   labelList: Array<ILabel>;
-  applicationList: Array<IApplication>;
-  applicationSelected: any;
-  statusList: Array<IInvariant>;
-  statusSelected: any;
-  testList: Array<ITest>;
-  testSelected: any;
   userSearch: any;
   columnActive: number;
-  searchableColumns: Array<Column>
+  searchableColumns: Array<Column>;
+  gloabalSearchModel: string;
 
 
   constructor(private systemService: SystemService,
@@ -52,26 +48,10 @@ export class FiltersComponent implements OnInit {
     this.searchableColumns = this.columns.filter(a => a.searchable);
   }
 
-  updateStatus(statusSelected): void {
-    this.statusSelected = statusSelected;
-  }
-  updateApplication(applicationSelected): void {
-    this.applicationSelected = applicationSelected;
-  }
-  updateTest(testSelected): void {
-    this.testSelected = testSelected;
-  }
-
   toggleColumn(column): void {
     column.active = !column.active;
     this.columnActive = this.columns.filter(a => a.active).length;
   }
-
-  sendFilter(data) {
-    data = this.testSelected;
-    this.test.emit(data);
-  }
-
 
   applySystem() {
     this.systemApply.emit('');
@@ -93,5 +73,10 @@ export class FiltersComponent implements OnInit {
   }
   load() {
     this.preferenceLoad.emit('');
+  }
+  validGlobalSearchField() {
+    console.log("search for : ", this.gloabalSearchModel);    
+    this.globalSearch = this.gloabalSearchModel;
+    this.applySystem();
   }
 }

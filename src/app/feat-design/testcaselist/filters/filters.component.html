@@ -45,9 +45,10 @@
     </ng-select>
 
     <!--Apply button-->
-    <button class="btn btn-info" (click)="applySystem()">Apply Systems</button>
+    <button class="btn btn-info" (click)="applySystem()">Apply</button>
     <button (click)="save()" class="filter-preference btn btn-primary"><i class="fa fa-save"></i></button>
     <button (click)="load()" class="filter-preference btn btn-primary"><i class="fa fa-arrow-alt-circle-down"></i></button>
+    <input type="text" class="form-control" (keyup.enter)="validGlobalSearchField()" [(ngModel)]="gloabalSearchModel" placeholder="Search...">
     <!-- <input type="text" class="form-control" id="global-search" name="global-search" placeholder="Search..."> -->
 
     <!--Distinct filters-->

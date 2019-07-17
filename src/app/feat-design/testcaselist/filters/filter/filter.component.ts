@@ -42,13 +42,16 @@ export class FilterComponent implements OnInit {
   remove(value) {
     this.column.sSearch.splice(this.column.sSearch.indexOf(value))
   }
+  change(values) {
+    this.column.sSearch = values;
+  }
   dbg(smth) {
     this.model = this.column.sSearch;
   }
 
   ngOnInit() {
     if(this.column.type==='label'){
-      this.systemService.getLabelsFromSystem('DEFAULT');
+      this.systemService.getLabelsFromSystem('');
       this.systemService.observableLabelsList.subscribe(response => {
         if (response) {
           if (response.length > 0) {

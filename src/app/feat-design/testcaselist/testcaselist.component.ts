@@ -106,7 +106,7 @@ export class TestcaselistComponent implements OnInit {
       param: {
         multiple: true,
         field: 'description',
-        placeholder: 'Search Description...',
+        placeholder: 'Select System...',
       },
       sSearch: []
 
@@ -170,7 +170,7 @@ export class TestcaselistComponent implements OnInit {
       param: {
         multiple: true,
         field: 'label',
-        placeholder: 'Select labels',
+        placeholder: 'Select Labels',
       },
       sSearch: []
 
@@ -201,7 +201,6 @@ export class TestcaselistComponent implements OnInit {
       active: false,
       dropActive: false,
       sortable: false,
-
       param: {
         multiple: true,
         field: 'labelsREQUIREMENT',
@@ -395,7 +394,7 @@ export class TestcaselistComponent implements OnInit {
   page = {
     size: 10, //maximum element per page
     number: 0, //number of current page
-    sort: [{dir: "asc", prop : "testcase"}],
+    sort: [{dir: "asc", prop : "testcase"}], //sort item
     totalCount: 0 //total count of element in database
   };
 
@@ -408,7 +407,8 @@ export class TestcaselistComponent implements OnInit {
   userPreferences:  {
     columns: Array<Column>,
     page: any
-  }
+  };
+  globalSearch = '';
   
   constructor(private testService: TestService, private invariantsService: InvariantsService, private labelfilteringPipe: LabelfilteringPipe, private systemService: SystemService, private filterService: FilterService) { }
 
@@ -463,7 +463,13 @@ export class TestcaselistComponent implements OnInit {
   }
 
   search() {
-    this.testService.getTestCasesFilterList(this.filterService.generateQueryStringParameters(this.columns, this.page));
+    console.log("search: ",this.globalSearch);
+    
+    //adjust system search with selected system and delete double.
+    this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
+    let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;
+    this.columns.filter(a => a.contentName==="system")[0].sSearch = systemArray.filter((a,i) => systemArray.indexOf(a)===i);
+    this.testService.getTestCasesFilterList(this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch));
   }
 
 }

@@ -23,6 +23,8 @@ export class FiltersComponent implements OnInit {
   @Output() searchTerm = new EventEmitter<string>();
   @Output() systemApply = new EventEmitter<string>();
   @Output() searchServe = new EventEmitter<string>();
+  @Output() preferenceLoad = new EventEmitter<string>();
+  @Output() preferenceSave = new EventEmitter<string>();
 
   resetColumnDrop() {
     this.columnActive = null;
@@ -85,5 +87,11 @@ export class FiltersComponent implements OnInit {
     if (index > -1) {
       this.columns[columnIndex].sSearch.splice(index, 1);
     }
+  }
+  save() {
+    this.preferenceSave.emit('');
+  }
+  load() {
+    this.preferenceLoad.emit('');
   }
 }

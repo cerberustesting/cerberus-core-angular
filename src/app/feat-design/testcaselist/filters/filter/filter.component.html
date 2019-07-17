@@ -3,15 +3,16 @@
            [selectableGroup]="true"
            [multiple]="column.param.multiple"
            [closeOnSelect]="false"
+           [bindValue]="id"
            placeholder="{{column.param.placeholder}}"
            [(ngModel)]='model'
            (open)="dbg(column.sSearch)"
            (add)="add($event)"
            (remove)="remove($event)"
            [clearable]="true">
-  <!-- <ng-template *ngIf="column.type==='label'" ng-option-tmp let-item="item" let-index="index">
+  <ng-template *ngIf="column.type==='label'" ng-option-tmp let-item="item" let-index="index">
     <div class="label" [style.background-color]="item.color">{{item.label}}</div>
-  </ng-template> -->
+  </ng-template>
 
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
             <span>{{column.displayName | titlecase }} Selected : {{column.sSearch.length}}</span>

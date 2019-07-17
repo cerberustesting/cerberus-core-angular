@@ -27,7 +27,6 @@ export class TestcaselistComponent implements OnInit {
       active: true,
       searchable: true,
       like: true,
-      dropActive: false,
       param: {
         multiple: true,
         field: 'test',
@@ -42,7 +41,12 @@ export class TestcaselistComponent implements OnInit {
       contentName: 'testCase',
       active: true,
       like: true,
-      dropActive: false,
+      param: {
+        multiple: true,
+        field: 'testCase',
+        placeholder: 'Search TestCase',
+      },
+      sSearch: []
 
     }, ///
     {
@@ -401,7 +405,11 @@ export class TestcaselistComponent implements OnInit {
   filterTest: any;
   testcasesList: Array<ITestCaseHeader>;
   filterList: Array<Filter> = [];
-
+  userPreferences:  {
+    columns: Array<Column>,
+    page: any
+  }
+  
   constructor(private testService: TestService, private invariantsService: InvariantsService, private labelfilteringPipe: LabelfilteringPipe, private systemService: SystemService, private filterService: FilterService) { }
 
   ngOnInit() {
@@ -447,11 +455,11 @@ export class TestcaselistComponent implements OnInit {
   }
 
   save() {
-    console.log('Not implemented yet');
+    console.log("Not implemented yet");
   }
 
   load() {
-    console.log('Not implemented yet');
+    console.log("Not implemented yet");
   }
 
   search() {

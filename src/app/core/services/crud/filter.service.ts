@@ -21,14 +21,19 @@ export class FilterService {
     }
     for (let column in columnList) {
       formData["mDataProp_" + column] = columnList[column].contentName;
-      formData["sSearch_" + column] = (columnList[column].sSearch)? columnList[column].sSearch.join(',') : '';
+      if (columnList[column].type==='label') {
+        formData["sSearch_" + column] = (columnList[column].sSearch)? columnList[column].sSearch.map(a=>a.label).join(',') : '';
+      } else {
+        formData["sSearch_" + column] = (columnList[column].sSearch)? columnList[column].sSearch.join(',') : '';
+      }
+      
       // formData["bRegex_" + column] = false;
       formData["bSearchable_" + column] = (columnList[column].searchable)? true : false;
       formData["bSortable_" + column] = (columnList[column].sortable)? true : false;
     }
-    console.log("pageInformation", pageInformation);
-    formData["iSortCol_0"]=columnList.map(a => a.contentName).indexOf(pageInformation.sort[0].prop);
-    formData["sSortDir_0"]= pageInformation.sort[0].dir;
+    let sortCol = columnList.map(a => a.contentName).indexOf(pageInformation.sort[0].prop);
+    formData["iSortCol_0"]=(sortCol>=0)? sortCol : 0; //column to sort
+    formData["sSortDir_0"]= pageInformation.sort[0].dir; //sort direction
     // formData["iSortingCols"]= 1;
     formData["sLike"]= 'tec.testCase,tec.description,tec.function,tec.refOrigine,tec.dateCreated,tec.dateModif';
     for(let item in formData){

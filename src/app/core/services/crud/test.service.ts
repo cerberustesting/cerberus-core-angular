@@ -77,9 +77,6 @@ export class TestService {
         query += 'system=' + system + '&';
       }
     }
-    console.log('query: ', query);
-
-
     this.http.get<ITestCaseHeader>(query)
       .subscribe((response) => {
 

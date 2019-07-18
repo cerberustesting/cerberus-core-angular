@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Column } from 'src/app/shared/model/column.model';
 
 @Component({
@@ -9,6 +9,7 @@ import { Column } from 'src/app/shared/model/column.model';
 export class FilterlikeComponent implements OnInit {
 
   @Input() column: Column;
+  @Output() applyFilterOutput = new EventEmitter<void>();
   data: string;
 
   constructor() { }
@@ -18,6 +19,7 @@ export class FilterlikeComponent implements OnInit {
 
   validField() : void {  
     this.column.sSearch.push(this.data);
+    this.applyFilterOutput.emit();
   }
 
 }

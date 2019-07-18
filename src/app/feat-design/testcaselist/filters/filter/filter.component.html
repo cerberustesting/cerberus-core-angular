@@ -10,7 +10,8 @@
            (add)="add($event)"
            (remove)="remove($event)"
            (change)="change($event)"
-           [clearable]="true">
+           [clearable]="true"
+           (close)="applyFilter()">
   <ng-template *ngIf="column.type==='label'" ng-option-tmp let-item="item" let-index="index">
     <div class="label" [style.background-color]="item.color">{{item.label}}</div>
   </ng-template>
@@ -18,7 +19,8 @@
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
             <span>{{column.displayName | titlecase }} Selected : {{column.sSearch.length}}</span>
     </ng-template>
-    <ng-template ng-footer-tmp>
-      <button class="btn btn-outline-info" (click)="applyFilter()">Apply</button>
+    <ng-template ng-header-tmp>
+      <button class="btn btn-outline-info" (click)="onSelectAll()">Select All</button>
+      <button class="btn btn-outline-info" (click)="onClearAll()">Clear All</button>
   </ng-template>
 </ng-select>

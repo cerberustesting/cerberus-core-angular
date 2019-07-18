@@ -28,7 +28,7 @@
         <!--Column from column array-->
         <ng-template ngFor let-column let-index="index" [ngForOf]="columns">
             <ngx-datatable-column *ngIf="column.active" [name]="column.displayName" [prop]="column.contentName"
-                [width]="column.width" [draggable]="true" [sortable]="column.sortable">
+                [width]="column.width" [draggable]="true" [sortable]="column.sortable" [resizeable]="false">
 
                 <!-- Header row -->
                 <ng-template ngx-datatable-header-template let-sort="sortFn">

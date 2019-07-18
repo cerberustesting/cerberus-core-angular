@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Filter } from 'src/app/shared/model/filter.model';
-import { filter } from 'rxjs/operators';
 import { Column } from 'src/app/shared/model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { SystemService } from 'src/app/core/services/crud/system.service';
@@ -14,6 +12,7 @@ export class FilterComponent implements OnInit {
   dataList: any;
   @Input() field: any;
   @Input() column: Column;
+  @Output() applyFilterOutput = new EventEmitter<void>();
   data: any;
   model = [];
 
@@ -33,8 +32,7 @@ export class FilterComponent implements OnInit {
   //   console.log(this.dataSelected);
   // }
   applyFilter() {
-    //this.filterItem.sSearch = this.data;
-    console.log(this.column.sSearch);
+    this.applyFilterOutput.emit();
   }
   add(value) {
     this.column.sSearch.push(value);
@@ -74,6 +72,16 @@ export class FilterComponent implements OnInit {
       });
     }
     
+  }
+  onSelectAll() {
+    this.dataList.forEach(element => {      
+      this.model.push(element);
+      this.column.sSearch.push(element)
+    });
+  }
+  onClearAll() {
+    this.model = [];
+    this.column.sSearch = [];
   }
 
 }

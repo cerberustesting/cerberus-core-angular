@@ -21,6 +21,20 @@ export class TestcaselistComponent implements OnInit {
   rows = [];
   columns: Array<Column> = [
     {
+      displayName: 'Application',
+      databaseName: 'tec.application',
+      contentName: 'application',
+      active: true,
+      searchable: true,
+      dropActive: false,
+      param: {
+        multiple: true,
+        field: 'application',
+        placeholder: 'Select applications',
+      },
+      sSearch: []
+    },
+    {
       displayName: 'Test Folder',
       databaseName: 'tec.test',
       contentName: 'test',
@@ -47,38 +61,22 @@ export class TestcaselistComponent implements OnInit {
         placeholder: 'Search TestCase',
       },
       sSearch: []
-
     }, ///
     {
-      displayName: 'Status',
-      databaseName: 'tec.status',
-      contentName: 'status',
+      displayName: 'Labels',
+      databaseName: 'lab.label',
+      contentName: 'labels',
+      type: 'label',
       active: true,
+      sortable: false,
       searchable: true,
       dropActive: false,
       param: {
         multiple: true,
-        field: 'status',
-        placeholder: 'Select status',
+        field: 'label',
+        placeholder: 'Select Labels',
       },
       sSearch: []
-
-    },
-    {
-      displayName: 'Application',
-      databaseName: 'tec.application',
-      contentName: 'application',
-      active: true,
-      searchable: true,
-      dropActive: false,
-      param: {
-        multiple: true,
-        field: 'application',
-        placeholder: 'Select applications',
-      },
-      sSearch: []
-
-
     },
     {
       displayName: 'Description',
@@ -92,6 +90,35 @@ export class TestcaselistComponent implements OnInit {
         multiple: true,
         field: 'description',
         placeholder: 'Search Description...',
+      },
+      sSearch: []
+
+    },
+    {
+      displayName: 'Status',
+      databaseName: 'tec.status',
+      contentName: 'status',
+      active: true,
+      searchable: true,
+      dropActive: false,
+      param: {
+        multiple: true,
+        field: 'status',
+        placeholder: 'Select status',
+      },
+      sSearch: []
+    },
+    {
+      displayName: 'Priority',
+      databaseName: 'tec.priority',
+      contentName: 'priority',
+      active: true,
+      dropActive: false,
+      searchable: true,
+      param: {
+        multiple: true,
+        field: 'priority',
+        placeholder: 'Select Priority',
       },
       sSearch: []
 
@@ -128,21 +155,6 @@ export class TestcaselistComponent implements OnInit {
 
     },
     {
-      displayName: 'Priority',
-      databaseName: 'tec.priority',
-      contentName: 'priority',
-      active: true,
-      dropActive: false,
-      searchable: true,
-      param: {
-        multiple: true,
-        field: 'priority',
-        placeholder: 'Select Priority',
-      },
-      sSearch: []
-
-    },
-    {
       displayName: 'CountryList',
       databaseName: '',
       contentName: 'countryList',
@@ -158,24 +170,7 @@ export class TestcaselistComponent implements OnInit {
       sSearch: []
 
     },
-    {
-      displayName: 'Labels',
-      databaseName: 'lab.label',
-      contentName: 'labels',
-      type: 'label',
-      active: true,
-      sortable: false,
-      searchable: true,
-      dropActive: false,
-      param: {
-        multiple: true,
-        field: 'label',
-        placeholder: 'Select Labels',
-      },
-      sSearch: []
-
-
-    },
+    
     /****/
     {
       displayName: 'Stickers',
@@ -438,8 +433,11 @@ export class TestcaselistComponent implements OnInit {
     this.testService.getTestCasesList(this.filterTest, this.invariantsService.systemsSelected);
   }
 
-  appplySystemChange() {
+  appplySystemChange(globalSearch?: string) {
     if (this.page.size == null) this.page.size = 10;
+    this.globalSearch = (globalSearch)? globalSearch : '';
+    console.log("globalSearch", this.globalSearch);
+    
     this.search()
     // if(this.filterList.length > 0) {
     //   this.testService.getTestCasesFilterList(this.page.size, this.filterList);

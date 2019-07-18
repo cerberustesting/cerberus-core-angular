@@ -2,12 +2,11 @@
     (test)="updateTest($event)" 
     (searchServe)="search()" 
     (searchTerm)="updateSearch($event)"  
-    (systemApply)="appplySystemChange()" 
+    (systemApply)="appplySystemChange($event)" 
     (preferenceSave)="save()"
     (preferenceLoad)="load()"
     [page]="page" 
-    [columns]="columns"
-    [globalSearch]="globalSearch">
+    [columns]="columns">
 </app-filters>
 
 <!--<app-actions></app-actions>-->

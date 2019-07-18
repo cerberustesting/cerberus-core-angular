@@ -18,7 +18,6 @@ export class FiltersComponent implements OnInit {
 
   @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
-  @Input('globalSearch') globalSearch: string;
 
   @Output() test = new EventEmitter<string>();
   @Output() searchTerm = new EventEmitter<string>();
@@ -54,7 +53,7 @@ export class FiltersComponent implements OnInit {
   }
 
   applySystem() {
-    this.systemApply.emit('');
+    this.systemApply.emit(this.gloabalSearchModel);
   }
 
   triggerFilter() {
@@ -74,9 +73,14 @@ export class FiltersComponent implements OnInit {
   load() {
     this.preferenceLoad.emit('');
   }
-  validGlobalSearchField() {
-    console.log("search for : ", this.gloabalSearchModel);    
-    this.globalSearch = this.gloabalSearchModel;
-    this.applySystem();
+  onKeyUp() {
+    if (this.gloabalSearchModel.length > 2){
+      setTimeout(() => this.applySystem(), 500);
+    }
   }
+  // validGlobalSearchField() {
+  //   console.log("search for : ", this.gloabalSearchModel);    
+  //   this.globalSearch = this.gloabalSearchModel;
+  //   this.applySystem();
+  // }
 }

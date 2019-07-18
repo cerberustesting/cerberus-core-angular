@@ -27,7 +27,7 @@ export class FilterService {
         formData["sSearch_" + column] = (columnList[column].sSearch)? columnList[column].sSearch.join(',') : '';
       }      
       // formData["bRegex_" + column] = false;
-      formData["bSearchable_" + column] = (columnList[column].searchable)? true : false;
+      formData["bSearchable_" + column] = (columnList[column].searchable || columnList[column].like)? true : false;
       formData["bSortable_" + column] = (columnList[column].sortable)? true : false;
     }
     let sortCol = columnList.map(a => a.contentName).indexOf(pageInformation.sort[0].prop);

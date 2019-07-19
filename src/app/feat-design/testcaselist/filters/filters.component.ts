@@ -79,6 +79,15 @@ export class FiltersComponent implements OnInit {
       setTimeout(() => this.applySystem(), 500);
     }
   }
+  addFilter(column) {
+    column.dropActive = !column.dropActive;
+    
+    //this.addFilterMenu.emit(column);
+  }
+
+  addFilterLike(column: Column) {
+    column.fieldActive = !column.fieldActive;
+  }
   // validGlobalSearchField() {
   //   console.log("search for : ", this.gloabalSearchModel);    
   //   this.globalSearch = this.gloabalSearchModel;

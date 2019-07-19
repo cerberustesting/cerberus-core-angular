@@ -3,7 +3,7 @@
     <!--Column Selector-->
     <ng-select class="column-selector custom" 
         bindLabel="name" 
-        placeholder="Selected : {{ columnActive }}"
+        placeholder="Columns : {{ columnActive }}"
         [items]="columns" 
         [closeOnSelect]="false" 
         (change)="resetColumnDrop" 
@@ -18,6 +18,29 @@
         <!--List of columns (underline if selected)-->
         <ng-template ng-option-tmp let-item="item" let-index="index">
             <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">{{item.displayName}}</div>
+        </ng-template>
+
+    </ng-select>
+    <ng-select class="column-selector custom" 
+        bindLabel="name" 
+        placeholder="Add Filters"
+        [items]="searchableColumns" 
+        [closeOnSelect]="false"
+        [searchable]="true" 
+        [clearable]="false">
+
+        <!--Content in the top container-->
+        <ng-template ng-label-tmp>
+            <div>Add Filters</div>
+        </ng-template>
+
+        <!--List of columns (underline if selected)-->
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+            <div>
+                <span>{{item.displayName}}</span>
+                <i *ngIf="item.searchable" class="fa fa-filter btn filter-btn" [ngClass]="(item.dropActive)? 'btn-success' : 'btn-warning'" (click)="addFilter(item)"></i>
+                <i *ngIf="item.like" class="fa fa-search btn filter-btn" [ngClass]="(item.fieldActive)? 'btn-success' : 'btn-info'" (click)="addFilterLike(item)"></i>
+            </div>
         </ng-template>
 
     </ng-select>
@@ -51,7 +74,6 @@
     
     <!-- Global Search Field -->
     <input type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()" [(ngModel)]="gloabalSearchModel" placeholder="Search...">
-    <!-- <input type="text" class="form-control" id="global-search" name="global-search" placeholder="Search..."> -->
 
     <!--Distinct filters-->
     <ng-template ngFor let-column [ngForOf]="columns">

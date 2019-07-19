@@ -1,20 +1,21 @@
 .data-table {
   margin: 20px;
-  margin-top: 60px;
-
+  margin-top: 180px;
   .material {
-    margin: 120px 0 20px;
+    margin: 0 0 20px;
     box-shadow: none;
   }
   
   .ngx-datatable .datatable-footer-inner {
-    position: absolute;
+    position: -webkit-sticky;
+    position: sticky;
     top: 0px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }
   
   .ngx-datatable .datatable-header {
-    position: absolute;
+    position: -webkit-sticky;
+    position: sticky;
     top: 70px;
   }
   
@@ -49,3 +50,60 @@
   }
 }
 
+// ? for customize footer
+// .footer {
+//   width: 100%;
+//   display: flex;
+//   &>div {
+//     margin: auto;
+//   }
+//   .select-page-container {
+//     float: right;
+//     .select-page {
+//       background-color: #0077ff;
+//       color: white;
+//       border: none;
+//       margin-right: 3px;
+//     }
+//   }
+// }
+
+.hover-action{
+  color: black;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+.row-menu {
+  position: absolute;
+  text-align: right;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  opacity: 0;
+  transition: .2s;
+  &:hover {
+    opacity :.8;
+  }
+}
+.actions-section {
+  padding: 5px;
+  padding-right: 30px;
+  width: 100%;
+  height: 100%;
+  margin-top: 8px;
+  button {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+    padding: 0;
+    font-size: 18px;
+    i {
+      padding: 0;
+    }
+    
+  }
+}

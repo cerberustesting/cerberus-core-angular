@@ -31,7 +31,7 @@ export class FilterService {
       formData["bSortable_" + column] = (columnList[column].sortable)? true : false;
     }
     let sortCol = columnList.map(a => a.contentName).indexOf(pageInformation.sort[0].prop);
-    formData["iSortCol_0"]=(sortCol>=0)? sortCol : 0; //column to sort
+    formData["iSortCol_0"]=(sortCol>=0)? sortCol : 1; //column to sort
     formData["sSortDir_0"]= pageInformation.sort[0].dir; //sort direction
     formData["sSearch"]=globalSearch;
     formData["sLike"]= 'tec.testCase,tec.description,tec.function,tec.refOrigine,tec.dateCreated,tec.dateModif';

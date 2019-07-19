@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule, Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-actions',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./actions.component.scss']
 })
 export class ActionsComponent implements OnInit {
+  @Input() selectedRows: Array<any>;
+
 
   constructor() { }
 

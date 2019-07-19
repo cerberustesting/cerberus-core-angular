@@ -1,5 +1,34 @@
 <div class="actions-section">
-  <i class="si si-trash"></i>
-  <i class="si si-settings"></i>
-  <i class="si si-control-play"></i>
+  <button class="btn btn-outline-danger" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave">
+    <i class="fa fa-trash-alt"></i>
+  </button> <!-- Delete TC -->
+
+  <button class="btn btn-outline-success"placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave">
+    <i class="fa fa-play"></i>
+  </button> <!-- Run TestCase -->
+
+  <button class="btn btn-outline-info" placement="top" ngbPopover="Edit TestCase Header" popoverTitle="Global Activation" triggers="mouseenter:mouseleave">
+    <i class="fa fa-pen"></i>
+  </button> <!-- Edit TestCase Header -->  
+
+  <button class="btn btn-outline-primary" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave">
+    <i class="fa fa-copy"></i>
+  </button> <!-- Duplicate TC --> 
+
+  <button class="btn btn-outline-info" *ngIf="(selectedRows.length>1)" placement="top" ngbPopover="Edit Label" triggers="mouseenter:mouseleave">
+    <i class="fa fa-tag"></i>
+  </button> <!-- Edit Label -->
+
+  <button class="btn btn-outline-info" *ngIf="(selectedRows.length>1)" placement="top" ngbPopover="Edit Status" triggers="mouseenter:mouseleave">
+    <i class="fa fa-check-circle"></i>
+  </button> <!-- Edit Status -->
+
+  <button class="btn btn-outline-info" *ngIf="(selectedRows.length>1)" placement="top" ngbPopover="Edit Priority" triggers="mouseenter:mouseleave">
+      <i class="fa fa-exclamation"></i>
+  </button> <!-- Edit Priority -->
 </div>
+
+
+<!-- Hover Action button list : Edit TestCase Header / Run TestCase / Duplicate TC / Delete TC /
+Top Action button list : Edit TestCase Header / Run TestCase / Duplicate TC / Delete TC /
+Top Mass Action button list : Run Testcase / Edit Label / Edit Status / Edit Priority / Delete TC / -->

@@ -65,6 +65,7 @@
 
 <!--active filter list-->
 <div class="filter-list">
+    <p class="filter-title">Filtering by : </p>
     <ng-template ngFor let-column [ngForOf]="columns">
         <ng-template [ngIf]="column.sSearch">
             <span *ngFor="let value of column.sSearch" class="badge badge-secondary filter-badge">
@@ -75,3 +76,5 @@
         </ng-template>
     </ng-template>
 </div>
+
+<app-actions class="action" [selectedRows]=selectedRows></app-actions>

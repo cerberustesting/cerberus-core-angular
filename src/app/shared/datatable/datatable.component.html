@@ -1,5 +1,5 @@
 <div class="data-table">
-    <ngx-datatable class="material fullscreen" 
+    <ngx-datatable class="material fullscreen fixed-header" 
         [rows]="rows" 
         [columns]="columns" 
         [columnMode]="'force'"
@@ -12,17 +12,38 @@
         [selectAllRowsOnPage]="true" 
         [scrollbarH]="false"
         [count]="page.totalCount" 
-        [offset]="page.number" 
+        [offset]="page.number"
         [externalPaging]="true" 
         [externalSorting]="true"
         (select)='onSelect($event)'
-        (page)='setPage($event)'
+        (page)="setPage($event)"
         (sort)="onSort($event)">
 
 
         <!--CheckBox Column-->
         <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
             [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
+            <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
+                <div class="row-menu">
+                    <div class="actions-section">
+                        <button class="btn btn-outline-danger" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave">
+                            <i class="fa fa-trash-alt"></i>
+                        </button> 
+                                  
+                        <button class="btn btn-outline-success"placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave">
+                            <i class="fa fa-play"></i>
+                        </button> 
+                                  
+                        <button class="btn btn-outline-info" placement="top" ngbPopover="Edit TestCase Header" popoverTitle="Global Activation" triggers="mouseenter:mouseleave">
+                            <i class="fa fa-pen"></i>
+                        </button>  
+                                  
+                        <button class="btn btn-outline-primary" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave">
+                            <i class="fa fa-copy"></i>
+                        </button> 
+                    </div>
+                </div>
+            </ng-template>
         </ngx-datatable-column>
 
         <!--Column from column array-->
@@ -62,8 +83,35 @@
                      <!--{{ value }}--> <i class="fa fa-check" *ngIf="value==='Y'"></i><i class="fa fa-times" *ngIf="value==='N'"></i>
                 </ng-template>
 
+                
+
             </ngx-datatable-column>
         </ng-template>
+
+        <!-- <ngx-datatable-footer>
+            ? Personalise footer to add actions
+            <ng-template ngx-datatable-footer-template
+            let-rowCount="rowCount"
+            let-pageSize="pageSize"
+            let-selectedCount="selectedCount"
+            let-curPage="curPage"
+            let-offset="offset">
+            <div class="footer">
+                <div>Selected : {{selectedCount}} / {{rowCount}} total</div>
+                <div></div>
+                <div class="select-page-container">            
+                            <datatable-pager
+                            [count]="rowCount" 
+                            [page]="curPage" 
+                            [size]="pageSize" 
+                            (change)="setPage($event)">
+                            </datatable-pager>
+                </div>
+            </div>
+            
+
+            </ng-template>
+        </ngx-datatable-footer> -->
 
     </ngx-datatable>
 </div>

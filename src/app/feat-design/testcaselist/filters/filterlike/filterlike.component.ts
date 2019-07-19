@@ -18,7 +18,9 @@ export class FilterlikeComponent implements OnInit {
   }
 
   validField() : void {  
-    this.column.sSearch.push(this.data);
+    if (!this.column.sSearch.includes(this.data)) {
+      this.column.sSearch.push(this.data)
+    }
     this.applyFilterOutput.emit();
   }
 

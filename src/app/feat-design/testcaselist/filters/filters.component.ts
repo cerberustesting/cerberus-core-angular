@@ -18,7 +18,7 @@ export class FiltersComponent implements OnInit {
 
   @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
-
+  @Input('selectedRows') selectedRows: any;
   @Output() test = new EventEmitter<string>();
   @Output() searchTerm = new EventEmitter<string>();
   @Output() systemApply = new EventEmitter<string>();
@@ -66,6 +66,7 @@ export class FiltersComponent implements OnInit {
     if (index > -1) {
       this.columns[columnIndex].sSearch.splice(index, 1);
     }
+    this.applySystem();
   }
   save() {
     this.preferenceSave.emit('');

@@ -18,9 +18,10 @@ export class DatatableComponent implements OnInit {
     sort: number,
     totalCount: number
   };
+  @Input() selected: Array<any>;
   @Output() pageUpdate = new EventEmitter<number>();
   @Output() addFilterMenu = new EventEmitter<any>();
-  selected = [];
+  
   isLoading: boolean;
 
   
@@ -31,15 +32,17 @@ export class DatatableComponent implements OnInit {
   }
 
   onSelect({ selected }) {
-    // console.log('Select Event', selected, this.selected);
+    console.log('Select Event', selected, this.selected);
 
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
   }
 
   setPage(pageInfo){
-    this.page.number = pageInfo.offset;
-    this.pageUpdate.emit(pageInfo.offset);
+    console.log("pageInfo", pageInfo);
+    
+    // this.page.number = pageInfo.offset;
+    // this.pageUpdate.emit(pageInfo.offset);
   }
 
   addFilter(column) {

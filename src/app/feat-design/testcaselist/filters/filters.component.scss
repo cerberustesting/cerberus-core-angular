@@ -1,4 +1,4 @@
-.filter-container, .filter-list {
+.filter-container, .filter-list, .action {
   display: flex;
   flex-direction: row;
   position: fixed;
@@ -6,12 +6,17 @@
   width: 100%;
   padding: 5px;
   z-index: 1000;
+  height: 60px;
 }
 .filter-list {
-  top: 125px;
+  top: 175px;
+  z-index: 5;
+  height: 45px;
+}
+.action {
+  top: 120px;
   z-index: 5;
 }
-
 .input-search {
   margin-right: 5px;
   border-radius: 3px;
@@ -92,4 +97,7 @@ ng-select.typeahead .ng-value {
 }
 .form-control {
   width: 150px;
+}
+.filter-title {
+  margin: 0;
 }

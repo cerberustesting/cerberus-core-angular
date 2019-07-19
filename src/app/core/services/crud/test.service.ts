@@ -98,22 +98,25 @@ export class TestService {
   getTestCasesFilterList(queryParameters: string) {
     this.http.get<ITestCaseHeader>(AppSettings.API_endpoint + '/ReadTestCase?'+queryParameters)
       .subscribe((response) => {
+        if(response) {
+        
 
-        // @ts-ignore
-        if (response.iTotalRecords > 0) {
           // @ts-ignore
-          // console.log(response);
+          if (response.iTotalRecords>0) {
+            // @ts-ignore
           
-          this.testcasesList = response.contentTable;
-          this.testcasesListLength = response.iTotalRecords;
+            this.testcasesList = response.contentTable;
+            this.testcasesListLength = response.iTotalRecords;
 
-          this.observableTestCasesList.next(this.testcasesList);
-          this.observableTestCasesListLength.next(this.testcasesListLength);
+            this.observableTestCasesList.next(this.testcasesList);
+            this.observableTestCasesListLength.next(this.testcasesListLength);
+          }
+          else {
+            this.testcasesList = null;
+            this.observableTestCasesList.next(this.testcasesList);
+          }
         }
-        else {
-          this.testcasesList = null;
-          this.observableTestCasesList.next(this.testcasesList);
-        }
+        
       });
   }
   getColumnData(columnName: string) {

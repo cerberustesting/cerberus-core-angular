@@ -404,12 +404,12 @@ export class TestcaselistComponent implements OnInit {
     page: any
   };
   globalSearch = '';
+  selectedRows: Array<any> = [];
   
   constructor(private testService: TestService, private invariantsService: InvariantsService, private labelfilteringPipe: LabelfilteringPipe, private systemService: SystemService, private filterService: FilterService) { }
 
   ngOnInit() {
-
-    this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected, this.page.size, this.page.number);
+    // this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected, this.page.size, this.page.number);
 
     this.testService.observableTestCasesList.subscribe(response => {
       if (response) {
@@ -425,6 +425,7 @@ export class TestcaselistComponent implements OnInit {
         this.page.totalCount = response;
       }
     });
+    this.search();
 
   }
 
@@ -436,7 +437,6 @@ export class TestcaselistComponent implements OnInit {
   appplySystemChange(globalSearch?: string) {
     if (this.page.size == null) this.page.size = 10;
     this.globalSearch = (globalSearch)? globalSearch : '';
-    console.log("globalSearch", this.globalSearch);
     
     this.search()
     // if(this.filterList.length > 0) {
@@ -461,7 +461,6 @@ export class TestcaselistComponent implements OnInit {
   }
 
   search() {
-    console.log("search: ",this.globalSearch);
     
     //adjust system search with selected system and delete double.
     this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);

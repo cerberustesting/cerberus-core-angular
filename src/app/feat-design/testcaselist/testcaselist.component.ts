@@ -388,7 +388,7 @@ export class TestcaselistComponent implements OnInit {
 
   page = {
     size: 10, //maximum element per page
-    number: 0, //number of current page
+    number: 1, //number of current page
     sort: [{dir: "asc", prop : "testcase"}], //sort item
     totalCount: 0 //total count of element in database
   };

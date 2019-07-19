@@ -20,6 +20,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { SettingsComponent } from "./testcasescript/tc-script/settings/settings.component";
 import { ActionsComponent } from './testcaselist/actions/actions.component';
 import { FilterlikeComponent } from './testcaselist/filters/filterlike/filterlike.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -41,13 +42,15 @@ import { FilterlikeComponent } from './testcaselist/filters/filterlike/filterlik
       SettingsComponent,
       ActionsComponent,
       FilterlikeComponent,
+      
   ],
   imports: [
     CommonModule,
     DesignRoutingModule,
     FilterPipeModule,
     SharedModule,
-    DragDropModule
+    DragDropModule,
+    NgbModule
   ],
   exports: [SharedModule]
 })

@@ -1,11 +1,16 @@
+.header-area {
+  background-color: #d9e8f5;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;  
+}
+
 .filter-container, .filter-list, .action {
   display: flex;
   flex-direction: row;
-  position: fixed;
-  background-color: #d9e8f5;
   width: 100%;
   padding: 5px;
-  z-index: 1000;
+  
   height: 60px;
 }
 .filter-list {
@@ -16,6 +21,9 @@
 .action {
   top: 120px;
   z-index: 5;
+  &>*{
+    margin: auto;
+  }
 }
 .input-search {
   margin-right: 5px;

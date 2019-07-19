@@ -3,17 +3,13 @@
         [rows]="rows" 
         [columns]="columns" 
         [columnMode]="'force'"
-        [rowHeight]="'auto'" 
-        [footerHeight]="50" 
+        [rowHeight]="'auto'"
         [headerHeight]="50" 
         [loadingIndicator]="isLoading"
         [selected]="selected" 
         [selectionType]="'checkbox'" 
         [selectAllRowsOnPage]="true" 
         [scrollbarH]="false"
-        [count]="page.totalCount" 
-        [offset]="page.number"
-        [externalPaging]="true" 
         [externalSorting]="true"
         (select)='onSelect($event)'
         (page)="setPage($event)"
@@ -87,31 +83,6 @@
 
             </ngx-datatable-column>
         </ng-template>
-
-        <!-- <ngx-datatable-footer>
-            ? Personalise footer to add actions
-            <ng-template ngx-datatable-footer-template
-            let-rowCount="rowCount"
-            let-pageSize="pageSize"
-            let-selectedCount="selectedCount"
-            let-curPage="curPage"
-            let-offset="offset">
-            <div class="footer">
-                <div>Selected : {{selectedCount}} / {{rowCount}} total</div>
-                <div></div>
-                <div class="select-page-container">            
-                            <datatable-pager
-                            [count]="rowCount" 
-                            [page]="curPage" 
-                            [size]="pageSize" 
-                            (change)="setPage($event)">
-                            </datatable-pager>
-                </div>
-            </div>
-            
-
-            </ng-template>
-        </ngx-datatable-footer> -->
 
     </ngx-datatable>
 </div>

@@ -16,7 +16,7 @@ export class FilterService {
       // "sEcho": 1, //
       "iColumns": columnList.length, 
       "sColumns": columnList.map(column => column.databaseName).join(','),
-      "iDisplayStart": pageInformation.number,
+      "iDisplayStart": (pageInformation.number-1)*pageInformation.size,
       "iDisplayLength": pageInformation.size,
     }
     for (let column in columnList) {

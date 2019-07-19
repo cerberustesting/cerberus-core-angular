@@ -88,6 +88,32 @@ export class FiltersComponent implements OnInit {
   addFilterLike(column: Column) {
     column.fieldActive = !column.fieldActive;
   }
+
+  setPagingProperties() {
+    let totalPages = Math.ceil(this.page.totalCount/this.page.size);
+
+    let pageName = [];
+    let caseSelectedIndex=3;
+    for (let i=1; i<= totalPages; ++i) {
+      pageName.push(i);
+    }
+    let range = [];
+    if(2 < this.page.number && this.page.number < totalPages-2){
+      for (let a=(totalPages-2); a<=(totalPages+2); ++a){
+        range.push(a);
+      }
+    } else if (2 >= this.page.number) {
+      range = [1,2,3,4,5];
+    } else {
+      for (let a=(totalPages-4); a<=(totalPages); ++a){
+        range.push(a);
+      }
+    }
+  }
+
+  pageChange(pageNumber) {
+    console.log("New page :", this.page.number);
+  }
   // validGlobalSearchField() {
   //   console.log("search for : ", this.gloabalSearchModel);    
   //   this.globalSearch = this.gloabalSearchModel;

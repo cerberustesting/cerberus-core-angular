@@ -3,118 +3,127 @@
   position: fixed;
   width: 100%;
   z-index: 1000;  
-}
 
-.filter-container, .filter-list, .action {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  padding: 5px;
+  .filter-container, .filter-list, .action {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 5px;  
+    height: 60px;
+  }
+  .filter-list {
+    top: 175px;
+    z-index: 5;
+    height: 45px;
+  }
+  .action {
+    top: 120px;
+    z-index: 5;
+    &>*{
+      margin: auto;
+    }
+  }
+  .input-search {
+    margin-right: 5px;
+    border-radius: 3px;
+    border: 1px solid #b3b3b3;
+    height: 35px;
+    padding: 5px;
+    margin-left: 5px;
+    outline: none;
+    overflow: hidden;
+  }
   
-  height: 60px;
-}
-.filter-list {
-  top: 175px;
-  z-index: 5;
-  height: 45px;
-}
-.action {
-  top: 120px;
-  z-index: 5;
-  &>*{
-    margin: auto;
+  .add-filter{
+    border: 1px solid #ccc;
+    font-size: 18px;
+    background-color: white;
+    outline: none;
+    max-height: 36px;
+    padding: 0 10px 0 10px;
+    margin: 5px 0 5px 5px
+  }
+  
+  .add-filter:hover {
+    border: 1px solid #b3b3b3;
+  }
+  
+  .add-filter:focus{
+    background-color: #ebf5ff;
+  }
+  
+  .ng-select {
+    margin-top: 5px ;
+    width: 150px;
+  }
+  
+  .selected {
+    border-bottom: 2px solid #0077ff;
+  }
+  .btn {
+    margin-left: 20px;
+  }
+  
+  .modal-backdrop {
+    display: none;
+  }
+  
+  ng-select.typeahead .ng-value {
+    display: none !important;
+  }
+  
+  .pageSize {
+    margin-left: 20px;
+  }
+  
+  .ui-select-choices {
+    position: fixed;
+    top: auto;
+    left: auto;
+    width: inherit;
+  }
+  .badge {
+    margin: 5px !important;
+  }
+  
+  .filter-badge {
+    cursor: pointer;
+    i {
+      margin-left: 3px;
+    }
+  }
+  
+  .addFilters {
+    width: 200px;
+  }
+  
+  .filter-container>*{
+    margin: 5px 10px;
+  }
+  .form-control {
+    width: 150px;
+  }
+  .filter-title {
+    margin: 0;
+  }
+  
+  .filter-btn {
+    font-size: 15px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    padding: 0px;
+    margin-left: 4px;
+  }
+  .filter-listed {
+    width: 100%;
+    i {
+      float: right;
+      margin-left: 5px;
+    }
+  }
+  .filter-more:hover{
+    text-decoration: underline;
   }
 }
-.input-search {
-  margin-right: 5px;
-  border-radius: 3px;
-  border: 1px solid #b3b3b3;
-  height: 35px;
-  padding: 5px;
-  margin-left: 5px;
-  outline: none;
-  overflow: hidden;
-}
 
-.add-filter{
-  //padding: 10px;
-  border: 1px solid #ccc;
-  font-size: 18px;
-  background-color: white;
-  outline: none;
-  max-height: 36px;
-  padding: 0 10px 0 10px;
-  //vertical-align: middle;
-  margin: 5px 0 5px 5px
-}
-
-.add-filter:hover {
-  border: 1px solid #b3b3b3;
-}
-
-.add-filter:focus{
-  background-color: #ebf5ff;
-}
-
-.ng-select {
-  margin-top: 5px ;
-  width: 150px;
-}
-
-.selected {
-  border-bottom: 2px solid #0077ff;
-}
-.btn {
-  margin-left: 20px;
-}
-
-.modal-backdrop {
-  display: none;
-}
-
-ng-select.typeahead .ng-value {
-  display: none !important;
-}
-
-.pageSize {
-  margin-left: 20px;
-}
-
-.ui-select-choices {
-  position: fixed;
-  top: auto;
-  left: auto;
-  width: inherit;
-}
-.badge {
-  margin: 5px !important;
-}
-
-.filter-badge {
-  i {
-    margin-left: 3px;
-  }
-}
-
-.addFilters {
-  width: 200px;
-}
-
-.filter-container>*{
-  margin: 5px 10px;
-}
-.form-control {
-  width: 150px;
-}
-.filter-title {
-  margin: 0;
-}
-
-.filter-btn {
-  font-size: 15px;
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
-  padding: 0px;
-  margin-left: 4px;
-}

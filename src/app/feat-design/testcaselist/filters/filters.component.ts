@@ -35,7 +35,7 @@ export class FiltersComponent implements OnInit {
   columnActive: number;
   searchableColumns: Array<Column>;
   gloabalSearchModel: string;
-
+  filterList = [];
 
   constructor(private systemService: SystemService,
     private invariantService: InvariantsService,
@@ -53,6 +53,14 @@ export class FiltersComponent implements OnInit {
   }
 
   applySystem() {
+    this.filterList = [];
+    this.columns.forEach(e => {
+      if(e.sSearch) {
+        e.sSearch.forEach(a => {
+          this.filterList.push({name: e.contentName, value: a});
+        });
+      }      
+    });
     this.systemApply.emit(this.gloabalSearchModel);
   }
 
@@ -60,9 +68,9 @@ export class FiltersComponent implements OnInit {
     this.searchServe.emit('');
   }
 
-  remove(column: Column, value: string) {
-    const columnIndex = this.columns.indexOf(column);
-    const index = column.sSearch.indexOf(value);
+  remove(name: string, value: string) {
+    const columnIndex = this.columns.map(c => c.contentName).indexOf(name);
+    const index = this.columns[columnIndex].sSearch.indexOf(value);
     if (index > -1) {
       this.columns[columnIndex].sSearch.splice(index, 1);
     }
@@ -74,49 +82,19 @@ export class FiltersComponent implements OnInit {
   load() {
     this.preferenceLoad.emit('');
   }
+
   onKeyUp() {
     if (this.gloabalSearchModel.length > 2){
       setTimeout(() => this.applySystem(), 500);
     }
   }
+
   addFilter(column) {
     column.dropActive = !column.dropActive;
-    
-    //this.addFilterMenu.emit(column);
   }
 
   addFilterLike(column: Column) {
     column.fieldActive = !column.fieldActive;
   }
 
-  setPagingProperties() {
-    let totalPages = Math.ceil(this.page.totalCount/this.page.size);
-
-    let pageName = [];
-    let caseSelectedIndex=3;
-    for (let i=1; i<= totalPages; ++i) {
-      pageName.push(i);
-    }
-    let range = [];
-    if(2 < this.page.number && this.page.number < totalPages-2){
-      for (let a=(totalPages-2); a<=(totalPages+2); ++a){
-        range.push(a);
-      }
-    } else if (2 >= this.page.number) {
-      range = [1,2,3,4,5];
-    } else {
-      for (let a=(totalPages-4); a<=(totalPages); ++a){
-        range.push(a);
-      }
-    }
-  }
-
-  pageChange(pageNumber) {
-    console.log("New page :", this.page.number);
-  }
-  // validGlobalSearchField() {
-  //   console.log("search for : ", this.gloabalSearchModel);    
-  //   this.globalSearch = this.gloabalSearchModel;
-  //   this.applySystem();
-  // }
 }

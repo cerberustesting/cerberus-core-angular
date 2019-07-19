@@ -16,35 +16,34 @@ export class FilterComponent implements OnInit {
   data: any;
   model = [];
 
-  // @Input() param: {
-  //   multiple: boolean,
-  //   field: any,
-  //   placeholder: any,
-  //   bindLabel: any,
-  //   bindValue: any,
-  // };
 
-  constructor(private testService: TestService, private systemService: SystemService) {
-  }
+  constructor(private testService: TestService, private systemService: SystemService) {  }
 
-  // sendValues(data) {
-  //   this.dataSelected.emit(data);
-  //   console.log(this.dataSelected);
-  // }
   applyFilter() {
     this.applyFilterOutput.emit();
   }
+
   add(value) {
     this.column.sSearch.push(value);
   }
+
   remove(value) {
     this.column.sSearch.splice(this.column.sSearch.indexOf(value))
   }
+
   change(values) {
     this.column.sSearch = values;
   }
+
   dbg(smth) {
     this.model = this.column.sSearch;
+  }
+
+  onKeyDownEnter(value) {
+    this.dataList.filter(e => e.includes(value));
+    let selectedElements = (this.column.type==='label')? this.dataList.filter(e => e.id.includes(value)) : this.dataList.filter(e => e.includes(value));;
+    this.model = selectedElements;
+    this.column.sSearch = selectedElements;
   }
 
   ngOnInit() {
@@ -74,10 +73,9 @@ export class FilterComponent implements OnInit {
     
   }
   onSelectAll() {
-    this.dataList.forEach(element => {      
-      this.model.push(element);
-      this.column.sSearch.push(element)
-    });
+    let selectedElements = this.dataList;
+    this.model = selectedElements;
+    this.column.sSearch = selectedElements;
   }
   onClearAll() {
     this.model = [];

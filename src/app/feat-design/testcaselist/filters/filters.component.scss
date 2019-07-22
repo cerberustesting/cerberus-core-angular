@@ -10,8 +10,12 @@
     width: 100%;
     padding: 5px;  
     height: 60px;
-    &>* {height: 35px;}
+    
   }
+  .filter-container>* {
+    height: 35px;
+  }
+
   .filter-list {
     top: 175px;
     z-index: 5;
@@ -130,4 +134,5 @@
 
 .filter-drop {
   margin-top: 0px !important;
+  max-height: 50px;
 }

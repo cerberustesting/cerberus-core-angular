@@ -21,8 +21,11 @@ export class FilterComponent implements OnInit {
   constructor(private testService: TestService, private systemService: SystemService) {  }
 
   applyFilter() {
-    this.column.sSearch = this.model;
+    //console.log(this.model);
+    
+    this.column.sSearch = (this.column.param.multiple)? this.model : [this.model];
     this.applyFilterOutput.emit();
+    
   }
 
   add(value) {
@@ -30,7 +33,9 @@ export class FilterComponent implements OnInit {
   }
 
   change(values) {
-    this.column.sSearch = values;
+    if (this.column.param.multiple) this.column.sSearch = values;
+    else if (values!='') this.column.sSearch = [values];
+    else this.column.sSearch = [];
   }
 
   dbg(smth) {

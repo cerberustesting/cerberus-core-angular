@@ -2,24 +2,7 @@
   margin: 20px;
   margin-top: 180px;
   .material {
-    margin: 0 0 20px;
     box-shadow: none;
-  }
-  
-  .ngx-datatable .datatable-footer-inner {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  }
-  
-  .ngx-datatable .datatable-header {
-    top: 0px;
-  }
-  
-  .ngx-datatable .datatable-body {
-    margin-top: 100px;
-    transition: .5s;
   }
   .action {
     width: 20px;
@@ -48,24 +31,6 @@
   }
 }
 
-// ? for customize footer
-// .footer {
-//   width: 100%;
-//   display: flex;
-//   &>div {
-//     margin: auto;
-//   }
-//   .select-page-container {
-//     float: right;
-//     .select-page {
-//       background-color: #0077ff;
-//       color: white;
-//       border: none;
-//       margin-right: 3px;
-//     }
-//   }
-// }
-
 .hover-action{
   color: black;
   position: absolute;
@@ -74,20 +39,17 @@
 }
 .row-menu {
   position: absolute;
-  text-align: right;
-  width: 100%;
-  height: 100%;
   top: 0;
+  right:0;
   opacity: 0;
   transition: .2s;
   &:hover {
-    opacity :.8;
+    opacity : 1;
   }
 }
 .actions-section {
   padding: 5px;
   padding-right: 30px;
-  width: 100%;
   height: 100%;
   margin-top: 8px;
   button {
@@ -96,12 +58,24 @@
     display: inline-block;
     align-items: center;
     justify-content: center;
-    margin-right: 4px;
+    margin-left: 4px;
     padding: 0;
     font-size: 18px;
     i {
       padding: 0;
-    }
-    
-  }
+    }    
+  }  
+}
+
+.ngx-datatable.scroll-vertical .datatable-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+
+:host
+  .ngx-datatable.material
+  .datatable-body-row:hover .row-menu {
+  opacity: .8;
 }

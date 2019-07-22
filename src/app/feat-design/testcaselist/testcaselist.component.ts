@@ -146,7 +146,7 @@ export class TestcaselistComponent implements OnInit {
       dropActive: false,
       type: 'boolean',
       param: {
-        multiple: true,
+        multiple: false,
         field: 'tcActive',
         placeholder: 'Select Gloabl Activation',
       },

@@ -68,9 +68,7 @@ export class FiltersComponent implements OnInit {
     this.searchServe.emit('');
   }
 
-  remove(name: string, value: string) {
-    console.log("removing : " + name + ' -> ' + value);
-    
+  remove(name: string, value: string) {    
     const columnIndex = this.columns.map(c => c.contentName).indexOf(name);
     const index = this.columns[columnIndex].sSearch.indexOf(value);
     if (index > -1) {

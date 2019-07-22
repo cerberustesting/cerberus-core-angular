@@ -29,13 +29,7 @@
 
             <!--List of columns (underline if selected)-->
             <ng-template ng-option-tmp let-item="item" let-index="index">
-                <div [ngClass]="{'selected': item.dropActive}" (click)="addFilter(item)">
-                    <span>{{item.displayName}}</span>
-                    <!-- <i *ngIf="item.searchable" class="fa fa-filter btn filter-btn"
-                        [ngClass]="(item.dropActive)? 'btn-success' : 'btn-warning'" (click)="addFilter(item)"></i>
-                    <i *ngIf="item.like" class="fa fa-search btn filter-btn"
-                        [ngClass]="(item.fieldActive)? 'btn-success' : 'btn-info'" (click)="addFilterLike(item)"></i> -->
-                </div>
+                <div [ngClass]="{'selected': item.dropActive}" (click)="addFilter(item)">{{item.displayName}}</div>
             </ng-template>
 
         </ng-select>
@@ -74,6 +68,7 @@
             </app-filterlike>
         </ng-template>
     </div>
+
     <div class="action">
         <app-actions [selectedRows]=selectedRows></app-actions>
         <span>{{selectedRows.length}} selected / {{page.totalCount}} total</span>

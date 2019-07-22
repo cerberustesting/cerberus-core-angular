@@ -20,7 +20,9 @@
   </ng-template>
 
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-            <span >{{column.displayName | titlecase }} Selected : {{column.sSearch.length}}</span>
+          <span *ngIf="column.param.multiple; else uniq">{{column.displayName | titlecase }} : {{column.sSearch.length}}</span>
+          <ng-template #uniq>{{column.displayName | titlecase }} : {{column.sSearch[0]}}</ng-template>
+            
     </ng-template>
     <ng-template ng-header-tmp>
       <button class="btn btn-outline-info" (click)="onSelectAll()">Select All</button>

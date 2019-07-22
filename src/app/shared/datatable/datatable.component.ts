@@ -39,8 +39,6 @@ export class DatatableComponent implements OnInit {
 
   addFilter(column) {
     column.dropActive = !column.dropActive;
-    
-    //this.addFilterMenu.emit(column);
   }
 
   addFilterLike(column: Column) {
@@ -52,12 +50,6 @@ export class DatatableComponent implements OnInit {
     this.pageUpdate.emit(this.page.number);
     this.isLoading = false;
   }
-
-/*
-  onActivate(event) {
-    console.log('Activate Event', event);
-  }
-*/
 
 
 

@@ -1,25 +1,26 @@
 <div class="data-table">
     <ngx-datatable class="material fullscreen fixed-header" 
+        style="height: 600px;"
         [rows]="rows" 
         [columns]="columns" 
         [columnMode]="'force'"
-        [rowHeight]="'auto'"
+        [rowHeight]="50"
         [headerHeight]="50" 
         [loadingIndicator]="isLoading"
         [selected]="selected" 
         [selectionType]="'checkbox'" 
         [selectAllRowsOnPage]="true" 
         [scrollbarH]="false"
-        [externalSorting]="true"
+        [scrollbarV]="true"
+        [externalSorting]="true"        
         (select)='onSelect($event)'
-        (page)="setPage($event)"
         (sort)="onSort($event)">
 
 
         <!--CheckBox Column-->
         <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
             [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
-            <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
+            <!-- <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
                 <div class="row-menu">
                     <div class="actions-section">
                         <button class="btn btn-outline-danger" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave">
@@ -39,7 +40,7 @@
                         </button> 
                     </div>
                 </div>
-            </ng-template>
+            </ng-template> -->
         </ngx-datatable-column>
 
         <!--Column from column array-->
@@ -67,6 +68,7 @@
                         <b>{{item.value}} </b>
                     </a>
                 </ng-template>
+                
 
                 <!--Label column-->
                 <ng-template *ngIf="column.type==='label'" let-row='row' let-value="value" ngx-datatable-cell-template>
@@ -78,11 +80,39 @@
                 <ng-template *ngIf="column.type==='boolean'" let-value="value" ngx-datatable-cell-template>
                      <!--{{ value }}--> <i class="fa fa-check" *ngIf="value==='Y'"></i><i class="fa fa-times" *ngIf="value==='N'"></i>
                 </ng-template>
+                <ng-template let-value='value' let-value ngx-datatable-cell-template>
+                        <span class="cell" *ngIf="value.length<20; else elipsValue">{{ value }}</span>
+                        <ng-template #elipsValue><span [ngbPopover]="value" triggers="mouseenter:mouseleave">{{value}}</span></ng-template>
+                    </ng-template>
 
                 
 
             </ngx-datatable-column>
         </ng-template>
+        <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
+            [width]="1">
+            <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
+                <div class="row-menu">
+                    <div class="actions-section">
+                        <button class="btn btn-outline-danger" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave">
+                            <i class="fa fa-trash-alt"></i>
+                        </button> 
+                                  
+                        <button class="btn btn-outline-success"placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave">
+                            <i class="fa fa-play"></i>
+                        </button> 
+                                  
+                        <button class="btn btn-outline-info" placement="top" ngbPopover="Edit TestCase Header" popoverTitle="Global Activation" triggers="mouseenter:mouseleave">
+                            <i class="fa fa-pen"></i>
+                        </button>  
+                                  
+                        <button class="btn btn-outline-primary" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave">
+                            <i class="fa fa-copy"></i>
+                        </button> 
+                    </div>
+                </div>
+            </ng-template>
+        </ngx-datatable-column>
 
     </ngx-datatable>
 </div>

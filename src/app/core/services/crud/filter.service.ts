@@ -11,6 +11,7 @@ export class FilterService {
   generateQueryStringParameters(columnList: Array<Column>, pageInformation: {size: number, sort: any, number: number, totalCount: number}, globalSearch: string): string {
     let queryParameter = "";
 
+
     //generate request header
     let formData = {
       // "sEcho": 1, //

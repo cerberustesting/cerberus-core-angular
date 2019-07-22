@@ -10,6 +10,7 @@ import { LabelfilteringPipe } from "./pipes/labelfiltering.pipe";
 import { AlertsComponent } from "./alerts/alerts.component";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 import { LabelComponent } from './label/label.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { LabelComponent } from './label/label.component';
     NgSelectModule,
     NgxDatatableModule,
     FormsModule,
+    NgbModule
 
   ],
   exports: [

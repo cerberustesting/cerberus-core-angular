@@ -9,6 +9,7 @@ import { UniqueproplistPipe } from "./pipes/uniqueproplist.pipe";
 import { LabelfilteringPipe } from "./pipes/labelfiltering.pipe";
 import { AlertsComponent } from "./alerts/alerts.component";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
+import { LabelComponent } from './label/label.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
     TrueindexPipe,
     UniqueproplistPipe,
     LabelfilteringPipe,
-    AlertsComponent
+    AlertsComponent,
+    LabelComponent
   ],
   imports: [
     CommonModule,

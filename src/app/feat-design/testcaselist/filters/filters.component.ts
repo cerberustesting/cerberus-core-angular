@@ -55,7 +55,7 @@ export class FiltersComponent implements OnInit {
   applySystem() {
     this.filterList = [];
     this.columns.forEach(e => {
-      if(e.sSearch) {
+      if(e.sSearch && e.contentName!=='description') {
         e.sSearch.forEach(a => {
           this.filterList.push({name: e.contentName, value: a});
         });
@@ -69,6 +69,8 @@ export class FiltersComponent implements OnInit {
   }
 
   remove(name: string, value: string) {
+    console.log("removing : " + name + ' -> ' + value);
+    
     const columnIndex = this.columns.map(c => c.contentName).indexOf(name);
     const index = this.columns[columnIndex].sSearch.indexOf(value);
     if (index > -1) {
@@ -76,6 +78,8 @@ export class FiltersComponent implements OnInit {
     }
     this.applySystem();
   }
+
+
   save() {
     this.preferenceSave.emit('');
   }

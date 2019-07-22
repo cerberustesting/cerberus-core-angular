@@ -1,6 +1,5 @@
 import {Component, Input, OnInit, ViewChild, Output, EventEmitter, HostBinding} from '@angular/core';
 import { Column } from '../model/column.model';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-table',
@@ -36,13 +35,6 @@ export class DatatableComponent implements OnInit {
 
     this.selected.splice(0, this.selected.length);
     this.selected.push(...selected);
-  }
-
-  setPage(pageInfo){
-    console.log("pageInfo", pageInfo);
-    
-    // this.page.number = pageInfo.offset;
-    // this.pageUpdate.emit(pageInfo.offset);
   }
 
   addFilter(column) {

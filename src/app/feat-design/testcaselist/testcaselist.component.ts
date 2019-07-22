@@ -40,7 +40,6 @@ export class TestcaselistComponent implements OnInit {
       contentName: 'test',
       active: true,
       searchable: true,
-      like: true,
       param: {
         multiple: true,
         field: 'test',
@@ -54,7 +53,7 @@ export class TestcaselistComponent implements OnInit {
       databaseName: 'tec.testcase',
       contentName: 'testCase',
       active: true,
-      like: true,
+      searchable: true,
       param: {
         multiple: true,
         field: 'testCase',

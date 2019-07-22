@@ -15,20 +15,18 @@ export class FilterComponent implements OnInit {
   @Output() applyFilterOutput = new EventEmitter<void>();
   data: any;
   model = [];
+  searchItems = [];
 
 
   constructor(private testService: TestService, private systemService: SystemService) {  }
 
   applyFilter() {
+    this.column.sSearch = this.model;
     this.applyFilterOutput.emit();
   }
 
   add(value) {
     this.column.sSearch.push(value);
-  }
-
-  remove(value) {
-    this.column.sSearch.splice(this.column.sSearch.indexOf(value))
   }
 
   change(values) {
@@ -37,13 +35,12 @@ export class FilterComponent implements OnInit {
 
   dbg(smth) {
     this.model = this.column.sSearch;
+    this.searchItems = [];
   }
 
-  onKeyDownEnter(value) {
-    this.dataList.filter(e => e.includes(value));
-    let selectedElements = (this.column.type==='label')? this.dataList.filter(e => e.id.includes(value)) : this.dataList.filter(e => e.includes(value));;
-    this.model = selectedElements;
-    this.column.sSearch = selectedElements;
+  onKeyUpEnter(value) {
+    this.model = this.searchItems;
+    this.column.sSearch = this.searchItems;
   }
 
   ngOnInit() {
@@ -73,13 +70,18 @@ export class FilterComponent implements OnInit {
     
   }
   onSelectAll() {
-    let selectedElements = this.dataList;
+    let selectedElements = (this.searchItems.length>0)? this.searchItems : this.dataList;
     this.model = selectedElements;
     this.column.sSearch = selectedElements;
   }
   onClearAll() {
     this.model = [];
     this.column.sSearch = [];
+  }
+
+  onSearch(event){
+    this.searchItems = event.items;
+    
   }
 
 }

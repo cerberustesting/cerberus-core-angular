@@ -70,25 +70,35 @@
                 </ng-template>
                 
 
-                <!--Label column-->
+                <!--Label columns-->
                 <ng-template *ngIf="column.type==='label'" let-row='row' let-value="value" ngx-datatable-cell-template>
                     <div *ngIf="row[column.contentName]">
-                        <div class="label" *ngFor="let item of row[column.contentName]"
-                            [style.background-color]="item.color">{{ item?.name }}</div>
+                                <div class="label"
+                                [style.background-color]="row[column.contentName][0].color">{{ row[column.contentName][0]?.name }}</div>
+                                <div class="badge badge-info" *ngIf="row[column.contentName].length>1" [ngbPopover]="labelPopoverTemplate" triggers="mouseenter:mouseleave">More : {{row[column.contentName].length-1}}</div>                        
+                                <ng-template #labelPopoverTemplate>
+                                        <div class="label" *ngFor="let item of row[column.contentName].slice(1)"
+                                        [style.background-color]="item.color">{{ item?.name }}</div>
+                                </ng-template>
                     </div>
                 </ng-template>
+
+                <!--Boolean columns-->
                 <ng-template *ngIf="column.type==='boolean'" let-value="value" ngx-datatable-cell-template>
                      <!--{{ value }}--> <i class="fa fa-check" *ngIf="value==='Y'"></i><i class="fa fa-times" *ngIf="value==='N'"></i>
                 </ng-template>
+
+                <!--Default columns-->
                 <ng-template let-value='value' let-value ngx-datatable-cell-template>
-                        <span class="cell" *ngIf="value.length<20; else elipsValue">{{ value }}</span>
-                        <ng-template #elipsValue><span [ngbPopover]="value" triggers="mouseenter:mouseleave">{{value}}</span></ng-template>
-                    </ng-template>
+                    <span class="cell" *ngIf="value.length<20; else elipsValue">{{ value }}</span>
+                    <ng-template #elipsValue><span [ngbPopover]="value" triggers="mouseenter:mouseleave">{{value}}</span></ng-template>
+                </ng-template>
 
                 
 
             </ngx-datatable-column>
         </ng-template>
+
         <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
             [width]="1">
             <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>

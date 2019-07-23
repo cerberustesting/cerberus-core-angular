@@ -20,35 +20,35 @@ export class FilterComponent implements OnInit {
 
   constructor(private testService: TestService, private systemService: SystemService) {  }
 
-  applyFilter() {
-    //console.log(this.model);
-    
+  applyFilter() { 
     this.column.sSearch = (this.column.param.multiple)? this.model : [this.model];
-    this.applyFilterOutput.emit();
-    
+    this.applyFilterOutput.emit();    
   }
 
-  add(value) {
+  onAdd(value) {
     this.column.sSearch.push(value);
   }
 
-  change(values) {
+  onChange(values) {
     if (this.column.param.multiple) this.column.sSearch = values;
     else if (values!='') this.column.sSearch = [values];
     else this.column.sSearch = [];
   }
 
-  dbg(smth) {
+  updateModel() {
+    /*get current filters*/
     this.model = this.column.sSearch;
     this.searchItems = [];
   }
 
-  onKeyUpEnter(value) {
+  onKeyUpEnter() {
+    /*when the field is validate*/
     this.model = this.searchItems;
     this.column.sSearch = this.searchItems;
   }
 
   ngOnInit() {
+    /*use a different request to get label because need label AND color*/
     if(this.column.type==='label'){
       this.systemService.getLabelsFromSystem('');
       this.systemService.observableLabelsList.subscribe(response => {
@@ -60,7 +60,6 @@ export class FilterComponent implements OnInit {
           this.dataList = null;
         }
       });
-
     } else {
       this.testService.getColumnData(this.column.databaseName).subscribe(response => {
         if (response) {
@@ -75,18 +74,20 @@ export class FilterComponent implements OnInit {
     
   }
   onSelectAll() {
+    /*Select all element that correspond to the search*/
     let selectedElements = (this.searchItems.length>0)? this.searchItems : this.dataList;
     this.model = selectedElements;
     this.column.sSearch = selectedElements;
   }
   onClearAll() {
+    /*Reset the model*/
     this.model = [];
     this.column.sSearch = [];
   }
 
   onSearch(event){
-    this.searchItems = event.items;
-    
+    /*everytime a key is pressed*/
+    this.searchItems = event.items;    
   }
 
 }

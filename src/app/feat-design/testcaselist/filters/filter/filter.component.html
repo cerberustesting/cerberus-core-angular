@@ -6,10 +6,10 @@
            [bindValue]="id"
            placeholder="{{column.param.placeholder}}"
            [(ngModel)]='model'
-           (open)="dbg(column.sSearch)"
-           (add)="add($event)"
+           (open)="updateModel()"
+           (add)="onAdd($event)"
            (remove)="remove($event)"
-           (change)="change($event)"
+           (change)="onChange($event)"
            [clearable]="true"
            (close)="applyFilter()"
            (search)="onSearch($event)"

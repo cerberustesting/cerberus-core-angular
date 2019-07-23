@@ -17,12 +17,15 @@ export class FilterlikeComponent implements OnInit {
 
   ngOnInit() { }
 
-  validField() : void {  
-    if(this.data.length > 2) {
-      if (!this.column.sSearch.includes(this.data)) {
-        this.column.sSearch = [this.data];
-      }
-      this.applyFilterOutput.emit();
-    }    
+  validField(): void {
+    this.column.sSearch = [this.data];
+    this.applyFilterOutput.emit();
   }
+
+  removeFilter() {
+    this.column.fieldActive = false;
+    this.data = '';
+    this.validField()
+  }
+
 }

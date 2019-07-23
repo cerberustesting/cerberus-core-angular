@@ -1,0 +1,9 @@
+.filter-field {
+    display: flex;
+    flex-wrap: nowrap;
+    line-height: 40px;
+    i {
+        display: inline-flex;
+        margin: 10px 5px;
+    }
+}

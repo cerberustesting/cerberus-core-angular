@@ -31,10 +31,10 @@ export var ColumnsData: Column[] = [
     },
     {
         displayName: 'TestCase ID',
-        databaseName: 'tec.testcase',
+        databaseName: 'tec.testCase',
         contentName: 'testCase',
         active: true,
-        searchable: true,
+        like: true,
         param: {
             multiple: true,
             field: 'testCase',

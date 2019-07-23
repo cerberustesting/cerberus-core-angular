@@ -44,7 +44,7 @@ export class FiltersComponent implements OnInit {
   ngOnInit() {
 
     this.columnActive = this.columns.filter(a => a.active).length;
-    this.searchableColumns = this.columns.filter(a => a.searchable);
+    this.searchableColumns = this.columns.filter(a => a.searchable || a.like);
   }
 
   toggleColumn(column): void {
@@ -92,7 +92,8 @@ export class FiltersComponent implements OnInit {
   }
 
   addFilter(column) {
-    column.dropActive = !column.dropActive;
+    if (!column.like) column.dropActive = !column.dropActive;
+    else column.fieldActive = !column.fieldActive;
   }
 
   addFilterLike(column: Column) {

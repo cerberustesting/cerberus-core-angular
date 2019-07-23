@@ -16,6 +16,8 @@
                 <app-filterlike *ngIf="column.fieldActive" [column]="column" (applyFilterOutput)=applySystem()>
                 </app-filterlike>
             </ng-template>
+            <app-filterlike [column]="columns[2]" (applyFilterOutput)=applySystem()>
+                </app-filterlike>
 
 
             <!--Filter Selector-->
@@ -27,12 +29,13 @@
                     <div>Add Filters</div>
                 </ng-template>
 
-                <!--List of columns (underline if selected)-->
+                <!--List of filters (underline if selected)-->
                 <ng-template ng-option-tmp let-item="item" let-index="index">
-                    <div [ngClass]="{'selected': item.dropActive}" (click)="addFilter(item)">{{item.displayName}}</div>
+                    <div [ngClass]="{'selected': item.dropActive || item.fieldActive}" (click)="addFilter(item)">{{item.displayName}}</div>
                 </ng-template>
 
             </ng-select>
+
 
         </div>
         <div class="right-side">

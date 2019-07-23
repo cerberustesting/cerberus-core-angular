@@ -1,121 +1,143 @@
 <div class="header-area">
     <div class="filter-container">
+        <div class="main-side">
+            <!-- Global Search Field -->
+            <input type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
+                [(ngModel)]="gloabalSearchModel" placeholder="Search...">
+
+
+            <!--Distinct filters-->
+            <ng-template ngFor let-column [ngForOf]="columns">
+                <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column"
+                    (applyFilterOutput)=applySystem()></app-filter>
+            </ng-template>
+            <!--Like filters-->
+            <ng-template ngFor let-column [ngForOf]="columns">
+                <app-filterlike *ngIf="column.fieldActive" [column]="column" (applyFilterOutput)=applySystem()>
+                </app-filterlike>
+            </ng-template>
+
+
+            <!--Filter Selector-->
+            <ng-select class="column-selector custom" bindLabel="name" placeholder="Add Filters"
+                [items]="searchableColumns" [closeOnSelect]="false" [searchable]="true" [clearable]="false">
+
+                <!--Content in the top container-->
+                <ng-template ng-label-tmp>
+                    <div>Add Filters</div>
+                </ng-template>
+
+                <!--List of columns (underline if selected)-->
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                    <div [ngClass]="{'selected': item.dropActive}" (click)="addFilter(item)">{{item.displayName}}</div>
+                </ng-template>
+
+            </ng-select>
+
+        </div>
+        <div class="right-side">
+
+            <ngb-pagination [(page)]="page.number" [pageSize]="page.size" [collectionSize]="page.totalCount"
+                [maxSize]="5" [boundaryLinks]="true" (pageChange)="applySystem()" [rotate]="true" [ellipses]="false">
+                <ng-template ngbPaginationPrevious><i class="fa fa-angle-left"></i></ng-template>
+                <ng-template ngbPaginationNext><i class="fa fa-angle-right"></i></ng-template>
+                <ng-template ngbPaginationFirst><i class="fa fa-angle-double-left"></i></ng-template>
+                <ng-template ngbPaginationLast><i class="fa fa-angle-double-right"></i></ng-template>
+            </ngb-pagination>
+            <div>{{selectedRows.length}} selected / {{page.totalCount}} total</div>
+
+        </div>
 
         <!--Column Selector-->
-        <ng-select class="column-selector custom" bindLabel="name" placeholder="Columns : {{ columnActive }}"
+        <!-- <ng-select class="column-selector custom" bindLabel="name" placeholder="Columns : {{ columnActive }}"
             [items]="columns" [closeOnSelect]="false" (change)="resetColumnDrop" [searchable]="false"
             [clearable]="false">
 
-            <!--Content in the top container-->
+            Content in the top container
             <ng-template ng-label-tmp>
                 <div>Selected : {{ columnActive }}</div>
             </ng-template>
 
-            <!--List of columns (underline if selected)-->
+            List of columns (underline if selected)
             <ng-template ng-option-tmp let-item="item" let-index="index">
                 <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">{{item.displayName}}</div>
             </ng-template>
 
-        </ng-select>
+        </ng-select> -->
 
-        <!--Filter Selector-->
-        <ng-select class="column-selector custom" bindLabel="name" placeholder="Add Filters" [items]="searchableColumns"
-            [closeOnSelect]="false" [searchable]="true" [clearable]="false">
 
-            <!--Content in the top container-->
-            <ng-template ng-label-tmp>
-                <div>Add Filters</div>
-            </ng-template>
 
-            <!--List of columns (underline if selected)-->
-            <ng-template ng-option-tmp let-item="item" let-index="index">
-                <div [ngClass]="{'selected': item.dropActive}" (click)="addFilter(item)">{{item.displayName}}</div>
-            </ng-template>
-
-        </ng-select>
-
-        <!--Page size selector-->
+        <!-- Page size selector
         <ng-select class="column-selector custom page-size" bindLabel="name" placeholder="Show : {{ page.size }}"
             [(ngModel)]="page.size" [items]="[10, 25, 50, 100]" [closeOnSelect]="true" [clearable]="false"
             (change)="applySystem()">
 
-            <!--Content in the top container-->
+
             <ng-template ng-label-tmp>
                 <div>Show : {{ page.size }}</div>
             </ng-template>
 
-            <!--Items list-->
             <ng-template ng-option-tmp let-item="item" let-index="index">
                 <div>Show : {{ item }}</div>
             </ng-template>
 
-        </ng-select>
+        </ng-select> -->
 
         <!--Apply button-->
-        <button class="btn btn-info" (click)="applySystem()">Apply</button>
+        <!-- <button class="btn btn-info" (click)="applySystem()">Apply</button> -->
 
-        <!-- Global Search Field -->
-        <input type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
-            [(ngModel)]="gloabalSearchModel" placeholder="Search...">
+
 
         <!--Distinct filters-->
-        <ng-template ngFor let-column [ngForOf]="columns">
-            <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column" (applyFilterOutput)=applySystem()></app-filter>
-        </ng-template>
+        <!-- <ng-template ngFor let-column [ngForOf]="columns">
+                <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column"
+                    (applyFilterOutput)=applySystem()></app-filter>
+            </ng-template> -->
         <!--Like filters-->
-        <ng-template ngFor let-column [ngForOf]="columns">
-            <app-filterlike *ngIf="column.fieldActive" [column]="column" (applyFilterOutput)=applySystem()>
-            </app-filterlike>
-        </ng-template>
+        <!-- <ng-template ngFor let-column [ngForOf]="columns">
+                <app-filterlike *ngIf="column.fieldActive" [column]="column" (applyFilterOutput)=applySystem()>
+                </app-filterlike>
+            </ng-template> -->
+
     </div>
 
-    <div class="action">
-        <!-- <app-actions [selectedRows]=selectedRows></app-actions> -->
-        <span>{{selectedRows.length}} selected / {{page.totalCount}} total</span>
 
-        <ngb-pagination [(page)]="page.number" [pageSize]="page.size" [collectionSize]="page.totalCount" [maxSize]="5"
-            [boundaryLinks]="true" (pageChange)="applySystem()" [rotate]="true" [ellipses]="false">
-            <ng-template ngbPaginationPrevious><i class="fa fa-angle-left"></i></ng-template>
-            <ng-template ngbPaginationNext><i class="fa fa-angle-right"></i></ng-template>
-            <ng-template ngbPaginationFirst><i class="fa fa-angle-double-left"></i></ng-template>
-            <ng-template ngbPaginationLast><i class="fa fa-angle-double-right"></i></ng-template>
-        </ngb-pagination>
-    </div>
 
     <!--active filter list-->
-    <div class="filter-list">
+    <!-- <div class="filter-list">
         <p class="filter-title" *ngIf="filterList.length>0">Filtering by : {{ filterList.length }}
-        <span *ngIf="filterList.length<=5; else moreFilter">
-            <ng-template ngFor let-filter [ngForOf]="filterList">
-                <span class="badge badge-secondary filter-badge">
-                    {{ filter.name }} : <div *ngIf="filter.value.color; else elseValue" class="label"
-                                            [style.background-color]="filter.value.color">{{filter.value.label}}</div>
-                    <ng-template #elseValue>{{ filter.value }}</ng-template>
-                    <i class="far fa-times-circle" (click)="remove(filter.name, filter.value)"></i>
-                </span>                
-            </ng-template>
-        </span>
-
-        <ng-template #moreFilter>
-            <ng-template ngFor let-filter [ngForOf]="filterList.slice(0, 5)">
-                <span class="badge badge-secondary filter-badge">
-                    {{ filter.name }} : <div *ngIf="filter.value.color; else elseValue" class="label"
-                                            [style.background-color]="filter.value.color">{{filter.value.label}}</div>
-                    <ng-template #elseValue>{{ filter.value }}</ng-template>
-                    <i class="far fa-times-circle" (click)="remove(filter.name, filter.value)"></i>
-                </span>
-            </ng-template>
-            <span class="badge badge-secondary filter-badge filter-more" placement="bottom" [ngbPopover]="moreTemplate">more : {{filterList.length - 5}}</span>
-            <ng-template #moreTemplate>
-                <ng-template ngFor let-filter [ngForOf]="filterList.slice(5)">
-                    <div class="filter-listed">{{filter.name}} : 
-                        <div *ngIf="filter.value.color; else elseValue" class="label"
-                        [style.background-color]="filter.value.color">{{filter.value.label}}</div>
+            <span *ngIf="filterList.length<=5; else moreFilter">
+                <ng-template ngFor let-filter [ngForOf]="filterList">
+                    <span class="badge badge-secondary filter-badge">
+                        {{ filter.name }} : <div *ngIf="filter.value.color; else elseValue" class="label"
+                            [style.background-color]="filter.value.color">{{filter.value.label}}</div>
                         <ng-template #elseValue>{{ filter.value }}</ng-template>
                         <i class="far fa-times-circle" (click)="remove(filter.name, filter.value)"></i>
-                    </div>
+                    </span>
+                </ng-template>
+            </span>
+
+            <ng-template #moreFilter>
+                <ng-template ngFor let-filter [ngForOf]="filterList.slice(0, 5)">
+                    <span class="badge badge-secondary filter-badge">
+                        {{ filter.name }} : <div *ngIf="filter.value.color; else elseValue" class="label"
+                            [style.background-color]="filter.value.color">{{filter.value.label}}</div>
+                        <ng-template #elseValue>{{ filter.value }}</ng-template>
+                        <i class="far fa-times-circle" (click)="remove(filter.name, filter.value)"></i>
+                    </span>
+                </ng-template>
+                <span class="badge badge-secondary filter-badge filter-more" placement="bottom"
+                    [ngbPopover]="moreTemplate">more : {{filterList.length - 5}}</span>
+                <ng-template #moreTemplate>
+                    <ng-template ngFor let-filter [ngForOf]="filterList.slice(5)">
+                        <div class="filter-listed">{{filter.name}} :
+                            <div *ngIf="filter.value.color; else elseValue" class="label"
+                                [style.background-color]="filter.value.color">{{filter.value.label}}</div>
+                            <ng-template #elseValue>{{ filter.value }}</ng-template>
+                            <i class="far fa-times-circle" (click)="remove(filter.name, filter.value)"></i>
+                        </div>
+                    </ng-template>
                 </ng-template>
             </ng-template>
-        </ng-template>
-    </div>
+    </div> -->
 </div>

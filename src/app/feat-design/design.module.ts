@@ -18,7 +18,6 @@ import { PropertyComponent } from "./testcasescript/tc-script/property/property.
 import { PropertyvalueComponent } from "./testcasescript/tc-script/property/propertyvalue/propertyvalue.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { SettingsComponent } from "./testcasescript/tc-script/settings/settings.component";
-import { ActionsComponent } from './testcaselist/actions/actions.component';
 import { FilterlikeComponent } from './testcaselist/filters/filterlike/filterlike.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -40,7 +39,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       PropertyComponent,
       PropertyvalueComponent,
       SettingsComponent,
-      ActionsComponent,
       FilterlikeComponent,
       
   ],
@@ -50,7 +48,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FilterPipeModule,
     SharedModule,
     DragDropModule,
-    NgbModule
+    NgbModule,
+
   ],
   exports: [SharedModule]
 })

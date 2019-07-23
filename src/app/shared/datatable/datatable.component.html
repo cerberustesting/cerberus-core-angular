@@ -1,46 +1,60 @@
 <div class="data-table">
-    <ngx-datatable class="material fullscreen fixed-header" 
-        style="height: 600px;"
-        [rows]="rows" 
-        [columns]="columns" 
-        [columnMode]="'force'"
-        [rowHeight]="50"
-        [headerHeight]="50" 
-        [loadingIndicator]="isLoading"
-        [selected]="selected" 
-        [selectionType]="'checkbox'" 
-        [selectAllRowsOnPage]="true" 
-        [scrollbarH]="false"
-        [scrollbarV]="true"
-        [externalSorting]="true"        
-        (select)='onSelect($event)'
-        (sort)="onSort($event)">
+    <ngx-datatable class="material fullscreen fixed-header" style="height: 600px;" [rows]="rows" [columns]="columns"
+        [columnMode]="'force'" [footerHeight]="50" [rowHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading"
+        [selected]="selected" [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" [scrollbarH]="false"
+        [scrollbarV]="true" [externalSorting]="true" (select)='onSelect($event)' (sort)="onSort($event)">
+
+        <ngx-datatable-footer>
+            <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
+                let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset">
+                <div class="top-header">
+                    <div class="left-side">
+                        <app-actions [selectedRows]="selectedCount"></app-actions>
+                    </div>
+                    <div class="right-side">
+                        <!--Column Selector-->
+                        <ng-select class="column-selector custom" bindLabel="name"
+                            placeholder="Columns : {{ columnActive }}" [items]="columns" [closeOnSelect]="false"
+                            (change)="resetColumnDrop" [searchable]="false" [clearable]="false">
+
+                            <!--Content in the top container-->
+                            <ng-template ng-label-tmp>
+                                <div>Selected : {{ columnActive }}</div>
+                            </ng-template>
+
+                            <!--List of columns (underline if selected)-->
+                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">
+                                    {{item.displayName}}</div>
+                            </ng-template>
+
+                        </ng-select>
+
+                        <!--Page size selector-->
+                        <ng-select class="column-selector custom page-size" bindLabel="name"
+                            placeholder="Show : {{ page.size }}" [(ngModel)]="page.size" [items]="[10, 25, 50, 100]"
+                            [closeOnSelect]="true" [clearable]="false" (change)="applyChange()">
+
+                            <!--Content in the top container-->
+                            <ng-template ng-label-tmp>
+                                <div>Show : {{ page.size }}</div>
+                            </ng-template>
+
+                            <!--Items list-->
+                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                <div>Show : {{ item }}</div>
+                            </ng-template>
+
+                        </ng-select>
+                    </div>
+                </div>
+            </ng-template>
+        </ngx-datatable-footer>
 
 
         <!--CheckBox Column-->
         <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
             [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
-            <!-- <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
-                <div class="row-menu">
-                    <div class="actions-section">
-                        <button class="btn btn-outline-danger" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave">
-                            <i class="fa fa-trash-alt"></i>
-                        </button> 
-                                  
-                        <button class="btn btn-outline-success"placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave">
-                            <i class="fa fa-play"></i>
-                        </button> 
-                                  
-                        <button class="btn btn-outline-info" placement="top" ngbPopover="Edit TestCase Header" popoverTitle="Global Activation" triggers="mouseenter:mouseleave">
-                            <i class="fa fa-pen"></i>
-                        </button>  
-                                  
-                        <button class="btn btn-outline-primary" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave">
-                            <i class="fa fa-copy"></i>
-                        </button> 
-                    </div>
-                </div>
-            </ng-template> -->
         </ngx-datatable-column>
 
         <!--Column from column array-->
@@ -50,10 +64,15 @@
 
                 <!-- Header row -->
                 <ng-template ngx-datatable-header-template let-sort="sortFn">
-                    <span class="datatable-header-cell-wrapper" >
-                        <span class="datatable-header-cell-label draggable" (click)="sort(index)">{{ column.displayName }}</span>
-                        <i *ngIf="column.searchable" class="fa fa-filter btn filter-btn" [ngClass]="(column.dropActive)? 'btn-success' : 'btn-warning'" (click)="addFilter(column)"></i>
-                        <i *ngIf="column.like" class="fa fa-search btn filter-btn" [ngClass]="(column.fieldActive)? 'btn-success' : 'btn-info'" (click)="addFilterLike(column)"></i>
+                    <span class="datatable-header-cell-wrapper">
+                        <span class="datatable-header-cell-label draggable"
+                            (click)="sort(index)">{{ column.displayName }}</span>
+                        <i *ngIf="column.searchable" class="fa fa-filter btn filter-btn"
+                            [ngClass]="(column.dropActive)? 'btn-success' : 'btn-warning'"
+                            (click)="addFilter(column)"></i>
+                        <i *ngIf="column.like" class="fa fa-search btn filter-btn"
+                            [ngClass]="(column.fieldActive)? 'btn-success' : 'btn-info'"
+                            (click)="addFilterLike(column)"></i>
                     </span>
                 </ng-template>
 
@@ -68,33 +87,37 @@
                         <b>{{item.value}} </b>
                     </a>
                 </ng-template>
-                
+
 
                 <!--Label columns-->
                 <ng-template *ngIf="column.type==='label'" let-row='row' let-value="value" ngx-datatable-cell-template>
                     <div *ngIf="row[column.contentName]">
-                                <div class="label"
-                                [style.background-color]="row[column.contentName][0].color">{{ row[column.contentName][0]?.name }}</div>
-                                <div class="badge badge-info" *ngIf="row[column.contentName].length>1" [ngbPopover]="labelPopoverTemplate" triggers="mouseenter:mouseleave">More : {{row[column.contentName].length-1}}</div>                        
-                                <ng-template #labelPopoverTemplate>
-                                        <div class="label" *ngFor="let item of row[column.contentName].slice(1)"
-                                        [style.background-color]="item.color">{{ item?.name }}</div>
-                                </ng-template>
+                        <div class="label" [style.background-color]="row[column.contentName][0].color">
+                            {{ row[column.contentName][0]?.name }}</div>
+                        <div class="badge badge-info" *ngIf="row[column.contentName].length>1"
+                            [ngbPopover]="labelPopoverTemplate" triggers="mouseenter:mouseleave" container="body">More :
+                            {{row[column.contentName].length-1}}</div>
+                        <ng-template #labelPopoverTemplate>
+                            <div class="label" *ngFor="let item of row[column.contentName].slice(1)"
+                                [style.background-color]="item.color">{{ item?.name }}</div>
+                        </ng-template>
                     </div>
                 </ng-template>
 
                 <!--Boolean columns-->
                 <ng-template *ngIf="column.type==='boolean'" let-value="value" ngx-datatable-cell-template>
-                     <!--{{ value }}--> <i class="fa fa-check" *ngIf="value==='Y'"></i><i class="fa fa-times" *ngIf="value==='N'"></i>
+                    <!--{{ value }}--> <i class="fa fa-check" *ngIf="value==='Y'"></i><i class="fa fa-times"
+                        *ngIf="value==='N'"></i>
                 </ng-template>
 
                 <!--Default columns-->
                 <ng-template let-value='value' let-value ngx-datatable-cell-template>
                     <span class="cell" *ngIf="value.length<20; else elipsValue">{{ value }}</span>
-                    <ng-template #elipsValue><span [ngbPopover]="value" triggers="mouseenter:mouseleave">{{value}}</span></ng-template>
+                    <ng-template #elipsValue><span [ngbPopover]="value" triggers="mouseenter:mouseleave"
+                            container="body">{{value}}</span></ng-template>
                 </ng-template>
 
-                
+
 
             </ngx-datatable-column>
         </ng-template>
@@ -104,21 +127,24 @@
             <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
                 <div class="row-menu">
                     <div class="actions-section">
-                        <button class="btn btn-outline-danger" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave">
+                        <button class="btn btn-outline-danger" placement="top" ngbPopover="Delete TestCase"
+                            triggers="mouseenter:mouseleave" container="body">
                             <i class="fa fa-trash-alt"></i>
-                        </button> 
-                                  
-                        <button class="btn btn-outline-success"placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave">
+                        </button>
+
+                        <button class="btn btn-outline-success" placement="top" ngbPopover="Run TestCase"
+                            triggers="mouseenter:mouseleave" container="body">
                             <i class="fa fa-play"></i>
-                        </button> 
-                                  
-                        <button class="btn btn-outline-info" placement="top" ngbPopover="Edit TestCase Header" popoverTitle="Global Activation" triggers="mouseenter:mouseleave">
+                        </button>
+
+                        <button class="btn btn-outline-info" placement="top" ngbPopover="Edit TestCase Header" triggers="mouseenter:mouseleave" container="body">
                             <i class="fa fa-pen"></i>
-                        </button>  
-                                  
-                        <button class="btn btn-outline-primary" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave">
+                        </button>
+
+                        <button class="btn btn-outline-primary" placement="top" ngbPopover="Duplicate TestCase"
+                            triggers="mouseenter:mouseleave" container="body">
                             <i class="fa fa-copy"></i>
-                        </button> 
+                        </button>
                     </div>
                 </div>
             </ng-template>

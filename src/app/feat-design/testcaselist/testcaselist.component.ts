@@ -19,9 +19,8 @@ import { ColumnsData } from './columns-data';
 })
 export class TestcaselistComponent implements OnInit {
 
-  rows = [];
-  columns: Array<Column> = ColumnsData;
-
+  rows = []; // testcase list
+  columns: Array<Column> = ColumnsData; // coluln list
   page = {
     size: 10, //maximum element per page
     number: 1, //number of current page
@@ -29,17 +28,12 @@ export class TestcaselistComponent implements OnInit {
     totalCount: 0 //total count of element in database
   };
 
-  selectedTest = '';
-  // searchTerm =  { $or: [{ testCase: '' }, { status: '' }, { application: '' }, { description: '' }, { system: '' }] };
+  selectedTest = ''; // ? 
 
-  filterTest: any;
+  filterTest: any; //
   testcasesList: Array<ITestCaseHeader>;
   filterList: Array<Filter> = [];
-  userPreferences:  {
-    columns: Array<Column>,
-    page: any
-  };
-  globalSearch = '';
+  globalSearch = ''; // value in global search field
   selectedRows: Array<any> = [];
   
   constructor(private testService: TestService, private invariantsService: InvariantsService, private labelfilteringPipe: LabelfilteringPipe, private systemService: SystemService, private filterService: FilterService) { }
@@ -72,15 +66,8 @@ export class TestcaselistComponent implements OnInit {
 
   appplySystemChange(globalSearch?: string) {
     if (this.page.size == null) this.page.size = 10;
-    this.globalSearch = (globalSearch)? globalSearch : '';
-    
+    this.globalSearch = (globalSearch)? globalSearch : '';    
     this.search()
-    // if(this.filterList.length > 0) {
-    //   this.testService.getTestCasesFilterList(this.page.size, this.filterList);
-    // }else {
-    //   this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected, this.page.size, this.page.number);
-    // }
-
   }
 
   pageUpdate(newPage) { //When selecting a new page    
@@ -96,8 +83,7 @@ export class TestcaselistComponent implements OnInit {
     console.log("Not implemented yet");
   }
 
-  search() {
-    
+  search() {    
     //adjust system search with selected system and delete double.
     this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
     let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;

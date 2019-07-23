@@ -11,6 +11,7 @@ import { AlertsComponent } from "./alerts/alerts.component";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 import { LabelComponent } from './label/label.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ActionsComponent } from './datatable/actions/actions.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UniqueproplistPipe,
     LabelfilteringPipe,
     AlertsComponent,
-    LabelComponent
+    LabelComponent,
+    ActionsComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UniqueproplistPipe,
     LabelfilteringPipe,
     AlertsComponent,
-    NgbPopoverModule
+    NgbPopoverModule,
+    ActionsComponent
   ],
   providers : [
     TrueindexPipe,

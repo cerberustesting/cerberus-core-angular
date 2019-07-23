@@ -79,3 +79,25 @@
   .datatable-body-row:hover .row-menu {
   opacity: .8;
 }
+
+.top-header {
+  width: 100%;
+  position: relative;
+  margin: 0 20px;
+  .right-side {
+    position: absolute;
+    right: 0;
+    top: 0;
+    &>*{
+      display: inline-block;
+      margin-left: 20px;
+    }
+    .selected {
+      border-bottom: 2px solid #0077ff;
+    }
+
+  }
+}
+
+
+// ! footer style in style.css

@@ -22,10 +22,20 @@ export class DatatableComponent implements OnInit {
   @Output() addFilterMenu = new EventEmitter<any>();
   
   isLoading: boolean;
+  columnActive: number;
 
+  toggleColumn(column): void {
+    column.active = !column.active;
+    this.columnActive = this.columns.filter(a => a.active).length;
+  }
+  
+  applyChange() {
+    this.pageUpdate.emit(this.page.number);
+  }
   
 
   ngOnInit() {
+    this.columnActive = this.columns.filter(a => a.active).length;
   }
   constructor() {
   }
@@ -49,6 +59,10 @@ export class DatatableComponent implements OnInit {
     this.page.sort = event.sorts;  
     this.pageUpdate.emit(this.page.number);
     this.isLoading = false;
+  }
+
+  resetColumnDrop() {
+    this.columnActive = null;
   }
 
 

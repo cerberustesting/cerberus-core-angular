@@ -21,3 +21,22 @@ body {
     margin: 2px;
     cursor: pointer;
 }
+ng-select .ng-dropdown-panel { 
+    width: auto !important; 
+    max-width: 550px; 
+} 
+
+.ngx-datatable .datatable-footer {
+  position: absolute;
+  top: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.ngx-datatable .datatable-header {
+  position: absolute;
+  top: 50px;
+}
+
+.ngx-datatable .datatable-body {
+  margin-top: 100px;
+}

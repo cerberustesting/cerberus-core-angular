@@ -70,7 +70,7 @@
     </div>
 
     <div class="action">
-        <app-actions [selectedRows]=selectedRows></app-actions>
+        <!-- <app-actions [selectedRows]=selectedRows></app-actions> -->
         <span>{{selectedRows.length}} selected / {{page.totalCount}} total</span>
 
         <ngb-pagination [(page)]="page.number" [pageSize]="page.size" [collectionSize]="page.totalCount" [maxSize]="5"

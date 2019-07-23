@@ -94,8 +94,7 @@
                     <div *ngIf="row[column.contentName]">
                         <div class="label" [style.background-color]="row[column.contentName][0].color">
                             {{ row[column.contentName][0]?.name }}</div>
-                        <div class="badge badge-info" *ngIf="row[column.contentName].length>1"
-                            [ngbPopover]="labelPopoverTemplate" triggers="mouseenter:mouseleave" container="body">More :
+                        <div class="badge badge-info" *ngIf="row[column.contentName].length>1">More :
                             {{row[column.contentName].length-1}}</div>
                         <ng-template #labelPopoverTemplate>
                             <div class="label" *ngFor="let item of row[column.contentName].slice(1)"
@@ -113,8 +112,7 @@
                 <!--Default columns-->
                 <ng-template let-value='value' let-value ngx-datatable-cell-template>
                     <span class="cell" *ngIf="value.length<20; else elipsValue">{{ value }}</span>
-                    <ng-template #elipsValue><span [ngbPopover]="value" triggers="mouseenter:mouseleave"
-                            container="body">{{value}}</span></ng-template>
+                    <ng-template #elipsValue><span>{{value}}</span></ng-template>
                 </ng-template>
 
 
@@ -127,22 +125,19 @@
             <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
                 <div class="row-menu">
                     <div class="actions-section">
-                        <button class="btn btn-outline-danger" placement="top" ngbPopover="Delete TestCase"
-                            triggers="mouseenter:mouseleave" container="body">
+                        <button class="btn btn-outline-danger">
                             <i class="fa fa-trash-alt"></i>
                         </button>
 
-                        <button class="btn btn-outline-success" placement="top" ngbPopover="Run TestCase"
-                            triggers="mouseenter:mouseleave" container="body">
+                        <button class="btn btn-outline-success">
                             <i class="fa fa-play"></i>
                         </button>
 
-                        <button class="btn btn-outline-info" placement="top" ngbPopover="Edit TestCase Header" triggers="mouseenter:mouseleave" container="body">
+                        <button class="btn btn-outline-info">
                             <i class="fa fa-pen"></i>
                         </button>
 
-                        <button class="btn btn-outline-primary" placement="top" ngbPopover="Duplicate TestCase"
-                            triggers="mouseenter:mouseleave" container="body">
+                        <button class="btn btn-outline-primary">
                             <i class="fa fa-copy"></i>
                         </button>
                     </div>

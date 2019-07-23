@@ -65,7 +65,7 @@ export class TestService {
   }
 
   getTestCasesList(test?: string, systems?: Array<string>, size?: number, start?: number) {
-    
+
     // ? Remove if not used
 
     if (!size) size = 10;
@@ -96,15 +96,32 @@ export class TestService {
       })
   }
   getTestCasesFilterList(queryParameters: string) {
-    this.http.get<ITestCaseHeader>(AppSettings.API_endpoint + '/ReadTestCase?'+queryParameters)
-      .subscribe((response) => {
-        if(response) {
-        
+    // this.http.get<ITestCaseHeader>(AppSettings.API_endpoint + '/ReadTestCase?'+queryParameters)
+    //   .subscribe((response) => {
+    //     if(response) {
 
-          // @ts-ignore
-          if (response.iTotalRecords>0) {
-            // @ts-ignore
-          
+
+    //       // @ts-ignore
+    //       if (response.iTotalRecords>0) {
+    //         // @ts-ignore
+
+    //         this.testcasesList = response.contentTable;
+    //         this.testcasesListLength = response.iTotalRecords;
+
+    //         this.observableTestCasesList.next(this.testcasesList);
+    //         this.observableTestCasesListLength.next(this.testcasesListLength);
+    //       }
+    //       else {
+    //         this.testcasesList = null;
+    //         this.observableTestCasesList.next(this.testcasesList);
+    //       }
+    //     }
+
+    //   });
+    this.http.post<ITestCaseHeader>(AppSettings.API_endpoint + '/ReadTestCase', queryParameters, httpOptions)
+      .subscribe((response) => {
+        if (response) {
+          if (response.iTotalRecords > 0) {
             this.testcasesList = response.contentTable;
             this.testcasesListLength = response.iTotalRecords;
 
@@ -115,14 +132,15 @@ export class TestService {
             this.testcasesList = null;
             this.observableTestCasesList.next(this.testcasesList);
           }
+
+
         }
-        
-      });
+      })
   }
   getColumnData(columnName: string) {
-    let query = AppSettings.API_endpoint + '/ReadTestCase?columnName='+columnName;
+    let query = AppSettings.API_endpoint + '/ReadTestCase?columnName=' + columnName;
     console.log(query);
-    
+
     return this.http.get<ITestCaseHeader>(query);
   }
 

@@ -89,5 +89,10 @@ export class FilterComponent implements OnInit {
     /*everytime a key is pressed*/
     this.searchItems = event.items;    
   }
+  removeFilter() {
+    this.column.dropActive = false;
+    this.model = [];
+    this.applyFilter()
+  }
 
 }

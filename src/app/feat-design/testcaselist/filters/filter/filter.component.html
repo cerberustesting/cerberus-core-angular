@@ -4,6 +4,7 @@
            [multiple]="column.param.multiple"
            [closeOnSelect]="false"
            [bindValue]="id"
+           [bindLabel]="label"
            placeholder="{{column.param.placeholder}}"
            [(ngModel)]='model'
            (open)="updateModel()"
@@ -26,7 +27,8 @@
     </ng-template> -->
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
         <div class="ng-value" *ngFor="let item of items | slice:0:1">
-            <span class="ng-value-label">{{ item }}</span>
+            <span *ngIf="item.label; else notLabel" class="ng-value-label">{{ item.label }}</span>
+            <ng-template #notLabel>{{ item }}</ng-template>
             <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
         </div>
         <div class="ng-value" *ngIf="items.length > 1">

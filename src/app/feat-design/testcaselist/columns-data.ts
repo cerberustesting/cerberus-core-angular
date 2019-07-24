@@ -51,6 +51,7 @@ export var ColumnsData: Column[] = [
         sortable: false,
         searchable: true,
         dropActive: false,
+        width: 300,
         param: {
             multiple: true,
             field: 'label',
@@ -107,7 +108,7 @@ export var ColumnsData: Column[] = [
         displayName: 'System',
         databaseName: 'app.system',
         contentName: 'system',
-        active: true,
+        active: false,
         dropActive: false,
         searchable: true,
         param: {
@@ -123,7 +124,7 @@ export var ColumnsData: Column[] = [
         databaseName: 'tec.tcactive',
         contentName: 'tcActive',
         searchable: true,
-        active: true,
+        active: false,
         dropActive: false,
         type: 'boolean',
         param: {

@@ -4,6 +4,8 @@
         [selected]="selected" [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" [scrollbarH]="false"
         [scrollbarV]="true" [externalSorting]="true" (select)='onSelect($event)' (sort)="onSort($event)">
 
+
+        <!--Top header-->
         <ngx-datatable-footer>
             <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
                 let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset">
@@ -92,12 +94,12 @@
                 <!--Label columns-->
                 <ng-template *ngIf="column.type==='label'" let-row='row' let-value="value" ngx-datatable-cell-template>
                     <div *ngIf="row[column.contentName]">
-                        <div class="label" [style.background-color]="row[column.contentName][0].color">
-                            {{ row[column.contentName][0]?.name }}</div>
-                        <div class="badge badge-info" *ngIf="row[column.contentName].length>1">More :
-                            {{row[column.contentName].length-1}}</div>
+                        <div class="label" *ngFor="let item of row[column.contentName].slice(0,2)" [style.background-color]="item.color">
+                            {{ item?.name }}</div>
+                        <div class="badge badge-info" *ngIf="row[column.contentName].length>2">More :
+                            {{row[column.contentName].length-2}}</div>
                         <ng-template #labelPopoverTemplate>
-                            <div class="label" *ngFor="let item of row[column.contentName].slice(1)"
+                            <div class="label" *ngFor="let item of row[column.contentName].slice(2)"
                                 [style.background-color]="item.color">{{ item?.name }}</div>
                         </ng-template>
                     </div>

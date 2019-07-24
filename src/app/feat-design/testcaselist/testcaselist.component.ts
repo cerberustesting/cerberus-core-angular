@@ -21,6 +21,7 @@ export class TestcaselistComponent implements OnInit {
 
   rows = []; // testcase list
   columns: Array<Column> = ColumnsData; // coluln list
+  userPreferences: string;
   page = {
     size: 10, //maximum element per page
     number: 1, //number of current page
@@ -40,7 +41,7 @@ export class TestcaselistComponent implements OnInit {
 
   ngOnInit() {
     // this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected, this.page.size, this.page.number);
-
+    this.load();
     this.testService.observableTestCasesList.subscribe(response => {
       if (response) {
         if (response.length > 0) {
@@ -67,6 +68,7 @@ export class TestcaselistComponent implements OnInit {
   appplySystemChange(globalSearch?: string) {
     if (this.page.size == null) this.page.size = 10;
     this.globalSearch = (globalSearch)? globalSearch : '';    
+    this.save()
     this.search()
   }
 
@@ -76,11 +78,18 @@ export class TestcaselistComponent implements OnInit {
   }
 
   save() {
-    console.log("Not implemented yet");
+    console.log("Save : Not implemented yet");
+    let usrPref = "";
+    usrPref = JSON.stringify({
+      columns: this.columns,
+      pageInformations: this.page
+    });
+    // TODO : Send data to the database
   }
 
   load() {
-    console.log("Not implemented yet");
+    console.log("Load : Not implemented yet");
+    // TODO : Get data from database
   }
 
   search() {    

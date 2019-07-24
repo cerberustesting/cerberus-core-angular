@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from "@ng-select/ng-select";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
-import { DatatableComponent } from "./datatable/datatable.component";
+import { DatatableComponent } from "./datatable-page/datatable/datatable.component";
 import { FormsModule } from "@angular/forms";
 import { TrueindexPipe } from "./pipes/trueindex.pipe";
 import { UniqueproplistPipe } from "./pipes/uniqueproplist.pipe";
@@ -11,7 +11,11 @@ import { AlertsComponent } from "./alerts/alerts.component";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 import { LabelComponent } from './label/label.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ActionsComponent } from './datatable/actions/actions.component';
+import { ActionsComponent } from './datatable-page/utils/actions/actions.component';
+import { DatatablePageComponent } from './datatable-page/datatable-page.component';
+import { FilterlikeComponent } from './datatable-page/utils/filterlike/filterlike.component';
+import { FiltersComponent } from "./datatable-page/filters/filters.component";
+import { FilterComponent } from "./datatable-page/utils/filter/filter.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { ActionsComponent } from './datatable/actions/actions.component';
     LabelfilteringPipe,
     AlertsComponent,
     LabelComponent,
-    ActionsComponent
+    ActionsComponent,
+    DatatablePageComponent,
+    FilterlikeComponent,
+    FiltersComponent,
+    FilterComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +48,9 @@ import { ActionsComponent } from './datatable/actions/actions.component';
     LabelfilteringPipe,
     AlertsComponent,
     NgbPopoverModule,
-    ActionsComponent
+    ActionsComponent,
+    FiltersComponent,
+    DatatablePageComponent
   ],
   providers : [
     TrueindexPipe,

@@ -5,10 +5,9 @@
             <input type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
                 [(ngModel)]="gloabalSearchModel" placeholder="Search...">
 
-
             <!--Distinct filters-->
             <ng-template ngFor let-column [ngForOf]="columns">
-                <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column"
+                <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column" [servlet]="servlet"
                     (applyFilterOutput)=applySystem()></app-filter>
             </ng-template>
             <!--Like filters-->

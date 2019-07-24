@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit {
       expanded: false,
       submenu: [{
         name: 'Data Library',
-        link: '/datalibrary'
+        link: '/design/datalibrary'
       },
       {
         name: 'Services',

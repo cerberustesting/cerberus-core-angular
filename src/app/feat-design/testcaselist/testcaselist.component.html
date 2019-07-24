@@ -1,10 +1,6 @@
-<app-filters 
-    (test)="updateTest($event)" 
+<!-- <app-filters 
     (searchServe)="search()" 
-    (searchTerm)="updateSearch($event)"  
     (systemApply)="appplySystemChange($event)" 
-    (preferenceSave)="save()"
-    (preferenceLoad)="load()"
     [page]="page" 
     [columns]="columns"
     [selectedRows]=selectedRows>
@@ -18,4 +14,12 @@
     [selected]="selectedRows"
     (addFilterMenu)="addFilterMenu($event)" 
     (pageUpdate)="pageUpdate($event)">
-</app-table>
+</app-table> -->
+
+<app-datatable-page
+    [page]="page"
+    [columns]="columns"
+    [servlet]="servlet"
+    [selectedRows]="selectedRows">
+
+</app-datatable-page>

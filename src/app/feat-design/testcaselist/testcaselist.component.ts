@@ -19,62 +19,40 @@ import { ColumnsData } from './columns-data';
 })
 export class TestcaselistComponent implements OnInit {
 
-  rows = []; // testcase list
-  columns: Array<Column> = ColumnsData; // coluln list
-  userPreferences: string;
+
+  columns: Array<Column> = ColumnsData; // column list
+  
   page = {
     size: 10, //maximum element per page
     number: 1, //number of current page
     sort: [{dir: "asc", prop : "testcase"}], //sort item
     totalCount: 0 //total count of element in database
   };
-
-  selectedTest = ''; // ? 
-
-  filterTest: any; //
-  testcasesList: Array<ITestCaseHeader>;
-  filterList: Array<Filter> = [];
-  globalSearch = ''; // value in global search field
   selectedRows: Array<any> = [];
+  servlet :string = '/ReadTestCase'
+
+  userPreferences: string;
   
   constructor(private testService: TestService, private invariantsService: InvariantsService, private labelfilteringPipe: LabelfilteringPipe, private systemService: SystemService, private filterService: FilterService) { }
 
   ngOnInit() {
+    // ? keep the callback ?
     // this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected, this.page.size, this.page.number);
-    this.load();
-    this.testService.observableTestCasesList.subscribe(response => {
-      if (response) {
-        if (response.length > 0) {
-          this.testcasesList = response;
-        }
-      } else {
-        this.testcasesList = null;
-      }
-    });
-    this.testService.observableTestCasesListLength.subscribe(response => {
-      if (response) {
-        this.page.totalCount = response;
-      }
-    });
-    this.search();
-
-  }
-
-  updateTest(selection) {
-    this.filterTest = selection;
-    this.testService.getTestCasesList(this.filterTest, this.invariantsService.systemsSelected);
-  }
-
-  appplySystemChange(globalSearch?: string) {
-    if (this.page.size == null) this.page.size = 10;
-    this.globalSearch = (globalSearch)? globalSearch : '';    
-    this.save()
-    this.search()
-  }
-
-  pageUpdate(newPage) { //When selecting a new page    
-    this.page.number = newPage;
-    this.appplySystemChange();
+    // this.load();
+    // this.testService.observableTestCasesList.subscribe(response => {
+    //   if (response) {
+    //     if (response.length > 0) {
+    //       this.testcasesList = response;
+    //     }
+    //   } else {
+    //     this.testcasesList = null;
+    //   }
+    // });
+    // this.testService.observableTestCasesListLength.subscribe(response => {
+    //   if (response) {
+    //     this.page.totalCount = response;
+    //   }
+    // });
   }
 
   save() {
@@ -90,14 +68,6 @@ export class TestcaselistComponent implements OnInit {
   load() {
     console.log("Load : Not implemented yet");
     // TODO : Get data from database
-  }
-
-  search() {    
-    //adjust system search with selected system and delete double.
-    this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
-    let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;
-    this.columns.filter(a => a.contentName==="system")[0].sSearch = systemArray.filter((a,i) => systemArray.indexOf(a)===i);
-    this.testService.getTestCasesFilterList(this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch));
   }
 
 }

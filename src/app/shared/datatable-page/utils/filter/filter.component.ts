@@ -12,6 +12,8 @@ export class FilterComponent implements OnInit {
   dataList: any;
   @Input() field: any;
   @Input() column: Column;
+  @Input() servlet: string;
+  @Input() request: string;
   @Output() applyFilterOutput = new EventEmitter<void>();
   data: any;
   model = [];
@@ -61,7 +63,7 @@ export class FilterComponent implements OnInit {
         }
       });
     } else {
-      this.testService.getColumnData(this.column.databaseName).subscribe(response => {
+      this.testService.getColumnData(this.servlet, this.column.databaseName).subscribe(response => {
         if (response) {
           if (response.distinctValues.length > 0) {
             this.dataList = response.distinctValues;       

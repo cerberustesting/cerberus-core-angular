@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DesignRoutingModule } from './design-routing.module';
 import { TestcaselistComponent } from "./testcaselist/testcaselist.component";
-import { FilterComponent } from "./testcaselist/filters/filter/filter.component";
-import { FiltersComponent } from "./testcaselist/filters/filters.component";
 import { FilterPipeModule } from "ngx-filter-pipe";
 import { SharedModule } from "../shared/shared.module";
 import { LabelsComponent } from "./labels/labels.component";
@@ -18,16 +16,14 @@ import { PropertyComponent } from "./testcasescript/tc-script/property/property.
 import { PropertyvalueComponent } from "./testcasescript/tc-script/property/propertyvalue/propertyvalue.component";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { SettingsComponent } from "./testcasescript/tc-script/settings/settings.component";
-import { FilterlikeComponent } from './testcaselist/filters/filterlike/filterlike.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatalibraryComponent } from './datalibrary/datalibrary.component';
 
 
 
 @NgModule({
   declarations: [
       TestcaselistComponent,
-      FilterComponent,
-      FiltersComponent,
       LabelsComponent,
       TestcasescriptComponent,
       TcSelectorComponent,
@@ -39,7 +35,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       PropertyComponent,
       PropertyvalueComponent,
       SettingsComponent,
-      FilterlikeComponent,
+      DatalibraryComponent,
       
   ],
   imports: [

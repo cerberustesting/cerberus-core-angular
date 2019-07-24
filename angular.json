@@ -27,8 +27,8 @@
               "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
             "scripts": [
-              "src/assets/js/plugins/jquery-sparkline/jquery.sparkline.min.js",
-              "src/assets/js/plugins/chart.js/Chart.bundle.min.js",
+              "node_modules/jquery-sparkline/jquery.sparkline.min.js",
+              "node_modules/chart.js/dist/Chart.bundle.min.js",
               "src/assets/js/custom.global.js"
             ]
           },

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ViewChild, Output, EventEmitter, HostBinding} from '@angular/core';
-import { Column } from '../model/column.model';
+import { Column } from '../../model/column.model';
 
 @Component({
   selector: 'app-table',
@@ -19,7 +19,7 @@ export class DatatableComponent implements OnInit {
   };
   @Input() selected: Array<any>;
   @Output() pageUpdate = new EventEmitter<number>();
-  @Output() addFilterMenu = new EventEmitter<any>();
+  @ViewChild('dataTable') dataTable: any;
   
   isLoading: boolean;
   columnActive: number;
@@ -63,6 +63,14 @@ export class DatatableComponent implements OnInit {
 
   resetColumnDrop() {
     this.columnActive = null;
+  }
+
+  toggleExpandRow(row) {
+    console.log('Toggled Expand Row!', row);
+    this.dataTable.rowDetail.toggleExpandRow(row);
+  }
+  onDetailToggle(event) {
+    console.log('Detail Toggled', event);
   }
 
 

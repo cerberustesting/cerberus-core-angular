@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TestcaselistComponent } from "./testcaselist/testcaselist.component";
 import { TestcasescriptComponent} from "./testcasescript/testcasescript.component";
+import { DatalibraryComponent } from './datalibrary/datalibrary.component';
 
 const designRoutes: Routes = [
   {
@@ -11,6 +12,10 @@ const designRoutes: Routes = [
   {
     path: 'testcasescript',
     component: TestcasescriptComponent
+  },
+  {
+    path: 'datalibrary',
+    component: DatalibraryComponent
   }
 ];
 

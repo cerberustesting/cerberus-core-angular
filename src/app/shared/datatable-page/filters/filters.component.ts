@@ -19,12 +19,9 @@ export class FiltersComponent implements OnInit {
   @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
   @Input('selectedRows') selectedRows: any;
-  @Output() test = new EventEmitter<string>();
-  @Output() searchTerm = new EventEmitter<string>();
+  @Input('servlet') servlet: string;
   @Output() systemApply = new EventEmitter<string>();
   @Output() searchServe = new EventEmitter<string>();
-  @Output() preferenceLoad = new EventEmitter<string>();
-  @Output() preferenceSave = new EventEmitter<string>();
 
   resetColumnDrop() {
     this.columnActive = null;
@@ -41,7 +38,7 @@ export class FiltersComponent implements OnInit {
     private invariantService: InvariantsService,
     private testService: TestService) { }
 
-  ngOnInit() {
+  ngOnInit() {    
 
     this.columnActive = this.columns.filter(a => a.active).length;
     this.searchableColumns = this.columns.filter(a => a.searchable || a.like);
@@ -75,14 +72,6 @@ export class FiltersComponent implements OnInit {
       this.columns[columnIndex].sSearch.splice(index, 1);
     }
     this.applySystem();
-  }
-
-
-  save() {
-    this.preferenceSave.emit('');
-  }
-  load() {
-    this.preferenceLoad.emit('');
   }
 
   onKeyUp() {

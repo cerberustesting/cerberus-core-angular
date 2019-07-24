@@ -1,8 +1,24 @@
 <div class="data-table">
-    <ngx-datatable class="material fullscreen fixed-header" style="height: 600px;" [rows]="rows" [columns]="columns"
+    <ngx-datatable #dataTable class="material fullscreen fixed-header expandable" style="height: 600px;" [rows]="rows" [columns]="columns"
         [columnMode]="'force'" [footerHeight]="50" [rowHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading"
         [selected]="selected" [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" [scrollbarH]="false"
         [scrollbarV]="true" [externalSorting]="true" (select)='onSelect($event)' (sort)="onSort($event)">
+
+        <!-- Row Detail Template -->
+        <!-- <ngx-datatable-row-detail
+          [rowHeight]="100"
+          #myDetailRow
+          (toggle)="onDetailToggle($event)"
+        >
+          <ng-template
+            let-row="row"
+            let-expanded="expanded"
+            ngx-datatable-row-detail-template
+          >
+             <span class="label" *ngFor="let item of row[label]" [style.background-color]="item.color">
+                            {{ item?.name }}</span>
+          </ng-template>
+        </ngx-datatable-row-detail> -->
 
 
         <!--Top header-->
@@ -80,22 +96,31 @@
 
                 <!--If the content need a function to be display-->
                 <ng-template *ngIf="column.displayContentFunction" let-row='row' let-value ngx-datatable-cell-template>
-                    {{ column.displayContentFunction(row) }}
+                    <span class="cell" [style.maxWidth]="column.width">{{ column.displayContentFunction(row) }}</span>
                 </ng-template>
 
                 <!--Country column-->
                 <ng-template *ngIf="column.contentName=='countryList'" let-value="value" ngx-datatable-cell-template>
-                    <a *ngFor="let item of value | keyvalue">
+                    <a *ngFor="let item of value | keyvalue" [style.maxWidth]="column.width">
                         <b>{{item.value}} </b>
                     </a>
                 </ng-template>
 
 
                 <!--Label columns-->
-                <ng-template *ngIf="column.type==='label'" let-row='row' let-value="value" ngx-datatable-cell-template>
-                    <div *ngIf="row[column.contentName]">
-                        <div class="label" *ngFor="let item of row[column.contentName].slice(0,2)" [style.background-color]="item.color">
-                            {{ item?.name }}</div>
+                <ng-template *ngIf="column.type==='label'" let-row='row' let-value="value" let-expanded="expanded" ngx-datatable-cell-template>
+                    <div *ngIf="row[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
+                            <!-- <a
+                            href="javascript:void(0)"
+                            [class.datatable-icon-right]="!expanded"
+                            [class.datatable-icon-down]="expanded"
+                            title="Expand/Collapse Row"
+                            (click)="toggleExpandRow(row)"
+                          >
+                          </a> -->
+
+                        <span class="label" *ngFor="let item of row[column.contentName].slice(0,2)" [style.background-color]="item.color">
+                            {{ item?.name }}</span>
                         <div class="badge badge-info" *ngIf="row[column.contentName].length>2">More :
                             {{row[column.contentName].length-2}}</div>
                         <ng-template #labelPopoverTemplate>
@@ -113,14 +138,16 @@
 
                 <!--Default columns-->
                 <ng-template let-value='value' let-value ngx-datatable-cell-template>
-                    <span class="cell" *ngIf="value.length<20; else elipsValue">{{ value }}</span>
-                    <ng-template #elipsValue><span>{{value}}</span></ng-template>
+                    <div class="cell" [style.maxWidth]="column.width">{{ value }}</div>
                 </ng-template>
 
 
 
             </ngx-datatable-column>
         </ng-template>
+        
+
+        
 
         <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
             [width]="1">

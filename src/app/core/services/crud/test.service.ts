@@ -25,6 +25,8 @@ export class TestService {
   testsList: Array<ITest> = new Array<ITest>();
   testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
   testcasesListLength: number;
+  testdatalib: Array<any> = new Array<ITestCaseHeader>();
+  testdatalibLength: number;
   testcase_labels: Array<ILabel> = new Array<ILabel>();
   testcase_properties: Array<IProperty>;
   testcase: ITestCase = null;
@@ -35,6 +37,8 @@ export class TestService {
   observableTestsList = new BehaviorSubject<ITest[]>(this.testsList);
   observableTestCasesList = new BehaviorSubject<ITestCaseHeader[]>(this.testcasesList);
   observableTestCasesListLength = new BehaviorSubject<number>(this.testcasesListLength);
+  observableTestDataLib = new BehaviorSubject<any[]>(this.testcasesList);
+  observableTestDataLibLength = new BehaviorSubject<number>(this.testcasesListLength);
   observableTestCaseLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
   observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
@@ -42,6 +46,7 @@ export class TestService {
   observableTestCaseProperties = new BehaviorSubject<IProperty[]>(this.testcase_properties);
   // boolean
   refreshTC: boolean = false;
+
 
 
   constructor(
@@ -95,7 +100,7 @@ export class TestService {
         }
       })
   }
-  getTestCasesFilterList(queryParameters: string) {
+  getTestCasesFilterList(queryParameters: string, callback) {
     this.http.post<ITestCaseHeader>(AppSettings.API_endpoint + '/ReadTestCase', queryParameters, httpOptions)
       .subscribe((response) => {
         if (response) {
@@ -105,6 +110,7 @@ export class TestService {
 
             this.observableTestCasesList.next(this.testcasesList);
             this.observableTestCasesListLength.next(this.testcasesListLength);
+            
           }
           else {
             this.testcasesList = null;
@@ -116,8 +122,45 @@ export class TestService {
       });
   }
 
-  getColumnData(columnName: string) {
-    let query = AppSettings.API_endpoint + '/ReadTestCase?columnName=' + columnName;
+
+  getTestDataLibFilterList(queryParameters: string) {
+    this.http.post<ITestCaseHeader>(AppSettings.API_endpoint + '/ReadTestDataLib', queryParameters, httpOptions)
+      .subscribe((response) => {
+        if (response) {
+          if (response.iTotalRecords > 0) {
+            this.testdatalib = response.contentTable;
+            this.testdatalibLength = response.iTotalRecords;
+
+            this.observableTestDataLib.next(this.testcasesList);
+            this.observableTestDataLibLength.next(this.testcasesListLength);
+          }
+          else {
+            this.testcasesList = null;
+            this.observableTestDataLib.next(this.testcasesList);
+          }
+        }
+      });
+  }
+
+  getFromRequest(servlet: string, queryParameters: string, callback) {
+    this.http.post<ITestCaseHeader>(AppSettings.API_endpoint + servlet, queryParameters, httpOptions)
+      .subscribe((response) => {
+        if (response) {
+          if (response.iTotalRecords > 0) {
+            callback(response.contentTable, response.iTotalRecords);
+          }
+          else {
+            this.testcasesList = null;
+            this.observableTestDataLib.next(this.testcasesList);
+          }
+        }
+      });
+  }
+
+
+
+  getColumnData(cervlet: string, columnName: string) {
+    let query = AppSettings.API_endpoint + cervlet + '?columnName=' + columnName;
     console.log(query);
 
     return this.http.get<ITestCaseHeader>(query);

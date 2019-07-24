@@ -1,0 +1,17 @@
+<app-filters 
+    (searchServe)="search()" 
+    (systemApply)="search($event)" 
+    [page]="page" 
+    [columns]="columns"
+    [selectedRows]="selectedRows"
+    [servlet]="servlet">
+</app-filters>
+
+<app-table 
+    [rows]="rows" 
+    [columns]="columns" 
+    [testcaseslist]="true" 
+    [page]="page" 
+    [selected]="selectedRows"
+    (pageUpdate)="pageUpdate($event)">
+</app-table>

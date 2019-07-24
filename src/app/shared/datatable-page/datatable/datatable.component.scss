@@ -98,6 +98,14 @@
 
   }
 }
+.cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cell-label span:truncated  {
+  display: none;
+}
 
 
 // ! footer style in style.css

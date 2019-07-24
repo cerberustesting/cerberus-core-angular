@@ -20,6 +20,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { SettingsComponent } from "./testcasescript/tc-script/settings/settings.component";
 import { FilterlikeComponent } from './testcaselist/filters/filterlike/filterlike.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ScriptComponent } from './testcasescript/tc-script/script/script.component';
 
 
 
@@ -40,6 +41,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       PropertyvalueComponent,
       SettingsComponent,
       FilterlikeComponent,
+      ScriptComponent,
       
   ],
   imports: [

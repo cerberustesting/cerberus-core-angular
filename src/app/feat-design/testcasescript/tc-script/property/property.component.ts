@@ -57,7 +57,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   ngOnChanges() {
     this.propertyNameIsInvalid = false;
-    console.log("ngOnChanges, current prop name:" + this.propertiesById[0].property);
+    //console.log("ngOnChanges, current prop name:" + this.propertiesById[0].property);
     this.propertyName = this.propertiesById[0].property;
   }
 

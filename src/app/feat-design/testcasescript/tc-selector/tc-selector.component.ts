@@ -3,6 +3,7 @@ import { ITestCase, ITestCaseHeader } from 'src/app/shared/model/testcase.model'
 import { ITest } from 'src/app/shared/model/test.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { AlertService, Alert } from 'src/app/core/services/utils/alert.service';
+import { SettingsService } from '../tc-script/settings/settings.service';
 
 const Alert_selectedTestDoesNotExist: Alert = { message: "The selected test doesn't exist", style: "alert-danger", duration: 5000, animationIn: "shake" }
 const Alert_selectedTestCaseDoesNotExist: Alert = { message: "The selected test case doesn't exist", style: "alert-danger", duration: 5000, animationIn: "shake" }
@@ -27,7 +28,8 @@ export class TcSelectorComponent implements OnInit {
 
   constructor(
     private TestService: TestService,
-    private AlertService: AlertService
+    private AlertService: AlertService,
+    private SettingsService: SettingsService
   ) { }
 
   ngOnDestroy() {
@@ -103,6 +105,8 @@ export class TcSelectorComponent implements OnInit {
     this.SelectedTestCaseChange.emit(this.selectedTestCase);
     this.refreshTestCase();
     this.TestService.getTestCase(this.selectedTest, this.selectedTestCase);
+    console.log("selectedTestCaseChange");
+    this.SettingsService.clearFocus();
   }
 
   refreshTestCase() {

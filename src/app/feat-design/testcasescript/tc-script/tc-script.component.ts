@@ -32,35 +32,28 @@ export class TcScriptComponent implements OnInit {
   constructor(
     private TestService: TestService,
     private InvariantsService: InvariantsService
-  ) {
-    this.stepListBlockId = "stepList";
-  }
+  ) { }
 
   ngOnInit() {
     this.activePropertyId = null;
+    this.propertiesList = new Array<IProperty>();
+    this.setActiveProperty();
     this.TestService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
     this.TestService.observableTestCaseProperties.subscribe(r => {
       if (r) {
-        this.propertiesList = r;
-        if (this.activePropertyId == null) {
-          this.setActiveProperty(this.propertiesList[0].property_id);
-        } else {
-          // refresh the content of the active property
-          this.setActiveProperty(this.activePropertyId);
+        if (r.length != 0) {
+          this.propertiesList = r;
+          if (this.activePropertyId == null) {
+            this.setActiveProperty(this.propertiesList[0].property_id);
+          } else {
+            // refresh the content of the active property
+            this.setActiveProperty(this.activePropertyId);
+          }
         }
       }
     });
     this.selectedTab = this.tabs[0];
     this.propertyNameIsInvalid = false;
-  }
-
-  addAStep() {
-    var newStep = new Step(this.testcase.info.testCase, this.testcase.info.test, this.testcase.stepList.length + 1);
-    this.testcase.stepList.push(newStep);
-    // useless to refresh the step sort here since we can only add at the end.
-    // if later modification (e.g. adding a step after any step), please consider
-    // - using splice() instead of push
-    // - call TestService.refreshStepSort(this.testcase.stepList)
   }
 
   // pass the name of the property to insert a property
@@ -102,11 +95,6 @@ export class TcScriptComponent implements OnInit {
     this.setActiveProperty(prop.property_id);
   }
 
-  dropStep(event: CdkDragDrop<IStep[]>) {
-    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    this.TestService.refreshStepSort(this.testcase.stepList);
-  }
-
   saveTestCase() {
     // send the testcase to the data service
     this.TestService.saveTestCase(this.testcase);
@@ -116,10 +104,11 @@ export class TcScriptComponent implements OnInit {
     if (!propId) {
       this.activeProperty = new Array<IProperty>();
       this.activePropertyId = null;
+    } else {
+      //console.log("setActiveProperty for id: " + propId);
+      this.activePropertyId = propId;
+      this.activeProperty = this.TestService.filterPropertiesByid(this.propertiesList, propId);
     }
-    //console.log("setActiveProperty for id: " + propId);
-    this.activePropertyId = propId;
-    this.activeProperty = this.TestService.filterPropertiesByid(this.propertiesList, propId);
   }
 
   debug() {

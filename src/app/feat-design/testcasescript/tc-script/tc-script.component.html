@@ -23,46 +23,14 @@
 
       <!-- SCRIPT TAB -->
       <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="scriptTab" role="tabpanel">
+
         <!-- SCRIPT CONTENT -->
-        <div class="row push" *ngIf="testcase.stepList.length == 0">
-          <div class="col-md-12 mt-3s text-center">
-            <p>The test case is empty <i class="far fa-frown-open"></i></p>
-          </div>
-          <div class="col-md-12 text-center">
-            <div class="btn-group" role="group" aria-label="Horizontal Outline Primary">
-              <button type="button" class="btn btn-outline-primary" (click)="addAStep()"><i
-                  class="fa fa-fw fa-plus mr-1"></i>
-                Step</button>
-              <button type="button" class="btn btn-outline-primary"><i class="fa fa-fw fa-plus mr-1"></i>Use
-                Step</button>
-            </div>
-          </div>
-        </div>
-        <div class="row" *ngIf="testcase.stepList.length != 0">
+
+        <div class="row">
+
           <!-- STEP LIST -->
           <div class="col-md-6">
-            <div [id]="stepListBlockId" role="tablist" aria-multiselectable="true" class="stepList" cdkDropList
-              [cdkDropListData]="testcase.stepList" (cdkDropListDropped)="dropStep($event)">
-              <div *ngFor="let step of testcase.stepList; let index = index" class="stepDrag" cdkDrag
-                cdkDragLockAxis="y">
-                <app-step [step]="step" [stepIndex]="index | trueindex">
-                  <button slot="drag-step" type="button" id="step{{ index | trueindex }}drag"
-                    class="btn btn-sm btn-light drag-cursor btn-drag-step" cdkDragHandle>
-                    <i class="fa fa-ellipsis-v"></i>
-                  </button>
-                </app-step>
-              </div>
-              <div class="push">
-                <div class="col-md-12 text-center">
-                  <button type="button" class="btn btn-outline-primary mr-3" (click)="addAStep()">
-                    <i class="fa fa-fw fa-plus mr-1"></i>Step
-                  </button>
-                  <button type="button" class="btn btn-outline-primary">
-                    <i class="fa fa-fw fa-plus mr-1"></i>Use Step
-                  </button>
-                </div>
-              </div>
-            </div>
+            <app-script [testcase]="testcase"></app-script>
           </div>
           <!-- END STEP LIST -->
           <!-- SETTINGS TOOLBAR -->

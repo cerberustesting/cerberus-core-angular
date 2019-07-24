@@ -19,7 +19,7 @@ import { SettingsComponent } from "./testcasescript/tc-script/settings/settings.
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatalibraryComponent } from './datalibrary/datalibrary.component';
 import { ScriptComponent } from './testcasescript/tc-script/script/script.component';
-
+import { FilterlikeComponent } from '../shared/datatable-page/utils/filterlike/filterlike.component'
 
 @NgModule({
   declarations: [

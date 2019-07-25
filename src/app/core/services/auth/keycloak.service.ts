@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import Keycloak from 'keycloak-js';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,13 +23,14 @@ export class KeycloakService {
       'ssl-required': 'external',
       'public-client': true
     });
+
     KeycloakService.auth.loggedIn = false;
     return new Promise((resolve, reject) => {
       keycloakAuth.init({ onLoad: 'login-required', checkLoginIframe: false })
         .success(() => {
           KeycloakService.auth.loggedIn = false;
           KeycloakService.auth.authz = keycloakAuth;
-          //console.log(KeycloakService.auth.authz.tokenParsed);
+
           resolve();
         })
         .error(() => {
@@ -36,12 +39,15 @@ export class KeycloakService {
     });
   }
 
-  constructor() { }
+  constructor(
+  ) { }
+
 
   login(): void {
     KeycloakService.auth.authz.login().success(
       () => {
         KeycloakService.auth.loggedIn = true;
+
       }
     );
   }

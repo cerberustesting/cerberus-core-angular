@@ -53,7 +53,7 @@ export class InvariantsService {
       }, (err) => this.AlertService.APIError(err));
   }
   getSystems() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=system')
+    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=system' )
       .subscribe(response => {
         this.systemsList = response;
         this.observableSystems.next(this.systemsList);

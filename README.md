@@ -7,6 +7,50 @@ Brand new Cerberus front-end implementation
 - `ng serve`
 
 # connect it to your local cerberus
+
+## New way (after Cerberus-4.1-SNAPHSOT (25-07-2019))
+
+Now, the authentication on angular works. 
+
+With keycloak, you need to athentificate on keycloak before using the angular front.
+Without keycloak, you need to login on the old front before using the angular front  
+
+To avoid CORS problem, Add on your cerberus back the env variable `FRONT_URL=your_angular_host` (eg : `FRONT_URL=http://localhost:4200`).
+
+At this time, a cors problem can occurred with keycloak. To resolve it :
+   * Log on the old cerberus front, and go back to the angular front, it should be work 
+   * Or use Chrome plugin: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi 
+   * ... while the problem is not resolve.
+
+### Active keycloak on font-angular 
+
+on `environment.ts` file, change the `keycloakActive: false` to true : 
+
+``` javascript
+// KEYCLOAK INFORMATION
+let keycloakConfig: any = {
+  url: 'http://localhost:38080/auth',
+  realm: 'Cerberus',
+  clientId: 'cerberus'
+};
+
+// CERBERUS API ENDPOINT
+let API_endpoint: string = "http://localhost:8080/";
+
+export const environment = {
+  production: false,
+  cerberus_api_url: API_endpoint,
+  keycloakActive: false,    // change it to true
+  keycloak: keycloakConfig
+};
+```
+
+This is my keycloak config : 
+
+[keycloakconfig](img/keycloak_config.png)
+
+## Old way (before Cerberus-4.1-SNAPHSOT)
+
 Make sure to deploy the Angular app on a different port than your local Cerberus.
 
 You will face CORS (Cross Origin Resource Sharing) issues because of the security rules of Cerberus.
@@ -18,7 +62,7 @@ To bypass it :
 
 All the necessary servlets have the fixHeaders method implemented. You just need to enable debug 
 
-```java
+``` java
 protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 throws ServletException, IOException, JSONException {
             
@@ -29,7 +73,7 @@ ServletUtil.servletStart(request);
 ServletUtil.fixHeaders(response);
 ```
 
-```java
+``` java
 public static void fixHeaders(HttpServletResponse response) {
         if (LOG.isDebugEnabled()) {
 	        response.addHeader("Access-Control-Allow-Origin", "*");

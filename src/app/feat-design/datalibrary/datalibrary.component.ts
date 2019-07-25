@@ -17,130 +17,192 @@ export class DatalibraryComponent implements OnInit {
   columns: Array<Column> = [
     {
       displayName: "ID",
-      contentName: '',
-      active: true
-    ,sSearch : []},
+      contentName: 'testDataLibID',
+      active: true,
+      sSearch: [],
+      databaseName: 'td1.TestDataLibID'
+    },
     {
       displayName: "Name",
-      contentName: '',
-      active: true
-    ,sSearch : []},
+      contentName: 'name',
+      active: true, 
+      sSearch: [],
+      databaseName: 'tdl.Name'
+    },
     {
       displayName: "System",
-      contentName: '',
-      active: true
-    ,sSearch : []},
+      contentName: 'system',
+      active: true, 
+      sSearch: [],
+      databaseName: 'tdl.System'
+    },
     {
       displayName: "Environment",
-      contentName: '',
-      active: true
-    ,sSearch : []},
+      contentName: 'environment',
+      active: true, 
+      sSearch: [],
+      databaseName : 'tdl.Environment'
+    },
     {
       displayName: "Country",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'country',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.Country'
+    },
     {
       displayName: "Group",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'group',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.Group'
+    },
     {
       displayName: "Description",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'description',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.Description'
+    },
     {
       displayName: "Type",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'type',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.Type'
+    },
     {
       displayName: "Value",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'subDataValue',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdd.value'
+    },
     {
       displayName: "Database",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'database',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.Database'
+    },
     {
       displayName: "Script",
-      contentName: '',
+      contentName: 'script',
       active: false,
-      width: 300
-    ,sSearch : []},
+      width: 300, 
+      sSearch: [],
+      databaseName : 'tdl.Script'
+    },
     {
       displayName: "Database",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'databaseUrl',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.DatabaseUrl'
+    },
+    {
+      displayName: "Service",
+      contentName: 'service',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.Service'
+    },
     {
       displayName: "Service Path",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'servicePath',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.ServicePath'
+    },
     {
       displayName: "Operation",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'method',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.method'
+    },
     {
       displayName: "Envelope",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'envelope',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.envelope'
+    },
+    {
+      displayName: "Database CSV",
+      contentName: 'databaseCsv',
+      active: false, 
+      sSearch: [],
+      databaseName : 'DatabaseCsv'
+    },
     {
       displayName: "C SV URL",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'csvUrl',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.csvUrl'
+    },
     {
       displayName: "Separator",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'separator',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.separator'
+    },
     {
       displayName: "Creation Date",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'created',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.Created'
+    },
     {
       displayName: "Creator",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'creator',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.Creator'
+    },
     {
       displayName: "Modification Date",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'lastModified',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.LastModified'
+    },
     {
       displayName: "Last Modifier",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'lastModifier',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdl.LastModifier'
+    },
     {
       displayName: "Column",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'subDataColumn',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdd.column'
+    },
     {
       displayName: "Parsing Answer",
-      contentName: '',
-      active: false
-    ,sSearch : []},
+      contentName: 'subDataParsingAnswer',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdd.ParsingAnswer'
+    },
     {
       displayName: "Column Position",
-      contentName: '',
-      active: false
-    ,sSearch : []}
+      contentName: 'subDataColumnPosition',
+      active: false, 
+      sSearch: [],
+      databaseName : 'tdd.ColumnPosition'
+    }
   ];
   page = {
     size: 10, //maximum element per page
     number: 1, //number of current page
-    sort: [{dir: "asc", prop : "id"}], //sort item
+    sort: [{ dir: "asc", prop: "id" }], //sort item
     totalCount: 0 //total count of element in database
   };
   rows = [];

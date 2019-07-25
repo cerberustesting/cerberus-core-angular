@@ -6,6 +6,7 @@ export var ColumnsData: Column[] = [
         databaseName: 'tec.application',
         contentName: 'application',
         active: true,
+        defaultActive: true,
         searchable: true,
         dropActive: false,
         param: {
@@ -20,6 +21,7 @@ export var ColumnsData: Column[] = [
         databaseName: 'tec.test',
         contentName: 'test',
         active: true,
+        defaultActive: true,
         searchable: true,
         param: {
             multiple: true,
@@ -34,6 +36,7 @@ export var ColumnsData: Column[] = [
         databaseName: 'tec.testCase',
         contentName: 'testCase',
         active: true,
+        defaultActive: true,
         like: true,
         param: {
             multiple: true,
@@ -48,6 +51,7 @@ export var ColumnsData: Column[] = [
         contentName: 'labels',
         type: 'label',
         active: true,
+        defaultActive: true,
         sortable: false,
         searchable: true,
         dropActive: false,
@@ -64,6 +68,7 @@ export var ColumnsData: Column[] = [
         databaseName: 'tec.description',
         contentName: 'description',
         width: 300,
+        defaultActive: true,
         active: true,
         dropActive: false,
         like: true,
@@ -80,6 +85,7 @@ export var ColumnsData: Column[] = [
         databaseName: 'tec.status',
         contentName: 'status',
         active: true,
+        defaultActive: true,
         searchable: true,
         dropActive: false,
         param: {
@@ -94,6 +100,7 @@ export var ColumnsData: Column[] = [
         databaseName: 'tec.priority',
         contentName: 'priority',
         active: true,
+        defaultActive: true,
         dropActive: false,
         searchable: true,
         param: {

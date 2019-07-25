@@ -18,6 +18,7 @@ export class DatatablePageComponent implements OnInit {
     totalCount: number
   };
   @Input() columns: Array<Column>;
+  @Input() massAction: boolean;
   @Input() servlet: string;
   @Input() selectedRows: Array<any>;
 

@@ -2,7 +2,8 @@ export interface Column {
     displayName: string,
     contentName: string,
     active: boolean,
-    databaseName?: string,
+    defaultActive?: boolean,
+    databaseName: string,
     width?: number, //default is 150
     type?: string, //for exemple 'label' or 'boolean'
     like?: boolean, //

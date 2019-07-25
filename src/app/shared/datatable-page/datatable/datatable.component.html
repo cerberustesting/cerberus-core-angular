@@ -35,6 +35,10 @@
                             placeholder="Columns : {{ columnActive }}" [items]="columns" [closeOnSelect]="false"
                             (change)="resetColumnDrop" [searchable]="false" [clearable]="false">
 
+                            <ng-template ng-header-tmp>
+                                <button class="btn btn-outline-info" style="width: 100%" (click)="resetDefaultColumns()">Reset</button>
+                            </ng-template>
+
                             <!--Content in the top container-->
                             <ng-template ng-label-tmp>
                                 <div>Selected : {{ columnActive }}</div>
@@ -52,6 +56,7 @@
                         <ng-select class="column-selector custom page-size" bindLabel="name"
                             placeholder="Show : {{ page.size }}" [(ngModel)]="page.size" [items]="[10, 25, 50, 100]"
                             [closeOnSelect]="true" [clearable]="false" (change)="applyChange()">
+                            
 
                             <!--Content in the top container-->
                             <ng-template ng-label-tmp>
@@ -149,7 +154,7 @@
 
         
 
-        <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
+        <ngx-datatable-column *ngIf="massAction" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
             [width]="1">
             <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
                 <div class="row-menu">

@@ -11,6 +11,7 @@ export class DatatableComponent implements OnInit {
   @Input() rows: any[];
   @Input() columns: Array<Column>
   @Input() testcaseslist: boolean;
+  @Input() massAction: boolean;
   @Input() page: {
     size: number,
     number: number,
@@ -72,8 +73,8 @@ export class DatatableComponent implements OnInit {
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
   }
-
-
-
+  resetDefaultColumns() {
+    this.columns.forEach(c => c.active = c.defaultActive);
+  }
 }
 

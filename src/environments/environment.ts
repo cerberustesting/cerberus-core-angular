@@ -10,7 +10,7 @@ let keycloakConfig: any = {
 };
 
 // CERBERUS API ENDPOINT
-let API_endpoint: string = "http://localhost:8080/";
+let API_endpoint: string = "http://localhost:8080/Cerberus";
 
 export const environment = {
   production: false,

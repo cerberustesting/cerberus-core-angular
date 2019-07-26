@@ -24,6 +24,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.keycloakAuth = this.keycloak.getKeycloakAuth();
-    this.userService.getReadUser();
+    //this.userService.getReadUser();
   }
 }

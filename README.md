@@ -6,88 +6,35 @@ Brand new Cerberus front-end implementation
 - `npm install`
 - `ng serve`
 
-# connect it to your local cerberus
+# connect it to cerberus-source API
 
-## New way (after Cerberus-4.1-SNAPHSOT (25-07-2019))
+This Cerberus front is using keycloak for its authentication
 
-Now, the authentication on angular works. 
+You can both :
+- connect it to an online Cerberus environment (QA) where data are safe to edit
 
-With keycloak, you need to athentificate on keycloak before using the angular front.
-Without keycloak, you need to login on the old front before using the angular front  
+You just have to clone the repo and you're good to go. An online internet connection is therefore necessary.
 
-To avoid CORS problem, Add on your cerberus back the env variable `FRONT_URL=your_angular_host` (eg : `FRONT_URL=http://localhost:4200`).
+- connect it to a local Cerberus instance that you have to deploy locally
 
-At this time, a cors problem can occurred with keycloak. To resolve it :
-   * Log on the old cerberus front, and go back to the angular front, it should be work 
-   * Or use Chrome plugin: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi 
-   * ... while the problem is not resolve.
+Please follow the instructions on cerberus-source repository to deploy Cerberus and Keycloak on your local environment.
 
-### Active keycloak on font-angular 
+In cerberus-angular, edit  `environment.ts` file with your corresponding URLs :
 
-on `environment.ts` file, change the `keycloakActive: false` to true : 
-
+- keycloak auth URL in the `keycloakConfig` object
 ``` javascript
 // KEYCLOAK INFORMATION
 let keycloakConfig: any = {
-  url: 'http://localhost:38080/auth',
+  url: 'http://localhost:38080/auth', //right here
   realm: 'Cerberus',
   clientId: 'cerberus'
 };
-
+```
+- the cerberus source URL in the same object
+``` javascript
 // CERBERUS API ENDPOINT
 let API_endpoint: string = "http://localhost:8080/";
-
-export const environment = {
-  production: false,
-  cerberus_api_url: API_endpoint,
-  keycloakActive: false,    // change it to true
-  keycloak: keycloakConfig
-};
 ```
-
-This is my keycloak config : 
-
-[keycloakconfig](img/keycloak_config.png)
-
-## Old way (before Cerberus-4.1-SNAPHSOT)
-
-Make sure to deploy the Angular app on a different port than your local Cerberus.
-
-You will face CORS (Cross Origin Resource Sharing) issues because of the security rules of Cerberus.
-
-To bypass it :
-- Necessary servlets needs to call the ServletUtil.fixHeaders method which add specific headers to its call.
-- Authentification constraint needs to be removed in `web.xml`.
-- A CORS plugin is needed in your web browser.
-
-All the necessary servlets have the fixHeaders method implemented. You just need to enable debug 
-
-``` java
-protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-throws ServletException, IOException, JSONException {
-            
-...
-
-// Calling Servlet Transversal Util.
-ServletUtil.servletStart(request);
-ServletUtil.fixHeaders(response);
-```
-
-``` java
-public static void fixHeaders(HttpServletResponse response) {
-        if (LOG.isDebugEnabled()) {
-	        response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, OPTIONS, DELETE");
-		response.addHeader("Access-Control-Allow-Headers", "Content-Type");
-		response.addHeader("Access-Control-Max-Age", "86400");
-	}
-}
-
-```
-
-To bypass authentication constraints, just delete the current `web.xml` and rename the `web-angular.xml` to `web.xml`.
-
-I am using this plugin to allow CORS in my Chrome browser: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi and it works just fine!
 
 # Docker
 
@@ -98,5 +45,3 @@ sudo docker build -t cerberus-angular .
 # Run it
 sudo docker run -it -v ${PWD}:/usr/src/app -v /usr/src/app/node_modules -p 4200:4200 --rm cerberus-angular
 ```
-
-

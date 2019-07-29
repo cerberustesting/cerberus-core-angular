@@ -41,11 +41,6 @@ export class HeaderbarComponent implements OnInit {
       }
     );
     // this.InvariantService.emitSystemsSubject();
-    if (environment.keycloakActive) {
-      this.userFullName = this.KeycloakService.getFullName();
-    } else {
-      this.userFullName = "No user";
-    }
   }
 
   addSystem(system) {
@@ -70,8 +65,7 @@ export class HeaderbarComponent implements OnInit {
   }
 
   logout() {
-    if (environment.keycloakActive) { this.KeycloakService.logout(); }
-    else { console.log("Keycloak must be activated to log out"); }
+    this.KeycloakService.logout();
   }
 
 }

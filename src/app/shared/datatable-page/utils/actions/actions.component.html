@@ -1,17 +1,17 @@
 <div class="actions-section">
-  <button class="btn btn-outline-danger" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-danger" *ngIf="(selectedRows>0)" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-trash-alt"></i>
   </button> <!-- Delete TC -->
 
-  <button class="btn btn-outline-success" placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-success" *ngIf="(selectedRows>0)" placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-play"></i>
   </button> <!-- Run TestCase -->
 
-  <button class="btn btn-outline-info" placement="top" ngbPopover="Edit TestCase Header" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-info" *ngIf="(selectedRows>0)" placement="top" ngbPopover="Edit TestCase Header" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-pen"></i>
   </button> <!-- Edit TestCase Header -->  
 
-  <button class="btn btn-outline-primary" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-primary" *ngIf="(selectedRows>0)" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-copy"></i>
   </button> <!-- Duplicate TC --> 
 

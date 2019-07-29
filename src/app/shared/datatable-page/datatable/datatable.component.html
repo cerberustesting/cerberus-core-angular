@@ -1,18 +1,19 @@
 <div class="data-table">
     <ngx-datatable #dataTable class="material fullscreen fixed-header expandable" style="height: 60vh;" 
     [rows]="rows" 
-    [columns]="columns"
-        
+    [columns]="columns"        
     [columnMode]="'force'" 
     [footerHeight]="50" 
     [rowHeight]="50" 
     [headerHeight]="50" 
-    [loadingIndicator]="isLoading"
-        
+    [loadingIndicator]="isLoading"        
     [selected]="selected" 
     [selectionType]="(selection)? 'checkbox' : ''" 
     [selectAllRowsOnPage]="selection" [scrollbarH]="false"
-        [scrollbarV]="true" [externalSorting]="true" (select)='onSelect($event)' (sort)="onSort($event)">
+    [scrollbarV]="true" 
+    [externalSorting]="true" 
+    (select)='onSelect($event)' 
+    (sort)="onSort($event)">
 
         <!-- Row Detail Template -->
         <!-- <ngx-datatable-row-detail

@@ -38,6 +38,12 @@ let API_endpoint: string = "http://localhost:8080/";
 ```
 
 The application is configured by default to work with `cerberus-angular` keycloak client with the following configuration :
+- Enabled : ON
+- Client protocol : openid-connect
+- Access Type : public
+- Standard Flow Enabled : ON
+- Valid Redirect URIs : your cerberus angular URL (or URI if Root URL is configured) (e.g. http://localhost:4200/*)
+- Web Origins : add "+"
 
 # Docker
 

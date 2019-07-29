@@ -24,10 +24,12 @@ export class HeaderbarComponent implements OnInit {
   constructor(
     private AlertService: AlertService,
     private InvariantService: InvariantsService,
-    private KeycloakService: KeycloakService
+    private ks: KeycloakService
   ) { }
 
   ngOnInit() {
+    this.userFullName = this.ks.getFullName();
+
     this.systemSub = this.InvariantService.observableSystems.subscribe(
       (response) => {
         this.systemsList = response;
@@ -65,7 +67,7 @@ export class HeaderbarComponent implements OnInit {
   }
 
   logout() {
-    this.KeycloakService.logout();
+    this.ks.logout();
   }
 
 }

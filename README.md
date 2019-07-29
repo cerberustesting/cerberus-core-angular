@@ -14,7 +14,7 @@ You can both :
 - connect it to an online Cerberus environment (QA) where data are safe to edit
 
 You just have to clone the repo and you're good to go. An online internet connection is therefore necessary.
-You also must deploy the application on default port 4200
+NB: You must deploy the application on default port 4200 (only this URL is configured on the online keycloak)
 
 - connect it to a local Cerberus instance that you have to deploy locally
 

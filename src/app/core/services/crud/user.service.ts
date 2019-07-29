@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
 import { HttpClient } from '@angular/common/http';
-import { AppSettings } from 'src/app/app.component';
+import { environment } from 'src/environments/environment';
+import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,10 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getReadUser() {
-    this.http.get<IBuildRevisionInvariant[]>(AppSettings.API_endpoint + 'ReadUser', { withCredentials: true })
+  getUser() {
+    this.http.get<IBuildRevisionInvariant[]>(environment.cerberus_api_url + '/ReadMyUser')
       .subscribe(response => {
-            // do nothing. Can get the user information
+        // TODO : feed the variables (to create)
       });
   }
 

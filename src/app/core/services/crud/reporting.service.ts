@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ITag } from 'src/app/shared/model/reporting.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { AppSettings } from 'src/app/app.component';
+import { ITag } from 'src/app/shared/model/reporting.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class ReportingService {
   constructor(private http: HttpClient) { }
 
   getTagList() {
-    this.http.get<ITag[]>(AppSettings.API_endpoint + '/ReadTag?iSortCol_0=0&sSortDir_0=desc&sColumns=id,tag,campaign,description')
+    this.http.get<ITag[]>(environment.cerberus_api_url + '/ReadTag?iSortCol_0=0&sSortDir_0=desc&sColumns=id,tag,campaign,description')
       .subscribe(response => {
         // @ts-ignore
         this.tagsList = response.contentTable;

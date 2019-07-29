@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
-import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AppSettings } from 'src/app/app.component';
-import { AlertService, Alert } from '../utils/alert.service';
+import { BehaviorSubject } from 'rxjs';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { AlertService } from 'src/app/core/services/utils/alert.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -46,14 +46,14 @@ export class InvariantsService {
   constructor(private http: HttpClient, private AlertService: AlertService) { }
 
   getCountriesList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=country')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=country')
       .subscribe(response => {
         this.countriesList = response;
         this.observableCountriesList.next(this.countriesList);
       }, (err) => this.AlertService.APIError(err));
   }
   getSystems() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=system' )
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=system' )
       .subscribe(response => {
         this.systemsList = response;
         this.observableSystems.next(this.systemsList);
@@ -74,21 +74,21 @@ export class InvariantsService {
     console.log(this.systemsSelected);
   }
   getTcStatus() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=tcStatus')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=tcStatus')
       .subscribe(response => {
         this.tcstatusList = response;
         this.observableTcStatus.next(this.tcstatusList);
       }, (err) => this.AlertService.APIError(err));
   }
   getTceStatus() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=tceStatus')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=tceStatus')
       .subscribe(response => {
         this.tcestatusList = response;
         this.observableTceStatusList.next(this.tcestatusList);
       }, (err) => this.AlertService.APIError(err));
   }
   getPriorities() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=priority')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=priority')
       .subscribe(response => {
         this.prioritiesList = response;
         // DIRTY : add a new field in Invariant model to have the value in Integer
@@ -100,7 +100,7 @@ export class InvariantsService {
   }
 
   getOriginsList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=origin')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=origin')
       .subscribe(response => {
         this.originsList = response;
         this.observableOriginsList.next(this.originsList);
@@ -108,7 +108,7 @@ export class InvariantsService {
   }
 
   getGroupList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=group')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=group')
       .subscribe(response => {
         this.groupsList = response;
         this.observableGroupsList.next(this.groupsList);
@@ -116,7 +116,7 @@ export class InvariantsService {
   }
 
   getStepConditionOperList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=stepconditionOper')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=stepconditionOper')
       .subscribe(response => {
         this.conditionOperList = response;
         this.observableConditionOperList.next(this.conditionOperList);
@@ -124,7 +124,7 @@ export class InvariantsService {
   }
 
   getStepLoopList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=steploop')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=steploop')
       .subscribe(response => {
         this.stepLoopList = response;
         this.observableStepLoopList.next(this.stepLoopList);
@@ -132,7 +132,7 @@ export class InvariantsService {
   }
 
   getActionList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=action')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=action')
       .subscribe(response => {
         this.actionsList = response;
         this.observableActionsList.next(this.actionsList);
@@ -140,7 +140,7 @@ export class InvariantsService {
   }
 
   getControlsList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=control')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=control')
       .subscribe(response => {
         this.controlsList = response;
         this.observableControlsList.next(this.controlsList);
@@ -148,7 +148,7 @@ export class InvariantsService {
   }
 
   getPropertyTypeList() {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=propertyType')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=propertyType')
       .subscribe(response => {
         this.propertyTypeList = response;
         this.observablePropertyTypeList.next(this.propertyTypeList);
@@ -156,7 +156,7 @@ export class InvariantsService {
   }
 
   getPropertyNatureList(): void {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=propertyNature')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=propertyNature')
       .subscribe(response => {
         this.propertyNatureList = response;
         this.observablePropertyNatureList.next(this.propertyNatureList);
@@ -164,7 +164,7 @@ export class InvariantsService {
   }
 
   getPropertyDatabaseList(): void {
-    this.http.get<IInvariant[]>(AppSettings.API_endpoint + '/FindInvariantByID?idName=propertyDatabase')
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=propertyDatabase')
       .subscribe(response => {
         this.propertyDatabaseList = response;
         this.observablePropertyDatabaseList.next(this.propertyDatabaseList);

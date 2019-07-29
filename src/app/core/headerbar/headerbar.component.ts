@@ -4,7 +4,6 @@ import { AlertService } from 'src/app/core/services/utils/alert.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
-import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-headerbar',

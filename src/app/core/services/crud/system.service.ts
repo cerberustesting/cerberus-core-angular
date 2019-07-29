@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
-import { ILabel } from 'src/app/shared/model/label.model';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
+import { ILabel } from 'src/app/shared/model/label.model';
 import { IApplication } from 'src/app/shared/model/application.model';
-import { AppSettings } from 'src/app/app.component';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SystemService {
-
-  // URL
-  private _url: string;
 
   private sprints: Array<IBuildRevisionInvariant> = new Array<IBuildRevisionInvariant>();
   private revs: Array<IBuildRevisionInvariant> = new Array<IBuildRevisionInvariant>();
@@ -29,7 +26,7 @@ export class SystemService {
   constructor(private http: HttpClient) { }
 
   getSprintsFromSystem(system: string) {
-    this.http.get<IBuildRevisionInvariant[]>(AppSettings.API_endpoint + '/ReadBuildRevisionInvariant?system=' + system + '&level=1')
+    this.http.get<IBuildRevisionInvariant[]>(environment.cerberus_api_url + '/ReadBuildRevisionInvariant?system=' + system + '&level=1')
       .subscribe(response => {
         this.sprints = response;
         // @ts-ignore
@@ -39,7 +36,7 @@ export class SystemService {
   }
 
   getRevFromSystem(system: string) {
-    this.http.get<IBuildRevisionInvariant[]>(AppSettings.API_endpoint + '/ReadBuildRevisionInvariant?system=' + system + '&level=2')
+    this.http.get<IBuildRevisionInvariant[]>(environment.cerberus_api_url + '/ReadBuildRevisionInvariant?system=' + system + '&level=2')
       .subscribe(response => {
         this.revs = response;
         // @ts-ignore
@@ -49,7 +46,7 @@ export class SystemService {
   }
 
   getLabelsFromSystem(system: string) {
-    this.http.get<ILabel[]>(AppSettings.API_endpoint + '/ReadLabel?system=' + system)
+    this.http.get<ILabel[]>(environment.cerberus_api_url + '/ReadLabel?system=' + system)
       .subscribe(response => {
         this.labels = response;
         // @ts-ignore
@@ -72,7 +69,7 @@ export class SystemService {
   }
 
   getApplicationList() {
-    this.http.get<IApplication[]>(AppSettings.API_endpoint + '/ReadApplication')
+    this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication')
       .subscribe(response => {
         this.applicationsList = response;
         // @ts-ignore
@@ -82,7 +79,7 @@ export class SystemService {
   }
 
   getApplication(application: string) {
-    this.http.get<IApplication>(AppSettings.API_endpoint + '/ReadApplication?application=' + application)
+    this.http.get<IApplication>(environment.cerberus_api_url + '/ReadApplication?application=' + application)
       .subscribe(response => {
         this.application = response;
         // @ts-ignore

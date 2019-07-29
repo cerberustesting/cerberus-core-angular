@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from './core/services/auth/keycloak.service';
+import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 import { KeycloakInstance } from 'keycloak-js';
 import { environment } from 'src/environments/environment';
-import {UserService} from "./core/services/crud/user.service";
-
-export class AppSettings {
-  public static API_endpoint: string = environment.cerberus_api_url;
-}
+import { UserService } from './core/services/crud/user.service';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +14,12 @@ export class AppComponent implements OnInit {
   public keycloakAuth: KeycloakInstance;
 
   constructor(
-      private keycloak: KeycloakService,
-      private userService: UserService
+    private keycloak: KeycloakService,
+    private UserService: UserService
   ) { }
 
   ngOnInit() {
     this.keycloakAuth = this.keycloak.getKeycloakAuth();
-    //this.userService.getReadUser();
+    this.UserService.getUser();
   }
 }

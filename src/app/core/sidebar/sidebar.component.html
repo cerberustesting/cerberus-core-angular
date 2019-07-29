@@ -53,26 +53,20 @@
       <ng-template ngFor let-menu [ngForOf]="menus">
         <li class="nav-main-heading">{{ menu.name }}</li>
         <li class="nav-main-item" *ngFor='let menuitem of menu.data'>
-          <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''"
-            [attr.data-toggle]="menuitem.submenu ? 'submenu' : ''" [attr.aria-haspopup]="menuitem.submenu ? 'true' : ''"
-            [attr.aria-expanded]="menuitem.expanded" [routerLink]="menuitem.submenu ? null : menuitem.link"
-            [attr.href]="null">
+          <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" (click)="toggleMenu(menuitem)">
             <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
             <span class="nav-main-link-name">{{menuitem.name}}</span>
           </a>
-          <ul class="nav-main-submenu" *ngIf="menuitem.submenu">
+          <ul *ngIf="menuitem.submenu && menuitem.expanded">
             <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
               <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''"
-                [routerLink]="submenuitem.submenu ? null : submenuitem.link"
-                [attr.data-toggle]="submenuitem.submenu ? 'submenu' : ''"
-                [attr.aria-haspopup]="submenuitem.submenu ? 'true' : ''" [attr.aria-expanded]="submenuitem.expanded">
+                [routerLink]="submenuitem.submenu ? null : submenuitem.link">
                 <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
                 <span class="nav-main-link-name">{{submenuitem.name}}</span>
               </a>
-              <ul class="nav-main-submenu" *ngIf="submenuitem.submenu">
+              <ul class="nav-main-submenu" *ngIf="submenuitem.submenu && submenuitem.expanded">
                 <li class="nav-main-item" *ngFor="let subsubmenuitem of submenuitem.submenu">
-                  <a class="nav-main-link" [routerLink]="subsubmenuitem.submenu ? null : subsubmenuitem.link"
-                    [attr.aria-expanded]="subsubmenuitem.expanded">
+                  <a class="nav-main-link" [routerLink]="subsubmenuitem.submenu ? null : subsubmenuitem.link">
                     <i *ngIf="subsubmenuitem.icon_class" class="nav-main-link-icon si"
                       [ngClass]="subsubmenuitem.icon_class"></i>
                     <span class="nav-main-link-name">{{subsubmenuitem.name}}</span>

@@ -179,11 +179,15 @@ export class SidebarComponent implements OnInit {
   ];
 
   menus =  [
-    { name: 'Design', data: this.testManagementMenu },
-    { name: 'Run', data: this.runMenu },
-    { name: 'Analyse', data: this.analyseMenu },
-    { name: 'Configure', data: this.configureMenu }
+    { name: 'Design', data: this.testManagementMenu, expanded: false },
+    { name: 'Run', data: this.runMenu, expanded: false },
+    { name: 'Analyse', data: this.analyseMenu, expanded: false },
+    { name: 'Configure', data: this.configureMenu, expanded: false }
   ]
+
+  toggleMenu(menu) {
+    menu.expanded = !menu.expanded;
+  }
 
   constructor() { }
 

@@ -4,6 +4,8 @@ import { AlertService } from 'src/app/core/services/utils/alert.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
+import { UserService } from '../services/crud/user.service';
+import { IUser } from 'src/app/shared/model/user.model';
 
 @Component({
   selector: 'app-headerbar',
@@ -12,22 +14,27 @@ import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 })
 export class HeaderbarComponent implements OnInit {
 
-  systemsList: Array<IInvariant>;
-  systemSub: Subscription;
-  selectedSystems: any[];
-  systemSubscription: Subscription;
+  private systemsList: Array<IInvariant>;
+  private systemSub: Subscription;
+  private selectedSystems: any[];
+  private systemSubscription: Subscription;
 
-  // user
-  userFullName: string;
+  // user data from Keycloak
+  private userFullName: string;
+
+  // user data from API
+  private user: IUser;
 
   constructor(
     private AlertService: AlertService,
     private InvariantService: InvariantsService,
-    private ks: KeycloakService
+    private ks: KeycloakService,
+    private UserService: UserService
   ) { }
 
   ngOnInit() {
     this.userFullName = this.ks.getFullName();
+    this.UserService.observableAccountLink.subscribe(r => { if (r) { this.user = r; } })
 
     this.systemSub = this.InvariantService.observableSystems.subscribe(
       (response) => {

@@ -50,7 +50,7 @@
         </button>
         <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">
           <div class="p-2">
-            <a class="dropdown-item link-cursor">
+            <a *ngIf="user" class="dropdown-item link-cursor" [href]="user.menu.accountLink" target="_blank">
               <i class="far fa-fw fa-user mr-1"></i> Profile
             </a>
             <div role="separator" class="dropdown-divider"></div>

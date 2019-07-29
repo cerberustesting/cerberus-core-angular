@@ -14,6 +14,7 @@ You can both :
 - connect it to an online Cerberus environment (QA) where data are safe to edit
 
 You just have to clone the repo and you're good to go. An online internet connection is therefore necessary.
+You also must deploy the application on default port 4200
 
 - connect it to a local Cerberus instance that you have to deploy locally
 
@@ -35,6 +36,8 @@ let keycloakConfig: any = {
 // CERBERUS API ENDPOINT
 let API_endpoint: string = "http://localhost:8080/";
 ```
+
+The application is configured by default to work with `cerberus-angular` keycloak client with the following configuration :
 
 # Docker
 

@@ -4,18 +4,17 @@
 
 // KEYCLOAK INFORMATION
 let keycloakConfig: any = {
-  url: 'http://localhost:38080/auth',
-  realm: 'Cerberus',
-  clientId: 'cerberus'
+  url: 'https://auth.cerberus-testing.org/auth',
+  realm: 'CerberusQA',
+  clientId: 'cerberus-angular'
 };
 
 // CERBERUS API ENDPOINT
-let API_endpoint: string = "http://localhost:8080/";
+let API_endpoint: string = "https://qa.cerberus-testing.org";
 
 export const environment = {
   production: false,
   cerberus_api_url: API_endpoint,
-  keycloakActive: false,
   keycloak: keycloakConfig
 };
 

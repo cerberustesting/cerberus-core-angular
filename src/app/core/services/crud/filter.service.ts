@@ -12,6 +12,7 @@ export class FilterService {
     let queryParameter = "";
     let formData = {}
     let columnListWithActiveFilter = columnList.filter(e => e.sSearch).filter(e => e.sSearch.length != 0 || e.contentName == pageInformation.sort[0].prop);
+    // contaign all columns to filter&sort
 
     //generate request header
 
@@ -47,6 +48,6 @@ export class FilterService {
     for (let item in formData) {
       queryParameter += encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&';
     }   
-    return queryParameter.slice(0, -1);
+    return queryParameter.slice(0, -1); // removing the last '&'
   }
 }

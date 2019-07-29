@@ -8,6 +8,7 @@ import { SharedModule } from "../shared/shared.module";
 import { BugreportComponent } from "./reportbytag/bugreport/bugreport.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ExecutionsperweekComponent } from "./dashboard/graph/executionsperweek/executionsperweek.component";
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,13 @@ import { ExecutionsperweekComponent } from "./dashboard/graph/executionsperweek/
       ReportbytagComponent,
       BugreportComponent,
       DashboardComponent,
-      ExecutionsperweekComponent,
+      ExecutionsperweekComponent
   ],
   imports: [
     CommonModule,
     AnalyseRoutingModule,
-    SharedModule
+    SharedModule,
+    ChartsModule
   ],
   exports: [SharedModule]
 })

@@ -20,7 +20,7 @@ export class DatalibraryComponent implements OnInit {
       contentName: 'testDataLibID',
       active: true,
       sSearch: [],
-      databaseName: 'td1.TestDataLibID'
+      databaseName: 'tdl.TestDataLibID'
     },
     {
       displayName: "Name",
@@ -130,7 +130,7 @@ export class DatalibraryComponent implements OnInit {
     },
     {
       displayName: "Database CSV",
-      contentName: 'databaseCsv',
+      contentName: 'tdl.databaseCsv',
       active: false, 
       sSearch: [],
       databaseName : 'DatabaseCsv'

@@ -1,7 +1,17 @@
 <div class="data-table">
-    <ngx-datatable #dataTable class="material fullscreen fixed-header expandable" style="height: 600px;" [rows]="rows" [columns]="columns"
-        [columnMode]="'force'" [footerHeight]="50" [rowHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading"
-        [selected]="selected" [selectionType]="'checkbox'" [selectAllRowsOnPage]="true" [scrollbarH]="false"
+    <ngx-datatable #dataTable class="material fullscreen fixed-header expandable" style="height: 60vh;" 
+    [rows]="rows" 
+    [columns]="columns"
+        
+    [columnMode]="'force'" 
+    [footerHeight]="50" 
+    [rowHeight]="50" 
+    [headerHeight]="50" 
+    [loadingIndicator]="isLoading"
+        
+    [selected]="selected" 
+    [selectionType]="(selection)? 'checkbox' : ''" 
+    [selectAllRowsOnPage]="selection" [scrollbarH]="false"
         [scrollbarV]="true" [externalSorting]="true" (select)='onSelect($event)' (sort)="onSort($event)">
 
         <!-- Row Detail Template -->
@@ -76,7 +86,7 @@
 
 
         <!--CheckBox Column-->
-        <ngx-datatable-column [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
+        <ngx-datatable-column *ngIf="selection" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
             [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
         </ngx-datatable-column>
 

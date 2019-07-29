@@ -8,7 +8,6 @@ import { IProject } from 'src/app/shared/model/project.model';
 import { AppSettings } from 'src/app/app.component';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
 import { IProperty, Property } from 'src/app/shared/model/property.model';
-import { Filter } from 'src/app/shared/model/filter.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -69,7 +68,7 @@ export class TestService {
       });
   }
 
-  getTestCasesList(test?: string, systems?: Array<string>, size?: number, start?: number) {
+  getTestCasesList(callback, test?: string, systems?: Array<string>, size?: number, start?: number) {
 
     // ? Remove if not used
 
@@ -85,40 +84,45 @@ export class TestService {
     this.http.get<ITestCaseHeader>(query)
       .subscribe((response) => {
 
-        // @ts-ignore
-        if (response.iTotalRecords > 0) {
-          // @ts-ignore
-          this.testcasesList = response.contentTable;
-          this.testcasesListLength = response.iTotalRecords;
+        console.log("response :", response);
+        callback(response.iTotalRecords, response.contentTable);
+        
 
-          this.observableTestCasesList.next(this.testcasesList);
-          this.observableTestCasesListLength.next(this.testcasesListLength);
-        }
-        else {
-          this.testcasesList = null;
-          this.observableTestCasesList.next(this.testcasesList);
-        }
+        // // @ts-ignore
+        // if (response.iTotalRecords > 0) {
+        //   // @ts-ignore
+        //   this.testcasesList = response.contentTable;
+        //   this.testcasesListLength = response.iTotalRecords;
+
+        //   this.observableTestCasesList.next(this.testcasesList);
+        //   this.observableTestCasesListLength.next(this.testcasesListLength);
+        // }
+        // else {
+        //   this.testcasesList = null;
+        //   this.observableTestCasesList.next(this.testcasesList);
+        // }
       })
   }
   getTestCasesFilterList(queryParameters: string, callback) {
     this.http.post<ITestCaseHeader>(AppSettings.API_endpoint + '/ReadTestCase', queryParameters, httpOptions)
       .subscribe((response) => {
-        if (response) {
-          if (response.iTotalRecords > 0) {
-            this.testcasesList = response.contentTable;
-            this.testcasesListLength = response.iTotalRecords;
+        callback(response.iTotalRecords, response.contentTable);
+        // if (response) {
+        //   if (response.iTotalRecords > 0) {
+        //     this.testcasesList = response.contentTable;
+        //     this.testcasesListLength = response.iTotalRecords;
 
-            this.observableTestCasesList.next(this.testcasesList);
-            this.observableTestCasesListLength.next(this.testcasesListLength);
+        //     this.observableTestCasesList.next(this.testcasesList);
+        //     this.observableTestCasesListLength.next(this.testcasesListLength);
             
-          }
-          else {
-            this.testcasesList = null;
-            this.observableTestCasesList.next(this.testcasesList);
-          }
+        //   }
+        //   else {
+        //     this.testcasesList = null;
+        //     this.observableTestCasesList.next(this.testcasesList);
+        //   }
 
 
-        }
+        // }
       });
   }
 
@@ -143,6 +147,7 @@ export class TestService {
   }
 
   getFromRequest(servlet: string, queryParameters: string, callback) {
+  console.log(AppSettings.API_endpoint + servlet + '?' + queryParameters);
     this.http.post<ITestCaseHeader>(AppSettings.API_endpoint + servlet, queryParameters, httpOptions)
       .subscribe((response) => {
         if (response) {

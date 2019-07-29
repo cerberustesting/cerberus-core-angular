@@ -78,8 +78,12 @@ export class FilterComponent implements OnInit {
   onSelectAll() {
     /*Select all element that correspond to the search*/
     let selectedElements = (this.searchItems.length>0)? this.searchItems : this.dataList;
-    this.model = selectedElements;
-    this.column.sSearch = selectedElements;
+    for (let element in selectedElements) {
+      if (!this.model.includes(element)){
+        this.model.push(element)
+      }
+    }
+    this.column.sSearch = this.model
   }
   onClearAll() {
     /*Reset the model*/

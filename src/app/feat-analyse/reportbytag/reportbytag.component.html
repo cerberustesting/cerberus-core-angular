@@ -43,7 +43,7 @@
                           <i class="fa fa-clock mr-1"></i> 14:02
                         </span>
                         <button *ngIf="item.ciResult" type="button"
-                          class="btn btn-sm btn-success">{{item.ciResult}}</button>
+                          class="btn btn-sm" [ngClass]="'btn-'+findStatusClass(item.ciResult)">{{item.ciResult}}</button>
                       </div>
                     </div>
                   </div>

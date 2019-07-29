@@ -20,6 +20,7 @@ export class DatatablePageComponent implements OnInit {
   @Input() columns: Array<Column>;
   @Input() massAction: boolean;
   @Input() servlet: string;
+  @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
 
   rows: Array<any>;
@@ -41,6 +42,19 @@ export class DatatablePageComponent implements OnInit {
       this.rows = list;
       this.page.totalCount = length;
     });
+    
+    // this.testService.getTestCasesFilterList(this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), (a, b) => {
+    //   this.rows = b;
+    //   this.page.totalCount = a
+
+    // });
+    // this.testService.observableTestsList.subscribe(rep => {
+    //   if (rep) {
+    //     console.log("rep :", rep);
+        
+    //     this.rows = rep;
+    //   }
+    // })
   }
 
   pageUpdate(newPage) { //When selecting a new page    

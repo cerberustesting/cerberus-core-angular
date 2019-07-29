@@ -14,7 +14,7 @@ export class FilterService {
 
     //generate request header
     let formData = {
-      // "sEcho": 4, //
+      "sEcho": 4, //
       "iColumns": columnList.length, 
       "sColumns": columnList.map(column => column.databaseName).join(','),
       "iDisplayStart": (pageInformation.number-1)*pageInformation.size,
@@ -38,8 +38,9 @@ export class FilterService {
     //formData["sLike"]= 'tec.testCase,tec.description,tec.function,tec.refOrigine,tec.dateCreated,tec.dateModif';
     for(let item in formData){
       queryParameter+= encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&';
-    }
-    queryParameter+= "sLike=tec.testCase%2Ctec.description%2Ctec.function%2Ctec.refOrigine%2Ctec.dateCreated%2Ctec.dateModif";
+    }    
+
+    queryParameter+= "sLike=" + columnList.filter(c=>c.like).map(column => column.databaseName).join(',');
 
     return queryParameter;
   }

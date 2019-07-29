@@ -12,6 +12,7 @@ export class DatatableComponent implements OnInit {
   @Input() columns: Array<Column>
   @Input() testcaseslist: boolean;
   @Input() massAction: boolean;
+  @Input() selection: boolean;
   @Input() page: {
     size: number,
     number: number,

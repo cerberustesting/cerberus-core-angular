@@ -60,8 +60,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-7">
+            <!-- <div class="col-md-7">
                 <canvas [id]="graphID" class="js-chartjs-pie" height="250"></canvas>
+            </div> -->
+            <div>
+                <canvas baseChart
+                height="250"
+                [datasets]="chartsParameters.datasets"
+                [labels]="chartsParameters.labels"
+                [chartType]="'pie'">
+            </canvas>
             </div>
         </div>
     </div>

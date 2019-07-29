@@ -63,6 +63,7 @@
     "latest": "^0.2.0",
     "magnific-popup": "^1.1.0",
     "moment": "^2.24.0",
+    "ng2-charts": "^2.2.5",
     "ngx-filter-pipe": "^2.1.2",
     "ngx-pipes": "^2.4.6",
     "popper.js": "^1.14.7",

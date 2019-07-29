@@ -20,6 +20,7 @@ export class FiltersComponent implements OnInit {
   @Input('page') page: any;
   @Input('selectedRows') selectedRows: any;
   @Input('servlet') servlet: string;
+  @Input('selection') selection: boolean;
   @Output() systemApply = new EventEmitter<string>();
   @Output() searchServe = new EventEmitter<string>();
 
@@ -39,7 +40,6 @@ export class FiltersComponent implements OnInit {
     private testService: TestService) { }
 
   ngOnInit() {    
-
     this.columnActive = this.columns.filter(a => a.active).length;
     this.searchableColumns = this.columns.filter(a => a.searchable || a.like);
   }

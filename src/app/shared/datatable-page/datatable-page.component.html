@@ -4,7 +4,8 @@
     [page]="page" 
     [columns]="columns"
     [selectedRows]="selectedRows"
-    [servlet]="servlet">
+    [servlet]="servlet"
+    [selection]="selection">
 </app-filters>
 
 <app-table 
@@ -12,6 +13,7 @@
     [columns]="columns" 
     [testcaseslist]="true" 
     [page]="page" 
+    [selection]="selection"
     [massAction]="massAction"
     [selected]="selectedRows"
     (pageUpdate)="pageUpdate($event)">

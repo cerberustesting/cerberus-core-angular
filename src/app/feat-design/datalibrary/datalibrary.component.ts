@@ -20,70 +20,130 @@ export class DatalibraryComponent implements OnInit {
       contentName: 'testDataLibID',
       active: true,
       sSearch: [],
-      databaseName: 'tdl.TestDataLibID'
+      databaseName: 'tdl.TestDataLibID',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select ID',
+    },
     },
     {
       displayName: "Name",
       contentName: 'name',
       active: true, 
       sSearch: [],
-      databaseName: 'tdl.Name'
+      databaseName: 'tdl.Name',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Name',
+    },
     },
     {
       displayName: "System",
       contentName: 'system',
       active: true, 
       sSearch: [],
-      databaseName: 'tdl.System'
+      databaseName: 'tdl.System',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select System',
+    },
     },
     {
       displayName: "Environment",
       contentName: 'environment',
       active: true, 
       sSearch: [],
-      databaseName : 'tdl.Environment'
+      databaseName : 'tdl.Environment',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Environment',
+    },
     },
     {
       displayName: "Country",
       contentName: 'country',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.Country'
+      databaseName : 'tdl.Country',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Country',
+    },
     },
     {
       displayName: "Group",
       contentName: 'group',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.Group'
+      databaseName : 'tdl.Group',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Group',
+    },
     },
     {
       displayName: "Description",
       contentName: 'description',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.Description'
+      databaseName : 'tdl.Description',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Description',
+    },
     },
     {
       displayName: "Type",
       contentName: 'type',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.Type'
+      databaseName : 'tdl.Type',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Type',
+    },
     },
     {
       displayName: "Value",
       contentName: 'subDataValue',
       active: false, 
       sSearch: [],
-      databaseName : 'tdd.value'
+      databaseName : 'tdd.value',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Value',
+    },
     },
     {
       displayName: "Database",
       contentName: 'database',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.Database'
+      databaseName : 'tdl.Database',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Database',
+    },
     },
     {
       displayName: "Script",
@@ -91,112 +151,208 @@ export class DatalibraryComponent implements OnInit {
       active: false,
       width: 300, 
       sSearch: [],
-      databaseName : 'tdl.Script'
+      databaseName : 'tdl.Script',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Script',
+    },
     },
     {
       displayName: "Database",
       contentName: 'databaseUrl',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.DatabaseUrl'
+      databaseName : 'tdl.DatabaseUrl',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Database',
+    },
     },
     {
       displayName: "Service",
       contentName: 'service',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.Service'
+      databaseName : 'tdl.Service',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Service',
+    },
     },
     {
       displayName: "Service Path",
       contentName: 'servicePath',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.ServicePath'
+      databaseName : 'tdl.ServicePath',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Service Path',
+    },
     },
     {
       displayName: "Operation",
       contentName: 'method',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.method'
+      databaseName : 'tdl.method',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Operation',
+    },
     },
     {
       displayName: "Envelope",
       contentName: 'envelope',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.envelope'
+      databaseName : 'tdl.envelope',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Envelope',
+    },
     },
     {
       displayName: "Database CSV",
       contentName: 'tdl.databaseCsv',
       active: false, 
       sSearch: [],
-      databaseName : 'DatabaseCsv'
+      databaseName : 'DatabaseCsv',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Database CSV',
+    },
     },
     {
       displayName: "C SV URL",
       contentName: 'csvUrl',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.csvUrl'
+      databaseName : 'tdl.csvUrl',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select C SV URL',
+    },
     },
     {
       displayName: "Separator",
       contentName: 'separator',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.separator'
+      databaseName : 'tdl.separator',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Separator',
+    },
     },
     {
       displayName: "Creation Date",
       contentName: 'created',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.Created'
+      databaseName : 'tdl.Created',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Creation Date',
+    },
     },
     {
       displayName: "Creator",
       contentName: 'creator',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.Creator'
+      databaseName : 'tdl.Creator',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Creator',
+    },
     },
     {
       displayName: "Modification Date",
       contentName: 'lastModified',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.LastModified'
+      databaseName : 'tdl.LastModified',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Modification Date',
+    },
     },
     {
       displayName: "Last Modifier",
       contentName: 'lastModifier',
       active: false, 
       sSearch: [],
-      databaseName : 'tdl.LastModifier'
+      databaseName : 'tdl.LastModifier',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Last Modifier',
+    },
     },
     {
       displayName: "Column",
       contentName: 'subDataColumn',
       active: false, 
       sSearch: [],
-      databaseName : 'tdd.column'
+      databaseName : 'tdd.column',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Column',
+    },
     },
     {
       displayName: "Parsing Answer",
       contentName: 'subDataParsingAnswer',
       active: false, 
       sSearch: [],
-      databaseName : 'tdd.ParsingAnswer'
+      databaseName : 'tdd.ParsingAnswer',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Parsing Answer',
+    },
     },
     {
       displayName: "Column Position",
       contentName: 'subDataColumnPosition',
       active: false, 
       sSearch: [],
-      databaseName : 'tdd.ColumnPosition'
+      databaseName : 'tdd.ColumnPosition',
+      searchable: true,
+      param: {
+        multiple: true,
+        
+        placeholder: 'Select Column Position',
+    },
     }
   ];
   page = {

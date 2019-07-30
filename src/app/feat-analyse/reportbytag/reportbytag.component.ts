@@ -20,6 +20,7 @@ export class ReportbytagComponent implements OnInit {
   private numberOfItemsFromEndBeforeFetchingMore = 10;
   private loading = false;
   private selectedTag: ITag = null;
+  private selectedTagData = null;
   // variables
   private countriesList: Array<IInvariant> = new Array();
   private selected_countriesList: Array<string> = new Array();
@@ -74,11 +75,17 @@ export class ReportbytagComponent implements OnInit {
           if (tagFromURL) {
             if (this.ReportingService.tagExists(tagFromURL)) {
               this.selectedTag = this.ReportingService.findTag(tagFromURL);
+              //console.log("tag :", this.selectedTag);
+              this.ReportingService.getTestCaseExecutionByTag(this.selectedTag.tag, response => {
+                this.selectedTagData = response;                
+              });
+              
             }
           }
         });
       }
     });
+
     initChartJS();
     this.InvariantsService.getCountriesList();
     this.InvariantsService.getTceStatus();

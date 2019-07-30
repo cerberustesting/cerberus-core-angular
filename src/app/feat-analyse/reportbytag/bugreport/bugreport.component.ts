@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 declare function Helpers(helperName: string);
 
 @Component({
@@ -7,6 +7,7 @@ declare function Helpers(helperName: string);
   styleUrls: ['./bugreport.component.scss']
 })
 export class BugreportComponent implements OnInit {
+  @Input() selectedTagData: any;
 
   constructor() { 
     Helpers('easy-pie-chart');

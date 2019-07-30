@@ -15,7 +15,22 @@
             <div class="col-md-5">
                 <div class="block block-rounded">
                     <div class="block-content">
-                        <div class="form-group">
+                        <!--*** For all activeState ***-->
+                        <div class="form-group" *ngFor="let status of activeState">
+                            <div class="input-group push">
+                                <div class="input-group-prepend" ngbPopover="Successful execution"
+                                    triggers="mouseenter:mouseleave">
+                                    <span class="input-group-text input-group-text-alt {{status.label | lowercase}}-bg">{{status.label}}</span>
+                                </div>
+                                <span class="form-control form-control-alt text-center {{status.label | lowercase}}-color">{{status.data}}<i
+                                        class="fa {{status.label | lowercase}}-color ml-2" [ngClass]="status.icon"></i></span>
+                                <div class="input-group-append">
+                                    <span class="input-group-text input-group-text-alt text-center {{status.label | lowercase}}-color"
+                                        id="percentageOK">{{round((status.data/selectedTag.nbExeUsefull)*100)}}%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group">
                             <div class="input-group push">
                                 <div class="input-group-prepend" ngbPopover="Successful execution"
                                     triggers="mouseenter:mouseleave">
@@ -56,7 +71,7 @@
                                         id="percentageOK">15%</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -64,13 +79,8 @@
                 <canvas [id]="graphID" class="js-chartjs-pie" height="250"></canvas>
             </div> -->
             <div>
-                <canvas baseChart
-                height="250"
-                [data]="data"
-                [labels]="labels"
-                [colors]="colors"
-                [chartType]="'pie'">
-            </canvas>
+                <canvas baseChart height="250" [data]="data" [labels]="labels" [chartType]="'pie'">
+                </canvas>
             </div>
         </div>
     </div>

@@ -23,6 +23,13 @@ export class ReportingService {
         this.observableTagsList.next(this.tagsList);
       })
   }
+  getTestCaseExecutionByTag(tag: string, callback: (any)=>any) {
+    //TODO : Specified type
+    this.http.get<any>(environment.cerberus_api_url + '/ReadTestCaseExecutionByTag?Tag='+ tag)
+      .subscribe(response => {
+        callback(response);
+      })
+  }
 
   tagExists(tag: string) {
     if (tag != null) { return this.tagsList.filter(t => t.tag === tag).length > 0; }

@@ -7,21 +7,21 @@
       <div class="col-md-4">
         <div class="js-pie-chart pie-chart" data-percent="25" data-line-width="10" data-size="100"
           data-bar-color="#ef5350" data-track-color="#e9e9e9">
-          <span>18/30</span>
+          <span>{{selectedTagData.bugTrackerStat.totalBugToReportReported}}/{{selectedTagData.bugTrackerStat.totalBugToReport}}</span>
         </div>
         <p class="text-muted mt-2 mb-0"> Bug Reported </p>
       </div>
       <div class="col-md-4">
         <div class="js-pie-chart pie-chart" data-percent="100" data-line-width="4" data-size="100"
           data-bar-color="#ef5350" data-track-color="#e9e9e9">
-          <span>18</span>
+          <span>{{selectedTagData.bugTrackerStat.totalBugToReport - selectedTagData.bugTrackerStat.totalBugToReportReported}}</span>
         </div>
         <p class="text-muted mt-2 mb-0"> Unreported Bug </p>
       </div>
       <div class="col-md-4">
         <div class="js-pie-chart pie-chart" data-percent="100" data-line-width="4" data-size="100"
           data-bar-color="#8dc451" data-track-color="#e9e9e9">
-          <span>999</span>
+          <span>{{selectedTagData.bugTrackerStat.totalBugReported}}</span>
         </div>
         <p class="text-muted mt-2 mb-0"> Resolved Bug </p>
       </div>

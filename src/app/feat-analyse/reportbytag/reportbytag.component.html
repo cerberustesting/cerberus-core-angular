@@ -217,7 +217,7 @@
                         </span>
                       </div>
                       <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-                        <i class="fa fa-calendar-alt mr-1"></i> 25 September 2018 </span>
+                        <i class="fa fa-calendar-alt mr-1"></i> {{selectedTag.DateCreated}} </span>
                     </div>
                   </div>
                   <div class="form-group col-md-6">
@@ -228,6 +228,7 @@
                         </span>
                       </div>
                       <span type="text" class="form-control form-control-alt text-center" id="StartTime">
+                        <!-- ? ? ? -->
                         <i class="fa fa-clock mr-1"></i> 14:00 </span>
                     </div>
                   </div>
@@ -239,6 +240,7 @@
                         </span>
                       </div>
                       <span type="text" class="form-control form-control-alt text-center" id="StartTime">
+                        <!-- ? ? ? -->
                         <i class="fa fa-clock mr-1"></i> 14:30 (+1d) </span>
                     </div>
                   </div>
@@ -250,7 +252,7 @@
                         </span>
                       </div>
                       <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-                        <i class="fa fa-stopwatch mr-1"></i> 3 min.</span>
+                        <i class="fa fa-stopwatch mr-1"></i> {{selectedTagData.tagDuration}} min.</span>
                     </div>
                   </div>
                   <div class="form-group col-md-6">
@@ -262,7 +264,7 @@
                       </div>
                       <span type="text" style="color: green;" class="form-control form-control-alt text-center"
                         id="CIResult">
-                        <i class="fa fa-check mr-1"></i> OK</span>
+                        <i class="fa fa-check mr-1"></i> {{selectedTagData.messageType}}</span>
                     </div>
                   </div>
                   <div class="form-group col-md-12">
@@ -273,7 +275,7 @@
                         </span>
                       </div>
                       <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-                        <i class="fa fa-user mr-1"></i> admin</span>
+                        <i class="fa fa-user mr-1"></i> {{selectedTag.UsrCreated}}</span>
                     </div>
                   </div>
                   <div class="form-group col-md-12">
@@ -284,17 +286,17 @@
                         </span>
                       </div>
                       <span type="text" class="form-control form-control-alt text-center" id="LatestExecution">
-                        <i class="fa fa-calendar-alt mr-1"></i> 03 September 2018 </span>
+                        <i class="fa fa-calendar-alt mr-1"></i> {{selectedTag.DateEndQueue}} </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-md-7">
-              <app-reportbystatus></app-reportbystatus>
+              <app-reportbystatus [selectedTag]="selectedTag"></app-reportbystatus>
             </div>
             <div class="col-md-12">
-              <app-bugreport></app-bugreport>
+              <app-bugreport [selectedTagData]="selectedTagData"></app-bugreport>
             </div>
             <div class="col-md-12">
               <div class="block block-bordered block-rounded">

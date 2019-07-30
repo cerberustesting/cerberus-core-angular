@@ -34,14 +34,16 @@ export class DatatablePageComponent implements OnInit {
   }
 
   search(globalSearch?: string) {
-    this.globalSearch = (globalSearch)? globalSearch : ''; 
-    this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
-    let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;
-    this.columns.filter(a => a.contentName==="system")[0].sSearch = systemArray.filter((a,i) => systemArray.indexOf(a)===i);
-    this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), (list, length) => {
-      this.rows = list;
-      this.page.totalCount = length;
-    });
+    if (this.servlet) {
+      this.globalSearch = (globalSearch)? globalSearch : ''; 
+      this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
+      let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;
+      this.columns.filter(a => a.contentName==="system")[0].sSearch = systemArray.filter((a,i) => systemArray.indexOf(a)===i);
+      this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), (list, length) => {
+        this.rows = list;
+        this.page.totalCount = length;
+      });
+    }
   }
 
   pageUpdate(newPage) { //When selecting a new page    

@@ -152,6 +152,10 @@
                         *ngIf="value==='N'"></i>
                 </ng-template>
 
+                <ng-template *ngIf="column.contentName==='script'" let-value="value" ngx-datatable-cell-template>
+                    <code>{{value}}</code>
+                </ng-template>
+
                 <!--Default columns-->
                 <ng-template let-value='value' let-value ngx-datatable-cell-template>
                     <div class="cell" [style.maxWidth]="column.width">{{ value }}</div>

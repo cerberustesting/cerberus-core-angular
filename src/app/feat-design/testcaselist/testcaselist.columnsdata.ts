@@ -1,6 +1,6 @@
 import { Column } from 'src/app/shared/model/column.model';
 
-export var ColumnsData: Column[] = [
+export var TestCasesColumnsData: Column[] = [
     {
         displayName: 'Application',
         databaseName: 'tec.application',

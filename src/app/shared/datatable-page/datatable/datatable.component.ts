@@ -26,6 +26,8 @@ export class DatatableComponent implements OnInit {
   isLoading: boolean;
   columnActive: number;
 
+
+
   toggleColumn(column): void {
     column.active = !column.active;
     this.columnActive = this.columns.filter(a => a.active).length;
@@ -76,6 +78,7 @@ export class DatatableComponent implements OnInit {
   }
   resetDefaultColumns() {
     this.columns.forEach(c => c.active = c.defaultActive);
+    this.columnActive = this.columns.filter(a => a.active).length;
   }
 }
 

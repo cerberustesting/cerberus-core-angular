@@ -7,7 +7,7 @@ import { LabelfilteringPipe } from 'src/app/shared/pipes/labelfiltering.pipe';
 import { Filter } from 'src/app/shared/model/filter.model';
 import { SystemService } from 'src/app/core/services/crud/system.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
-import { ColumnsData } from './columns-data';
+import { TestCasesColumnsData } from './testcaselist.columnsdata';
 
 
 
@@ -20,7 +20,7 @@ import { ColumnsData } from './columns-data';
 export class TestcaselistComponent implements OnInit {
 
 
-  columns: Array<Column> = ColumnsData; // column list
+  columns: Array<Column> = TestCasesColumnsData; // column list
   
   page = {
     size: 10, //maximum element per page
@@ -36,23 +36,6 @@ export class TestcaselistComponent implements OnInit {
   constructor(private testService: TestService, private invariantsService: InvariantsService, private labelfilteringPipe: LabelfilteringPipe, private systemService: SystemService, private filterService: FilterService) { }
 
   ngOnInit() {
-    // ? keep the callback ?
-    // this.testService.getTestCasesList(this.selectedTest, this.invariantsService.systemsSelected, this.page.size, this.page.number);
-    // this.load();
-    // this.testService.observableTestCasesList.subscribe(response => {
-    //   if (response) {
-    //     if (response.length > 0) {
-    //       this.testcasesList = response;
-    //     }
-    //   } else {
-    //     this.testcasesList = null;
-    //   }
-    // });
-    // this.testService.observableTestCasesListLength.subscribe(response => {
-    //   if (response) {
-    //     this.page.totalCount = response;
-    //   }
-    // });
   }
 
   save() {

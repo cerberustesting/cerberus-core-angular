@@ -44,7 +44,7 @@
                 <ng-template ngbPaginationFirst><i class="fa fa-angle-double-left"></i></ng-template>
                 <ng-template ngbPaginationLast><i class="fa fa-angle-double-right"></i></ng-template>
             </ngb-pagination>
-            <div *ngIf="selection">{{selectedRows.length}} selected / {{page.totalCount}} total</div>
+            <div *ngIf="selectedRows">{{selectedRows.length}} selected / {{page.totalCount}} total</div>
             <div *ngIf="!selection">Total : {{page.totalCount}}</div>
 
         </div>

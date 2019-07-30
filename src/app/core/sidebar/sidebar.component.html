@@ -53,7 +53,7 @@
       <ng-template ngFor let-menu [ngForOf]="menus">
         <li class="nav-main-heading">{{ menu.name }}</li>
         <li class="nav-main-item" style="cursor: pointer;" *ngFor='let menuitem of menu.data'>
-          <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" (click)="toggleMenu(menuitem)">
+          <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="menuitem.submenu ? null : menuitem.link" (click)="toggleMenu(menuitem)">
             <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
             <span class="nav-main-link-name">{{menuitem.name}}</span>
           </a>

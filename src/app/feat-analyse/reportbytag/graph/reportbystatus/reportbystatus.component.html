@@ -66,8 +66,9 @@
             <div>
                 <canvas baseChart
                 height="250"
-                [datasets]="chartsParameters.datasets"
-                [labels]="chartsParameters.labels"
+                [data]="data"
+                [labels]="labels"
+                [colors]="colors"
                 [chartType]="'pie'">
             </canvas>
             </div>

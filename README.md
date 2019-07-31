@@ -28,13 +28,13 @@ In cerberus-angular, edit  `environment.ts` file with your corresponding URLs :
 let keycloakConfig: any = {
   url: 'http://localhost:38080/auth', //right here
   realm: 'Cerberus',
-  clientId: 'cerberus'
+  clientId: 'cerberus-angular'
 };
 ```
 - the cerberus source URL in the same object
 ``` javascript
 // CERBERUS API ENDPOINT
-let API_endpoint: string = "http://localhost:8080/";
+let API_endpoint: string = "http://localhost:8080";
 ```
 
 The application is configured by default to work with `cerberus-angular` keycloak client with the following configuration :

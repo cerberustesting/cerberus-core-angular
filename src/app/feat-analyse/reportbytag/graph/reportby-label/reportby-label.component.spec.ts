@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReportbystatusComponent } from './reportbystatus.component';
+import { ReportbyLabelComponent } from './reportby-label.component';
 
-describe('ReportbystatusComponent', () => {
-  let component: ReportbystatusComponent;
-  let fixture: ComponentFixture<ReportbystatusComponent>;
+describe('ReportbyLabelComponent', () => {
+  let component: ReportbyLabelComponent;
+  let fixture: ComponentFixture<ReportbyLabelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportbystatusComponent ]
+      declarations: [ ReportbyLabelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReportbystatusComponent);
+    fixture = TestBed.createComponent(ReportbyLabelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

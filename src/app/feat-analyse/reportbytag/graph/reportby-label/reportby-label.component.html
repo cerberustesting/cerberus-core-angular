@@ -1,0 +1,41 @@
+<div class="small-block">
+<div class="col-md-12">
+  <div class="block block-bordered block-rounded">
+    <div class="block-header block-header-default">
+      <h3 class="block-title">Report <small>by label</small></h3>
+    </div>
+    <div class="block-content" style="width: 100%;">
+        <div class="block block-rounded block-bordered">
+          <div class="block-content block-content-full">
+            <div class="js-nestable-connected-treeview dd" style="width: 100%;">
+              <ol class="dd-list" style="width: 100%;">
+                <li class="dd-item" data-id="21" *ngFor="let label of labelTree">
+                  <div class="dd-handle">
+                    <i class="fa fa-folder text-warning mr-1"></i> {{label.label.value}}
+                  </div>
+                  <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  <ol class="dd-list" *ngIf="label.children">
+                    <li class="dd-item" data-id="23" *ngFor="let childLabel of label.children">
+                      <div class="dd-handle">
+                        <i class="fa fa-file-alt text-info mr-1"></i> {{childLabel.label.value}}
+                      </div>
+                      <div class="progress">
+                          <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                          <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                          <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </li>
+                  </ol>
+                </li>                
+              </ol>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>

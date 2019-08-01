@@ -21,6 +21,7 @@ export class ReportbytagComponent implements OnInit {
   private loading = false;
   private selectedTag: ITag = null;
   private selectedTagData = null;
+  
   // variables
   private countriesList: Array<IInvariant> = new Array();
   private selected_countriesList: Array<string> = new Array();
@@ -29,6 +30,7 @@ export class ReportbytagComponent implements OnInit {
   private filtersShowed: boolean;
   private showCountriesFilterOptions: boolean;
   private showTceStatusFilterOptions: boolean;
+  private reportView: boolean = true;
   // DIRTY : need to create custom CSS class for earch TCE Status
   private TceStatus_Class: Array<any> = new Array(
     {
@@ -64,136 +66,145 @@ export class ReportbytagComponent implements OnInit {
     private router: Router, ) { }
 
   ngOnInit() {
-    this.ReportingService.getTagList();
-    this.ReportingService.observableTagsList.subscribe(response => {
-      if (response) {
-        this.tagsList = response;
-        this.tagsBuffer = this.tagsList.slice(0, this.bufferSize)
-        // parse query strings from URL
-        this.activatedRoute.queryParams.subscribe(params => {
-          var tagFromURL = params['tag'];
-          if (tagFromURL) {
-            if (this.ReportingService.tagExists(tagFromURL)) {
-              this.selectedTag = this.ReportingService.findTag(tagFromURL);
-              //console.log("tag :", this.selectedTag);
-              this.ReportingService.getTestCaseExecutionByTag(this.selectedTag.tag, response => {
-                this.selectedTagData = response;                
-              });
+    // this.ReportingService.getTagList();
+    // this.ReportingService.observableTagsList.subscribe(response => {
+    //   if (response) {
+    //     this.tagsList = response;
+    //     this.tagsBuffer = this.tagsList.slice(0, this.bufferSize)
+    //     // parse query strings from URL
+    //     this.activatedRoute.queryParams.subscribe(params => {
+    //       var tagFromURL = params['tag'];
+    //       if (tagFromURL) {
+    //         if (this.ReportingService.tagExists(tagFromURL)) {
+    //           this.selectedTag = this.ReportingService.findTag(tagFromURL);
+    //           //console.log("tag :", this.selectedTag);
+    //           this.ReportingService.getTestCaseExecutionByTag(this.selectedTag.tag, response => {
+    //             this.selectedTagData = response;                
+    //           });
               
-            }
-          }
-        });
-      }
-    });
+    //         }
+    //       }
+    //     });
+    //   }
+    // });
 
     initChartJS();
     this.InvariantsService.getCountriesList();
     this.InvariantsService.getTceStatus();
-    this.InvariantsService.observableCountriesList.subscribe(response => {
-      this.countriesList = response;
-      for (var index in this.countriesList) {
-        this.selected_countriesList[index] = this.countriesList[index].value;
-      }
-    });
-    this.InvariantsService.observableTceStatusList.subscribe(response => {
-      this.tceStatusList = response;
-      for (var index in this.tceStatusList) {
-        this.selected_tceStatusList[index] = this.tceStatusList[index].value;
-      }
-    });
+    // this.InvariantsService.observableCountriesList.subscribe(response => {
+    //   this.countriesList = response;
+    //   for (var index in this.countriesList) {
+    //     this.selected_countriesList[index] = this.countriesList[index].value;
+    //   }
+    // });
+    // this.InvariantsService.observableTceStatusList.subscribe(response => {
+    //   this.tceStatusList = response;
+    //   for (var index in this.tceStatusList) {
+    //     this.selected_tceStatusList[index] = this.tceStatusList[index].value;
+    //   }
+    // });
     this.filtersShowed = false;
   }
-
-  onScrollToEnd() {
-    this.fetchMore();
+  tagSelection(value) { 
+    this.selectedTag = value;
+    this.ReportingService.getTestCaseExecutionByTag(this.selectedTag.tag, response => {
+      this.selectedTagData = response;                
+    });
+  }
+  toggleReportView(view) {
+    this.reportView = view;
   }
 
-  selectedTagChange() {
-    if (this.selectedTag) { this.router.navigate([], { queryParams: { tag: this.selectedTag.tag } }); }
-    else { this.router.navigate([]); }
-  }
+  // onScrollToEnd() {
+  //   this.fetchMore();
+  // }
 
-  onScroll({ end }) {
-    if (this.loading || this.tagsList.length === this.tagsBuffer.length) { return; }
-    if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.tagsBuffer.length) { this.fetchMore(); }
-  }
+  // selectedTagChange() {
+  //   if (this.selectedTag) { this.router.navigate([], { queryParams: { tag: this.selectedTag.tag } }); }
+  //   else { this.router.navigate([]); }
+  // }
 
-  private fetchMore() {
-    const len = this.tagsBuffer.length;
-    const more = this.tagsList.slice(len, this.bufferSize + len);
-    this.loading = true;
-    // using timeout here to simulate backend API delay
-    setTimeout(() => {
-      this.loading = false;
-      this.tagsBuffer = this.tagsBuffer.concat(more);
-    }, 1)
-  }
+  // onScroll({ end }) {
+  //   if (this.loading || this.tagsList.length === this.tagsBuffer.length) { return; }
+  //   if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.tagsBuffer.length) { this.fetchMore(); }
+  // }
 
-  clearTag() {
-    this.selectedTag = null;
-    this.filtersShowed = false;
-    this.selectedTagChange();
-  }
+  // private fetchMore() {
+  //   const len = this.tagsBuffer.length;
+  //   const more = this.tagsList.slice(len, this.bufferSize + len);
+  //   this.loading = true;
+  //   // using timeout here to simulate backend API delay
+  //   setTimeout(() => {
+  //     this.loading = false;
+  //     this.tagsBuffer = this.tagsBuffer.concat(more);
+  //   }, 1)
+  // }
 
-  findStatusClass(status: string) {
-    return this.TceStatus_Class.find(tces => tces.status === status).class;
-  }
+  // clearTag() {
+  //   this.selectedTag = null;
+  //   this.filtersShowed = false;
+  //   this.selectedTagChange();
+  // }
 
-  // countries global selection functions
-  isCountrySelected(country: string): boolean {
-    return this.selected_countriesList.filter(c => c === country).length > 0;
-  }
-  selectAllCountries() {
-    for (var index in this.countriesList) {
-      this.selected_countriesList[index] = this.countriesList[index].value;
-    }
-  }
-  UnselectAllCountries() {
-    this.selected_countriesList = [];
-  }
-  updateCountriesList($event, country: string) {
-    if (!$event.target.checked) {
-      // unchek : the country is removed
-      var index = this.selected_countriesList.indexOf(country);
-      this.selected_countriesList.splice(index, 1);
-    } else {
-      // check : the country is added
-      // if it is not already in the array
-      if (this.selected_countriesList.indexOf(country) == -1) {
-        this.selected_countriesList.push(country);
-      }
-    }
-  }
+  // findStatusClass(status: string) {
+  //   return this.TceStatus_Class.find(tces => tces.status === status).class;
+  // }
 
-  // status global selection functions
-  isTCEStatusSelected(tcestatus: string): boolean {
-    return this.selected_tceStatusList.filter(s => s === tcestatus).length > 0;
-  }
-  selectAllTCEStatus() {
-    for (var index in this.tceStatusList) {
-      this.selected_tceStatusList[index] = this.tceStatusList[index].value;
-    }
-  }
-  UnselectAllTCEStatus() {
-    this.selected_tceStatusList = [];
-  }
-  updateTCEStatusList($event, status: string) {
-    if (!$event.target.checked) {
-      // unchek : the status is removed
-      var index = this.selected_tceStatusList.indexOf(status);
-      this.selected_tceStatusList.splice(index, 1);
-    } else {
-      // check : the status is added
-      // if it is not already in the array
-      if (this.selected_tceStatusList.indexOf(status) == -1) {
-        this.selected_tceStatusList.push(status);
-      }
-    }
-  }
+  // // countries global selection functions
+  // isCountrySelected(country: string): boolean {
+  //   return this.selected_countriesList.filter(c => c === country).length > 0;
+  // }
+  // selectAllCountries() {
+  //   for (var index in this.countriesList) {
+  //     this.selected_countriesList[index] = this.countriesList[index].value;
+  //   }
+  // }
+  // UnselectAllCountries() {
+  //   this.selected_countriesList = [];
+  // }
+  // updateCountriesList($event, country: string) {
+  //   if (!$event.target.checked) {
+  //     // unchek : the country is removed
+  //     var index = this.selected_countriesList.indexOf(country);
+  //     this.selected_countriesList.splice(index, 1);
+  //   } else {
+  //     // check : the country is added
+  //     // if it is not already in the array
+  //     if (this.selected_countriesList.indexOf(country) == -1) {
+  //       this.selected_countriesList.push(country);
+  //     }
+  //   }
+  // }
 
-  mouseEnterCountriesFilter() { this.showCountriesFilterOptions = true; }
-  mouseLeaveCountriesFilter() { this.showCountriesFilterOptions = false; }
-  mouseEnterTceStatusFilter() { this.showTceStatusFilterOptions = true; }
-  mouseLeaveTceStatusFilter() { this.showTceStatusFilterOptions = false; }
+  // // status global selection functions
+  // isTCEStatusSelected(tcestatus: string): boolean {
+  //   return this.selected_tceStatusList.filter(s => s === tcestatus).length > 0;
+  // }
+  // selectAllTCEStatus() {
+  //   for (var index in this.tceStatusList) {
+  //     this.selected_tceStatusList[index] = this.tceStatusList[index].value;
+  //   }
+  // }
+  // UnselectAllTCEStatus() {
+  //   this.selected_tceStatusList = [];
+  // }
+  // updateTCEStatusList($event, status: string) {
+  //   if (!$event.target.checked) {
+  //     // unchek : the status is removed
+  //     var index = this.selected_tceStatusList.indexOf(status);
+  //     this.selected_tceStatusList.splice(index, 1);
+  //   } else {
+  //     // check : the status is added
+  //     // if it is not already in the array
+  //     if (this.selected_tceStatusList.indexOf(status) == -1) {
+  //       this.selected_tceStatusList.push(status);
+  //     }
+  //   }
+  // }
+
+  // mouseEnterCountriesFilter() { this.showCountriesFilterOptions = true; }
+  // mouseLeaveCountriesFilter() { this.showCountriesFilterOptions = false; }
+  // mouseEnterTceStatusFilter() { this.showTceStatusFilterOptions = true; }
+  // mouseLeaveTceStatusFilter() { this.showTceStatusFilterOptions = false; }
 
 }

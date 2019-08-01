@@ -5,9 +5,9 @@ import { ITag } from 'src/app/shared/model/reporting.model';
 declare var jQuery: any;
 
 @Component({
-  selector: 'app-reportbystatus',
-  templateUrl: './reportbystatus.component.html',
-  styleUrls: ['./reportbystatus.component.scss']
+  selector: 'app-reportby-status',
+  templateUrl: './reportby-status.component.html',
+  styleUrls: ['./reportby-status.component.scss']
 })
 export class ReportbystatusComponent implements OnInit {
 
@@ -27,6 +27,7 @@ export class ReportbystatusComponent implements OnInit {
 
 
   public initChartJSLines() {
+    // TODO : Add colors
     let compo = [
       {
         label: "FA",
@@ -94,6 +95,7 @@ export class ReportbystatusComponent implements OnInit {
     ];
     this.activeState = compo.filter(e=> e.data>0);
     this.labels = this.activeState.map(e => e.label);
+    // TODO : Add colors
     // this.colors = [
     //   {
     //     backgroundColor: compo.map(e => e.color)

@@ -8,184 +8,14 @@
 </div>
 
 <div class="content">
-  <div class="row" *ngIf="tagsList">
-    <div class="col-md-12">
-      <div class="block block-rounded block-bordered">
-        <div class="block-header block-header-default">
-          <h3 class="block-title">Tag <small>selection</small></h3>
-        </div>
-        <div class="block-content row">
-          <!-- tag selection section -->
-          <div class="col-md-12 row push">
-            <div class="col-md-11 pr-0">
-              <ng-select [items]="tagsBuffer" [virtualScroll]="true" [loading]="loading" bindLabel="tag"
-                placeholder="Select a Tag" (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()"
-                [(ngModel)]='selectedTag' (change)="selectedTagChange()" (clear)="clearTag()">
-                <ng-template ng-header-tmp>
-                  <small class="form-text text-muted">Loaded {{tagsBuffer.length}} of {{tagsList.length}}</small>
-                </ng-template>
-                <ng-template ng-option-tmp let-item="item" let-index="index">
-                  <!-- <b>{{item.id}}</b> {{item.tag}} -->
-                  <div class="block block-rounded block-bordered mb-0">
-                    <div class="block-header block-header-default">
-                      <h3 class="block-title font-size-sm">{{item.tag}}</h3>
-                      <div class="block-options">
-                        <span *ngIf="item.campaign" class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                          <i class="fa fa-tags mr-1"></i> {{item.campaign}}
-                        </span>
-                        <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                          <i class="fa fa-list mr-1"></i> {{item.nbExeUsefull}} Exe(s)
-                        </span>
-                        <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                          <i class="fa fa-calendar-alt mr-1"></i> September 25
-                        </span>
-                        <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                          <i class="fa fa-clock mr-1"></i> 14:02
-                        </span>
-                        <button *ngIf="item.ciResult" type="button"
-                          class="btn btn-sm" [ngClass]="'btn-'+findStatusClass(item.ciResult)">{{item.ciResult}}</button>
-                      </div>
-                    </div>
-                  </div>
-                </ng-template>
-              </ng-select>
-            </div>
-            <div class="col-md-1">
-              <button type="button" class="btn btn-outline-secondary heigthNgSelect"
-                (click)="filtersShowed = !filtersShowed" [ngClass]="selectedTag ? '' : 'disabled'"
-                [disabled]="!selectedTag">
-                <span *ngIf="filtersShowed">Hide</span>
-                <span *ngIf="!filtersShowed">Show</span>
-                <span> Filters</span>
-              </button>
-            </div>
-          </div>
-          <!-- filters section -->
-          <div *ngIf="filtersShowed && selectedTag && countriesList" class="col-md-6"
-            (mouseenter)="mouseEnterCountriesFilter() " (mouseleave)="mouseLeaveCountriesFilter()">
-            <div class="block block-rounded block-bordered">
-              <div class="block-header">
-                <h3 class="block-title">Filter <small>by countries</small></h3>
-                <div *ngIf="showCountriesFilterOptions" class="block-options">
-                  <button type="button" class="btn btn-sm btn-primary pt-0 pb-0 mr-2"
-                    (click)="selectAllCountries()">Select All</button>
-                  <button type="button" class="btn btn-sm btn-primary pt-0 pb-0" (click)="UnselectAllCountries()">Select
-                    None</button>
-                </div>
-              </div>
-              <div class="block-content">
-                <div class="form-group">
-                  <!-- <label class="d-block">Filter by Countries</label> -->
-                  <div *ngFor="let country of countriesList; let i = index"
-                    class="custom-control custom-checkbox custom-control-lg custom-control-inline">
-                    <input type="checkbox" class="custom-control-input" [id]="country.value" [name]="country.value"
-                      [checked]="isCountrySelected(country.value)" (change)="updateCountriesList($event,country.value)">
-                    <label class="custom-control-label" [for]="country.value">{{country.value}}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="filtersShowed && selectedTag" class="col-md-6">
-            <div class="block block-rounded block-bordered">
-              <div class="block-header">
-                <h3 class="block-title">Filter <small>by status</small></h3>
-                <div class="block-options">
-                  <button type="button" class="btn btn-sm btn-primary pt-0 pb-0 mr-2"
-                    (click)="selectAllTCEStatus()">Select All</button>
-                  <button type="button" class="btn btn-sm btn-primary pt-0 pb-0" (click)="UnselectAllTCEStatus()">Select
-                    None</button>
-                </div>
-              </div>
-              <div class="block-content">
-                <div class="form-group">
-                  <div *ngFor="let tceStatus of tceStatusList"
-                    class="custom-control custom-checkbox custom-control-lg custom-control-inline"
-                    [ngClass]="'custom-control-'+findStatusClass(tceStatus.value)">
-                    <input type="checkbox" class="custom-control-input" [id]="tceStatus.value" [name]="tceStatus.value"
-                      [checked]="isTCEStatusSelected(tceStatus.value)"
-                      (change)="updateTCEStatusList($event,tceStatus.value)">
-                    <label class="custom-control-label" [for]="tceStatus.value">{{tceStatus.value}}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="filtersShowed && selectedTag" class="col-md-12 push">
-            <div class="block block-rounded block-bordered">
-              <div class="block-header">
-                <h3 class="block-title">Widget <small>selection</small></h3>
-              </div>
-              <div class="block-content row">
-                <div class="col-md-12 mb-0 pl-0 pr-0 form-group">
-                </div>
-                <div class="col-md-3">
-                  <div class="custom-control custom-block custom-control-info">
-                    <input type="checkbox" class="custom-control-input" id="example-cb-custom-block6"
-                      name="example-cb-custom-block6" checked="">
-                    <label class="custom-control-label" for="example-cb-custom-block6">
-                      <span class="d-block text-center">
-                        <i class="fa fa-info fa-2x mb-2 text-black-50"></i><br>
-                        Report By Function/Test
-                      </span>
-                    </label>
-                    <span class="custom-block-indicator">
-                      <i class="fa fa-check"></i>
-                    </span>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="custom-control custom-block custom-control-info">
-                    <input type="checkbox" class="custom-control-input" id="block2" name="block2" checked="">
-                    <label class="custom-control-label" for="block2">
-                      <span class="d-block text-center">
-                        <i class="fa fa-cubes fa-2x mb-2 text-black-50"></i><br>
-                        Report By Application
-                      </span>
-                    </label>
-                    <span class="custom-block-indicator">
-                      <i class="fa fa-check"></i>
-                    </span>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="custom-control custom-block custom-control-info">
-                    <input type="checkbox" class="custom-control-input" id="block3" name="block3" checked="">
-                    <label class="custom-control-label" for="block3">
-                      <span class="d-block text-center">
-                        <i class="fa fa-tag fa-2x mb-2 text-black-50"></i><br>
-                        Report By Label
-                      </span>
-                    </label>
-                    <span class="custom-block-indicator">
-                      <i class="fa fa-check"></i>
-                    </span>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="custom-control custom-block custom-control-info">
-                    <input type="checkbox" class="custom-control-input" id="block4" name="block4" checked="">
-                    <label class="custom-control-label" for="block4">
-                      <span class="d-block text-center">
-                        <i class="fa fa-list-ul fa-2x mb-2 text-black-50"></i><br>
-                        Executions List
-                      </span>
-                    </label>
-                    <span class="custom-block-indicator">
-                      <i class="fa fa-check"></i>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
+  <app-tag-selection (tagSelection)="tagSelection($event)"></app-tag-selection>
 
-  <div class="row" *ngIf="selectedTag">
+
+  <div class="row" *ngIf="selectedTag"><!-- ! *ngIf="selectedTag"-->
     <div class="col-md-12">
+
+      <!--Menus on top right-->
       <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
           <h3 class="block-title">{{selectedTag.tag}} <small>execution report</small></h3>
@@ -204,109 +34,37 @@
         <div class="block-content">
           <div class="row push">
             <div class="col-md-5">
-              <div class="block block-bordered block-rounded">
-                <div class="block-header block-header-default">
-                  <h3 class="block-title">Tag <small>detail</small></h3>
-                </div>
-                <div class="block-content row">
-                  <div class="form-group col-md-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text input-group-text-alt">
-                          Date
-                        </span>
-                      </div>
-                      <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-                        <i class="fa fa-calendar-alt mr-1"></i> {{selectedTag.DateCreated}} </span>
-                    </div>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text input-group-text-alt">
-                          Start
-                        </span>
-                      </div>
-                      <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-                        <!-- ? ? ? -->
-                        <i class="fa fa-clock mr-1"></i> 14:00 </span>
-                    </div>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text input-group-text-alt">
-                          End
-                        </span>
-                      </div>
-                      <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-                        <!-- ? ? ? -->
-                        <i class="fa fa-clock mr-1"></i> 14:30 (+1d) </span>
-                    </div>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text input-group-text-alt">
-                          Duration
-                        </span>
-                      </div>
-                      <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-                        <i class="fa fa-stopwatch mr-1"></i> {{selectedTagData.tagDuration}} min.</span>
-                    </div>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text input-group-text-alt">
-                          CI Result
-                        </span>
-                      </div>
-                      <span type="text" style="color: green;" class="form-control form-control-alt text-center"
-                        id="CIResult">
-                        <i class="fa fa-check mr-1"></i> {{selectedTagData.messageType}}</span>
-                    </div>
-                  </div>
-                  <div class="form-group col-md-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text input-group-text-alt">
-                          Launched by
-                        </span>
-                      </div>
-                      <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-                        <i class="fa fa-user mr-1"></i> {{selectedTag.UsrCreated}}</span>
-                    </div>
-                  </div>
-                  <div class="form-group col-md-12">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text input-group-text-alt">
-                          Latest
-                        </span>
-                      </div>
-                      <span type="text" class="form-control form-control-alt text-center" id="LatestExecution">
-                        <i class="fa fa-calendar-alt mr-1"></i> {{selectedTag.DateEndQueue}} </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <app-tag-detail></app-tag-detail>
             </div>
-            <div class="col-md-7">
-              <app-reportbystatus [selectedTag]="selectedTag"></app-reportbystatus>
+            <div class="col-md-5">
+              <app-reportby-status [selectedTag]="selectedTag"></app-reportby-status>
             </div>
-            <div class="col-md-12">
-              <app-bugreport [selectedTagData]="selectedTagData"></app-bugreport>
-            </div>
-            <div class="col-md-12">
-              <div class="block block-bordered block-rounded">
-                <div class="block-header block-header-default">
-                  <h3 class="block-title">Report <small>by label</small></h3>
+            <div class="content">
+                <div class="block block-rounded block-bordered">
+                    <ul class="nav nav-tabs nav-tabs-block justify-content-end js-tabs-enabled" data-toggle="tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': reportView}" (click)="toggleReportView(true)">Charts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': !reportView}" (click)="toggleReportView(false)">List</a>
+                        </li>
+                    </ul>
+                    <div class="block-content tab-content" id="chartsView" *ngIf="reportView">
+                        <app-reportby-testfolder class="report-charts"></app-reportby-testfolder>
+                        <app-reportby-label class="report-charts"></app-reportby-label>
+                        <app-reportby-other class="report-charts"></app-reportby-other>
+                        
+                    </div>
+                    <div class="block-content tab-content" id="listView" *ngIf="!reportView">
+                        <div class="col-md-12">
+                            <app-bugreport [selectedTagData]="selectedTagData"></app-bugreport>
+                          </div>
+                    </div>
                 </div>
-                <div class="block-content row">
-                </div>
-              </div>
             </div>
+            
+            
+            
           </div>
         </div>
       </div>

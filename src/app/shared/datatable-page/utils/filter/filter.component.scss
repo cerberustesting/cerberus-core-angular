@@ -3,14 +3,22 @@
 }
 
 .ng-select, .ng-select-container {
-  width: 250px;
+  max-width: 250px;
   max-height: 35px;
-  display: inline-block;
-  margin: 5px 5px 5px;
+  display: inline-flex;
+  flex-wrap: nowrap;
 }
 .ui-select-choices {
   position: fixed;
   top: auto;
   left: auto;
   width: inherit;
+}
+
+.select-container {
+  display: inline-flex;
+  .close-icon {
+    display: inline-flex;
+    margin: 10px 5px;
+  }
 }

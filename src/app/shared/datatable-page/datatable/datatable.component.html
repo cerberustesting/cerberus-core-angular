@@ -3,13 +3,13 @@
     [rows]="rows" 
     [columns]="columns"        
     [columnMode]="'force'" 
-    [footerHeight]="50" 
     [rowHeight]="50" 
     [headerHeight]="50" 
     [loadingIndicator]="isLoading"        
     [selected]="(selected)? selected :  ''" 
     [selectionType]="(selection)? 'checkbox' : ''" 
-    [selectAllRowsOnPage]="selection" [scrollbarH]="false"
+    [selectAllRowsOnPage]="selection" 
+    [scrollbarH]="false"
     [scrollbarV]="true" 
     [externalSorting]="true" 
     (select)='onSelect($event)' 
@@ -32,7 +32,7 @@
         </ngx-datatable-row-detail> -->
 
 
-        <!--Top header-->
+        <!-- Top header
         <ngx-datatable-footer>
             <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
                 let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset">
@@ -41,49 +41,11 @@
                         <app-actions [selectedRows]="selectedCount"></app-actions>
                     </div>
                     <div class="right-side">
-                        <!--Column Selector-->
-                        <ng-select class="column-selector custom auto-width" bindLabel="name"
-                            placeholder="Columns : {{ columnActive }}" [items]="columns" [closeOnSelect]="false"
-                            (change)="resetColumnDrop" [searchable]="false" [clearable]="false">
-
-                            <ng-template ng-header-tmp>
-                                <button class="btn btn-outline-info" style="width: 100%" (click)="resetDefaultColumns()">Reset</button>
-                            </ng-template>
-
-                            <!--Content in the top container-->
-                            <ng-template ng-label-tmp>
-                                <div>Selected : {{ columnActive }}</div>
-                            </ng-template>
-
-                            <!--List of columns (underline if selected)-->
-                            <ng-template ng-option-tmp let-item="item" let-index="index">
-                                <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">
-                                    {{item.displayName}}</div>
-                            </ng-template>
-
-                        </ng-select>
-
-                        <!--Page size selector-->
-                        <ng-select class="column-selector custom page-size auto-width" bindLabel="name"
-                            placeholder="Show : {{ page.size }}" [(ngModel)]="page.size" [items]="[10, 25, 50, 100]"
-                            [closeOnSelect]="true" [clearable]="false" (change)="applyChange()">
-                            
-
-                            <!--Content in the top container-->
-                            <ng-template ng-label-tmp>
-                                <div>Show : {{ page.size }}</div>
-                            </ng-template>
-
-                            <!--Items list-->
-                            <ng-template ng-option-tmp let-item="item" let-index="index">
-                                <div>Show : {{ item }}</div>
-                            </ng-template>
-
-                        </ng-select>
+                        
                     </div>
                 </div>
             </ng-template>
-        </ngx-datatable-footer>
+        </ngx-datatable-footer> -->
 
 
         <!--CheckBox Column-->

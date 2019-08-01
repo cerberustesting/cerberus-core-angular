@@ -1,6 +1,7 @@
 .data-table {
-  margin: 20px;
-  margin-top: 140px;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
   .material {
     box-shadow: none;
   }
@@ -30,6 +31,7 @@
     color: rgb(221, 75, 57);
   }
 }
+
 
 .hover-action{
   color: black;
@@ -80,24 +82,24 @@
   opacity: .8;
 }
 
-.top-header {
-  width: 100%;
-  position: relative;
-  margin: 0 20px;
-  .right-side {
-    position: absolute;
-    right: 0;
-    top: -18px;
-    &>*{
-      display: inline-block;
-      margin-left: 20px;
-    }
-    .selected {
-      border-bottom: 2px solid #0077ff;
-    }
+// .top-header {
+//   width: 100%;
+//   position: relative;
+//   margin: 0 20px;
+//   .right-side {
+//     position: absolute;
+//     right: 0;
+//     top: -18px;
+//     &>*{
+//       display: inline-block;
+//       margin-left: 20px;
+//     }
+//     .selected {
+//       border-bottom: 2px solid #0077ff;
+//     }
 
-  }
-}
+//   }
+// }
 .cell {
   white-space: nowrap;
   overflow: hidden;

@@ -1,29 +1,29 @@
 <div class="actions-section">
-  <button class="btn btn-outline-danger" *ngIf="(selectedRows>0)" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-danger" *ngIf="(selectedRows.length>0)" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-trash-alt"></i>
   </button> <!-- Delete TC -->
 
-  <button class="btn btn-outline-success" *ngIf="(selectedRows>0)" placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-success" *ngIf="(selectedRows.length>0)" placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-play"></i>
   </button> <!-- Run TestCase -->
 
-  <button class="btn btn-outline-info" *ngIf="(selectedRows>0)" placement="top" ngbPopover="Edit TestCase Header" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-info" *ngIf="(selectedRows.length>0)" placement="top" ngbPopover="Edit TestCase Header" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-pen"></i>
   </button> <!-- Edit TestCase Header -->  
 
-  <button class="btn btn-outline-primary" *ngIf="(selectedRows>0)" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-primary" *ngIf="(selectedRows.length>0)" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-copy"></i>
   </button> <!-- Duplicate TC --> 
 
-  <button class="btn btn-outline-info" *ngIf="(selectedRows>1)" placement="top" ngbPopover="Edit Label" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-info" *ngIf="(selectedRows.length>1)" placement="top" ngbPopover="Edit Label" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-tag"></i>
   </button> <!-- Edit Label -->
 
-  <button class="btn btn-outline-info" *ngIf="(selectedRows>1)" placement="top" ngbPopover="Edit Status" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-info" *ngIf="(selectedRows.length>1)" placement="top" ngbPopover="Edit Status" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-check-circle"></i>
   </button> <!-- Edit Status -->
 
-  <button class="btn btn-outline-info" *ngIf="(selectedRows>1)" placement="top" ngbPopover="Edit Priority" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-info" *ngIf="(selectedRows.length>1)" placement="top" ngbPopover="Edit Priority" triggers="mouseenter:mouseleave" container="body">
       <i class="fa fa-exclamation"></i>
   </button> <!-- Edit Priority -->
 </div>

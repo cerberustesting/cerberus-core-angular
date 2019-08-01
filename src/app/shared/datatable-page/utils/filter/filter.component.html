@@ -1,25 +1,13 @@
-<ng-select class="custom auto-width"
-           [items]="dataList"
-           [selectableGroup]="true"
-           [multiple]="column.param.multiple"
-           [closeOnSelect]="false"
-           [bindValue]="id"
-           [bindLabel]="label"
-           placeholder="{{column.param.placeholder}}"
-           [(ngModel)]='model'
-           (open)="updateModel()"
-           (add)="onAdd($event)"
-           (remove)="applyFilter()"
-           (change)="onChange($event)"
-           (clear)="applyFilter()"
-           [clearable]="true"
-           (close)="applyFilter()"
-           (search)="onSearch($event)"
-           (keyup.enter)="onKeyUpEnter($event)">
-           
-  <ng-template *ngIf="column.type==='label'" ng-option-tmp let-item="item" let-index="index">
-    <div class="label" [style.background-color]="item.color">{{item.label}}</div>
-  </ng-template>
+<div class="select-container">
+  <ng-select class="custom auto-width" [items]="dataList" [selectableGroup]="true" [multiple]="column.param.multiple"
+    [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" placeholder="{{column.param.placeholder}}"
+    [(ngModel)]='model' (open)="updateModel()" (add)="onAdd($event)" (remove)="applyFilter()"
+    (change)="onChange($event)" (clear)="applyFilter()" [clearable]="true" (close)="applyFilter()"
+    (search)="onSearch($event)" (keyup.enter)="onKeyUpEnter($event)">
+
+    <ng-template *ngIf="column.type==='label'" ng-option-tmp let-item="item" let-index="index">
+      <div class="label" [style.background-color]="item.color">{{item.label}}</div>
+    </ng-template>
 
     <!-- <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
           <span *ngIf="column.param.multiple; else uniq">{{column.displayName | titlecase }} : {{column.sSearch.length}}</span>
@@ -27,19 +15,21 @@
             
     </ng-template> -->
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-        <div class="ng-value" *ngFor="let item of items | slice:0:1">
-            <span *ngIf="item.label; else notLabel" class="ng-value-label">{{ item.label }}</span>
-            <ng-template #notLabel>{{ item }}</ng-template>
-            <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
-        </div>
-        <div class="ng-value" *ngIf="items.length > 1">
-            <span class="ng-value-label">{{items.length - 1}} more...</span>
-        </div>
+      <div class="ng-value" *ngFor="let item of items | slice:0:1">
+        <span *ngIf="item.label; else notLabel" class="ng-value-label">{{ item.label }}</span>
+        <ng-template #notLabel>{{ item }}</ng-template>
+        <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+      </div>
+      <div class="ng-value" *ngIf="items.length > 1">
+        <span class="ng-value-label">{{items.length - 1}} more...</span>
+      </div>
     </ng-template>
 
     <ng-template ng-header-tmp>
       <button class="btn btn-outline-info" (click)="onSelectAll()">Select All</button>
       <button class="btn btn-outline-info" (click)="onClearAll()">Clear All</button>
-  </ng-template>
-</ng-select>
-<i class="far fa-times-circle" (click)="removeFilter()"></i>
+    </ng-template>
+  </ng-select>
+
+  <i class="close-icon far fa-times-circle" (click)="removeFilter()"></i>
+</div>

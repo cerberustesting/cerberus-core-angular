@@ -1,41 +1,47 @@
-<div class="header-area">
-    <div class="filter-container">
-        <div class="main-side">
-            <!-- Global Search Field -->
-            <input type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
-                [(ngModel)]="gloabalSearchModel" placeholder="Search...">
+<div class="header-area bg-body-light">
+    <div class="filter-container ">
+        <div class="content content-full">
+            <div class="main-side ">
+                <!-- Global Search Field -->
+                <input type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
+                    [(ngModel)]="gloabalSearchModel" placeholder="Search...">
 
-            <!--Distinct filters-->
-            <ng-template ngFor let-column [ngForOf]="columns">
-                <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column" [servlet]="servlet"
-                    (applyFilterOutput)=applySystem()></app-filter>
-            </ng-template>
-            <!--Like filters-->
-            <ng-template ngFor let-column [ngForOf]="columns">
-                <app-filterlike *ngIf="column.fieldActive" [column]="column" (applyFilterOutput)=applySystem()>
-                </app-filterlike>
-            </ng-template>
+                <!--Filter Selector-->
+                <ng-select class="column-selector custom auto-width" bindLabel="name" placeholder="Add Filters"
+                    [items]="searchableColumns" [closeOnSelect]="false" [searchable]="true" [clearable]="false">
 
+                    <!--Content in the top container-->
+                    <ng-template ng-label-tmp>
+                        <div>Add Filters</div>
+                    </ng-template>
 
-            <!--Filter Selector-->
-            <ng-select class="column-selector custom auto-width" bindLabel="name" placeholder="Add Filters"
-                [items]="searchableColumns" [closeOnSelect]="false" [searchable]="true" [clearable]="false">
+                    <!--List of filters (underline if selected)-->
+                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <div [ngClass]="{'selected': item.dropActive || item.fieldActive}" (click)="addFilter(item)">
+                            {{item.displayName}}</div>
+                    </ng-template>
 
-                <!--Content in the top container-->
-                <ng-template ng-label-tmp>
-                    <div>Add Filters</div>
+                </ng-select>
+
+            </div>
+            <div class="filter-list">
+                <!--Distinct filters-->
+                <ng-template ngFor let-column [ngForOf]="columns">
+                    <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column" [servlet]="servlet"
+                        (applyFilterOutput)=applySystem()></app-filter>
                 </ng-template>
-
-                <!--List of filters (underline if selected)-->
-                <ng-template ng-option-tmp let-item="item" let-index="index">
-                    <div [ngClass]="{'selected': item.dropActive || item.fieldActive}" (click)="addFilter(item)">{{item.displayName}}</div>
+                <!--Like filters-->
+                <ng-template ngFor let-column [ngForOf]="columns">
+                    <app-filterlike *ngIf="column.fieldActive" [column]="column" (applyFilterOutput)=applySystem()>
+                    </app-filterlike>
                 </ng-template>
-
-            </ng-select>
-
-
+            </div>
+            <div class="action-container" *ngIf="selectedRows">
+                <app-actions [selectedRows]="selectedRows"></app-actions>
+            </div>
         </div>
-        <div class="right-side">
+
+        <div class="flex-sm-00-auto ml-sm-3">
 
             <ngb-pagination [(page)]="page.number" [pageSize]="page.size" [collectionSize]="page.totalCount"
                 [maxSize]="5" [boundaryLinks]="true" (pageChange)="applySystem()" [rotate]="true" [ellipses]="false">
@@ -46,6 +52,50 @@
             </ngb-pagination>
             <div *ngIf="selectedRows">{{selectedRows.length}} selected / {{page.totalCount}} total</div>
             <div *ngIf="!selection">Total : {{page.totalCount}}</div>
+            <div>
+
+                <!--Column Selector-->
+                <ng-select class="column-selector custom auto-width" bindLabel="name"
+                    placeholder="Columns : {{ columnActive }}" [items]="columns" [closeOnSelect]="false"
+                    (change)="resetColumnDrop" [searchable]="false" [clearable]="false">
+
+                    <ng-template ng-header-tmp>
+                        <button class="btn btn-outline-info" style="margin: auto; width: 100%;"
+                            (click)="resetDefaultColumns()">Reset</button>
+                    </ng-template>
+
+                    <!--Content in the top container-->
+                    <ng-template ng-label-tmp>
+                        <div>Selected : {{ columnActive }}</div>
+                    </ng-template>
+
+                    <!--List of columns (underline if selected)-->
+                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">
+                            {{item.displayName}}</div>
+                    </ng-template>
+
+                </ng-select>
+
+                <!--Page size selector-->
+                <ng-select class="page-selector custom page-size" bindLabel="name"
+                    placeholder="Show : {{ page.size }}" [(ngModel)]="page.size" [items]="[10, 25, 50, 100]"
+                    [closeOnSelect]="true" [clearable]="false" (change)="applySystem()">
+
+
+                    <!--Content in the top container-->
+                    <ng-template ng-label-tmp>
+                        <div>Show : {{ page.size }}</div>
+                    </ng-template>
+
+                    <!--Items list-->
+                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <div>Show : {{ item }}</div>
+                    </ng-template>
+
+                </ng-select>
+            </div>
+
 
         </div>
     </div>

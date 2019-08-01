@@ -79,9 +79,6 @@ export class DatatableComponent implements OnInit {
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
   }
-  resetDefaultColumns() {
-    this.columns.forEach(c => c.active = c.defaultActive);
-    this.columnActive = this.columns.filter(a => a.active).length;
-  }
+  
 }
 

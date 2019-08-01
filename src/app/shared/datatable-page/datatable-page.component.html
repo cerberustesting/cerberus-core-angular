@@ -8,13 +8,18 @@
     [selection]="selection">
 </app-filters>
 
-<app-table 
-    [rows]="rows" 
-    [columns]="columns" 
-    [testcaseslist]="true" 
-    [page]="page" 
-    [selection]="selection"
-    [massAction]="massAction"
-    [selected]="selectedRows"
-    (pageUpdate)="pageUpdate($event)">
-</app-table>
+<!-- <div class="content"> -->
+    <!-- <div class="block-content"> -->
+        <app-table 
+            [rows]="rows" 
+            [columns]="columns" 
+            [testcaseslist]="true" 
+            [page]="page" 
+            [selection]="selection"
+            [massAction]="massAction"
+            [selected]="selectedRows"
+            (pageUpdate)="pageUpdate($event)">
+        </app-table>
+    <!-- </div> -->
+<!-- </div> -->
+

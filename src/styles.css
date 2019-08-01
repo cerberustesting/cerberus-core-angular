@@ -26,7 +26,7 @@ ng-select.auto-width .ng-dropdown-panel {
     max-width: 550px; 
 } 
 
-.ngx-datatable .datatable-footer {
+/* .ngx-datatable .datatable-footer {
   position: absolute;
   top: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
@@ -39,4 +39,4 @@ ng-select.auto-width .ng-dropdown-panel {
 
 .ngx-datatable .datatable-body {
   margin-top: 100px;
-}
+} */

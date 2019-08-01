@@ -88,5 +88,9 @@ export class FiltersComponent implements OnInit {
   addFilterLike(column: Column) {
     column.fieldActive = !column.fieldActive;
   }
+  resetDefaultColumns() {
+    this.columns.forEach(c => c.active = c.defaultActive);
+    this.columnActive = this.columns.filter(a => a.active).length;
+  }
 
 }

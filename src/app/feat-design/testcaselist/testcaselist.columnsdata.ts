@@ -147,14 +147,8 @@ export var TestCasesColumnsData: Column[] = [
         databaseName: '',
         contentName: 'countryList',
         width: 200,
-        dropActive: false,
         active: false,
-        searchable: true,
-        param: {
-            multiple: true,
-            field: 'countryList',
-            placeholder: 'Select Country',
-        },
+        
         sSearch: []
 
     },

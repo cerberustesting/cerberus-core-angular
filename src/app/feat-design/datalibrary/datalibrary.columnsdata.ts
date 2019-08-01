@@ -4,7 +4,7 @@ export var DataLibColumnsData: Column[] = [
     {
       displayName: "ID",
       contentName: 'testDataLibID',
-      active: true,
+      active: false,
       defaultActive: true,
       sSearch: [],
       databaseName: 'tdl.TestDataLibID',
@@ -56,7 +56,8 @@ export var DataLibColumnsData: Column[] = [
     {
       displayName: "Country",
       contentName: 'country',
-      active: false, 
+      active: true,
+      defaultActive: true,
       sSearch: [],
       databaseName : 'tdl.Country',
       searchable: true,
@@ -80,7 +81,8 @@ export var DataLibColumnsData: Column[] = [
     {
       displayName: "Description",
       contentName: 'description',
-      active: false, 
+      active: true,
+      defaultActive: true,
       sSearch: [],
       databaseName : 'tdl.Description',
       searchable: true,
@@ -93,7 +95,8 @@ export var DataLibColumnsData: Column[] = [
     {
       displayName: "Type",
       contentName: 'type',
-      active: false, 
+      active: true,
+      defaultActive: true,
       sSearch: [],
       databaseName : 'tdl.Type',
       searchable: true,

@@ -1,6 +1,7 @@
 .filter-field {
-    display: flex;
+    display: inline-flex;
     flex-wrap: nowrap;
+    max-width: 250px;
     line-height: 40px;
     i {
         display: inline-flex;

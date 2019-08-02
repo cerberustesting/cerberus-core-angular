@@ -13,39 +13,8 @@
     [scrollbarV]="true" 
     [externalSorting]="true" 
     (select)='onSelect($event)' 
-    (sort)="onSort($event)">
-
-        <!-- Row Detail Template -->
-        <!-- <ngx-datatable-row-detail
-          [rowHeight]="100"
-          #myDetailRow
-          (toggle)="onDetailToggle($event)"
-        >
-          <ng-template
-            let-row="row"
-            let-expanded="expanded"
-            ngx-datatable-row-detail-template
-          >
-             <span class="label" *ngFor="let item of row[label]" [style.background-color]="item.color">
-                            {{ item?.name }}</span>
-          </ng-template>
-        </ngx-datatable-row-detail> -->
-
-
-        <!-- Top header
-        <ngx-datatable-footer>
-            <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
-                let-selectedCount="selectedCount" let-curPage="curPage" let-offset="offset">
-                <div class="top-header">
-                    <div class="left-side">
-                        <app-actions [selectedRows]="selectedCount"></app-actions>
-                    </div>
-                    <div class="right-side">
-                        
-                    </div>
-                </div>
-            </ng-template>
-        </ngx-datatable-footer> -->
+    (sort)="onSort($event)"
+    (scroll)="onScroll($event.offsetY)">
 
 
         <!--CheckBox Column-->
@@ -66,8 +35,9 @@
                         <i *ngIf="column.searchable" class="fa fa-filter btn filter-btn"
                             [ngClass]="(column.dropActive)? 'btn-success' : 'btn-warning'"
                             (click)="addFilter(column)"></i>
-                        <i *ngIf="column.like" class="fa fa-search btn filter-btn"
-                            [ngClass]="(column.fieldActive)? 'btn-success' : 'btn-info'"
+                            
+                        <i *ngIf="column.like" class="fa fa-filter btn filter-btn"
+                            [ngClass]="(column.fieldActive)? 'btn-success' : 'btn-warning'"
                             (click)="addFilterLike(column)"></i>
                     </span>
                 </ng-template>
@@ -99,7 +69,7 @@
 
                         <span class="label" *ngFor="let item of row[column.contentName].slice(0,2)" [style.background-color]="item.color">
                             {{ item?.name }}</span>
-                        <div class="badge badge-info" *ngIf="row[column.contentName].length>2" style="cursor: pointer;" placement="top" [ngbPopover]="labelPopoverTemplate" triggers="mouseenter:mouseleave" container="body">More :
+                        <div class="badge badge-info" *ngIf="row[column.contentName].length>2" style="cursor: pointer;" placement="right" [ngbPopover]="labelPopoverTemplate" triggers="mouseenter:mouseleave" container="body">More :
                             {{row[column.contentName].length-2}}</div>
                         <ng-template #labelPopoverTemplate>
                             <div class="label" *ngFor="let item of row[column.contentName].slice(2)"

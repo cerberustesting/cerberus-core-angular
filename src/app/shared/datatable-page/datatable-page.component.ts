@@ -31,14 +31,17 @@ export class DatatablePageComponent implements OnInit {
 
   ngOnInit() {
     this.search();    
+    this.invariantsService.observableSystemsSelected.subscribe(rep => {
+      this.search();
+    })
   }
 
   search(globalSearch?: string) {
     if (this.servlet) {
       this.globalSearch = (globalSearch)? globalSearch : ''; 
-      this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
-      let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;
-      this.columns.filter(a => a.contentName==="system")[0].sSearch = systemArray.filter((a,i) => systemArray.indexOf(a)===i);
+      // this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
+      // let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;
+      // this.columns.filter(a => a.contentName==="system")[0].sSearch = systemArray.filter((a,i) => systemArray.indexOf(a)===i);
       this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), (list, length) => {
         this.rows = list;
         this.page.totalCount = length;

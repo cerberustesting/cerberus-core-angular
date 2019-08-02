@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Column } from 'src/app/shared/model/column.model';
+import { InvariantsService } from './invariants.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilterService {
 
-  constructor() { }
+  constructor(private invariantService: InvariantsService) { }
 
   generateQueryStringParameters(columnList: Array<Column>, pageInformation: { size: number, sort: any, number: number, totalCount: number }, globalSearch: string): string {
     let queryParameter = "";
     let formData = {}
-    let columnListWithActiveFilter = columnList.filter(e => e.sSearch).filter(e => e.sSearch.length != 0 || e.contentName == pageInformation.sort[0].prop);
+    let columnListWithActiveFilter = columnList.filter(e => e.sSearch).filter(e => e.sSearch.length != 0 || e.contentName == pageInformation.sort[0].prop || e.contentName == 'system');
     // contaign all columns to filter&sort
-
+    console.log(this.invariantService.systemsSelected);
+    
     //generate request header
 
     // ? "sEcho"
@@ -32,8 +34,12 @@ export class FilterService {
       formData["sColumns"] = columnListWithActiveFilter.map(column => column.databaseName).join(','); // list of columns to filter&sort
       // ? "iColumns" 
       for (let column in columnListWithActiveFilter) {
-        if (columnList[column].type === 'label') {
+        if (columnListWithActiveFilter[column].type === 'label') {
           formData["sSearch_" + column] = (columnListWithActiveFilter[column].sSearch) ? columnListWithActiveFilter[column].sSearch.map(a => a.label).join(',') : ''; // value(s) to filter (only label)
+        } else if(columnListWithActiveFilter[column].contentName === 'system'){
+          let systemByFilter = ((columnListWithActiveFilter[column].sSearch.length!=0) ? columnListWithActiveFilter[column].sSearch.join(',') : '');
+          let systemByService = (this.invariantService.systemsSelected.length!=0)? ',' + this.invariantService.systemsSelected.join(','): ''
+          formData["sSearch_" + column] = systemByFilter + ((systemByFilter!='' && systemByService!='')? ',' : '') + systemByService; // value(s) to filter
         } else {
           formData["sSearch_" + column] = (columnListWithActiveFilter[column].sSearch) ? columnListWithActiveFilter[column].sSearch.join(',') : ''; // value(s) to filter
         }

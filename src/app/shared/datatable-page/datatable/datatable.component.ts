@@ -79,6 +79,15 @@ export class DatatableComponent implements OnInit {
   onDetailToggle(event) {
     console.log('Detail Toggled', event);
   }
+
+  selectAll() {
+    for(let row of this.rows) {
+      if(!this.selected.includes(row)) {
+        this.selected.push(row);
+      }
+    }
+    
+  }
   
 }
 

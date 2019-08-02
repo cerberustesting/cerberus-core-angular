@@ -8,13 +8,12 @@
     [loadingIndicator]="isLoading"        
     [selected]="(selected)? selected :  ''" 
     [selectionType]="(selection)? 'checkbox' : ''" 
-    [selectAllRowsOnPage]="selection" 
+    [selectAllRowsOnPage]="false" 
     [scrollbarH]="false"
     [scrollbarV]="true" 
     [externalSorting]="true" 
     (select)='onSelect($event)' 
-    (sort)="onSort($event)"
-    (scroll)="onScroll($event.offsetY)">
+    (sort)="onSort($event)">
 
 
         <!--CheckBox Column-->

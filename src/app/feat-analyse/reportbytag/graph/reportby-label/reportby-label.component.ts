@@ -23,7 +23,11 @@ export class ReportbyLabelComponent implements OnInit {
         { label: { value: 'child 2' }, values: {KO: 20, OK: 50, FA: 30} }
       ]
     },
-  ]
+  ];
+  expand: boolean = true;
+  toggleChildren(label) {
+    label.expand = !((label.expand)? true : false);
+  }
 
   constructor() { }
 

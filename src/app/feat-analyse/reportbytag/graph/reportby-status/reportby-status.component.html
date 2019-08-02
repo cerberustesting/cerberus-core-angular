@@ -1,8 +1,11 @@
 <div class="block block-rounded block-bordered">
     <div class="block-header block-header-default">
         <h3 class="block-title">Report <small>by status</small></h3>
+        <button type="button" class="btn-block-option" (click)="expand = !expand">
+                <i class="si" [ngClass]="{'si-arrow-down': !expand, 'si-arrow-up': expand}"></i>
+              </button>
     </div>
-    <div class="block-content block-content-full text-center">
+    <div class="block-content block-content-full text-center" *ngIf="expand">
         <div class="row">
             <div class="col-md-12 push">
                 <div class="progress">

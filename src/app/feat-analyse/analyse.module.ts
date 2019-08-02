@@ -15,6 +15,8 @@ import { ReportbyOtherComponent } from './reportbytag/graph/reportby-other/repor
 import { ReportlistComponent } from './reportbytag/reportlist/reportlist.component';
 import { TagDetailComponent } from './reportbytag/tag-detail/tag-detail.component';
 import { TagSelectionComponent } from './reportbytag/tag-selection/tag-selection.component';
+import { StatisticDurationComponent } from './reportbytag/graph/statistic-duration/statistic-duration.component';
+import { StatisticReliabilityComponent } from './reportbytag/graph/statistic-reliability/statistic-reliability.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { TagSelectionComponent } from './reportbytag/tag-selection/tag-selection
       ReportbyOtherComponent,
       ReportlistComponent,
       TagDetailComponent,
-      TagSelectionComponent
+      TagSelectionComponent,
+      StatisticDurationComponent,
+      StatisticReliabilityComponent
   ],
   imports: [
     CommonModule,

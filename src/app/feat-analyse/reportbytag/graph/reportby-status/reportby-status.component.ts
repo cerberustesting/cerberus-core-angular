@@ -15,6 +15,7 @@ export class ReportbystatusComponent implements OnInit {
 
   loadJS: Promise<any>;
   private graphID: string = "graph_reportbystatus";
+  expand: boolean = true;
 
   constructor() {
     

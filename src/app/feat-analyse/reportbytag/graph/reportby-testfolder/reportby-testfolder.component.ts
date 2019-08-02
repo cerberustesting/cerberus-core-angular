@@ -15,6 +15,7 @@ export class ReportbyTestfolderComponent implements OnInit {
     options : ChartOptions ,
     legend: boolean,
   }
+  expand: boolean = true;
 
   constructor() { }
 

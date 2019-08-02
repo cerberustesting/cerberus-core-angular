@@ -15,6 +15,7 @@ export class ReportbyOtherComponent implements OnInit {
     labels: Label[],
     options: ChartOptions
   }
+  expand: boolean = true;
 
   constructor() { }
 

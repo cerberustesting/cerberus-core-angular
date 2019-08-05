@@ -7,19 +7,19 @@ const appRoutes: Route[] = [
   { path: '', redirectTo: '/analyse/dashboard', pathMatch: 'full' },
   {
     path: 'design',
-    loadChildren: './feat-design/design.module#DesignModule'
+    loadChildren: () => import('./feat-design/design.module').then(m => m.DesignModule)
   },
   {
     path: 'run',
-    loadChildren: './feat-run/run.module#RunModule'
+    loadChildren: () => import('./feat-run/run.module').then(m => m.RunModule)
   },
   {
     path: 'analyse',
-    loadChildren: './feat-analyse/analyse.module#AnalyseModule'
+    loadChildren: () => import('./feat-analyse/analyse.module').then(m => m.AnalyseModule)
   },
   {
     path: 'configure',
-    loadChildren: './feat-configure/configure.module#ConfigureModule'
+    loadChildren: () => import('./feat-configure/configure.module').then(m => m.ConfigureModule)
   },
   { path: '**', redirectTo: '/pagenotfound' },
   { path: 'pagenotfound', component: PagenotfoundComponent },

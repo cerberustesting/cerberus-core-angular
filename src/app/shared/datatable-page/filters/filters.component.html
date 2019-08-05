@@ -22,6 +22,7 @@
                     </ng-template>
 
                 </ng-select>
+                <ng-template [ngIf]="false">Hello</ng-template>
 
             </div>
             <div class="filter-list">
@@ -44,7 +45,7 @@
         <div class="flex-sm-00-auto ml-sm-3">
 
             <ngb-pagination [(page)]="page.number" [pageSize]="page.size" [collectionSize]="page.totalCount"
-                [maxSize]="5" [boundaryLinks]="true" (pageChange)="applySystem()" [rotate]="true" [ellipses]="false">
+                [maxSize]="5" [boundaryLinks]="true" (pageChange)="applyPage()" [rotate]="true" [ellipses]="false">
                 <ng-template ngbPaginationPrevious><i class="fa fa-angle-left"></i></ng-template>
                 <ng-template ngbPaginationNext><i class="fa fa-angle-right"></i></ng-template>
                 <ng-template ngbPaginationFirst><i class="fa fa-angle-double-left"></i></ng-template>

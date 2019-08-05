@@ -14,6 +14,7 @@ export interface Column {
     fieldActive?: boolean,
     booleanColumn?: boolean,
     param?: any,
-    sSearch?: Array<any>
+    sSearch?: Array<any>,
+    flexGrow?: number
     
 }

@@ -22,7 +22,6 @@ export class DatatableComponent implements OnInit {
   @Input() selected: Array<any>;
   @Output() pageUpdate = new EventEmitter<number>();
   @Output() sort = new EventEmitter<void>();
-  @ViewChild('dataTable', { static: true }) dataTable: any;
   
   isLoading: boolean;
   columnActive: number;
@@ -71,14 +70,6 @@ export class DatatableComponent implements OnInit {
 
   resetColumnDrop() {
     this.columnActive = null;
-  }
-
-  toggleExpandRow(row) {
-    console.log('Toggled Expand Row!', row);
-    this.dataTable.rowDetail.toggleExpandRow(row);
-  }
-  onDetailToggle(event) {
-    console.log('Detail Toggled', event);
   }
 
   selectAll() {

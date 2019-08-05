@@ -22,6 +22,7 @@ export class FiltersComponent implements OnInit {
   @Input('servlet') servlet: string;
   @Input('selection') selection: boolean;
   @Output() systemApply = new EventEmitter<string>();
+  @Output() pageApply = new EventEmitter<number>();
 
   resetColumnDrop() {
     this.columnActive = null;
@@ -59,6 +60,9 @@ export class FiltersComponent implements OnInit {
       }      
     });
     this.systemApply.emit(this.gloabalSearchModel);
+  }
+  applyPage() {
+    this.pageApply.emit(this.page.number);
   }
 
   remove(name: string, value: string) {    

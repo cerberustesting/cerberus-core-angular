@@ -6,6 +6,7 @@ export var TestCasesColumnsData: Column[] = [
         databaseName: 'tec.application',
         contentName: 'application',
         active: true,
+        flexGrow: 100,
         defaultActive: true,
         searchable: true,
         dropActive: false,
@@ -21,6 +22,7 @@ export var TestCasesColumnsData: Column[] = [
         databaseName: 'tec.test',
         contentName: 'test',
         active: true,
+        flexGrow: 100,
         defaultActive: true,
         searchable: true,
         param: {
@@ -35,6 +37,7 @@ export var TestCasesColumnsData: Column[] = [
         displayName: 'TestCase ID',
         databaseName: 'tec.testCase',
         contentName: 'testCase',
+        flexGrow: 75,
         active: true,
         defaultActive: true,
         like: true,
@@ -55,7 +58,7 @@ export var TestCasesColumnsData: Column[] = [
         sortable: false,
         searchable: true,
         dropActive: false,
-        width: 300,
+        flexGrow: 250,
         param: {
             multiple: true,
             field: 'label',
@@ -67,7 +70,8 @@ export var TestCasesColumnsData: Column[] = [
         displayName: 'Description',
         databaseName: 'tec.description',
         contentName: 'description',
-        width: 300,
+        type: 'longtext',
+        flexGrow: 250,
         defaultActive: true,
         active: true,
         dropActive: false,
@@ -88,6 +92,7 @@ export var TestCasesColumnsData: Column[] = [
         defaultActive: true,
         searchable: true,
         dropActive: false,
+        flexGrow: 100,
         param: {
             multiple: true,
             field: 'status',
@@ -103,6 +108,7 @@ export var TestCasesColumnsData: Column[] = [
         defaultActive: true,
         dropActive: false,
         searchable: true,
+        flexGrow: 100,
         param: {
             multiple: true,
             field: 'priority',
@@ -145,8 +151,9 @@ export var TestCasesColumnsData: Column[] = [
     {
         displayName: 'CountryList',
         databaseName: '',
+        type: 'list',
         contentName: 'countryList',
-        width: 200,
+        flexGrow: 200,
         active: false,
         
         sSearch: []

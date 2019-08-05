@@ -1,34 +1,22 @@
 <div class="data-table">
-    <ngx-datatable #dataTable class="material fullscreen fixed-header expandable" style="height: 60vh;" 
-    [rows]="rows" 
-    [columns]="columns"        
-    [columnMode]="'force'" 
-    [rowHeight]="50" 
-    [headerHeight]="50" 
-    [loadingIndicator]="isLoading"        
-    [selected]="(selected)? selected :  ''" 
-    [selectionType]="(selection)? 'checkbox' : ''" 
-    [selectAllRowsOnPage]="false" 
-    [scrollbarH]="false"
-    [scrollbarV]="true" 
-    [externalSorting]="true" 
-    (select)='onSelect($event)'
-    [externalPaging]="true" 
-    [count]="page.totalCount"
-    [offset]="page.number"
-    (sort)="onSort($event)"
-    (page)="onPage($event)">
+    <ngx-datatable #dataTable class="material fullscreen fixed-header expandable" style="height: 68vh;" [rows]="rows"
+        [columns]="columns" [columnMode]="'flex'" [rowHeight]="50" [headerHeight]="50" [loadingIndicator]="isLoading"
+        [selected]="(selected)? selected :  ''" [selectionType]="(selection)? 'checkbox' : ''"
+        [selectAllRowsOnPage]="false" [scrollbarH]="false" [scrollbarV]="true" [externalSorting]="true"
+        (select)='onSelect($event)' [externalPaging]="true" [count]="page.totalCount" [offset]="page.number"
+        (sort)="onSort($event)" (page)="onPage($event)">
 
 
         <!--CheckBox Column-->
-        <ngx-datatable-column *ngIf="selection" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
-            [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
+        <ngx-datatable-column *ngIf="selection" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+            [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
         </ngx-datatable-column>
 
         <!--Column from column array-->
         <ng-template ngFor let-column let-index="index" [ngForOf]="columns">
             <ngx-datatable-column *ngIf="column.active" [name]="column.displayName" [prop]="column.contentName"
-                [width]="(column.width)? column.width : 150" [draggable]="true" [sortable]="column.sortable" [resizeable]="false">
+                [flexGrow]="(column.flexGrow)? column.flexGrow : 150" [draggable]="true" [sortable]="column.sortable"
+                [resizeable]="false">
 
                 <!-- Header row -->
                 <ng-template ngx-datatable-header-template let-sort="sortFn">
@@ -38,74 +26,125 @@
                         <i *ngIf="column.searchable" class="fa fa-filter btn filter-btn"
                             [ngClass]="(column.dropActive)? 'btn-success' : 'btn-warning'"
                             (click)="addFilter(column)"></i>
-                            
+
                         <i *ngIf="column.like" class="fa fa-filter btn filter-btn"
                             [ngClass]="(column.fieldActive)? 'btn-success' : 'btn-warning'"
                             (click)="addFilterLike(column)"></i>
                     </span>
                 </ng-template>
 
-                <!--If the content need a function to be display-->
-                <ng-template *ngIf="column.displayContentFunction" let-row='row' let-value ngx-datatable-cell-template>
-                    <span class="cell" [style.maxWidth]="column.width">{{ column.displayContentFunction(row) }}</span>
+                <ng-template let-row='row' let-value="value" ngx-datatable-cell-template>
+
+                    <span *ngIf="column.displayContentFunction" class="cell"
+                        [style.maxWidth]="column.width">{{ column.displayContentFunction(row) }}</span>
+
+                    <div *ngIf="column.type=='list'">
+                        <a *ngFor="let item of value | keyvalue" [style.maxWidth]="column.width">
+                            <b>{{item.value}} </b>
+                        </a>
+                    </div>
+
+
+                    <div *ngIf="column.type=='label'">
+                        <div *ngIf="row[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
+
+                            <span class="label" *ngFor="let item of row[column.contentName].slice(0,2)"
+                                [style.background-color]="item.color">
+                                {{ item?.name }}</span>
+                            <div class="badge badge-info" *ngIf="row[column.contentName].length>2"
+                                style="cursor: pointer;" placement="right" [ngbPopover]="labelPopoverTemplate"
+                                triggers="mouseenter:mouseleave" container="body">More :
+                                {{row[column.contentName].length-2}}</div>
+                            <ng-template #labelPopoverTemplate>
+                                <div class="label" *ngFor="let item of row[column.contentName].slice(2)"
+                                    [style.background-color]="item.color">{{ item?.name }}</div>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div *ngIf="column.type==='boolean'">
+                        <i class="fa fa-check" *ngIf="value==='Y'"></i>
+                        <i class="fa fa-times" *ngIf="value==='N'"></i>
+                    </div>
+
+                    <div *ngIf="column.type==='script'">
+                        <code>{{value}}</code>
+                    </div>
+
+                    <div *ngIf="!column.type || column.type==='none'" class="cell" [style.maxWidth]="column.width">{{ value }}</div>
+
+                    <div *ngIf="column.type==='longtext'" class="cell" [style.maxWidth]="column.width" placement="top" [ngbPopover]="value"
+                        triggers="mouseenter:mouseleave" container="body">{{ value }}</div>
+
                 </ng-template>
 
+                <!--If the content need a function to be display-->
+                <!-- <ng-template *ngIf="column.displayContentFunction" let-row='row' let-value ngx-datatable-cell-template>
+                    <span class="cell" [style.maxWidth]="column.width">{{ column.displayContentFunction(row) }}</span>
+                </ng-template> -->
+
                 <!--Country column-->
-                <ng-template *ngIf="column.contentName=='countryList'" let-value="value" ngx-datatable-cell-template>
+                <!-- <ng-template *ngIf="column.contentName=='countryList'" let-value="value" ngx-datatable-cell-template>
                     <a *ngFor="let item of value | keyvalue" [style.maxWidth]="column.width">
                         <b>{{item.value}} </b>
                     </a>
-                </ng-template>
+                </ng-template> -->
 
 
                 <!--Label columns-->
-                <ng-template *ngIf="column.type==='label'" let-row='row' let-value="value" let-expanded="expanded" ngx-datatable-cell-template>
-                    <div *ngIf="row[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
-                            <!-- <a
-                            href="javascript:void(0)"
-                            [class.datatable-icon-right]="!expanded"
-                            [class.datatable-icon-down]="expanded"
-                            title="Expand/Collapse Row"
-                            (click)="toggleExpandRow(row)"
-                          >
-                          </a> -->
 
-                        <span class="label" *ngFor="let item of row[column.contentName].slice(0,2)" [style.background-color]="item.color">
+                <!-- <ng-template [ngIf]="column.type=='label' && row" let-row='row' let-value="value" let-expanded="expanded"
+                    ngx-datatable-cell-template>
+                    {{write(row)}}
+                    <div *ngIf="row[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
+
+                        <span class="label" *ngFor="let item of row[column.contentName].slice(0,2)"
+                            [style.background-color]="item.color">
                             {{ item?.name }}</span>
-                        <div class="badge badge-info" *ngIf="row[column.contentName].length>2" style="cursor: pointer;" placement="right" [ngbPopover]="labelPopoverTemplate" triggers="mouseenter:mouseleave" container="body">More :
+                        <div class="badge badge-info" *ngIf="row[column.contentName].length>2" style="cursor: pointer;"
+                            placement="right" [ngbPopover]="labelPopoverTemplate" triggers="mouseenter:mouseleave"
+                            container="body">More :
                             {{row[column.contentName].length-2}}</div>
                         <ng-template #labelPopoverTemplate>
                             <div class="label" *ngFor="let item of row[column.contentName].slice(2)"
                                 [style.background-color]="item.color">{{ item?.name }}</div>
                         </ng-template>
                     </div>
-                </ng-template>
+                </ng-template> -->
+
+
 
                 <!--Boolean columns-->
-                <ng-template *ngIf="column.type==='boolean'" let-value="value" ngx-datatable-cell-template>
-                    <!--{{ value }}--> <i class="fa fa-check" *ngIf="value==='Y'"></i><i class="fa fa-times"
+                <!-- <ng-template [ngIf]="column.type==='boolean'" let-value="value" ngx-datatable-cell-template>
+                    {{ column.contentName }} => <i class="fa fa-check" *ngIf="value==='Y'"></i><i class="fa fa-times"
                         *ngIf="value==='N'"></i>
-                </ng-template>
+                </ng-template> -->
 
-                <ng-template *ngIf="column.contentName==='script'" let-value="value" ngx-datatable-cell-template>
+                <!-- <ng-template *ngIf="column.contentName==='script'" let-value="value" ngx-datatable-cell-template>
                     <code>{{value}}</code>
-                </ng-template>
+                </ng-template> -->
+
+                <!-- <ng-template *ngIf="column.contentName==='description'" let-value='value' let-value
+                    ngx-datatable-cell-template>
+                    <div class="cell" [style.maxWidth]="column.width" placement="top" [ngbPopover]="value"
+                        triggers="mouseenter:mouseleave" container="body">{{ value }}</div>
+                </ng-template> -->
 
                 <!--Default columns-->
-                <ng-template let-value='value' let-value ngx-datatable-cell-template>
+                <!-- <ng-template let-value='value' let-value ngx-datatable-cell-template>
                     <div class="cell" [style.maxWidth]="column.width">{{ value }}</div>
-                </ng-template>
+                </ng-template> -->
 
 
 
             </ngx-datatable-column>
         </ng-template>
-        
 
-        
 
-        <ngx-datatable-column *ngIf="massAction" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false"
-            [width]="1">
+
+
+        <ngx-datatable-column *ngIf="massAction" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+            [resizeable]="false" [width]="1">
             <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
                 <div class="row-menu">
                     <div class="actions-section">

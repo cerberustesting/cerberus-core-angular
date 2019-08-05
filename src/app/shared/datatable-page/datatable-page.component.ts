@@ -38,9 +38,9 @@ export class DatatablePageComponent implements OnInit {
   }
 
   search(globalSearch?: string) {
-    if(this.cache.includes(this.page.number)) return;
-    else this.cache.push(this.page.number)
-    console.log("searching");
+    if(this.cache.includes(this.page.number * this.page.size)) return;
+    else this.cache.push(this.page.number * this.page.size);
+
     
     if (this.servlet) {
       this.globalSearch = (globalSearch)? globalSearch : ''; 
@@ -62,16 +62,15 @@ export class DatatablePageComponent implements OnInit {
   }
 
   pageUpdate(newPage) { //When selecting a new page    
-    console.log('pageUpdate call');
     this.page.number = newPage;    
     this.search();
   }
   applyFilters(globalSearch?: string) {
-    console.log('applyFilters call');
     this.cache = [];
     this.rows = [];
     this.page.number = 0;
     this.search(globalSearch);
   }
+  
 
 }

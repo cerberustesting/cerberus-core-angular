@@ -1,5 +1,6 @@
 <app-filters 
     (systemApply)="applyFilters($event)" 
+    (pageApply)="pageUpdate($event)"
     [page]="page" 
     [columns]="columns"
     [selectedRows]="selectedRows"

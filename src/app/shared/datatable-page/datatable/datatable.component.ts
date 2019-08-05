@@ -21,7 +21,7 @@ export class DatatableComponent implements OnInit {
   };
   @Input() selected: Array<any>;
   @Output() pageUpdate = new EventEmitter<number>();
-  @ViewChild('dataTable') dataTable: any;
+  @ViewChild('dataTable', { static: true }) dataTable: any;
   
   isLoading: boolean;
   columnActive: number;

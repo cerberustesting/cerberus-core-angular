@@ -1,6 +1,5 @@
 <app-filters 
-    (searchServe)="search()" 
-    (systemApply)="search($event)" 
+    (systemApply)="applyFilters($event)" 
     [page]="page" 
     [columns]="columns"
     [selectedRows]="selectedRows"
@@ -18,7 +17,8 @@
             [selection]="selection"
             [massAction]="massAction"
             [selected]="selectedRows"
-            (pageUpdate)="pageUpdate($event)">
+            (pageUpdate)="pageUpdate($event)"
+            (sort)="applyFilters($event)">
         </app-table>
     <!-- </div> -->
 <!-- </div> -->

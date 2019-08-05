@@ -78,22 +78,22 @@
                 </ng-select>
 
                 <!--Page size selector-->
-                <ng-select class="page-selector custom page-size" bindLabel="name"
+                <!-- <ng-select class="page-selector custom page-size" bindLabel="name"
                     placeholder="Show : {{ page.size }}" [(ngModel)]="page.size" [items]="[10, 25, 50, 100]"
                     [closeOnSelect]="true" [clearable]="false" (change)="applySystem()">
 
 
-                    <!--Content in the top container-->
+                    <!--Content in the top container
                     <ng-template ng-label-tmp>
                         <div>Show : {{ page.size }}</div>
                     </ng-template>
 
-                    <!--Items list-->
+                    <!--Items list
                     <ng-template ng-option-tmp let-item="item" let-index="index">
                         <div>Show : {{ item }}</div>
                     </ng-template>
 
-                </ng-select>
+                </ng-select> -->
             </div>
 
 

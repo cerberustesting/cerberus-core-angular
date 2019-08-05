@@ -21,6 +21,7 @@ export class DatatableComponent implements OnInit {
   };
   @Input() selected: Array<any>;
   @Output() pageUpdate = new EventEmitter<number>();
+  @Output() sort = new EventEmitter<void>();
   @ViewChild('dataTable') dataTable: any;
   
   isLoading: boolean;
@@ -64,7 +65,7 @@ export class DatatableComponent implements OnInit {
   onSort(event) {
     this.isLoading = true;
     this.page.sort = event.sorts;  
-    this.pageUpdate.emit(this.page.number);
+    this.sort.emit();
     this.isLoading = false;
   }
 
@@ -87,6 +88,12 @@ export class DatatableComponent implements OnInit {
       }
     }
     
+  }
+
+  onPage(pageInfo) {
+    this.page.number = pageInfo.offset;
+    this.page.size = pageInfo.pageSize;
+    this.applyChange();
   }
   
 }

@@ -22,7 +22,6 @@ export class FiltersComponent implements OnInit {
   @Input('servlet') servlet: string;
   @Input('selection') selection: boolean;
   @Output() systemApply = new EventEmitter<string>();
-  @Output() searchServe = new EventEmitter<string>();
 
   resetColumnDrop() {
     this.columnActive = null;
@@ -50,6 +49,7 @@ export class FiltersComponent implements OnInit {
   }
 
   applySystem() {
+    console.log('applySystem call');
     this.filterList = [];
     this.columns.forEach(e => {
       if(e.sSearch && e.contentName!=='description') {
@@ -59,10 +59,6 @@ export class FiltersComponent implements OnInit {
       }      
     });
     this.systemApply.emit(this.gloabalSearchModel);
-  }
-
-  triggerFilter() {
-    this.searchServe.emit('');
   }
 
   remove(name: string, value: string) {    

@@ -22,6 +22,7 @@ export class DatatablePageComponent implements OnInit {
   @Input() servlet: string;
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
+  cache: Array<number> = [];
 
   rows: Array<any>;
   globalSearch: string
@@ -30,28 +31,47 @@ export class DatatablePageComponent implements OnInit {
   constructor(private testService: TestService, private filterService: FilterService, private invariantsService: InvariantsService) { }
 
   ngOnInit() {
-    this.search();    
+    // this.search();    
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
       this.search();
     })
   }
 
   search(globalSearch?: string) {
+    if(this.cache.includes(this.page.number)) return;
+    else this.cache.push(this.page.number)
+    console.log("searching");
+    
     if (this.servlet) {
       this.globalSearch = (globalSearch)? globalSearch : ''; 
       // this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
       // let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;
       // this.columns.filter(a => a.contentName==="system")[0].sSearch = systemArray.filter((a,i) => systemArray.indexOf(a)===i);
-      this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), (list, length) => {
-        this.rows = list;
+      this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), (list: Array<any>, length: number) => {
+        if (this.rows) {
+          const rows = [...this.rows];
+          rows.splice(this.page.number * this.page.size, 0, ...list)
+          this.rows = rows;
+        } else {
+          this.rows = list;
+        }
+        
         this.page.totalCount = length;
       });
     }
   }
 
   pageUpdate(newPage) { //When selecting a new page    
-    this.page.number = newPage;
+    console.log('pageUpdate call');
+    this.page.number = newPage;    
     this.search();
+  }
+  applyFilters(globalSearch?: string) {
+    console.log('applyFilters call');
+    this.cache = [];
+    this.rows = [];
+    this.page.number = 0;
+    this.search(globalSearch);
   }
 
 }

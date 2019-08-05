@@ -14,13 +14,12 @@ export class FilterService {
     let formData = {}
     let columnListWithActiveFilter = columnList.filter(e => e.sSearch).filter(e => e.sSearch.length != 0 || e.contentName == pageInformation.sort[0].prop || e.contentName == 'system');
     // contaign all columns to filter&sort
-    console.log(this.invariantService.systemsSelected);
     
     //generate request header
 
     // ? "sEcho"
     
-    formData["iDisplayStart"] = (pageInformation.number - 1) * pageInformation.size; // first element index
+    formData["iDisplayStart"] = pageInformation.number * pageInformation.size; // first element index
     formData["iDisplayLength"] = pageInformation.size; // number of elements
     let sortCol = columnListWithActiveFilter.map(a => a.contentName).indexOf(pageInformation.sort[0].prop);
     if (sortCol >= 0) {
@@ -54,6 +53,7 @@ export class FilterService {
     for (let item in formData) {
       queryParameter += encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&';
     }   
+    console.log(formData['iDisplayStart'] + ' => ' + formData['iDisplayLength']);
     return queryParameter.slice(0, -1); // removing the last '&'
   }
 }

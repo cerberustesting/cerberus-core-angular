@@ -12,8 +12,12 @@
     [scrollbarH]="false"
     [scrollbarV]="true" 
     [externalSorting]="true" 
-    (select)='onSelect($event)' 
-    (sort)="onSort($event)">
+    (select)='onSelect($event)'
+    [externalPaging]="true" 
+    [count]="page.totalCount"
+    [offset]="page.number"
+    (sort)="onSort($event)"
+    (page)="onPage($event)">
 
 
         <!--CheckBox Column-->

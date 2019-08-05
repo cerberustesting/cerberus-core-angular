@@ -1,4 +1,5 @@
-<div class="row" *ngIf="tagsList"><div class="col-md-12">
+<div class="row" *ngIf="tagsList">
+  <div class="col-md-12">
     <div class="block block-rounded block-bordered">
       <div class="block-header block-header-default">
         <h3 class="block-title">Tag <small>selection</small></h3>
@@ -6,7 +7,7 @@
       <div class="block-content row">
         <!-- tag selection section -->
         <div class="col-md-12 row push">
-          <div class="col-md-11 pr-0">
+          <div class="col-md-12">
             <ng-select [items]="tagsBuffer" [virtualScroll]="true" [loading]="loading" bindLabel="tag"
               placeholder="Select a Tag" (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()"
               [(ngModel)]='selectedTag' (change)="selectedTagChange()" (clear)="clearTag()">
@@ -31,16 +32,16 @@
                       <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
                         <i class="fa fa-clock mr-1"></i> 14:02
                       </span>
-                      <button *ngIf="item.ciResult" type="button"
-                        class="btn btn-sm" [ngClass]="'btn-'+findStatusClass(item.ciResult)">{{item.ciResult}}</button>
+                      <button *ngIf="item.ciResult" type="button" class="btn btn-sm"
+                        [ngClass]="'btn-'+findStatusClass(item.ciResult)">{{item.ciResult}}</button>
                     </div>
                   </div>
                 </div>
               </ng-template>
             </ng-select>
           </div>
-          <div class="col-md-1">
-            <button type="button" class="btn btn-outline-secondary heigthNgSelect"
+          <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-outline-secondary heigthNgSelect no-border"
               (click)="filtersShowed = !filtersShowed" [ngClass]="selectedTag ? '' : 'disabled'"
               [disabled]="!selectedTag">
               <span *ngIf="filtersShowed">Hide</span>

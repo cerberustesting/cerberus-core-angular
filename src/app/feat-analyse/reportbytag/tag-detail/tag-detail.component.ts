@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 
 @Component({
   selector: 'app-tag-detail',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tag-detail.component.scss']
 })
 export class TagDetailComponent implements OnInit {
+  collapse = false;
 
-  constructor() { }
+  tagDetail = {};
+
+  constructor(private reportingService: ReportingService) { }
 
   ngOnInit() {
+    this.reportingService.observableTagDetail.subscribe(tagDetail => {
+      this.tagDetail = tagDetail;
+    })
   }
 
 }

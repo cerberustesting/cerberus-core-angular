@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Label } from 'ng2-charts';
 import { ChartType, ChartOptions } from 'chart.js';
 import { ITag } from 'src/app/shared/model/reporting.model';
+import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 declare var jQuery: any;
 
 @Component({
@@ -17,97 +18,23 @@ export class ReportbystatusComponent implements OnInit {
   private graphID: string = "graph_reportbystatus";
   expand: boolean = true;
 
-  constructor() {
-    
+  constructor(private reportingService: ReportingService) {
+
   }
 
- labels: Label[];
- colors: any;
- data: number[];
- activeState: Array<any>;
-
-
-  public initChartJSLines() {
-    // TODO : Add colors
-    let compo = [
-      {
-        label: "FA",
-        color: 'rgba(141, 196, 81, 1)',
-        colorHover: 'rgba(141, 196, 81, .5)',
-        data: this.selectedTag.nbFA,
-        icon: 'fa-robot'
-      },
-      {
-        label: "KO",
-        color: 'rgba(255, 177, 25, 1)',
-        colorHover: 'rgba(255, 177, 25, .5)',
-        data: this.selectedTag.nbKO,
-        icon: 'fa-times'
-      },
-      {
-        label: "NA",
-        color: 'rgba(224, 79, 26, 1)',
-        colorHover: 'rgba(224, 79, 26, .5)',
-        data: this.selectedTag.nbNA,
-        icon: 'fa-robot'
-      },
-      {
-        label: "NE",
-        color: 'rgba(224, 79, 26, 1)',
-        colorHover: 'rgba(224, 79, 26, .5)',
-        data: this.selectedTag.nbNE,
-        icon: 'fa-robot'
-      },
-      {
-        label: "OK",
-        color: 'rgba(224, 79, 26, 1)',
-        colorHover: 'rgba(224, 79, 26, .5)',
-        data: this.selectedTag.nbOK,
-        icon: 'fa-check'
-      },
-      {
-        label: "PE",
-        color: 'rgba(224, 79, 26, 1)',
-        colorHover: 'rgba(224, 79, 26, .5)',
-        data: this.selectedTag.nbPE,
-        icon: 'fa-robot'
-      },
-      {
-        label: "QE",
-        color: 'rgba(224, 79, 26, 1)',
-        colorHover: 'rgba(224, 79, 26, .5)',
-        data: this.selectedTag.nbQE,
-        icon: 'fa-robot'
-      },
-      {
-        label: "QU",
-        color: 'rgba(224, 79, 26, 1)',
-        colorHover: 'rgba(224, 79, 26, .5)',
-        data: this.selectedTag.nbQU,
-        icon: 'fa-robot'
-      },
-      {
-        label: "WE",
-        color: 'rgba(224, 79, 26, 1)',
-        colorHover: 'rgba(224, 79, 26, .5)',
-        data: this.selectedTag.nbWE,
-        icon: 'fa-robot'
-      }
-    ];
-    this.activeState = compo.filter(e=> e.data>0);
-    this.labels = this.activeState.map(e => e.label);
-    // TODO : Add colors
-    // this.colors = [
-    //   {
-    //     backgroundColor: compo.map(e => e.color)
-    //   }
-    // ];
-    this.data = this.activeState.map(e => e.data);
- 
-  }
+  labels: Label[];
+  colors: any;
+  data: number[];
+  activeState: Array<any>;
 
   ngOnInit() {
-    this.initChartJSLines();
+    this.reportingService.observableReportStatus.subscribe(data => {
+      this.activeState = data.status.filter(e => e.data > 0);
+      this.labels = this.activeState.map(e => e.label);
+      this.data = this.activeState.map(e => e.data);
+      this.colors = [ { backgroundColor: this.activeState.map(e => e.color) } ];
+    });
+
   }
 
   round(value) {

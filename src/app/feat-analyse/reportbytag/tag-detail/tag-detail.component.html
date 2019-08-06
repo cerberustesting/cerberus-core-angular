@@ -1,32 +1,21 @@
 <div class="block block-bordered block-rounded">
-    <div class="block-header block-header-default">
-      <h3 class="block-title">Tag <small>detail</small></h3>
+  <div class="block-header block-header-default">
+    <h3 class="block-title">Tag <small>detail</small></h3>
+  </div>
+  <div class="block-content">
+    <div class="row">
+    <div class="form-group col-md-6">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text input-group-text-alt">
+            Start
+          </span>
+        </div>
+        <span type="text" class="form-control form-control-alt text-center" id="StartTime">
+          <i class="fa fa-calendar-alt mr-1"></i> {{ tagDetail.start | date:'d MMMM yyyy   H:mm' }} </span>
+      </div>
     </div>
-    <div class="block-content row">
-      <div class="form-group col-md-12">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text input-group-text-alt">
-              Date
-            </span>
-          </div>
-          <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-            <i class="fa fa-calendar-alt mr-1"></i> 25 September 2018 </span>
-        </div>
-      </div>
-      <div class="form-group col-md-6">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text input-group-text-alt">
-              Start
-            </span>
-          </div>
-          <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-            <!-- ? ? ? -->
-            <i class="fa fa-clock mr-1"></i> 14:00 </span>
-        </div>
-      </div>
-      <div class="form-group col-md-6">
+    <div class="form-group col-md-6">
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text input-group-text-alt">
@@ -34,34 +23,57 @@
             </span>
           </div>
           <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-            <!-- ? ? ? -->
-            <i class="fa fa-clock mr-1"></i> 14:30 (+1d) </span>
+            <i class="fa fa-calendar-alt mr-1"></i> {{ tagDetail.end | date:'d MMMM yyyy   H:mm' }} </span>
         </div>
       </div>
-      <div class="form-group col-md-6">
+    <!-- <div class="form-group col-md-6">
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text input-group-text-alt">
-              Duration
+              Start
             </span>
           </div>
           <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-            <i class="fa fa-stopwatch mr-1"></i> 3 min.</span>
+            <i class="fa fa-clock mr-1"></i> 14:00 </span>
         </div>
-      </div>
-      <div class="form-group col-md-6">
+      </div> -->
+    <!-- <div class="form-group col-md-6">
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text input-group-text-alt">
-              CI Result
+              End
             </span>
           </div>
-          <span type="text" style="color: green;" class="form-control form-control-alt text-center"
-            id="CIResult">
-            <i class="fa fa-check mr-1"></i> OK </span>
+          <span type="text" class="form-control form-control-alt text-center" id="StartTime">
+            <i class="fa fa-clock mr-1"></i> 14:30 (+1d) </span>
         </div>
+      </div> -->
+    <div class="form-group col-md-6">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text input-group-text-alt">
+            Duration
+          </span>
+        </div>
+        <span type="text" class="form-control form-control-alt text-center" id="StartTime">
+          <i class="fa fa-stopwatch mr-1"></i> {{ tagDetail.duration }} min.</span>
       </div>
-      <div class="form-group col-md-12">
+    </div>
+    <div class="form-group col-md-6">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text input-group-text-alt">
+            CI Result
+          </span>
+        </div>
+        <span type="text" style="color: green;" class="form-control form-control-alt text-center" id="CIResult">
+          <i class="fa fa-check mr-1"></i> {{ tagDetail.ciResult }} </span>
+      </div>
+    </div>
+  </div>
+    
+    <div *ngIf="collapse" class="row">
+      <div class="form-group col-md-6">
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text input-group-text-alt">
@@ -69,9 +81,20 @@
             </span>
           </div>
           <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-            <i class="fa fa-user mr-1"></i> admin </span>
+            <i class="fa fa-user mr-1"></i> {{ tagDetail.usrCreated }} </span>
         </div>
       </div>
+      <div class="form-group col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-group-text-alt">
+                Campaign
+              </span>
+            </div>
+            <span type="text" class="form-control form-control-alt text-center" id="LatestExecution">
+               {{ tagDetail.campaign }} </span>
+          </div>
+        </div>
       <div class="form-group col-md-12">
         <div class="input-group">
           <div class="input-group-prepend">
@@ -80,8 +103,14 @@
             </span>
           </div>
           <span type="text" class="form-control form-control-alt text-center" id="LatestExecution">
-            <i class="fa fa-calendar-alt mr-1"></i> 03 September </span>
+            <i class="fa fa-calendar-alt mr-1"></i> {{ tagDetail.lastExecution | date:'d MMMM yyyy   H:mm' }} </span>
         </div>
       </div>
+
     </div>
+
+    <button class="col-md-12 btn btn-info" (click)="collapse = !collapse"><span *ngIf="collapse; else closeAdvance">Close Advance</span></button>
+    <ng-template #closeAdvance>Advance</ng-template>
+
   </div>
+</div>

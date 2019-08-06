@@ -34,10 +34,10 @@
         </div>
         <div class="block-content">
           <div class="row push">
-            <div class="col-md-5">
+            <div class="col-md-6">
               <app-tag-detail></app-tag-detail>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
               <app-reportby-status [selectedTag]="selectedTag"></app-reportby-status>
             </div>
             <div class="content">
@@ -45,10 +45,10 @@
                 <ul class="nav nav-tabs nav-tabs-block justify-content-end js-tabs-enabled" data-toggle="tabs"
                   role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link" [ngClass]="{'active': reportView}" (click)="toggleReportView(true)">Charts</a>
+                    <a class="nav-link" [ngClass]="{'active': reportView}" (click)="toggleReportView(true)">Report</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" [ngClass]="{'active': !reportView}" (click)="toggleReportView(false)">List</a>
+                    <a class="nav-link" [ngClass]="{'active': !reportView}" (click)="toggleReportView(false)">Analyse</a>
                   </li>
                 </ul>
                 <div class="block-content tab-content row push" id="chartsView" *ngIf="reportView">

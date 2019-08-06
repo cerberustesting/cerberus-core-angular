@@ -107,9 +107,7 @@ export class ReportbytagComponent implements OnInit {
   }
   tagSelection(value) { 
     this.selectedTag = value;
-    this.ReportingService.getTestCaseExecutionByTag(this.selectedTag.tag, response => {
-      this.selectedTagData = response;                
-    });
+    this.ReportingService.getTestCaseExecutionByTag(this.selectedTag.tag);
   }
   toggleReportView(view) {
     this.reportView = view;

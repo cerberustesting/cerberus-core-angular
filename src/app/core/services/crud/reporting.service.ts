@@ -16,7 +16,6 @@ export class ReportingService {
   private reportTestFolder = {};
   private reportLabel = {};
   status: Array<any> = [
-
     {
       label: "FA",
       color: "#F0AD4E",
@@ -66,6 +65,7 @@ export class ReportingService {
 
   observableTagDetail = new BehaviorSubject<any>(this.tagDetail);
   observableReportStatus = new BehaviorSubject<any>(this.reportStatus);
+  observableReportTestFolder = new BehaviorSubject<any>(this.reportTestFolder);
 
   // variables
   private tagsList: Array<ITag>;
@@ -84,7 +84,7 @@ export class ReportingService {
   }
   ReadTestCaseExecutionByTag(tag: string, callback: (any) => any) {
     //TODO : Specified type
-    this.http.get<any>(environment.cerberus_api_url + '/ReadTestCaseExecutionByTag?Tag=' + tag)
+    this.http.get<any>(environment.cerberus_api_url + '/ReadTestCaseExecutionByTag?Tag=' + tag + '&OK=on&KO=on&FA=on&NA=on&NE=on&WE=on&PE=on&QU=on&QE=on&CA=on&BE=on&CH=on&ES=on&FR=on&IT=on&LU=on&NL=on&PT=on&RU=on&UK=on&VI=on&PL=on&DE=on&RX=on&UF=on&env=on&country=on&robotDecli=on&app=on&')
       .subscribe(response => {
         callback(response);
       })
@@ -95,6 +95,7 @@ export class ReportingService {
       console.log("response :", response);
       this.parseTagDetail(response);
       this.parseReportStatus(response);
+      this.parseReportTestFolder(response);
     });
   }
 
@@ -134,6 +135,43 @@ export class ReportingService {
     }
     this.reportStatus.total = response.tagObject.nbExeUsefull;
     this.observableReportStatus.next(this.reportStatus)
+  }
+  parseReportTestFolder(response) {
+    let labelList = [];
+    let datasets = [];
+    let colors = [];
+
+    for (let axis of response.functionChart.axis) {
+      labelList.push(axis.name);
+    }
+    
+    for (let status of this.status){
+      let temp = {data: [], label: status.label, backgroundColor: status.color, hoverBackgroundColor: status.color};
+      for (let axis of response.functionChart.axis) {
+        if (axis[status.label]) temp.data.push(axis[status.label].value);
+        else temp.data.push(0);
+      }
+      if (temp.data.some(number => number!=0)) datasets.push(temp);
+    }
+
+
+    this.reportTestFolder = {
+      datasets: datasets,
+      label: labelList,
+      options : {
+        responsive: true,
+        // We use these empty structures as placeholders for dynamic theming.
+        scales: { xAxes: [{stacked: true}], yAxes: [{stacked: true}] },
+        plugins: {
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+          }
+        }
+      },
+      legend: true
+    }
+    this.observableReportTestFolder.next(this.reportTestFolder);
   }
   
 }

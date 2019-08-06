@@ -7,7 +7,7 @@
         </button>
     </div>
     
-    <div class="block-content row" *ngIf="expand">
+    <div class="block-content row" *ngIf="expand && chart.datasets">
       <canvas baseChart [datasets]="chart.datasets" [labels]="chart.label" [options]="chart.options"
         [plugins]="chart.plugin" [legend]="chart.legend" [chartType]="'bar'">
       </canvas>

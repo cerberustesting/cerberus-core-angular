@@ -12,6 +12,7 @@
         [labels]="chart.labels" 
         [options]="chart.options"
         [legend]="chart.legend" 
-        [chartType]="'bar'"></canvas>
+        [chartType]="'bar'"
+        (chartClick)="chartClicked($event)"></canvas>
     </div>
   </div>

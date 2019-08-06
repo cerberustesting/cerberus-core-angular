@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 
 @Component({
   selector: 'app-statistic-reliability',
@@ -8,22 +9,19 @@ import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 })
 export class StatisticReliabilityComponent implements OnInit {
 
-  chart = {
-    options : {
-      responsive: true
-    },
-    legend: false,
-    datasets: [
-      { data: [9,8,7,4,5,6,3,2,1], label: 'lineLabel', type: 'line' },
-      { data: [9,6,3,8,5,2,7,4,1], label: 'barLabel'}
-    ],
-    labels: ['1','2','3','4','5','6','7','8','9']
-  };
+  chart: any;
   expand: boolean = true;
 
-  constructor() { }
+  constructor(private reportingService: ReportingService) { }
 
   ngOnInit() {
+    this.reportingService.observableReportStatisticsReliability.subscribe(response => {
+      this.chart = response;
+    });
+  }
+  chartClicked(event) {
+    console.log("click :", event);
+    
   }
 
 }

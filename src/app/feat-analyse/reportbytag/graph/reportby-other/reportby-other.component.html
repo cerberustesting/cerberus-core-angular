@@ -7,47 +7,12 @@
         </button>
     </div>
     <div class="block-content row" *ngIf="expand">
-      <div class="chart-container">
+      <div class="chart-container" *ngFor="let chart of charts">
         <canvas baseChart 
         [data]="chart.data" 
         [labels]="chart.labels" 
         [legend]="chart.legend" 
-        [chartType]="'polarArea'"
-        [options]="chart.options">
-        </canvas>
-      </div>
-      <div class="chart-container">
-        <canvas baseChart 
-        [data]="chart.data" 
-        [labels]="chart.labels" 
-        [legend]="chart.legend" 
-        [chartType]="'polarArea'"
-        [options]="chart.options">
-        </canvas>
-      </div>
-      <div class="chart-container">
-        <canvas baseChart 
-        [data]="chart.data" 
-        [labels]="chart.labels" 
-        [legend]="chart.legend" 
-        [chartType]="'polarArea'"
-        [options]="chart.options">
-        </canvas>
-      </div>
-      <div class="chart-container">
-        <canvas baseChart 
-        [data]="chart.data" 
-        [labels]="chart.labels" 
-        [legend]="chart.legend" 
-        [chartType]="'polarArea'"
-        [options]="chart.options">
-        </canvas>
-      </div>
-      <div class="chart-container">
-        <canvas baseChart 
-        [data]="chart.data" 
-        [labels]="chart.labels" 
-        [legend]="chart.legend" 
+        [colors]="chart.colors" 
         [chartType]="'polarArea'"
         [options]="chart.options">
         </canvas>

@@ -48,15 +48,15 @@
                     <div *ngIf="column.type=='label'">
                         <div *ngIf="row[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
 
-                            <span class="label" *ngFor="let item of row[column.contentName].slice(0,2)"
+                            <span class="label" *ngFor="let item of row[column.contentName].slice(0,3)"
                                 [style.background-color]="item.color">
                                 {{ item?.name }}</span>
-                            <div class="badge badge-info" *ngIf="row[column.contentName].length>2"
+                            <div class="badge badge-info" *ngIf="row[column.contentName].length>3"
                                 style="cursor: pointer;" placement="right" [ngbPopover]="labelPopoverTemplate"
                                 triggers="mouseenter:mouseleave" container="body">More :
                                 {{row[column.contentName].length-2}}</div>
                             <ng-template #labelPopoverTemplate>
-                                <div class="label" *ngFor="let item of row[column.contentName].slice(2)"
+                                <div class="label" *ngFor="let item of row[column.contentName].slice(3)"
                                     [style.background-color]="item.color">{{ item?.name }}</div>
                             </ng-template>
                         </div>
@@ -71,10 +71,11 @@
                         <code>{{value}}</code>
                     </div>
 
-                    <div *ngIf="!column.type || column.type==='none'" class="cell" [style.maxWidth]="column.width">{{ value }}</div>
+                    <div *ngIf="!column.type || column.type==='none'" class="cell" [style.maxWidth]="column.width">
+                        {{ value }}</div>
 
-                    <div *ngIf="column.type==='longtext'" class="cell" [style.maxWidth]="column.width" placement="top" [ngbPopover]="value"
-                        triggers="mouseenter:mouseleave" container="body">{{ value }}</div>
+                    <div *ngIf="column.type==='longtext'" class="cell" [style.maxWidth]="column.width" placement="top"
+                        [ngbPopover]="value" triggers="mouseenter:mouseleave" container="body">{{ value }}</div>
 
                 </ng-template>
 

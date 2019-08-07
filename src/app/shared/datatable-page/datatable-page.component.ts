@@ -33,17 +33,20 @@ export class DatatablePageComponent implements OnInit {
   ngOnInit() {
     // this.search();    
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
+      this.cache = [];
+      this.rows = [];
+      this.page.number = 0;
       this.search();
     })
   }
 
   search(globalSearch?: string) {
-    if(this.cache.includes(this.page.number * this.page.size)) return;
+    if (this.cache.includes(this.page.number * this.page.size)) return;
     else this.cache.push(this.page.number * this.page.size);
 
-    
+
     if (this.servlet) {
-      this.globalSearch = (globalSearch)? globalSearch : ''; 
+      this.globalSearch = (globalSearch) ? globalSearch : '';
       // this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
       // let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;
       // this.columns.filter(a => a.contentName==="system")[0].sSearch = systemArray.filter((a,i) => systemArray.indexOf(a)===i);
@@ -55,15 +58,16 @@ export class DatatablePageComponent implements OnInit {
         } else {
           this.rows = list;
         }
-        
+
         this.page.totalCount = length;
       });
     }
   }
 
   pageUpdate(newPage) { //When selecting a new page    
-    this.page.number = newPage;    
+    this.page.number = newPage;
     this.search();
+
   }
   applyFilters(globalSearch?: string) {
     this.cache = [];
@@ -71,6 +75,6 @@ export class DatatablePageComponent implements OnInit {
     this.page.number = 0;
     this.search(globalSearch);
   }
-  
+
 
 }

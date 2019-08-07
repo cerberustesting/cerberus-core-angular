@@ -37,6 +37,8 @@
               </div>
           </ng-template>
           <ng-template ng-header-tmp>
+              <button class="btn btn-outline-primary select-btn" (click)="selectAll()">Select all</button>
+              <button class="btn btn-outline-primary select-btn" (click)="unselectAll()">Unselect all</button>
               <div *ngFor="let system of systemModel" (click)="deleteSystem(system)" class="selected-system"><i class="fa fa-times"></i> {{ system }}</div>
           </ng-template>
         </ng-select>

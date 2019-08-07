@@ -19,3 +19,9 @@
     color: #3b5998;
   }
 }
+.select-btn {
+  width: 110px;
+  &:nth-child(2) {
+    float: right;
+  }
+}

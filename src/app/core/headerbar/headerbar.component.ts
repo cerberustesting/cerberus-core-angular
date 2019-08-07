@@ -84,5 +84,14 @@ export class HeaderbarComponent implements OnInit {
   logout() {
     this.ks.logout();
   }
+  selectAll() {
+    this.systemModel = this.systemsList.map(a=>a.value);
+    for (let system of this.systemModel) {
+      this.addSystem(system);
+    }
+  }
+  unselectAll() {
+    this.onClear()
+  }
 
 }

@@ -18,6 +18,7 @@ export class HeaderbarComponent implements OnInit {
   private systemSub: Subscription;
   private selectedSystems: any[];
   private systemSubscription: Subscription;
+  private systemModel: string[];
 
   // user data from Keycloak
   private userFullName: string;
@@ -46,6 +47,7 @@ export class HeaderbarComponent implements OnInit {
     this.systemSubscription = this.InvariantService.observableSystemsSelected.subscribe(
       (systemsSelected: any[]) => {
         this.selectedSystems = systemsSelected;
+        this.systemModel = systemsSelected;        
       }
     );
     // this.InvariantService.emitSystemsSubject();
@@ -56,6 +58,13 @@ export class HeaderbarComponent implements OnInit {
   }
   deleteSystem(system) {
     this.InvariantService.removeSystem(system);
+  }
+  onClear() {
+    let systemsToDelete = this.selectedSystems.map(a=>a);
+    for (let system of systemsToDelete) {
+      this.deleteSystem(system);
+    }
+    this.systemModel = [];
   }
 
   debug() {

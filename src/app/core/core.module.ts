@@ -5,6 +5,7 @@ import { FooterComponent } from "./footer/footer.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { AppRoutingModule } from "../app-routing.module";
 import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
   ],
   imports: [
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule
   ],
   exports : [
       HeaderbarComponent,

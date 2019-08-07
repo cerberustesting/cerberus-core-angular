@@ -9,3 +9,13 @@
 .link-cursor {
   cursor: pointer;
 }
+
+.selected-system {
+  cursor: pointer;
+  color: #222;
+  border-bottom: 1px solid #3b5998;
+  margin-bottom: 5px;
+  i {
+    color: #3b5998;
+  }
+}

@@ -44,3 +44,26 @@ ng-select.auto-width .ng-dropdown-panel {
 .ngx-datatable .datatable-body {
   margin-top: 100px;
 } */
+
+ng-select.system-select {
+  display: inline-block;
+}
+
+ng-select.system-select .ng-select-container {
+  position: relative;
+  display: inline-flex;
+  width: 250px;
+  border-color: #fff;
+  background-color: transparent !important;
+  color: #fff;
+  margin-left: 20px;
+  
+}
+ng-select.system-select .ng-select-container .ng-placeholder {
+  color: #fff !important;
+}
+ng-select.system-select .ng-dropdown-panel {
+  width: 250px;
+  position: absolute !important;
+  left: 20px;
+}

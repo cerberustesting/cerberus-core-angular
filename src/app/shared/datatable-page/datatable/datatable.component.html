@@ -10,6 +10,7 @@
         <!--CheckBox Column-->
         <ngx-datatable-column *ngIf="selection" [sortable]="false" [canAutoResize]="false" [draggable]="false"
             [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
+            
         </ngx-datatable-column>
 
         <!--Column from column array-->
@@ -54,7 +55,7 @@
                             <div class="badge badge-info" *ngIf="row[column.contentName].length>3"
                                 style="cursor: pointer;" placement="right" [ngbPopover]="labelPopoverTemplate"
                                 triggers="mouseenter:mouseleave" container="body">More :
-                                {{row[column.contentName].length-2}}</div>
+                                {{row[column.contentName].length-3}}</div>
                             <ng-template #labelPopoverTemplate>
                                 <div class="label" *ngFor="let item of row[column.contentName].slice(3)"
                                     [style.background-color]="item.color">{{ item?.name }}</div>

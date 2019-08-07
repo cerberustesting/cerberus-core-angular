@@ -52,27 +52,18 @@
       </li>
       <ng-template ngFor let-menu [ngForOf]="menus">
         <li class="nav-main-heading">{{ menu.name }}</li>
-        <li class="nav-main-item" style="cursor: pointer;" *ngFor='let menuitem of menu.data'>
+        <li class="nav-main-item" [ngClass]="{'open': menuitem.expanded&&menuitem.submenu}" style="cursor: pointer;" *ngFor='let menuitem of menu.data'>
           <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="menuitem.submenu ? null : menuitem.link" (click)="toggleMenu(menuitem)">
             <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
             <span class="nav-main-link-name">{{menuitem.name}}</span>
           </a>
-          <ul *ngIf="menuitem.submenu && menuitem.expanded">
+          <ul class="no-padding nav-main-submenu" *ngIf="menuitem.submenu && menuitem.expanded">
             <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
               <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''"
                 [routerLink]="submenuitem.submenu ? null : submenuitem.link">
                 <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
                 <span class="nav-main-link-name">{{submenuitem.name}}</span>
-              </a>
-              <ul class="nav-main-submenu" *ngIf="submenuitem.submenu && submenuitem.expanded">
-                <li class="nav-main-item" *ngFor="let subsubmenuitem of submenuitem.submenu">
-                  <a class="nav-main-link" [routerLink]="subsubmenuitem.submenu ? null : subsubmenuitem.link">
-                    <i *ngIf="subsubmenuitem.icon_class" class="nav-main-link-icon si"
-                      [ngClass]="subsubmenuitem.icon_class"></i>
-                    <span class="nav-main-link-name">{{subsubmenuitem.name}}</span>
-                  </a>
-                </li>
-              </ul>
+              </a>              
             </li>
           </ul>
         </li>

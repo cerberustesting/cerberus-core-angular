@@ -41,8 +41,8 @@ export class DatatablePageComponent implements OnInit {
   }
 
   search(globalSearch?: string) {
-    if (this.cache.includes(this.page.number * this.page.size)) return;
-    else this.cache.push(this.page.number * this.page.size);
+    if (this.cache.includes(this.page.number)) return;
+    else this.cache.push(this.page.number);
 
 
     if (this.servlet) {

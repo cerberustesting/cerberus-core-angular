@@ -62,6 +62,9 @@ export class FiltersComponent implements OnInit {
     this.systemApply.emit(this.gloabalSearchModel);
   }
   applyPage() {
+    let a = document.getElementsByClassName("datatable-body")[0];
+    a.scroll(0,0);
+    a.scrollBy(0, (this.page.number-1) * this.page.size * 50 + 50);
     this.pageApply.emit(this.page.number);
   }
 

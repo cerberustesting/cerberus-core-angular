@@ -93,8 +93,8 @@ export class ReportingService {
     this.http.get<any>(environment.cerberus_api_url + '/ReadTestCaseExecutionByTag?Tag=' + this.selectedTagName + '&OK=on&KO=on&FA=on&NA=on&NE=on&WE=on&PE=on&QU=on&QE=on&CA=on&BE=on&CH=on&ES=on&FR=on&IT=on&LU=on&NL=on&PT=on&RU=on&UK=on&VI=on&PL=on&DE=on&RX=on&UF=on&env=on&country=on&robotDecli=on&app=on&')
       .subscribe(response => {        
         this.http.get<any>(environment.cerberus_api_url + '/ReadCampaign?tag=true&&campaign=' + response.tagObject.campaign)
-          .subscribe(campaignResonse => {
-            this.campaignData = campaignResonse.contentTable.tag;
+          .subscribe(campaignResponse => {            
+            this.campaignData = campaignResponse.contentTable.tag.slice(0, 10);
             callback(response);
           })
       })
@@ -193,29 +193,48 @@ export class ReportingService {
   parseOther(response) {
     this.reportOther = [];
 
-
+    let graphs = {
+      country: {},
+      environment: {},
+      robotDecli: {},
+      application: {}
+    }
 
     for (let table of response.statsChart.contentTable.split) {
+      let percentage = Math.round((table.OK/table.total)*1000)/10
+      if (!graphs.country[table.country]) graphs.country[table.country] = [];
+      graphs.country[table.country].push(percentage);
+      if (!graphs.environment[table.environment]) graphs.environment[table.environment] = [];
+      graphs.environment[table.environment].push(percentage);
+      if (!graphs.robotDecli[table.robotDecli]) graphs.robotDecli[table.robotDecli] = [];
+      graphs.robotDecli[table.robotDecli].push(percentage);
+      if (!graphs.application[table.application]) graphs.application[table.application] = [];
+      graphs.application[table.application].push(percentage);
+    }
+    console.log('graphs :', graphs);
 
-      let tmp = [];
-      for (let status of this.status) {
-        tmp.push({
-          label: status.label,
-          color: status.color,
-          data: table[status.label]
-        })
+    
+
+    for (let graph in graphs) {
+      let labels = [];
+      let data = [];
+      for (let label in graphs[graph]) {
+        labels.push(label);
+        let sum = 0;
+        graphs[graph][label].forEach(element => {
+          sum+=element;
+        });        
+        data.push(Math.round((sum/graphs[graph][label].length)*10)/10)
       }
-      tmp = tmp.filter(a => a.data>0);
-
       let chart = {
-        data: tmp.map(a => a.data),
+        data: data,
         legend: false,
-        labels: tmp.map(a => a.label),
-        colors: [ { backgroundColor: tmp.map(a => a.color) } ],
+        labels: labels,
+        // colors: [ { backgroundColor: tmp.map(a => a.color) } ],
         options: {
           title: {
             display: true,
-            text: table.environment + ' ' + table.country + ' ' + table.robotDecli + ' ' + table.application
+            text: graph,
           },
           scales :{
             yAxes: [{
@@ -226,6 +245,44 @@ export class ReportingService {
       }
       this.reportOther.push(chart);
     }
+
+
+    
+
+
+
+    // for (let table of response.statsChart.contentTable.split) {
+
+    //   let tmp = [];
+    //   for (let status of this.status) {
+    //     tmp.push({
+    //       label: status.label,
+    //       color: status.color,
+    //       data: table[status.label]
+    //     })
+    //   }
+    //   tmp = tmp.filter(a => a.data>0);
+
+    //   let chart = {
+    //     data: tmp.map(a => a.data),
+    //     legend: false,
+    //     labels: tmp.map(a => a.label),
+    //     colors: [ { backgroundColor: tmp.map(a => a.color) } ],
+    //     options: {
+    //       title: {
+    //         display: true,
+    //         text: table.environment + ' ' + table.country + ' ' + table.robotDecli + ' ' + table.application
+    //       },
+    //       scales :{
+    //         yAxes: [{
+    //           ticks: {display: false}
+    //         }]
+    //       }
+    //     }
+    //   }
+    //   this.reportOther.push(chart);
+    // }
+    console.log(this.reportOther);
     this.observableReportOther.next(this.reportOther);
 
   }
@@ -235,22 +292,19 @@ export class ReportingService {
       {data: [], label: "Results"},
     ]
     let labels = [];
-    console.log(this.campaignData);
     
     for (let tag of this.campaignData) {
-      datasets[0].data.push((tag.nbExeUsefull/tag.nbExe)*100);
-      datasets[1].data.push((tag.nbOK/tag.nbExe)*100);
+      datasets[0].data.push((Math.round(tag.nbExeUsefull/tag.nbExe)*100));
+      datasets[1].data.push(Math.round((tag.nbOK/tag.nbExe)*100));
       labels.push(tag.tag);
     }
     this.reportStatisticsReliability = {
       options : {
         responsive: true
       },
-      legend: false,
       datasets: datasets,
       labels: labels
     };
-    console.log("report :", this.reportStatisticsDurationExecution);
     this.observableReportStatisticsReliability.next(this.reportStatisticsReliability);
   }
 
@@ -260,7 +314,6 @@ export class ReportingService {
       {data: [], label: "Executions"},
     ]
     let labels = [];
-    console.log(this.campaignData);
     
     for (let tag of this.campaignData) {
       let dateEnd = new Date(tag.DateEndQueue);
@@ -274,11 +327,9 @@ export class ReportingService {
       options : {
         responsive: true
       },
-      legend: false,
       datasets: datasets,
       labels: labels
     };
-    console.log("report :", this.reportStatisticsDurationExecution);
     this.observableReportStatisticsDurationExecution.next(this.reportStatisticsDurationExecution);
   }
 

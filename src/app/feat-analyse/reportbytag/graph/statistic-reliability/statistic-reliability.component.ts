@@ -19,9 +19,5 @@ export class StatisticReliabilityComponent implements OnInit {
       this.chart = response;
     });
   }
-  chartClicked(event) {
-    console.log("click :", event);
-    
-  }
 
 }

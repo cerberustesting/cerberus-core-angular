@@ -6,7 +6,7 @@
           <i class="si" [ngClass]="{'si-arrow-down': !expand, 'si-arrow-up': expand}"></i>
         </button>
     </div>
-    <div class="block-content row" *ngIf="expand">
+    <div class="block-content row" *ngIf="expand && chart.datasets">
         <div class="block-content row">
             <canvas baseChart 
             [datasets]="chart.datasets" 

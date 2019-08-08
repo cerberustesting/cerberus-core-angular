@@ -17,7 +17,7 @@ export class DatalibraryComponent implements OnInit {
 
   columns = DataLibColumnsData;
   page = {
-    size: 10, //maximum element per page
+    size: 0, //maximum element per page
     number: 1, //number of current page
     sort: [{ dir: "asc", prop: "testDataLibID" }], //sort item
     totalCount: 0 //total count of element in database

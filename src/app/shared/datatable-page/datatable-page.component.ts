@@ -22,7 +22,7 @@ export class DatatablePageComponent implements OnInit {
   @Input() servlet: string;
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
-  cache: Array<number> = [];
+  cache: number = -1;
 
   rows: Array<any>;
   globalSearch: string
@@ -33,7 +33,7 @@ export class DatatablePageComponent implements OnInit {
   ngOnInit() {
     // this.search();    
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
-      this.cache = [];
+      this.cache = -1;
       this.rows = [];
       this.page.number = 0;
       this.search();
@@ -41,26 +41,39 @@ export class DatatablePageComponent implements OnInit {
   }
 
   search(globalSearch?: string) {
-    if (this.cache.includes(this.page.number)) return;
-    else this.cache.push(this.page.number);
+
+
 
 
     if (this.servlet) {
       this.globalSearch = (globalSearch) ? globalSearch : '';
-      // this.columns.filter(a => a.contentName==="system")[0].sSearch = this.columns.filter(a => a.contentName==="system")[0].sSearch.concat(this.invariantsService.systemsSelected);
-      // let systemArray = this.columns.filter(a => a.contentName==="system")[0].sSearch;
-      // this.columns.filter(a => a.contentName==="system")[0].sSearch = systemArray.filter((a,i) => systemArray.indexOf(a)===i);
-      this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), (list: Array<any>, length: number) => {
-        if (this.rows) {
-          const rows = [...this.rows];
-          rows.splice(this.page.number * this.page.size, 0, ...list)
-          this.rows = rows;
-        } else {
-          this.rows = list;
-        }
+      const a = this.page.number;
+      const delta = a - this.cache;
+      const countWanted = delta * this.page.size;
+      
 
-        this.page.totalCount = length;
-      });
+      // for (let i = this.cache; i < a; ++i) {
+      if (countWanted>0) {
+        
+        this.page.number = this.cache+1;
+        console.log('page ', this.page);
+        this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch, countWanted), (list: Array<any>, length: number) => {
+          if (this.rows) {
+            const rows = [...this.rows];
+            rows.splice(this.page.number * this.page.size, 0, ...list)
+            this.rows = rows;
+          } else {
+            this.rows = list;
+          }
+  
+          this.page.totalCount = length;
+        });
+        this.cache = a;
+        this.page.number = a;      
+      }
+      
+      
+      
     }
   }
 
@@ -70,7 +83,7 @@ export class DatatablePageComponent implements OnInit {
 
   }
   applyFilters(globalSearch?: string) {
-    this.cache = [];
+    this.cache = -1;
     this.rows = [];
     this.page.number = 0;
     this.search(globalSearch);

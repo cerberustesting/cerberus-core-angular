@@ -22,6 +22,7 @@ export class DatatableComponent implements OnInit {
   @Input() selected: Array<any>;
   @Output() pageUpdate = new EventEmitter<number>();
   @Output() sort = new EventEmitter<void>();
+  @ViewChild("dataTable", {static: true}) table: any;
   
   isLoading: boolean;
   columnActive: number;
@@ -85,9 +86,6 @@ export class DatatableComponent implements OnInit {
     this.page.number = pageInfo.offset;
     this.page.size = pageInfo.pageSize;
     this.applyChange();
-  }
-  write(obj) {
-    console.log("write :", obj);
   }
   
 }

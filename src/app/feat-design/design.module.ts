@@ -19,6 +19,7 @@ import { SettingsComponent } from "./testcasescript/tc-script/settings/settings.
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatalibraryComponent } from './datalibrary/datalibrary.component';
 import { ScriptComponent } from './testcasescript/tc-script/script/script.component';
+import { CampaignsComponent } from './campaigns/campaigns.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ScriptComponent } from './testcasescript/tc-script/script/script.compon
       SettingsComponent,
       ScriptComponent,
       DatalibraryComponent,
+      CampaignsComponent,
   ],
   imports: [
     CommonModule,

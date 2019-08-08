@@ -33,7 +33,7 @@ export class TestcaselistComponent implements OnInit {
 
   userPreferences: string;
   
-  constructor(private testService: TestService, private invariantsService: InvariantsService, private labelfilteringPipe: LabelfilteringPipe, private systemService: SystemService, private filterService: FilterService) { }
+  constructor() { }
 
   ngOnInit() {
   }

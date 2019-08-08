@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit {
     },
     {
       name: 'Campaigns',
-      link: '/campaigns',
+      link: '/design/campaigns',
       icon_class: 'si-paper-clip',
       expanded: false
     },

@@ -96,10 +96,10 @@
         </ng-template>
 
         <!-- Action column -->
-        <ngx-datatable-column *ngIf="massAction" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+        <ngx-datatable-column *ngIf="name!='none'" [sortable]="false" [canAutoResize]="false" [draggable]="false"
             [resizeable]="false" [width]="1">
             <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
-                <div class="row-menu">
+                <div class="row-menu" *ngIf="name=='testcaselist'">
                     <div class="actions-section">
                         <button class="btn btn-outline-danger">
                             <i class="fa fa-trash-alt"></i>
@@ -118,6 +118,25 @@
                         </button>
                     </div>
                 </div>
+                <div class="row-menu" *ngIf="name=='datalib'">
+                        <div class="actions-section">
+                            <button class="btn btn-outline-danger">
+                                <i class="fa fa-trash-alt"></i>
+                            </button>
+    
+                            <button class="btn btn-outline-info">
+                                <i class="fa fa-pen"></i>
+                            </button>
+    
+                            <button class="btn btn-outline-primary">
+                                <i class="fa fa-copy"></i>
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="far fa-list-alt"></i>
+                            </button>
+
+                        </div>
+                    </div>
             </ng-template>
         </ngx-datatable-column>
 

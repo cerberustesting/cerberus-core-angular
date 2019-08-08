@@ -22,6 +22,7 @@ export class DatatablePageComponent implements OnInit {
   @Input() servlet: string;
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
+  @Input() name?: string = 'none';
   cache: number = -1;
 
   rows: Array<any>;

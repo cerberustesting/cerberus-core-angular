@@ -23,6 +23,7 @@ export class DatatableComponent implements OnInit {
   @Output() pageUpdate = new EventEmitter<number>();
   @Output() sort = new EventEmitter<void>();
   @ViewChild("dataTable", {static: true}) table: any;
+  @Input() name?: string;
   
   isLoading: boolean;
   columnActive: number;

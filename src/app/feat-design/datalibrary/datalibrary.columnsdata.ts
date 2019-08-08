@@ -9,6 +9,7 @@ export var DataLibColumnsData: Column[] = [
       sSearch: [],
       databaseName: 'tdl.TestDataLibID',
       searchable: true,
+      flexGrow: 50,
       param: {
         multiple: true,        
         placeholder: 'Select ID',
@@ -46,6 +47,7 @@ export var DataLibColumnsData: Column[] = [
       active: true, 
       defaultActive: true,
       sSearch: [],
+      flexGrow: 80,
       databaseName : 'tdl.Environment',
       searchable: true,
       param: {
@@ -84,6 +86,7 @@ export var DataLibColumnsData: Column[] = [
       active: true,
       defaultActive: true,
       sSearch: [],
+      flexGrow: 250,
       databaseName : 'tdl.Description',
       searchable: true,
       param: {
@@ -138,6 +141,7 @@ export var DataLibColumnsData: Column[] = [
       active: false,
       width: 300, 
       sSearch: [],
+      flexGrow: 300,
       databaseName : 'tdl.Script',
       like: true,
       param: {

@@ -1,6 +1,6 @@
 <div class="data-table">
     <ngx-datatable #dataTable class="material fullscreen fixed-header expandable" style="height: 68vh;" 
-        [rows]="rows"
+        [rows]="rows || []"
         [columns]="columns" 
         [columnMode]="'flex'" 
         [rowHeight]="50" 

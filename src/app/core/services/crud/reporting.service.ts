@@ -78,6 +78,17 @@ export class ReportingService {
   // observables
   observableTagsList = new BehaviorSubject<ITag[]>(this.tagsList);
 
+  private colors = [
+    '#0665d0',    
+    '#689550',
+    '#774aa4',
+    '#00a680',
+    '#314499',
+    '#3b5998',
+    '#6772e5',
+    '#dd4b39'
+  ]
+
   constructor(private http: HttpClient) { }
 
   getTagList() {
@@ -91,9 +102,9 @@ export class ReportingService {
   ReadTestCaseExecutionByTag(callback: (any) => any) {
     //TODO : Specified type
     this.http.get<any>(environment.cerberus_api_url + '/ReadTestCaseExecutionByTag?Tag=' + this.selectedTagName + '&OK=on&KO=on&FA=on&NA=on&NE=on&WE=on&PE=on&QU=on&QE=on&CA=on&BE=on&CH=on&ES=on&FR=on&IT=on&LU=on&NL=on&PT=on&RU=on&UK=on&VI=on&PL=on&DE=on&RX=on&UF=on&env=on&country=on&robotDecli=on&app=on&')
-      .subscribe(response => {        
+      .subscribe(response => {
         this.http.get<any>(environment.cerberus_api_url + '/ReadCampaign?tag=true&&campaign=' + response.tagObject.campaign)
-          .subscribe(campaignResponse => {            
+          .subscribe(campaignResponse => {
             this.campaignData = campaignResponse.contentTable.tag.slice(0, 10);
             callback(response);
           })
@@ -194,52 +205,54 @@ export class ReportingService {
     this.reportOther = [];
 
     let graphs = {
-      country: {},
-      environment: {},
-      robotDecli: {},
-      application: {}
+      Countries: {},
+      Environments: {},
+      RobotDecli: {},
+      Applications: {}
     }
 
     for (let table of response.statsChart.contentTable.split) {
-      let percentage = Math.round((table.OK/table.total)*1000)/10
-      if (!graphs.country[table.country]) graphs.country[table.country] = [];
-      graphs.country[table.country].push(percentage);
-      if (!graphs.environment[table.environment]) graphs.environment[table.environment] = [];
-      graphs.environment[table.environment].push(percentage);
-      if (!graphs.robotDecli[table.robotDecli]) graphs.robotDecli[table.robotDecli] = [];
-      graphs.robotDecli[table.robotDecli].push(percentage);
-      if (!graphs.application[table.application]) graphs.application[table.application] = [];
-      graphs.application[table.application].push(percentage);
+      let percentage = Math.round((table.OK / table.total) * 1000) / 10
+      if (!graphs.Countries[table.country]) graphs.Countries[table.country] = [];
+      graphs.Countries[table.country].push(percentage);
+      if (!graphs.Environments[table.environment]) graphs.Environments[table.environment] = [];
+      graphs.Environments[table.environment].push(percentage);
+      if (!graphs.RobotDecli[table.robotDecli]) graphs.RobotDecli[table.robotDecli] = [];
+      graphs.RobotDecli[table.robotDecli].push(percentage);
+      if (!graphs.Applications[table.application]) graphs.Applications[table.application] = [];
+      graphs.Applications[table.application].push(percentage);
     }
     console.log('graphs :', graphs);
 
-    
+
 
     for (let graph in graphs) {
       let labels = [];
       let data = [];
       for (let label in graphs[graph]) {
-        labels.push(label);
+        labels.push((label !== '')? label : 'none');
         let sum = 0;
         graphs[graph][label].forEach(element => {
-          sum+=element;
-        });        
-        data.push(Math.round((sum/graphs[graph][label].length)*10)/10)
+          sum += element;
+        });
+        data.push(Math.round((sum / graphs[graph][label].length) * 10) / 10)
       }
       let chart = {
+        name: graph,
         data: data,
         legend: false,
         labels: labels,
-        // colors: [ { backgroundColor: tmp.map(a => a.color) } ],
+        colors: [ { 
+          backgroundColor: this.colors, 
+          borderColor: this.colors
+        } ],
         options: {
           title: {
             display: true,
-            text: graph,
+            text: 'percentage of OK\'s / ' + graph,
           },
-          scales :{
-            yAxes: [{
-              ticks: {display: false}
-            }]
+          scale: {
+            display: false
           }
         }
       }
@@ -247,7 +260,7 @@ export class ReportingService {
     }
 
 
-    
+
 
 
 
@@ -288,18 +301,18 @@ export class ReportingService {
   }
   parseStatisticReliability(response) {
     let datasets = [
-      {data: [], label: "Reliability", type: 'line'},
-      {data: [], label: "Results"},
+      { data: [], label: "Reliability", type: 'line' },
+      { data: [], label: "Results" },
     ]
     let labels = [];
-    
+
     for (let tag of this.campaignData) {
-      datasets[0].data.push((Math.round(tag.nbExeUsefull/tag.nbExe)*100));
-      datasets[1].data.push(Math.round((tag.nbOK/tag.nbExe)*100));
+      datasets[0].data.push((Math.round(tag.nbExeUsefull / tag.nbExe) * 100));
+      datasets[1].data.push(Math.round((tag.nbOK / tag.nbExe) * 100));
       labels.push(tag.tag);
     }
     this.reportStatisticsReliability = {
-      options : {
+      options: {
         responsive: true
       },
       datasets: datasets,
@@ -310,21 +323,21 @@ export class ReportingService {
 
   parseStatisticDuration(response) {
     let datasets = [
-      {data: [], label: "Duration", type: 'line'},
-      {data: [], label: "Executions"},
+      { data: [], label: "Duration", type: 'line' },
+      { data: [], label: "Executions" },
     ]
     let labels = [];
-    
+
     for (let tag of this.campaignData) {
       let dateEnd = new Date(tag.DateEndQueue);
       let dateStart = new Date(tag.DateCreated);
-      let duration = Math.round((dateEnd.getTime() - dateStart.getTime())/6000)/10
-      datasets[0].data.push((duration>0)? duration : 0);
+      let duration = Math.round((dateEnd.getTime() - dateStart.getTime()) / 6000) / 10
+      datasets[0].data.push((duration > 0) ? duration : 0);
       datasets[1].data.push(tag.nbExe);
       labels.push(tag.tag);
     }
     this.reportStatisticsDurationExecution = {
-      options : {
+      options: {
         responsive: true
       },
       datasets: datasets,

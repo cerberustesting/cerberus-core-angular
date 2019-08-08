@@ -1,13 +1,30 @@
 
   <div class="block block-bordered block-rounded">
     <div class="block-header block-header-default">
-      <h3 class="block-title">Report <small>by Application Environnment RobotDecli</small></h3>
+      <h3 class="block-title">Report <small>by {{chart.name}}</small></h3>
       <button type="button" class="btn-block-option" (click)="expand = !expand">
           <i class="si" [ngClass]="{'si-arrow-down': !expand, 'si-arrow-up': expand}"></i>
         </button>
     </div>
     <div class="block-content row" *ngIf="expand">
-      <div class="chart-container" *ngFor="let chart of charts">
+      <div class="col-md-5">
+        <!-- <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let label of chart.labels; let i=index">{{label}}
+              <span class="badge badge-pill" [style.backgroundColor]="chart.colors[0].backgroundColor[i]">{{chart.data[i]}}%</span>
+          </li>
+        </ul> -->
+        <div class="form-group" *ngFor="let label of chart.labels; let i=index">
+            <div class="input-group push">
+                <div class="input-group-prepend">
+                    <span class="input-group-text input-group-text-alt legend-text" [style.backgroundColor]="chart.colors[0].backgroundColor[i]">{{label}}</span>
+                </div>
+                <div class="input-group-append legend-value">
+                    <span class="input-group-text input-group-text-alt text-center " [style.color]="chart.colors[0].backgroundColor[i]">{{chart.data[i]}}%</span>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-7">
         <canvas baseChart 
         [data]="chart.data" 
         [labels]="chart.labels" 

@@ -16,6 +16,7 @@ import { DatatablePageComponent } from './datatable-page/datatable-page.componen
 import { FilterlikeComponent } from './datatable-page/utils/filterlike/filterlike.component';
 import { FiltersComponent } from "./datatable-page/filters/filters.component";
 import { FilterComponent } from "./datatable-page/utils/filter/filter.component";
+import { DatalibTclistComponent } from './datatable-page/utils/datalib-tclist/datalib-tclist.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FilterComponent } from "./datatable-page/utils/filter/filter.component"
     DatatablePageComponent,
     FilterlikeComponent,
     FiltersComponent,
-    FilterComponent
+    FilterComponent,
+    DatalibTclistComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +40,9 @@ import { FilterComponent } from "./datatable-page/utils/filter/filter.component"
     FormsModule,
     NgbModule
 
+  ],
+  entryComponents: [
+    DatalibTclistComponent
   ],
   exports: [
     NgSelectModule,

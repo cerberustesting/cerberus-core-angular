@@ -1,5 +1,7 @@
 import {Component, Input, OnInit, ViewChild, Output, EventEmitter, HostBinding} from '@angular/core';
 import { Column } from '../../model/column.model';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DatalibTclistComponent } from '../utils/datalib-tclist/datalib-tclist.component';
 
 @Component({
   selector: 'app-table',
@@ -28,6 +30,8 @@ export class DatatableComponent implements OnInit {
   isLoading: boolean;
   columnActive: number;
 
+  constructor(private modalService: NgbModal) { }
+
 
 
   toggleColumn(column): void {
@@ -42,8 +46,6 @@ export class DatatableComponent implements OnInit {
 
   ngOnInit() {
     this.columnActive = this.columns.filter(a => a.active).length;
-  }
-  constructor() {
   }
 
   onSelect({ selected }) {
@@ -87,6 +89,13 @@ export class DatatableComponent implements OnInit {
     this.page.number = pageInfo.offset;
     this.page.size = pageInfo.pageSize;
     this.applyChange();
+  }
+
+  openTCList(row) {
+    const modalRef = this.modalService.open(DatalibTclistComponent, { size: 'lg' });
+    modalRef.componentInstance.id = row.testDataLibID;
+    modalRef.componentInstance.name = row.name;
+    modalRef.componentInstance.country = row.country;
   }
   
 }

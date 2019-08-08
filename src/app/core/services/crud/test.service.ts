@@ -122,6 +122,17 @@ export class TestService {
     return this.http.get<ITestCaseHeader>(query);
   }
 
+  getTestDataLib(testdatalibid: string, name: string, country: string, callback: (TestDataLib: any) => any) {
+    // get data for datatable
+    this.http.get<any>(environment.cerberus_api_url + '/ReadTestDataLib?testdatalibid=' + testdatalibid + '&name=' + name + '&country=' + country)
+      .subscribe((response) => {
+        if (response) {
+          callback(response);
+        }
+      });
+  }
+
+
   filtreTestCase(filterTable): Observable<ITestCaseHeader> {
     return this.http.post<ITestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase', filterTable, httpOptions);
   }

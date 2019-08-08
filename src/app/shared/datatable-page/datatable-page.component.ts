@@ -51,8 +51,6 @@ export class DatatablePageComponent implements OnInit {
       const a = this.page.number;
       const delta = a - this.cache;
       const countWanted = delta * this.page.size;
-      
-      console.log("a="+a+"\ndelta="+delta+'\ncountWanted='+countWanted+"\nthis.cache="+this.cache);
 
       if (countWanted>0) {
         

@@ -35,7 +35,7 @@ export class DatatablePageComponent implements OnInit {
     // this.search();    
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
       this.cache = -1;
-      this.rows = [];
+      this.rows = null;
       this.page.number = 0;
       this.search();
     })
@@ -52,14 +52,14 @@ export class DatatablePageComponent implements OnInit {
       const delta = a - this.cache;
       const countWanted = delta * this.page.size;
       
+      console.log("a="+a+"\ndelta="+delta+'\ncountWanted='+countWanted+"\nthis.cache="+this.cache);
 
-      // for (let i = this.cache; i < a; ++i) {
       if (countWanted>0) {
         
         this.page.number = this.cache+1;
         console.log('page ', this.page);
         this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch, countWanted), (list: Array<any>, length: number) => {
-          if (this.rows) {
+          if (this.rows || this.rows == []) {
             const rows = [...this.rows];
             rows.splice(this.page.number * this.page.size, 0, ...list)
             this.rows = rows;
@@ -84,8 +84,11 @@ export class DatatablePageComponent implements OnInit {
 
   }
   applyFilters(globalSearch?: string) {
+    let a = document.getElementsByClassName("datatable-body")[0];
+    a.scroll(0,0);
+    a.scrollBy(0,0);
     this.cache = -1;
-    this.rows = [];
+    this.rows = null;
     this.page.number = 0;
     this.search(globalSearch);
   }

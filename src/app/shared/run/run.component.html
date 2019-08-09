@@ -1,0 +1,48 @@
+<div class="test">
+    <div class="col-md-12">
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Run <small>TestCases</small></h3>
+            </div>
+            <div class="block-content">
+                <div class="block block-bordered block-rounded">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">Environment <small>Selection</small></h3>
+                    </div>
+                    <div class="block-content row">
+                        <div *ngFor="let env of envList;" style="margin-right: 0.75rem" >
+                            <div class="custom-control custom-block custom-control-info">
+                                <input type="checkbox" class="custom-control-input" [id]="env.value"  checked="">
+                                <label class="custom-control-label" [for]="env.value">
+                                    <span class="d-block text-center">
+                                      {{env.value}}
+                                    </span>
+                                </label>
+                                <span class="custom-block-indicator">
+                                   <i class="fa fa-check"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Test Selection -->
+                            </div>
+                        </div>
+                <div class="block block-bordered block-rounded">
+                    <div class="block-header block-header-default">
+                        <h3 class="block-title">Countries <small>Selection</small></h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="form-group">
+                            <div *ngFor="let country of countriesList;"
+                                 class="custom-control custom-checkbox custom-control-lg custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" [id]="country.value" [name]="country.value"
+                                       [checked]="isCountrySelected(country.value)" (change)="updateCountriesList($event,country.value)">
+                                <label class="custom-control-label" [for]="country.value">{{country.value}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

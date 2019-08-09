@@ -17,6 +17,7 @@ import { FilterlikeComponent } from './datatable-page/utils/filterlike/filterlik
 import { FiltersComponent } from "./datatable-page/filters/filters.component";
 import { FilterComponent } from "./datatable-page/utils/filter/filter.component";
 import { DatalibTclistComponent } from './datatable-page/utils/datalib-tclist/datalib-tclist.component';
+import { RunComponent } from './run/run.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DatalibTclistComponent } from './datatable-page/utils/datalib-tclist/da
     FilterlikeComponent,
     FiltersComponent,
     FilterComponent,
-    DatalibTclistComponent
+    DatalibTclistComponent,
+    RunComponent
   ],
   imports: [
     CommonModule,

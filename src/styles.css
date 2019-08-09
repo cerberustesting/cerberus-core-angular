@@ -30,21 +30,6 @@ ng-select.auto-width .ng-dropdown-panel {
   border: 0;
 }
 
-/* .ngx-datatable .datatable-footer {
-  position: absolute;
-  top: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-.ngx-datatable .datatable-header {
-  position: absolute;
-  top: 50px;
-}
-
-.ngx-datatable .datatable-body {
-  margin-top: 100px;
-} */
-
 ng-select.system-select {
   display: inline-block;
 }
@@ -52,7 +37,7 @@ ng-select.system-select {
 ng-select.system-select .ng-select-container {
   position: relative;
   display: inline-flex;
-  width: 250px;
+  width: 330px;
   border-color: #fff;
   background-color: transparent !important;
   color: #fff;
@@ -63,7 +48,7 @@ ng-select.system-select .ng-select-container .ng-placeholder {
   color: #fff !important;
 }
 ng-select.system-select .ng-dropdown-panel {
-  width: 250px;
+  width: 330px;
   position: absolute !important;
   left: 20px;
 }

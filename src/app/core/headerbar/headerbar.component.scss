@@ -12,16 +12,21 @@
 
 .selected-system {
   cursor: pointer;
-  color: #222;
-  border-bottom: 1px solid #3b5998;
-  margin-bottom: 5px;
+  background-color: rgb(209,229,247);
+  border: 2px solid rgb(60, 144, 223);
+  margin: 5px;
+  text-align: center;
+  color: black;
+  padding: 3px;
   i {
     color: #3b5998;
   }
 }
 .select-btn {
-  width: 110px;
-  &:nth-child(2) {
-    float: right;
-  }
+  width: 100%;
+}
+
+.selected-container {
+  max-height: 220px;
+  overflow-y: scroll;
 }

@@ -55,7 +55,6 @@ export class DatatablePageComponent implements OnInit {
       if (countWanted>0) {
         
         this.page.number = this.cache+1;
-        console.log('page ', this.page);
         this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch, countWanted), (list: Array<any>, length: number) => {
           if (this.rows || this.rows == []) {
             const rows = [...this.rows];

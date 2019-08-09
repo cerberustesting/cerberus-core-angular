@@ -59,13 +59,15 @@ export class InvariantsService {
         this.observableSystems.next(this.systemsList);
       }, (err) => this.AlertService.APIError(err));
   }
-  selectSystem(system) {
+  selectSystem(systemList) {
     // @ts-ignore
-    if (!this.systemsSelected.includes(system)) {
-      this.systemsSelected.push(system);
-      this.observableSystemsSelected.next(this.systemsSelected);
-      console.log('new badge is : ' + system);
-    } else { console.log('System already selected : ' + system); }
+    this.systemsSelected = [...systemList];
+    this.observableSystemsSelected.next(this.systemsSelected);
+    // if (!this.systemsSelected.includes(system)) {
+    //   this.systemsSelected.push(system);
+    //   this.observableSystemsSelected.next(this.systemsSelected);
+    //   console.log('new badge is : ' + system);
+    // } else { console.log('System already selected : ' + system); }
   }
   removeSystem(badge) {
     if (this.systemsSelected.indexOf(badge) != null) {

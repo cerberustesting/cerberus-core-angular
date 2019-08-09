@@ -53,7 +53,6 @@ export class FilterService {
     for (let item in formData) {
       queryParameter += encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&';
     }   
-    console.log(formData['iDisplayStart'] + ' => ' + formData['iDisplayLength']);
     return queryParameter.slice(0, -1); // removing the last '&'
   }
 }

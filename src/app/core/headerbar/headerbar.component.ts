@@ -19,6 +19,7 @@ export class HeaderbarComponent implements OnInit {
   private selectedSystems: any[];
   private systemSubscription: Subscription;
   private systemModel: string[];
+  private toggleSelectAll: boolean = true;
 
   // user data from Keycloak
   private userFullName: string;
@@ -47,24 +48,20 @@ export class HeaderbarComponent implements OnInit {
     this.systemSubscription = this.InvariantService.observableSystemsSelected.subscribe(
       (systemsSelected: any[]) => {
         this.selectedSystems = systemsSelected;
-        this.systemModel = systemsSelected;        
+        this.systemModel = systemsSelected;
       }
     );
     // this.InvariantService.emitSystemsSubject();
   }
-
-  addSystem(system) {
-    this.InvariantService.selectSystem(system);
+  change() {
+    this.systemsList = this.systemsList.filter(system => this.systemModel.includes(system.value)).concat(this.systemsList.filter(system => !this.systemModel.includes(system.value)));
   }
-  deleteSystem(system) {
-    this.InvariantService.removeSystem(system);
+  onClose() {
+    this.InvariantService.selectSystem(this.systemModel);
   }
-  onClear() {
-    let systemsToDelete = this.selectedSystems.map(a=>a);
-    for (let system of systemsToDelete) {
-      this.deleteSystem(system);
-    }
+  onClear() {    
     this.systemModel = [];
+    this.InvariantService.selectSystem(this.systemModel);
   }
 
   debug() {
@@ -85,13 +82,14 @@ export class HeaderbarComponent implements OnInit {
     this.ks.logout();
   }
   selectAll() {
-    this.systemModel = this.systemsList.map(a=>a.value);
-    for (let system of this.systemModel) {
-      this.addSystem(system);
+    if (this.toggleSelectAll || this.systemModel.length===0) {
+      this.systemModel = this.systemsList.map(a => a.value);
+      this.InvariantService.selectSystem(this.systemModel);
+    } else {
+      this.onClear()
     }
-  }
-  unselectAll() {
-    this.onClear()
+    this.toggleSelectAll = !this.toggleSelectAll;
+
   }
 
 }

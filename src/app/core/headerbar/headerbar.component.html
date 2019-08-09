@@ -19,36 +19,26 @@
         (click)="deleteSystem(badge)">
         x {{ badge }}
       </span> -->
-      <ng-select class="custom system-select"
-          [items]="systemsList"
-          bindLabel="value"
-          bindValue="value"
-          [closeOnSelect]="false"
-          multiple="true"
-          (add)="addSystem($event.value)"
-          (remove)="deleteSystem($event.value)"
-          (clear)="onClear()"
-          [hideSelected]="true"
-          [(ngModel)]="systemModel"
-          placeholder="Select System">
-          <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-              <div>
-                  Systems Selected : {{systemModel.length}}
-              </div>
-          </ng-template>
-          <ng-template ng-header-tmp>
-              <button class="btn btn-outline-primary select-btn" (click)="selectAll()">Select all</button>
-              <button class="btn btn-outline-primary select-btn" (click)="unselectAll()">Unselect all</button>
-              <div *ngFor="let system of systemModel" (click)="deleteSystem(system)" class="selected-system"><i class="fa fa-times"></i> {{ system }}</div>
-          </ng-template>
-        </ng-select>
+      <ng-select class="custom system-select" [items]="systemsList" bindLabel="value" bindValue="value"
+        [closeOnSelect]="false" multiple="true" 
+        (clear)="onClear()" (change)="change()" [(ngModel)]="systemModel" [dropdownPosition]="'bottom'"
+        placeholder="Select System" (close)="onClose()">
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+          <span *ngFor="let item of items | slice:0:2" style="margin-right :5px;">{{item.value}},</span>
+          <span class="ng-value-label" *ngIf="items.length > 2">{{items.length - 2}} more...</span>
+        </ng-template>
+        <ng-template ng-header-tmp>
+          <button class="btn btn-outline-primary select-btn" (click)="selectAll()" [innerHTML]="(this.toggleSelectAll || this.systemModel.length===0)? 'Select all' : 'Unselect All'"></button>
+          <!-- <div class="selected-container"><div *ngFor="let system of systemModel" (click)="deleteSystem(system)" class="selected-system">{{ system }}</div></div> -->
+        </ng-template>
+      </ng-select>
       <!-- <button type="button" class="btn btn-dual" id="page-header-user-dropdown" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         <span class="d-none d-sm-inline-block">Systems</span>
         <i class="fa fa-fw fa-angle-down ml-1 d-none d-sm-inline-block"></i>
       </button> -->
 
-      
+
 
 
       <!-- <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">

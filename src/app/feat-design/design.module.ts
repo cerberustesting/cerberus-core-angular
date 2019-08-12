@@ -20,6 +20,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatalibraryComponent } from './datalibrary/datalibrary.component';
 import { ScriptComponent } from './testcasescript/tc-script/script/script.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
+import { PropertyV2Component } from './testcasescript/tc-script/property-v2/property-v2.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
       ScriptComponent,
       DatalibraryComponent,
       CampaignsComponent,
+      PropertyV2Component,
   ],
   imports: [
     CommonModule,
@@ -46,6 +50,8 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
     SharedModule,
     DragDropModule,
     NgbModule,
+    NgxDatatableModule,
+    ReactiveFormsModule
 
   ],
   exports: [SharedModule]

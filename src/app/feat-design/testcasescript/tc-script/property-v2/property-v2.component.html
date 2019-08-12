@@ -1,0 +1,186 @@
+<button class="btn btn-primary">+ Property</button>
+<!-- <div class="accordion" id="accordionExample">
+    <div class="card" *ngFor="let name of mapProperties">
+        <div class="card-header" id="headingOne" [ngClass]="{'header-active': name.expanded}">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" (click)="name.expanded = !name.expanded">
+                    {{name.name}} <span class="badge badge-primary">{{name.properties.length}}</span> <i class="si" [ngClass]="(name.expanded)? 'si-arrow-right' : 'si-arrow-down'"></i>
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapseOne" class="collapse property-collapse" [ngClass]="{'show' : name.expanded}"
+            aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="block block-rounded block-bordered block-rounded">
+                <div class="block-header block-header-default row">
+                    <div class="card col-md-12" *ngFor="let property of name.properties">
+                        <div class="card-header" id="headingOne" [ngClass]="{'header-active': property.expanded}">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button"
+                                    (click)="property.expanded = !property.expanded">
+                                    <div class="input-group push" >
+                                        <div class="input-group-prepend">
+                                            <span class="form-control form-control-alt">{{property.nature}}</span>
+                                        </div>
+                                        <span style="width: 250px" class="form-control form-control-alt text-center">{{property.country.join(' ')}}</span>
+                                        <span class="input-group-text input-group-text-alt  text-center">{{property.value1}}</span>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text input-group-text-alt text-center"><i class="si" [ngClass]="(property.expanded)? 'si-arrow-right' : 'si-arrow-down'"></i></span>
+                                        </div>
+                                    </div>
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseOne" class="collapse property-collapse"
+                            [ngClass]="{'show' : property.expanded}" aria-labelledby="headingOne"
+                            data-parent="#accordionExample">
+                            <ng-container *ngTemplateOutlet="templatePropertyInfo; context: {property:property}"></ng-container>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<ngx-datatable #myTable class="material expandable fullscreen" [rowHeight]="50" [headerHeight]="50"
+    [rows]="propertiesList" [columnMode]="'force'" (activate)="onActivate($event)">
+
+
+    <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Name" prop="property">
+        <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-expanded="expanded"
+            ngx-datatable-cell-template><span>{{value}}</span></ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Type" prop="type">
+        <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-expanded="expanded"
+            ngx-datatable-cell-template><span>{{value}}</span></ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Value" prop="value1">
+        <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-expanded="expanded"
+            ngx-datatable-cell-template>
+            <span title="Double click to edit" (dblclick)="editing[rowIndex] = true"
+                *ngIf="!editing[rowIndex]">{{value}}</span>
+            <input class="inline-text-edit" autofocus (blur)="updateValue(rowIndex)" *ngIf="editing[rowIndex]"
+                type="text" [value]="value" />
+        </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Country">
+        <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+            {{row.country.join(' ')}}</ng-template>
+    </ngx-datatable-column>
+
+
+    <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow>
+        <ng-template let-property="row" let-rowIndex="rowIndex" let-expanded="expanded"
+            ngx-datatable-row-detail-template>
+            <ng-container *ngTemplateOutlet="templatePropertyInfo; context: {property:property, rowIndex:rowIndex}">
+            </ng-container>
+
+        </ng-template>
+    </ngx-datatable-row-detail>
+
+
+</ngx-datatable>
+
+<ng-template #templatePropertyInfo let-property="property" let-rowIndex="rowIndex">
+    <div class="block block-rounded block-bordered block-rounded">
+        <div class="block-header block-header-default">
+            <form [formGroup]="propertyForms[rowIndex]">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Type</span>
+                            </div>
+                            <select class="custom-select" formControlName="type">
+                                <option *ngFor="let type of propertyType">{{type.value}}</option>
+                            </select>
+                        </div>
+                        <!--TODO : only if "getFromSql" is selected as type-->
+                        <div class="input-group mb-3"
+                            *ngIf="propertyForms[rowIndex].controls.type.value==='getFromSql'">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">DataBase</span>
+                            </div>
+                            <select class="custom-select" formControlName="database">
+                                <option *ngFor="let database of propertyDatabase">{{database.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="list-group-prepend">
+                                    <span class="list-group-text">CountryList</span>
+                                </div>
+                                <div class="list-group-append">
+                                    <span class="list-group-text">AZ ER RT TY UI OP</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Description</span>
+                                    </div>
+                                    <input type="text" class="form-control" [placeholder]="property.description"
+                                    formControlName="description">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Value</span>
+                            </div>
+                            <textarea type="text" class="form-control"
+                                [placeholder]="property.value1" formControlName="value"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Length</span>
+                                    </div>
+                                    <input type="text" class="form-control" [placeholder]="property.length"
+                                    formControlName="length">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Nature</span>
+                                    </div>
+                                    <select class="custom-select" formControlName="nature">
+                                        <option *ngFor="let nature of propertyNature" [value]="nature.value">
+                                            {{nature.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Cache Duration</span>
+                                    </div>
+                                    <input type="text" class="form-control" [placeholder]="property.cacheExpire"
+                                    formControlName="cacheExpire" >
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Rank</span>
+                                    </div>
+                                    <input type="text" class="form-control" [placeholder]="property.rank" formControlName="rank">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>

@@ -26,6 +26,7 @@ export class TcScriptComponent implements OnInit {
   private activePropertyId: number;
   private activeProperty: Array<IProperty>;
   private propertyNameIsInvalid: boolean;
+  private oldVersion = false; //TODO : to remove and keep a version
 
   //@ViewChild(ChildComponent) child;
 

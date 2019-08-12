@@ -12,6 +12,7 @@ import { UserService } from './core/services/crud/user.service';
 export class AppComponent implements OnInit {
 
   public keycloakAuth: KeycloakInstance;
+  nightMode: boolean;
 
   constructor(
     private keycloak: KeycloakService,
@@ -19,7 +20,11 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.nightMode = false;
     this.keycloakAuth = this.keycloak.getKeycloakAuth();
     this.UserService.getUser();
+  }
+  toggleNightMode() {
+    this.nightMode = !this.nightMode;
   }
 }

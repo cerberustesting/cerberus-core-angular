@@ -1,9 +1,9 @@
 <!-- Page Container -->
 <div id="page-container"
-  class="sidebar-o sidebar-mini enable-page-overlay side-scroll page-header-fixed page-header-dark main-content-narrow">
+  class="sidebar-o sidebar-mini enable-page-overlay side-scroll page-header-fixed page-header-dark main-content-narrow" [ngClass]="(nightMode)? 'sidebar-dark':''">
 
   <!-- MENU SIDE BAR -->
-  <app-sidebar></app-sidebar>
+  <app-sidebar [nightMode]="nightMode" (nightModeOutput)="toggleNightMode()"></app-sidebar>
   <!-- END MENU SIDE BAR -->
 
   <!--

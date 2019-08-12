@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+
+  @Input('nightMode') nightMode: boolean;
+  @Output() nightModeOutput = new EventEmitter<void>();
 
   testManagementMenu = [
     {
@@ -184,6 +187,10 @@ export class SidebarComponent implements OnInit {
     { name: 'Analyse', data: this.analyseMenu, expanded: false },
     { name: 'Configure', data: this.configureMenu, expanded: false }
   ]
+  write = console.log;
+  toggleNightMode() {
+    this.nightModeOutput.emit();
+  }
 
   toggleMenu(menu) {
     menu.expanded = !menu.expanded;
@@ -192,6 +199,7 @@ export class SidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.nightMode)
   }
 
 }

@@ -193,6 +193,11 @@ export class SidebarComponent implements OnInit {
   }
 
   toggleMenu(menu) {
+    for (let section of this.menus) {
+      for (let li of section.data) {
+        if (li!==menu) li.expanded = false;
+      }
+    }
     menu.expanded = !menu.expanded;
   }
 

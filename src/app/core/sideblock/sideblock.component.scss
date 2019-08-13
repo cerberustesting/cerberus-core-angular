@@ -15,6 +15,7 @@
         border: 2px solid;
         border-radius: 50%;
         line-height: 45px;
+        cursor: pointer;
 
     }
     .block-content {
@@ -36,10 +37,13 @@
     
     .close-icon {
         text-align: center;
-        font-size: 30px;
-        line-height: 45px;
+        font-size: 20px;
+        line-height: 30px;
         position: absolute;
         right: 10px;
+        top: 10px;
+        z-index: 1;
+        cursor: pointer;
 
     }
     .block-content {

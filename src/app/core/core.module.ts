@@ -7,6 +7,7 @@ import { AppRoutingModule } from "../app-routing.module";
 import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
 import { SharedModule } from '../shared/shared.module';
 import { SideblockComponent } from './sideblock/sideblock.component';
+import {RunComponent} from '../shared/run/run.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { SideblockComponent } from './sideblock/sideblock.component';
     multi: true
   }*/
   ],
-  entryComponents: [
+  entryComponents: [RunComponent
   ]
 })
 export class CoreModule {

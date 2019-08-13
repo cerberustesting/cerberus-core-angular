@@ -7,6 +7,7 @@ import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 import { UserService } from '../services/crud/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
 import { SidecontentService } from '../services/crud/sidecontent.service';
+import {RunComponent} from '../../shared/run/run.component';
 
 @Component({
   selector: 'app-headerbar',
@@ -68,7 +69,8 @@ export class HeaderbarComponent implements OnInit {
 
   debug() {
     //this.AlertService.displayMessage(this.createARandomAlert());
-    this.sideContentService.openSideBlock()
+    this.sideContentService.openSideBlock();
+    this.sideContentService.addComponentToSideBlock(RunComponent);
   }
 
   createARandomAlert() {

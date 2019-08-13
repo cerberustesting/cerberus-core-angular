@@ -181,7 +181,7 @@ export class SidebarComponent implements OnInit {
     }
   ];
 
-  menus =  [
+  menus = [
     { name: 'Design', data: this.testManagementMenu, expanded: false },
     { name: 'Run', data: this.runMenu, expanded: false },
     { name: 'Analyse', data: this.analyseMenu, expanded: false },
@@ -195,7 +195,7 @@ export class SidebarComponent implements OnInit {
   toggleMenu(menu) {
     for (let section of this.menus) {
       for (let li of section.data) {
-        if (li!==menu) li.expanded = false;
+        if (li !== menu) li.expanded = false;
       }
     }
     menu.expanded = !menu.expanded;
@@ -203,8 +203,6 @@ export class SidebarComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.nightMode)
-  }
+  ngOnInit() { }
 
 }

@@ -45,7 +45,6 @@ export class HeaderbarComponent implements OnInit {
     this.InvariantService.observableSystemsSelected.subscribe(
       (systemsSelected: any[]) => {
         this.selectedSystems = systemsSelected;
-        console.log(this.selectedSystems);
         this.systemModel = systemsSelected;
       }
     );

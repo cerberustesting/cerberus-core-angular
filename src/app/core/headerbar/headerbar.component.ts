@@ -7,7 +7,7 @@ import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 import { UserService } from '../services/crud/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
 import { SidecontentService } from '../services/crud/sidecontent.service';
-import {RunComponent} from '../../shared/run/run.component';
+import { RunComponent } from '../../shared/run/run.component';
 
 @Component({
   selector: 'app-headerbar',
@@ -62,7 +62,7 @@ export class HeaderbarComponent implements OnInit {
   onClose() {
     this.InvariantService.selectSystem(this.systemModel);
   }
-  onClear() {    
+  onClear() {
     this.systemModel = [];
     this.InvariantService.selectSystem(this.systemModel);
   }
@@ -86,8 +86,13 @@ export class HeaderbarComponent implements OnInit {
   logout() {
     this.ks.logout();
   }
+
+  openUserSettingsPage() {
+    window.open(this.user.menu.accountLink, "_blank");
+  }
+
   selectAll() {
-    if (this.toggleSelectAll || this.systemModel.length===0) {
+    if (this.toggleSelectAll || this.systemModel.length === 0) {
       this.systemModel = this.systemsList.map(a => a.value);
       this.InvariantService.selectSystem(this.systemModel);
     } else {

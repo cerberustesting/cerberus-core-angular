@@ -4,12 +4,22 @@
   <div class="content-header">
     <!-- Left Section -->
     <div>
-      <!-- Toggle Sidebar -->
-      <!-- Layout API, functionality initialized in Template._uiApiLayout()-->
-      <button type="button" class="btn btn-dual mr-1" data-toggle="layout" data-action="sidebar_toggle">
-        <i class="fa fa-fw fa-bars"></i>
-      </button>
-      <!-- END Toggle Sidebar -->
+      <div class="d-inline-block">
+        <i class="fa fa-folder-open"></i>
+        <ng-select class="custom system-select" [items]="systemsList" bindLabel="value" bindValue="value"
+          [closeOnSelect]="false" multiple="true" (clear)="onClear()" (change)="change()" [(ngModel)]="systemModel"
+          [dropdownPosition]="'bottom'" [hideSelected]="true" placeholder="Select System" (close)="onClose()">
+          <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+            <span *ngFor="let item of items | slice:0:2" style="margin-right :5px;">{{item.value}},</span>
+            <span class="ng-value-label" *ngIf="items.length > 2">{{items.length - 2}} more...</span>
+          </ng-template>
+          <ng-template ng-header-tmp>
+            <button class="btn btn-outline-primary select-btn" (click)="selectAll()"
+              [innerHTML]="(this.toggleSelectAll || this.systemModel.length===0)? 'Select all' : 'Unselect All'"></button>
+            <!-- <div class="selected-container"><div *ngFor="let system of systemModel" (click)="deleteSystem(system)" class="selected-system">{{ system }}</div></div> -->
+          </ng-template>
+        </ng-select>
+      </div>
     </div>
     <!-- END Left Section -->
 
@@ -19,57 +29,25 @@
         (click)="deleteSystem(badge)">
         x {{ badge }}
       </span> -->
-      <ng-select class="custom system-select" [items]="systemsList" bindLabel="value" bindValue="value"
-        [closeOnSelect]="false" multiple="true" 
-        (clear)="onClear()" (change)="change()" [(ngModel)]="systemModel" [dropdownPosition]="'bottom'"
-        placeholder="Select System" (close)="onClose()">
-        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-          <span *ngFor="let item of items | slice:0:2" style="margin-right :5px;">{{item.value}},</span>
-          <span class="ng-value-label" *ngIf="items.length > 2">{{items.length - 2}} more...</span>
-        </ng-template>
-        <ng-template ng-header-tmp>
-          <button class="btn btn-outline-primary select-btn" (click)="selectAll()" [innerHTML]="(this.toggleSelectAll || this.systemModel.length===0)? 'Select all' : 'Unselect All'"></button>
-          <!-- <div class="selected-container"><div *ngFor="let system of systemModel" (click)="deleteSystem(system)" class="selected-system">{{ system }}</div></div> -->
-        </ng-template>
-      </ng-select>
-      <!-- <button type="button" class="btn btn-dual" id="page-header-user-dropdown" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        <span class="d-none d-sm-inline-block">Systems</span>
-        <i class="fa fa-fw fa-angle-down ml-1 d-none d-sm-inline-block"></i>
-      </button> -->
 
-
-
-
-      <!-- <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">
-          
-        <div class="bg-primary-darker rounded-top font-w600 text-white text-center p-3">
-          Select system
-        </div>
-        <div class="p-2">
-          <a class="dropdown-item">
-            <i class="far fa-fw fa-arrow-alt-circle-left mr-1"></i> All
-          </a>
-          <div role="separator" class="dropdown-divider"></div>
-          <a class="dropdown-item" *ngFor='let system of systemsList' (click)="addSystem(this.system.value)">
-            {{system.value}}
-          </a>
-          <!-- END Side Overlay 
-        </div>
-      </div> -->
 
       <!-- User Dropdown -->
       <div class="dropdown d-inline-block">
         <button type="button" class="btn btn-dual" id="page-header-user-dropdown" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-fw fa-user d-sm-none"></i>
+          <i class="fa fa-fw fa-user mr-1"></i>
           <span class="d-none d-sm-inline-block">{{ userFullName }}</span>
           <i class="fa fa-fw fa-angle-down ml-1 d-none d-sm-inline-block"></i>
         </button>
-        <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">
+        <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown"
+          x-placement="bottom-end"
+          style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-90px, 38px, 0px);">
+          <div class="bg-primary-darker rounded-top font-w600 text-white text-center p-3">
+            User Options
+          </div>
           <div class="p-2">
-            <a *ngIf="user" class="dropdown-item link-cursor" [href]="user.menu.accountLink" target="_blank">
-              <i class="far fa-fw fa-user mr-1"></i> Profile
+            <a class="dropdown-item link-cursor" (click)="openUserSettingsPage()">
+              <i class="far fa-fw fa-building mr-1"></i> Settings
             </a>
             <div role="separator" class="dropdown-divider"></div>
             <a class="dropdown-item link-cursor" (click)="logout()">
@@ -83,30 +61,12 @@
       <button type="button" class="btn btn-dual" (click)="debug()">
         <i class="fa fa-fw fa-bug"></i>
       </button>
+
     </div>
     <!-- END Right Section -->
+
   </div>
   <!-- END Header Content -->
-
-  <!-- Header Search -->
-  <!-- 
-  <div id="page-header-search" class="overlay-header bg-primary">
-    <div class="content-header">
-      <form class="w-100" action="be_pages_generic_search.html" method="post">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <button type="button" class="btn btn-primary" data-toggle="layout" data-action="header_search_off">
-              <i class="fa fa-fw fa-times-circle"></i>
-            </button>
-          </div>
-          <input type="text" class="form-control border-0" placeholder="Search or hit ESC.." id="page-header-search-input"
-            name="page-header-search-input">
-        </div>
-      </form>
-    </div>
-  </div>
-  -->
-  <!-- END Header Search -->
 
   <!-- Header Loader -->
   <!-- Please check out the Loaders page under Components category to see examples of showing/hiding it -->
@@ -118,5 +78,6 @@
     </div>
   </div>
   <!-- END Header Loader -->
+
 </header>
 <!-- END Header -->

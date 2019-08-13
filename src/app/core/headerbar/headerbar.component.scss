@@ -1,7 +1,3 @@
-.dropdown-menu {
-  // position: fixed;
-}
-
 .dropdown-menu:hover {
   display: block;
 }
@@ -12,7 +8,7 @@
 
 .selected-system {
   cursor: pointer;
-  background-color: rgb(209,229,247);
+  background-color: rgb(209, 229, 247);
   border: 2px solid rgb(60, 144, 223);
   margin: 5px;
   text-align: center;

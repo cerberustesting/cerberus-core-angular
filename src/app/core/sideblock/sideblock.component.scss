@@ -1,0 +1,52 @@
+.dynamic-block {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    z-index: 100000;
+    width: 50%;
+    background-color: #fff;
+    
+    .close-icon {
+        width: 45px;
+        height: 45px;
+        text-align: center;
+        font-size: 35px;
+        border: 2px solid;
+        border-radius: 50%;
+        line-height: 45px;
+
+    }
+    .block-content {
+        height: 100%;
+    }
+}
+
+:host {
+        margin-top: 70px;
+        border: 1px solid #dadeec;
+        width:40%;
+        position: absolute;
+        background-color: #ffffff;
+        z-index:1000;
+        right: -40%;
+        top:0;
+        bottom: 0;
+        transition: 1s;
+    
+    .close-icon {
+        text-align: center;
+        font-size: 30px;
+        line-height: 45px;
+        position: absolute;
+        right: 10px;
+
+    }
+    .block-content {
+        height: 100%;
+    }
+}
+  
+:host.is-open {
+    right: 0;
+}

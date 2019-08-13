@@ -8,6 +8,7 @@
 
 body {
   background-color: #ebedf5;
+  overflow-x: hidden;
 }
 
 .label {

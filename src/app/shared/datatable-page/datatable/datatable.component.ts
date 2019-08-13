@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild, Output, EventEmitter, HostBinding} 
 import { Column } from '../../model/column.model';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatalibTclistComponent } from '../utils/datalib-tclist/datalib-tclist.component';
+import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 
 @Component({
   selector: 'app-table',
@@ -30,7 +31,7 @@ export class DatatableComponent implements OnInit {
   isLoading: boolean;
   columnActive: number;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private sideContentService: SidecontentService) { }
 
 
 
@@ -92,10 +93,16 @@ export class DatatableComponent implements OnInit {
   }
 
   openTCList(row) {
-    const modalRef = this.modalService.open(DatalibTclistComponent, { size: 'lg' });
-    modalRef.componentInstance.id = row.testDataLibID;
-    modalRef.componentInstance.name = row.name;
-    modalRef.componentInstance.country = row.country;
+    this.sideContentService.addComponentToSideBlock(DatalibTclistComponent, {
+      id: row.testDataLibID,
+      name: row.name,
+      country: row.country
+    });
+    this.sideContentService.openSideBlock();
+    // const modalRef = this.modalService.open(DatalibTclistComponent, { size: 'lg' });
+    // modalRef.componentInstance.id = row.testDataLibID;
+    // modalRef.componentInstance.name = name;
+    // modalRef.componentInstance.country = row.country;
   }
   
 }

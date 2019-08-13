@@ -6,6 +6,7 @@ import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 import { UserService } from '../services/crud/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
+import { SidecontentService } from '../services/crud/sidecontent.service';
 
 @Component({
   selector: 'app-headerbar',
@@ -31,7 +32,8 @@ export class HeaderbarComponent implements OnInit {
     private AlertService: AlertService,
     private InvariantService: InvariantsService,
     private ks: KeycloakService,
-    private UserService: UserService
+    private UserService: UserService,
+    private sideContentService: SidecontentService
   ) { }
 
   ngOnInit() {
@@ -65,7 +67,8 @@ export class HeaderbarComponent implements OnInit {
   }
 
   debug() {
-    this.AlertService.displayMessage(this.createARandomAlert());
+    //this.AlertService.displayMessage(this.createARandomAlert());
+    this.sideContentService.openSideBlock()
   }
 
   createARandomAlert() {

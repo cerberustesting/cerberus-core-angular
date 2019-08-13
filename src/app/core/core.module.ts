@@ -6,13 +6,15 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
 import { AppRoutingModule } from "../app-routing.module";
 import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
 import { SharedModule } from '../shared/shared.module';
+import { SideblockComponent } from './sideblock/sideblock.component';
 
 @NgModule({
   declarations: [
       HeaderbarComponent,
       FooterComponent,
       SidebarComponent,
-      PagenotfoundComponent
+      PagenotfoundComponent,
+      SideblockComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { SharedModule } from '../shared/shared.module';
       HeaderbarComponent,
       FooterComponent,
       SidebarComponent,
-      AppRoutingModule
+      AppRoutingModule,
+      SideblockComponent
   ],
   providers : [
     /*    {
@@ -31,6 +34,8 @@ import { SharedModule } from '../shared/shared.module';
     useClass: KeycloakInterceptorService,
     multi: true
   }*/
+  ],
+  entryComponents: [
   ]
 })
 export class CoreModule {

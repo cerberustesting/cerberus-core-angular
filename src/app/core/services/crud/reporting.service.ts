@@ -229,15 +229,18 @@ export class ReportingService {
     for (let graph in graphs) {
       let labels = [];
       let data = [];
+      let display = false;
       for (let label in graphs[graph]) {
         labels.push((label !== '')? label : 'none');
         let sum = 0;
         graphs[graph][label].forEach(element => {
           sum += element;
         });
+        if (sum>0) display = true;
         data.push(Math.round((sum / graphs[graph][label].length) * 10) / 10)
       }
       let chart = {
+        display: display,
         name: graph,
         data: data,
         legend: false,

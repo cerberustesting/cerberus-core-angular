@@ -64,7 +64,8 @@ export class TagSelectionComponent implements OnInit {
     this.ReportingService.observableTagsList.subscribe(response => {
       if (response) {
         this.tagsList = response;
-        this.tagsBuffer = this.tagsList.slice(0, this.bufferSize)
+        this.tagsBuffer = this.tagsList.slice(0, this.bufferSize);
+        console.log(this.tagsBuffer[0]);
         // parse query strings from URL
         this.activatedRoute.queryParams.subscribe(params => {
           var tagFromURL = params['tag'];

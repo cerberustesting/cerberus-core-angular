@@ -54,7 +54,7 @@
                 <div class="block-content tab-content row push" id="chartsView" *ngIf="reportView">
                     <div class="col-md-6"><app-reportby-testfolder class="report-charts"></app-reportby-testfolder></div>
                   <div class="col-md-6"><app-reportby-label class="report-charts"></app-reportby-label></div>
-                  <div class="col-md-6" *ngFor="let chart of chartsOther"><app-reportby-other [chart]="chart" class="report-charts"></app-reportby-other></div>
+                  <div class="col-md-6" *ngFor="let chart of chartsOther"><app-reportby-other *ngIf="chart.display" [chart]="chart" class="report-charts"></app-reportby-other></div>
                   <div class="col-md-6"><app-statistic-duration class="report-charts"></app-statistic-duration></div>
                   <div class="col-md-6"><app-statistic-reliability class="report-charts"></app-statistic-reliability></div>
                 </div>

@@ -27,10 +27,10 @@
                         <i class="fa fa-list mr-1"></i> {{item.nbExeUsefull}} Exe(s)
                       </span>
                       <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                        <i class="fa fa-calendar-alt mr-1"></i> September 25
+                        <i class="fa fa-calendar-alt mr-1"></i> {{item.DateCreated | date:'MMMM d'}}
                       </span>
                       <span class="flex-fill text-muted font-size-sm font-w600 mr-1">
-                        <i class="fa fa-clock mr-1"></i> 14:02
+                        <i class="fa fa-clock mr-1"></i> {{item.DateCreated | date:'HH:mm'}}
                       </span>
                       <button *ngIf="item.ciResult" type="button" class="btn btn-sm"
                         [ngClass]="'btn-'+findStatusClass(item.ciResult)">{{item.ciResult}}</button>

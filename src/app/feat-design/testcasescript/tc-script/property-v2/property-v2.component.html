@@ -45,7 +45,7 @@
     </div>
 </div> -->
 
-<!-- <ngx-datatable #myTable class="material expandable fullscreen" [rowHeight]="50" [headerHeight]="50"
+<ngx-datatable #myTable class="material expandable fullscreen" [rowHeight]="50" [headerHeight]="50"
     [rows]="propertiesList" [columnMode]="'force'" (activate)="onActivate($event)">
 
 
@@ -85,7 +85,7 @@
     </ngx-datatable-row-detail>
 
 
-</ngx-datatable> -->
+</ngx-datatable>
 
 <ng-template #templatePropertyInfo let-property="property" let-rowIndex="rowIndex">
     <div class="block block-rounded block-bordered block-rounded">
@@ -99,7 +99,7 @@
                             </div>
                             <select class="custom-select" formControlName="type">
                                 <option *ngFor="let type of propertyType">{{type.value}}</option>
-                            </select>
+                            </select>y
                         </div>
                         <!--TODO : only if "getFromSql" is selected as type-->
                         <div class="input-group mb-3"

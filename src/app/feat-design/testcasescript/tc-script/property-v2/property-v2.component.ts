@@ -54,6 +54,7 @@ export class PropertyV2Component implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.propertiesList);
     this.testService.observableTestCase.subscribe(r => { this.testcaseheader = r.info; });
     this.propertyType = this.invariantService.propertyTypeList;
     this.propertyDatabase = this.invariantService.propertyDatabaseList;

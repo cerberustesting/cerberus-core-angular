@@ -13,3 +13,12 @@
     outline: none;
     border-bottom: 1px solid #0077ff;
 }
+.custom-checkbox {
+    display: inline-block;
+    margin: 0 10px;
+}
+.country-list {
+    max-width: 70%;
+    white-space: normal;
+    overflow: hidden;
+}

@@ -45,7 +45,7 @@
     </div>
 </div> -->
 
-<ngx-datatable #myTable class="material expandable fullscreen" [rowHeight]="50" [headerHeight]="50"
+<!-- <ngx-datatable #myTable class="material expandable fullscreen" [rowHeight]="50" [headerHeight]="50"
     [rows]="propertiesList" [columnMode]="'force'" (activate)="onActivate($event)">
 
 
@@ -85,7 +85,7 @@
     </ngx-datatable-row-detail>
 
 
-</ngx-datatable>
+</ngx-datatable> -->
 
 <ng-template #templatePropertyInfo let-property="property" let-rowIndex="rowIndex">
     <div class="block block-rounded block-bordered block-rounded">
@@ -114,13 +114,17 @@
                     </div>
                     <div class="col-md-8">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="list-group-prepend">
-                                    <span class="list-group-text">CountryList</span>
-                                </div>
-                                <div class="list-group-append">
-                                    <span class="list-group-text">AZ ER RT TY UI OP</span>
-                                </div>
+                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                <ul class="list-group list-group-horizontal">
+                                    <li class="list-group-item input-group-text">CountryList</li>
+                                    <li class="list-group-item country-list">
+                                        <div *ngFor="let country of countryList" class="custom-control custom-checkbox custom-control-primary mb-1" (click)="toggleChk(property, country)">
+                                            <input type="checkbox" class="custom-control-input" [checked]="property.country.includes(country)">
+                                            <label class="custom-control-label">{{country}}</label>
+                                        </div>
+                                    </li>
+                                </ul>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
@@ -128,7 +132,7 @@
                                         <span class="input-group-text">Description</span>
                                     </div>
                                     <input type="text" class="form-control" [placeholder]="property.description"
-                                    formControlName="description">
+                                        formControlName="description">
                                 </div>
                             </div>
                         </div>
@@ -136,8 +140,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Value</span>
                             </div>
-                            <textarea type="text" class="form-control"
-                                [placeholder]="property.value1" formControlName="value"></textarea>
+                            <textarea type="text" class="form-control" [placeholder]="property.value1"
+                                formControlName="value"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
@@ -146,7 +150,7 @@
                                         <span class="input-group-text">Length</span>
                                     </div>
                                     <input type="text" class="form-control" [placeholder]="property.length"
-                                    formControlName="length">
+                                        formControlName="length">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -166,7 +170,7 @@
                                         <span class="input-group-text">Cache Duration</span>
                                     </div>
                                     <input type="text" class="form-control" [placeholder]="property.cacheExpire"
-                                    formControlName="cacheExpire" >
+                                        formControlName="cacheExpire">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -174,7 +178,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Rank</span>
                                     </div>
-                                    <input type="text" class="form-control" [placeholder]="property.rank" formControlName="rank">
+                                    <input type="text" class="form-control" [placeholder]="property.rank"
+                                        formControlName="rank">
                                 </div>
                             </div>
                         </div>

@@ -1,91 +1,88 @@
-<div class="block-run">
-    <div class="btn-close"><i class="far fa-times-circle"></i></div>
-    <div class="col-md-12">
-        <div class="block block-rounded">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">Run <small>TestCases</small></h3>
-            </div>
-            <div class="block-content">
-                <div class="block block-bordered block-rounded">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title">Environment <small>Selection</small></h3>
-                    </div>
-                    <div class="block-content row">
-                        <div *ngFor="let env of envList;" style="margin-right: 0.75rem" >
-                            <div class="custom-control custom-block custom-control-info">
-                                <input type="checkbox" class="custom-control-input" [id]="env.value"  checked="">
-                                <label class="custom-control-label" [for]="env.value">
-                                    <span class="d-block text-center">
-                                      {{env.value}}
-                                    </span>
-                                </label>
-                                <span class="custom-block-indicator">
-                                   <i class="fa fa-check"></i>
+<div class="col-md-12">
+    <div class="block block-rounded">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">Run <small>TestCases</small></h3>
+        </div>
+        <div class="block-content">
+            <div class="block block-bordered block-rounded">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Environment <small>Selection</small></h3>
+                </div>
+                <div class="block-content row">
+                    <div *ngFor="let env of envList;" style="margin-right: 0.75rem" >
+                        <div class="custom-control custom-block custom-control-info">
+                            <input type="checkbox" class="custom-control-input" [id]="env.value"  checked="">
+                            <label class="custom-control-label" [for]="env.value">
+                                <span class="d-block text-center">
+                                  {{env.value}}
                                 </span>
-                            </div>
+                            </label>
+                            <span class="custom-block-indicator">
+                               <i class="fa fa-check"></i>
+                            </span>
                         </div>
-                        <!-- Test Selection -->
-                            </div>
-                        </div>
-                <div class="block block-bordered block-rounded">
-                    <div class="block-header block-header-default">
-                        <h3 class="block-title">Countries <small>Selection</small></h3>
                     </div>
-                    <div class="block-content">
-                        <div class="form-group">
-                            <div *ngFor="let country of countriesList;"
-                                 class="custom-control custom-checkbox custom-control-lg custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" [id]="country.value" [name]="country.value"
-                                       [checked]="isCountrySelected(country.value)" (change)="updateCountriesList($event,country.value)">
-                                <label class="custom-control-label" [for]="country.value">{{country.value}}</label>
-                            </div>
+                    <!-- Test Selection -->
+                        </div>
+                    </div>
+            <div class="block block-bordered block-rounded">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Countries <small>Selection</small></h3>
+                </div>
+                <div class="block-content">
+                    <div class="form-group">
+                        <div *ngFor="let country of countriesList;"
+                             class="custom-control custom-checkbox custom-control-lg custom-control-inline">
+                            <input type="checkbox" class="custom-control-input" [id]="country.value" [name]="country.value"
+                                   [checked]="isCountrySelected(country.value)" (change)="updateCountriesList($event,country.value)">
+                            <label class="custom-control-label" [for]="country.value">{{country.value}}</label>
                         </div>
                     </div>
                 </div>
-                <div class="block block-bordered block-rounded">
-                    <div class="block-content">
-                        <div id="accordion2" role="tablist" aria-multiselectable="true">
-                            <div class="block block-rounded mb-1">
-                                <div class="block-header block-header-default" role="tab" id="accordion2_h1">
-                                    <a class="font-w600" data-toggle="collapse" data-parent="#accordion2" href="#accordion2_q1" aria-expanded="true" aria-controls="accordion2_q1">Execution Settings</a>
-                                </div>
-                                <div id="accordion2_q1" class="collapse show" role="tabpanel" aria-labelledby="accordion2_h1" style="">
-                                    <div class="block-content">
-                                        <div class="form-group">
-                                            <label for="block-form-tag">Tag</label>
-                                            <input type="text" class="form-control" id="block-form-tag" name="block-form-tag">
+            </div>
+            <div class="block block-bordered block-rounded">
+                <div class="block-content">
+                    <div id="accordion2" role="tablist" aria-multiselectable="true">
+                        <div class="block block-rounded mb-1">
+                            <div class="block-header block-header-default" role="tab" id="accordion2_h1">
+                                <a class="font-w600" data-toggle="collapse" data-parent="#accordion2" href="#accordion2_q1" aria-expanded="true" aria-controls="accordion2_q1">Execution Settings</a>
+                            </div>
+                            <div id="accordion2_q1" class="collapse show" role="tabpanel" aria-labelledby="accordion2_h1" style="">
+                                <div class="block-content">
+                                    <div class="form-group">
+                                        <label for="block-form-tag">Tag</label>
+                                        <input type="text" class="form-control" id="block-form-tag" name="block-form-tag">
+                                    </div>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="Small Outline Primary">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text input-group-text-alt">
+                                                <a>Screenshots</a>
+                                            </span>
                                         </div>
-                                        <div class="btn-group btn-group-sm" role="group" aria-label="Small Outline Primary">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text input-group-text-alt">
-                                                    <a>Screenshots</a>
-                                                </span>
-                                            </div>
-                                            <button type="button" class="btn btn-outline-dark">None</button>
-                                            <button type="button" class="btn btn-outline-dark">On error</button>
-                                            <button type="button" class="btn btn-outline-dark">Always</button>
-                                        </div>
+                                        <button type="button" class="btn btn-outline-dark">None</button>
+                                        <button type="button" class="btn btn-outline-dark">On error</button>
+                                        <button type="button" class="btn btn-outline-dark">Always</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="block block-rounded mb-1">
-                                <div class="block-header block-header-default" role="tab" id="accordion2_h2">
-                                    <a class="font-w600" data-toggle="collapse" data-parent="#accordion2" href="#accordion2_q2" aria-expanded="true" aria-controls="accordion2_q2">Logs Settings</a>
-                                </div>
-                                <div id="accordion2_q2" class="collapse" role="tabpanel" aria-labelledby="accordion2_h2" style="">
-                                    <div class="block-content">
-                                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, orna</p>
-                                    </div>
+                        </div>
+                        <div class="block block-rounded mb-1">
+                            <div class="block-header block-header-default" role="tab" id="accordion2_h2">
+                                <a class="font-w600" data-toggle="collapse" data-parent="#accordion2" href="#accordion2_q2" aria-expanded="true" aria-controls="accordion2_q2">Logs Settings</a>
+                            </div>
+                            <div id="accordion2_q2" class="collapse" role="tabpanel" aria-labelledby="accordion2_h2" style="">
+                                <div class="block-content">
+                                    <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, orna</p>
                                 </div>
                             </div>
-                            <div class="block block-rounded mb-1">
-                                <div class="block-header block-header-default" role="tab" id="accordion2_h3">
-                                    <a class="font-w600" data-toggle="collapse" data-parent="#accordion2" href="#accordion2_q3" aria-expanded="true" aria-controls="accordion2_q3">Robot Settings</a>
-                                </div>
-                                <div id="accordion2_q3" class="collapse" role="tabpanel" aria-labelledby="accordion2_h3" style="">
-                                    <div class="block-content">
-                                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, orna</p>
-                                    </div>
+                        </div>
+                        <div class="block block-rounded mb-1">
+                            <div class="block-header block-header-default" role="tab" id="accordion2_h3">
+                                <a class="font-w600" data-toggle="collapse" data-parent="#accordion2" href="#accordion2_q3" aria-expanded="true" aria-controls="accordion2_q3">Robot Settings</a>
+                            </div>
+                            <div id="accordion2_q3" class="collapse" role="tabpanel" aria-labelledby="accordion2_h3" style="">
+                                <div class="block-content">
+                                    <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, orna</p>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <button class="col-md-12 btn btn-success">Run</button>
     </div>
+    <button class="col-md-12 btn btn-success">Run</button>
 </div>
 

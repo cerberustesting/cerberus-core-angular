@@ -25,7 +25,7 @@ export class InvariantsService {
   propertyNatureList: Array<IInvariant>;
   propertyDatabaseList: Array<IInvariant>;
   systemsList: Array<IInvariant>;
-  systemsSelected = [];
+  systemsSelected: Array<IInvariant> = [];
   // observables
   observableCountriesList = new BehaviorSubject<IInvariant[]>(this.countriesList);
   observableTcStatus = new BehaviorSubject<IInvariant[]>(this.tcstatusList);
@@ -53,7 +53,7 @@ export class InvariantsService {
       }, (err) => this.AlertService.APIError(err));
   }
   getSystems() {
-    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=system' )
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=system')
       .subscribe(response => {
         this.systemsList = response;
         this.observableSystems.next(this.systemsList);

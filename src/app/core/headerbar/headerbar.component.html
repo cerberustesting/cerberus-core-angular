@@ -8,16 +8,32 @@
         <i class="fa fa-folder-open"></i>
         <ng-select class="custom system-select" [items]="systemsList" bindLabel="value" bindValue="value"
           [closeOnSelect]="false" multiple="true" (clear)="onClear()" (change)="change()" [(ngModel)]="systemModel"
-          [dropdownPosition]="'bottom'" [hideSelected]="true" placeholder="Select System" (close)="onClose()">
+          [dropdownPosition]="'bottom'" placeholder="Select System" (close)="onClose()">
+
           <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
             <span *ngFor="let item of items | slice:0:2" style="margin-right :5px;">{{item.value}},</span>
             <span class="ng-value-label" *ngIf="items.length > 2">{{items.length - 2}} more...</span>
           </ng-template>
+
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <b *ngIf="!isASystemSelected(item.value)">{{item.value}}</b>
+            <b *ngIf="isASystemSelected(item.value)">
+              <i class="fa fa-check"></i>
+              {{item.value}}
+            </b>
+          </ng-template>
+
           <ng-template ng-header-tmp>
+
+            <!-- TO DO : add ngSwitch to have more flexibility in the button customization -->
+
             <button class="btn btn-outline-primary select-btn" (click)="selectAll()"
-              [innerHTML]="(this.toggleSelectAll || this.systemModel.length===0)? 'Select all' : 'Unselect All'"></button>
+              [innerHTML]="(this.toggleSelectAll || this.systemModel.length===0)? 'Select all' : 'Clear All'">
+            </button>
+
             <!-- <div class="selected-container"><div *ngFor="let system of systemModel" (click)="deleteSystem(system)" class="selected-system">{{ system }}</div></div> -->
           </ng-template>
+
         </ng-select>
       </div>
     </div>

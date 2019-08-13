@@ -17,9 +17,7 @@ import { RunComponent } from '../../shared/run/run.component';
 export class HeaderbarComponent implements OnInit {
 
   private systemsList: Array<IInvariant>;
-  private systemSub: Subscription;
   private selectedSystems: any[];
-  private systemSubscription: Subscription;
   private systemModel: string[];
   private toggleSelectAll: boolean = true;
 
@@ -41,16 +39,13 @@ export class HeaderbarComponent implements OnInit {
     this.userFullName = this.ks.getFullName();
     this.UserService.observableAccountLink.subscribe(r => { if (r) { this.user = r; } })
 
-    this.systemSub = this.InvariantService.observableSystems.subscribe(
-      (response) => {
-        this.systemsList = response;
-      }
-    );
+    this.InvariantService.observableSystems.subscribe(response => { this.systemsList = response; });
     this.InvariantService.getSystems();
 
-    this.systemSubscription = this.InvariantService.observableSystemsSelected.subscribe(
+    this.InvariantService.observableSystemsSelected.subscribe(
       (systemsSelected: any[]) => {
         this.selectedSystems = systemsSelected;
+        console.log(this.selectedSystems);
         this.systemModel = systemsSelected;
       }
     );
@@ -58,6 +53,7 @@ export class HeaderbarComponent implements OnInit {
   }
   change() {
     this.systemsList = this.systemsList.filter(system => this.systemModel.includes(system.value)).concat(this.systemsList.filter(system => !this.systemModel.includes(system.value)));
+    this.InvariantService.selectSystem(this.systemModel);
   }
   onClose() {
     this.InvariantService.selectSystem(this.systemModel);
@@ -100,6 +96,10 @@ export class HeaderbarComponent implements OnInit {
     }
     this.toggleSelectAll = !this.toggleSelectAll;
 
+  }
+
+  isASystemSelected(system: string): boolean {
+    return this.selectedSystems.filter(s => s == system).length > 0;
   }
 
 }

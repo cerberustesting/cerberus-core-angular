@@ -3,6 +3,7 @@ import { Column } from '../../model/column.model';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatalibTclistComponent } from '../utils/datalib-tclist/datalib-tclist.component';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
+import { DatalibEditComponent } from '../utils/datalib-edit/datalib-edit.component';
 
 @Component({
   selector: 'app-table',
@@ -99,10 +100,20 @@ export class DatatableComponent implements OnInit {
       country: row.country
     });
     this.sideContentService.openSideBlock();
-    // const modalRef = this.modalService.open(DatalibTclistComponent, { size: 'lg' });
-    // modalRef.componentInstance.id = row.testDataLibID;
-    // modalRef.componentInstance.name = name;
-    // modalRef.componentInstance.country = row.country;
+  }
+  editDataLib(row) {
+    this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
+      datalib: row,
+      duplicate: false
+    });
+    this.sideContentService.openSideBlock();
+  }
+  duplicateDataLib(row) {
+    this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
+      datalib: row,
+      duplicate: true
+    });
+    this.sideContentService.openSideBlock();
   }
   
 }

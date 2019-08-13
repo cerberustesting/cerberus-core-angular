@@ -16,7 +16,6 @@ export class SidecontentService {
     this.rootViewContainer = viewContainerRef;
   }
   addComponentToSideBlock(component: any, parameters?: {}) {
-    console.log(component);
     const factory = this.factoryResolver.resolveComponentFactory(component);
     let _component = factory.create(this.rootViewContainer.parentInjector);
     if (parameters) {
@@ -24,7 +23,9 @@ export class SidecontentService {
         _component.instance[parameter] = parameters[parameter];
       }
     }    
+    this.rootViewContainer.remove(0);
     this.rootViewContainer.insert(_component.hostView);
+    
   }
   openSideBlock() {
     this.isOpen = !this.isOpen;

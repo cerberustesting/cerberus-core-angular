@@ -1,0 +1,297 @@
+<div class="block-header">
+    <h3 class="block-title" *ngIf="!duplicate">Edit New Data Library</h3>
+    <h3 class="block-title" *ngIf="duplicate">Duplicate New Data Library</h3>
+</div>
+<div class="block-content">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">ID</span>
+                </div>
+                <input disabled="(duplicate)? true:false" type="text" class="form-control" [placeholder]="datalib.testDataLibID" [value]="datalib.testDataLibID">
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Name</span>
+                </div>
+                <input type="text" class="form-control" [placeholder]="datalib.name" [value]="datalib.name">
+                
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Type</span>
+                </div>
+                <select class="form-control" [value]="datalib.type">
+                        <option value="INTERNAL">INTERNAL - Internal Cerberus test data</option>
+                        <option value="SQL">SQL - Dynamic test data from SQL execution</option>
+                        <option value="SERVICE">SERVICE - Dynamic test data from SERVICE Webservice call</option>
+                        <option value="CSV">CSV - Internal Dynamic test data from CSV file</option>
+                    </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">System</span>
+                </div>
+                <select class="form-control" [value]="datalib.system">
+                        <option *ngFor="let system of systemsList" [value]="system.value">{{system.value}} - {{system.description}}</option>
+                    </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Environment</span>
+                </div>
+                <select class="form-control" [value]="datalib.environment">
+                        <option *ngFor="let environment of environmentList" [value]="environment.value">{{environment.value}} - {{environment.description}}</option>
+                    </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Country</span>
+                </div>
+                <select class="form-control" [value]="datalib.country">
+                        <option *ngFor="let country of countriesList" [value]="country.value">{{country.value}} - {{country.description}}</option>
+                    </select>
+            </div>
+        </div>
+    </div>
+
+    <!--BLOCK WITH TABS-->
+    <div class="block block-rounded block-bordered">
+        <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': paneActive===1}" (click)="paneActive = 1">Definition</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': paneActive===2}" (click)="paneActive = 2">SubData</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': paneActive===3}" (click)="paneActive = 3">Tracability</a>
+            </li>
+        </ul>
+        <div class="block-content tab-content">
+            <!--Definition TAB-->
+            <div class="tab-pane" [ngClass]="{'active': paneActive===1}" role="tabpanel">
+                <!--SERVICE configuration-->
+                <div class="block block-rounded block-bordered">
+                    <div class="block-header" (click)="serviceCollapse=!serviceCollapse">
+                        <h3 class="block-title">SERVICE configuration</h3>
+                        <i class="si" [ngClass]="(serviceCollapse)? 'si-arrow-down' : 'si-arrow-right'"></i>
+                    </div>
+                    <div class="block-content" *ngIf="serviceCollapse">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Database</span>
+                                    </div>
+                                    <select class="form-control" [value]="datalib.database">
+                                            <option *ngFor="let database of databasesList" [value]="database.value">{{database.value}} - {{database.description}}</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Service</span>
+                                    </div>
+                                    <select class="form-control" [value]="datalib.service">
+                                            <option *ngFor="let service of servicesList" [value]="service.value">{{service.value}}</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Service Path </span>
+                                    </div>
+                                    <input type="text" class="form-control" [placeholder]="datalib.servicePath" [value]="datalib.servicePath">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Operation </span>
+                                    </div>
+                                    <input type="text" class="form-control"[placeholder]="'operation ?'" [value]="'operation ?'"> <!-- TODO -->
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Envelope </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" [placeholder]="datalib.envelope" [value]="datalib.envelope"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--END SERVICE configuration-->
+                <!--SQL configuration-->
+                <div class="block block-rounded block-bordered">
+                    <div class="block-header" (click)="sqlCollapse=!sqlCollapse">
+                        <h3 class="block-title">SQL configuration</h3>
+                        <i class="si" [ngClass]="(sqlCollapse)? 'si-arrow-down' : 'si-arrow-right'"></i>
+                    </div>
+                    <div class="block-content" *ngIf="sqlCollapse">
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Database </span>
+                                </div>
+                                <select class="form-control" [value]="datalib.database">
+                                        <option *ngFor="let database of databasesList" [value]="database.value">{{database.value}} - {{database.description}}</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Script </span>
+                                </div>
+                                <textarea type="text" class="form-control" [placeholder]="datalib.script" [value]="datalib.script"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--END SQL configuration-->
+                <!--CSV configuration-->
+                <div class="block block-rounded block-bordered">
+                    <div class="block-header" (click)="csvCollapse=!csvCollapse">
+                        <h3 class="block-title">CSV configuration</h3>
+                        <i class="si" [ngClass]="(csvCollapse)? 'si-arrow-down' : 'si-arrow-right'"></i>
+                    </div>
+                    <div class="block-content" *ngIf="csvCollapse">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Database </span>
+                                    </div>
+                                    <select class="form-control" [value]="datalib.databaseCsv">
+                                            <option *ngFor="let database of databasesList" [value]="database.value">{{database.value}} - {{database.description}}</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">CSV URL </span>
+                                    </div>
+                                    <input type="text" class="form-control" [placeholder]="datalib.csvUrl" [value]="datalib.csvUrl">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Separator </span>
+                                    </div>
+                                    <input type="text" class="form-control" [placeholder]="datalib.separator" [value]="datalib.separator">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">CSV File </span>
+                                    </div>
+                                    <input type="file" class="form-control" > <!-- Todo -->
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div>
+
+                                </div>
+                                <input type="checkbox" checked=""> Automatically feed subdata's list with the first line of csv ?
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--END CSV configuration-->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Group</span>
+                            </div>
+                            <input type="text" class="form-control" [placeholder]="datalib.group" [value]="datalib.group">
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Private</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder=""> <!-- TODO : chk-->
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Description</span>
+                            </div>
+                            <textarea type="text" class="form-control" [placeholder]="datalib.description" [value]="datalib.description"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!--END Definition TAB-->
+            <!--SubData TAB-->
+            <div class="tab-pane" [ngClass]="{'active': paneActive===2}" role="tabpanel">
+                <p>...</p> <!-- ? use ngx-datatable ? -->
+            </div>
+            <!-- END SubData TAB-->
+            <!--SubData TAB-->
+            <div class="tab-pane" [ngClass]="{'active': paneActive===3}" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item bg-secondary" style="color: #fff;">Creation Date </li>
+                            <li class="list-group-item">{{datalib.created | date:'d MMMM y   HH:mm'}}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item bg-secondary" style="color: #fff;">Modification Date </li>
+                                <li class="list-group-item">{{datalib.lastModified | date:'d MMMM y   HH:mm'}}</li>
+                            </ul>
+                        </div>
+                    <div class="col-md-5">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item bg-secondary" style="color: #fff;">Created by </li>
+                            <li class="list-group-item">{{datalib.creator}}</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-md-7">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item bg-secondary" style="color: #fff;">Modified by </li>
+                            <li class="list-group-item">{{datalib.lastModifier}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--END SubData TAB-->
+        </div>
+    </div>
+    <!--END BLOCK WITH TABS-->
+    <div class="row">
+        <button class="col-md-12 btn btn-info" *ngIf="!duplicate">Save</button>
+        <button class="col-md-12 btn btn-info" *ngIf="duplicate">Duplicate</button>
+    </div>
+
+</div>

@@ -14,7 +14,9 @@ import { RunComponent } from '../../shared/run/run.component';
 })
 export class HeaderbarComponent implements OnInit {
 
+  // system(s) list fetched from API
   private systemsList: Array<IInvariant> = [];
+  // selected system(s) list  
   private selectedSystems: Array<IInvariant>;
 
   // user data from Keycloak
@@ -25,7 +27,7 @@ export class HeaderbarComponent implements OnInit {
 
   constructor(
     private InvariantService: InvariantsService,
-    private ks: KeycloakService,
+    private Keycloak: KeycloakService,
     private UserService: UserService,
     private sideContentService: SidecontentService
   ) { }
@@ -33,7 +35,7 @@ export class HeaderbarComponent implements OnInit {
   ngOnInit() {
     // fetch data from User (could be done at a higher level)
     this.UserService.observableAccountLink.subscribe(r => { if (r) { this.user = r; } })
-    this.userFullName = this.ks.getFullName();
+    this.userFullName = this.Keycloak.getFullName();
 
     // fetch the system list from invariant list
     this.InvariantService.observableSystems.subscribe(response => { this.systemsList = response; });
@@ -68,11 +70,8 @@ export class HeaderbarComponent implements OnInit {
     // we check that the selectedSystems array is defined
     // since ng-select component override declaration
     // which means undefined == empty in this case
-    if (this.selectedSystems) {
-      return this.selectedSystems.filter(s => s.value == systemName).length > 0;
-    } else {
-      return false;
-    }
+    if (this.selectedSystems) { return this.selectedSystems.filter(s => s.value == systemName).length > 0; }
+    else { return false; }
   }
 
   areAllSystemsSelected(): boolean {
@@ -89,7 +88,7 @@ export class HeaderbarComponent implements OnInit {
   }
 
   logout() {
-    this.ks.logout();
+    this.Keycloak.logout();
   }
 
   openUserSettingsPage() {

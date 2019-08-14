@@ -6,9 +6,9 @@
     <div>
       <div class="d-inline-block">
         <i class="fa fa-folder-open"></i>
-        <ng-select class="custom system-select" [items]="systemsList" bindLabel="value" bindValue="value"
-          [closeOnSelect]="false" multiple="true" (clear)="onClear()" (change)="change()" [(ngModel)]="systemModel"
-          [dropdownPosition]="'bottom'" placeholder="Select System" (close)="onClose()">
+        <ng-select class="custom system-select" [items]="systemsList" [closeOnSelect]="false" multiple="true"
+          (clear)="systemsList_OnClear()" (change)="systemsList_OnChange()" [(ngModel)]="selectedSystems"
+          [dropdownPosition]="'bottom'" placeholder="Select System">
 
           <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
             <span *ngFor="let item of items | slice:0:2" style="margin-right :5px;">{{item.value}},</span>
@@ -16,21 +16,21 @@
           </ng-template>
 
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-            <b *ngIf="!isASystemSelected(item.value)">{{item.value}}</b>
-            <b *ngIf="isASystemSelected(item.value)">
-              <i class="fa fa-check"></i>
+            <b>
+              <i *ngIf="isASystemSelected(item.value)" class="fa fa-check"></i>
               {{item.value}}
             </b>
           </ng-template>
 
           <!-- TOP BUTTONS : CLEAR / SELECT ALL -->
           <ng-template ng-header-tmp>
-            <div class="text-center">
-              <button *ngIf="selectedSystems.length === 0" class="btn btn-info full-width" (click)="toggleSystems()">
+            <div class="row ml-1 mr-1">
+              <button class="col mr-2 btn btn-info" (click)="selectAllSystems()" [disabled]="areAllSystemsSelected()">
                 <i class="fa fa-fw fa-check mr-1"></i>
                 Select all
               </button>
-              <button *ngIf="selectedSystems.length !== 0" class="btn btn-danger full-width" (click)="toggleSystems()">
+              <button class="col btn btn-danger" (click)="clearAllSystems()"
+                [disabled]="numberOfSelectedSystems() === 0">
                 <i class="fa fa-fw fa-times mr-1"></i>
                 Clear all
               </button>

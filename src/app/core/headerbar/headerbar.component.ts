@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { AlertService } from 'src/app/core/services/utils/alert.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
@@ -16,10 +14,8 @@ import { RunComponent } from '../../shared/run/run.component';
 })
 export class HeaderbarComponent implements OnInit {
 
-  private systemsList: Array<IInvariant>;
-  private selectedSystems: any[];
-  private systemModel: string[];
-  private toggleSelectAll: boolean = true;
+  private systemsList: Array<IInvariant> = [];
+  private selectedSystems: Array<IInvariant>;
 
   // user data from Keycloak
   private userFullName: string;
@@ -28,7 +24,6 @@ export class HeaderbarComponent implements OnInit {
   private user: IUser;
 
   constructor(
-    private AlertService: AlertService,
     private InvariantService: InvariantsService,
     private ks: KeycloakService,
     private UserService: UserService,
@@ -36,34 +31,69 @@ export class HeaderbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userFullName = this.ks.getFullName();
+    // fetch data from User (could be done at a higher level)
     this.UserService.observableAccountLink.subscribe(r => { if (r) { this.user = r; } })
+    this.userFullName = this.ks.getFullName();
 
+    // fetch the system list from invariant list
     this.InvariantService.observableSystems.subscribe(response => { this.systemsList = response; });
     this.InvariantService.getSystems();
 
-    this.InvariantService.observableSystemsSelected.subscribe(
-      (systemsSelected: any[]) => {
-        this.selectedSystems = systemsSelected;
-        this.systemModel = systemsSelected;
-      }
-    );
-    // this.InvariantService.emitSystemsSubject();
+    // subscribe to selected system(s) list
+    this.InvariantService.observableSystemsSelected.subscribe(r => { this.selectedSystems = r; });
   }
 
-  change() {
-    // order the selected system(s) at the beginning
-    this.systemsList = this.systemsList.filter(system => this.systemModel.includes(system.value)).concat(this.systemsList.filter(system => !this.systemModel.includes(system.value)));
-    this.InvariantService.selectSystem(this.systemModel);
+  systemsList_OnChange() {
+    // send the new list of selected system(s) to the service
+    this.InvariantService.updateSelectedSystemList(this.selectedSystems);
+    // TODO : order the selected system(s) at the beginning
+    //this.systemsList = this.systemsList.filter(system => this.systemModel.includes(system.value)).concat(this.systemsList.filter(system => !this.systemModel.includes(system.value)));
   }
 
-  onClose() {
-    this.InvariantService.selectSystem(this.systemModel);
+  systemsList_OnClear() {
+    // empty the selected system(s) array
+    this.selectedSystems = new Array<IInvariant>();
+    this.InvariantService.updateSelectedSystemList(this.selectedSystems);
   }
 
-  onClear() {
-    this.systemModel = [];
-    this.InvariantService.selectSystem(this.systemModel);
+  selectAllSystems(): void {
+    this.InvariantService.selectAllSystems();
+  }
+
+  clearAllSystems(): void {
+    this.systemsList_OnClear();
+  }
+
+  isASystemSelected(systemName: string): boolean {
+    // we check that the selectedSystems array is defined
+    // since ng-select component override declaration
+    // which means undefined == empty in this case
+    if (this.selectedSystems) {
+      return this.selectedSystems.filter(s => s.value == systemName).length > 0;
+    } else {
+      return false;
+    }
+  }
+
+  areAllSystemsSelected(): boolean {
+    return this.numberOfSelectedSystems() === this.systemsList.length;
+  }
+
+  numberOfSelectedSystems(): number {
+    let numberOfSelectedSystems: number;
+    // due to ng-select behavior
+    // if selectedSystems is undefined => empty array
+    if (!this.selectedSystems) { numberOfSelectedSystems = 0; }
+    else { numberOfSelectedSystems = this.selectedSystems.length; }
+    return numberOfSelectedSystems;
+  }
+
+  logout() {
+    this.ks.logout();
+  }
+
+  openUserSettingsPage() {
+    window.open(this.user.menu.accountLink, "_blank");
   }
 
   debug() {
@@ -81,28 +111,4 @@ export class HeaderbarComponent implements OnInit {
       duration: 5000
     }
   }
-
-  logout() {
-    this.ks.logout();
-  }
-
-  openUserSettingsPage() {
-    window.open(this.user.menu.accountLink, "_blank");
-  }
-
-  toggleSystems() {
-    if (this.toggleSelectAll || this.systemModel.length === 0) {
-      this.systemModel = this.systemsList.map(a => a.value);
-      this.InvariantService.selectSystem(this.systemModel);
-    } else {
-      this.onClear()
-    }
-    this.toggleSelectAll = !this.toggleSelectAll;
-
-  }
-
-  isASystemSelected(system: string): boolean {
-    return this.selectedSystems.filter(s => s == system).length > 0;
-  }
-
 }

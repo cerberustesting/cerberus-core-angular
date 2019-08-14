@@ -25,7 +25,8 @@ export class InvariantsService {
   propertyNatureList: Array<IInvariant>;
   propertyDatabaseList: Array<IInvariant>;
   systemsList: Array<IInvariant>;
-  systemsSelected: Array<IInvariant> = [];
+  // system management
+  systemsSelected: Array<IInvariant>;
   // observables
   observableCountriesList = new BehaviorSubject<IInvariant[]>(this.countriesList);
   observableTcStatus = new BehaviorSubject<IInvariant[]>(this.tcstatusList);
@@ -52,6 +53,7 @@ export class InvariantsService {
         this.observableCountriesList.next(this.countriesList);
       }, (err) => this.AlertService.APIError(err));
   }
+
   getSystems() {
     this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=system')
       .subscribe(response => {
@@ -59,24 +61,34 @@ export class InvariantsService {
         this.observableSystems.next(this.systemsList);
       }, (err) => this.AlertService.APIError(err));
   }
-  selectSystem(systemList) {
-    // @ts-ignore
-    this.systemsSelected = [...systemList];
+
+  // input: the new list of selected system(s)
+  // replace the service variable with the given list
+  updateSelectedSystemList(newSystemsList: Array<IInvariant>): void {
+    this.systemsSelected = newSystemsList;
     this.observableSystemsSelected.next(this.systemsSelected);
-    // if (!this.systemsSelected.includes(system)) {
-    //   this.systemsSelected.push(system);
-    //   this.observableSystemsSelected.next(this.systemsSelected);
-    //   console.log('new badge is : ' + system);
-    // } else { console.log('System already selected : ' + system); }
   }
-  removeSystem(badge) {
-    if (this.systemsSelected.indexOf(badge) != null) {
-      console.log('deleting badge : ' + badge);
-      this.systemsSelected.splice(this.systemsSelected.indexOf(badge), 1);
-      this.observableSystemsSelected.next(this.systemsSelected);
-    }
-    console.log(this.systemsSelected);
+
+  // select all the systems at once
+  selectAllSystems() {
+    // fill a new list with all the system
+    let allSystemsList = new Array<IInvariant>();
+    this.systemsList.forEach(system => {
+      allSystemsList.push(system);
+    });
+    // replace the service variable with the previously created list
+    this.updateSelectedSystemList(allSystemsList);
   }
+
+  // removeSystem(badge) {
+  //   if (this.systemsSelected.indexOf(badge) != null) {
+  //     console.log('deleting badge : ' + badge);
+  //     this.systemsSelected.splice(this.systemsSelected.indexOf(badge), 1);
+  //     this.observableSystemsSelected.next(this.systemsSelected);
+  //   }
+  //   console.log(this.systemsSelected);
+  // }
+
   getTcStatus() {
     this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=tcStatus')
       .subscribe(response => {

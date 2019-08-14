@@ -26,14 +26,17 @@
 :host {
         margin-top: 70px;
         border: 1px solid #dadeec;
-        width:50%;
+        width:40%;
         position: absolute;
         background-color: #ffffff;
         z-index:1000;
-        right: -50%;
+        right: -40%;
         top:0;
         bottom: 0;
         transition: 1s;
+        overflow-y: scroll;
+
+        
     
     .close-icon {
         text-align: center;

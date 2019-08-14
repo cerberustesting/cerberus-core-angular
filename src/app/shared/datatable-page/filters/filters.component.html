@@ -2,6 +2,9 @@
     <div class="filter-container ">
         <div class="content content-full">
             <div class="main-side ">
+                <!-- Create button-->
+                <button class="btn btn-info" *ngIf="name=='datalib'" (click)="createDatalib()"><i class="fa fa-plus-circle"></i> Create DataLib</button>
+
                 <!-- Global Search Field -->
                 <input type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
                     [(ngModel)]="gloabalSearchModel" placeholder="Search...">

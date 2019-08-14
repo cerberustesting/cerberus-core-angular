@@ -8,6 +8,8 @@ import { TestService } from '../../../core/services/crud/test.service';
 import { ITest } from '../../../shared/model/test.model';
 import { Column } from 'src/app/shared/model/column.model';
 import { Filter } from 'src/app/shared/model/filter.model';
+import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
+import { DatalibEditComponent } from '../utils/datalib-edit/datalib-edit.component';
 
 @Component({
   selector: 'app-filters',
@@ -21,6 +23,7 @@ export class FiltersComponent implements OnInit {
   @Input('selectedRows') selectedRows: any;
   @Input('servlet') servlet: string;
   @Input('selection') selection: boolean;
+  @Input() name?: string;
   @Output() systemApply = new EventEmitter<string>();
   @Output() pageApply = new EventEmitter<number>();
 
@@ -37,7 +40,8 @@ export class FiltersComponent implements OnInit {
 
   constructor(private systemService: SystemService,
     private invariantService: InvariantsService,
-    private testService: TestService) { }
+    private testService: TestService,
+    private sideContentService: SidecontentService) { }
 
   ngOnInit() {    
     this.columnActive = this.columns.filter(a => a.active).length;
@@ -50,7 +54,6 @@ export class FiltersComponent implements OnInit {
   }
 
   applySystem() {
-    console.log('applySystem call');
     this.filterList = [];
     this.columns.forEach(e => {
       if(e.sSearch && e.contentName!=='description') {
@@ -94,6 +97,15 @@ export class FiltersComponent implements OnInit {
   resetDefaultColumns() {
     this.columns.forEach(c => c.active = c.defaultActive);
     this.columnActive = this.columns.filter(a => a.active).length;
+  }
+
+  createDatalib() {
+    this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
+      datalib: {},
+      type: 'CREATE',
+      exit: () => this.applySystem()
+    });
+    this.sideContentService.openSideBlock();
   }
 
 }

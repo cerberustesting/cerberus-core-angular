@@ -28,7 +28,7 @@ export class SidecontentService {
     
   }
   openSideBlock() {
-    this.isOpen = !this.isOpen;
+    this.isOpen = true;
     this.change.emit(this.isOpen);
   }
   closeSideBlock() {

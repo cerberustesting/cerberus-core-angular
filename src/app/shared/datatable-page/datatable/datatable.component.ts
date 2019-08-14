@@ -4,7 +4,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatalibTclistComponent } from '../utils/datalib-tclist/datalib-tclist.component';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 import { DatalibEditComponent } from '../utils/datalib-edit/datalib-edit.component';
-import { WarningModalComponent } from '../../warning-modal/warning-modal.component';
+import { CustomModalComponent } from '../../custom-modal/custom-modal.component';
 import { TestService } from 'src/app/core/services/crud/test.service';
 
 @Component({
@@ -106,7 +106,7 @@ export class DatatableComponent implements OnInit {
   editDataLib(row) {
     this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
       datalib: row,
-      duplicate: false,
+      type: 'EDIT',
       exit: () => this.sort.emit()
     });
     this.sideContentService.openSideBlock();
@@ -114,13 +114,13 @@ export class DatatableComponent implements OnInit {
   duplicateDataLib(row) {
     this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
       datalib: row,
-      duplicate: true,
+      type: 'DUPLICATE',
       exit: () => this.sort.emit()
     });
     this.sideContentService.openSideBlock();
   }
   deleteDataLib(row) {
-    const modalRef = this.modalService.open(WarningModalComponent);
+    const modalRef = this.modalService.open(CustomModalComponent);
     modalRef.componentInstance.title = 'Delete Test Data Library Entry';
     modalRef.componentInstance.text = "Do you want to delete Test Data Library '" + row.name + "' \
     of system '" + row.system + "' (ID : " + row.testDataLibID + ") ?";

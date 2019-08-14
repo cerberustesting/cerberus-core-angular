@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WarningModalComponent } from './warning-modal.component';
+import { CustomModalComponent } from './custom-modal.component';
 
-describe('WarningModalComponent', () => {
-  let component: WarningModalComponent;
-  let fixture: ComponentFixture<WarningModalComponent>;
+describe('CustomModalComponent', () => {
+  let component: CustomModalComponent;
+  let fixture: ComponentFixture<CustomModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WarningModalComponent ]
+      declarations: [ CustomModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WarningModalComponent);
+    fixture = TestBed.createComponent(CustomModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

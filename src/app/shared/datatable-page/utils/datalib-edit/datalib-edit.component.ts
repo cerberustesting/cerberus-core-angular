@@ -14,8 +14,8 @@ export class DatalibEditComponent implements OnInit {
 
   // *** Inputs ***
   datalib: any;
-  duplicate: boolean;
-  exit: (n:void)=>void;
+  type: string;
+  exit: (n:void)=>void; //function to execute when press submit button
 
   // *** controle property ***
   paneActive = 1;
@@ -53,24 +53,28 @@ export class DatalibEditComponent implements OnInit {
 
   // *** main form ***
   private datalibForm: FormGroup;
-
-  // class="custom-select" formControlName="database"
-  // [formGroup]="datalibForm"
   
 
-  constructor(private invariantService: InvariantsService, private testService: TestService,  private formBuilder: FormBuilder, private sidecontentService: SidecontentService) { }
+  constructor(
+    private invariantService: InvariantsService, 
+    private testService: TestService,  
+    private formBuilder: FormBuilder, 
+    private sidecontentService: SidecontentService) { }
 
   ngOnInit() {
     this.systemsList = this.invariantService.systemsList;
     this.countriesList = this.invariantService.countriesList;
-    this.testService.getDataLibData(this.datalib.testDataLibID, data => {
-      this.data = data.contentTable;
-    });
+    if (this.datalib.testDataLibID) {
+      this.testService.getDataLibData(this.datalib.testDataLibID, data => {
+        this.data = data.contentTable;
+      });
+    }
+    
 
     this.datalibForm = this.formBuilder.group({
-      testdatalibid: (this.duplicate)? '' : this.datalib.testDataLibID,
+      testdatalibid: (this.type==='DUPLICATE')? '' : this.datalib.testDataLibID,
       name: this.datalib.name,
-      type: this.datalib.type,
+      type: this.datalib.type || 'INTERNAL',
       system: this.datalib.system,
       environment: this.datalib.environment,
       country: this.datalib.country,
@@ -95,19 +99,18 @@ export class DatalibEditComponent implements OnInit {
       subDataList: "[{\"testDataLibDataID\":157,\"subData\":\"\",\"testDataLibID\":60,\"parsingAnswer\":\"\",\"encrypt\":false,\"column\":\"\",\"columnPosition\":\"\",\"description\":\"\",\"value\":\"\",\"toDelete\":false}]"
     });
     
-    // TODO : add subdata to request
+    // TODO : add subdata
     
   }
   onSubmit(values) {
-    console.log(values);
     if(!values.file) values.file = 'undifined'
-    //values.subDataList = []; // TODO : add subdata to request
+    //values.subDataList = []; // TODO : add subdata
 
     let formData = new FormData();
     for (let key in values) {
-      formData.append(key, values[key])
+      formData.append(key, values[key] || '');
     }
-    if(!this.duplicate) {   
+    if(this.type==='EDIT') {   
       this.testService.updateTestDataLib(formData).subscribe(() => this.refreshTable());
     } else {
       this.testService.createTestDataLib(formData).subscribe(() => this.refreshTable());
@@ -117,7 +120,7 @@ export class DatalibEditComponent implements OnInit {
   }
   refreshTable() {
     this.sidecontentService.closeSideBlock();
-    this.exit()
+    this.exit(); //reload rows in datatable
   }
 
 }

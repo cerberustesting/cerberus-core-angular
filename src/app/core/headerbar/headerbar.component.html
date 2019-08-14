@@ -23,16 +23,20 @@
             </b>
           </ng-template>
 
+          <!-- TOP BUTTONS : CLEAR / SELECT ALL -->
           <ng-template ng-header-tmp>
-
-            <!-- TO DO : add ngSwitch to have more flexibility in the button customization -->
-
-            <button class="btn btn-outline-primary select-btn" (click)="selectAll()"
-              [innerHTML]="(this.toggleSelectAll || this.systemModel.length===0)? 'Select all' : 'Clear All'">
-            </button>
-
-            <!-- <div class="selected-container"><div *ngFor="let system of systemModel" (click)="deleteSystem(system)" class="selected-system">{{ system }}</div></div> -->
+            <div class="text-center">
+              <button *ngIf="selectedSystems.length === 0" class="btn btn-info full-width" (click)="toggleSystems()">
+                <i class="fa fa-fw fa-check mr-1"></i>
+                Select all
+              </button>
+              <button *ngIf="selectedSystems.length !== 0" class="btn btn-danger full-width" (click)="toggleSystems()">
+                <i class="fa fa-fw fa-times mr-1"></i>
+                Clear all
+              </button>
+            </div>
           </ng-template>
+          <!-- END TOP BUTTONS : CLEAR / SELECT ALL -->
 
         </ng-select>
       </div>

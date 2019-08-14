@@ -50,13 +50,17 @@ export class HeaderbarComponent implements OnInit {
     );
     // this.InvariantService.emitSystemsSubject();
   }
+
   change() {
+    // order the selected system(s) at the beginning
     this.systemsList = this.systemsList.filter(system => this.systemModel.includes(system.value)).concat(this.systemsList.filter(system => !this.systemModel.includes(system.value)));
     this.InvariantService.selectSystem(this.systemModel);
   }
+
   onClose() {
     this.InvariantService.selectSystem(this.systemModel);
   }
+
   onClear() {
     this.systemModel = [];
     this.InvariantService.selectSystem(this.systemModel);
@@ -86,7 +90,7 @@ export class HeaderbarComponent implements OnInit {
     window.open(this.user.menu.accountLink, "_blank");
   }
 
-  selectAll() {
+  toggleSystems() {
     if (this.toggleSelectAll || this.systemModel.length === 0) {
       this.systemModel = this.systemsList.map(a => a.value);
       this.InvariantService.selectSystem(this.systemModel);

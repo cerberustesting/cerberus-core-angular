@@ -3,6 +3,7 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as $ from 'jquery';
+import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 
 @Component({
   selector: 'app-datalib-edit',
@@ -14,6 +15,7 @@ export class DatalibEditComponent implements OnInit {
   // *** Inputs ***
   datalib: any;
   duplicate: boolean;
+  exit: (n:void)=>void;
 
   // *** controle property ***
   paneActive = 1;
@@ -56,7 +58,7 @@ export class DatalibEditComponent implements OnInit {
   // [formGroup]="datalibForm"
   
 
-  constructor(private invariantService: InvariantsService, private testService: TestService,  private formBuilder: FormBuilder) { }
+  constructor(private invariantService: InvariantsService, private testService: TestService,  private formBuilder: FormBuilder, private sidecontentService: SidecontentService) { }
 
   ngOnInit() {
     this.systemsList = this.invariantService.systemsList;
@@ -114,7 +116,8 @@ export class DatalibEditComponent implements OnInit {
     
   }
   refreshTable() {
-
+    this.sidecontentService.closeSideBlock();
+    this.exit()
   }
 
 }

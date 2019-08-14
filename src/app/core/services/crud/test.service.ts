@@ -127,6 +127,10 @@ export class TestService {
   createTestDataLib(formData: FormData) {
     return this.http.post<any>(environment.cerberus_api_url + '/CreateTestDataLib', formData);
   }
+  deleteTestDataLib(id: string, callback: (n:void)=>void) {
+    this.http.post<any>(environment.cerberus_api_url + '/DeleteTestDataLib', 'testdatalibid=' + id, httpOptions)
+      .subscribe((rep) => callback());
+  }
 
 
   filtreTestCase(filterTable): Observable<ITestCaseHeader> {

@@ -4,6 +4,8 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatalibTclistComponent } from '../utils/datalib-tclist/datalib-tclist.component';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 import { DatalibEditComponent } from '../utils/datalib-edit/datalib-edit.component';
+import { WarningModalComponent } from '../../warning-modal/warning-modal.component';
+import { TestService } from 'src/app/core/services/crud/test.service';
 
 @Component({
   selector: 'app-table',
@@ -32,7 +34,7 @@ export class DatatableComponent implements OnInit {
   isLoading: boolean;
   columnActive: number;
 
-  constructor(private modalService: NgbModal, private sideContentService: SidecontentService) { }
+  constructor(private modalService: NgbModal, private sideContentService: SidecontentService, private testService: TestService) { }
 
 
 
@@ -104,16 +106,25 @@ export class DatatableComponent implements OnInit {
   editDataLib(row) {
     this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
       datalib: row,
-      duplicate: false
+      duplicate: false,
+      exit: () => this.sort.emit()
     });
     this.sideContentService.openSideBlock();
   }
   duplicateDataLib(row) {
     this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
       datalib: row,
-      duplicate: true
+      duplicate: true,
+      exit: () => this.sort.emit()
     });
     this.sideContentService.openSideBlock();
+  }
+  deleteDataLib(row) {
+    const modalRef = this.modalService.open(WarningModalComponent);
+    modalRef.componentInstance.title = 'Delete Test Data Library Entry';
+    modalRef.componentInstance.text = "Do you want to delete Test Data Library '" + row.name + "' \
+    of system '" + row.system + "' (ID : " + row.testDataLibID + ") ?";
+    modalRef.componentInstance.fct = () => {this.testService.deleteTestDataLib(row.testDataLibID, () =>this.sort.emit());};
   }
   
 }

@@ -19,6 +19,7 @@ import { FilterComponent } from "./datatable-page/utils/filter/filter.component"
 import { DatalibTclistComponent } from './datatable-page/utils/datalib-tclist/datalib-tclist.component';
 import { RunComponent } from './run/run.component';
 import { DatalibEditComponent } from './datatable-page/utils/datalib-edit/datalib-edit.component';
+import { WarningModalComponent } from './warning-modal/warning-modal.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DatalibEditComponent } from './datatable-page/utils/datalib-edit/datali
     FilterComponent,
     DatalibTclistComponent,
     RunComponent,
-    DatalibEditComponent
+    DatalibEditComponent,
+    WarningModalComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { DatalibEditComponent } from './datatable-page/utils/datalib-edit/datali
   ],
   entryComponents: [
     DatalibTclistComponent,
-    DatalibEditComponent
+    DatalibEditComponent,
+    WarningModalComponent
   ],
   exports: [
     NgSelectModule,

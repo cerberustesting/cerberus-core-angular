@@ -28,7 +28,7 @@ export class SideblockComponent implements OnInit {
   ngOnInit() {
     this.sideContentService.setRootViewContainerRef(this.viewContainerRef)
     this.sideContentService.change.subscribe(isOpen => {
-      this.isOpen = true;
+      this.isOpen = isOpen;
     });
   }
   close() {

@@ -2,14 +2,14 @@
     <h3 class="block-title" *ngIf="!duplicate">Edit New Data Library</h3>
     <h3 class="block-title" *ngIf="duplicate">Duplicate New Data Library</h3>
 </div>
-<div class="block-content">
+<form class="block-content" [formGroup]="datalibForm" (ngSubmit)="onSubmit(datalibForm.value)">
     <div class="row">
         <div class="col-md-2">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">ID</span>
                 </div>
-                <input disabled="(duplicate)? true:false" type="text" class="form-control" [placeholder]="datalib.testDataLibID" [value]="datalib.testDataLibID">
+                <input type="text" class="form-control" [placeholder]="datalib.testDataLibID" formControlName="testdatalibid">
             </div>
         </div>
         <div class="col-md-7">
@@ -17,7 +17,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Name</span>
                 </div>
-                <input type="text" class="form-control" [placeholder]="datalib.name" [value]="datalib.name">
+                <input type="text" class="form-control" [placeholder]="datalib.name" formControlName="name">
                 
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Type</span>
                 </div>
-                <select class="form-control" [value]="datalib.type">
+                <select class="form-control" formControlName="type">
                         <option value="INTERNAL">INTERNAL - Internal Cerberus test data</option>
                         <option value="SQL">SQL - Dynamic test data from SQL execution</option>
                         <option value="SERVICE">SERVICE - Dynamic test data from SERVICE Webservice call</option>
@@ -39,7 +39,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">System</span>
                 </div>
-                <select class="form-control" [value]="datalib.system">
+                <select class="form-control"  formControlName="system">
                         <option *ngFor="let system of systemsList" [value]="system.value">{{system.value}} - {{system.description}}</option>
                     </select>
             </div>
@@ -49,7 +49,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Environment</span>
                 </div>
-                <select class="form-control" [value]="datalib.environment">
+                <select class="form-control" formControlName="environment">
                         <option *ngFor="let environment of environmentList" [value]="environment.value">{{environment.value}} - {{environment.description}}</option>
                     </select>
             </div>
@@ -59,7 +59,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Country</span>
                 </div>
-                <select class="form-control" [value]="datalib.country">
+                <select class="form-control" formControlName="country">
                         <option *ngFor="let country of countriesList" [value]="country.value">{{country.value}} - {{country.description}}</option>
                     </select>
             </div>
@@ -95,7 +95,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Database</span>
                                     </div>
-                                    <select class="form-control" [value]="datalib.database">
+                                    <select class="form-control" formControlName="databaseURL"><!-- ! -->
                                             <option *ngFor="let database of databasesList" [value]="database.value">{{database.value}} - {{database.description}}</option>
                                         </select>
                                 </div>
@@ -105,7 +105,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Service</span>
                                     </div>
-                                    <select class="form-control" [value]="datalib.service">
+                                    <select class="form-control" formControlName="service">
                                             <option *ngFor="let service of servicesList" [value]="service.value">{{service.value}}</option>
                                         </select>
                                 </div>
@@ -115,7 +115,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Service Path </span>
                                     </div>
-                                    <input type="text" class="form-control" [placeholder]="datalib.servicePath" [value]="datalib.servicePath">
+                                    <input type="text" class="form-control" [placeholder]="datalib.servicePath" formControlName="servicepath">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -131,7 +131,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Envelope </span>
                                     </div>
-                                    <textarea type="text" class="form-control" [placeholder]="datalib.envelope" [value]="datalib.envelope"></textarea>
+                                    <textarea type="text" class="form-control" [placeholder]="datalib.envelope" formControlName="envelope"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +151,7 @@
                                     <span class="input-group-text">Database </span>
                                 </div>
                                 <select class="form-control" [value]="datalib.database">
-                                        <option *ngFor="let database of databasesList" [value]="database.value">{{database.value}} - {{database.description}}</option>
+                                        <option *ngFor="let database of databasesList" formControlName="database">{{database.value}} - {{database.description}}</option>
                                     </select>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Script </span>
                                 </div>
-                                <textarea type="text" class="form-control" [placeholder]="datalib.script" [value]="datalib.script"></textarea>
+                                <textarea type="text" class="form-control" [placeholder]="datalib.script" formControlName="script"></textarea>
                             </div>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
                                         <span class="input-group-text">Database </span>
                                     </div>
                                     <select class="form-control" [value]="datalib.databaseCsv">
-                                            <option *ngFor="let database of databasesList" [value]="database.value">{{database.value}} - {{database.description}}</option>
+                                            <option *ngFor="let database of databasesList"  formControlName="databaseCsv">{{database.value}} - {{database.description}}</option>
                                         </select>
                                 </div>
                             </div>
@@ -189,7 +189,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">CSV URL </span>
                                     </div>
-                                    <input type="text" class="form-control" [placeholder]="datalib.csvUrl" [value]="datalib.csvUrl">
+                                    <input type="text" class="form-control" [placeholder]="datalib.csvUrl" formControlName="csvUrl">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -197,7 +197,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Separator </span>
                                     </div>
-                                    <input type="text" class="form-control" [placeholder]="datalib.separator" [value]="datalib.separator">
+                                    <input type="text" class="form-control" [placeholder]="datalib.separator" formControlName="separator">
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -225,7 +225,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Group</span>
                             </div>
-                            <input type="text" class="form-control" [placeholder]="datalib.group" [value]="datalib.group">
+                            <input type="text" class="form-control" [placeholder]="datalib.group" formControlName="group">
                             
                         </div>
                     </div>
@@ -234,7 +234,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Private</span>
                             </div>
-                            <input type="text" class="form-control" placeholder=""> <!-- TODO : chk-->
+                            <input type="text" class="form-control" placeholder="" formControlName="file"> <!-- TODO : chk-->
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -242,7 +242,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Description</span>
                             </div>
-                            <textarea type="text" class="form-control" [placeholder]="datalib.description" [value]="datalib.description"></textarea>
+                            <textarea type="text" class="form-control" [placeholder]="datalib.description" formControlName="libdescription"></textarea>
                         </div>
                     </div>
                 </div>
@@ -252,7 +252,10 @@
             <!--END Definition TAB-->
             <!--SubData TAB-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===2}" role="tabpanel">
-                <p>...</p> <!-- ? use ngx-datatable ? -->
+                    <ngx-datatable #myTable class="material fullscreen" [rowHeight]="50" [headerHeight]="50"
+                    [rows]="data" [columnMode]="'force'">
+                    <ngx-datatable-column *ngFor="let column of columns" [resizeable]="false" [sortable]="false" [name]="column.name" [prop]="column.prop"></ngx-datatable-column>
+                </ngx-datatable>
             </div>
             <!-- END SubData TAB-->
             <!--SubData TAB-->
@@ -290,8 +293,8 @@
     </div>
     <!--END BLOCK WITH TABS-->
     <div class="row">
-        <button class="col-md-12 btn btn-info" *ngIf="!duplicate">Save</button>
-        <button class="col-md-12 btn btn-info" *ngIf="duplicate">Duplicate</button>
+        <button class="col-md-12 btn btn-info" type="submit" *ngIf="!duplicate">Save</button>
+        <button class="col-md-12 btn btn-info" type="submit" *ngIf="duplicate">Duplicate</button>
     </div>
 
-</div>
+</form>

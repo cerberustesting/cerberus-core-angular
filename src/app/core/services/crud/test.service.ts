@@ -82,24 +82,6 @@ export class TestService {
       })
   }
 
-  // getTestDataLibFilterList(queryParameters: string) {
-  //   this.http.post<ITestCaseHeader>(environment.cerberus_api_url + '/ReadTestDataLib', queryParameters, httpOptions)
-  //     .subscribe((response) => {
-  //       if (response) {
-  //         if (response.iTotalRecords > 0) {
-  //           this.testdatalib = response.contentTable;
-  //           this.testdatalibLength = response.iTotalRecords;
-  //           this.observableTestDataLib.next(this.testcasesList);
-  //           this.observableTestDataLibLength.next(this.testcasesListLength);
-  //         }
-  //         else {
-  //           this.testcasesList = null;
-  //           this.observableTestDataLib.next(this.testcasesList);
-  //         }
-  //       }
-  //     });
-  // }
-
   getFromRequest(servlet: string, queryParameters: string, callback) {
     // get data for datatable
     this.http.post<ITestCaseHeader>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
@@ -130,6 +112,17 @@ export class TestService {
           callback(response);
         }
       });
+  }
+  getDataLibData(testdatalibId: string, callback: (data: any) => any) {
+    this.http.get<any>(environment.cerberus_api_url + '/ReadTestDataLibData?testdatalibid=' + testdatalibId)
+      .subscribe((response) => {
+        if (response) {
+          callback(response);
+        }
+      });
+  }
+  updateTestDataLib(formData: FormData) {
+    return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestDataLib', formData);
   }
 
 

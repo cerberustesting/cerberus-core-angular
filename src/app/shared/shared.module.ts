@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from "@ng-select/ng-select";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { DatatableComponent } from "./datatable-page/datatable/datatable.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TrueindexPipe } from "./pipes/trueindex.pipe";
 import { UniqueproplistPipe } from "./pipes/uniqueproplist.pipe";
 import { LabelfilteringPipe } from "./pipes/labelfiltering.pipe";
@@ -42,7 +42,8 @@ import { DatalibEditComponent } from './datatable-page/utils/datalib-edit/datali
     NgSelectModule,
     NgxDatatableModule,
     FormsModule,
-    NgbModule
+    NgbModule,    
+    ReactiveFormsModule
 
   ],
   entryComponents: [

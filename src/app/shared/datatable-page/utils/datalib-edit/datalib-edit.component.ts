@@ -66,7 +66,7 @@ export class DatalibEditComponent implements OnInit {
     });
 
     this.datalibForm = this.formBuilder.group({
-      testdatalibid: this.datalib.testdatalibID,
+      testdatalibid: (this.duplicate)? '' : this.datalib.testDataLibID,
       name: this.datalib.name,
       type: this.datalib.type,
       system: this.datalib.system,
@@ -100,14 +100,18 @@ export class DatalibEditComponent implements OnInit {
     console.log(values);
     if(!values.file) values.file = 'undifined'
     //values.subDataList = []; // TODO : add subdata to request
+
     let formData = new FormData();
     for (let key in values) {
       formData.append(key, values[key])
     }
-
-    //let queryString = $.param(values);
-    //request edit
-    this.testService.updateTestDataLib(formData).subscribe(() => this.refreshTable())
+    if(!this.duplicate) {   
+      this.testService.updateTestDataLib(formData).subscribe(() => this.refreshTable());
+    } else {
+      this.testService.createTestDataLib(formData).subscribe(() => this.refreshTable());
+    }
+    
+    
   }
   refreshTable() {
 

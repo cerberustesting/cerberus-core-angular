@@ -124,6 +124,9 @@ export class TestService {
   updateTestDataLib(formData: FormData) {
     return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestDataLib', formData);
   }
+  createTestDataLib(formData: FormData) {
+    return this.http.post<any>(environment.cerberus_api_url + '/CreateTestDataLib', formData);
+  }
 
 
   filtreTestCase(filterTable): Observable<ITestCaseHeader> {

@@ -25,10 +25,12 @@ export class InvariantsService {
   propertyNatureList: Array<IInvariant>;
   propertyDatabaseList: Array<IInvariant>;
   systemsList: Array<IInvariant>;
+  environmentsList: Array<IInvariant>;
   // system management
   systemsSelected: Array<IInvariant>;
   // observables
   observableCountriesList = new BehaviorSubject<IInvariant[]>(this.countriesList);
+  observableEnvironments = new BehaviorSubject<IInvariant[]>(this.environmentsList);
   observableTcStatus = new BehaviorSubject<IInvariant[]>(this.tcstatusList);
   observableSystems = new BehaviorSubject<IInvariant[]>(this.systemsList);
   observableSystemsSelected = new BehaviorSubject<any[]>(this.systemsSelected);
@@ -62,6 +64,14 @@ export class InvariantsService {
       }, (err) => this.AlertService.APIError(err));
   }
 
+    getEnvironments() {
+        this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=environment')
+            .subscribe(response => {
+                this.environmentsList = response;
+                this.observableEnvironments.next(this.environmentsList);
+            }, (err) => this.AlertService.APIError(err));
+    }
+
   // input: the new list of selected system(s)
   // replace the service variable with the given list
   updateSelectedSystemList(newSystemsList: Array<IInvariant>): void {
@@ -79,15 +89,6 @@ export class InvariantsService {
     // replace the service variable with the previously created list
     this.updateSelectedSystemList(allSystemsList);
   }
-
-  // removeSystem(badge) {
-  //   if (this.systemsSelected.indexOf(badge) != null) {
-  //     console.log('deleting badge : ' + badge);
-  //     this.systemsSelected.splice(this.systemsSelected.indexOf(badge), 1);
-  //     this.observableSystemsSelected.next(this.systemsSelected);
-  //   }
-  //   console.log(this.systemsSelected);
-  // }
 
   getTcStatus() {
     this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=tcStatus')

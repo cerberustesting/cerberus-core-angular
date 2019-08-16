@@ -3,7 +3,7 @@
     <i class="fa fa-trash-alt"></i>
   </button> <!-- Delete TC -->
 
-  <button class="btn btn-outline-success" *ngIf="(selectedRows.length>0)" placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-success" *ngIf="(selectedRows.length>0)" (click)="runTestCases(selectedRows)" placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-play"></i>
   </button> <!-- Run TestCase -->
 
@@ -11,7 +11,7 @@
     <i class="fa fa-pen"></i>
   </button> <!-- Edit TestCase Header -->  
 
-  <button class="btn btn-outline-primary" *ngIf="(selectedRows.length>0)" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave" container="body">
+  <button class="btn btn-outline-primary" *ngIf="(selectedRows.length==1)" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-copy"></i>
   </button> <!-- Duplicate TC --> 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IInvariant} from '../model/invariants.model';
 import {InvariantsService} from '../../core/services/crud/invariants.service';
 
@@ -7,38 +7,33 @@ import {InvariantsService} from '../../core/services/crud/invariants.service';
   templateUrl: './run.component.html',
   styleUrls: ['./run.component.scss']
 })
+
+
 export class RunComponent implements OnInit {
+
+    @Input() testCases:  Array<any>;
 
   private countriesList: Array<IInvariant> = new Array();
   private selected_countriesList: Array<string> = new Array();
-  private envList: Array<any> = [
-      {
-        value: "QA"
-      },
-      {
-        value: "UAT"
-      },
-      {
-        value: "PREPROD"
-      },
-      {
-        value: "STAGING"
-      },
-      {
-        value: "RE7"
-      }
-  ];
+  private envList: Array<any> = new Array();
 
   constructor(private InvariantsService: InvariantsService) {}
 
   ngOnInit() {
     this.InvariantsService.getCountriesList();
-    this.InvariantsService.getTceStatus();
     this.InvariantsService.observableCountriesList.subscribe(response => {
       this.countriesList = response;
       for (const index in this.countriesList) {
         this.selected_countriesList[index] = this.countriesList[index].value;
       }
+    });
+
+    this.InvariantsService.getEnvironments();
+    this.InvariantsService.observableEnvironments.subscribe(response => {
+      this.envList = response;
+      /*for (const index in this.envList) {
+          this.selected_countriesList[index] = this.countriesList[index].value;
+      }*/
     });
   }
 

@@ -1,6 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {IInvariant} from '../model/invariants.model';
-import {InvariantsService} from '../../core/services/crud/invariants.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { IInvariant } from '../model/invariants.model';
+import { InvariantsService } from '../../core/services/crud/invariants.service';
+import { IRunParameters, RunParameters} from './run.parameters';
+import { RunService } from '../../core/services/crud/run.service';
 
 @Component({
   selector: 'app-run',
@@ -11,13 +13,17 @@ import {InvariantsService} from '../../core/services/crud/invariants.service';
 
 export class RunComponent implements OnInit {
 
-    @Input() testCases:  Array<any>;
+  @Input() testCases:  Array<any>;
 
-  private countriesList: Array<IInvariant> = new Array();
-  private selected_countriesList: Array<string> = new Array();
-  private envList: Array<any> = new Array();
+  private runParameters: IRunParameters = new RunParameters();
+  private countriesList: Array<IInvariant> = [];
+  private selected_countriesList: Array<string> = [];
+  private envList: Array<any> = [];
 
-  constructor(private InvariantsService: InvariantsService) {}
+  constructor(
+      private InvariantsService: InvariantsService,
+      private RunService: RunService
+  ) {}
 
   ngOnInit() {
     this.InvariantsService.getCountriesList();
@@ -53,6 +59,22 @@ export class RunComponent implements OnInit {
         this.selected_countriesList.push(country);
       }
     }
+  }
+
+  runSelection() {
+
+    this.runParameters.testcase = this.testCases[0].testCase;
+    this.runParameters.test = this.testCases[0].test;
+    this.runParameters.environment = this.envList[0].value;
+    let submit = new FormData();
+
+
+    for (let key in this.runParameters) {
+      submit.append(key, this.runParameters[key] || '');
+    }
+    console.log(submit);
+
+    this.RunService.addToExecutionQueue(submit);
   }
 
 }

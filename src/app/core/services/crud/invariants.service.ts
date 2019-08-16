@@ -27,13 +27,13 @@ export class InvariantsService {
   systemsList: Array<IInvariant>;
   environmentsList: Array<IInvariant>;
   // system management
-  systemsSelected: Array<IInvariant>;
+  selectedSystemsList: Array<IInvariant>;
   // observables
   observableCountriesList = new BehaviorSubject<IInvariant[]>(this.countriesList);
   observableEnvironments = new BehaviorSubject<IInvariant[]>(this.environmentsList);
   observableTcStatus = new BehaviorSubject<IInvariant[]>(this.tcstatusList);
   observableSystems = new BehaviorSubject<IInvariant[]>(this.systemsList);
-  observableSystemsSelected = new BehaviorSubject<any[]>(this.systemsSelected);
+  observableSystemsSelected = new BehaviorSubject<any[]>(this.selectedSystemsList);
   observablePriorities = new BehaviorSubject<IInvariant[]>(this.prioritiesList);
   observableOriginsList = new BehaviorSubject<IInvariant[]>(this.originsList);
   observableGroupsList = new BehaviorSubject<IInvariant[]>(this.groupsList);
@@ -75,8 +75,8 @@ export class InvariantsService {
   // input: the new list of selected system(s)
   // replace the service variable with the given list
   updateSelectedSystemList(newSystemsList: Array<IInvariant>): void {
-    this.systemsSelected = newSystemsList;
-    this.observableSystemsSelected.next(this.systemsSelected);
+    this.selectedSystemsList = newSystemsList;
+    this.observableSystemsSelected.next(this.selectedSystemsList);
   }
 
   // select all the systems at once

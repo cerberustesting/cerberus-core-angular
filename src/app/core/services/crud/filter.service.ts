@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Column } from 'src/app/shared/model/column.model';
 import { InvariantsService } from './invariants.service';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class FilterService {
     let formData = {}
     let columnListWithActiveFilter = columnList.filter(e => e.sSearch).filter(e => e.sSearch.length != 0 || e.contentName == pageInformation.sort[0].prop || e.contentName == 'system');
     // contaign all columns to filter&sort
-    
+
     //generate request header
 
     // ? "sEcho"
-    
+
     formData["iDisplayStart"] = pageInformation.number * pageInformation.size; // first element index
     formData["iDisplayLength"] = countWanted; // number of elements
     let sortCol = columnListWithActiveFilter.map(a => a.contentName).indexOf(pageInformation.sort[0].prop);
@@ -35,10 +36,22 @@ export class FilterService {
       for (let column in columnListWithActiveFilter) {
         if (columnListWithActiveFilter[column].type === 'label') {
           formData["sSearch_" + column] = (columnListWithActiveFilter[column].sSearch) ? columnListWithActiveFilter[column].sSearch.map(a => a.label).join(',') : ''; // value(s) to filter (only label)
-        } else if(columnListWithActiveFilter[column].contentName === 'system'){
-          let systemByFilter = ((columnListWithActiveFilter[column].sSearch.length!=0) ? columnListWithActiveFilter[column].sSearch.join(',') : '');
-          let systemByService = (this.invariantService.systemsSelected.length!=0)? ',' + this.invariantService.systemsSelected.join(','): ''
-          formData["sSearch_" + column] = systemByFilter + ((systemByFilter!='' && systemByService!='')? ',' : '') + systemByService; // value(s) to filter
+        } else if (columnListWithActiveFilter[column].contentName === 'system') {
+          let systemByFilter = ((columnListWithActiveFilter[column].sSearch.length != 0) ? columnListWithActiveFilter[column].sSearch.join(',') : '');
+          let systemByService;
+          if (this.invariantService.selectedSystemsList) {
+            let SystemByFilterRaw = new Array<String>();
+            if (this.invariantService.selectedSystemsList.length != 0) {
+              this.invariantService.selectedSystemsList.forEach(system => {
+                SystemByFilterRaw.push(system.value);
+              });
+              systemByService = ',' + SystemByFilterRaw.join(',');
+            }
+            //systemByService = (this.invariantService.selectedSystemsList.length != 0) ? ',' + this.invariantService.selectedSystemsList.join(',') : ''
+          } else {
+            systemByService = '';
+          }
+          formData["sSearch_" + column] = systemByFilter + ((systemByFilter != '' && systemByService != '') ? ',' : '') + systemByService; // value(s) to filter
         } else {
           formData["sSearch_" + column] = (columnListWithActiveFilter[column].sSearch) ? columnListWithActiveFilter[column].sSearch.join(',') : ''; // value(s) to filter
         }
@@ -52,7 +65,8 @@ export class FilterService {
 
     for (let item in formData) {
       queryParameter += encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&';
-    }   
+    }
+    console.log(queryParameter.slice(0, -1));
     return queryParameter.slice(0, -1); // removing the last '&'
   }
 }

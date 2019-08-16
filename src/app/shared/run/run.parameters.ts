@@ -22,7 +22,7 @@ export class RunParameters {
     timeout: null;
     pagesource: number;
     seleniumlog: number;
-    manualexecution: boolean;
+    manualexecution: string;
     retries: number;
     priority: number;
     outputformat: string;
@@ -52,10 +52,10 @@ export class RunParameters {
    this.timeout = null;
    this.pagesource = 1;
    this.seleniumlog = 1;
-   this.manualexecution = false;
+   this.manualexecution = 'N';
    this.retries = 0;
    this.priority = 1000;
-   this.outputformat = 'compact';
+   this.outputformat = 'json';
    this.executor = null;
     }
 }

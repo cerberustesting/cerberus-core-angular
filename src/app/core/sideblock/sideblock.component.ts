@@ -18,6 +18,8 @@ export class SideblockComponent implements OnInit {
   @HostBinding('class.is-open')
   isOpen = false;
   title: string = '';
+  @HostBinding('class.is-hidden') hidden: boolean = false;
+
 
   @ViewChild('dynamic', {read: ViewContainerRef, static: true}) viewContainerRef: ViewContainerRef;
 
@@ -34,5 +36,7 @@ export class SideblockComponent implements OnInit {
   close() {
     this.isOpen = false;
   }
-
+  hide() {
+    this.hidden = !this.hidden;
+    }
 }

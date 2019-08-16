@@ -5,51 +5,68 @@
     <!-- Left Section -->
     <div>
       <div class="d-inline-block">
-        <i class="fa fa-folder-open"></i>
-        <ng-select class="custom system-select" [items]="systemsList" [closeOnSelect]="false" multiple="true"
-          (clear)="systemsList_OnClear()" (change)="systemsList_OnChange()" [(ngModel)]="selectedSystems"
-          [dropdownPosition]="'bottom'" placeholder="Select System">
-
-          <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-            <span *ngFor="let item of items | slice:0:2" style="margin-right :5px;">{{item.value}},</span>
-            <span class="ng-value-label" *ngIf="items.length > 2">{{items.length - 2}} more...</span>
-          </ng-template>
-
-          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-            <b>
-              <i *ngIf="isASystemSelected(item.value)" class="fa fa-check"></i>
-              {{item.value}}
-            </b>
-          </ng-template>
-
-          <!-- TOP BUTTONS : CLEAR / SELECT ALL -->
-          <ng-template ng-header-tmp>
-            <div class="row ml-1 mr-1">
-              <button class="col mr-2 btn btn-info" (click)="selectAllSystems()" [disabled]="areAllSystemsSelected()">
-                <i class="fa fa-fw fa-check mr-1"></i>
-                Select all
-              </button>
-              <button class="col btn btn-danger" (click)="clearAllSystems()"
-                [disabled]="numberOfSelectedSystems() === 0">
-                <i class="fa fa-fw fa-times mr-1"></i>
-                Clear all
-              </button>
-            </div>
-          </ng-template>
-          <!-- END TOP BUTTONS : CLEAR / SELECT ALL -->
-
-        </ng-select>
+        <i class="fa fa-angle-right"></i>
+        Page Title
       </div>
+
     </div>
     <!-- END Left Section -->
 
     <!-- Right Section -->
-    <div class="dropdown d-inline-block">
-      <!-- <span *ngFor='let badge of selectedSystems' style="cursor: pointer" class="badge badge-pill badge-light"
-        (click)="deleteSystem(badge)">
-        x {{ badge }}
-      </span> -->
+    <div class="d-inline-block">
 
+      <div class="d-inline-block">
+        <button type="button" class="btn btn-dual p-0 system-select-width text-left">
+
+          <!-- SYSTEM SELECTION -->
+          <ng-select class="custom" [items]="systemsList" [closeOnSelect]="false" multiple="true"
+            (clear)="systemsList_OnClear()" (change)="systemsList_OnChange()" [(ngModel)]="selectedSystemsList"
+            [dropdownPosition]="'bottom'" placeholder="No system selected" [searchFn]="customSearchSystem">
+
+            <!-- SELECTED VALUE(S) TEMPLATE -->
+            <ng-template ng-multi-label-tmp let-items="items" let-search="searchTerm">
+              <i class="fa fa-fw fa-folder-open mr-2" style="color:#495057;"></i>
+              <span *ngIf="selectedSystemsList" class="nav-main-link-badge badge badge-pill badge-primary mr-2">
+                <span *ngIf="selectedSystemsList.length == 1"> {{ selectedSystemsList[0].value }}</span>
+                <span *ngIf="selectedSystemsList.length > 1"> {{ selectedSystemsList.length }} </span>
+              </span>
+            </ng-template>
+            <!-- END SELECTED VALUE(S) TEMPLATE -->
+
+            <!-- OPTION(S) TEMPLATE -->
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              <b>
+                <span *ngIf="!isASystemSelected(item.value)">{{item.value}}</span>
+                <span *ngIf="isASystemSelected(item.value)" class="text-primary-dark bold">{{item.value}}</span>
+                <i *ngIf="isASystemSelected(item.value)" class="ml-1 fa fa-check-circle text-primary-dark"></i>
+              </b>
+            </ng-template>
+            <!-- END OPTION(S) TEMPLATE -->
+
+            <!-- TOP BUTTONS : CLEAR / SELECT ALL -->
+            <ng-template ng-header-tmp>
+              <div class="row ml-1 mr-1">
+                <!-- SELECT ALL BUTTON -->
+                <button class="col mr-2 btn btn-info btn-sm" (click)="selectAllSystems()"
+                  [disabled]="areAllSystemsSelected()">
+                  <i class="fa fa-fw fa-check mr-1"></i>
+                  Select all
+                </button>
+                <!-- CLEAR ALL BUTTON -->
+                <button class="col btn btn-danger btn-sm" (click)="clearAllSystems()"
+                  [disabled]="numberOfSelectedSystems() === 0">
+                  <i class="fa fa-fw fa-times mr-1"></i>
+                  Clear all
+                </button>
+              </div>
+            </ng-template>
+            <!-- END TOP BUTTONS : CLEAR / SELECT ALL -->
+
+          </ng-select>
+          <!-- END SYSTEM SELECTION -->
+
+        </button>
+      </div>
 
       <!-- User Dropdown -->
       <div class="dropdown d-inline-block">

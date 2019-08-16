@@ -6,24 +6,22 @@
   cursor: pointer;
 }
 
-.selected-system {
-  cursor: pointer;
-  background-color: rgb(209, 229, 247);
-  border: 2px solid rgb(60, 144, 223);
-  margin: 5px;
-  text-align: center;
-  color: black;
-  padding: 3px;
-  i {
-    color: #3b5998;
-  }
-}
-
 .full-width {
   width: 100%;
 }
 
-.selected-container {
-  max-height: 220px;
-  overflow-y: scroll;
+.system-select-width {
+  width: 19rem;
+}
+
+.ng-select.custom {
+  .ng-select-container {
+    .ng-value-container {
+      padding-top: 0px !important;
+    }
+  }
+}
+
+.bold {
+  font-weight: bold !important;
 }

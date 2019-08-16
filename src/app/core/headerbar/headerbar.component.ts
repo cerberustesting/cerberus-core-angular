@@ -5,7 +5,7 @@ import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 import { UserService } from '../services/crud/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
 import { SidecontentService } from '../services/crud/sidecontent.service';
-import { RunComponent } from '../../shared/run/run.component';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-headerbar',
@@ -25,11 +25,16 @@ export class HeaderbarComponent implements OnInit {
   // user data from Keycloak
   private userFullName: string;
 
+  // ? WORK IN PROGRESS
+  //snack bar configuration
+  snackBar_config: MatSnackBarConfig<any>;
+
   constructor(
     private InvariantService: InvariantsService,
     private Keycloak: KeycloakService,
     private UserService: UserService,
-    private sideContentService: SidecontentService
+    private sideContentService: SidecontentService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -43,6 +48,12 @@ export class HeaderbarComponent implements OnInit {
 
     // subscribe to selected system(s) list
     this.InvariantService.observableSystemsSelected.subscribe(r => { this.selectedSystemsList = r; });
+
+    // ? WORK IN PROGRESS
+    this.snackBar_config = {
+      horizontalPosition: 'end',
+      duration: 2000
+    }
   }
 
   systemsList_OnChange(): void {
@@ -106,13 +117,7 @@ export class HeaderbarComponent implements OnInit {
     this.sideContentService.openSideBlock();
   }
 
-  createARandomAlert() {
-    return {
-      message: "message test " + Math.floor(Math.random() * (999999 - 100000)) + 100000,
-      animationIn: "fadeInDown",
-      animationOut: "fadeOut",
-      style: "alert-info",
-      duration: 5000
-    }
+  openSnackBar() {
+    this._snackBar.open('Test message', 'Dismiss', this.snackBar_config);
   }
 }

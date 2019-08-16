@@ -47,7 +47,6 @@ export class FilterService {
               });
               systemByService = ',' + SystemByFilterRaw.join(',');
             }
-            //systemByService = (this.invariantService.selectedSystemsList.length != 0) ? ',' + this.invariantService.selectedSystemsList.join(',') : ''
           } else {
             systemByService = '';
           }
@@ -66,7 +65,6 @@ export class FilterService {
     for (let item in formData) {
       queryParameter += encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&';
     }
-    console.log(queryParameter.slice(0, -1));
     return queryParameter.slice(0, -1); // removing the last '&'
   }
 }

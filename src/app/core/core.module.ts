@@ -7,40 +7,34 @@ import { AppRoutingModule } from "../app-routing.module";
 import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
 import { SharedModule } from '../shared/shared.module';
 import { SideblockComponent } from './sideblock/sideblock.component';
-import {RunComponent} from '../shared/run/run.component';
+import { RunComponent } from '../shared/run/run.component';
 
 @NgModule({
   declarations: [
-      HeaderbarComponent,
-      FooterComponent,
-      SidebarComponent,
-      PagenotfoundComponent,
-      SideblockComponent,
+    HeaderbarComponent,
+    FooterComponent,
+    SidebarComponent,
+    PagenotfoundComponent,
+    SideblockComponent,
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
     SharedModule
   ],
-  exports : [
-      HeaderbarComponent,
-      FooterComponent,
-      SidebarComponent,
-      AppRoutingModule,
-      SideblockComponent
+  exports: [
+    HeaderbarComponent,
+    FooterComponent,
+    SidebarComponent,
+    AppRoutingModule,
+    SideblockComponent
   ],
-  providers : [
-    /*    {
-    provide: HTTP_INTERCEPTORS,
-    useClass: KeycloakInterceptorService,
-    multi: true
-  }*/
-  ],
+  providers: [],
   entryComponents: [RunComponent
   ]
 })
 export class CoreModule {
-  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error('CoreModule has already been loaded. You should only import Core modules in the AppModule only.');
     }

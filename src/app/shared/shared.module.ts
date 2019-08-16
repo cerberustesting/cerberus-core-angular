@@ -21,6 +21,7 @@ import { RunComponent } from './run/run.component';
 import { DatalibEditComponent } from './datatable-page/utils/datalib-edit/datalib-edit.component';
 import { CustomModalComponent } from './custom-modal/custom-modal.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -45,15 +46,15 @@ import { MatSliderModule } from '@angular/material/slider';
     NgSelectModule,
     NgxDatatableModule,
     FormsModule,
-    NgbModule,    
+    NgbModule,
     ReactiveFormsModule,
-    MatSliderModule
-
+    MatSliderModule,
+    MatSnackBarModule
   ],
   entryComponents: [
     DatalibTclistComponent,
     DatalibEditComponent,
-    CustomModalComponent
+    CustomModalComponent,
   ],
   exports: [
     NgSelectModule,
@@ -68,7 +69,7 @@ import { MatSliderModule } from '@angular/material/slider';
     FiltersComponent,
     DatatablePageComponent
   ],
-  providers : [
+  providers: [
     TrueindexPipe,
     LabelfilteringPipe
   ]

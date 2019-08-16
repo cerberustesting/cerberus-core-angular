@@ -104,7 +104,6 @@ export class HeaderbarComponent implements OnInit {
   debug(): void {
     //this.AlertService.displayMessage(this.createARandomAlert());
     this.sideContentService.openSideBlock();
-    this.sideContentService.addComponentToSideBlock(RunComponent);
   }
 
   createARandomAlert() {

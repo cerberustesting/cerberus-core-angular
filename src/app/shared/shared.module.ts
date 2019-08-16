@@ -20,6 +20,7 @@ import { DatalibTclistComponent } from './datatable-page/utils/datalib-tclist/da
 import { RunComponent } from './run/run.component';
 import { DatalibEditComponent } from './datatable-page/utils/datalib-edit/datalib-edit.component';
 import { CustomModalComponent } from './custom-modal/custom-modal.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CustomModalComponent } from './custom-modal/custom-modal.component';
     NgxDatatableModule,
     FormsModule,
     NgbModule,    
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSliderModule
 
   ],
   entryComponents: [

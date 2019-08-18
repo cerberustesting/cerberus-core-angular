@@ -1,7 +1,7 @@
-<button *ngIf="data.dismissable" type="button" class="close" (click)="dismissSnackbar()">
+<button *ngIf="data.dismissable === true" type="button" class="close" (click)="dismissSnackbar()">
     <span aria-hidden="true">×</span>
 </button>
 <p class="mb-0">
-    <i *ngIf="data.icon" class="fa fa-fw mr-1" [ngClass]="data.icon"></i>
+    <i *ngIf="data.style" class="fa fa-fw mr-1" [ngClass]="findIconForStyle(data.style)"></i>
     {{data.message}}
 </p>

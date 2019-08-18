@@ -5,14 +5,12 @@ import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 import { UserService } from '../services/crud/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
 import { SidecontentService } from '../services/crud/sidecontent.service';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { NotificationsComponent } from 'src/app/shared/notifications/notifications.component';
+import { NotificationService } from '../services/utils/notification.service';
 
 @Component({
   selector: 'app-headerbar',
   templateUrl: './headerbar.component.html',
-  styleUrls: ['./headerbar.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./headerbar.component.scss']
 })
 export class HeaderbarComponent implements OnInit {
 
@@ -26,16 +24,12 @@ export class HeaderbarComponent implements OnInit {
   // user data from Keycloak
   private userFullName: string;
 
-  // ? WORK IN PROGRESS
-  //snack bar configuration
-  snackBar_config: MatSnackBarConfig<any>;
-
   constructor(
     private InvariantService: InvariantsService,
     private Keycloak: KeycloakService,
     private UserService: UserService,
     private sideContentService: SidecontentService,
-    private _snackBar: MatSnackBar
+    private NotificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -49,13 +43,6 @@ export class HeaderbarComponent implements OnInit {
 
     // subscribe to selected system(s) list
     this.InvariantService.observableSystemsSelected.subscribe(r => { this.selectedSystemsList = r; });
-
-    // ? WORK IN PROGRESS
-    this.snackBar_config = {
-      horizontalPosition: 'end',
-      duration: 100000,
-      panelClass: ['alert', 'alert-success', 'alert-dismissable']
-    }
   }
 
   systemsList_OnChange(): void {
@@ -113,22 +100,12 @@ export class HeaderbarComponent implements OnInit {
     window.open(this.user.menu.accountLink, "_blank");
   }
 
-  // DEBUG FUNCTION : feel free to edit it!
+  // DEBUG FUNCTION : feel free to edit them!
   debug(): void {
-    //this.AlertService.displayMessage(this.createARandomAlert());
     this.sideContentService.openSideBlock();
   }
 
-  openSnackBar() {
-    // TO DO : create a service
-    // TO DO : create a model for notification object
-    this.snackBar_config.data = {
-      message: 'Ive got five dogs',
-      icon: 'fa-info-circle',
-      style: 'success',
-      dismissable: true 
-    }
-    ;
-    this._snackBar.openFromComponent(NotificationsComponent, this.snackBar_config);
+  debug2(): void {
+    this.NotificationService.createANotification('test message', 'alert-info', true, 5000);
   }
 }

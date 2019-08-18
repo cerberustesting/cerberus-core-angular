@@ -22,6 +22,7 @@ import { DatalibEditComponent } from './datatable-page/utils/datalib-edit/datali
 import { CustomModalComponent } from './custom-modal/custom-modal.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     DatalibTclistComponent,
     RunComponent,
     DatalibEditComponent,
-    CustomModalComponent
+    CustomModalComponent,
+    NotificationsComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +69,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     NgbPopoverModule,
     ActionsComponent,
     FiltersComponent,
-    DatatablePageComponent
+    DatatablePageComponent,
+    NotificationsComponent
   ],
   providers: [
     TrueindexPipe,

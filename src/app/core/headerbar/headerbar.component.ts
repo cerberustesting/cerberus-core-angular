@@ -6,6 +6,7 @@ import { UserService } from '../services/crud/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
 import { SidecontentService } from '../services/crud/sidecontent.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { NotificationsComponent } from 'src/app/shared/notifications/notifications.component';
 
 @Component({
   selector: 'app-headerbar',
@@ -52,7 +53,8 @@ export class HeaderbarComponent implements OnInit {
     // ? WORK IN PROGRESS
     this.snackBar_config = {
       horizontalPosition: 'end',
-      duration: 2000
+      duration: 100000,
+      panelClass: ['alert', 'alert-success', 'alert-dismissable']
     }
   }
 
@@ -118,6 +120,15 @@ export class HeaderbarComponent implements OnInit {
   }
 
   openSnackBar() {
-    this._snackBar.open('Test message', 'Dismiss', this.snackBar_config);
+    // TO DO : create a service
+    // TO DO : create a model for notification object
+    this.snackBar_config.data = {
+      message: 'Ive got five dogs',
+      icon: 'fa-info-circle',
+      style: 'success',
+      dismissable: true 
+    }
+    ;
+    this._snackBar.openFromComponent(NotificationsComponent, this.snackBar_config);
   }
 }

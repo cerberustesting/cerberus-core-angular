@@ -8,6 +8,7 @@ import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
 import { SharedModule } from '../shared/shared.module';
 import { SideblockComponent } from './sideblock/sideblock.component';
 import { RunComponent } from '../shared/run/run.component';
+import { NotificationsComponent } from '../shared/notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -15,11 +16,12 @@ import { RunComponent } from '../shared/run/run.component';
     FooterComponent,
     SidebarComponent,
     PagenotfoundComponent,
-    SideblockComponent,
+    SideblockComponent
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
+    SharedModule,
     SharedModule
   ],
   exports: [
@@ -30,7 +32,9 @@ import { RunComponent } from '../shared/run/run.component';
     SideblockComponent
   ],
   providers: [],
-  entryComponents: [RunComponent
+  entryComponents: [
+    RunComponent,
+    NotificationsComponent
   ]
 })
 export class CoreModule {

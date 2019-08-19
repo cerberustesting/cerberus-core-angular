@@ -6,6 +6,7 @@ import { UserService } from '../services/crud/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
 import { SidecontentService } from '../services/crud/sidecontent.service';
 import { NotificationService } from '../services/utils/notification.service';
+import { NotificationStyle } from '../services/utils/notification.model';
 
 @Component({
   selector: 'app-headerbar',
@@ -107,6 +108,6 @@ export class HeaderbarComponent implements OnInit {
   }
 
   debug2(): void {
-    this.NotificationService.createANotification('This is a danger', 'alert-danger');
+    this.NotificationService.createANotification('This is a dismissable information message, which will last for 5 sec', NotificationStyle.Info, true, 5000);
   }
 }

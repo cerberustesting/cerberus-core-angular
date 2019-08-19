@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { INotification, Notification } from './notification.model';
+import { Notification, NotificationStyle } from './notification.model';
 import { NotificationsComponent } from 'src/app/shared/notifications/notifications.component';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
@@ -12,27 +12,26 @@ const defaultDuration: number = 5000;
 })
 export class NotificationService {
 
-  private notification: INotification;
   private defaultClasses: Array<String>;
 
-  //snack bar configuration
+  //snack bar configuration object
   snackBarConfiguration: MatSnackBarConfig<any>;
 
-  constructor(private snackBar: MatSnackBar, ) {
+  constructor(
+    private snackBar: MatSnackBar
+  ) {
     this.snackBarConfiguration = {
       horizontalPosition: 'end',
+      // default dashmix class(es) to add to the snackbar
       panelClass: ['alert']
     }
-
-    // default classes to be added to the snackbar
-    this.defaultClasses = ['alert'];
   }
 
-  createANotification(message: string, style: string, dismissable?: boolean, duration?: number) {
-    // check parameters and assign default values
-    if (!dismissable) { dismissable = defaultDismissable}
-    if (!duration) { duration = defaultDuration}
-    // pass data to the notification component 
+  createANotification(message: string, style: NotificationStyle, dismissable?: boolean, duration?: number) {
+    // check parameters and assign default values if necessary
+    if (!dismissable) { dismissable = defaultDismissable }
+    if (!duration) { duration = defaultDuration }
+    // pass data to the notification component via configuration
     this.snackBarConfiguration.data = new Notification(message, style, dismissable, duration);
     // add the dismissable dashmix class if the alert is dismissable
     //@ts-ignore

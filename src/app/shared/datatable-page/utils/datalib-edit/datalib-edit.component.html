@@ -81,17 +81,23 @@
             <!--Definition TAB-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===1}" role="tabpanel">
                 <!--SERVICE configuration-->
-                <ng-container *ngTemplateOutlet="templateServiceTab"></ng-container>
-
+                <div *ngIf="datalibForm.value.type==='SERVICE'" >
+                        <ng-container *ngTemplateOutlet="templateServiceTab"></ng-container>
+                </div>
                 <!--END SERVICE configuration-->
+
                 <!--SQL configuration-->
-                <ng-container *ngTemplateOutlet="templateSqlTab"></ng-container>
-
+                <div *ngIf="datalibForm.value.type==='SQL'" >
+                        <ng-container *ngTemplateOutlet="templateSqlTab"></ng-container>
+                </div>
                 <!--END SQL configuration-->
-                <!--CSV configuration-->
-                <ng-container *ngTemplateOutlet="templateCsvTab"></ng-container>
 
+                <!--CSV configuration-->
+                <div *ngIf="datalibForm.value.type==='CSV'" >
+                        <ng-container *ngTemplateOutlet="templateCsvTab"></ng-container>
+                </div>
                 <!--END CSV configuration-->
+
                 <div class="row">
                     <div class="col-md-8">
                         <div class="input-group mb-3">
@@ -183,11 +189,10 @@
 
 <ng-template #templateServiceTab>
     <div class="block block-rounded block-bordered">
-        <div class="block-header" (click)="serviceCollapse=!serviceCollapse">
+        <div class="block-header">
             <h3 class="block-title">SERVICE configuration</h3>
-            <i class="si" [ngClass]="(serviceCollapse)? 'si-arrow-down' : 'si-arrow-right'"></i>
         </div>
-        <div class="block-content" *ngIf="serviceCollapse">
+        <div class="block-content">
             <div class="row">
                 <div class="col-md-4">
                     <div class="input-group mb-3">
@@ -244,11 +249,10 @@
 
 <ng-template #templateSqlTab>
     <div class="block block-rounded block-bordered">
-        <div class="block-header" (click)="sqlCollapse=!sqlCollapse">
+        <div class="block-header">
             <h3 class="block-title">SQL configuration</h3>
-            <i class="si" [ngClass]="(sqlCollapse)? 'si-arrow-down' : 'si-arrow-right'"></i>
         </div>
-        <div class="block-content" *ngIf="sqlCollapse">
+        <div class="block-content">
             <div class="col-md-6">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -274,11 +278,10 @@
 
 <ng-template #templateCsvTab>
     <div class="block block-rounded block-bordered">
-        <div class="block-header" (click)="csvCollapse=!csvCollapse">
+        <div class="block-header">
             <h3 class="block-title">CSV configuration</h3>
-            <i class="si" [ngClass]="(csvCollapse)? 'si-arrow-down' : 'si-arrow-right'"></i>
         </div>
-        <div class="block-content" *ngIf="csvCollapse">
+        <div class="block-content">
             <div class="row">
                 <div class="col-md-3">
                     <div class="input-group mb-3">

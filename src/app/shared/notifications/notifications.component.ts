@@ -13,19 +13,23 @@ export class NotificationsComponent implements OnInit {
   private crossReference_StyleIcon = [
     {
       style: 'alert-success',
-      icon: 'fa-check'
+      icon: 'fa-check',
+      title: 'Success'
     },
     {
       style: 'alert-danger',
-      icon: 'fa-times'
+      icon: 'fa-times',
+      title: 'Error'
     },
     {
       style: 'alert-warning',
-      icon: 'fa-exclamation'
+      icon: 'fa-exclamation',
+      title: 'Warning'
     },
     {
       style: 'alert-info',
-      icon: 'fa-info'
+      icon: 'fa-info',
+      title: 'Info'
     }
   ]
 
@@ -37,12 +41,20 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit() { }
 
+  /**
+   * Close the snackbar method
+   */
   public dismissSnackbar(): void {
     this.snackBar.dismiss();
   }
 
-  findIconForStyle(style: string): string {
-    return this.crossReference_StyleIcon.find(cr => cr.style == style).icon;
+  /**
+   * Return the Cross Reference to get from a style, its icon and title
+   * 
+   * @param style: NotificationStyle 
+   * @returns: CR object with icon and title attribute
+   */
+  findCrossReferenceForStyle(style: string): any {
+    return this.crossReference_StyleIcon.find(cr => cr.style == style);
   }
-
 }

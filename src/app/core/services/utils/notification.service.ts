@@ -15,15 +15,13 @@ export class NotificationService {
   private defaultClasses: Array<String>;
 
   //snack bar configuration object
-  snackBarConfiguration: MatSnackBarConfig<any>;
+  private snackBarConfiguration: MatSnackBarConfig<any>;
 
   constructor(
     private snackBar: MatSnackBar
   ) {
     this.snackBarConfiguration = {
-      horizontalPosition: 'end',
-      // default dashmix class(es) to add to the snackbar
-      panelClass: ['alert']
+      horizontalPosition: 'end'
     }
   }
 
@@ -31,15 +29,28 @@ export class NotificationService {
     // check parameters and assign default values if necessary
     if (typeof dismissable == 'undefined') { dismissable = defaultDismissable }
     if (!duration) { duration = defaultDuration }
+
     // pass data to the notification component via configuration
     this.snackBarConfiguration.data = new Notification(message, style, dismissable, duration);
+
+    // CSS class management
+    this.resetDefaultClasses();
     // add the dismissable dashmix class if the alert is dismissable
-    //@ts-ignore
-    if (dismissable == true) { this.snackBarConfiguration.panelClass.push('alert-dismissable') }
+    if (dismissable == true) { this.defaultClasses.push('alert-dismissable'); }
+    // add the correct css class according to the style
+    this.defaultClasses.push(style);
+    //@ts-ignore : can't assign a 'string[]' to 'string || string[]' error
+    this.snackBarConfiguration.panelClass = this.defaultClasses;
+
     // set the duration in the snackbar configuration
     this.snackBarConfiguration.duration = this.snackBarConfiguration.data.duration;
-    //@ts-ignore
-    this.snackBarConfiguration.panelClass.push(style);
+
+    // open the notification component with the updated configuration
     this.snackBar.openFromComponent(NotificationsComponent, this.snackBarConfiguration);
+  }
+
+  resetDefaultClasses() {
+    // place here the css class to be added in any case
+    this.defaultClasses = ['alert'];
   }
 }

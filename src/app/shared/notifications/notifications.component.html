@@ -1,7 +1,8 @@
-<button *ngIf="data.dismissable === true" type="button" class="close" (click)="dismissSnackbar()">
+<button *ngIf="data.dismissable === true" type="button" class="close" aria-label="Close" (click)="dismissSnackbar()">
     <span aria-hidden="true">×</span>
 </button>
-<p class="mb-0">
-    <i *ngIf="data.style" class="fa fa-fw mr-1" [ngClass]="findIconForStyle(data.style)"></i>
-    {{data.message}}
-</p>
+<h3 class="alert-heading font-size-h4 my-2">
+    <i class="fa fa-fw" [ngClass]="findCrossReferenceForStyle(data.style).icon"></i>
+    {{findCrossReferenceForStyle(data.style).title}}
+</h3>
+<p class="mb-0">{{data.message}}</p>

@@ -114,6 +114,6 @@ export class HeaderbarComponent implements OnInit {
   }
 
   debug2(): void {
-    this.NotificationService.createANotification('This is a dismissable information message, which will last for 5 sec', NotificationStyle.Info, true, 5000);
+    this.NotificationService.createANotification("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", NotificationStyle.Info, true, 5000);
   }
 }

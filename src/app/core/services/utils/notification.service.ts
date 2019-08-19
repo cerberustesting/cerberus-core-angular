@@ -21,7 +21,8 @@ export class NotificationService {
     private snackBar: MatSnackBar
   ) {
     this.snackBarConfiguration = {
-      horizontalPosition: 'end'
+      horizontalPosition: 'end',
+      verticalPosition: "top"
     }
   }
 
@@ -51,6 +52,6 @@ export class NotificationService {
 
   resetDefaultClasses() {
     // place here the css class to be added in any case
-    this.defaultClasses = ['alert'];
+    this.defaultClasses = ['alert', 'mt-headerbar'];
   }
 }

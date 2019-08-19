@@ -29,7 +29,7 @@ export class NotificationService {
 
   createANotification(message: string, style: NotificationStyle, dismissable?: boolean, duration?: number) {
     // check parameters and assign default values if necessary
-    if (!dismissable) { dismissable = defaultDismissable }
+    if (typeof dismissable == 'undefined') { dismissable = defaultDismissable }
     if (!duration) { duration = defaultDuration }
     // pass data to the notification component via configuration
     this.snackBarConfiguration.data = new Notification(message, style, dismissable, duration);

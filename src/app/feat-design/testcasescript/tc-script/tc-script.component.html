@@ -48,7 +48,7 @@
         <!-- PROPERTIES CONTENT -->
         <div class="row">
           <div class="col-md-12" *ngIf="!oldVersion">
-          <app-property-v2 [properties]="propertiesList"></app-property-v2>
+          <app-property-v2 [properties]="propertiesList" [testcase]="testcase"></app-property-v2>
           </div>
           <ng-template [ngIf]="oldVersion">
             <!-- PROPERTY LIST -->

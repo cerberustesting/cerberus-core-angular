@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { IProperty } from 'src/app/shared/model/property.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { ITestCaseHeader, ITestCase } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 
 
@@ -13,22 +13,24 @@ import { TestService } from 'src/app/core/services/crud/test.service';
 })
 export class PropertyV2Component implements OnInit {
   @Input('properties') propertiesList: Array<any>;
-  @ViewChild('myTable', { static: false }) table: any;
+  @Input('testcase') testcase: ITestCase;
+  @ViewChild('propertyTable', { static: false }) table: any;
 
-  constructor(private invariantService: InvariantsService, private formBuilder: FormBuilder, private testService: TestService) { }
-  properties = [
-    { name: 'name 1', properties: [{ index: 1 }, { index: 2 }, { index: 3 }, { index: 4 }] },
-    { name: 'name 2', properties: [{ index: 1 }, { index: 2 }, { index: 3 }, { index: 4 }] },
-    { name: 'name 3', properties: [{ index: 1 }, { index: 2 }, { index: 3 }, { index: 4 }] },
-    { name: 'name 4', properties: [{ index: 1 }, { index: 2 }, { index: 3 }, { index: 4 }] },
-    { name: 'name 5', properties: [{ index: 1 }, { index: 2 }, { index: 3 }, { index: 4 }] },
-    { name: 'name 6', properties: [{ index: 1 }, { index: 2 }, { index: 3 }, { index: 4 }] },
-  ]
-  mapProperties = [];
-  editing: Array<boolean>;
-  propertyForms: Array<any>;
-
-  columns = [
+  constructor(
+    private invariantService: InvariantsService, 
+    private formBuilder: FormBuilder, 
+    private testService: TestService) { }
+  
+  
+  private editing: Array<boolean>;
+  private propertyForms: Array<any>;
+  private propertyType: Array<any>;
+  private propertyDatabase: Array<any>;
+  private propertyNature: Array<any>;
+  private countryList: Array<any>;
+  private testcaseheader: ITestCaseHeader;
+  private testCaseCountryList: Array<String>;
+  private columnsList = [
     {
       name: 'Name',
       bindValue: 'property',
@@ -41,27 +43,14 @@ export class PropertyV2Component implements OnInit {
       name: 'Value',
       bindValue: 'value1', //I suppose
     },
-  ];
-  propertyType: Array<any>;
-  propertyDatabase: Array<any>;
-  propertyNature: Array<any>;
-  countryList: Array<any>;
-  private testcaseheader: ITestCaseHeader;
-  onActivate(event) {
-    if (event.type == 'click') {
-      this.table.rowDetail.toggleExpandRow(event.row);
-    }
-  }
+  ];  
 
-  ngOnInit() {
-    console.log(this.propertiesList);
-    this.testService.observableTestCase.subscribe(r => { this.testcaseheader = r.info; });
+  ngOnInit(): void {
+    this.testService.observableTestCase.subscribe(response => { this.testcaseheader = response.info; }); //get current TC header
     this.propertyType = this.invariantService.propertyTypeList;
     this.propertyDatabase = this.invariantService.propertyDatabaseList;
     this.propertyNature = this.invariantService.propertyNatureList;
-    this.countryList = this.invariantService.countriesList; // TODO : remove countries outside TC header
     this.editing = this.propertiesList.map(e => false);
-    this.countryList = this.testService.convertCountriesList(this.testcaseheader);
     this.propertyForms = this.propertiesList.map(e => {
       return this.formBuilder.group({
         type: e.type,
@@ -74,45 +63,74 @@ export class PropertyV2Component implements OnInit {
         rank: e.rank
       })
     });
-    let temp = {};
-    let tempCountry = {};
-
-
-
-    for (let property of this.propertiesList) {
-      if (!temp[property.property]) temp[property.property] = { properties: [], countries: [] };      
-      temp[property.property].properties.push(property);
-      temp[property.property].countries.concat(property.country);
+    // get countries from testcase
+    this.testCaseCountryList = [];
+    for (let country in this.testcase.info.countryList) {
+      this.testCaseCountryList.push(country);
     }
-    for (let property in temp) {
-      this.mapProperties.push({ name: property, properties: temp[property].properties, country: temp[property].countries.filter((item, index)=> 
-               temp[property].countries.indexOf(item)===index
-      )});
-    }
+    this.updateSelectableCountries();
   }
-  updateValue(rowIndex) {
+
+  /**
+   * updateValue
+   * * Disable edition in the table row
+   * TODO : Save new value
+   * @param rowIndex 
+   */
+  updateValue(rowIndex): void {
     this.editing[rowIndex] = false;
   }
 
-  toggleChk(property, country) {
-    if (property.country.includes(country)) property.country.splice(property.country.indexOf(country));
-    else property.country.push(country);
+  /**
+   * updateSelectableCountries
+   * * update selectable countries in property edition depended of already selected countries
+   */
+  updateSelectableCountries(): void {
+    let selectedCountriesByPropertyName = {};
+    // fill selectedCountriesByPropertyName with selected countries split by property name
+    this.propertiesList.forEach(property => {
+      if (!selectedCountriesByPropertyName[property.property]) selectedCountriesByPropertyName[property.property] = [];
+      selectedCountriesByPropertyName[property.property] = selectedCountriesByPropertyName[property.property].concat(property.country);
+    });
+    // set selectableCountries with countries of the testcase minus the already selected 
+    // countries from selectedCountriesByPropertyName and add country from that property
+    this.propertiesList.forEach(property => {
+      property.selectableCountries = this.testCaseCountryList.filter(country => !selectedCountriesByPropertyName[property.property].includes(country)).concat(property.country).sort();
+    });
+  }
+  
+  /**
+   * onActivate
+   * * Call for each event on a row
+   * * Toggle rowDetail on click
+   * @param event (generate by angular)
+   */
+  onActivate(event): void {
+    if (event.type == 'click') {
+      this.table.rowDetail.toggleExpandRow(event.row);
+    }
   }
 
-  // getPropertyCountryList(property) {
-  //   let rep = this.countryList;
-  //   this.propertiesList.filter(p => p.property === property.property).forEach((p, i) => {
-        
-  //       p.country.forEach(c => {
-  //         if (rep.includes(c)) {
-  //           console.log("splice",c)
-  //           rep.splice(i,1)
-  //         }
-  //       })
-      
-  //   });
-    
-  //   return rep.concat(property.country).filter((c, i, list) => list.indexOf(c)===i);
-  // }
+  /**
+   * toggleChk
+   * * call on checkbox selection in property countries list
+   * * Push the country in the property countries list or remove it
+   * @param property Property to change
+   * @param country Country pressed
+   */
+  toggleChk(property, country): void {
+    if (property.country.includes(country)) property.country.splice(property.country.indexOf(country));
+    else property.country.push(country);
+    this.updateSelectableCountries()
+  }
+
+  /**
+   * toggleExpandGroup
+   * * toggle collapse of this group in table
+   * @param group the group to expand/collapse
+   */
+  toggleExpandGroup(group): void {
+    this.table.groupHeader.toggleExpandGroup(group);
+  }
 
 }

@@ -1,66 +1,59 @@
+<!-- TODO -->
 <button class="btn btn-primary">+ Property</button>
-<!-- <div class="accordion" id="accordionExample">
-    <div class="card" *ngFor="let name of mapProperties">
-        <div class="card-header" id="headingOne" [ngClass]="{'header-active': name.expanded}">
-            <h2 class="mb-0">
-                <button class="btn btn-link" type="button" (click)="name.expanded = !name.expanded">
-                    {{name.name}} <span class="badge badge-primary">{{name.properties.length}}</span> <i class="si" [ngClass]="(name.expanded)? 'si-arrow-right' : 'si-arrow-down'"></i>
-                </button>
-            </h2>
-        </div>
-
-        <div id="collapseOne" class="collapse property-collapse" [ngClass]="{'show' : name.expanded}"
-            aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="block block-rounded block-bordered block-rounded">
-                <div class="block-header block-header-default row">
-                    <div class="card col-md-12" *ngFor="let property of name.properties">
-                        <div class="card-header" id="headingOne" [ngClass]="{'header-active': property.expanded}">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link" type="button"
-                                    (click)="property.expanded = !property.expanded">
-                                    <div class="input-group push" >
-                                        <div class="input-group-prepend">
-                                            <span class="form-control form-control-alt">{{property.nature}}</span>
-                                        </div>
-                                        <span style="width: 250px" class="form-control form-control-alt text-center">{{property.country.join(' ')}}</span>
-                                        <span class="input-group-text input-group-text-alt  text-center">{{property.value1}}</span>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text input-group-text-alt text-center"><i class="si" [ngClass]="(property.expanded)? 'si-arrow-right' : 'si-arrow-down'"></i></span>
-                                        </div>
-                                    </div>
-                                </button>
-                            </h2>
-                        </div>
-
-                        <div id="collapseOne" class="collapse property-collapse"
-                            [ngClass]="{'show' : property.expanded}" aria-labelledby="headingOne"
-                            data-parent="#accordionExample">
-                            <ng-container *ngTemplateOutlet="templatePropertyInfo; context: {property:property}"></ng-container>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<ngx-datatable #myTable class="material expandable fullscreen" [rowHeight]="50" [headerHeight]="50"
-    [rows]="propertiesList" [columnMode]="'force'" (activate)="onActivate($event)">
 
 
-    <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Name" prop="property">
-        <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-expanded="expanded"
-            ngx-datatable-cell-template><span>{{value}}</span></ng-template>
+
+<ngx-datatable 
+    #propertyTable 
+    class="material expandable fullscreen" 
+    [rowHeight]="50" 
+    [headerHeight]="50"
+    [rows]="propertiesList" 
+    [columnMode]="'force'" 
+    (activate)="onActivate($event)">
+
+
+    <ngx-datatable-column 
+        [resizeable]="false" 
+        [sortable]="false" 
+        name="Name" 
+        prop="property">
+
+        <ng-template 
+            let-rowIndex="rowIndex" 
+            let-row="row" 
+            let-value="value" 
+            let-expanded="expanded"
+            ngx-datatable-cell-template>
+            <span>{{value}}</span>
+        </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Type" prop="type">
-        <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-expanded="expanded"
-            ngx-datatable-cell-template><span>{{value}}</span></ng-template>
+    <ngx-datatable-column 
+        [resizeable]="false" 
+        [sortable]="false" 
+        name="Type" 
+        prop="type">
+        <ng-template 
+            let-rowIndex="rowIndex" 
+            let-row="row" 
+            let-value="value" 
+            let-expanded="expanded"
+            ngx-datatable-cell-template>
+            <span>{{value}}</span>
+        </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Value" prop="value1">
-        <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-expanded="expanded"
+    <ngx-datatable-column 
+        [resizeable]="false" 
+        [sortable]="false" 
+        name="Value" 
+        prop="value1">
+        <ng-template 
+            let-rowIndex="rowIndex" 
+            let-row="row" 
+            let-value="value" 
+            let-expanded="expanded"
             ngx-datatable-cell-template>
             <span title="Double click to edit" (dblclick)="editing[rowIndex] = true"
                 *ngIf="!editing[rowIndex]">{{value}}</span>
@@ -69,7 +62,10 @@
         </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Country">
+    <ngx-datatable-column 
+        [resizeable]="false" 
+        [sortable]="false" 
+        name="Country">
         <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
             {{row.country.join(' ')}}</ng-template>
     </ngx-datatable-column>
@@ -87,21 +83,97 @@
 
 </ngx-datatable>
 
+<!-- ? The version with group by name and row detail (currently incompatible) 
+    <ngx-datatable
+    #propertyTable
+    [rows]="propertiesList"
+    [groupExpansionDefault]="true"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [scrollbarH]="false"
+    [groupRowsBy]="'property'"
+    [columnMode]="'force'"
+    class="material expandable fullscreen" 
+    [rowHeight]="50" 
+    (activate)="onActivate($event)">
+
+    <ngx-datatable-group-header
+          [rowHeight]="50"
+          #myGroupHeader
+          (toggle)="onDetailToggle($event)"
+        >
+          <ng-template
+            let-group="group"
+            let-expanded="expanded"
+            ngx-datatable-group-header-template
+          >
+            <div style="padding-left:5px;">
+              <a
+                [class.datatable-icon-right]="!expanded"
+                [class.datatable-icon-down]="expanded"
+                title="Expand/Collapse Group"
+                (click)="toggleExpandGroup(group)"
+              >
+                <b>Name: {{ group.value[0].property }}</b>
+              </a>
+            </div>
+          </ng-template>
+        </ngx-datatable-group-header>
+        <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Name" prop="property">
+            <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-expanded="expanded"
+                ngx-datatable-cell-template><span (click)="onActivate(row)">{{value}}</span></ng-template>
+        </ngx-datatable-column>
+    
+        <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Type" prop="type">
+            <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-expanded="expanded"
+                ngx-datatable-cell-template><span>{{value}}</span></ng-template>
+        </ngx-datatable-column>
+    
+        <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Value" prop="value1">
+            <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" let-expanded="expanded"
+                ngx-datatable-cell-template>
+                <span title="Double click to edit" (dblclick)="editing[rowIndex] = true"
+                    *ngIf="!editing[rowIndex]">{{value}}</span>
+                <input class="inline-text-edit" autofocus (blur)="updateValue(rowIndex)" *ngIf="editing[rowIndex]"
+                    type="text" [value]="value" />
+            </ng-template>
+        </ngx-datatable-column>
+    
+        <ngx-datatable-column [resizeable]="false" [sortable]="false" name="Country">
+            <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                {{row.country.join(' ')}}</ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow>
+            <ng-template let-property="row" let-rowIndex="rowIndex" let-expanded="expanded"
+                ngx-datatable-row-detail-template>
+                <ng-container *ngTemplateOutlet="templatePropertyInfo; context: {property:property, rowIndex:rowIndex}">
+                </ng-container>
+    
+            </ng-template>
+        </ngx-datatable-row-detail>
+
+</ngx-datatable> -->
+
+<!-- START PROPERTY TEMPLATE -->
 <ng-template #templatePropertyInfo let-property="property" let-rowIndex="rowIndex">
     <div class="block block-rounded block-bordered block-rounded">
         <div class="block-header block-header-default">
             <form [formGroup]="propertyForms[rowIndex]">
                 <div class="row">
+                    <!-- START LEFT SIDE -->
                     <div class="col-md-4">
+                        <!-- START TYPE INPUT -->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Type</span>
                             </div>
                             <select class="custom-select" formControlName="type">
                                 <option *ngFor="let type of propertyType">{{type.value}}</option>
-                            </select>y
+                            </select>
                         </div>
-                        <!--TODO : only if "getFromSql" is selected as type-->
+                        <!-- END TYPE INPUT -->
+                        <!-- START DATATABLE INPUT -->
                         <div class="input-group mb-3"
                             *ngIf="propertyForms[rowIndex].controls.type.value==='getFromSql'">
                             <div class="input-group-prepend">
@@ -111,21 +183,28 @@
                                 <option *ngFor="let database of propertyDatabase">{{database.value}}</option>
                             </select>
                         </div>
+                        <!-- END DATATABLE INPUT -->
                     </div>
+                    <!-- END LEFT SIDE -->
                     <div class="col-md-8">
                         <div class="row">
+                            <!-- START COUNTRY LIST CONTAINER -->
                             <div class="col-md-6" style="margin-bottom: 10px;">
                                 <ul class="list-group list-group-horizontal">
                                     <li class="list-group-item input-group-text">CountryList</li>
                                     <li class="list-group-item country-list">
-                                        <div *ngFor="let country of countryList" class="custom-control custom-checkbox custom-control-primary mb-1" (click)="toggleChk(property, country)">
-                                            <input type="checkbox" class="custom-control-input" [checked]="property.country.includes(country)">
+                                        <div *ngFor="let country of property.selectableCountries"
+                                            class="custom-control custom-checkbox custom-control-primary mb-1"
+                                            (click)="toggleChk(property, country)">
+                                            <input type="checkbox" class="custom-control-input"
+                                                [checked]="property.country.includes(country)">
                                             <label class="custom-control-label">{{country}}</label>
                                         </div>
                                     </li>
                                 </ul>
-
                             </div>
+                            <!-- END COUNTRY LIST CONTAINER -->
+                            <!-- START DESCRIPTION INPUT -->
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -135,7 +214,9 @@
                                         formControlName="description">
                                 </div>
                             </div>
+                            <!-- END DESCRIPTION INPUT -->
                         </div>
+                        <!-- START VALUE INPUT -->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Value</span>
@@ -143,7 +224,9 @@
                             <textarea type="text" class="form-control" [placeholder]="property.value1"
                                 formControlName="value"></textarea>
                         </div>
+                        <!-- END VALUE INPUT -->
                         <div class="row">
+                            <!-- START LENGTH INPUT -->
                             <div class="col-md-3">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -153,6 +236,8 @@
                                         formControlName="length">
                                 </div>
                             </div>
+                            <!-- END LENGTH INPUT -->
+                            <!-- START NATURE INPUT -->
                             <div class="col-md-3">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -164,6 +249,8 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- END NATURE INPUT -->
+                            <!-- START CACHE DURATION INPUT -->
                             <div class="col-md-3">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -173,6 +260,8 @@
                                         formControlName="cacheExpire">
                                 </div>
                             </div>
+                            <!-- END CACHE DURATION INPUT -->
+                            <!-- START RANK INPUT -->
                             <div class="col-md-3">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -182,6 +271,7 @@
                                         formControlName="rank">
                                 </div>
                             </div>
+                            <!-- END RANK INPUT -->
                         </div>
                     </div>
                 </div>
@@ -189,3 +279,4 @@
         </div>
     </div>
 </ng-template>
+<!-- END PROPERTY TEMPLATE -->

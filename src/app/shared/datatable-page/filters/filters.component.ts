@@ -31,12 +31,11 @@ export class FiltersComponent implements OnInit {
     this.columnActive = null;
   }
 
-  labelList: Array<ILabel>;
-  userSearch: any;
-  columnActive: number;
-  searchableColumns: Array<Column>;
-  gloabalSearchModel: string;
-  filterList = [];
+  private labelList: Array<ILabel>;
+  private userSearch: any;
+  private columnActive: number;
+  private searchableColumns: Array<Column>;
+  private gloabalSearchModel: string;
 
   constructor(private systemService: SystemService,
     private invariantService: InvariantsService,
@@ -48,57 +47,71 @@ export class FiltersComponent implements OnInit {
     this.searchableColumns = this.columns.filter(a => a.searchable || a.like);
   }
 
+  /**
+   * toggleColumn
+   * * Change colmun activation from column selector
+   * @param column column to toggle
+   */
   toggleColumn(column): void {
     column.active = !column.active;
     this.columnActive = this.columns.filter(a => a.active).length;
   }
 
-  applySystem() {
-    this.filterList = [];
-    this.columns.forEach(e => {
-      if(e.sSearch && e.contentName!=='description') {
-        e.sSearch.forEach(a => {
-          this.filterList.push({name: e.contentName, value: a});
-        });
-      }      
-    });
+  /** applySystem
+   * * emit filters
+   */
+  applySystem(): void {
     this.systemApply.emit(this.gloabalSearchModel);
   }
-  applyPage() {
+
+  /** applyPage
+   * * emit page modifications
+   */
+  applyPage(): void {
     let a = document.getElementsByClassName("datatable-body")[0];
     a.scroll(0,0);
     a.scrollBy(0, (this.page.number-1) * this.page.size * 50 + 50);
     this.pageApply.emit(this.page.number);
   }
 
-  remove(name: string, value: string) {    
-    const columnIndex = this.columns.map(c => c.contentName).indexOf(name);
-    const index = this.columns[columnIndex].sSearch.indexOf(value);
-    if (index > -1) {
-      this.columns[columnIndex].sSearch.splice(index, 1);
-    }
-    this.applySystem();
-  }
-
-  onKeyUp() {
+  /** onKeyUp
+   * * In the gloabl search field, start search if there are more than 2 caracters and after 1/2 second
+   */
+  onKeyUp(): void {
     if (this.gloabalSearchModel.length > 2){
       setTimeout(() => this.applySystem(), 500);
     }
   }
 
-  addFilter(column) {
+  /** addFilter
+   * * Add select filter for that column
+   * @param column  column to filter
+   */
+  addFilter(column: Column) {
     if (!column.like) column.dropActive = !column.dropActive;
     else column.fieldActive = !column.fieldActive;
   }
 
+  /** addFilterLike
+   * * Add search field for that column
+   * @param column column to filter
+   */
   addFilterLike(column: Column) {
     column.fieldActive = !column.fieldActive;
   }
+
+  /** resetDefaultColumns
+   * * rest default column to display
+   */
   resetDefaultColumns() {
     this.columns.forEach(c => c.active = c.defaultActive);
     this.columnActive = this.columns.filter(a => a.active).length;
   }
 
+  // *** Datalib methods ***
+  /** createDatalib
+   * * Open side  content for datalib creation
+   */
   createDatalib() {
     this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
       datalib: {},

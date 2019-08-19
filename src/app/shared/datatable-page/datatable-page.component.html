@@ -9,19 +9,15 @@
     [selection]="selection">
 </app-filters>
 
-<!-- <div class="content"> -->
-    <!-- <div class="block-content"> -->
-        <app-table 
-            [rows]="rows" 
-            [columns]="columns" 
-            [testcaseslist]="true" 
-            [page]="page" 
-            [selection]="selection"
-            [massAction]="massAction"
-            [selected]="selectedRows"
-            [name]="name"
-            (pageUpdate)="pageUpdate($event)"
-            (sort)="applyFilters($event)">
-        </app-table>
-    <!-- </div> -->
-<!-- </div> -->
+<app-table 
+    [rows]="rows" 
+    [columns]="columns" 
+    [testcaseslist]="true" 
+    [page]="page" 
+    [selection]="selection"
+    [massAction]="massAction"
+    [selected]="selectedRows"
+    [name]="name"
+    (pageUpdate)="pageUpdate($event)"
+    (sort)="applyFilters($event)">
+</app-table>

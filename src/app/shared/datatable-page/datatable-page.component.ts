@@ -4,6 +4,7 @@ import { TestService } from 'src/app/core/services/crud/test.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 
+
 @Component({
   selector: 'app-datatable-page',
   templateUrl: './datatable-page.component.html',
@@ -23,16 +24,18 @@ export class DatatablePageComponent implements OnInit {
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
   @Input() name?: string = 'none';
-  cache: number = -1;
+  cache: number = -1; //number of displayed rows
 
   rows: Array<any>;
   globalSearch: string
 
 
-  constructor(private testService: TestService, private filterService: FilterService, private invariantsService: InvariantsService) { }
+  constructor(
+    private testService: TestService, 
+    private filterService: FilterService, 
+    private invariantsService: InvariantsService) { }
 
   ngOnInit() {
-    // this.search();    
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
       this.cache = -1;
       this.rows = null;
@@ -41,15 +44,17 @@ export class DatatablePageComponent implements OnInit {
     })
   }
 
-  search(globalSearch?: string) {
-
-
-
-
+  /**
+   * search
+   * * get rows corresponding to filters and page infomations
+   * @param globalSearch content of the gloabl search field (default: '')
+   */
+  search(globalSearch?: string): void {
+    // if a servlet as been specified
     if (this.servlet) {
       this.globalSearch = (globalSearch) ? globalSearch : '';
-      const a = this.page.number;
-      const delta = a - this.cache;
+      const currentPageNumber = this.page.number;
+      const delta = currentPageNumber - this.cache;
       const countWanted = delta * this.page.size;
 
       if (countWanted>0) {
@@ -66,24 +71,32 @@ export class DatatablePageComponent implements OnInit {
   
           this.page.totalCount = length;
         });
-        this.cache = a;
-        this.page.number = a;      
+        this.cache = currentPageNumber;
+        this.page.number = currentPageNumber;      
       }
-      
-      
-      
     }
   }
 
-  pageUpdate(newPage) { //When selecting a new page    
+  /**
+   * pageUpdate
+   * * to call when a new page is selected or scrolled
+   * @param newPage new page number
+   */
+  pageUpdate(newPage: number): void { //When selecting a new page    
     this.page.number = newPage;
     this.search();
-
   }
-  applyFilters(globalSearch?: string) {
+
+  /**
+   * applyFilters
+   * * update rows with new filters
+   * * reset cache, rows, page number and scroll
+   * @param globalSearch content of global search field
+   */
+  applyFilters(globalSearch?: string): void {
     let a = document.getElementsByClassName("datatable-body")[0];
     a.scroll(0,0);
-    a.scrollBy(0,0);
+    a.scrollBy(0,0); // scroll to the table top
     this.cache = -1;
     this.rows = null;
     this.page.number = 0;

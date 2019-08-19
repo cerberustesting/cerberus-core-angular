@@ -4,6 +4,8 @@ import { ITest } from 'src/app/shared/model/test.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { AlertService, Alert } from 'src/app/core/services/utils/alert.service';
 import { SettingsService } from '../tc-script/settings/settings.service';
+import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
+import { NotificationService } from 'src/app/core/services/utils/notification.service';
 
 const Alert_selectedTestDoesNotExist: Alert = { message: "The selected test doesn't exist", style: "alert-danger", duration: 5000, animationIn: "shake" }
 const Alert_selectedTestCaseDoesNotExist: Alert = { message: "The selected test case doesn't exist", style: "alert-danger", duration: 5000, animationIn: "shake" }
@@ -29,7 +31,8 @@ export class TcSelectorComponent implements OnInit {
   constructor(
     private TestService: TestService,
     private AlertService: AlertService,
-    private SettingsService: SettingsService
+    private SettingsService: SettingsService,
+    private NotificationService: NotificationService
   ) { }
 
   ngOnDestroy() {
@@ -47,8 +50,9 @@ export class TcSelectorComponent implements OnInit {
           if (this.selectedTest != null) {
             // secure the parsed test from URL
             if (!this.TestService.seletectedTestExist(this.selectedTest)) {
-              console.log("the selected test doesn't exist");
-              this.AlertService.displayMessage(Alert_selectedTestDoesNotExist);
+              console.error("the selected test doesn't exist");
+              this.NotificationService.createANotification("The selected test doesn't exist", NotificationStyle.Error, true, 5000);
+              // this.AlertService.displayMessage(Alert_selectedTestDoesNotExist);
               this.selectedTest = null;
             } else {
               this.SelectedTestChange.emit(this.selectedTest);
@@ -68,8 +72,9 @@ export class TcSelectorComponent implements OnInit {
           // secure the parsed test case from URL
           if (this.selectedTestCase != null && this.selectedTest != null) {
             if (!this.TestService.selectedTestCaseExist(this.selectedTestCase)) {
-              console.log("the selected test case doesn't exist");
-              this.AlertService.displayMessage(Alert_selectedTestCaseDoesNotExist);
+              console.error("the selected test case doesn't exist");
+              this.NotificationService.createANotification("The selected test casedoesn't exist", NotificationStyle.Error, true, 5000);
+              // this.AlertService.displayMessage(Alert_selectedTestCaseDoesNotExist);
               this.selectedTestCase = null;
             } else {
               //this.SelectedTestChange.emit(this.selectedTest);
@@ -81,8 +86,9 @@ export class TcSelectorComponent implements OnInit {
         this.testcasesList = null;
         if (this.selectedTest != null) {
           if (this.TestService.seletectedTestExist(this.selectedTest))
-            console.log("there is no corresponding test case for this test");
-          this.AlertService.displayMessage(Alert_noTestCaseForATest);
+            console.warn("there is no corresponding test case for this test");
+          this.NotificationService.createANotification("There is no corresponding test case for this test", NotificationStyle.Warning, true, 5000);
+          // this.AlertService.displayMessage(Alert_noTestCaseForATest);
         }
       }
     });

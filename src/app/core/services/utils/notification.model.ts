@@ -13,7 +13,7 @@ export class Notification {
     dismissable: boolean;
     duration: number;
 
-    constructor(message: string, style: string, dismissable?: boolean, duration?: number) {
+    constructor(message: string, style: string, dismissable: boolean, duration: number) {
         this.message = message;
         this.style = style;
         this.dismissable = dismissable;

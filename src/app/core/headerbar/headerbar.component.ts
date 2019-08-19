@@ -107,6 +107,6 @@ export class HeaderbarComponent implements OnInit {
   }
 
   debug2(): void {
-    this.NotificationService.createANotification('test message', 'alert-info', true, 5000);
+    this.NotificationService.createANotification('This is a danger', 'alert-danger');
   }
 }

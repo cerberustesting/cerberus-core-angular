@@ -10,7 +10,8 @@ import { NotificationService } from '../services/utils/notification.service';
 @Component({
   selector: 'app-headerbar',
   templateUrl: './headerbar.component.html',
-  styleUrls: ['./headerbar.component.scss']
+  styleUrls: ['./headerbar.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HeaderbarComponent implements OnInit {
 

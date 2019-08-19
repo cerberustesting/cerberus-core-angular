@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
 
 @Component({
   selector: 'app-labels',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LabelsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private headerTitleService: HeaderTitleService) { 
+    headerTitleService.setTitle("Labels");
+  }
 
   ngOnInit() {
   }

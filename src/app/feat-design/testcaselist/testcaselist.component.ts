@@ -8,6 +8,7 @@ import { Filter } from 'src/app/shared/model/filter.model';
 import { SystemService } from 'src/app/core/services/crud/system.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
+import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
 
 
 
@@ -33,7 +34,9 @@ export class TestcaselistComponent implements OnInit {
 
   userPreferences: string;
   
-  constructor() { }
+  constructor(private headerTitleService: HeaderTitleService) { 
+    this.headerTitleService.setTitle("Testcase List");
+  }
 
   ngOnInit() {
   }

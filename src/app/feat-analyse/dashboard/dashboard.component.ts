@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
 declare function Helpers(name: string);
 declare function initChartJS();
 
@@ -9,7 +10,9 @@ declare function initChartJS();
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private headerTitleService: HeaderTitleService) { 
+    headerTitleService.setTitle("Dashboard");
+  }
 
   ngOnInit() {
     initChartJS();

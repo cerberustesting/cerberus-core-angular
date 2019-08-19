@@ -7,6 +7,7 @@ import { IUser } from 'src/app/shared/model/user.model';
 import { SidecontentService } from '../services/crud/sidecontent.service';
 import { NotificationService } from '../services/utils/notification.service';
 import { NotificationStyle } from '../services/utils/notification.model';
+import { HeaderTitleService } from '../services/crud/header-title.service';
 
 @Component({
   selector: 'app-headerbar',
@@ -26,12 +27,15 @@ export class HeaderbarComponent implements OnInit {
   // user data from Keycloak
   private userFullName: string;
 
+  private title: string;
+
   constructor(
     private InvariantService: InvariantsService,
     private Keycloak: KeycloakService,
     private UserService: UserService,
     private sideContentService: SidecontentService,
-    private NotificationService: NotificationService
+    private NotificationService: NotificationService,
+    private hearderTitleService: HeaderTitleService
   ) { }
 
   ngOnInit() {
@@ -45,6 +49,8 @@ export class HeaderbarComponent implements OnInit {
 
     // subscribe to selected system(s) list
     this.InvariantService.observableSystemsSelected.subscribe(r => { this.selectedSystemsList = r; });
+
+    this.hearderTitleService.observableTitle.subscribe(newTitle => this.title = newTitle)
   }
 
   systemsList_OnChange(): void {

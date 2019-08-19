@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CampainsColumnsData } from './campaigns-columnsdata';
 import { Column } from 'src/app/shared/model/column.model';
+import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
 
 @Component({
   selector: 'app-campaigns',
@@ -20,7 +21,9 @@ export class CampaignsComponent implements OnInit {
   selectedRows: Array<any> = [];
   servlet :string = '/ReadCampaign'
 
-  constructor() { }
+  constructor(private headerTitleService: HeaderTitleService) { 
+    headerTitleService.setTitle("Campaigns");
+  }
 
   ngOnInit() {
   }

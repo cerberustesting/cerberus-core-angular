@@ -5,6 +5,7 @@ import { TestService } from 'src/app/core/services/crud/test.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { SystemService } from 'src/app/core/services/crud/system.service';
 import { AlertService } from 'src/app/core/services/utils/alert.service';
+import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
 
 @Component({
   selector: 'app-testcasescript',
@@ -22,8 +23,11 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private TestService: TestService,
     private InvariantService: InvariantsService,
-    private SystemService: SystemService
-  ) { }
+    private SystemService: SystemService,
+    private headerTitleService: HeaderTitleService
+  ) { 
+    headerTitleService.setTitle("Testcase Edition");
+  }
 
   ngOnDestroy() {
     this.testcase = null;

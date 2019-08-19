@@ -7,6 +7,7 @@ import { SystemService } from 'src/app/core/services/crud/system.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { Filter } from 'src/app/shared/model/filter.model';
 import { DataLibColumnsData } from './datalibrary.columnsdata';
+import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
 
 @Component({
   selector: 'app-datalibrary',
@@ -29,7 +30,9 @@ export class DatalibraryComponent implements OnInit {
   filterTest: any; //
   servlet = '/ReadTestDataLib';
 
-  constructor(private testService: TestService, private invariantsService: InvariantsService, private labelfilteringPipe: LabelfilteringPipe, private systemService: SystemService, private filterService: FilterService) { }
+  constructor(private headerTitleService: HeaderTitleService) { 
+    headerTitleService.setTitle("Data Library");
+  }
 
   ngOnInit() { }
 

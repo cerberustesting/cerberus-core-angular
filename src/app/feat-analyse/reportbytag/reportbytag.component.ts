@@ -5,6 +5,7 @@ import { ITag } from 'src/app/shared/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
 declare function initChartJS();
 
 @Component({
@@ -38,7 +39,10 @@ export class ReportbytagComponent implements OnInit {
     private ReportingService: ReportingService,
     private activatedRoute: ActivatedRoute,
     private InvariantsService: InvariantsService,
-    private router: Router, ) { }
+    private router: Router, 
+    private headerTitleService: HeaderTitleService) { 
+      headerTitleService.setTitle("Report");
+    }
 
   ngOnInit() {
     this.ReportingService.observableReportOther.subscribe(response => {

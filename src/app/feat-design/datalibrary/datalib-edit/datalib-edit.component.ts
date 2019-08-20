@@ -46,6 +46,7 @@ export class DatalibEditComponent implements OnInit {
   databasesList: any[] = [ // TODO : set dynamically && wich property for wich datatable
     {value: "CRB", description: "CERBERUS Database"}
   ];
+  
   serviceList: any[]; // TODO : set dynamically
 
   // *** datalib properties ***

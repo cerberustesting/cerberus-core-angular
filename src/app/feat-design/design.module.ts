@@ -22,7 +22,10 @@ import { ScriptComponent } from './testcasescript/tc-script/script/script.compon
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { PropertyV2Component } from './testcasescript/tc-script/property-v2/property-v2.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ActionsComponent } from './testcaselist/actions/actions.component';
+import { DatalibEditComponent } from './datalibrary/datalib-edit/datalib-edit.component';
+import { DatalibTclistComponent } from './datalibrary/datalib-edit/datalib-tclist/datalib-tclist.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,9 @@ import { ReactiveFormsModule } from '@angular/forms';
       DatalibraryComponent,
       CampaignsComponent,
       PropertyV2Component,
+      ActionsComponent,
+      DatalibEditComponent,
+      DatalibTclistComponent
   ],
   imports: [
     CommonModule,
@@ -51,8 +57,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     DragDropModule,
     NgbModule,
     NgxDatatableModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,    
+    FormsModule,
+  ],
+  entryComponents: [
+    DatalibEditComponent,
+    DatalibTclistComponent
   ],
   exports: [SharedModule]
 })

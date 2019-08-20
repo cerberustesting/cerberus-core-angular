@@ -6,7 +6,9 @@
     [selectedRows]="selectedRows"
     [servlet]="servlet"
     [name]="name"
-    [selection]="selection">
+    [selection]="selection"
+    [filterTemplate]="filterTemplate"
+    [massActionTemplate]="massActionTemplate">
 </app-filters>
 
 <app-table 
@@ -18,6 +20,7 @@
     [massAction]="massAction"
     [selected]="selectedRows"
     [name]="name"
+    [endLineActionTemplate]="endLineActionTemplate"
     (pageUpdate)="pageUpdate($event)"
     (sort)="applyFilters($event)">
 </app-table>

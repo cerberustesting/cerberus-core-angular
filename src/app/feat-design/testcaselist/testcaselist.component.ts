@@ -9,9 +9,7 @@ import { SystemService } from 'src/app/core/services/crud/system.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
-
-
-
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-testcaselist',
@@ -22,6 +20,7 @@ export class TestcaselistComponent implements OnInit {
 
 
   columns: Array<Column> = TestCasesColumnsData; // column list
+  
   
   page = {
     size: 0, //maximum element per page
@@ -40,6 +39,8 @@ export class TestcaselistComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  
 
   save() {
     console.log("Save : Not implemented yet");

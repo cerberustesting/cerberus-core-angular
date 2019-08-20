@@ -9,6 +9,7 @@ import { SharedModule } from "./shared/shared.module";
 import { CoreModule } from "./core/core.module";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SessionInterceptorService } from './core/services/auth/session.interceptor.service'
+import { DesignModule } from './feat-design/design.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SessionInterceptorService } from './core/services/auth/session.intercep
     CoreModule,
     FilterPipeModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DesignModule
   ],
   providers: [
     {

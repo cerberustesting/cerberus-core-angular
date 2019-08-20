@@ -3,15 +3,28 @@
         <div class="content content-full">
             <div class="main-side ">
                 <!-- Create button-->
-                <button class="btn btn-info" *ngIf="name=='datalib'" (click)="createDatalib()"><i class="fa fa-plus-circle"></i> Create DataLib</button>
+                <div>
+                    <ng-template *ngIf="filterTemplate" [ngTemplateOutlet]="filterTemplate"></ng-template>
+                </div>                
 
                 <!-- Global Search Field -->
-                <input type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
-                    [(ngModel)]="gloabalSearchModel" placeholder="Search...">
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    (keyup)="onKeyUp()" 
+                    (blur)="applySystem()"
+                    [(ngModel)]="gloabalSearchModel" 
+                    placeholder="Search...">
 
                 <!--Filter Selector-->
-                <ng-select class="column-selector custom auto-width" bindLabel="name" placeholder="Add Filters"
-                    [items]="searchableColumns" [closeOnSelect]="false" [searchable]="true" [clearable]="false">
+                <ng-select 
+                    class="column-selector custom auto-width" 
+                    bindLabel="name" 
+                    placeholder="Add Filters"
+                    [items]="searchableColumns" 
+                    [closeOnSelect]="false" 
+                    [searchable]="true" 
+                    [clearable]="false">
 
                     <!--Content in the top container-->
                     <ng-template ng-label-tmp>
@@ -40,9 +53,11 @@
                     </app-filterlike>
                 </ng-template>
             </div>
-            <div class="action-container" *ngIf="selectedRows">
+
+            <ng-template *ngIf="massActionTemplate" [ngTemplateOutlet]="massActionTemplate"></ng-template>
+            <!-- <div class="action-container" *ngIf="selectedRows">
                 <app-actions [selectedRows]="selectedRows"></app-actions>
-            </div>
+            </div> -->
         </div>
 
         <div class="flex-sm-00-auto ml-sm-3">
@@ -81,7 +96,7 @@
 
                 </ng-select>
 
-                <!--Page size selector-->
+                <!--Page size selector ! if comeback to a no scroll table-->
                 <!-- <ng-select class="page-selector custom page-size" bindLabel="name"
                     placeholder="Show : {{ page.size }}" [(ngModel)]="page.size" [items]="[10, 25, 50, 100]"
                     [closeOnSelect]="true" [clearable]="false" (change)="applySystem()">

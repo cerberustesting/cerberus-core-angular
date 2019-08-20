@@ -1,10 +1,5 @@
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter, HostBinding } from '@angular/core';
 import { Column } from '../../model/column.model';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatalibTclistComponent } from '../utils/datalib-tclist/datalib-tclist.component';
-import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
-import { DatalibEditComponent } from '../utils/datalib-edit/datalib-edit.component';
-import { CustomModalComponent } from '../../custom-modal/custom-modal.component';
 import { TestService } from 'src/app/core/services/crud/test.service';
 
 @Component({
@@ -26,16 +21,15 @@ export class DatatableComponent implements OnInit {
     totalCount: number
   };
   @Input() selected: Array<any>;
+  @Input() endLineActionTemplate: any; // TODO : type TemplateRef
+
   @Output() pageUpdate = new EventEmitter<number>();
   @Output() sort = new EventEmitter<void>();
   @ViewChild("dataTable", { static: true }) table: any;
   @Input() name?: string;
   columnActive: number;
 
-  constructor(
-    private modalService: NgbModal,
-    private sideContentService: SidecontentService,
-    private testService: TestService) { }
+  constructor() { }
 
   ngOnInit() {
     this.columnActive = this.columns.filter(a => a.active).length;
@@ -121,60 +115,6 @@ export class DatatableComponent implements OnInit {
     this.page.number = pageInfo.offset;
     this.page.size = pageInfo.pageSize;
     this.applyChange();
-  }
-
-  // *** TestCase Methods ***
-
-  openTCList(row): void {
-    this.sideContentService.addComponentToSideBlock(DatalibTclistComponent, {
-      id: row.testDataLibID,
-      name: row.name,
-      country: row.country
-    });
-    this.sideContentService.openSideBlock();
-  }
-
-  // *** Datalib Methods ***
-
-  /**
-   * editDataLib
-   * * open side content to edit this datalib
-   * @param row datalib to edit
-   */
-  editDataLib(row: any): void {
-    this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
-      datalib: row,
-      type: 'EDIT',
-      exit: () => this.sort.emit()
-    });
-    this.sideContentService.openSideBlock();
-  }
-
-  /**
-   * duplicateDataLib
-   * * open side content to duplpicate this datalib
-   * @param row datalib to duplicate
-   */
-  duplicateDataLib(row: any): void {
-    this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
-      datalib: row,
-      type: 'DUPLICATE',
-      exit: () => this.sort.emit()
-    });
-    this.sideContentService.openSideBlock();
-  }
-
-  /**
-   * deleteDataLib
-   * * open modal to delete datalib
-   * @param row datalib to delete
-   */
-  deleteDataLib(row: any) {
-    const modalRef = this.modalService.open(CustomModalComponent);
-    modalRef.componentInstance.title = 'Delete Test Data Library Entry';
-    modalRef.componentInstance.text = "Do you want to delete Test Data Library '" + row.name + "' \
-    of system '" + row.system + "' (ID : " + row.testDataLibID + ") ?";
-    modalRef.componentInstance.fct = () => { this.testService.deleteTestDataLib(row.testDataLibID, () => this.sort.emit()); };
   }
 
 }

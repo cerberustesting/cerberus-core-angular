@@ -3,6 +3,34 @@
     [columns]="columns"
     [servlet]="servlet"
     [massAction]="false"
-    name="datalib">
+    name="datalib"
+    [refreshResults]="refreshResultsEvent.asObservable()">
+
+    <ng-template datatable-filter-tmp>
+        <button class="btn btn-info" (click)="createDatalib()"><i class="fa fa-plus-circle"></i> Create Datalib</button>
+    </ng-template>
+    
+    <ng-template datatable-end-line-tmp let-row="row">
+        <div class="row-menu">
+            <div class="actions-section">
+                <button class="btn btn-outline-danger" (click)="deleteDataLib(row)">
+                    <i class="fa fa-trash-alt"></i>
+                </button>
+    
+                <button class="btn btn-outline-info" (click)="editDataLib(row)">
+                    <i class="fa fa-pen"></i>
+                </button>
+    
+                <button class="btn btn-outline-primary" (click)="duplicateDataLib(row)">
+                    <i class="fa fa-copy"></i>
+                </button>
+                            
+                <button class="btn btn-outline-primary" (click)="openTCList(row)">
+                    <i class="far fa-list-alt"></i>
+                </button>
+
+            </div>
+        </div>
+    </ng-template>
 
 </app-datatable-page>

@@ -1,6 +1,6 @@
 import { Component, OnInit, NgModule, Input } from '@angular/core';
-import {RunComponent} from '../../../run/run.component';
-import {SidecontentService} from '../../../../core/services/crud/sidecontent.service';
+import { RunComponent } from '../../../shared/run/run.component';
+import { SidecontentService } from '../../../core/services/crud/sidecontent.service';
 
 
 @Component({

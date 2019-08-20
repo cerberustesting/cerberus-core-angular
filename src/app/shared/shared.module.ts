@@ -11,18 +11,16 @@ import { AlertsComponent } from "./alerts/alerts.component";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 import { LabelComponent } from './label/label.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ActionsComponent } from './datatable-page/utils/actions/actions.component';
 import { DatatablePageComponent } from './datatable-page/datatable-page.component';
 import { FilterlikeComponent } from './datatable-page/utils/filterlike/filterlike.component';
 import { FiltersComponent } from "./datatable-page/filters/filters.component";
 import { FilterComponent } from "./datatable-page/utils/filter/filter.component";
-import { DatalibTclistComponent } from './datatable-page/utils/datalib-tclist/datalib-tclist.component';
 import { RunComponent } from './run/run.component';
-import { DatalibEditComponent } from './datatable-page/utils/datalib-edit/datalib-edit.component';
 import { CustomModalComponent } from './custom-modal/custom-modal.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineAction } from './datatable-page/directives/datatable.directive';
 
 @NgModule({
   declarations: [
@@ -32,16 +30,16 @@ import { NotificationsComponent } from './notifications/notifications.component'
     LabelfilteringPipe,
     AlertsComponent,
     LabelComponent,
-    ActionsComponent,
     DatatablePageComponent,
     FilterlikeComponent,
     FiltersComponent,
     FilterComponent,
-    DatalibTclistComponent,
     RunComponent,
-    DatalibEditComponent,
     CustomModalComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    DatatableFilterTmpDirective,
+    DatatableMassActionTmpDirective,
+    DatatableEndLineAction
   ],
   imports: [
     CommonModule,
@@ -54,9 +52,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     MatSnackBarModule
   ],
   entryComponents: [
-    DatalibTclistComponent,
-    DatalibEditComponent,
     CustomModalComponent,
+    
   ],
   exports: [
     NgSelectModule,
@@ -67,10 +64,12 @@ import { NotificationsComponent } from './notifications/notifications.component'
     LabelfilteringPipe,
     AlertsComponent,
     NgbPopoverModule,
-    ActionsComponent,
     FiltersComponent,
     DatatablePageComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    DatatableFilterTmpDirective,
+    DatatableMassActionTmpDirective,
+    DatatableEndLineAction
   ],
   providers: [
     TrueindexPipe,

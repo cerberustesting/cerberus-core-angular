@@ -95,10 +95,15 @@
         </ng-template>
 
         <!-- Action column -->
-        <ngx-datatable-column *ngIf="name!='none'" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+        <ngx-datatable-column *ngIf="endLineActionTemplate" [sortable]="false" [canAutoResize]="false" [draggable]="false"
             [resizeable]="false" [width]="1">
+            
+            
             <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
-                <div class="row-menu" *ngIf="name=='testcaselist'">
+                    <ng-template 
+                        [ngTemplateOutlet]="endLineActionTemplate"
+                        [ngTemplateOutletContext]="{ row: row }"></ng-template>
+                <!-- <div class="row-menu" *ngIf="name=='testcaselist'">
                     <div class="actions-section">
                         <button class="btn btn-outline-danger">
                             <i class="fa fa-trash-alt"></i>
@@ -116,8 +121,8 @@
                             <i class="fa fa-copy"></i>
                         </button>
                     </div>
-                </div>
-                <div class="row-menu" *ngIf="name=='datalib'">
+                </div> -->
+                <!-- <div class="row-menu" *ngIf="name=='datalib'">
                         <div class="actions-section">
                             <button class="btn btn-outline-danger" (click)="deleteDataLib(row)">
                                 <i class="fa fa-trash-alt"></i>
@@ -135,7 +140,7 @@
                             </button>
 
                         </div>
-                    </div>
+                    </div> -->
             </ng-template>
         </ngx-datatable-column>
 

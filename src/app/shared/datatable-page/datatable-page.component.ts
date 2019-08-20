@@ -1,14 +1,15 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { AfterContentInit, Component, OnInit, Input, Output, TemplateRef, ContentChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Column } from '../model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
-
+import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineAction } from './directives/datatable.directive';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-datatable-page',
   templateUrl: './datatable-page.component.html',
-  styleUrls: ['./datatable-page.component.scss']
+  styleUrls: ['./datatable-page.component.scss'],
 })
 export class DatatablePageComponent implements OnInit {
 
@@ -24,6 +25,14 @@ export class DatatablePageComponent implements OnInit {
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
   @Input() name?: string = 'none';
+  @Input() refreshResults: Observable<void>;
+  
+
+  @ContentChild(DatatableFilterTmpDirective, { read: TemplateRef, static: true }) filterTemplate: TemplateRef<any>;
+  @ContentChild(DatatableMassActionTmpDirective, { read: TemplateRef, static: true }) massActionTemplate: TemplateRef<any>;
+  @ContentChild(DatatableEndLineAction, { read: TemplateRef, static: true }) endLineActionTemplate: TemplateRef<any>;
+  
+
   cache: number = -1; //number of displayed rows
 
   rows: Array<any>;
@@ -41,8 +50,11 @@ export class DatatablePageComponent implements OnInit {
       this.rows = null;
       this.page.number = 0;
       this.search();
-    })
+    });
+    if(this.refreshResults) this.refreshResults.subscribe(() => this.applyFilters())
+    
   }
+  
 
   /**
    * search

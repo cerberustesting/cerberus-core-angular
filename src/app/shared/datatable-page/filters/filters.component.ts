@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { SystemService } from '../../../core/services/crud/system.service';
 import { ILabel } from '../../../shared/model/label.model';
 import { IApplication } from '../../../shared/model/application.model';
@@ -9,7 +9,7 @@ import { ITest } from '../../../shared/model/test.model';
 import { Column } from 'src/app/shared/model/column.model';
 import { Filter } from 'src/app/shared/model/filter.model';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
-import { DatalibEditComponent } from '../utils/datalib-edit/datalib-edit.component';
+import { DatalibEditComponent } from '../../../feat-design/datalibrary/datalib-edit/datalib-edit.component';
 
 @Component({
   selector: 'app-filters',
@@ -24,6 +24,8 @@ export class FiltersComponent implements OnInit {
   @Input('servlet') servlet: string;
   @Input('selection') selection: boolean;
   @Input() name?: string;
+  @Input() filterTemplate: any; // TODO : type TemplateRef
+  @Input() massActionTemplate: any; // TODO : type TemplateRef
   @Output() systemApply = new EventEmitter<string>();
   @Output() pageApply = new EventEmitter<number>();
 
@@ -108,17 +110,6 @@ export class FiltersComponent implements OnInit {
     this.columnActive = this.columns.filter(a => a.active).length;
   }
 
-  // *** Datalib methods ***
-  /** createDatalib
-   * * Open side  content for datalib creation
-   */
-  createDatalib() {
-    this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
-      datalib: {},
-      type: 'CREATE',
-      exit: () => this.applySystem()
-    });
-    this.sideContentService.openSideBlock();
-  }
+  
 
 }

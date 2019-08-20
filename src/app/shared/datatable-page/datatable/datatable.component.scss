@@ -32,6 +32,29 @@
 }
 
 
+
+
+.ngx-datatable.scroll-vertical .datatable-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+:host
+  .ngx-datatable.material
+  .datatable-body-row:hover .row-menu {
+  opacity: .8;
+}
+
+.cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cell-label span:truncated  {
+  display: none;
+}
+
 .hover-action{
   color: black;
   position: absolute;
@@ -66,46 +89,6 @@
       padding: 0;
     }    
   }  
-}
-
-.ngx-datatable.scroll-vertical .datatable-body {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-
-
-:host
-  .ngx-datatable.material
-  .datatable-body-row:hover .row-menu {
-  opacity: .8;
-}
-
-// .top-header {
-//   width: 100%;
-//   position: relative;
-//   margin: 0 20px;
-//   .right-side {
-//     position: absolute;
-//     right: 0;
-//     top: -18px;
-//     &>*{
-//       display: inline-block;
-//       margin-left: 20px;
-//     }
-//     .selected {
-//       border-bottom: 2px solid #0077ff;
-//     }
-
-//   }
-// }
-.cell {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.cell-label span:truncated  {
-  display: none;
 }
 
 

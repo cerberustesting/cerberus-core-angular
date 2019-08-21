@@ -1,9 +1,9 @@
 <div class="block-header">
     <!--Title-->
-    <h3 class="block-title" *ngIf="type==='EDIT'">Edit New Data Library <small>ID : {{datalib.testDataLibID}}</small>
+    <h3 class="block-title" *ngIf="mode==='EDIT'">Edit New Data Library <small>ID : {{datalib.testDataLibID}}</small>
     </h3>
-    <h3 class="block-title" *ngIf="type==='DUPLICATE'">Duplicate New Data Library</h3>
-    <h3 class="block-title" *ngIf="type==='CREATE'">Create New Data Library</h3>
+    <h3 class="block-title" *ngIf="mode==='DUPLICATE'">Duplicate New Data Library</h3>
+    <h3 class="block-title" *ngIf="mode==='CREATE'">Create New Data Library</h3>
 </div>
 <form class="block-content" [formGroup]="datalibForm" (ngSubmit)="onSubmit(datalibForm.value)">
     <!-- Start Header -->
@@ -356,9 +356,9 @@
     </div>
     <!--END BLOCK WITH TABS-->
     <div class="row">
-        <button class="col-md-12 btn btn-info" type="submit" *ngIf="type==='EDIT'">Save</button>
-        <button class="col-md-12 btn btn-info" type="submit" *ngIf="type==='DUPLICATE'">Duplicate</button>
-        <button class="col-md-12 btn btn-info" type="submit" *ngIf="type==='CREATE'">Create</button>
+        <button class="col-md-12 btn btn-info" type="submit" *ngIf="mode==='EDIT'">Save</button>
+        <button class="col-md-12 btn btn-info" type="submit" *ngIf="mode==='DUPLICATE'">Duplicate</button>
+        <button class="col-md-12 btn btn-info" type="submit" *ngIf="mode==='CREATE'">Create</button>
     </div>
 
 </form>

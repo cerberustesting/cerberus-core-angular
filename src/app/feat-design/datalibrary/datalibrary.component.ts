@@ -8,7 +8,7 @@ import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { Filter } from 'src/app/shared/model/filter.model';
 import { DataLibColumnsData } from './datalibrary.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
-import { DatalibInteractionComponent } from './datalib-interaction/datalib-interaction.component';
+import { DatalibInteractionComponent, MODE } from './datalib-interaction/datalib-interaction.component';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
@@ -74,7 +74,7 @@ export class DatalibraryComponent implements OnInit {
   editDataLib(row: any): void {
     this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
       datalib: row,
-      type: 'EDIT',
+      mode: MODE.EDIT,
       exit: () => {
         this.refreshResults();
         this.NotificationService.createANotification('The datalib has been successfully edited', NotificationStyle.Success);
@@ -91,7 +91,7 @@ export class DatalibraryComponent implements OnInit {
   duplicateDataLib(row: any): void {
     this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
       datalib: row,
-      type: 'DUPLICATE',
+      mode: MODE.DUPLICATE,
       exit: () => {
         this.refreshResults();
         this.NotificationService.createANotification('The datalib has been successfully duplicated', NotificationStyle.Success);
@@ -125,7 +125,7 @@ export class DatalibraryComponent implements OnInit {
   createDatalib() {
     this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
       datalib: {},
-      type: 'CREATE',
+      mode: MODE.CREATE,
       exit: () => {
         this.refreshResults();
         this.NotificationService.createANotification('The datalib has been successfully created', NotificationStyle.Success);

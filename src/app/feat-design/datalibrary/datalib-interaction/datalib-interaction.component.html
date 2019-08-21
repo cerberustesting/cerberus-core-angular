@@ -272,32 +272,14 @@
             <!--END Definition TAB-->
             <!--SubData TAB-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===2}" role="tabpanel">
+                <button type="button" class="btn btn-info" (click)="addSubdata()">Add Subdata</button>
                 <ngx-datatable #myTable class="material fullscreen" [rowHeight]="50" [headerHeight]="50" [rows]="data"
-                    [columnMode]="'force'">
-                    <!-- <ngx-datatable-column [resizeable]="false" name="Sub-data" prop="subData">
-                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                                    <span
-                                      title="Double click to edit"
-                                      (dblclick)="editing[rowIndex + '-subData'] = true"
-                                      *ngIf="!editing[rowIndex + '-subData']">
-                                      {{value}}
-                                    </span>
-                                    <input
-                                      autofocus
-                                      (blur)="updateValue($event, 'subData', rowIndex)"
-                                      *ngIf="editing[rowIndex+ '-subData']"
-                                      type="text"
-                                      [value]="value"
-                                    />
-                                  </ng-template>
-                    </ngx-datatable-column>
-                    <ngx-datatable-column [resizeable]="false" name="Encrypt" prop="encrypt"></ngx-datatable-column>
-                    <ngx-datatable-column [resizeable]="false" name="Description" prop="description"></ngx-datatable-column>
-                    <ngx-datatable-column *ngIf="datalibForm.value.type==='INTERNAL'" [resizeable]="false" name="Value" prop="value"></ngx-datatable-column>
-                    <ngx-datatable-column *ngIf="datalibForm.value.type==='SQL'" [resizeable]="false" name="Column" prop="column"></ngx-datatable-column>
-                    <ngx-datatable-column *ngIf="datalibForm.value.type==='SERVICE'" [resizeable]="false" name="Parsing Answer" prop="parsingAnswer"></ngx-datatable-column>
-                    <ngx-datatable-column *ngIf="datalibForm.value.type==='CSV'" [resizeable]="false" name="Column Position" prop="columnPosition"></ngx-datatable-column>               -->
+                    [columnMode]="'force'">     
+                    <ngx-datatable-column>
+                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
 
+                            </ng-template>
+                    </ngx-datatable-column>
                     <ng-template ngFor let-column let-index="index" [ngForOf]="columns">
                             <ngx-datatable-column *ngIf="column.condition" [resizeable]="false" [name]="column.name" [prop]="column.prop">
                                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">

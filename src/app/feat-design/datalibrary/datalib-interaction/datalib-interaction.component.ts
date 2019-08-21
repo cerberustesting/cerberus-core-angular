@@ -153,7 +153,7 @@ export class DatalibInteractionComponent implements OnInit {
     for (let key in values) {
       formData.append(key, values[key] || '');
     }
-    if (this.mode === MODE.CREATE) {
+    if (this.mode === MODE.EDIT) {
       this.testService.updateTestDataLib(formData).subscribe(() => this.refreshTable());
     } else {
       this.testService.createTestDataLib(formData).subscribe(() => this.refreshTable());
@@ -166,6 +166,29 @@ export class DatalibInteractionComponent implements OnInit {
   refreshTable(): void {
     this.sidecontentService.closeSideBlock();
     this.exit(); //reload rows in datatable
+  }
+
+  /**addSubdata
+   * * add Empty Subdata to the subdata list
+   */
+  addSubdata(): void {
+    this.data = this.data.concat([{
+      column: '',
+      columnPosition: '',
+      description: '',
+      encrypt: 'N',
+      parsingAnswer: '',
+      subData: 'SUBDATA' + (this.data.length + 1),
+      testDataLibDataID: -1,
+      value: '',
+    }]);
+  }
+
+  /**deleteSubdata
+   * * delete Subdata from the subdata list
+   */
+  deleteSubdata(subdata): void {
+    // TODO : add class to the row
   }
 
 }

@@ -1,19 +1,13 @@
 <div class="select-container">
-  <ng-select class="custom auto-width" [items]="dataList" [selectableGroup]="true" [multiple]="column.param.multiple"
-    [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" placeholder="{{column.param.placeholder}}"
+  <ng-select class="custom auto-width" [items]="dataList" [selectableGroup]="true" [multiple]="column.multiple"
+    [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" placeholder="{{column.placeholder}}"
     [(ngModel)]='model' (open)="updateModel()" (add)="onAdd($event)" (remove)="applyFilter()"
     (change)="onChange($event)" (clear)="applyFilter()" [clearable]="true" (close)="applyFilter()"
     (search)="onSearch($event)" (keyup.enter)="onKeyUpEnter($event)">
 
     <ng-template *ngIf="column.type==='label'" ng-option-tmp let-item="item" let-index="index">
       <div class="label" [style.background-color]="item.color">{{item.label}}</div>
-    </ng-template>
-
-    <!-- <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
-          <span *ngIf="column.param.multiple; else uniq">{{column.displayName | titlecase }} : {{column.sSearch.length}}</span>
-          <ng-template #uniq>{{column.displayName | titlecase }} : {{column.sSearch[0]}}</ng-template>
-            
-    </ng-template> -->
+    </ng-template> 
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
       <div class="ng-value" *ngFor="let item of items | slice:0:1">
         <span *ngIf="item.label; else notLabel" class="ng-value-label">{{ item.label }}</span>

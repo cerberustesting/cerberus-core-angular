@@ -1,161 +1,134 @@
-import { Column } from 'src/app/shared/model/column.model';
+import { Column, COLUMN_TYPE } from 'src/app/shared/model/column.model';
 
 export var TestCasesColumnsData: Column[] = [
     {
         displayName: 'Application',
-        databaseName: 'tec.application',
+        apiName: 'tec.application',
         contentName: 'application',
         active: true,
         flexGrow: 100,
         defaultActive: true,
         searchable: true,
         dropActive: false,
-        param: {
-            multiple: true,
-            field: 'application',
-            placeholder: 'Select applications',
-        },
+        multiple: true,
+        placeholder: 'Select applications',
         sSearch: []
     },
     {
         displayName: 'Test Folder',
-        databaseName: 'tec.test',
+        apiName: 'tec.test',
         contentName: 'test',
         active: true,
         flexGrow: 100,
         defaultActive: true,
         searchable: true,
-        param: {
-            multiple: true,
-            field: 'test',
-            placeholder: 'Select test',
-        },
+        multiple: true,
+        placeholder: 'Select test',
         sSearch: []
 
     },
     {
         displayName: 'TestCase ID',
-        databaseName: 'tec.testCase',
+        apiName: 'tec.testCase',
         contentName: 'testCase',
         flexGrow: 75,
         active: true,
         defaultActive: true,
         like: true,
-        param: {
-            multiple: true,
-            field: 'testCase',
-            placeholder: 'Search TestCase',
-        },
+        multiple: true,
+        placeholder: 'Search TestCase',
         sSearch: []
     }, ///
     {
         displayName: 'Labels',
-        databaseName: 'lab.label',
+        apiName: 'lab.label',
         contentName: 'labels',
-        type: 'label',
+        type: COLUMN_TYPE.LABEL,
         active: true,
         defaultActive: true,
         sortable: false,
         searchable: true,
         dropActive: false,
         flexGrow: 250,
-        param: {
-            multiple: true,
-            field: 'label',
-            placeholder: 'Select Labels',
-        },
+        multiple: true,
+        placeholder: 'Select Labels',
         sSearch: []
     },
     {
         displayName: 'Description',
-        databaseName: 'tec.description',
+        apiName: 'tec.description',
         contentName: 'description',
-        type: 'longtext',
+        type: COLUMN_TYPE.LONGTEXT,
         flexGrow: 250,
         defaultActive: true,
         active: true,
         dropActive: false,
         like: true,
-        param: {
-            multiple: true,
-            field: 'description',
-            placeholder: 'Search Description...',
-        },
+        multiple: true,
+        placeholder: 'Search Description...',
         sSearch: []
 
     },
     {
         displayName: 'Status',
-        databaseName: 'tec.status',
+        apiName: 'tec.status',
         contentName: 'status',
         active: true,
         defaultActive: true,
         searchable: true,
         dropActive: false,
         flexGrow: 100,
-        param: {
-            multiple: true,
-            field: 'status',
-            placeholder: 'Select status',
-        },
+        multiple: true,
+        placeholder: 'Select status',
         sSearch: []
     },
     {
         displayName: 'Priority',
-        databaseName: 'tec.priority',
+        apiName: 'tec.priority',
         contentName: 'priority',
         active: true,
         defaultActive: true,
         dropActive: false,
         searchable: true,
         flexGrow: 100,
-        param: {
-            multiple: true,
-            field: 'priority',
-            placeholder: 'Select Priority',
-        },
+        multiple: true,
+        placeholder: 'Select Priority',
         sSearch: []
 
     },
     {
         displayName: 'System',
-        databaseName: 'app.system',
+        apiName: 'app.system',
         contentName: 'system',
         active: false,
         dropActive: false,
         searchable: true,
-        param: {
-            multiple: true,
-            field: 'description',
-            placeholder: 'Select System...',
-        },
+        multiple: true,
+        placeholder: 'Select System...',
         sSearch: []
 
     },
     {
         displayName: 'Global Activation',
-        databaseName: 'tec.tcactive',
+        apiName: 'tec.tcactive',
         contentName: 'tcActive',
         searchable: true,
         active: false,
         dropActive: false,
-        type: 'boolean',
-        param: {
-            multiple: false,
-            field: 'tcActive',
-            placeholder: 'Select Gloabl Activation',
-        },
+        type: COLUMN_TYPE.BOOLEAN,
+        multiple: false,
+        placeholder: 'Select Gloabl Activation',
         sSearch: []
 
     },
     {
         displayName: 'CountryList',
-        databaseName: '',
-        type: 'list',
+        apiName: '',
+        type: COLUMN_TYPE.LIST,
         contentName: 'countryList',
         flexGrow: 200,
         active: false,
-        
+
         sSearch: []
 
     },
@@ -163,214 +136,178 @@ export var TestCasesColumnsData: Column[] = [
     /****/
     {
         displayName: 'Stickers',
-        databaseName: 'lab.labelsSTICKER',
+        apiName: 'lab.labelsSTICKER',
         contentName: 'labelsSTICKER',
-        type: 'label',
+        type: COLUMN_TYPE.LABEL,
         active: false,
         sortable: false,
         dropActive: false,
-        param: {
-            multiple: true,
-            field: 'labelsSTICKER',
-            placeholder: 'Select Stickers',
-        },
+        multiple: true,
+        placeholder: 'Select Stickers',
         sSearch: []
 
     },//
     {
         displayName: 'Requirements',
-        databaseName: 'lab.labelsREQUIREMENT',
+        apiName: 'lab.labelsREQUIREMENT',
         contentName: 'labelsREQUIREMENT',
-        type: 'label',
+        type: COLUMN_TYPE.LABEL,
         active: false,
         dropActive: false,
         sortable: false,
-        param: {
-            multiple: true,
-            field: 'labelsREQUIREMENT',
-            placeholder: 'Select Requirement',
-        },
+        multiple: true,
+        placeholder: 'Select Requirement',
         sSearch: []
 
     },//
     {
         displayName: 'Batteries',
-        databaseName: 'lab.labelsBATTERY',
+        apiName: 'lab.labelsBATTERY',
         contentName: 'labelsBATTERY',
-        type: 'label',
+        type: COLUMN_TYPE.LABEL,
         active: false,
         dropActive: false,
         sortable: false
     },//
     {
         displayName: 'QA Activation',
-        databaseName: 'tec.tcactive',
+        apiName: 'tec.tcactive',
         contentName: 'activePROD',
         active: false,
         dropActive: false,
-        type: 'boolean'
+        type: COLUMN_TYPE.BOOLEAN
     },
     {
         displayName: 'UAT Activation',
-        databaseName: 'tec.tcactive',
+        apiName: 'tec.tcactive',
         contentName: 'activeQA',
         active: false,
         dropActive: false,
-        type: 'boolean'
+        type: COLUMN_TYPE.BOOLEAN
     },
     {
         displayName: 'PROD Activation',
-        databaseName: 'tec.tcactive',
+        apiName: 'tec.tcactive',
         contentName: 'activeUAT',
         active: false,
         dropActive: false,
-        type: 'boolean'
+        type: COLUMN_TYPE.BOOLEAN
     },
     {
         displayName: 'Function',
-        databaseName: 'tec.function',
+        apiName: 'tec.function',
         contentName: 'function',
         active: false,
         dropActive: false,
         like: true,
 
-        param: {
-            multiple: true,
-            field: 'function',
-            placeholder: 'Select Function',
-        },
+        multiple: true,
+        placeholder: 'Select Function',
         sSearch: []
 
     },
     {
         displayName: 'Project',
-        databaseName: 'tec.project',
+        apiName: 'tec.project',
         contentName: 'Project',
         dropActive: false,
         active: false,
 
-        param: {
-            multiple: true,
-            field: 'Project',
-            placeholder: 'Select Project',
-        },
+        multiple: true,
+        placeholder: 'Select Project',
         sSearch: []
 
     },
     {
         displayName: 'Origine',
-        databaseName: 'tec.origine',
+        apiName: 'tec.origine',
         contentName: 'origine',
         dropActive: false,
         active: false,
 
-        param: {
-            multiple: true,
-            field: 'origine',
-            placeholder: 'Select Origine',
-        },
+        multiple: true,
+        placeholder: 'Select Origine',
         sSearch: []
 
     },
     {
         displayName: 'Reference Origine',
-        databaseName: 'tec.refOrigine',
+        apiName: 'tec.refOrigine',
         contentName: 'refOrigin',
         active: false,
         dropActive: false,
         like: true,
-        param: {
-            multiple: true,
-            field: 'refOrigin',
-            placeholder: 'Select Reference Origine',
-        },
+        multiple: true,
+        placeholder: 'Select Reference Origine',
         sSearch: []
 
     },
     {
         displayName: 'Type',
-        databaseName: 'tec.group',
+        apiName: 'tec.group',
         contentName: 'group',
         searchable: true,
         active: false,
-        param: {
-            multiple: true,
-            field: 'group',
-            placeholder: 'Select Type',
-        },
+        multiple: true,
+        placeholder: 'Select Type',
         sSearch: []
 
     },
     {
         displayName: 'Date Created',
-        databaseName: 'tec.dateCreated',
+        apiName: 'tec.dateCreated',
         contentName: 'dateCreated',
         active: false,
         dropActive: false,
         like: true,
-        param: {
-            multiple: true,
-            field: 'dateCreated',
-            placeholder: 'Select Date Created',
-        },
+        multiple: true,
+        placeholder: 'Select Date Created',
         sSearch: []
 
     },
     {
         displayName: 'User Created',
-        databaseName: 'tec.usrCreated',
+        apiName: 'tec.usrCreated',
         contentName: 'usrCreated',
         dropActive: false,
         searchable: true,
         active: false,
-        param: {
-            multiple: true,
-            field: 'user',
-            placeholder: 'Select User',
-        },
+        multiple: true,
+        placeholder: 'Select User',
         sSearch: []
 
     },
     {
         displayName: 'TestCase Version',
-        databaseName: 'tec.testCaseVersion',
+        apiName: 'tec.testCaseVersion',
         contentName: 'testCaseVersion',
         dropActive: false,
         active: false,
-        param: {
-            multiple: true,
-            field: 'testCaseVersion',
-            placeholder: 'Select TestCase Version',
-        },
+        multiple: true,
+        placeholder: 'Select TestCase Version',
         sSearch: []
 
     },
     {
         displayName: 'Date Modification',
-        databaseName: 'tec.dateModif',
+        apiName: 'tec.dateModif',
         contentName: 'dateModif',
         active: false,
         dropActive: false,
         like: true,
-        param: {
-            multiple: true,
-            field: 'dateModif',
-            placeholder: 'Select Date Modification',
-        },
+        multiple: true,
+        placeholder: 'Select Date Modification',
         sSearch: []
 
     },
     {
         displayName: 'User Modification',
-        databaseName: 'tec.usrModif',
+        apiName: 'tec.usrModif',
         contentName: 'usrModif',
         dropActive: false,
         active: false,
-        param: {
-            multiple: true,
-            field: 'usrModif',
-            placeholder: 'Select User Modification',
-        },
+        multiple: true,
+        placeholder: 'Select User Modification',
         sSearch: []
 
     },];

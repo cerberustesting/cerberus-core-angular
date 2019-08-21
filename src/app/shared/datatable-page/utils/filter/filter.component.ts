@@ -23,7 +23,7 @@ export class FilterComponent implements OnInit {
   constructor(private testService: TestService, private systemService: SystemService) {  }
 
   applyFilter() { 
-    this.column.sSearch = (this.column.param.multiple)? this.model : [this.model];
+    this.column.sSearch = (this.column.multiple)? this.model : [this.model];
     this.applyFilterOutput.emit();    
   }
 
@@ -32,7 +32,7 @@ export class FilterComponent implements OnInit {
   }
 
   onChange(values) {
-    if (this.column.param.multiple) this.column.sSearch = values;
+    if (this.column.multiple) this.column.sSearch = values;
     else if (values!='') this.column.sSearch = [values];
     else this.column.sSearch = [];
   }
@@ -63,7 +63,7 @@ export class FilterComponent implements OnInit {
         }
       });
     } else {
-      this.testService.getColumnData(this.servlet, this.column.databaseName).subscribe(response => {
+      this.testService.getColumnData(this.servlet, this.column.apiName).subscribe(response => {
         if (response) {
           if (response.distinctValues.length > 0) {
             this.dataList = response.distinctValues;       

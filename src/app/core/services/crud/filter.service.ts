@@ -31,7 +31,7 @@ export class FilterService {
 
 
     if (columnListWithActiveFilter.length > 0) {
-      formData["sColumns"] = columnListWithActiveFilter.map(column => column.databaseName).join(','); // list of columns to filter&sort
+      formData["sColumns"] = columnListWithActiveFilter.map(column => column.apiName).join(','); // list of columns to filter&sort
       // ? "iColumns" 
       for (let column in columnListWithActiveFilter) {
         if (columnListWithActiveFilter[column].type === 'label') {
@@ -59,7 +59,7 @@ export class FilterService {
         // ? "bSearchable_"
         // ? "bSortable_"
       }
-      formData["sLike"] = columnListWithActiveFilter.filter(c => c.like).map(column => column.databaseName).join(','); // databaseName of like filters
+      formData["sLike"] = columnListWithActiveFilter.filter(c => c.like).map(column => column.apiName).join(','); // databaseName of like filters
     }
 
     for (let item in formData) {

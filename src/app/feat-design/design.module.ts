@@ -24,8 +24,8 @@ import { PropertyV2Component } from './testcasescript/tc-script/property-v2/prop
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActionsComponent } from './testcaselist/actions/actions.component';
-import { DatalibEditComponent } from './datalibrary/datalib-edit/datalib-edit.component';
-import { DatalibTclistComponent } from './datalibrary/datalib-edit/datalib-tclist/datalib-tclist.component';
+import { DatalibInteractionComponent } from './datalibrary/datalib-interaction/datalib-interaction.component';
+import { DatalibTclistComponent } from './datalibrary/datalib-interaction/datalib-tclist/datalib-tclist.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,7 @@ import { DatalibTclistComponent } from './datalibrary/datalib-edit/datalib-tclis
       CampaignsComponent,
       PropertyV2Component,
       ActionsComponent,
-      DatalibEditComponent,
+      DatalibInteractionComponent,
       DatalibTclistComponent
   ],
   imports: [
@@ -61,7 +61,7 @@ import { DatalibTclistComponent } from './datalibrary/datalib-edit/datalib-tclis
     FormsModule,
   ],
   entryComponents: [
-    DatalibEditComponent,
+    DatalibInteractionComponent,
     DatalibTclistComponent
   ],
   exports: [SharedModule]

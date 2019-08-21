@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatalibEditComponent } from './datalib-edit.component';
+import { DatalibInteractionComponent } from './datalib-interaction.component';
 
-describe('DatalibEditComponent', () => {
-  let component: DatalibEditComponent;
-  let fixture: ComponentFixture<DatalibEditComponent>;
+describe('DatalibInteractionComponent', () => {
+  let component: DatalibInteractionComponent;
+  let fixture: ComponentFixture<DatalibInteractionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DatalibEditComponent ]
+      declarations: [ DatalibInteractionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DatalibEditComponent);
+    fixture = TestBed.createComponent(DatalibInteractionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

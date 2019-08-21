@@ -8,11 +8,11 @@ import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { Filter } from 'src/app/shared/model/filter.model';
 import { DataLibColumnsData } from './datalibrary.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
-import { DatalibEditComponent } from './datalib-edit/datalib-edit.component';
+import { DatalibInteractionComponent } from './datalib-interaction/datalib-interaction.component';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
-import { DatalibTclistComponent } from './datalib-edit/datalib-tclist/datalib-tclist.component';
+import { DatalibTclistComponent } from './datalib-interaction/datalib-tclist/datalib-tclist.component';
 import { Subject } from 'rxjs';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
@@ -72,7 +72,7 @@ export class DatalibraryComponent implements OnInit {
    * @param row datalib to edit
    */
   editDataLib(row: any): void {
-    this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
+    this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
       datalib: row,
       type: 'EDIT',
       exit: () => {
@@ -89,7 +89,7 @@ export class DatalibraryComponent implements OnInit {
    * @param row datalib to duplicate
    */
   duplicateDataLib(row: any): void {
-    this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
+    this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
       datalib: row,
       type: 'DUPLICATE',
       exit: () => {
@@ -123,7 +123,7 @@ export class DatalibraryComponent implements OnInit {
    * * Open side  content for datalib creation
    */
   createDatalib() {
-    this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
+    this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
       datalib: {},
       type: 'CREATE',
       exit: () => {

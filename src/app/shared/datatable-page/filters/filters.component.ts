@@ -7,9 +7,7 @@ import { IInvariant } from '../../../shared/model/invariants.model';
 import { TestService } from '../../../core/services/crud/test.service';
 import { ITest } from '../../../shared/model/test.model';
 import { Column } from 'src/app/shared/model/column.model';
-import { Filter } from 'src/app/shared/model/filter.model';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
-import { DatalibEditComponent } from '../../../feat-design/datalibrary/datalib-edit/datalib-edit.component';
 
 @Component({
   selector: 'app-filters',

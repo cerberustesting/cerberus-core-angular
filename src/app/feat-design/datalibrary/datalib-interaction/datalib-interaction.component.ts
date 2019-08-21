@@ -6,11 +6,11 @@ import * as $ from 'jquery';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 
 @Component({
-  selector: 'app-datalib-edit',
-  templateUrl: './datalib-edit.component.html',
-  styleUrls: ['./datalib-edit.component.scss']
+  selector: 'app-datalib-interaction',
+  templateUrl: './datalib-interaction.component.html',
+  styleUrls: ['./datalib-interaction.component.scss']
 })
-export class DatalibEditComponent implements OnInit {
+export class DatalibInteractionComponent implements OnInit {
 
   // *** Inputs ***
   datalib: any;

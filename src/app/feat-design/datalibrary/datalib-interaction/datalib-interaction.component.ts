@@ -143,7 +143,7 @@ export class DatalibInteractionComponent implements OnInit {
    */
   onSubmit(values: any): void {
     for (let row in this.data) {
-      this.data[row]['toDelete'] = false;
+      this.data[row]['toDelete'] = (this.data[row].toDelete)?true:false;
       this.data[row].encrypt = (this.data[row].encrypt === 'Y') ? true : false
     }
     values['subDataList'] = JSON.stringify(this.data);
@@ -188,7 +188,18 @@ export class DatalibInteractionComponent implements OnInit {
    * * delete Subdata from the subdata list
    */
   deleteSubdata(subdata): void {
-    // TODO : add class to the row
+    subdata['toDelete'] = !subdata['toDelete'];
+  }
+  
+  /**
+   * 
+   * @param row 
+   */
+  getRowClass(row) {
+    
+    return {
+      'to-delete': (row.toDelete) === true
+    };
   }
 
 }

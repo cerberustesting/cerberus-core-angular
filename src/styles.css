@@ -55,3 +55,7 @@ ng-select.system-select .ng-dropdown-panel {
   position: absolute !important;
   left: 20px;
 }
+
+.to-delete {
+  background-color: #f9dcd1;
+}

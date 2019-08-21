@@ -273,11 +273,11 @@
             <!--SubData TAB-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===2}" role="tabpanel">
                 <button type="button" class="btn btn-info" (click)="addSubdata()">Add Subdata</button>
-                <ngx-datatable #myTable class="material fullscreen" [rowHeight]="50" [headerHeight]="50" [rows]="data"
+                <ngx-datatable #myTable class="material fullscreen" [rowHeight]="50" [headerHeight]="50" [rows]="data" [rowClass]="getRowClass"
                     [columnMode]="'force'">     
                     <ngx-datatable-column>
                             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
-
+                                <button type="button" class="btn delete-btn" [ngClass]="(row.toDelete)? 'btn-info' : 'btn-danger'" (click)="deleteSubdata(row)"><i class="fa" [ngClass]="(row.toDelete)? 'fa-plus-square' : 'fa-trash'" ></i></button>
                             </ng-template>
                     </ngx-datatable-column>
                     <ng-template ngFor let-column let-index="index" [ngForOf]="columns">

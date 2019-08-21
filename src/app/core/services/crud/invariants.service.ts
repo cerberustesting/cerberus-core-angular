@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
-import { AlertService } from 'src/app/core/services/utils/alert.service';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from '../utils/notification.service';
+import { NotificationStyle } from '../utils/notification.model';
 
 @Injectable({
   providedIn: 'root'
@@ -46,14 +47,14 @@ export class InvariantsService {
   observablePropertyNatureList = new BehaviorSubject<IInvariant[]>(this.propertyNatureList);
   observablePropertyDatabaseList = new BehaviorSubject<IInvariant[]>(this.propertyDatabaseList);
 
-  constructor(private http: HttpClient, private AlertService: AlertService) { }
+  constructor(private http: HttpClient, private Notification: NotificationService) { }
 
   getCountriesList() {
     this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=country')
       .subscribe(response => {
         this.countriesList = response;
         this.observableCountriesList.next(this.countriesList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getSystems() {
@@ -61,7 +62,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.systemsList = response;
         this.observableSystems.next(this.systemsList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
     getEnvironments() {
@@ -69,7 +70,7 @@ export class InvariantsService {
             .subscribe(response => {
                 this.environmentsList = response;
                 this.observableEnvironments.next(this.environmentsList);
-            }, (err) => this.AlertService.APIError(err));
+            }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
     }
 
   // input: the new list of selected system(s)
@@ -95,14 +96,14 @@ export class InvariantsService {
       .subscribe(response => {
         this.tcstatusList = response;
         this.observableTcStatus.next(this.tcstatusList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
   getTceStatus() {
     this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=tceStatus')
       .subscribe(response => {
         this.tcestatusList = response;
         this.observableTceStatusList.next(this.tcestatusList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
   getPriorities() {
     this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=priority')
@@ -113,7 +114,7 @@ export class InvariantsService {
           this.prioritiesList[key].valueInt = Number(this.prioritiesList[key].value);
         }
         this.observablePriorities.next(this.prioritiesList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getOriginsList() {
@@ -121,7 +122,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.originsList = response;
         this.observableOriginsList.next(this.originsList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getGroupList() {
@@ -129,7 +130,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.groupsList = response;
         this.observableGroupsList.next(this.groupsList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getStepConditionOperList() {
@@ -137,7 +138,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.conditionOperList = response;
         this.observableConditionOperList.next(this.conditionOperList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getStepLoopList() {
@@ -145,7 +146,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.stepLoopList = response;
         this.observableStepLoopList.next(this.stepLoopList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getActionList() {
@@ -153,7 +154,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.actionsList = response;
         this.observableActionsList.next(this.actionsList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getControlsList() {
@@ -161,7 +162,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.controlsList = response;
         this.observableControlsList.next(this.controlsList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getPropertyTypeList() {
@@ -169,7 +170,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.propertyTypeList = response;
         this.observablePropertyTypeList.next(this.propertyTypeList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getPropertyNatureList(): void {
@@ -177,7 +178,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.propertyNatureList = response;
         this.observablePropertyNatureList.next(this.propertyNatureList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
   getPropertyDatabaseList(): void {
@@ -185,7 +186,7 @@ export class InvariantsService {
       .subscribe(response => {
         this.propertyDatabaseList = response;
         this.observablePropertyDatabaseList.next(this.propertyDatabaseList);
-      }, (err) => this.AlertService.APIError(err));
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
 }

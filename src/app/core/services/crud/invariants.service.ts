@@ -27,6 +27,7 @@ export class InvariantsService {
   propertyDatabaseList: Array<IInvariant>;
   systemsList: Array<IInvariant>;
   environmentsList: Array<IInvariant>;
+  appService: Array<any>;
   // system management
   selectedSystemsList: Array<IInvariant>;
   // observables
@@ -46,6 +47,7 @@ export class InvariantsService {
   observablePropertyTypeList = new BehaviorSubject<IInvariant[]>(this.propertyTypeList);
   observablePropertyNatureList = new BehaviorSubject<IInvariant[]>(this.propertyNatureList);
   observablePropertyDatabaseList = new BehaviorSubject<IInvariant[]>(this.propertyDatabaseList);
+  observableAppService = new BehaviorSubject<any[]>(this.propertyDatabaseList);
 
   constructor(private http: HttpClient, private Notification: NotificationService) { }
 
@@ -186,6 +188,15 @@ export class InvariantsService {
       .subscribe(response => {
         this.propertyDatabaseList = response;
         this.observablePropertyDatabaseList.next(this.propertyDatabaseList);
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
+  }
+
+  getApplicationService(): void {
+    this.http.get<any>(environment.cerberus_api_url + '/ReadAppService?iSortCol_0=0&sSortDir_0=asc&sColumns=service,type,method,description&iDisplayLength=30&sSearch_0=&iDisplayStart=0')
+      .subscribe(response => {
+        this.appService = response.contentTable;
+        this.observableAppService.next(this.appService);
+        console.log(this.appService);
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 

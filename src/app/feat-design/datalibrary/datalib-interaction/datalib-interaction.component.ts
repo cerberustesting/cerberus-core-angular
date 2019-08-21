@@ -37,6 +37,7 @@ export class DatalibInteractionComponent implements OnInit {
   // *** select options list ***
   systemsList: any[];
   environmentList: any[] = [ // TODO : set dynamically
+    { value: '', description: ''},
     { value: 'DEV', description: 'Developpement' },
     { value: 'QA', description: 'Quality Assurance' },
     { value: 'UAT', description: 'User Acceptance Test' },
@@ -57,7 +58,7 @@ export class DatalibInteractionComponent implements OnInit {
   countriesList: any[];
   databasesList: any[];
 
-  serviceList: any[]; // TODO : set dynamically
+  servicesList: any[]; // TODO : set dynamically
 
   // *** datalib properties ***
   data: any[];
@@ -74,12 +75,15 @@ export class DatalibInteractionComponent implements OnInit {
   ngOnInit() {
     this.invariantService.getCountriesList(); // TODO : remove to place at the top of project
     this.invariantService.getPropertyDatabaseList(); // TODO : remove to place at the top of project
-    this.systemsList = this.invariantService.systemsList;
+    this.invariantService.getApplicationService();
+    this.invariantService.observableAppService
+      .subscribe(rep => {if(rep) this.servicesList = [{service:''}].concat(rep);});
+    this.systemsList = [{value:''}].concat(this.invariantService.systemsList);
     this.invariantService.observableCountriesList
-      .subscribe(rep => this.countriesList = rep);
+      .subscribe(rep => {if(rep) this.countriesList = [{value:''}].concat(rep);});
 
     this.invariantService.observablePropertyDatabaseList
-      .subscribe(rep => this.databasesList = rep);
+      .subscribe(rep => {if(rep) this.databasesList = [{value:''}].concat(rep);});
 
     if (this.datalib.testDataLibID) {
       this.testService.getDataLibData(this.datalib.testDataLibID, data => {

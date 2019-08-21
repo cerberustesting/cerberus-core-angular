@@ -122,8 +122,8 @@ export class DatalibInteractionComponent implements OnInit {
       {name: 'Encrypt', prop: 'encrypt', condition: "true"},
       {name: 'Value', prop: 'value', condition: this.datalibForm.value.type==='INTERNAL'},
       {name: 'Column', prop: 'column', condition: this.datalibForm.value.type==='SQL'},
-      {name: 'Parsing Answer', prop: 'parsingAnswer', condition: this.datalibForm.value.type==='CSV'},
-      {name: 'Column Position', prop: 'columnPosition', condition: this.datalibForm.value.type==='SERVICE'},
+      {name: 'Parsing Answer', prop: 'parsingAnswer', condition: this.datalibForm.value.type==='SERVICE'},
+      {name: 'Column Position', prop: 'columnPosition', condition: this.datalibForm.value.type==='CSV'},
       {name: 'Description', prop: 'description', condition: "true"}
     ]
   }

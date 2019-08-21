@@ -196,7 +196,7 @@ export class DatalibInteractionComponent implements OnInit {
    * @param row 
    */
   getRowClass(row) {
-    
+
     return {
       'to-delete': (row.toDelete) === true
     };

@@ -183,7 +183,7 @@
                                 </div>
                                 <div class="block-content">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Database </span>
@@ -194,15 +194,8 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        
                                         <div class="col-md-6">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">CSV URL </span>
-                                                </div>
-                                                <input type="text" class="form-control" formControlName="csvUrl">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Separator </span>
@@ -210,20 +203,31 @@
                                                 <input type="text" class="form-control" formControlName="separator">
                                             </div>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-12">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">CSV URL </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" formControlName="csvUrl">
+                                                </div>
+                                            </div>
+                                        <div class="col-md-12">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">CSV File </span>
                                                 </div>
-                                                <input type="file" class="form-control"> <!-- Todo -->
+                                                <div class="custom-file">
+                                                    <label class="custom-file-label">No file selected</label>
+                                                    <input type="file" class="form-control custom-file-input js-custom-file-input-enabled" formControlName="file"> <!-- Todo -->
+                                                </div>
+                                                
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div>
-                        
-                                            </div>
-                                            <input type="checkbox" checked="">
-                                            <p>Automatically feed subdata's list with the first line of csv ?</p>
+                                        <div class="col-md-12">
+                                                <div class="custom-control custom-checkbox custom-control-inline custom-control-primary">
+                                                        <input type="checkbox" class="custom-control-input" id="automatic-fied" checked="">
+                                                        <label class="custom-control-label" for="automatic-fied">Automatically feed subdata's list with the first line of csv ?</label>
+                                                    </div>
                         
                                         </div>
                                     </div>
@@ -243,18 +247,9 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Private</span>
-                            </div>
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                        <input type="checkbox" [checked]="datalib.privateData==='Y'">
-                                        <p *ngIf="datalib.privateData==='Y'">This data will be editable by admin Only</p>
-                                </div>
-                            </div>
-                            
-                            <!-- TODO : chk-->
+                        <div class="custom-control custom-checkbox custom-control-inline custom-control-primary">
+                            <input type="checkbox" class="custom-control-input" id="privateData" [checked]="datalib.privateData==='Y'">
+                            <label class="custom-control-label" for="privateData">This data will be editable by admin Only</label>
                         </div>
                     </div>
                     <div class="col-md-12">

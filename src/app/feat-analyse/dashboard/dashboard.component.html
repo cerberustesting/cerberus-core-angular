@@ -60,23 +60,46 @@
 
   <div class="row">
     <div class="col-md-12">
-      <div class="block block-rounded">
-        <div class="row block-content" style="padding: 0.75rem 0.75rem;">
-
-          <div class="btn col-md-1 label-list-title ">
-            <i class="fa fa-filter"></i>
-            Filters
+      <div class="block block-rounded block-bordered" (mouseenter)="filterSectionMouseOver = true"
+        (mouseleave)="filterSectionMouseOver = false">
+        <div class="block-header block-header-default">
+          <h3 class="block-title">
+            <i class="fa fa-filter mr-1"></i>
+            Columns <small>filtering</small>
+            <span class="nav-main-link-badge badge badge-pill badge-success ml-2">{{test.length}}</span>
+          </h3>
+          <div class="block-options">
+            <button *ngIf="filterSectionMouseOver" type="button" class="btn-block-option btn-sm custom-btn-danger mr-2 pl-2 pr-2 pt-1 pb-1">
+              <i class="fa fa-fw fa-times mr-1"></i>Clear all
+            </button>
+            <!-- <button *ngIf="filterSectionMouseOver" type="button" class="btn-block-option btn-danger" data-toggle="block-option" data-action="close">
+                <i class="si si-close"></i>
+            </button> -->
+            <button type="button" class="btn-block-option" (click)="filterSectionToggle = !filterSectionToggle">
+              <i class="si" [ngClass]="filterSectionToggle ? 'si-arrow-up' : 'si-arrow-down'"></i>
+            </button>
           </div>
+        </div>
+        <div *ngIf="filterSectionToggle" class="block-content" style="padding: 0.75rem 0.75rem 0.25rem;">
+          <div class="form-inline">
+            <div *ngFor="let t of test" class="input-group mr-2 mb-2">
+              <select class="form-control">
+                <option value="0">Add a Filter</option>
+                <option value="1">Option #1</option>
+              </select>
+              <div class="input-group-append">
+                <button type="button" class="btn btn-light" style="border-color: #dadeec">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div>
 
-          <div class="col-md-11 form-inline">
-            <select *ngFor="let t of test" class="form-control mr-2 mb-2">
-              <option value="0">Add a Filter</option>
-              <option value="1">Option #1</option>
-            </select>
           </div>
         </div>
       </div>
     </div>
+
+
   </div>
 </div>
 

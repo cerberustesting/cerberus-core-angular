@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
-declare function Helpers(name: string);
 declare function initChartJS();
 
 @Component({
@@ -10,7 +9,10 @@ declare function initChartJS();
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private headerTitleService: HeaderTitleService) { 
+  private filterSectionToggle: boolean = true;
+  private filterSectionMouseOver: boolean = false;
+
+  constructor(private headerTitleService: HeaderTitleService) {
     headerTitleService.setTitle("Dashboard");
   }
 
@@ -18,6 +20,6 @@ export class DashboardComponent implements OnInit {
     initChartJS();
   }
 
-  private test:Array<string> = ['a','a','a','a','a','a','a','a','a']
+  private test: Array<string> = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a']
 
 }

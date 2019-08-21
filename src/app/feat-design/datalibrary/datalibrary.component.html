@@ -2,12 +2,10 @@
     [page]="page"
     [columns]="columns"
     [servlet]="servlet"
-    [massAction]="false"
-    name="datalib"
     [refreshResults]="refreshResultsEvent.asObservable()">
 
     <ng-template datatable-filter-tmp>
-        <button class="btn btn-info" (click)="createDatalib()"><i class="fa fa-plus-circle"></i> Create Datalib</button>
+        <button class="btn btn-info" (click)="createDatalib()"><i class="fa fa-plus-circle mr-2"></i>Create Datalib</button>
     </ng-template>
     
     <ng-template datatable-end-line-tmp let-row="row">

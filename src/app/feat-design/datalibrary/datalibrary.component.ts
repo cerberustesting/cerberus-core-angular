@@ -14,6 +14,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
 import { DatalibTclistComponent } from './datalib-edit/datalib-tclist/datalib-tclist.component';
 import { Subject } from 'rxjs';
+import { NotificationService } from 'src/app/core/services/utils/notification.service';
+import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 
 @Component({
   selector: 'app-datalibrary',
@@ -23,20 +25,19 @@ import { Subject } from 'rxjs';
 export class DatalibraryComponent implements OnInit {
 
   columns = DataLibColumnsData;
+  // TODO : create gloabl method
   page = {
     size: 0, //maximum element per page
     number: 1, //number of current page
     sort: [{ dir: "asc", prop: "testDataLibID" }], //sort item
     totalCount: 0 //total count of element in database
   };
-  rows = [];
   selectedRows = [];
   filterList: Array<Filter> = [];
   globalSearch = ''; // value in global search field
-  filterTest: any; //
   servlet = '/ReadTestDataLib';
   private refreshResultsEvent: Subject<void> = new Subject<void>();
-  
+
   refreshResults() {
     this.refreshResultsEvent.next()
   }
@@ -45,8 +46,9 @@ export class DatalibraryComponent implements OnInit {
     private headerTitleService: HeaderTitleService,
     private sideContentService: SidecontentService,
     private modalService: NgbModal,
-    private testService: TestService
-    ) { 
+    private testService: TestService,
+    private NotificationService: NotificationService
+  ) {
     headerTitleService.setTitle("Data Library");
   }
 
@@ -73,7 +75,10 @@ export class DatalibraryComponent implements OnInit {
     this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
       datalib: row,
       type: 'EDIT',
-      exit: () => this.refreshResults()
+      exit: () => {
+        this.refreshResults();
+        this.NotificationService.createANotification('The datalib has been successfully edited', NotificationStyle.Success);
+      }
     });
     this.sideContentService.openSideBlock();
   }
@@ -87,7 +92,10 @@ export class DatalibraryComponent implements OnInit {
     this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
       datalib: row,
       type: 'DUPLICATE',
-      exit: () => this.refreshResults()
+      exit: () => {
+        this.refreshResults();
+        this.NotificationService.createANotification('The datalib has been successfully duplicated', NotificationStyle.Success);
+      }
     });
     this.sideContentService.openSideBlock();
   }
@@ -102,7 +110,13 @@ export class DatalibraryComponent implements OnInit {
     modalRef.componentInstance.title = 'Delete Test Data Library Entry';
     modalRef.componentInstance.text = "Do you want to delete Test Data Library '" + row.name + "' \
     of system '" + row.system + "' (ID : " + row.testDataLibID + ") ?";
-    modalRef.componentInstance.fct = () => { this.testService.deleteTestDataLib(row.testDataLibID, () => this.refreshResults()); };
+    modalRef.componentInstance.fct = () => {
+      this.testService.deleteTestDataLib(
+        row.testDataLibID,
+        () => {this.refreshResults()}
+      );
+      this.NotificationService.createANotification('The datalib '+ row.name +' (ID :'+ row.testDataLibID +') has been successfully deleted', NotificationStyle.Success);
+    };
   }
 
   /** createDatalib
@@ -112,7 +126,10 @@ export class DatalibraryComponent implements OnInit {
     this.sideContentService.addComponentToSideBlock(DatalibEditComponent, {
       datalib: {},
       type: 'CREATE',
-      exit: () => this.refreshResults()
+      exit: () => {
+        this.refreshResults();
+        this.NotificationService.createANotification('The datalib has been successfully created', NotificationStyle.Success);
+      }
     });
     this.sideContentService.openSideBlock();
   }

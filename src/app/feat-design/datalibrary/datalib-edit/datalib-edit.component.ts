@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import * as $ from 'jquery';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 
@@ -17,20 +17,15 @@ export class DatalibEditComponent implements OnInit {
   type: string;
   exit: (n:void)=>void; //function to execute when press submit button
 
+  // *** main form ***
+  private datalibForm: FormGroup;
+
   // *** controle property ***
   paneActive = 1;
   serviceCollapse = false;
   sqlCollapse = false;
   csvCollapse = false;
-  columns = [
-    {name: 'Sub-data', prop: 'subData'},
-    {name: 'Encrypt', prop: 'encrypt'},
-    {name: 'Value', prop: 'value'},
-    {name: 'Column', prop: 'column'},
-    {name: 'Parsing Answer', prop: 'parsingAnswer'},
-    {name: 'Column Position', prop: 'columnPosition'},
-    {name: 'Description', prop: 'description'}
-  ]
+  columns: Array<any> 
 
   // *** select options list ***
   systemsList: any[];
@@ -42,18 +37,25 @@ export class DatalibEditComponent implements OnInit {
     {value: 'DEMO', description: 'Demonstration'},
     {value: 'PROD', description: 'Production'}
   ];
+  editing = {};
+
+  updateValue(event, cell, rowIndex) {
+    console.log('inline editing rowIndex', rowIndex)
+    this.editing[rowIndex + '-' + cell] = false;
+    this.data[rowIndex][cell] = event.target.value;
+    this.data = [...this.data];
+    console.log('UPDATED!', this.data[rowIndex][cell]);
+  }
+
   countriesList: any[];
-  databasesList: any[] = [ // TODO : set dynamically && wich property for wich datatable
-    {value: "CRB", description: "CERBERUS Database"}
-  ];
+  databasesList: any[];
   
   serviceList: any[]; // TODO : set dynamically
 
   // *** datalib properties ***
   data: any[];
 
-  // *** main form ***
-  private datalibForm: FormGroup;
+  
   
 
   constructor(
@@ -63,19 +65,27 @@ export class DatalibEditComponent implements OnInit {
     private sidecontentService: SidecontentService) { }
 
   ngOnInit() {
+    this.invariantService.getCountriesList(); // TODO : remove to place at the top of project
+    this.invariantService.getPropertyDatabaseList(); // TODO : remove to place at the top of project
     this.systemsList = this.invariantService.systemsList;
-    this.countriesList = this.invariantService.countriesList;
+    this.invariantService.observableCountriesList
+      .subscribe(rep => this.countriesList = rep);
+
+    this.invariantService.observablePropertyDatabaseList
+      .subscribe(rep => this.databasesList = rep);
+    
     if (this.datalib.testDataLibID) {
       this.testService.getDataLibData(this.datalib.testDataLibID, data => {
         this.data = data.contentTable;
       });
     }
     
+    
 
     this.datalibForm = this.formBuilder.group({
       testdatalibid: (this.type==='DUPLICATE')? '' : this.datalib.testDataLibID,
       name: this.datalib.name,
-      type: this.datalib.type || 'INTERNAL',
+      type:  this.datalib.type || 'INTERNAL',
       system: this.datalib.system,
       environment: this.datalib.environment,
       country: this.datalib.country,
@@ -97,13 +107,33 @@ export class DatalibEditComponent implements OnInit {
       script: this.datalib.script,
       privateData: (this.datalib.privateData==='Y'),
       file: this.datalib.file,
-      subDataList: "[{\"testDataLibDataID\":157,\"subData\":\"\",\"testDataLibID\":60,\"parsingAnswer\":\"\",\"encrypt\":false,\"column\":\"\",\"columnPosition\":\"\",\"description\":\"\",\"value\":\"\",\"toDelete\":false}]"
-    });
+    });   
+    this.datalibForm.valueChanges.subscribe(rep => this.setColumns());
+    this.setColumns();
     
     // TODO : add subdata
     
   }
+
+  setColumns() {
+    
+    this.columns = [
+      {name: 'Sub-data', prop: 'subData', condition: "true"},
+      {name: 'Encrypt', prop: 'encrypt', condition: "true"},
+      {name: 'Value', prop: 'value', condition: this.datalibForm.value.type==='INTERNAL'},
+      {name: 'Column', prop: 'column', condition: this.datalibForm.value.type==='SQL'},
+      {name: 'Parsing Answer', prop: 'parsingAnswer', condition: this.datalibForm.value.type==='CSV'},
+      {name: 'Column Position', prop: 'columnPosition', condition: this.datalibForm.value.type==='SERVICE'},
+      {name: 'Description', prop: 'description', condition: "true"}
+    ]
+  }
+
   onSubmit(values) {
+    for (let row in this.data) {
+      this.data[row]['toDelete'] = false;
+      this.data[row].encrypt = (this.data[row].encrypt==='Y')?true:false
+    }
+    values['subDataList'] = JSON.stringify(this.data);
     if(!values.file) values.file = 'undifined'
     //values.subDataList = []; // TODO : add subdata
 

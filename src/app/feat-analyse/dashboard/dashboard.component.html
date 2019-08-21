@@ -9,6 +9,78 @@
 <!-- END title section -->
 
 <div class="content">
+  <div class="row push">
+    <div class="col-md-2">
+      <!-- <div class="form-inline"> -->
+
+      <button type="button" class="btn btn-info mr-2">
+        <i class="fa fa-fw fa-plus download mr-1"></i> Create Test Case
+      </button>
+
+      <!-- </div> -->
+    </div>
+
+    <div class="col-md-6">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <button type="button" class="btn btn-primary">
+            <i class="fa fa-search mr-1"></i> Quick Search
+          </button>
+        </div>
+        <input type="text" class="form-control" id="example-group3-input1" name="example-group3-input1"
+          placeholder="Keyword">
+      </div>
+    </div>
+
+    <div class="col-md-3 offset-1 text-right">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fa fa-columns mr-2"></i>
+            Displayed Columns
+          </span>
+        </div>
+        <select class="form-control">
+          <option value="0">Column to display</option>
+          <option value="1">Option #1</option>
+          <option value="2">Option #2</option>
+          <option value="3">Option #3</option>
+          <option value="4">Option #4</option>
+          <option value="5">Option #5</option>
+          <option value="6">Option #6</option>
+          <option value="7">Option #7</option>
+          <option value="8">Option #8</option>
+          <option value="9">Option #9</option>
+          <option value="10">Option #10</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="block block-rounded">
+        <div class="row block-content" style="padding: 0.75rem 0.75rem;">
+
+          <div class="btn col-md-1 label-list-title ">
+            <i class="fa fa-filter"></i>
+            Filters
+          </div>
+
+          <div class="col-md-11 form-inline">
+            <select *ngFor="let t of test" class="form-control mr-2 mb-2">
+              <option value="0">Add a Filter</option>
+              <option value="1">Option #1</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
   <div class="row">
     <div class="col-md-12">
       <div class="block">

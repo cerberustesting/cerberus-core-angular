@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TrueindexPipe } from "./pipes/trueindex.pipe";
 import { UniqueproplistPipe } from "./pipes/uniqueproplist.pipe";
 import { LabelfilteringPipe } from "./pipes/labelfiltering.pipe";
-import { AlertsComponent } from "./alerts/alerts.component";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 import { LabelComponent } from './label/label.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -28,7 +27,6 @@ import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, Datatable
     TrueindexPipe,
     UniqueproplistPipe,
     LabelfilteringPipe,
-    AlertsComponent,
     LabelComponent,
     DatatablePageComponent,
     FilterlikeComponent,
@@ -62,7 +60,6 @@ import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, Datatable
     TrueindexPipe,
     UniqueproplistPipe,
     LabelfilteringPipe,
-    AlertsComponent,
     NgbPopoverModule,
     FiltersComponent,
     DatatablePageComponent,

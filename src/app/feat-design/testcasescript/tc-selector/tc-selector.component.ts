@@ -2,14 +2,9 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ITestCase, ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { ITest } from 'src/app/shared/model/test.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { AlertService, Alert } from 'src/app/core/services/utils/alert.service';
 import { SettingsService } from '../tc-script/settings/settings.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
-
-const Alert_selectedTestDoesNotExist: Alert = { message: "The selected test doesn't exist", style: "alert-danger", duration: 5000, animationIn: "shake" }
-const Alert_selectedTestCaseDoesNotExist: Alert = { message: "The selected test case doesn't exist", style: "alert-danger", duration: 5000, animationIn: "shake" }
-const Alert_noTestCaseForATest: Alert = { message: "There is no corresponding test case for this test", style: "alert-warning", duration: 5000 }
 
 @Component({
   selector: 'app-tc-selector',
@@ -30,9 +25,8 @@ export class TcSelectorComponent implements OnInit {
 
   constructor(
     private TestService: TestService,
-    private AlertService: AlertService,
     private SettingsService: SettingsService,
-    private NotificationService: NotificationService
+    private Notification: NotificationService
   ) { }
 
   ngOnDestroy() {
@@ -51,7 +45,7 @@ export class TcSelectorComponent implements OnInit {
             // secure the parsed test from URL
             if (!this.TestService.seletectedTestExist(this.selectedTest)) {
               console.error("the selected test doesn't exist");
-              this.NotificationService.createANotification("The selected test doesn't exist", NotificationStyle.Error, true, 5000);
+              this.Notification.createANotification("The selected test doesn't exist", NotificationStyle.Error, true, 5000);
               // this.AlertService.displayMessage(Alert_selectedTestDoesNotExist);
               this.selectedTest = null;
             } else {
@@ -73,7 +67,7 @@ export class TcSelectorComponent implements OnInit {
           if (this.selectedTestCase != null && this.selectedTest != null) {
             if (!this.TestService.selectedTestCaseExist(this.selectedTestCase)) {
               console.error("the selected test case doesn't exist");
-              this.NotificationService.createANotification("The selected test casedoesn't exist", NotificationStyle.Error, true, 5000);
+              this.Notification.createANotification("The selected test casedoesn't exist", NotificationStyle.Error, true, 5000);
               // this.AlertService.displayMessage(Alert_selectedTestCaseDoesNotExist);
               this.selectedTestCase = null;
             } else {
@@ -87,7 +81,7 @@ export class TcSelectorComponent implements OnInit {
         if (this.selectedTest != null) {
           if (this.TestService.seletectedTestExist(this.selectedTest))
             console.warn("there is no corresponding test case for this test");
-          this.NotificationService.createANotification("There is no corresponding test case for this test", NotificationStyle.Warning, true, 5000);
+          this.Notification.createANotification("There is no corresponding test case for this test", NotificationStyle.Warning, true, 5000);
           // this.AlertService.displayMessage(Alert_noTestCaseForATest);
         }
       }

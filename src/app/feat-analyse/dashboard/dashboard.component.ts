@@ -18,4 +18,6 @@ export class DashboardComponent implements OnInit {
     initChartJS();
   }
 
+  private test:Array<string> = ['a','a','a','a','a','a','a','a','a']
+
 }

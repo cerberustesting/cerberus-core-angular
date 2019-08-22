@@ -11,6 +11,7 @@ export class DashboardComponent implements OnInit {
 
   private filterSectionToggle: boolean = true;
   private filterSectionMouseOver: boolean = false;
+  private test: Array<string> = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'];
 
   constructor(private headerTitleService: HeaderTitleService) {
     headerTitleService.setTitle("Dashboard");
@@ -19,7 +20,5 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     initChartJS();
   }
-
-  private test: Array<string> = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a']
 
 }

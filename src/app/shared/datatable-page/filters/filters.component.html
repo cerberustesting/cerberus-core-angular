@@ -1,122 +1,139 @@
 <div class="header-area bg-body-light">
-    <div class="filter-container ">
+    <div class="filter-container">
         <div class="content content-full">
-            <div class="main-side ">
-                <!-- Create button-->
-                <div>
+            <div class="row push">
+                <div class="col-md-2">
                     <ng-template *ngIf="filterTemplate" [ngTemplateOutlet]="filterTemplate"></ng-template>
-                </div>                
+                </div>
 
-                <!-- Global Search Field -->
-                <input 
-                    type="text" 
-                    class="form-control" 
-                    (keyup)="onKeyUp()" 
-                    (blur)="applySystem()"
-                    [(ngModel)]="gloabalSearchModel" 
-                    placeholder="Search...">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-search mr-2"></i>Quick Search
+                            </button>
+                        </div>
+                        <input type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
+                            [(ngModel)]="gloabalSearchModel" placeholder="Keyword">
+                    </div>
+                </div>
 
-                <!--Filter Selector-->
-                <ng-select 
-                    class="column-selector custom auto-width" 
-                    bindLabel="name" 
-                    placeholder="Add Filters"
-                    [items]="searchableColumns" 
-                    [closeOnSelect]="false" 
-                    [searchable]="true" 
-                    [clearable]="false">
+                <div class="col-md-3 offset-1">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-columns mr-2"></i>
+                                Displayed Columns
+                            </span>
+                        </div>
+                        <ng-select class="ng-select-displayedcolumns" bindLabel="name"
+                            placeholder="Columns : {{ columnActive }}" [items]="columns" [closeOnSelect]="false"
+                            (change)="resetColumnDrop" [searchable]="false" [clearable]="false">
+                            <ng-template ng-header-tmp>
+                                <div class="row ml-1 mr-1">
+                                    <button type="button" class="col-12 btn btn-sm btn-secondary mr-2 pl-2 pr-2 pt-1 pb-1"
+                                        (click)="resetDefaultColumns()">
+                                        <i class="fa fa-fw fa-redo-alt mr-1"></i>Reset
+                                    </button>
+                                </div>
+                            </ng-template>
 
-                    <!--Content in the top container-->
-                    <ng-template ng-label-tmp>
-                        <div>Add Filters</div>
-                    </ng-template>
+                            <!--Content in the top container-->
+                            <ng-template ng-label-tmp>
+                                <div>Selected : {{ columnActive }}</div>
+                            </ng-template>
+                            <!--List of columns (underline if selected)-->
+                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                <div (click)="toggleColumn(item)">
+                                    <span *ngIf="item.active" class="text-primary-dark bold">
+                                        <i class="ml-1 fa fa-check-circle text-primary-dark"></i>
+                                        {{item.displayName}}
+                                    </span>
+                                    <span *ngIf="!item.active">{{item.displayName}}</span>
+                                </div>
+                            </ng-template>
 
-                    <!--List of filters (underline if selected)-->
-                    <ng-template ng-option-tmp let-item="item" let-index="index">
-                        <div [ngClass]="{'selected': item.dropActive || item.fieldActive}" (click)="addFilter(item)">
-                            {{item.displayName}}</div>
-                    </ng-template>
-
-                </ng-select>
-                <ng-template [ngIf]="false">Hello</ng-template>
+                        </ng-select>
+                    </div>
+                </div>
 
             </div>
-            <div class="filter-list">
-                <!--Distinct filters-->
-                <ng-template ngFor let-column [ngForOf]="columns">
-                    <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column" [servlet]="servlet"
-                        (applyFilterOutput)=applySystem()></app-filter>
-                </ng-template>
-                <!--Like filters-->
-                <ng-template ngFor let-column [ngForOf]="columns">
-                    <app-filterlike *ngIf="column.fieldActive" [column]="column" (applyFilterOutput)=applySystem()>
-                    </app-filterlike>
-                </ng-template>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="block block-rounded block-bordered" (mouseenter)="filterSectionMouseOver = true"
+                        (mouseleave)="filterSectionMouseOver = false">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">
+                                <i class="fa fa-filter mr-1"></i>
+                                Columns <small>filtering</small>
+                                <span class="nav-main-link-badge badge badge-pill badge-success ml-2">
+                                    {{test.length}}
+                                </span>
+                            </h3>
+                            <div class="block-options">
+                                <button *ngIf="filterSectionMouseOver" type="button"
+                                    class="btn-block-option btn-sm custom-btn-danger mr-2 pl-2 pr-2 pt-1 pb-1">
+                                    <i class="fa fa-fw fa-times mr-1"></i>Clear all
+                                </button>
+                                <button type="button" class="btn-block-option"
+                                    (click)="filterSectionToggle = !filterSectionToggle">
+                                    <i class="si" [ngClass]="filterSectionToggle ? 'si-arrow-up' : 'si-arrow-down'"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="filterSectionToggle" class="block-content"
+                            style="padding: 0.75rem 0.75rem 0.25rem;">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <ng-select class="column-selector custom auto-width mr-2" bindLabel="name"
+                                        placeholder="Add Filters" [items]="searchableColumns" [closeOnSelect]="false"
+                                        [searchable]="true" [clearable]="false">
+                                        <!--Content in the top container-->
+                                        <ng-template ng-label-tmp>
+                                            <div>Add Filters</div>
+                                        </ng-template>
+                                        <!--List of filters (underline if selected)-->
+                                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                                            <!-- <div [ngClass]="{'selected': item.dropActive || item.fieldActive}"
+                                                (click)="addFilter(item)">
+                                                {{item.displayName}}
+                                            </div> -->
+                                            <div (click)="addFilter(item)">
+                                                <span *ngIf="item.dropActive || item.fieldActive"
+                                                    class="text-primary-dark bold">
+                                                    <i class="ml-1 fa fa-check-circle text-primary-dark"></i>
+                                                    {{item.displayName}}
+                                                </span>
+                                                <span
+                                                    *ngIf="!item.dropActive || !item.fieldActive">{{item.displayName}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="filter-list form-inline mb-2">
+                                        <!--Distinct filters-->
+                                        <ng-template ngFor let-column [ngForOf]="columns">
+                                            <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column"
+                                                [servlet]="servlet" (applyFilterOutput)=applySystem()>
+                                            </app-filter>
+                                        </ng-template>
+                                        <!--Like filters-->
+                                        <ng-template ngFor let-column [ngForOf]="columns">
+                                            <app-filterlike *ngIf="column.fieldActive" [column]="column"
+                                                (applyFilterOutput)=applySystem()>
+                                            </app-filterlike>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-
-            <ng-template *ngIf="massActionTemplate" [ngTemplateOutlet]="massActionTemplate"></ng-template>
-            <!-- <div class="action-container" *ngIf="selectedRows">
-                <app-actions [selectedRows]="selectedRows"></app-actions>
-            </div> -->
-        </div>
-
-        <div class="flex-sm-00-auto ml-sm-3">
-
-            <ngb-pagination [(page)]="page.number" [pageSize]="page.size" [collectionSize]="page.totalCount"
-                [maxSize]="5" [boundaryLinks]="true" (pageChange)="applyPage()" [rotate]="true" [ellipses]="false">
-                <ng-template ngbPaginationPrevious><i class="fa fa-angle-left"></i></ng-template>
-                <ng-template ngbPaginationNext><i class="fa fa-angle-right"></i></ng-template>
-                <ng-template ngbPaginationFirst><i class="fa fa-angle-double-left"></i></ng-template>
-                <ng-template ngbPaginationLast><i class="fa fa-angle-double-right"></i></ng-template>
-            </ngb-pagination>
-            <div *ngIf="selectedRows">{{selectedRows.length}} selected / {{page.totalCount}} total</div>
-            <div *ngIf="!selection">Total : {{page.totalCount}}</div>
-            <div>
-
-                <!--Column Selector-->
-                <ng-select class="column-selector custom auto-width" bindLabel="name"
-                    placeholder="Columns : {{ columnActive }}" [items]="columns" [closeOnSelect]="false"
-                    (change)="resetColumnDrop" [searchable]="false" [clearable]="false">
-
-                    <ng-template ng-header-tmp>
-                        <button class="btn btn-outline-info" style="margin: auto; width: 100%;"
-                            (click)="resetDefaultColumns()">Reset</button>
-                    </ng-template>
-
-                    <!--Content in the top container-->
-                    <ng-template ng-label-tmp>
-                        <div>Selected : {{ columnActive }}</div>
-                    </ng-template>
-
-                    <!--List of columns (underline if selected)-->
-                    <ng-template ng-option-tmp let-item="item" let-index="index">
-                        <div [ngClass]="{'selected': item.active}" (click)="toggleColumn(item)">
-                            {{item.displayName}}</div>
-                    </ng-template>
-
-                </ng-select>
-
-                <!--Page size selector ! if comeback to a no scroll table-->
-                <!-- <ng-select class="page-selector custom page-size" bindLabel="name"
-                    placeholder="Show : {{ page.size }}" [(ngModel)]="page.size" [items]="[10, 25, 50, 100]"
-                    [closeOnSelect]="true" [clearable]="false" (change)="applySystem()">
-
-
-                    <!--Content in the top container
-                    <ng-template ng-label-tmp>
-                        <div>Show : {{ page.size }}</div>
-                    </ng-template>
-
-                    <!--Items list
-                    <ng-template ng-option-tmp let-item="item" let-index="index">
-                        <div>Show : {{ item }}</div>
-                    </ng-template>
-
-                </ng-select> -->
-            </div>
-
-
         </div>
     </div>
-
 </div>

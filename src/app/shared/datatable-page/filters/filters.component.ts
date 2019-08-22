@@ -16,6 +16,10 @@ import { SidecontentService } from 'src/app/core/services/crud/sidecontent.servi
 })
 export class FiltersComponent implements OnInit {
 
+  private filterSectionToggle: boolean = true;
+  private filterSectionMouseOver: boolean = false;
+  private test: Array<string> = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'];
+
   @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
   @Input('selectedRows') selectedRows: any;

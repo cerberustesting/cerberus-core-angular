@@ -1,4 +1,50 @@
-<div class="select-container">
+<div class="input-group mr-2 mb-2">
+
+  <div class="input-group-prepend link-cursor" (mouseenter)="mouseOverOnFilter = true"
+    (mouseleave)="mouseOverOnFilter = false" (click)="removeFilter()">
+    <span class="input-group-text">
+      <i class="fa fa-fw mr-2" [ngClass]="mouseOverOnFilter ? 'fa-trash' : 'fa-search'" style="color:#495057;"></i>
+      {{column.displayName}}
+    </span>
+  </div>
+
+  <ng-select class="custom" [items]="dataList" [selectableGroup]="true" [multiple]="column.multiple"
+    [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" [(ngModel)]='model' (open)="updateModel()"
+    (add)="onAdd($event)" (remove)="applyFilter()" (change)="onChange($event)" (clear)="applyFilter()"
+    [clearable]="true" (close)="applyFilter()" (search)="onSearch($event)" (keyup.enter)="onKeyUpEnter($event)">
+
+    <ng-template *ngIf="column.type=='label'" ng-option-tmp let-item="item" let-index="index">
+      <div class="label" [style.background-color]="item.color">{{item.label}} COUCOU</div>
+    </ng-template>
+
+    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-search="searchTerm">
+      <i class="fa fa-fw fa-folder-open mr-2" style="color:#495057;"></i>
+      <span class="nav-main-link-badge badge badge-pill badge-primary mr-2">
+        <span *ngIf="items.length == 1"> {{ items[0] }}</span>
+        <span *ngIf="items.length > 1"> {{ items.length }} </span>
+      </span>
+    </ng-template>
+
+    <ng-template ng-header-tmp>
+      <div class="row ml-1 mr-1">
+        <!-- TO DO : disable buttons -->
+        <!-- SELECT ALL BUTTON -->
+        <button class="col mr-2 btn btn-info btn-sm" (click)="onSelectAll()">
+          <i class="fa fa-fw fa-check mr-1"></i>
+          Select all
+        </button>
+        <!-- CLEAR ALL BUTTON -->
+        <button class="col btn btn-danger btn-sm" (click)="onClearAll()">
+          <i class="fa fa-fw fa-times mr-1"></i>
+          Clear all
+        </button>
+      </div>
+    </ng-template>
+
+  </ng-select>
+</div>
+
+<!-- <div class="select-container">
   <ng-select class="custom auto-width" [items]="dataList" [selectableGroup]="true" [multiple]="column.multiple"
     [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" placeholder="{{column.placeholder}}"
     [(ngModel)]='model' (open)="updateModel()" (add)="onAdd($event)" (remove)="applyFilter()"
@@ -26,4 +72,4 @@
   </ng-select>
 
   <i class="close-icon far fa-times-circle" (click)="removeFilter()"></i>
-</div>
+</div> -->

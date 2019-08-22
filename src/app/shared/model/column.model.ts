@@ -22,5 +22,4 @@ export enum COLUMN_TYPE {
     LABEL = 'label',
     LONGTEXT = 'longtext',
     LIST = 'list'
-
 }

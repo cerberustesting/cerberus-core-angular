@@ -1,24 +1,11 @@
-.ng-dropdown-panel, .ng-select-bottom {
-  z-index: 1000;
+ng-select {
+    min-width: 250px;
 }
 
-.ng-select, .ng-select-container {
-  max-width: 250px;
-  max-height: 35px;
-  display: inline-flex;
-  flex-wrap: nowrap;
-}
-.ui-select-choices {
-  position: fixed;
-  top: auto;
-  left: auto;
-  width: inherit;
-}
-
-.select-container {
-  display: inline-flex;
-  .close-icon {
-    display: inline-flex;
-    margin: 10px 5px;
+.ng-select.custom {
+    .ng-select-container {
+      .ng-value-container {
+        padding-top: 0px !important;
+      }
+    }
   }
-}

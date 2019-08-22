@@ -1,12 +1,10 @@
-<app-datatable-page
-    [page]="page"
-    [columns]="columns"
-    [servlet]="servlet"
-    [selectedRows]="selectedRows"
+<app-datatable-page [page]="page" [columns]="columns" [servlet]="servlet" [selectedRows]="selectedRows"
     [selection]="true">
 
     <ng-template datatable-filter-tmp>
-        <button class="btn btn-info"><i class="fa fa-plus-circle"></i> Create TestCase</button>
+        <button type="button" class="btn btn-info mr-2">
+            <i class="fa fa-fw fa-plus download mr-2"></i>Create Test Case
+        </button>
     </ng-template>
 
     <ng-template datatable-mass-action-tmp>
@@ -14,25 +12,25 @@
     </ng-template>
 
     <ng-template datatable-end-line-tmp>
-            <div class="row-menu">
-                    <div class="actions-section">
-                        <button class="btn btn-outline-danger">
-                            <i class="fa fa-trash-alt"></i>
-                        </button>
+        <div class="row-menu">
+            <div class="actions-section">
+                <button class="btn btn-outline-danger">
+                    <i class="fa fa-trash-alt"></i>
+                </button>
 
-                        <button class="btn btn-outline-success">
-                            <i class="fa fa-play"></i>
-                        </button>
+                <button class="btn btn-outline-success">
+                    <i class="fa fa-play"></i>
+                </button>
 
-                        <button class="btn btn-outline-info">
-                            <i class="fa fa-pen"></i>
-                        </button>
+                <button class="btn btn-outline-info">
+                    <i class="fa fa-pen"></i>
+                </button>
 
-                        <button class="btn btn-outline-primary">
-                            <i class="fa fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
+                <button class="btn btn-outline-primary">
+                    <i class="fa fa-copy"></i>
+                </button>
+            </div>
+        </div>
     </ng-template>
 
 </app-datatable-page>

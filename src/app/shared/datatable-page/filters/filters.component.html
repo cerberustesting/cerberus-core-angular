@@ -29,9 +29,11 @@
                         <ng-select class="ng-select-displayedcolumns" bindLabel="name"
                             placeholder="Columns : {{ columnActive }}" [items]="columns" [closeOnSelect]="false"
                             (change)="resetColumnDrop" [searchable]="false" [clearable]="false">
+
                             <ng-template ng-header-tmp>
                                 <div class="row ml-1 mr-1">
-                                    <button type="button" class="col-12 btn btn-sm btn-secondary mr-2 pl-2 pr-2 pt-1 pb-1"
+                                    <button type="button"
+                                        class="col-12 btn btn-sm btn-secondary mr-2 pl-2 pr-2 pt-1 pb-1"
                                         (click)="resetDefaultColumns()">
                                         <i class="fa fa-fw fa-redo-alt mr-1"></i>Reset
                                     </button>
@@ -67,8 +69,9 @@
                             <h3 class="block-title">
                                 <i class="fa fa-filter mr-1"></i>
                                 Columns <small>filtering</small>
+                                <!-- NOT WORKING RIGHT NOW -->
                                 <span class="nav-main-link-badge badge badge-pill badge-success ml-2">
-                                    {{test.length}}
+                                    13
                                 </span>
                             </h3>
                             <div class="block-options">
@@ -86,20 +89,17 @@
                             style="padding: 0.75rem 0.75rem 0.25rem;">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <ng-select class="column-selector custom auto-width mr-2" bindLabel="name"
-                                        placeholder="Add Filters" [items]="searchableColumns" [closeOnSelect]="false"
-                                        [searchable]="true" [clearable]="false">
+                                    <ng-select class="column-selector mr-2" bindLabel="name" placeholder="Add Filters"
+                                        [items]="searchableColumns" [closeOnSelect]="false" [searchable]="true"
+                                        [clearable]="false">
                                         <!--Content in the top container-->
                                         <ng-template ng-label-tmp>
                                             <div>Add Filters</div>
                                         </ng-template>
                                         <!--List of filters (underline if selected)-->
                                         <ng-template ng-option-tmp let-item="item" let-index="index">
-                                            <!-- <div [ngClass]="{'selected': item.dropActive || item.fieldActive}"
-                                                (click)="addFilter(item)">
-                                                {{item.displayName}}
-                                            </div> -->
                                             <div (click)="addFilter(item)">
+                                                <!-- NOT WORKING RIGHT NOW -->
                                                 <span *ngIf="item.dropActive || item.fieldActive"
                                                     class="text-primary-dark bold">
                                                     <i class="ml-1 fa fa-check-circle text-primary-dark"></i>

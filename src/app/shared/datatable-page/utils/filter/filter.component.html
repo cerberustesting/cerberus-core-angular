@@ -13,8 +13,9 @@
     (add)="onAdd($event)" (remove)="applyFilter()" (change)="onChange($event)" (clear)="applyFilter()"
     [clearable]="true" (close)="applyFilter()" (search)="onSearch($event)" (keyup.enter)="onKeyUpEnter($event)">
 
+    <!-- NOT WORKING RIGHT NOW -->
     <ng-template *ngIf="column.type=='label'" ng-option-tmp let-item="item" let-index="index">
-      <div class="label" [style.background-color]="item.color">{{item.label}} COUCOU</div>
+      <div class="label" [style.background-color]="item.color">{{item.label}}</div>
     </ng-template>
 
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-search="searchTerm">

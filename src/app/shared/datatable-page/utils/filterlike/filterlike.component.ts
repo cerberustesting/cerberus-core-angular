@@ -13,6 +13,8 @@ export class FilterlikeComponent implements OnInit {
   @Output() applyFilterOutput = new EventEmitter<void>();
   data: string;
 
+  private mouseOverOnFilter: boolean = false;
+
   constructor(private testService: TestService) { }
 
   ngOnInit() { }

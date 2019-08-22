@@ -70,7 +70,7 @@
                                 <span class="input-group-text">Application</span>
                             </div>
                             <select class="form-control" formControlName="application">
-                                <option value=""></option> <!--TODO-->
+                                <option *ngFor="let application of applicationsList" [value]="application.application">{{ application.application }}</option> <!--TODO-->
                             </select>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                                 <span class="input-group-text">Status</span>
                             </div>
                             <select class="form-control" formControlName="status">
-                                <option value=""></option> <!--TODO-->
+                                <option *ngFor="let status of statusList" [value]="status.value">{{ status.value }}</option> <!--TODO-->
                             </select>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                                 <span class="input-group-text">Type</span>
                             </div>
                             <select class="form-control" formControlName="group">
-                                <option value=""></option>
+                                <option *ngFor="let type of typesList" [value]="type.value">{{ type.value }}</option>
                             </select>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                                 <span class="input-group-text">Priority</span>
                             </div>
                             <select class="form-control" formControlName="priority">
-                                <option value=""></option>
+                                <option *ngFor="let priority of priorityList" [value]="priority.value">{{ priority.value }}</option>
                             </select>
                         </div>
                     </div>
@@ -248,19 +248,19 @@
                     </div>
                     <div class="block block-rounded block-bordered">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Condition Operator</span>
                                     </div>
                                     <select class="form-control" formControlName="conditionOper">
-                                        <option *ngFor="let condition of conditionsList" [value]="condition">
-                                            {{ condition }} <!--TODO-->
+                                        <option *ngFor="let condition of conditionsList" [value]="condition.value">
+                                            {{ condition.value }} <!--TODO-->
                                         </option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Condition Value 1</span>
@@ -268,7 +268,7 @@
                                     <input type="text" class="form-control" formControlName="conditionVal1">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Condition Value 2</span>

@@ -38,9 +38,9 @@ export class TestcaseInteractionComponent implements OnInit {
   private applicationsList: Array<IApplication>; // ok
   private statusList: Array<IInvariant>; // ok
   private typesList: Array<IInvariant>; // ok
-  private priorityList: Array<IInvariant>; // ok
-  private sprintsList: Array<any>; // TODO add type
-  private revsList: Array<any>; // TODO add type
+  private priorityList: Array<IInvariant>; // TODO
+  private sprintsList: Array<any>; // ? add type
+  private revsList: Array<any>; // ? add type
   private conditionsList: Array<IInvariant>; // TODO
   private testsList: Array<ITest>;
   private countriesList: Array<IInvariant>;
@@ -57,12 +57,15 @@ export class TestcaseInteractionComponent implements OnInit {
     this.systemService.getApplicationList();
     this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
     this.invariantsService.getTcStatus();
-    this.invariantsService.observableTceStatusList.subscribe(rep => this.statusList = rep);
-    this.invariantsService.getPropertyTypeList();
-    this.invariantsService.observablePropertyTypeList.subscribe(rep => this.typesList = rep);
+    this.invariantsService.observableTcStatus.subscribe(rep => this.statusList = rep);
+    this.invariantsService.getStepConditionOperList();
+    this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionsList = rep);
     this.invariantsService.getCountriesList();
-    this.invariantsService.observableCountriesList.subscribe(rep => this.countriesList = rep)
-    // TODO :  condition
+    this.invariantsService.observableCountriesList.subscribe(rep => this.countriesList = rep);
+    this.invariantsService.getPriorities();
+    this.invariantsService.observablePriorities.subscribe(rep => this.priorityList = rep);
+    this.invariantsService.getGroupList();    
+    this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
     this.systemService.getSprintsFromSystem(this.testCase.system);
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
     this.systemService.getRevFromSystem(this.testCase.system);

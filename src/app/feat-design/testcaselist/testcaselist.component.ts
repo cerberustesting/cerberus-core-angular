@@ -10,6 +10,10 @@ import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
 import { Subject } from 'rxjs';
+import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
+import { NotificationService } from 'src/app/core/services/utils/notification.service';
+import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
+import { TestcaseInteractionComponent, TESTCASE_INTERACTION_MODE } from './testcase-interaction/testcase-interaction.component';
 
 @Component({
   selector: 'app-testcaselist',
@@ -33,28 +37,27 @@ export class TestcaselistComponent implements OnInit {
 
   userPreferences: string;
   
-  constructor(private headerTitleService: HeaderTitleService) { 
+  constructor(
+    private headerTitleService: HeaderTitleService,
+    private sideContentService: SidecontentService,
+    private NotificationService: NotificationService) { 
     this.headerTitleService.setTitle("Testcase List");
   }
 
   ngOnInit() {
   }
+  
+  editTestCaseHeader(testcase) {
+    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+      testCase: testcase,
+      mode: TESTCASE_INTERACTION_MODE.EDIT,
+      // exit: () => {
+      //   this.NotificationService.createANotification('The datalib has been successfully edited', NotificationStyle.Success);
+      // }
+    });
+    this.sideContentService.openSideBlock();
+  }
 
   
-
-  save() {
-    console.log("Save : Not implemented yet");
-    let usrPref = "";
-    usrPref = JSON.stringify({
-      columns: this.columns,
-      pageInformations: this.page
-    });
-    // TODO : Send data to the database
-  }
-
-  load() {
-    console.log("Load : Not implemented yet");
-    // TODO : Get data from database
-  }
 
 }

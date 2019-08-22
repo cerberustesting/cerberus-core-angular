@@ -62,3 +62,7 @@ ng-select.system-select .ng-dropdown-panel {
 .to-delete {
   background-color: #f9dcd1;
 }
+
+.nav-item {
+  cursor: pointer;
+}

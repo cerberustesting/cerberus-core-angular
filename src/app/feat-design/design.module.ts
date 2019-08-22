@@ -26,6 +26,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActionsComponent } from './testcaselist/actions/actions.component';
 import { DatalibInteractionComponent } from './datalibrary/datalib-interaction/datalib-interaction.component';
 import { DatalibTclistComponent } from './datalibrary/datalib-interaction/datalib-tclist/datalib-tclist.component';
+import { TestcaseInteractionComponent } from './testcaselist/testcase-interaction/testcase-interaction.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { DatalibTclistComponent } from './datalibrary/datalib-interaction/datali
       PropertyV2Component,
       ActionsComponent,
       DatalibInteractionComponent,
-      DatalibTclistComponent
+      DatalibTclistComponent,
+      TestcaseInteractionComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +64,8 @@ import { DatalibTclistComponent } from './datalibrary/datalib-interaction/datali
   ],
   entryComponents: [
     DatalibInteractionComponent,
-    DatalibTclistComponent
+    DatalibTclistComponent,
+    TestcaseInteractionComponent
   ],
   exports: [SharedModule]
 })

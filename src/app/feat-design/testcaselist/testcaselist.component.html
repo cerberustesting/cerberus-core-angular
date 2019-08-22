@@ -13,7 +13,7 @@
         <app-actions [selectedRows]="selectedRows"></app-actions>
     </ng-template>
 
-    <ng-template datatable-end-line-tmp>
+    <ng-template datatable-end-line-tmp let-row="row">
             <div class="row-menu">
                     <div class="actions-section">
                         <button class="btn btn-outline-danger">
@@ -24,7 +24,7 @@
                             <i class="fa fa-play"></i>
                         </button>
 
-                        <button class="btn btn-outline-info">
+                        <button class="btn btn-outline-info" (click)="editTestCaseHeader(row)">
                             <i class="fa fa-pen"></i>
                         </button>
 

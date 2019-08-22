@@ -20,8 +20,7 @@ export class DatalibInteractionComponent implements OnInit {
   
   // *** Inputs ***
   datalib: any; // datalib to edit
-  mode: MODE; // EDIT / DUPLICATE / 
-  MODES:MODE;
+  mode: MODE; // EDIT / DUPLICATE / CREATE
   exit: (n: void) => void; //function to execute when press submit button
 
   // *** main form ***

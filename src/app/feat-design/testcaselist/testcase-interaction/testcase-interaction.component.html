@@ -1,0 +1,409 @@
+<div class="block-header">
+    <!--Title-->
+    <!-- TODO : chose depend of mode-->
+    <h3 *ngIf="mode==='EDIT'" class="block-title">Edit Test Case Header <small>ID : {{ testCase.testCase }}</small></h3>
+    <h3 *ngIf="mode==='DUPLICATE'">Duplicate Test Case</h3>
+</div>
+<form class="block-content" [formGroup]="testcaseHeaderForm" (ngSubmit)="onSubmit(testcaseHeaderForm.value)">
+    <div class="row">
+
+        <div class="col-md-6 input-group">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Test Folder</span>
+                </div>
+                <input type="text" class="form-control" formControlName="test">
+            </div>
+        </div>
+
+        <div class="col-md-6 input-group">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Test Case ID</span>
+                </div>
+                <input type="text" class="form-control" formControlName="testCase">
+            </div>
+        </div>
+
+    </div>
+    <div class="block block-rounded block-bordered">
+        <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': paneActive===1}" (click)="paneActive = 1">Definition</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': paneActive===2}" (click)="paneActive = 2">Execution
+                    Settings</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': paneActive===3}" (click)="paneActive = 3">Label</a>
+            </li>
+            <li class="nav-item">
+                <a class=" nav-link" [ngClass]="{'active': paneActive===4}" (click)="paneActive = 4">Bug Report</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': paneActive===5}" (click)="paneActive = 5">Dependency</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active': paneActive===6}" (click)="paneActive = 6">Tracability</a>
+            </li>
+        </ul>
+        <div class="block-content tab-content">
+            <!--Definition TAB-->
+            <div class="tab-pane" [ngClass]="{'active': paneActive===1}" role="tabpanel">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Test case short description</span>
+                            </div>
+                            <textarea class="form-control" formControlName="shortDesc"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Application</span>
+                            </div>
+                            <select class="form-control" formControlName="application">
+                                <option value=""></option> <!--TODO-->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Status</span>
+                            </div>
+                            <select class="form-control" formControlName="status">
+                                <option value=""></option> <!--TODO-->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Type</span>
+                            </div>
+                            <select class="form-control" formControlName="group">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Priority</span>
+                            </div>
+                            <select class="form-control" formControlName="priority">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Detailed Description / Value Expected </span>
+                            </div>
+                            <textarea class="form-control" ></textarea> <!--TODO-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="tab-pane" [ngClass]="{'active': paneActive===2}" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Global Activation</span>
+                            </div>
+                            <select class="form-control" formControlName="active">
+                                <option *ngFor="let boolean of booleanList" [value]="boolean.value">{{ boolean.text }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Active QA</span>
+                            </div>
+                            <select class="form-control" formControlName="activeQA">
+                                <option *ngFor="let boolean of booleanList" [value]="boolean.value">{{ boolean.text }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Active UAT</span>
+                            </div>
+                            <select class="form-control" formControlName="activeUAT">
+                                <option *ngFor="let boolean of booleanList" [value]="boolean.value">{{ boolean.text }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Active PROD</span>
+                            </div>
+                            <select class="form-control" formControlName="activeProd">
+                                <option *ngFor="let boolean of booleanList" [value]="boolean.value">{{ boolean.text }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="block block-rounded block-bordered">
+                            Countries
+                            <!--TODO-->
+                        </div>
+                    </div>
+
+                    <div class="block block-rounded block-bordered">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">From Sprint</span>
+                                    </div>
+                                    <select class="form-control" formControlName="fromSprint">
+                                        <option *ngFor="let sprint of sprintsList" [value]="sprint.versionName">{{ sprint.versionName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">From Rev</span>
+                                    </div>
+                                    <select class="form-control" formControlName="fromRev">
+                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">{{ rev.versionName }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">To Sprint</span>
+                                    </div>
+                                    <select class="form-control" formControlName="toSprint">
+                                        <option *ngFor="let sprint of sprintsList" [value]="sprint.versionName">{{ sprint.versionName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">To Rev</span>
+                                    </div>
+                                    <select class="form-control" formControlName="toRev">
+                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">{{ rev.versionName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Target Sprint</span>
+                                    </div>
+                                    <select class="form-control" formControlName="targetSprint">
+                                        <option *ngFor="let sprint of sprintsList" [value]="sprint.versionName">{{ sprint.versionName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Target Rev</span>
+                                    </div>
+                                    <select class="form-control" formControlName="targetRev">
+                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">{{ rev.versionName }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block block-rounded block-bordered">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Condition Operator</span>
+                                    </div>
+                                    <select class="form-control" formControlName="conditionOper">
+                                        <option *ngFor="let condition of conditionsList" [value]="condition">
+                                            {{ condition }} <!--TODO-->
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Condition Value 1</span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="conditionVal1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Condition Value 2</span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="conditionVal2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block block-rounded">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">User Agent</span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="userAgent">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Screen Size</span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="screenSize">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="tab-pane" [ngClass]="{'active': paneActive===3}" role="tabpanel">
+                <!--TODO : add labels acordeon-->
+            </div>
+
+
+
+            <div class="tab-pane" [ngClass]="{'active': paneActive===4}" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Bug ID</span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="bugId">
+                        </div>
+                    </div>
+                    <div class="col-md-8">Bug Link</div>
+                    <!--? what is-->
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Comment</span>
+                            </div>
+                            <textarea class="form-control" formControlName="comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="tab-pane" [ngClass]="{'active': paneActive===5}" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Select a Test</span>
+                            </div>
+                            <select class="form-control">
+                                <option *ngFor="let test of testsList" [value]="test">
+                                    {{ test }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf="false" class="col-md-6">Test Cases</div>
+                    <!--TODO : display only if test selected-->
+                    <button *ngIf="false" class="btn btn-info col-md-12">Add test case</button>
+                    <!--TODO : display only if testcase selected-->
+                    <!--TODO : Add datatable and add it to query string-->
+                </div>
+            </div>
+
+
+
+            <div class="tab-pane" [ngClass]="{'active': paneActive===6}" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Implementers</span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="implementer">
+                        </div>
+                    </div>
+                    <div class="col-md-6 tracability-list-item">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item bg-secondary text-light">Version</li>
+                            <li class="list-group-item">{{ testCase.testCaseVersion }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item bg-secondary text-light">Creation Date</li>
+                            <li class="list-group-item">{{ testCase.dateCreated | date:'d MMMM y   HH:mm' }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item bg-secondary text-light">Created By</li>
+                            <li class="list-group-item">{{ testCase.usrCreated }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item bg-secondary text-light">Modification Date</li>
+                            <li class="list-group-item">{{ testCase.dateModif | date:'d MMMM y   HH:mm' }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item bg-secondary text-light">Modified by</li>
+                            <li class="list-group-item">{{ testCase.usrModif }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button class="col-md-12 btn btn-primary" type="submit">Save</button>
+    </div>
+
+</form>

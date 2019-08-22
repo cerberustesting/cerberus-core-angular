@@ -103,6 +103,9 @@ export class TestService {
     let query = environment.cerberus_api_url + servlet + '?columnName=' + columnName;
     return this.http.get<ITestCaseHeader>(query);
   }
+  updateTestCase(queryString) {
+    return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, httpOptions);
+  }
 
   getTestDataLib(testdatalibid: string, name: string, country: string, callback: (TestDataLib: any) => any) {
     // get data for datatable

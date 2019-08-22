@@ -70,7 +70,9 @@
                                 <span class="input-group-text">Application</span>
                             </div>
                             <select class="form-control" formControlName="application">
-                                <option *ngFor="let application of applicationsList" [value]="application.application">{{ application.application }}</option> <!--TODO-->
+                                <option *ngFor="let application of applicationsList" [value]="application.application">
+                                    {{ application.application }}</option>
+                                <!--TODO-->
                             </select>
                         </div>
                     </div>
@@ -81,7 +83,9 @@
                                 <span class="input-group-text">Status</span>
                             </div>
                             <select class="form-control" formControlName="status">
-                                <option *ngFor="let status of statusList" [value]="status.value">{{ status.value }}</option> <!--TODO-->
+                                <option *ngFor="let status of statusList" [value]="status.value">{{ status.value }}
+                                </option>
+                                <!--TODO-->
                             </select>
                         </div>
                     </div>
@@ -103,7 +107,8 @@
                                 <span class="input-group-text">Priority</span>
                             </div>
                             <select class="form-control" formControlName="priority">
-                                <option *ngFor="let priority of priorityList" [value]="priority.value">{{ priority.value }}</option>
+                                <option *ngFor="let priority of priorityList" [value]="priority.value">
+                                    {{ priority.value }}</option>
                             </select>
                         </div>
                     </div>
@@ -113,7 +118,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Detailed Description / Value Expected </span>
                             </div>
-                            <textarea class="form-control" ></textarea> <!--TODO-->
+                            <textarea class="form-control"></textarea>
+                            <!--TODO-->
                         </div>
                     </div>
                 </div>
@@ -183,7 +189,8 @@
                                         <span class="input-group-text">From Sprint</span>
                                     </div>
                                     <select class="form-control" formControlName="fromSprint">
-                                        <option *ngFor="let sprint of sprintsList" [value]="sprint.versionName">{{ sprint.versionName }}
+                                        <option *ngFor="let sprint of sprintsList" [value]="sprint.versionName">
+                                            {{ sprint.versionName }}
                                         </option>
                                     </select>
                                 </div>
@@ -194,7 +201,8 @@
                                         <span class="input-group-text">From Rev</span>
                                     </div>
                                     <select class="form-control" formControlName="fromRev">
-                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">{{ rev.versionName }}
+                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                            {{ rev.versionName }}
                                         </option>
                                     </select>
                                 </div>
@@ -206,7 +214,8 @@
                                         <span class="input-group-text">To Sprint</span>
                                     </div>
                                     <select class="form-control" formControlName="toSprint">
-                                        <option *ngFor="let sprint of sprintsList" [value]="sprint.versionName">{{ sprint.versionName }}
+                                        <option *ngFor="let sprint of sprintsList" [value]="sprint.versionName">
+                                            {{ sprint.versionName }}
                                         </option>
                                     </select>
                                 </div>
@@ -217,7 +226,8 @@
                                         <span class="input-group-text">To Rev</span>
                                     </div>
                                     <select class="form-control" formControlName="toRev">
-                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">{{ rev.versionName }}
+                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                            {{ rev.versionName }}
                                         </option>
                                     </select>
                                 </div>
@@ -228,7 +238,8 @@
                                         <span class="input-group-text">Target Sprint</span>
                                     </div>
                                     <select class="form-control" formControlName="targetSprint">
-                                        <option *ngFor="let sprint of sprintsList" [value]="sprint.versionName">{{ sprint.versionName }}
+                                        <option *ngFor="let sprint of sprintsList" [value]="sprint.versionName">
+                                            {{ sprint.versionName }}
                                         </option>
                                     </select>
                                 </div>
@@ -239,7 +250,8 @@
                                         <span class="input-group-text">Target Rev</span>
                                     </div>
                                     <select class="form-control" formControlName="targetRev">
-                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">{{ rev.versionName }}
+                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                            {{ rev.versionName }}
                                         </option>
                                     </select>
                                 </div>
@@ -255,7 +267,8 @@
                                     </div>
                                     <select class="form-control" formControlName="conditionOper">
                                         <option *ngFor="let condition of conditionsList" [value]="condition.value">
-                                            {{ condition.value }} <!--TODO-->
+                                            {{ condition.value }}
+                                            <!--TODO-->
                                         </option>
                                     </select>
                                 </div>
@@ -304,7 +317,51 @@
 
 
             <div class="tab-pane" [ngClass]="{'active': paneActive===3}" role="tabpanel">
-                <!--TODO : add labels acordeon-->
+                <div class="block block-rounded block-bordered">
+                    <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': labelTab===1}"
+                                (click)="labelTab = 1">Batteries</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': labelTab===2}"
+                                (click)="labelTab = 2">Requirements</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="{'active': labelTab===3}" (click)="labelTab = 3">Stickers</a>
+                        </li>
+                    </ul>
+
+                    <div class="block-content tab-content">
+                        <div class="tab-pane" [ngClass]="{'active': labelTab===1}" role="tabpanel" *ngIf="labelList">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let label of labelList.batteries">
+                                    <span class="badge badge-primary"
+                                        [style.background-color]="label.label.color">{{ label.label.label }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane" [ngClass]="{'active': labelTab===2}" role="tabpanel" *ngIf="labelList">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let label of labelList.requirements">
+                                    <span class="badge badge-primary"
+                                        [style.background-color]="label.label.color">{{ label.label.label }}</span>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="tab-pane" [ngClass]="{'active': labelTab===3}" role="tabpanel" *ngIf="labelList">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let label of labelList.stickers">
+                                    <span class="badge badge-primary"
+                                        [style.background-color]="label.label.color">{{ label.label.label }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -342,8 +399,8 @@
                                 <span class="input-group-text">Select a Test</span>
                             </div>
                             <select class="form-control">
-                                <option *ngFor="let test of testsList" [value]="test">
-                                    {{ test }}
+                                <option *ngFor="let test of testsList" [value]="test.value">
+                                    {{ test.value }}
                                 </option>
                             </select>
                         </div>

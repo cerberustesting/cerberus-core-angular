@@ -26,6 +26,7 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // *** HTML control ***
   private paneActive = 1;
+  private labelTab = 1;
 
   // *** Forms ***
   private testcaseHeaderForm: FormGroup;
@@ -44,6 +45,11 @@ export class TestcaseInteractionComponent implements OnInit {
   private conditionsList: Array<IInvariant>; // TODO
   private testsList: Array<ITest>;
   private countriesList: Array<IInvariant>;
+  private labelList = {
+    batteries: [],
+    requirements: [],
+    stickers: []
+  };
 
   private tcCountryList: Array<any> = [];
 
@@ -54,6 +60,8 @@ export class TestcaseInteractionComponent implements OnInit {
     private testService: TestService) { }
 
   ngOnInit() {
+    this.systemService.getLabelsHierarchyFromSystem(this.testCase.system, this.testCase.test, this.testCase.testCase);
+    this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep)
     this.systemService.getApplicationList();
     this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
     this.invariantsService.getTcStatus();

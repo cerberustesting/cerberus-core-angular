@@ -14,6 +14,7 @@ export class SystemService {
   private sprints: Array<IBuildRevisionInvariant> = new Array<IBuildRevisionInvariant>();
   private revs: Array<IBuildRevisionInvariant> = new Array<IBuildRevisionInvariant>();
   private labels: Array<ILabel> = new Array<ILabel>();
+  private labelsHierarchy: Array<any>;
   private applicationsList: Array<IApplication> = new Array<IApplication>();
   private application: IApplication;
 
@@ -22,6 +23,7 @@ export class SystemService {
   observableLabelsList = new BehaviorSubject<ILabel[]>(this.labels);
   observableApplicationList = new BehaviorSubject<IApplication[]>(this.applicationsList);
   observableApplication = new BehaviorSubject<IApplication>(this.application);
+  observableLabelsHierarchyList = new BehaviorSubject<any>(this.labelsHierarchy);
 
   constructor(private http: HttpClient) { }
 
@@ -57,6 +59,16 @@ export class SystemService {
           delete this.labels[index].display;
         }
         this.observableLabelsList.next(this.labels);
+      });
+  }
+
+  getLabelsHierarchyFromSystem(system: string, test: string, testCase: string, ) {
+    this.http.get<any>(environment.cerberus_api_url + '/ReadLabel?system=' + system + '&withHierarchy=true&isSelectable=Y&testSelect=' + 
+    encodeURIComponent(test) + '&testCaseSelect=' + encodeURIComponent(testCase))
+      .subscribe(response => {
+        // @ts-ignore
+        this.labelsHierarchy = response.labelHierarchy
+        this.observableLabelsHierarchyList.next(this.labelsHierarchy);
       });
   }
 

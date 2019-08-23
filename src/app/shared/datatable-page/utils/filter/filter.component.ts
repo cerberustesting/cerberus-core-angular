@@ -14,6 +14,7 @@ export class FilterComponent implements OnInit {
   @Input() column: Column;
   @Input() servlet: string;
   @Input() request: string;
+  @Output() remove = new EventEmitter<string>();
   @Output() applyFilterOutput = new EventEmitter<void>();
   data: any;
   model = [];
@@ -95,6 +96,7 @@ export class FilterComponent implements OnInit {
   removeFilter() {
     this.column.dropActive = false;
     this.model = [];
+    this.remove.emit(this.column.contentName);
     this.applyFilter()
   }
 

@@ -71,7 +71,7 @@
                                 Columns <small>filtering</small>
                                 <!-- NOT WORKING RIGHT NOW -->
                                 <span class="nav-main-link-badge badge badge-pill badge-success ml-2">
-                                    13
+                                    {{ activeFilters.length }}
                                 </span>
                             </h3>
                             <div class="block-options">
@@ -99,14 +99,12 @@
                                         <!--List of filters (underline if selected)-->
                                         <ng-template ng-option-tmp let-item="item" let-index="index">
                                             <div (click)="addFilter(item)">
-                                                <!-- NOT WORKING RIGHT NOW -->
-                                                <span *ngIf="item.dropActive || item.fieldActive"
+                                                <span *ngIf="item.dropActive || item.fieldActive; else elseTemplate"
                                                     class="text-primary-dark bold">
                                                     <i class="ml-1 fa fa-check-circle text-primary-dark"></i>
                                                     {{item.displayName}}
                                                 </span>
-                                                <span
-                                                    *ngIf="!item.dropActive || !item.fieldActive">{{item.displayName}}</span>
+                                                <ng-template #elseTemplate>{{item.displayName}}</ng-template>
                                             </div>
                                         </ng-template>
                                     </ng-select>
@@ -116,13 +114,14 @@
                                         <!--Distinct filters-->
                                         <ng-template ngFor let-column [ngForOf]="columns">
                                             <app-filter *ngIf="column.dropActive" class="filter-drop" [column]="column"
-                                                [servlet]="servlet" (applyFilterOutput)=applySystem()>
+                                                [servlet]="servlet" (applyFilterOutput)=applySystem()
+                                                (remove)="removeFilter($event)">
                                             </app-filter>
                                         </ng-template>
                                         <!--Like filters-->
                                         <ng-template ngFor let-column [ngForOf]="columns">
                                             <app-filterlike *ngIf="column.fieldActive" [column]="column"
-                                                (applyFilterOutput)=applySystem()>
+                                                (applyFilterOutput)=applySystem() (remove)="removeFilter($event)">
                                             </app-filterlike>
                                         </ng-template>
                                     </div>

@@ -40,6 +40,7 @@ export class FiltersComponent implements OnInit {
   private columnActive: number;
   private searchableColumns: Array<Column>;
   private gloabalSearchModel: string;
+  private activeFilters: Array<string> = [];
 
   constructor(private systemService: SystemService,
     private invariantService: InvariantsService,
@@ -59,6 +60,7 @@ export class FiltersComponent implements OnInit {
   toggleColumn(column): void {
     column.active = !column.active;
     this.columnActive = this.columns.filter(a => a.active).length;
+    
   }
 
   /** applySystem
@@ -92,6 +94,12 @@ export class FiltersComponent implements OnInit {
    * @param column  column to filter
    */
   addFilter(column: Column) {
+    if (column.dropActive || column.fieldActive) {
+      column.sSearch = [];
+      this.activeFilters.splice(this.activeFilters.indexOf(column.contentName),1)
+    } else {
+      this.activeFilters.push(column.contentName)
+    }
     if (!column.like) column.dropActive = !column.dropActive;
     else column.fieldActive = !column.fieldActive;
   }
@@ -110,6 +118,10 @@ export class FiltersComponent implements OnInit {
   resetDefaultColumns() {
     this.columns.forEach(c => c.active = c.defaultActive);
     this.columnActive = this.columns.filter(a => a.active).length;
+  }
+
+  removeFilter(columnContent: string) {
+    this.activeFilters.splice(this.activeFilters.indexOf(columnContent), 1)
   }
 
   

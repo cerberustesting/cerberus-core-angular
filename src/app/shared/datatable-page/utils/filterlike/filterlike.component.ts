@@ -11,6 +11,7 @@ export class FilterlikeComponent implements OnInit {
 
   @Input() column: Column;
   @Output() applyFilterOutput = new EventEmitter<void>();
+  @Output() remove = new EventEmitter<string>();
   data: string;
 
   private mouseOverOnFilter: boolean = false;
@@ -27,6 +28,7 @@ export class FilterlikeComponent implements OnInit {
   removeFilter() {
     this.column.fieldActive = false;
     this.data = '';
+    this.remove.emit(this.column.contentName);
     this.validField()
   }
 

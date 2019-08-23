@@ -8,6 +8,9 @@ import { IProject } from 'src/app/shared/model/project.model';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
 import { IProperty } from 'src/app/shared/model/property.model';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from '../utils/notification.service';
+import { catchError, tap } from 'rxjs/operators';
+import { NotificationStyle } from '../utils/notification.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -50,7 +53,8 @@ export class TestService {
 
   constructor(
     private http: HttpClient,
-    private TrueindexPipe: TrueindexPipe
+    private TrueindexPipe: TrueindexPipe,
+    private notificationService: NotificationService
   ) { }
 
   getTestsList() {
@@ -104,7 +108,11 @@ export class TestService {
     return this.http.get<ITestCaseHeader>(query);
   }
   updateTestCase(queryString) {
-    return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, httpOptions);
+    return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, httpOptions)
+      .pipe(tap(
+        data => this.notificationService.createANotification('Testcase updated', NotificationStyle.Success),
+        error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
+      ))
   }
 
   getTestDataLib(testdatalibid: string, name: string, country: string, callback: (TestDataLib: any) => any) {

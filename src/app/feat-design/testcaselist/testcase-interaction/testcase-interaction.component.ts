@@ -21,7 +21,7 @@ export enum TESTCASE_INTERACTION_MODE {
 export class TestcaseInteractionComponent implements OnInit {
 
   // *** Inputs ***
-  testCase: ITestCaseHeader;
+  testCase: any;
   mode: TESTCASE_INTERACTION_MODE;
 
   // *** HTML control ***
@@ -61,7 +61,7 @@ export class TestcaseInteractionComponent implements OnInit {
 
   ngOnInit() {
     this.systemService.getLabelsHierarchyFromSystem(this.testCase.system, this.testCase.test, this.testCase.testCase);
-    this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep)
+    this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
     this.systemService.getApplicationList();
     this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
     this.invariantsService.getTcStatus();
@@ -72,7 +72,7 @@ export class TestcaseInteractionComponent implements OnInit {
     this.invariantsService.observableCountriesList.subscribe(rep => this.countriesList = rep);
     this.invariantsService.getPriorities();
     this.invariantsService.observablePriorities.subscribe(rep => this.priorityList = rep);
-    this.invariantsService.getGroupList();    
+    this.invariantsService.getGroupList();
     this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
     this.systemService.getSprintsFromSystem(this.testCase.system);
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
@@ -116,37 +116,44 @@ export class TestcaseInteractionComponent implements OnInit {
       // countryList: [{ "country": "BE", "toDelete": true }, { "country": "CH", "toDelete": true }, { "country": "ES", "toDelete": true }, { "country": "FR", "toDelete": true }, { "country": "IT", "toDelete": true }, { "country": "NL", "toDelete": true }, { "country": "PT", "toDelete": false }, { "country": "RU", "toDelete": true }, { "country": "UK", "toDelete": true }, { "country": "VI", "toDelete": true }, { "country": "PL", "toDelete": true }, { "country": "DE", "toDelete": true }, { "country": "RX", "toDelete": true }, { "country": "UF", "toDelete": true }], // ?
       // testcaseDependency: [], // ?
     });
-
   }
+  async 
 
   onSubmit(values: any) {
-    console.log(this.tcCountryList);
-    // values.shortDesc = encodeURIComponent(values.shortDesc);
-    // values.status = encodeURIComponent(values.status);
-    // values.userAgent = encodeURIComponent(values.userAgent);
-    // values.behaviorOrValueExpected = encodeURIComponent(values.behaviorOrValueExpected);
 
     let queryString = "";
 
     for (let item in values) {
-      queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item]) + '&';
+      queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item])// + '&';
     }
-    queryString += 'labelList+' + encodeURIComponent(JSON.stringify([])) + '&';    
-    queryString += 'testcaseDependency+' + encodeURIComponent(JSON.stringify([])) + '&';
+    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify([])) + '&';
 
     let countryList = [];
     for (let country of this.countriesList) {
       countryList.push(
-        {country: country.value, toDelete: this.tcCountryList.map(c => c.country).includes(country.value)}
+        { country: country.value, toDelete: this.tcCountryList.map(c => c.country).includes(country.value) }
       )
     }
-    queryString += 'countryList+' + encodeURIComponent(JSON.stringify(countryList));
-    
+    let labelList = [];
+    for (let type in this.labelList) {
+      for (let label of this.labelList[type]) {
+        if (label.state.selected) {
+          labelList.push(
+            {labelId: label.id, toDelete: false}
+          )
+        }
+      }
+    }
 
-    console.log(queryString);
+    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
+    queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
+
     this.testService.updateTestCase(queryString).subscribe(rep => console.info(rep));
-    return false;
-    
+
+  }
+
+  toggleLabel(label): void {
+    label.state.selected = !label.state.selected;
   }
 
 }

@@ -337,7 +337,7 @@
                     <div class="block-content tab-content">
                         <div class="tab-pane" [ngClass]="{'active': labelTab===1}" role="tabpanel" *ngIf="labelList">
                             <ul class="list-group">
-                                <li class="list-group-item" *ngFor="let label of labelList.batteries">
+                                <li class="list-group-item" *ngFor="let label of labelList.batteries" [ngClass]="{'active' :label.state.selected}" (click)="toggleLabel(label)">
                                     <span class="badge badge-primary"
                                         [style.background-color]="label.label.color">{{ label.label.label }}</span>
                                 </li>
@@ -345,7 +345,7 @@
                         </div>
                         <div class="tab-pane" [ngClass]="{'active': labelTab===2}" role="tabpanel" *ngIf="labelList">
                             <ul class="list-group">
-                                <li class="list-group-item" *ngFor="let label of labelList.requirements">
+                                <li class="list-group-item" *ngFor="let label of labelList.requirements" [ngClass]="{'active' : label.state.selected}" (click)="toggleLabel(label)">
                                     <span class="badge badge-primary"
                                         [style.background-color]="label.label.color">{{ label.label.label }}</span>
                                 </li>
@@ -354,7 +354,7 @@
                         </div>
                         <div class="tab-pane" [ngClass]="{'active': labelTab===3}" role="tabpanel" *ngIf="labelList">
                             <ul class="list-group">
-                                <li class="list-group-item" *ngFor="let label of labelList.stickers">
+                                <li class="list-group-item" *ngFor="let label of labelList.stickers" [ngClass]="{'active' : label.state.selected}" (click)="toggleLabel(label)">
                                     <span class="badge badge-primary"
                                         [style.background-color]="label.label.color">{{ label.label.label }}</span>
                                 </li>

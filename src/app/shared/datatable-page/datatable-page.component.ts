@@ -5,6 +5,8 @@ import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineAction } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
+import { NotificationService } from 'src/app/core/services/utils/notification.service';
+import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 
 @Component({
   selector: 'app-datatable-page',
@@ -33,21 +35,22 @@ export class DatatablePageComponent implements OnInit {
   @ContentChild(DatatableEndLineAction, { read: TemplateRef, static: true }) endLineActionTemplate: TemplateRef<any>;
   
 
-  cache: number = -1; //number of displayed rows
+  cache: any = {}; //number of displayed rows
 
-  rows: Array<any>;
+  rows: Array<any> = [];
   globalSearch: string
 
 
   constructor(
     private testService: TestService, 
     private filterService: FilterService, 
-    private invariantsService: InvariantsService) { }
+    private invariantsService: InvariantsService,
+    private NotificationService: NotificationService) { }
 
   ngOnInit() {
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
-      this.cache = -1;
-      this.rows = null;
+      this.cache = {};
+      this.rows = [];
       this.page.number = 0;
       this.search();
     });
@@ -62,30 +65,21 @@ export class DatatablePageComponent implements OnInit {
    * @param globalSearch content of the gloabl search field (default: '')
    */
   search(globalSearch?: string): void {
-    // if a servlet as been specified
-    if (this.servlet) {
-      this.globalSearch = (globalSearch) ? globalSearch : '';
-      const currentPageNumber = this.page.number;
-      const delta = currentPageNumber - this.cache;
-      const countWanted = delta * this.page.size;
-
-      if (countWanted>0) {
-        
-        this.page.number = this.cache+1;
-        this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch, countWanted), (list: Array<any>, length: number) => {
-          if (this.rows || this.rows == []) {
-            const rows = [...this.rows];
-            rows.splice(this.page.number * this.page.size, 0, ...list)
-            this.rows = rows;
-          } else {
-            this.rows = list;
-          }
-  
+    this.globalSearch = (globalSearch) ? globalSearch : '';
+    if (this.servlet) { // TODO : delete count wanted 
+      this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), 
+        (list: Array<any>, length: number) => {
           this.page.totalCount = length;
+
+          const start = this.page.number * this.page.size;
+          const rows = [...this.rows];
+
+          rows.splice(start, 0, ...list);
+
+          this.rows = rows;
+
+          this.cache[this.page.number] = true;
         });
-        this.cache = currentPageNumber;
-        this.page.number = currentPageNumber;      
-      }
     }
   }
 
@@ -109,8 +103,8 @@ export class DatatablePageComponent implements OnInit {
     let a = document.getElementsByClassName("datatable-body")[0];
     a.scroll(0,0);
     a.scrollBy(0,0); // scroll to the table top
-    this.cache = -1;
-    this.rows = null;
+    this.cache = {};
+    this.rows =  [];
     this.page.number = 0;
     this.search(globalSearch);
   }

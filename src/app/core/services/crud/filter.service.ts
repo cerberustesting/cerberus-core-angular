@@ -10,7 +10,7 @@ export class FilterService {
 
   constructor(private invariantService: InvariantsService) { }
 
-  generateQueryStringParameters(columnList: Array<Column>, pageInformation: { size: number, sort: any, number: number, totalCount: number }, globalSearch: string, countWanted: number): string {
+  generateQueryStringParameters(columnList: Array<Column>, pageInformation: { size: number, sort: any, number: number, totalCount: number }, globalSearch: string): string {
     let queryParameter = "";
     let formData = {}
     let columnListWithActiveFilter = columnList.filter(e => e.sSearch).filter(e => e.sSearch.length != 0 || e.contentName == pageInformation.sort[0].prop || e.contentName == 'system');
@@ -21,7 +21,7 @@ export class FilterService {
     // ? "sEcho"
 
     formData["iDisplayStart"] = pageInformation.number * pageInformation.size; // first element index
-    formData["iDisplayLength"] = countWanted; // number of elements
+    formData["iDisplayLength"] = pageInformation.size; // number of elements
     let sortCol = columnListWithActiveFilter.map(a => a.contentName).indexOf(pageInformation.sort[0].prop);
     if (sortCol >= 0) {
       formData["iSortCol_0"] = sortCol; //column to sort

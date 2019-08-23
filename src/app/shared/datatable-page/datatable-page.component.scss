@@ -1,13 +1,15 @@
-.content {
-    width: 100%;
-    padding: 0;
-    margin-right: 0;
-    margin-left: 0;
-    
-    .block-content {
+.page {
+    height: calc(100vh - 75px);
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+
+    &>* {
         width: 100%;
-        margin: 0;
-        padding: 0;
-        margin-right: 0;
+    }
+
+    app-table {
+        display: inline-flex;
+        height: 100%;
     }
 }

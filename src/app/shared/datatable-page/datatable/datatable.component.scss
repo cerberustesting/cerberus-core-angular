@@ -1,8 +1,13 @@
 .data-table {
   width: 100%;
+  height: 100%;
   overflow-x: hidden;
   .material {
     box-shadow: none;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    height: 100%;
   }
   .action {
     width: 20px;
@@ -90,6 +95,7 @@
     }    
   }  
 }
+:host {
+  overflow: hidden;
+}
 
-
-// ! footer style in style.css

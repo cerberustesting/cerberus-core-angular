@@ -196,7 +196,6 @@ export class InvariantsService {
       .subscribe(response => {
         this.appService = response.contentTable;
         this.observableAppService.next(this.appService);
-        console.log(this.appService);
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 

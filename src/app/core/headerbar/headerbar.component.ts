@@ -116,4 +116,8 @@ export class HeaderbarComponent implements OnInit {
   debug2(): void {
     this.NotificationService.createANotification("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", NotificationStyle.Info, true, 5000);
   }
+
+  refreshInvariants() {
+    this.InvariantService.loadInvariants();
+  }
 }

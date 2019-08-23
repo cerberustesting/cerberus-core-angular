@@ -200,4 +200,23 @@ export class InvariantsService {
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
+  loadInvariants() {
+    this.getActionList();
+    this.getApplicationService();
+    this.getControlsList();
+    this.getCountriesList();
+    this.getEnvironments();
+    this.getGroupList();
+    this.getOriginsList();
+    this.getPriorities();
+    this.getPropertyDatabaseList();
+    this.getPropertyNatureList();
+    this.getPropertyTypeList();
+    this.getStepConditionOperList();
+    this.getStepLoopList();
+    this.getSystems();
+    this.getTcStatus();
+    this.getTceStatus();
+  }
+
 }

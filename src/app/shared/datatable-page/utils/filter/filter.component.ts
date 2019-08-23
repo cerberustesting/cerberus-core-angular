@@ -19,12 +19,13 @@ export class FilterComponent implements OnInit {
   model = [];
   searchItems = [];
 
+  private mouseOverOnFilter: boolean = false;
 
-  constructor(private testService: TestService, private systemService: SystemService) {  }
+  constructor(private testService: TestService, private systemService: SystemService) { }
 
-  applyFilter() { 
-    this.column.sSearch = (this.column.multiple)? this.model : [this.model];
-    this.applyFilterOutput.emit();    
+  applyFilter() {
+    this.column.sSearch = (this.column.multiple) ? this.model : [this.model];
+    this.applyFilterOutput.emit();
   }
 
   onAdd(value) {
@@ -33,7 +34,7 @@ export class FilterComponent implements OnInit {
 
   onChange(values) {
     if (this.column.multiple) this.column.sSearch = values;
-    else if (values!='') this.column.sSearch = [values];
+    else if (values != '') this.column.sSearch = [values];
     else this.column.sSearch = [];
   }
 
@@ -51,7 +52,7 @@ export class FilterComponent implements OnInit {
 
   ngOnInit() {
     /*use a different request to get label because need label AND color*/
-    if(this.column.type==='label'){
+    if (this.column.type === 'label') {
       this.systemService.getLabelsFromSystem('');
       this.systemService.observableLabelsList.subscribe(response => {
         if (response) {
@@ -66,18 +67,18 @@ export class FilterComponent implements OnInit {
       this.testService.getColumnData(this.servlet, this.column.apiName).subscribe(response => {
         if (response) {
           if (response.distinctValues.length > 0) {
-            this.dataList = response.distinctValues;       
+            this.dataList = response.distinctValues;
           }
         } else {
           this.dataList = null;
         }
       });
     }
-    
+
   }
   onSelectAll() {
     /*Select all element that correspond to the search*/
-    let selectedElements = (this.searchItems.length>0)? this.searchItems : this.dataList;
+    let selectedElements = (this.searchItems.length > 0) ? this.searchItems : this.dataList;
     this.model = selectedElements;
     this.column.sSearch = this.model;
   }
@@ -87,9 +88,9 @@ export class FilterComponent implements OnInit {
     this.column.sSearch = [];
   }
 
-  onSearch(event){
+  onSearch(event) {
     /*everytime a key is pressed*/
-    this.searchItems = event.items;    
+    this.searchItems = event.items;
   }
   removeFilter() {
     this.column.dropActive = false;

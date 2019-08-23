@@ -9,7 +9,7 @@ export var CampainsColumnsData: Column[] = [
         flexGrow: 100,
         defaultActive: true,
         searchable: true,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
         sSearch: []
@@ -23,7 +23,7 @@ export var CampainsColumnsData: Column[] = [
         defaultActive: true,
         searchable: true,
         type: COLUMN_TYPE.BOOLEAN,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
         sSearch: []
@@ -37,7 +37,7 @@ export var CampainsColumnsData: Column[] = [
         defaultActive: true,
         searchable: true,
         type: COLUMN_TYPE.BOOLEAN,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
         sSearch: []
@@ -51,7 +51,7 @@ export var CampainsColumnsData: Column[] = [
         defaultActive: true,
         searchable: true,
         type: COLUMN_TYPE.LONGTEXT,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
         sSearch: []
@@ -65,7 +65,7 @@ export var CampainsColumnsData: Column[] = [
         defaultActive: true,
         searchable: true,
         type: COLUMN_TYPE.BOOLEAN,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
         sSearch: []
@@ -79,7 +79,7 @@ export var CampainsColumnsData: Column[] = [
         defaultActive: true,
         searchable: true,
         type: COLUMN_TYPE.BOOLEAN,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
         sSearch: []
@@ -92,7 +92,7 @@ export var CampainsColumnsData: Column[] = [
         flexGrow: 100,
         defaultActive: true,
         searchable: true,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
         sSearch: []
@@ -105,7 +105,7 @@ export var CampainsColumnsData: Column[] = [
         flexGrow: 100,
         defaultActive: true,
         searchable: true,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
         sSearch: []
@@ -117,7 +117,7 @@ export var CampainsColumnsData: Column[] = [
         active: true,
         flexGrow: 100,
         defaultActive: true,
-        dropActive: false,
+        filterDisplayed: false,
         type: COLUMN_TYPE.LONGTEXT,
         like: true,
         multiple: true,

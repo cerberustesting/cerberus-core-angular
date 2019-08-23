@@ -6,7 +6,7 @@ import { InvariantsService } from '../../../core/services/crud/invariants.servic
 import { IInvariant } from '../../../shared/model/invariants.model';
 import { TestService } from '../../../core/services/crud/test.service';
 import { ITest } from '../../../shared/model/test.model';
-import { Column } from 'src/app/shared/model/column.model';
+import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 
 @Component({
@@ -49,7 +49,7 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit() {    
     this.columnActive = this.columns.filter(a => a.active).length;
-    this.searchableColumns = this.columns.filter(a => a.searchable || a.like);
+    this.searchableColumns = this.columns.filter(a => a.searchable || a.filterMode===FILTER_MODE.SEARCH_FIELD);
   }
 
   /**
@@ -94,23 +94,24 @@ export class FiltersComponent implements OnInit {
    * @param column  column to filter
    */
   addFilter(column: Column) {
-    if (column.dropActive || column.fieldActive) {
+    if (column.filterDisplayed) {
       column.sSearch = [];
       this.activeFilters.splice(this.activeFilters.indexOf(column.contentName),1)
     } else {
       this.activeFilters.push(column.contentName)
     }
-    if (!column.like) column.dropActive = !column.dropActive;
-    else column.fieldActive = !column.fieldActive;
+    column.filterDisplayed = !column.filterDisplayed;
+   
   }
 
   /** addFilterLike
    * * Add search field for that column
    * @param column column to filter
+   * TODO : remove
    */
-  addFilterLike(column: Column) {
-    column.fieldActive = !column.fieldActive;
-  }
+  // addFilterLike(column: Column) {
+  //   column.fieldActive = !column.fieldActive;
+  // }
 
   /** resetDefaultColumns
    * * rest default column to display

@@ -9,7 +9,8 @@ export interface Column {
     sortable?: boolean, // the column can be sortable
     searchable?: boolean, // the column can be filter with a dropdown
     displayContentFunction?: (any) => string, // if some value need a function to be display
-    dropActive?: boolean, //the dropdown filter is active 
+    filterDisplayed?: boolean, //the dropdown filter is active 
+    filterMode?: FILTER_MODE,
     fieldActive?: boolean, // the text field filter is active
     placeholder?: string, // Placeholder of the corresponding filter
     multiple?: boolean, // can select multiple item at time
@@ -22,4 +23,9 @@ export enum COLUMN_TYPE {
     LABEL = 'label',
     LONGTEXT = 'longtext',
     LIST = 'list'
+}
+
+export enum FILTER_MODE {
+    DROPDOWN = 'DROPDOWN',
+    SEARCH_FIELD = 'SEARCH_FIELD'
 }

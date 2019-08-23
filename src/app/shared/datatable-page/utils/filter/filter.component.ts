@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Column } from 'src/app/shared/model/column.model';
+import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { SystemService } from 'src/app/core/services/crud/system.service';
 
@@ -53,6 +53,9 @@ export class FilterComponent implements OnInit {
 
   ngOnInit() {
     /*use a different request to get label because need label AND color*/
+
+    if (!this.column.filterMode) this.column.filterMode = FILTER_MODE.DROPDOWN
+
     if (this.column.type === 'label') {
       this.systemService.getLabelsFromSystem('');
       this.systemService.observableLabelsList.subscribe(response => {
@@ -94,10 +97,15 @@ export class FilterComponent implements OnInit {
     this.searchItems = event.items;
   }
   removeFilter() {
-    this.column.dropActive = false;
+    this.column.filterDisplayed = false;
     this.model = [];
     this.remove.emit(this.column.contentName);
     this.applyFilter()
+  }
+
+  validField(): void {
+    this.column.sSearch = [this.data];
+    this.applyFilterOutput.emit();
   }
 
 }

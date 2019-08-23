@@ -11,7 +11,6 @@ import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 import { LabelComponent } from './label/label.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatatablePageComponent } from './datatable-page/datatable-page.component';
-import { FilterlikeComponent } from './datatable-page/utils/filterlike/filterlike.component';
 import { FiltersComponent } from "./datatable-page/filters/filters.component";
 import { FilterComponent } from "./datatable-page/utils/filter/filter.component";
 import { RunComponent } from './run/run.component';
@@ -29,7 +28,6 @@ import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, Datatable
     LabelfilteringPipe,
     LabelComponent,
     DatatablePageComponent,
-    FilterlikeComponent,
     FiltersComponent,
     FilterComponent,
     RunComponent,

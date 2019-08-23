@@ -1,4 +1,4 @@
-import { Column, COLUMN_TYPE } from 'src/app/shared/model/column.model';
+import { Column, COLUMN_TYPE, FILTER_MODE } from 'src/app/shared/model/column.model';
 
 export var TestCasesColumnsData: Column[] = [
     {
@@ -9,7 +9,7 @@ export var TestCasesColumnsData: Column[] = [
         flexGrow: 100,
         defaultActive: true,
         searchable: true,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
         sSearch: []
@@ -34,7 +34,8 @@ export var TestCasesColumnsData: Column[] = [
         flexGrow: 75,
         active: true,
         defaultActive: true,
-        like: true,
+        like: true, 
+        filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Search TestCase',
         sSearch: []
@@ -48,7 +49,7 @@ export var TestCasesColumnsData: Column[] = [
         defaultActive: true,
         sortable: false,
         searchable: true,
-        dropActive: false,
+        filterDisplayed: false,
         flexGrow: 250,
         multiple: true,
         placeholder: 'Select Labels',
@@ -62,8 +63,9 @@ export var TestCasesColumnsData: Column[] = [
         flexGrow: 250,
         defaultActive: true,
         active: true,
-        dropActive: false,
-        like: true,
+        filterDisplayed: false,
+        like: true, 
+        filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Search Description...',
         sSearch: []
@@ -76,7 +78,7 @@ export var TestCasesColumnsData: Column[] = [
         active: true,
         defaultActive: true,
         searchable: true,
-        dropActive: false,
+        filterDisplayed: false,
         flexGrow: 100,
         multiple: true,
         placeholder: 'Select status',
@@ -88,7 +90,7 @@ export var TestCasesColumnsData: Column[] = [
         contentName: 'priority',
         active: true,
         defaultActive: true,
-        dropActive: false,
+        filterDisplayed: false,
         searchable: true,
         flexGrow: 100,
         multiple: true,
@@ -101,7 +103,7 @@ export var TestCasesColumnsData: Column[] = [
         apiName: 'app.system',
         contentName: 'system',
         active: false,
-        dropActive: false,
+        filterDisplayed: false,
         searchable: true,
         multiple: true,
         placeholder: 'Select System...',
@@ -114,7 +116,7 @@ export var TestCasesColumnsData: Column[] = [
         contentName: 'tcActive',
         searchable: true,
         active: false,
-        dropActive: false,
+        filterDisplayed: false,
         type: COLUMN_TYPE.BOOLEAN,
         multiple: false,
         placeholder: 'Select Gloabl Activation',
@@ -141,7 +143,7 @@ export var TestCasesColumnsData: Column[] = [
         type: COLUMN_TYPE.LABEL,
         active: false,
         sortable: false,
-        dropActive: false,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select Stickers',
         sSearch: []
@@ -153,7 +155,7 @@ export var TestCasesColumnsData: Column[] = [
         contentName: 'labelsREQUIREMENT',
         type: COLUMN_TYPE.LABEL,
         active: false,
-        dropActive: false,
+        filterDisplayed: false,
         sortable: false,
         multiple: true,
         placeholder: 'Select Requirement',
@@ -166,7 +168,7 @@ export var TestCasesColumnsData: Column[] = [
         contentName: 'labelsBATTERY',
         type: COLUMN_TYPE.LABEL,
         active: false,
-        dropActive: false,
+        filterDisplayed: false,
         sortable: false
     },//
     {
@@ -174,7 +176,7 @@ export var TestCasesColumnsData: Column[] = [
         apiName: 'tec.tcactive',
         contentName: 'activePROD',
         active: false,
-        dropActive: false,
+        filterDisplayed: false,
         type: COLUMN_TYPE.BOOLEAN
     },
     {
@@ -182,7 +184,7 @@ export var TestCasesColumnsData: Column[] = [
         apiName: 'tec.tcactive',
         contentName: 'activeQA',
         active: false,
-        dropActive: false,
+        filterDisplayed: false,
         type: COLUMN_TYPE.BOOLEAN
     },
     {
@@ -190,7 +192,7 @@ export var TestCasesColumnsData: Column[] = [
         apiName: 'tec.tcactive',
         contentName: 'activeUAT',
         active: false,
-        dropActive: false,
+        filterDisplayed: false,
         type: COLUMN_TYPE.BOOLEAN
     },
     {
@@ -198,9 +200,9 @@ export var TestCasesColumnsData: Column[] = [
         apiName: 'tec.function',
         contentName: 'function',
         active: false,
-        dropActive: false,
-        like: true,
-
+        filterDisplayed: false,
+        like: true, 
+        filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Select Function',
         sSearch: []
@@ -210,7 +212,7 @@ export var TestCasesColumnsData: Column[] = [
         displayName: 'Project',
         apiName: 'tec.project',
         contentName: 'Project',
-        dropActive: false,
+        filterDisplayed: false,
         active: false,
 
         multiple: true,
@@ -222,7 +224,7 @@ export var TestCasesColumnsData: Column[] = [
         displayName: 'Origine',
         apiName: 'tec.origine',
         contentName: 'origine',
-        dropActive: false,
+        filterDisplayed: false,
         active: false,
 
         multiple: true,
@@ -235,8 +237,9 @@ export var TestCasesColumnsData: Column[] = [
         apiName: 'tec.refOrigine',
         contentName: 'refOrigin',
         active: false,
-        dropActive: false,
-        like: true,
+        filterDisplayed: false,
+        like: true, 
+        filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Select Reference Origine',
         sSearch: []
@@ -258,8 +261,9 @@ export var TestCasesColumnsData: Column[] = [
         apiName: 'tec.dateCreated',
         contentName: 'dateCreated',
         active: false,
-        dropActive: false,
-        like: true,
+        filterDisplayed: false,
+        like: true, 
+        filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Select Date Created',
         sSearch: []
@@ -269,7 +273,7 @@ export var TestCasesColumnsData: Column[] = [
         displayName: 'User Created',
         apiName: 'tec.usrCreated',
         contentName: 'usrCreated',
-        dropActive: false,
+        filterDisplayed: false,
         searchable: true,
         active: false,
         multiple: true,
@@ -281,7 +285,7 @@ export var TestCasesColumnsData: Column[] = [
         displayName: 'TestCase Version',
         apiName: 'tec.testCaseVersion',
         contentName: 'testCaseVersion',
-        dropActive: false,
+        filterDisplayed: false,
         active: false,
         multiple: true,
         placeholder: 'Select TestCase Version',
@@ -293,8 +297,9 @@ export var TestCasesColumnsData: Column[] = [
         apiName: 'tec.dateModif',
         contentName: 'dateModif',
         active: false,
-        dropActive: false,
-        like: true,
+        filterDisplayed: false,
+        like: true, 
+        filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Select Date Modification',
         sSearch: []
@@ -304,7 +309,7 @@ export var TestCasesColumnsData: Column[] = [
         displayName: 'User Modification',
         apiName: 'tec.usrModif',
         contentName: 'usrModif',
-        dropActive: false,
+        filterDisplayed: false,
         active: false,
         multiple: true,
         placeholder: 'Select User Modification',

@@ -118,20 +118,12 @@
                                                 (remove)="removeFilter($event)">
                                             </app-filter>
                                         </ng-template>
-                                        <!--Like filters--><!-- TODO : remove-->
-                                        <!-- <ng-template ngFor let-column [ngForOf]="columns">
-                                            <app-filterlike *ngIf="column.fieldActive" [column]="column"
-                                                (applyFilterOutput)=applySystem() (remove)="removeFilter($event)">
-                                            </app-filterlike>
-                                        </ng-template> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
             <ng-template *ngIf="massActionTemplate" [ngTemplateOutlet]="massActionTemplate"></ng-template>
         </div>

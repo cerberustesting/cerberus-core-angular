@@ -26,7 +26,6 @@ export class DatatablePageComponent implements OnInit {
   @Input() servlet: string;
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
-  @Input() name?: string = 'none';
   @Input() refreshResults: Observable<void>;
   
 
@@ -49,6 +48,7 @@ export class DatatablePageComponent implements OnInit {
 
   ngOnInit() {
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
+      console.log('systemList change')
       this.cache = {};
       this.rows = [];
       this.page.number = 0;
@@ -66,7 +66,11 @@ export class DatatablePageComponent implements OnInit {
    */
   search(globalSearch?: string): void {
     this.globalSearch = (globalSearch) ? globalSearch : '';
-    if (this.servlet) { // TODO : delete count wanted 
+    
+    if (this.servlet && !this.cache[this.page.number] && this.page.size>0) {
+      // console.log("Search : \n page number : " + this.page.number + '\n page size : ' + this.page.size);
+      // console.log("cache :", this.cache);
+    this.cache[this.page.number] = true;
       this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), 
         (list: Array<any>, length: number) => {
           this.page.totalCount = length;
@@ -78,7 +82,7 @@ export class DatatablePageComponent implements OnInit {
 
           this.rows = rows;
 
-          this.cache[this.page.number] = true;
+          
         });
     }
   }

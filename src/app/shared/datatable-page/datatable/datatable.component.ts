@@ -73,16 +73,6 @@ export class DatatableComponent implements OnInit {
   addFilter(column: Column): void {
     column.filterDisplayed = !column.filterDisplayed;
   }
-  
-  /** 
-   * addFilterLike
-   * * Add a like filter corresponding to the column
-   * @param column column to filter
-   * TODO : Remove
-   */
-  // addFilterLike(column: Column): void {
-  //   column.fieldActive = !column.fieldActive;
-  // }
 
   /**
    * onSort

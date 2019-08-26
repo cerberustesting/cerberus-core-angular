@@ -25,20 +25,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class TestcaselistComponent implements OnInit {
 
 
-  columns: Array<Column> = TestCasesColumnsData; // column list
-  
-  
-  page = {
+  private columns: Array<Column> = TestCasesColumnsData; // column list from `testcaselist.columnsdata.ts`  
+  private page = {
     size: 0, //maximum element per page
     number: 1, //number of current page
     sort: [{dir: "asc", prop : "testCase"}], //sort item
     totalCount: 0 //total count of element in database
   };
-  selectedRows: Array<any> = [];
-  servlet :string = '/ReadTestCase'
-
-  userPreferences: string;
-  private refreshResultsEvent: Subject<void> = new Subject<void>();
+  private selectedRows: Array<any> = []; // the selected rows in the table
+  private servlet :string = '/ReadTestCase'; //const : the api to call to refresh datatable results
+  private refreshResultsEvent: Subject<void> = new Subject<void>(); //the observable to refresh the table
   
   constructor(
     private headerTitleService: HeaderTitleService,
@@ -52,11 +48,18 @@ export class TestcaselistComponent implements OnInit {
   ngOnInit() {
   }
 
-  refreshResults() {
+  /** refreshResults
+   * * refresh datatable results
+   */
+  refreshResults(): void {
     this.refreshResultsEvent.next()
   }
   
-  editTestCaseHeader(testcase) {
+  /** editTestCaseHeader
+   * * Open sde content in edition mode for the selected testcase
+   * @param testcase the test to edit
+   */
+  editTestCaseHeader(testcase: any): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       testCase: testcase,
       mode: TESTCASE_INTERACTION_MODE.EDIT,
@@ -66,7 +69,12 @@ export class TestcaselistComponent implements OnInit {
     });
     this.sideContentService.openSideBlock();
   }
-  duplicateTestCaseHeader(testcase) {
+
+  /** duplicateTestCaseHeader
+   * * Open sde content in duplicate mode for the selected testcase
+   * @param testcase the test to duplicate
+   */
+  duplicateTestCaseHeader(testcase: any): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       testCase: testcase,
       mode: TESTCASE_INTERACTION_MODE.DUPLICATE,
@@ -76,7 +84,12 @@ export class TestcaselistComponent implements OnInit {
     });
     this.sideContentService.openSideBlock();
   }
-  createTestCaseHeader() {
+
+  /** createTestCaseHeader
+   * * Open sde content in create mode for the selected testcase
+   * @param testcase the test to create
+   */
+  createTestCaseHeader(): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       testCase: {},
       mode: TESTCASE_INTERACTION_MODE.CREATE,
@@ -87,22 +100,23 @@ export class TestcaselistComponent implements OnInit {
     this.sideContentService.openSideBlock();
   }
 
-  deleteTestCase(row) {
+  /** deleteTestCase
+   * * Open custom modal to delete testCase
+   * @param testcase the TestCase to delete
+   */
+  deleteTestCase(testcase: any): void {
     const modalRef = this.modalService.open(CustomModalComponent);
     modalRef.componentInstance.title = 'Delete Test Case';
-    modalRef.componentInstance.text = "Do you want to delete Test Case " + row.test + "' - '" + row.testCase + "' ?";
+    modalRef.componentInstance.text = "Do you want to delete Test Case " + testcase.test + "' - '" + testcase.testCase + "' ?";
     modalRef.componentInstance.fct = () => {
       this.testService.deleteTestCase(
-        row.test,
-        row.testCase,
+        testcase.test,
+        testcase.testCase,
         () => {
           this.refreshResults();
-          this.NotificationService.createANotification('The testCase '+ row.test +' - ' + row.testCase + ' has been successfully deleted', NotificationStyle.Success);
+          this.NotificationService.createANotification('The testCase '+ testcase.test +' - ' + testcase.testCase + ' has been successfully deleted', NotificationStyle.Success);
         }
       );
     };
   }
-
-  
-
 }

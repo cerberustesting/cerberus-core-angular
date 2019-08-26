@@ -1,16 +1,21 @@
 <app-datatable-page [page]="page" [columns]="columns" [servlet]="servlet" [selectedRows]="selectedRows"
     [selection]="true" [refreshResults]="refreshResultsEvent.asObservable()">
 
+    <!--START Template for create button-->
     <ng-template datatable-filter-tmp>
         <button type="button" class="btn btn-info mr-2" (click)="createTestCaseHeader()">
             <i class="fa fa-fw fa-plus download mr-2"></i>Create Test Case
         </button>
     </ng-template>
+    <!--END Template for create button-->
 
+    <!--START Template for mass action buttons-->
     <ng-template datatable-mass-action-tmp>
         <app-actions [selectedRows]="selectedRows"></app-actions>
     </ng-template>
+    <!--END Template for mass action buttons-->
 
+    <!--START Template for end rows buttons-->
     <ng-template datatable-end-line-tmp let-row="row">
             <div class="row-menu">
                     <div class="actions-section">
@@ -32,5 +37,6 @@
             </div>
         </div>
     </ng-template>
+    <!--END Template for end rows buttons-->
 
 </app-datatable-page>

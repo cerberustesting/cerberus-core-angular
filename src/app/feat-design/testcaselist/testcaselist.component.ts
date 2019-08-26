@@ -62,6 +62,26 @@ export class TestcaselistComponent implements OnInit {
     });
     this.sideContentService.openSideBlock();
   }
+  duplicateTestCaseHeader(testcase) {
+    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+      testCase: testcase,
+      mode: TESTCASE_INTERACTION_MODE.DUPLICATE,
+      exit: () => {
+        this.refreshResults();
+      }
+    });
+    this.sideContentService.openSideBlock();
+  }
+  createTestCaseHeader() {
+    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+      testCase: {},
+      mode: TESTCASE_INTERACTION_MODE.CREATE,
+      exit: () => {
+        this.refreshResults();
+      }
+    });
+    this.sideContentService.openSideBlock();
+  }
 
   
 

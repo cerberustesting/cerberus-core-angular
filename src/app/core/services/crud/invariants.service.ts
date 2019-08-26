@@ -29,7 +29,13 @@ export class InvariantsService {
   environmentsList: Array<IInvariant>;
   appService: Array<any>;
   // system management
-  selectedSystemsList: Array<IInvariant>;
+  selectedSystemsList: Array<IInvariant> = [{ // DEFAULT SELECTION
+     description: "Cerberus Application",
+     gp1: "",
+     gp2: "",
+     gp3: "",
+     value: "CERBERUS"
+  }]; // TODO : remove 
   // observables
   observableCountriesList = new BehaviorSubject<IInvariant[]>(this.countriesList);
   observableEnvironments = new BehaviorSubject<IInvariant[]>(this.environmentsList);

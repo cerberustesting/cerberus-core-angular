@@ -20,6 +20,7 @@
                     <span class="input-group-text">Test Folder</span>
                 </div>
                 <select class="form-control" formControlName="test">
+                    <option value="">Select test folder</option>
                     <option *ngFor="let test of testsList" [value]="test.test">
                         {{ test.test }}
                     </option>
@@ -80,7 +81,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Application</span>
                             </div>
-                            <select class="form-control" formControlName="application">
+                            <select class="form-control" formControlName="application" (change)="getFromSystem()">
+                                <option value=""></option>
                                 <option *ngFor="let application of applicationsList" [value]="application.application">
                                     {{ application.application }}</option>
                                 <!--TODO-->

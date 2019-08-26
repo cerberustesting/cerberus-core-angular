@@ -25,7 +25,7 @@ export enum TESTCASE_INTERACTION_MODE {
 export class TestcaseInteractionComponent implements OnInit {
 
   // *** Inputs ***
-  testCase: ITestCaseHeader;
+  testCase: any = {};
   mode: TESTCASE_INTERACTION_MODE;
   exit: (n: void) => void;
 
@@ -71,47 +71,45 @@ export class TestcaseInteractionComponent implements OnInit {
     private sidecontentService: SidecontentService) { }
 
   ngOnInit() {
-    this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
-      this.testCase = testcaseHeader;
-      console.log(this.testCase);
-      for (let dependency of this.testCase.dependencyList) {
-        this.dependencyTestCaseList.push({
-          id: dependency.id,
-          test: dependency.depTest,
-          testcase: dependency.depTestCase,
-          description: dependency.description,
-          active: dependency.active
-        });
-      }
-    });
+    if (this.testCase) {
+      this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
+        this.testCase = testcaseHeader;
+        for (let dependency of this.testCase.dependencyList) {
+          this.dependencyTestCaseList.push({
+            id: dependency.id,
+            test: dependency.depTest,
+            testcase: dependency.depTestCase,
+            description: dependency.description,
+            active: dependency.active
+          });
+        }
+      });
+      for (let country in this.testCase.countryList) this.tcCountryList.push(country);
+    } 
+    
 
-
-    this.systemService.getLabelsHierarchyFromSystem(this.testCase.system, this.testCase.test, this.testCase.testCase);
+    
+    
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
     this.systemService.getApplicationList();
     this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
-    //this.invariantsService.getTcStatus();
     this.invariantsService.observableTcStatus.subscribe(rep => this.statusList = rep);
-    //this.invariantsService.getStepConditionOperList();
     this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionsList = rep);
-    //this.invariantsService.getCountriesList();
     this.invariantsService.observableCountriesList.subscribe(rep => this.countriesList = rep);
-    //this.invariantsService.getPriorities();
     this.invariantsService.observablePriorities.subscribe(rep => this.priorityList = rep);
-    //this.invariantsService.getGroupList();
     this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
-    this.systemService.getSprintsFromSystem(this.testCase.system);
+    
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
-    this.systemService.getRevFromSystem(this.testCase.system);
+    
     this.systemService.observableRevs.subscribe(rep => this.revsList = [{ versionName: '' }].concat(rep));
     this.testService.getTestsList();
     this.testService.observableTestsList.subscribe(rep => this.testsList = rep);
 
-    for (let country in this.testCase.countryList) this.tcCountryList.push(country);
+    
 
 
     this.testcaseHeaderForm = this.formBuilder.group({
-      test: this.testCase.test,
+      test: this.testCase.test || '',
       testCase: this.testCase.testCase,
       originalTest: this.testCase.test, // ! const
       originalTestCase: this.testCase.testCase, // ! const
@@ -140,6 +138,17 @@ export class TestcaseInteractionComponent implements OnInit {
       userAgent: this.testCase.userAgent,
       screenSize: this.testCase.screenSize,
     });
+    this.getFromSystem();
+  }
+
+  getFromSystem(): void {
+    if (this.testcaseHeaderForm.value.application) {
+      this.testCase.system = this.testcaseHeaderForm.value.application;      
+      this.systemService.getLabelsHierarchyFromSystem(this.testCase.system, this.testCase.test, this.testCase.testCase);
+      this.systemService.getSprintsFromSystem(this.testCase.system);
+      this.systemService.getRevFromSystem(this.testCase.system);
+    }
+    
   }
 
   
@@ -223,13 +232,23 @@ export class TestcaseInteractionComponent implements OnInit {
       return;
     }
 
+    if (!values.test) {
+      this.notificationService.createANotification("Please specify the Test Folder", NotificationStyle.Warning);
+      return;
+    }
+
+    if (!values.testcase) {
+      this.notificationService.createANotification("Please specify the Test Case ID", NotificationStyle.Warning);
+      return;
+    }
+
     let queryString = ""; // the query string to send
     let countryList = []; //the format countrylist
     let labelList = []; //the format labelList
 
     // add all items from the form  group
     for (let item in values) {
-      queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item]) + '&';
+      queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item] || '') + '&';
     }
     
     // fill countryList with all countries selected
@@ -255,7 +274,13 @@ export class TestcaseInteractionComponent implements OnInit {
     queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
     queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
 
-    this.testService.updateTestCase(queryString).subscribe(rep => this.refreshTable());
+    if (this.mode = TESTCASE_INTERACTION_MODE.CREATE) {
+      this.testService.createTestCase(queryString).subscribe(rep => this.refreshTable());
+    } else {
+      this.testService.updateTestCase(queryString).subscribe(rep => this.refreshTable());
+    }
+    
+    
   }
 
   /** refreshTable

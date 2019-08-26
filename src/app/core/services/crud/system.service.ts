@@ -5,6 +5,7 @@ import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvar
 import { ILabel } from 'src/app/shared/model/label.model';
 import { IApplication } from 'src/app/shared/model/application.model';
 import { environment } from 'src/environments/environment';
+import { InvariantsService } from './invariants.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class SystemService {
   observableApplication = new BehaviorSubject<IApplication>(this.application);
   observableLabelsHierarchyList = new BehaviorSubject<any>(this.labelsHierarchy);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private invariantsService: InvariantsService) { }
 
   getSprintsFromSystem(system: string) {
     this.http.get<IBuildRevisionInvariant[]>(environment.cerberus_api_url + '/ReadBuildRevisionInvariant?system=' + system + '&level=1')
@@ -81,13 +82,20 @@ export class SystemService {
   }
 
   getApplicationList() {
-    this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication')
+    this.applicationsList = [];
+    for (let system of this.invariantsService.selectedSystemsList) {
+      this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication?system='+system.value)
       .subscribe(response => {
-        this.applicationsList = response;
+        console.log(response);
         // @ts-ignore
-        this.applicationsList = this.applicationsList.contentTable;
+        this.applicationsList = this.applicationsList.concat(response.contentTable);
+        // @ts-ignore
+        // this.applicationsList = this.applicationsList.contentTable;
         this.observableApplicationList.next(this.applicationsList);
-      })
+        console.log(this.applicationsList);
+      });
+    }
+    
   }
 
   getApplication(application: string) {

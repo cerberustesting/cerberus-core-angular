@@ -115,6 +115,13 @@ export class TestService {
         error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
       ))
   }
+  createTestCase(queryString) {
+    return this.http.post<any>(environment.cerberus_api_url + '/CreateTestCase', queryString, httpOptions)
+      .pipe(tap(
+        data => this.notificationService.createANotification('Testcase updated', NotificationStyle.Success),
+        error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
+      ))
+  }
 
   getTestDataLib(testdatalibid: string, name: string, country: string, callback: (TestDataLib: any) => any) {
     // get data for datatable

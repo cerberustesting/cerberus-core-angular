@@ -398,18 +398,47 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Select a Test</span>
                             </div>
-                            <select class="form-control">
-                                <option *ngFor="let test of testsList" [value]="test.value">
-                                    {{ test.value }}
+                            <select class="form-control" (change)="onTestChange($event.target.value)">
+                                <option value="">---</option>
+                                <option *ngFor="let test of testsList" [value]="test.test">
+                                    {{ test.test }}
                                 </option>
                             </select>
                         </div>
                     </div>
-                    <div *ngIf="false" class="col-md-6">Test Cases</div>
-                    <!--TODO : display only if test selected-->
-                    <button *ngIf="false" class="btn btn-info col-md-12">Add test case</button>
-                    <!--TODO : display only if testcase selected-->
+                    <div *ngIf="testcaseList.length>0" class="col-md-6">
+                            <select class="form-control" (change)="onTestCaseChange($event.target.value)">
+                                    <option value="">---</option>
+                                    <option *ngFor="let testcase of testcaseList; let index = index" [value]="index">
+                                        {{ testcase.testCase }}
+                                    </option>
+                                </select>
+                    </div>
+                    <button type="button" *ngIf="dependencySelectedTestCase" (click)="addToDependencyTable(dependencySelectedTestCase)" class="btn btn-info col-md-12">Add test case</button>
                     <!--TODO : Add datatable and add it to query string-->
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Actions</th>
+                                    <th>Test Cases</th>
+                                    <th>Activate</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let dependency of dependencyTestCaseList; let index = index">
+                                    <td><button class="btn btn-danger" (click)="removeDependency(index)"><i class="fa fa-trash"></i></button></td>
+                                    <td>{{ dependency.test }} - {{ dependency.testcase }}</td>
+                                    <td><input type="checkbox" name="activate" [(ngModel)]="dependency.active" [ngModelOptions]="{standalone: true}"></td>
+                                    <td><input type="text" name="description" [(ngModel)]="dependency.description" [ngModelOptions]="{standalone: true}"></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    
+
                 </div>
             </div>
 

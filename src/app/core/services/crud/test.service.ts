@@ -80,6 +80,7 @@ export class TestService {
           this.testcasesListLength = response.iTotalRecords;
           this.observableTestCasesList.next(this.testcasesList);
         } else {
+          this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
           this.testcasesList = null;
           this.observableTestCasesList.next(this.testcasesList);
         }
@@ -165,6 +166,13 @@ export class TestService {
           this.testcaseheader_countriesList_format = this.convertCountriesList(this.testcase.info);
           this.getLabelsfromTestCase(test, testcase);
         })
+    }
+  }
+
+  getTestCaseInformations(test: string, testcase: string, callback: (n:ITestCaseHeader)=>any) {
+    if (test&&testcase) {
+      this.http.get<any>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase)
+        .subscribe((response) => callback(response.contentTable));
     }
   }
 

@@ -7,6 +7,8 @@ import { SystemService } from 'src/app/core/services/crud/system.service';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { ITest } from 'src/app/shared/model/test.model';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { NotificationService } from 'src/app/core/services/utils/notification.service';
+import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 
 export enum TESTCASE_INTERACTION_MODE {
   EDIT = 'EDIT',
@@ -21,7 +23,7 @@ export enum TESTCASE_INTERACTION_MODE {
 export class TestcaseInteractionComponent implements OnInit {
 
   // *** Inputs ***
-  testCase: any;
+  testCase: ITestCaseHeader;
   mode: TESTCASE_INTERACTION_MODE;
 
   // *** HTML control ***
@@ -52,14 +54,38 @@ export class TestcaseInteractionComponent implements OnInit {
   };
 
   private tcCountryList: Array<any> = [];
+  private testcaseList: Array<ITestCaseHeader> = [];
+  private dependencySelectedTestCase: ITestCaseHeader;
+  private dependencyTestCaseList: Array<any> = [];
+
+  private columns = [
+    { prop: 'testCase' },
+    { prop: 'description' },
+  ]
 
   constructor(
     private invariantsService: InvariantsService,
     private systemService: SystemService,
     private formBuilder: FormBuilder,
-    private testService: TestService) { }
+    private testService: TestService,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
+    this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
+      this.testCase = testcaseHeader;
+      console.log(this.testCase);
+      for (let dependency of this.testCase.dependencyList) {
+        this.dependencyTestCaseList.push({
+          id: dependency.id,
+          test: dependency.depTest,
+          testcase: dependency.depTestCase,
+          description: dependency.description,
+          active: dependency.active
+        });
+      }
+    });
+
+
     this.systemService.getLabelsHierarchyFromSystem(this.testCase.system, this.testCase.test, this.testCase.testCase);
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
     this.systemService.getApplicationList();
@@ -82,6 +108,7 @@ export class TestcaseInteractionComponent implements OnInit {
     this.testService.observableTestsList.subscribe(rep => this.testsList = rep);
 
     for (let country in this.testCase.countryList) this.tcCountryList.push(country);
+
 
     this.testcaseHeaderForm = this.formBuilder.group({
       test: this.testCase.test,
@@ -111,22 +138,18 @@ export class TestcaseInteractionComponent implements OnInit {
       toRev: this.testCase.toRev,
       toSprint: this.testCase.toBuild,
       userAgent: this.testCase.userAgent, // ?
-      screenSize: this.testCase.screenSize
-      // labelList: [], // ?
-      // countryList: [{ "country": "BE", "toDelete": true }, { "country": "CH", "toDelete": true }, { "country": "ES", "toDelete": true }, { "country": "FR", "toDelete": true }, { "country": "IT", "toDelete": true }, { "country": "NL", "toDelete": true }, { "country": "PT", "toDelete": false }, { "country": "RU", "toDelete": true }, { "country": "UK", "toDelete": true }, { "country": "VI", "toDelete": true }, { "country": "PL", "toDelete": true }, { "country": "DE", "toDelete": true }, { "country": "RX", "toDelete": true }, { "country": "UF", "toDelete": true }], // ?
-      // testcaseDependency: [], // ?
+      screenSize: this.testCase.screenSize,
     });
   }
-  async 
 
   onSubmit(values: any) {
 
     let queryString = "";
 
     for (let item in values) {
-      queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item])// + '&';
+      queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item]) + '&';
     }
-    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify([])) + '&';
+
 
     let countryList = [];
     for (let country of this.countriesList) {
@@ -134,17 +157,19 @@ export class TestcaseInteractionComponent implements OnInit {
         { country: country.value, toDelete: this.tcCountryList.map(c => c.country).includes(country.value) }
       )
     }
+
     let labelList = [];
     for (let type in this.labelList) {
       for (let label of this.labelList[type]) {
         if (label.state.selected) {
           labelList.push(
-            {labelId: label.id, toDelete: false}
+            { labelId: label.id, toDelete: false }
           )
         }
       }
     }
 
+    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(this.dependencyTestCaseList)) + '&';
     queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
     queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
 
@@ -154,6 +179,47 @@ export class TestcaseInteractionComponent implements OnInit {
 
   toggleLabel(label): void {
     label.state.selected = !label.state.selected;
+  }
+
+  onTestChange(test) {
+    this.testService.getTestCasesList(test);
+    this.testService.observableTestCasesList
+      .subscribe(testcaseList => {
+        if (testcaseList) {
+          this.testcaseList = testcaseList;
+        } else {
+          this.testcaseList = [];
+        }
+      });
+  }
+
+  onTestCaseChange(testcase) {
+    console.log(testcase);
+    this.dependencySelectedTestCase = testcase;
+  }
+
+
+  addToDependencyTable(testCaseIndex) {
+    // ! console.log("testcase :", testCaseIndex);
+    let testcase = this.testcaseList[testCaseIndex];
+    let dependency = {
+      id: this.dependencyTestCaseList.sort((a, b) => (a.id<b.id)?1:-1)[0].id+1,
+      test: testcase.test,
+      testcase: testcase.testCase,
+      description: '',
+      active: true
+    };
+    if (!(this.dependencyTestCaseList.map(d=> d.test).includes(dependency.test) &&
+    this.dependencyTestCaseList.map(d=> d.testcase).includes(dependency.testcase))) {
+      this.dependencyTestCaseList.push(dependency);
+    } else {
+      this.notificationService.createANotification('This TestCase is already selected !', NotificationStyle.Error);
+    }
+    // ! console.log(this.dependencyTestCaseList);
+  }
+
+  removeDependency(dependencyIndex) {
+    this.dependencyTestCaseList.splice(dependencyIndex, 1);
   }
 
 }

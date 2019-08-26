@@ -16,6 +16,7 @@
         (select)='onSelect($event)' 
         [count]="page.totalCount" 
         [offset]="page.number"
+        (activate)="onActivate($event)"
         (sort)="onSort($event)" 
         (page)="onPage($event)">
 
@@ -94,6 +95,7 @@
                 </ng-template>
             </ngx-datatable-column>
         </ng-template>
+                
 
         <!-- Action column -->
         <ngx-datatable-column *ngIf="endLineActionTemplate" [sortable]="false" [canAutoResize]="false" [draggable]="false"
@@ -101,7 +103,7 @@
             
             
             <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
-                    <ng-template 
+                    <ng-template *ngIf="row.activate"
                         [ngTemplateOutlet]="endLineActionTemplate"
                         [ngTemplateOutletContext]="{ row: row }"></ng-template>
             </ng-template>

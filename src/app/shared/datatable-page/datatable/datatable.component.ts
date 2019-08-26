@@ -107,6 +107,14 @@ export class DatatableComponent implements OnInit {
     this.page.size = pageInfo.pageSize;
     this.applyChange();
   }
-
+  
+  /** onActivate
+   * * toggle end row buttons
+   * @param event generate with angular
+   */
+  onActivate(event: any) {    
+    this.rows.forEach(r=>r.activate=false);
+    event.row.activate = true;
+  }
 }
 

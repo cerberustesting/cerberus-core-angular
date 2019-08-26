@@ -236,8 +236,8 @@ export class TestcaseInteractionComponent implements OnInit {
       this.notificationService.createANotification("Please specify the Test Folder", NotificationStyle.Warning);
       return;
     }
-
-    if (!values.testcase) {
+    
+    if (!values.testCase) {
       this.notificationService.createANotification("Please specify the Test Case ID", NotificationStyle.Warning);
       return;
     }

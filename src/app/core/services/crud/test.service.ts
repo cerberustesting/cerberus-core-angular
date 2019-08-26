@@ -111,14 +111,20 @@ export class TestService {
   updateTestCase(queryString) {
     return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, httpOptions)
       .pipe(tap(
-        data => this.notificationService.createANotification('Testcase updated', NotificationStyle.Success),
+        data => {
+          if (data.messageType==='OK') this.notificationService.createANotification('Testcase updated', NotificationStyle.Success);
+          else this.notificationService.createANotification(data.message, NotificationStyle.Warning)
+        },
         error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
       ))
   }
   createTestCase(queryString) {
     return this.http.post<any>(environment.cerberus_api_url + '/CreateTestCase', queryString, httpOptions)
       .pipe(tap(
-        data => this.notificationService.createANotification('Testcase updated', NotificationStyle.Success),
+        data => {
+          if (data.messageType==='OK') this.notificationService.createANotification('Testcase created', NotificationStyle.Success);
+          else this.notificationService.createANotification(data.message, NotificationStyle.Warning)
+        },
         error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
       ))
   }

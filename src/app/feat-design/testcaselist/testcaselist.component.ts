@@ -14,6 +14,8 @@ import { SidecontentService } from 'src/app/core/services/crud/sidecontent.servi
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { TestcaseInteractionComponent, TESTCASE_INTERACTION_MODE } from './testcase-interaction/testcase-interaction.component';
+import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-testcaselist',
@@ -41,6 +43,8 @@ export class TestcaselistComponent implements OnInit {
   constructor(
     private headerTitleService: HeaderTitleService,
     private sideContentService: SidecontentService,
+    private modalService: NgbModal,
+    private testService: TestService,
     private NotificationService: NotificationService) { 
     this.headerTitleService.setTitle("Testcase List");
   }
@@ -81,6 +85,22 @@ export class TestcaselistComponent implements OnInit {
       }
     });
     this.sideContentService.openSideBlock();
+  }
+
+  deleteTestCase(row) {
+    const modalRef = this.modalService.open(CustomModalComponent);
+    modalRef.componentInstance.title = 'Delete Test Case';
+    modalRef.componentInstance.text = "Do you want to delete Test Case " + row.test + "' - '" + row.testCase + "' ?";
+    modalRef.componentInstance.fct = () => {
+      this.testService.deleteTestCase(
+        row.test,
+        row.testCase,
+        () => {
+          this.refreshResults();
+          this.NotificationService.createANotification('The testCase '+ row.test +' - ' + row.testCase + ' has been successfully deleted', NotificationStyle.Success);
+        }
+      );
+    };
   }
 
   

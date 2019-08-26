@@ -14,7 +14,7 @@
     <ng-template datatable-end-line-tmp let-row="row">
             <div class="row-menu">
                     <div class="actions-section">
-                        <button class="btn btn-outline-danger">
+                        <button class="btn btn-outline-danger" (click)="deleteTestCase(row)">
                             <i class="fa fa-trash-alt"></i>
                         </button>
 

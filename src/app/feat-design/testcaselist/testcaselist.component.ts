@@ -36,6 +36,7 @@ export class TestcaselistComponent implements OnInit {
   servlet :string = '/ReadTestCase'
 
   userPreferences: string;
+  private refreshResultsEvent: Subject<void> = new Subject<void>();
   
   constructor(
     private headerTitleService: HeaderTitleService,
@@ -46,14 +47,18 @@ export class TestcaselistComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  refreshResults() {
+    this.refreshResultsEvent.next()
+  }
   
   editTestCaseHeader(testcase) {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       testCase: testcase,
       mode: TESTCASE_INTERACTION_MODE.EDIT,
-      // exit: () => {
-      //   this.NotificationService.createANotification('The datalib has been successfully edited', NotificationStyle.Success);
-      // }
+      exit: () => {
+        this.refreshResults();
+      }
     });
     this.sideContentService.openSideBlock();
   }

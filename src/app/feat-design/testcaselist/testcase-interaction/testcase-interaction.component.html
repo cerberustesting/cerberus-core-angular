@@ -1,10 +1,17 @@
+<form [formGroup]="testcaseHeaderForm" (ngSubmit)="onSubmit(testcaseHeaderForm.value)">
 <div class="block-header">
     <!--Title-->
     <!-- TODO : chose depend of mode-->
     <h3 *ngIf="mode==='EDIT'" class="block-title">Edit Test Case Header <small>ID : {{ testCase.testCase }}</small></h3>
-    <h3 *ngIf="mode==='DUPLICATE'">Duplicate Test Case</h3>
+    <h3 *ngIf="mode==='DUPLICATE'" class="block-title">Duplicate Test Case</h3>
+    <h3 *ngIf="mode==='CREATE'" class="block-title">Create Test Case</h3>
+    <div>
+        <button class="btn btn-primary save-btn" *ngIf="mode==='EDIT'" type="submit">Save</button>
+        <button class="btn btn-primary save-btn" *ngIf="mode==='CREATE'" type="submit">Create</button>
+        <button class="btn btn-primary save-btn" *ngIf="mode==='DUPLICATE'" type="submit">Duplicate</button>
+    </div>
 </div>
-<form class="block-content" [formGroup]="testcaseHeaderForm" (ngSubmit)="onSubmit(testcaseHeaderForm.value)">
+<div class="block-content">
     <div class="row">
 
         <div class="col-md-6 input-group">
@@ -12,7 +19,11 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Test Folder</span>
                 </div>
-                <input type="text" class="form-control" formControlName="test">
+                <select class="form-control" formControlName="test">
+                    <option *ngFor="let test of testsList" [value]="test.test">
+                        {{ test.test }}
+                    </option>
+                </select>
             </div>
         </div>
 
@@ -124,9 +135,10 @@
                     </div>
                 </div>
             </div>
+            <!-- END Definition tab-->
 
 
-
+            <!-- START Execution Settings tab-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===2}" role="tabpanel">
                 <div class="row">
                     <div class="col-md-6">
@@ -313,9 +325,10 @@
                     </div>
                 </div>
             </div>
+            <!-- END Execution Settings tab-->
 
 
-
+            <!-- START Label tab-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===3}" role="tabpanel">
                 <div class="block block-rounded block-bordered">
                     <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
@@ -337,7 +350,8 @@
                     <div class="block-content tab-content">
                         <div class="tab-pane" [ngClass]="{'active': labelTab===1}" role="tabpanel" *ngIf="labelList">
                             <ul class="list-group">
-                                <li class="list-group-item" *ngFor="let label of labelList.batteries" [ngClass]="{'active' :label.state.selected}" (click)="toggleLabel(label)">
+                                <li class="list-group-item" *ngFor="let label of labelList.batteries"
+                                    [ngClass]="{'active' :label.state.selected}" (click)="toggleLabel(label)">
                                     <span class="badge badge-primary"
                                         [style.background-color]="label.label.color">{{ label.label.label }}</span>
                                 </li>
@@ -345,7 +359,8 @@
                         </div>
                         <div class="tab-pane" [ngClass]="{'active': labelTab===2}" role="tabpanel" *ngIf="labelList">
                             <ul class="list-group">
-                                <li class="list-group-item" *ngFor="let label of labelList.requirements" [ngClass]="{'active' : label.state.selected}" (click)="toggleLabel(label)">
+                                <li class="list-group-item" *ngFor="let label of labelList.requirements"
+                                    [ngClass]="{'active' : label.state.selected}" (click)="toggleLabel(label)">
                                     <span class="badge badge-primary"
                                         [style.background-color]="label.label.color">{{ label.label.label }}</span>
                                 </li>
@@ -354,7 +369,8 @@
                         </div>
                         <div class="tab-pane" [ngClass]="{'active': labelTab===3}" role="tabpanel" *ngIf="labelList">
                             <ul class="list-group">
-                                <li class="list-group-item" *ngFor="let label of labelList.stickers" [ngClass]="{'active' : label.state.selected}" (click)="toggleLabel(label)">
+                                <li class="list-group-item" *ngFor="let label of labelList.stickers"
+                                    [ngClass]="{'active' : label.state.selected}" (click)="toggleLabel(label)">
                                     <span class="badge badge-primary"
                                         [style.background-color]="label.label.color">{{ label.label.label }}</span>
                                 </li>
@@ -363,9 +379,9 @@
                     </div>
                 </div>
             </div>
+            <!-- END Label tab-->
 
-
-
+            <!-- START Bug Report tab-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===4}" role="tabpanel">
                 <div class="row">
                     <div class="col-md-4">
@@ -377,7 +393,7 @@
                         </div>
                     </div>
                     <div class="col-md-8">Bug Link</div>
-                    <!--? what is-->
+                    <!--TODO-->
                     <div class="col-md-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -388,9 +404,10 @@
                     </div>
                 </div>
             </div>
+            <!-- END Bug Report tab-->
 
 
-
+            <!-- START Dependency tab-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===5}" role="tabpanel">
                 <div class="row">
                     <div class="col-md-6">
@@ -407,14 +424,16 @@
                         </div>
                     </div>
                     <div *ngIf="testcaseList.length>0" class="col-md-6">
-                            <select class="form-control" (change)="onTestCaseChange($event.target.value)">
-                                    <option value="">---</option>
-                                    <option *ngFor="let testcase of testcaseList; let index = index" [value]="index">
-                                        {{ testcase.testCase }}
-                                    </option>
-                                </select>
+                        <select class="form-control" (change)="onTestCaseChange($event.target.value)">
+                            <option value="">---</option>
+                            <option *ngFor="let testcase of testcaseList; let index = index" [value]="index">
+                                {{ testcase.testCase }}
+                            </option>
+                        </select>
                     </div>
-                    <button type="button" *ngIf="dependencySelectedTestCase" (click)="addToDependencyTable(dependencySelectedTestCase)" class="btn btn-info col-md-12">Add test case</button>
+                    <button type="button" *ngIf="dependencySelectedTestCase"
+                        (click)="addToDependencyTable(dependencySelectedTestCase)" class="btn btn-info col-md-12">Add
+                        test case</button>
                     <!--TODO : Add datatable and add it to query string-->
                     <div class="col-md-12">
                         <table class="table">
@@ -428,22 +447,26 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let dependency of dependencyTestCaseList; let index = index">
-                                    <td><button class="btn btn-danger" (click)="removeDependency(index)"><i class="fa fa-trash"></i></button></td>
+                                    <td><button class="btn btn-danger" (click)="removeDependency(index)"><i
+                                                class="fa fa-trash"></i></button></td>
                                     <td>{{ dependency.test }} - {{ dependency.testcase }}</td>
-                                    <td><input type="checkbox" name="activate" [(ngModel)]="dependency.active" [ngModelOptions]="{standalone: true}"></td>
-                                    <td><input type="text" name="description" [(ngModel)]="dependency.description" [ngModelOptions]="{standalone: true}"></td>
+                                    <td><input type="checkbox" name="activate" [(ngModel)]="dependency.active"
+                                            [ngModelOptions]="{standalone: true}"></td>
+                                    <td><input type="text" name="description" [(ngModel)]="dependency.description"
+                                            [ngModelOptions]="{standalone: true}"></td>
                                 </tr>
                             </tbody>
 
                         </table>
                     </div>
-                    
+
 
                 </div>
             </div>
+            <!-- End Dependency tab-->
 
 
-
+            <!-- START Tracability tab-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===6}" role="tabpanel">
                 <div class="row">
                     <div class="col-md-6">
@@ -486,10 +509,9 @@
                     </div>
                 </div>
             </div>
+            <!-- END Tracability tab-->
         </div>
     </div>
-    <div class="row">
-        <button class="col-md-12 btn btn-primary" type="submit">Save</button>
-    </div>
-
+    
+</div>
 </form>

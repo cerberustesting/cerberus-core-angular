@@ -9,10 +9,12 @@ import { ITest } from 'src/app/shared/model/test.model';
 import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
+import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 
 export enum TESTCASE_INTERACTION_MODE {
   EDIT = 'EDIT',
-  DUPLICATE = 'DUPLICATE'
+  DUPLICATE = 'DUPLICATE',
+  CREATE = 'CREATE',
 }
 
 @Component({
@@ -25,6 +27,7 @@ export class TestcaseInteractionComponent implements OnInit {
   // *** Inputs ***
   testCase: ITestCaseHeader;
   mode: TESTCASE_INTERACTION_MODE;
+  exit: (n: void) => void;
 
   // *** HTML control ***
   private paneActive = 1;
@@ -38,13 +41,13 @@ export class TestcaseInteractionComponent implements OnInit {
     { value: true, text: 'Yes' },
     { value: false, text: 'No' }
   ];
-  private applicationsList: Array<IApplication>; // ok
-  private statusList: Array<IInvariant>; // ok
-  private typesList: Array<IInvariant>; // ok
-  private priorityList: Array<IInvariant>; // TODO
+  private applicationsList: Array<IApplication>;
+  private statusList: Array<IInvariant>;
+  private typesList: Array<IInvariant>;
+  private priorityList: Array<IInvariant>;
   private sprintsList: Array<any>; // ? add type
   private revsList: Array<any>; // ? add type
-  private conditionsList: Array<IInvariant>; // TODO
+  private conditionsList: Array<IInvariant>;
   private testsList: Array<ITest>;
   private countriesList: Array<IInvariant>;
   private labelList = {
@@ -53,22 +56,19 @@ export class TestcaseInteractionComponent implements OnInit {
     stickers: []
   };
 
+  // *** Other testcase properties ***
   private tcCountryList: Array<any> = [];
   private testcaseList: Array<ITestCaseHeader> = [];
   private dependencySelectedTestCase: ITestCaseHeader;
   private dependencyTestCaseList: Array<any> = [];
-
-  private columns = [
-    { prop: 'testCase' },
-    { prop: 'description' },
-  ]
 
   constructor(
     private invariantsService: InvariantsService,
     private systemService: SystemService,
     private formBuilder: FormBuilder,
     private testService: TestService,
-    private notificationService: NotificationService) { }
+    private notificationService: NotificationService,
+    private sidecontentService: SidecontentService) { }
 
   ngOnInit() {
     this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
@@ -120,7 +120,7 @@ export class TestcaseInteractionComponent implements OnInit {
       activeQA: this.testCase.activeQA,
       activeUAT: this.testCase.activeUAT,
       application: this.testCase.application,
-      behaviorOrValueExpected: this.testCase.behaviorOrValueExpected, // ?
+      behaviorOrValueExpected: this.testCase.behaviorOrValueExpected,
       bugId: this.testCase.bugID,
       comment: this.testCase.comment,
       fromRev: this.testCase.fromRev,
@@ -128,8 +128,8 @@ export class TestcaseInteractionComponent implements OnInit {
       group: this.testCase.group,
       implementer: this.testCase.implementer,
       priority: this.testCase.priority,
-      shortDesc: this.testCase.description, // ?
-      status: this.testCase.status, // ?
+      shortDesc: this.testCase.description,
+      status: this.testCase.status,
       targetRev: this.testCase.targetRev,
       targetSprint: this.testCase.targetBuild,
       conditionOper: this.testCase.conditionOper,
@@ -137,50 +137,30 @@ export class TestcaseInteractionComponent implements OnInit {
       conditionVal2: this.testCase.conditionVal2,
       toRev: this.testCase.toRev,
       toSprint: this.testCase.toBuild,
-      userAgent: this.testCase.userAgent, // ?
+      userAgent: this.testCase.userAgent,
       screenSize: this.testCase.screenSize,
     });
   }
 
-  onSubmit(values: any) {
+  
 
-    let queryString = "";
-
-    for (let item in values) {
-      queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item]) + '&';
-    }
-
-
-    let countryList = [];
-    for (let country of this.countriesList) {
-      countryList.push(
-        { country: country.value, toDelete: this.tcCountryList.map(c => c.country).includes(country.value) }
-      )
-    }
-
-    let labelList = [];
-    for (let type in this.labelList) {
-      for (let label of this.labelList[type]) {
-        if (label.state.selected) {
-          labelList.push(
-            { labelId: label.id, toDelete: false }
-          )
-        }
-      }
-    }
-
-    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(this.dependencyTestCaseList)) + '&';
-    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
-    queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
-
-    this.testService.updateTestCase(queryString).subscribe(rep => console.info(rep));
-
-  }
-
+  
+  /** toggleLabel
+   * * call on label click
+   * * toggle label selection
+   * @param label label to select/unselect
+   */
   toggleLabel(label): void {
     label.state.selected = !label.state.selected;
   }
 
+  // *** Dependency tab ***
+
+  /** onTestChange
+   * * call on test selection
+   * * load all testcase from the chosen test
+   * @param test 
+   */
   onTestChange(test) {
     this.testService.getTestCasesList(test);
     this.testService.observableTestCasesList
@@ -193,14 +173,20 @@ export class TestcaseInteractionComponent implements OnInit {
       });
   }
 
+  /** onTestCaseChange
+   * * asign the selected testcase to dependencySelectedTestCase
+   * @param testcase the testcase to asign
+   */
   onTestCaseChange(testcase) {
-    console.log(testcase);
     this.dependencySelectedTestCase = testcase;
   }
 
-
-  addToDependencyTable(testCaseIndex) {
-    // ! console.log("testcase :", testCaseIndex);
+  /** addToDependencyTable
+   * * add the testcase to the table
+   * * if the testcase is already in the table notify the error
+   * @param testCaseIndex 
+   */
+  addToDependencyTable(testCaseIndex): void {
     let testcase = this.testcaseList[testCaseIndex];
     let dependency = {
       id: this.dependencyTestCaseList.sort((a, b) => (a.id<b.id)?1:-1)[0].id+1,
@@ -215,11 +201,69 @@ export class TestcaseInteractionComponent implements OnInit {
     } else {
       this.notificationService.createANotification('This TestCase is already selected !', NotificationStyle.Error);
     }
-    // ! console.log(this.dependencyTestCaseList);
   }
 
-  removeDependency(dependencyIndex) {
+  /** removeDependency
+   * * call on click on the trash button
+   * * delete the dependency from the table
+   * @param dependencyIndex 
+   */
+  removeDependency(dependencyIndex): void {
     this.dependencyTestCaseList.splice(dependencyIndex, 1);
+  }
+
+  /** onSubmit
+   * * call the api to valid the forms
+   * @param values values of the formGroup
+   */
+  onSubmit(values: any): void {
+
+    if (!values.application) {
+      this.notificationService.createANotification("Please specify the name of the application", NotificationStyle.Warning);
+      return;
+    }
+
+    let queryString = ""; // the query string to send
+    let countryList = []; //the format countrylist
+    let labelList = []; //the format labelList
+
+    // add all items from the form  group
+    for (let item in values) {
+      queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item]) + '&';
+    }
+    
+    // fill countryList with all countries selected
+    for (let country of this.countriesList) {
+      countryList.push(
+        { country: country.value, toDelete: this.tcCountryList.map(c => c.country).includes(country.value) }
+      )
+    }
+
+    // fill labelList with all labels selected
+    for (let type in this.labelList) {
+      for (let label of this.labelList[type]) {
+        if (label.state.selected) {
+          labelList.push(
+            { labelId: label.id, toDelete: false }
+          )
+        }
+      }
+    }
+
+    // add all list to the queryString
+    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(this.dependencyTestCaseList)) + '&';
+    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
+    queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
+
+    this.testService.updateTestCase(queryString).subscribe(rep => this.refreshTable());
+  }
+
+  /** refreshTable
+   * * close the sidecontent and call exit function gave as input
+   */
+  refreshTable(): void {
+    this.sidecontentService.closeSideBlock();
+    this.exit();
   }
 
 }

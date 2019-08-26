@@ -47,11 +47,9 @@ export class DatalibInteractionComponent implements OnInit {
   editing = {};
 
   updateValue(event, cell, rowIndex) {
-    console.log('inline editing rowIndex', rowIndex)
     this.editing[rowIndex + '-' + cell] = false;
     this.data[rowIndex][cell] = event.target.value;
     this.data = [...this.data];
-    console.log('UPDATED!', this.data[rowIndex][cell]);
   }
 
   countriesList: any[];

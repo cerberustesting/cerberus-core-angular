@@ -1,5 +1,5 @@
 <app-datatable-page [page]="page" [columns]="columns" [servlet]="servlet" [selectedRows]="selectedRows"
-    [selection]="true">
+    [selection]="true" [refreshResults]="refreshResultsEvent.asObservable()">
 
     <ng-template datatable-filter-tmp>
         <button type="button" class="btn btn-info mr-2">

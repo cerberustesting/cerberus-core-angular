@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Column } from 'src/app/shared/model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
-import { LabelfilteringPipe } from 'src/app/shared/pipes/labelfiltering.pipe';
-import { SystemService } from 'src/app/core/services/crud/system.service';
-import { FilterService } from 'src/app/core/services/crud/filter.service';
-import { Filter } from 'src/app/shared/model/filter.model';
 import { DataLibColumnsData } from './datalibrary.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
 import { DatalibInteractionComponent, MODE } from './datalib-interaction/datalib-interaction.component';
@@ -24,19 +19,13 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 })
 export class DatalibraryComponent implements OnInit {
 
-  columns = DataLibColumnsData;
-  // TODO : create gloabl method
-  page = {
-    size: 0, //maximum element per page
-    number: 1, //number of current page
-    sort: [{ dir: "asc", prop: "testDataLibID" }], //sort item
-    totalCount: 0 //total count of element in database
-  };
-  selectedRows = [];
-  filterList: Array<Filter> = [];
-  globalSearch = ''; // value in global search field
-  servlet = '/ReadTestDataLib';
-  private refreshResultsEvent: Subject<void> = new Subject<void>();
+  private columns: Array<Column> = DataLibColumnsData; // get all columns from `datalibrary.columnsdata.ts`
+
+  // *** parameters for the `datatable-page` component ***
+  
+  private defaultPageSort = [{ dir: "asc", prop: "testDataLibID" }];
+  private servlet = '/ReadTestDataLib'; // the api to call to get datalib list
+  private refreshResultsEvent: Subject<void> = new Subject<void>(); // the event to emit to refresh the table
 
   refreshResults() {
     this.refreshResultsEvent.next()
@@ -54,17 +43,24 @@ export class DatalibraryComponent implements OnInit {
 
   ngOnInit() { }
 
-
-  // *** Datalib Methods ***
-
-  openTCList(row): void {
-    this.sideContentService.addComponentToSideBlock(DatalibTclistComponent, {
-      id: row.testDataLibID,
-      name: row.name,
-      country: row.country
+  /** createDatalib
+   * * Open side content for datalib creation
+   */
+  createDatalib() {
+    this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
+      datalib: {},
+      mode: MODE.CREATE,
+      exit: () => {
+        this.refreshResults();
+        this.NotificationService.createANotification('The datalib has been successfully created', NotificationStyle.Success);
+      }
     });
     this.sideContentService.openSideBlock();
   }
+
+  // *********************************
+  // *** End Row buttons functions ***  
+  // *********************************
 
   /**
    * editDataLib
@@ -119,19 +115,19 @@ export class DatalibraryComponent implements OnInit {
     };
   }
 
-  /** createDatalib
-   * * Open side  content for datalib creation
+  /** openTCList
+   * * open the testcase list link wich use the datalib in the side content
+   * @param datalib the selected datalib 
    */
-  createDatalib() {
-    this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
-      datalib: {},
-      mode: MODE.CREATE,
-      exit: () => {
-        this.refreshResults();
-        this.NotificationService.createANotification('The datalib has been successfully created', NotificationStyle.Success);
-      }
+  openTCList(datalib): void {
+    this.sideContentService.addComponentToSideBlock(DatalibTclistComponent, {
+      id: datalib.testDataLibID,
+      name: datalib.name,
+      country: datalib.country
     });
     this.sideContentService.openSideBlock();
   }
+
+  
 
 }

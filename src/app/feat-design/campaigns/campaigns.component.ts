@@ -10,16 +10,10 @@ import { HeaderTitleService } from 'src/app/core/services/crud/header-title.serv
 })
 export class CampaignsComponent implements OnInit {
 
-  columns: Array<Column> = CampainsColumnsData; // column list
-  
-  page = {
-    size: 0, //maximum element per page
-    number: 1, //number of current page
-    sort: [{dir: "asc", prop : "testCase"}], //sort item
-    totalCount: 0 //total count of element in database
-  };
-  selectedRows: Array<any> = [];
-  servlet :string = '/ReadCampaign'
+  private columns: Array<Column> = CampainsColumnsData; // column list  
+  private defaultPageSort = [{dir: "asc", prop : "testCase"}];
+  private selectedRows: Array<any> = [];
+  private servlet :string = '/ReadCampaign'
 
   constructor(private headerTitleService: HeaderTitleService) { 
     headerTitleService.setTitle("Campaigns");

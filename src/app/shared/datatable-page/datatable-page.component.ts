@@ -14,13 +14,7 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
   styleUrls: ['./datatable-page.component.scss'],
 })
 export class DatatablePageComponent implements OnInit {
-
-  @Input() page: {
-    number: number,
-    size: number,
-    sort: any,
-    totalCount: number
-  };
+  @Input() pageSort: any;
   @Input() columns: Array<Column>;
   @Input() massAction: boolean;
   @Input() servlet: string;
@@ -34,10 +28,15 @@ export class DatatablePageComponent implements OnInit {
   @ContentChild(DatatableEndLineAction, { read: TemplateRef, static: true }) endLineActionTemplate: TemplateRef<any>;
   
 
-  cache: any = {}; //number of displayed rows
-
-  rows: Array<any> = [];
-  globalSearch: string
+  private cache: any = {}; //number of displayed rows
+  private rows: Array<any> = []; //rows to display
+  private globalSearch: string; // value in global search field
+  private page: { // the default page informations
+    number: number, // page number
+    size: number, // number of rows on screen
+    sort: any, // sort informations (column and direction)
+    totalCount: number // total of element in the database
+  };
 
 
   constructor(
@@ -47,6 +46,12 @@ export class DatatablePageComponent implements OnInit {
     private NotificationService: NotificationService) { }
 
   ngOnInit() {
+    this.page = {
+      number: 1,
+      size: 0,
+      sort: this.pageSort,
+      totalCount: 0
+    };
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
       console.log('systemList change')
       this.cache = {};

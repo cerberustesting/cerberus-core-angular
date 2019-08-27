@@ -26,12 +26,7 @@ export class TestcaselistComponent implements OnInit {
 
 
   private columns: Array<Column> = TestCasesColumnsData; // column list from `testcaselist.columnsdata.ts`  
-  private page = {
-    size: 0, //maximum element per page
-    number: 1, //number of current page
-    sort: [{dir: "asc", prop : "testCase"}], //sort item
-    totalCount: 0 //total count of element in database
-  };
+  private defaultPageSort = [{dir: "asc", prop : "testCase"}];
   private selectedRows: Array<any> = []; // the selected rows in the table
   private servlet :string = '/ReadTestCase'; //const : the api to call to refresh datatable results
   private refreshResultsEvent: Subject<void> = new Subject<void>(); //the observable to refresh the table

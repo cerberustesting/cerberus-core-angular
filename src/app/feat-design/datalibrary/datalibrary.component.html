@@ -1,13 +1,16 @@
 <app-datatable-page
-    [page]="page"
+    [pageSort]="defaultPageSort" 
     [columns]="columns"
     [servlet]="servlet"
     [refreshResults]="refreshResultsEvent.asObservable()">
 
+    <!--START Template for create datalib button-->
     <ng-template datatable-filter-tmp>
         <button class="btn btn-info mr-4 mb-3" (click)="createDatalib()"><i class="fa fa-fw fa-plus download mr-2"></i>Datalib</button>
     </ng-template>
+    <!--END Template for create datalib button-->
     
+    <!--START Template for End Row Buttons-->
     <ng-template datatable-end-line-tmp let-row="row">
         <div class="row-menu">
             <div class="actions-section">
@@ -30,5 +33,6 @@
             </div>
         </div>
     </ng-template>
+    <!--END Template for End Row Buttons-->
 
 </app-datatable-page>

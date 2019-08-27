@@ -55,6 +55,23 @@ ng-select.system-select .ng-dropdown-panel {
   left: 20px;
 }
 
+ng-select .ng-select-container {
+  border: 1px solid #d8dfed !important;
+}
+
+.input-group > ng-select:not(:first-child) .ng-select-container {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+ng-select.custom-icon > .ng-select-container > .ng-value-container {
+  padding-top: 0px !important;
+}
+
+.input-group-height {
+  height: 38px;
+}
+
 .ng-select .ng-select-container {
   height: 100% !important;
 }

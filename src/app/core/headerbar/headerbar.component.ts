@@ -20,7 +20,7 @@ export class HeaderbarComponent implements OnInit {
   // system(s) list fetched from API
   private systemsList: Array<IInvariant> = [];
   // selected system(s) list by the user 
-  private selectedSystemsList: Array<IInvariant>;
+  private selectedSystemsList: Array<IInvariant> = [];
 
   // user data from API
   private user: IUser;

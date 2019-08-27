@@ -1,4 +1,4 @@
-import { Column } from 'src/app/shared/model/column.model';
+import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
 
 export var DataLibColumnsData: Column[] = [
   {
@@ -8,6 +8,7 @@ export var DataLibColumnsData: Column[] = [
     defaultActive: false,
     sSearch: [],
     apiName: 'tdl.TestDataLibID',
+    filterMode: FILTER_MODE.SEARCH_FIELD,
     searchable: true,
     flexGrow: 50,
     multiple: true,
@@ -20,6 +21,7 @@ export var DataLibColumnsData: Column[] = [
     defaultActive: true,
     sSearch: [],
     apiName: 'tdl.Name',
+    filterMode: FILTER_MODE.SEARCH_FIELD,
     searchable: true,
     multiple: true,
     placeholder: 'Select Name',
@@ -97,6 +99,7 @@ export var DataLibColumnsData: Column[] = [
     active: false,
     sSearch: [],
     apiName: 'tdd.value',
+    filterMode: FILTER_MODE.SEARCH_FIELD,
     searchable: true,
     multiple: true,
     placeholder: 'Select Value',

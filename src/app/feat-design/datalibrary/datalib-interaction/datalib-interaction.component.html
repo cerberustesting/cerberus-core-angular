@@ -17,6 +17,7 @@
 
             </div>
         </div>
+        <!-- START Type Dropdown -->
         <div class="col-md-4">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -30,6 +31,9 @@
                 </select>
             </div>
         </div>
+        <!-- END Type Dropdown -->
+
+        <!-- START System Dropdown -->
         <div class="col-md-4">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -40,6 +44,9 @@
                 </select>
             </div>
         </div>
+        <!-- END System Dropdown -->
+
+        <!-- START Environment Dropdown -->
         <div class="col-md-4">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -51,6 +58,9 @@
                 </select>
             </div>
         </div>
+        <!-- END Environment Dropdown -->
+
+        <!-- START Country Dropdown -->
         <div class="col-md-4">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -61,6 +71,7 @@
                 </select>
             </div>
         </div>
+        <!-- END Country Dropdown -->
     </div>
     <!-- End Header -->
 
@@ -81,162 +92,198 @@
             <!--Definition TAB-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===1}" role="tabpanel">
                 <!--SERVICE configuration-->
-                <div *ngIf="datalibForm.value.type==='SERVICE'" >
-                        <!-- <ng-container *ngTemplateOutlet="templateServiceTab"></ng-container> -->
-                        <div class="block block-rounded block-bordered">
-                                <div class="block-header">
-                                    <h3 class="block-title">SERVICE configuration</h3>
-                                </div>
-                                <div class="block-content">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Database</span>
-                                                </div>
-                                                <select class="form-control" formControlName="databaseUrl">
-                                                    <!-- ! -->
-                                                    <option *ngFor="let database of databasesList" [value]="database.value">
-                                                        {{database.value}}</option>
-                                                </select>
-                                            </div>
+                <div *ngIf="datalibForm.value.type==='SERVICE'">
+                    <!-- <ng-container *ngTemplateOutlet="templateServiceTab"></ng-container> -->
+                    <div class="block block-rounded block-bordered">
+                        <div class="block-header">
+                            <h3 class="block-title">SERVICE configuration</h3>
+                        </div>
+                        <div class="block-content">
+                            <div class="row">
+                                <!-- START Database Dropdown -->
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Database</span>
                                         </div>
-                                        <div class="col-md-8">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Service</span>
-                                                </div>
-                                                <select class="form-control" formControlName="service">
-                                                    <option *ngFor="let service of servicesList" [value]="service.service">
-                                                        {{service.service}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Service Path </span>
-                                                </div>
-                                                <input type="text" class="form-control" formControlName="servicepath">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Operation </span>
-                                                </div>
-                                                <input type="text" class="form-control" [value]="'operation ?'"> <!-- TODO -->
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Envelope </span>
-                                                </div>
-                                                <textarea type="text" class="form-control" formControlName="envelope"></textarea>
-                                            </div>
-                                        </div>
+                                        <select class="form-control" formControlName="databaseUrl">
+                                            <option *ngFor="let database of databasesList" [value]="database.value">
+                                                {{database.value}}</option>
+                                        </select>
                                     </div>
                                 </div>
+                                <!-- END Database Dropdown -->
+
+                                <!-- START Service Dropdown -->
+                                <div class="col-md-8">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Service</span>
+                                        </div>
+                                        <select class="form-control" formControlName="service">
+                                            <option *ngFor="let service of servicesList" [value]="service.service">
+                                                {{service.service}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- END Service Dropdown -->
+
+
+                                <!-- START Service Path Input -->
+                                <div class="col-md-8">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Service Path</span>
+                                        </div>
+                                        <input type="text" class="form-control" formControlName="servicepath">
+                                    </div>
+                                </div>
+                                <!-- END Service Path Input -->
+
+                                <!-- START Operation Input -->
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Operation</span>
+                                        </div>
+                                        <input type="text" class="form-control" [value]="'operation ?'"> <!-- TODO -->
+                                    </div>
+                                </div>
+                                <!-- END Operation Input -->
+
+                                <!-- START Envelope Input -->
+                                <div class="col-md-12">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Envelope</span>
+                                        </div>
+                                        <textarea type="text" class="form-control"
+                                            formControlName="envelope"></textarea>
+                                    </div>
+                                </div>
+                                <!-- END Envelope Input -->
                             </div>
+                        </div>
+                    </div>
                 </div>
                 <!--END SERVICE configuration-->
 
                 <!--SQL configuration-->
-                <div *ngIf="datalibForm.value.type==='SQL'" >
-                        <!-- <ng-container *ngTemplateOutlet="templateSqlTab"></ng-container> -->
-                        <div class="block block-rounded block-bordered">
-                                <div class="block-header">
-                                    <h3 class="block-title">SQL configuration</h3>
-                                </div>
-                                <div class="block-content">
-                                    <div class="col-md-6">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Database </span>
-                                            </div>
-                                            <select class="form-control" formControlName="database">
-                                                <option *ngFor="let database of databasesList">
-                                                    {{database.value}}</option>
-                                            </select>
-                                        </div>
+                <div *ngIf="datalibForm.value.type==='SQL'">
+                    <!-- <ng-container *ngTemplateOutlet="templateSqlTab"></ng-container> -->
+                    <div class="block block-rounded block-bordered">
+                        <div class="block-header">
+                            <h3 class="block-title">SQL configuration</h3>
+                        </div>
+                        <div class="block-content">
+                            <!-- START Database Dropdown -->
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Database</span>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Script </span>
-                                            </div>
-                                            <textarea type="text" class="form-control" formControlName="script"></textarea>
-                                        </div>
-                                    </div>
+                                    <select class="form-control" formControlName="database">
+                                        <option *ngFor="let database of databasesList">
+                                            {{database.value}}</option>
+                                    </select>
                                 </div>
                             </div>
+                            <!-- END Database Dropdown -->
+
+                            <!-- START Script TextArea -->
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Script </span>
+                                    </div>
+                                    <textarea type="text" class="form-control" formControlName="script"></textarea>
+                                </div>
+                            </div>
+                            <!-- END Script TextArea -->
+                        </div>
+                    </div>
                 </div>
                 <!--END SQL configuration-->
 
                 <!--CSV configuration-->
-                <div *ngIf="datalibForm.value.type==='CSV'" >
-                        <!-- <ng-container *ngTemplateOutlet="templateCsvTab"></ng-container> -->
-                        <div class="block block-rounded block-bordered">
-                                <div class="block-header">
-                                    <h3 class="block-title">CSV configuration</h3>
+                <div *ngIf="datalibForm.value.type==='CSV'">
+                    <!-- <ng-container *ngTemplateOutlet="templateCsvTab"></ng-container> -->
+                    <div class="block block-rounded block-bordered">
+                        <div class="block-header">
+                            <h3 class="block-title">CSV configuration</h3>
+                        </div>
+                        <div class="block-content">
+                            <div class="row">
+                                <!--START Database Dropdown-->
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Database</span>
+                                        </div>
+                                        <select class="form-control" formControlName="databaseCsv">
+                                            <option *ngFor="let database of databasesList">
+                                                {{database.value}}</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="block-content">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Database </span>
-                                                </div>
-                                                <select class="form-control" formControlName="databaseCsv">
-                                                    <option *ngFor="let database of databasesList">
-                                                        {{database.value}}</option>
-                                                </select>
-                                            </div>
+                                <!--END Database Dropdown-->
+
+                                <!--START Separator Input-->
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Separator</span>
                                         </div>
-                                        
-                                        <div class="col-md-6">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">Separator </span>
-                                                </div>
-                                                <input type="text" class="form-control" formControlName="separator">
-                                            </div>
+                                        <input type="text" class="form-control" formControlName="separator">
+                                    </div>
+                                </div>
+                                <!--END Separator Input-->
+
+                                <!--START CSV URL Input-->
+                                <div class="col-md-12">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">CSV URL</span>
                                         </div>
-                                        <div class="col-md-12">
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">CSV URL </span>
-                                                    </div>
-                                                    <input type="text" class="form-control" formControlName="csvUrl">
-                                                </div>
-                                            </div>
-                                        <div class="col-md-12">
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">CSV File </span>
-                                                </div>
-                                                <div class="custom-file">
-                                                    <label class="custom-file-label">No file selected</label>
-                                                    <input type="file" class="form-control custom-file-input js-custom-file-input-enabled" formControlName="file"> <!-- Todo -->
-                                                </div>
-                                                
-                                            </div>
+                                        <input type="text" class="form-control" formControlName="csvUrl">
+                                    </div>
+                                </div>
+                                <!--END CSV URL Input-->
+
+                                <!--START CSV File Input-->
+                                <div class="col-md-12">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">CSV File </span>
                                         </div>
-                                        <div class="col-md-12">
-                                                <div class="custom-control custom-checkbox custom-control-inline custom-control-primary">
-                                                        <input type="checkbox" class="custom-control-input" id="automatic-fied" checked="">
-                                                        <label class="custom-control-label" for="automatic-fied">Automatically feed subdata's list with the first line of csv ?</label>
-                                                    </div>
-                        
+                                        <div class="custom-file">
+                                            <label class="custom-file-label">No file selected</label>
+                                            <input type="file"
+                                                class="form-control custom-file-input js-custom-file-input-enabled"
+                                                formControlName="file"> <!-- Todo -->
                                         </div>
                                     </div>
                                 </div>
+                                <!--END CSV File Input-->
+
+
+                                <div class="col-md-12">
+                                    <div
+                                        class="custom-control custom-checkbox custom-control-inline custom-control-primary">
+                                        <input type="checkbox" class="custom-control-input" id="automatic-fied"
+                                            checked=""> <!-- Todo -->
+                                        <label class="custom-control-label" for="automatic-fied">Automatically feed
+                                            subdata's list with the first line of csv ?</label>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                    </div>
                 </div>
                 <!--END CSV configuration-->
 
                 <div class="row">
+                    <!--START Group Input-->
                     <div class="col-md-8">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -246,12 +293,20 @@
 
                         </div>
                     </div>
+                    <!--END Group Input-->
+
+                    <!--START Private Input-->
                     <div class="col-md-4">
                         <div class="custom-control custom-checkbox custom-control-inline custom-control-primary">
-                            <input type="checkbox" class="custom-control-input" id="privateData" [checked]="datalib.privateData==='Y'">
-                            <label class="custom-control-label" for="privateData">This data will be editable by admin Only</label>
+                            <input type="checkbox" class="custom-control-input" id="privateData"
+                                [checked]="datalib.privateData==='Y'">
+                            <label class="custom-control-label" for="privateData">This data will be editable by admin
+                                Only</label>
                         </div>
                     </div>
+                    <!--END Private Input-->
+
+                    <!--START Description TextArea-->
                     <div class="col-md-12">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -260,6 +315,7 @@
                             <textarea type="text" class="form-control" formControlName="libdescription"></textarea>
                         </div>
                     </div>
+                    <!--END Description TextArea-->
                 </div>
 
 
@@ -267,32 +323,55 @@
             <!--END Definition TAB-->
             <!--SubData TAB-->
             <div class="tab-pane" [ngClass]="{'active': paneActive===2}" role="tabpanel">
+
                 <button type="button" class="btn btn-info" (click)="addSubdata()">Add Subdata</button>
-                <ngx-datatable #myTable class="material fullscreen" [rowHeight]="50" [headerHeight]="50" [rows]="data" [rowClass]="getRowClass"
-                    [columnMode]="'force'">     
+
+                <ngx-datatable 
+                    #myTable 
+                    class="material fullscreen" 
+                    [rowHeight]="50" 
+                    [headerHeight]="50" 
+                    [rows]="data"
+                    [rowClass]="getRowClass" 
+                    [columnMode]="'force'">
+
                     <ngx-datatable-column>
-                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
-                                <button type="button" class="btn delete-btn" [ngClass]="(row.toDelete)? 'btn-info' : 'btn-danger'" (click)="deleteSubdata(row)"><i class="fa" [ngClass]="(row.toDelete)? 'fa-plus-square' : 'fa-trash'" ></i></button>
-                            </ng-template>
+                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row">
+                            <button 
+                                type="button" 
+                                class="btn delete-btn"
+                                [ngClass]="(row.toDelete)? 'btn-info' : 'btn-danger'" 
+                                (click)="deleteSubdata(row)">
+
+                                <i class="fa" [ngClass]="(row.toDelete)? 'fa-plus-square' : 'fa-trash'"></i></button>
+                        </ng-template>
                     </ngx-datatable-column>
+
+
                     <ng-template ngFor let-column let-index="index" [ngForOf]="columns">
-                            <ngx-datatable-column *ngIf="column.condition" [resizeable]="false" [name]="column.name" [prop]="column.prop">
-                                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                                            <div style="width:100%; height: 100%;"
-                                              title="Double click to edit"
-                                              (dblclick)="editing[rowIndex + '-' + column.prop] = true"
-                                              *ngIf="!editing[rowIndex + '-' + column.prop]">
-                                              <span *ngIf="!value">...</span>{{value}}
-                                            </div>
-                                            <input
-                                              autofocus
-                                              (blur)="updateValue($event, column.prop, rowIndex)"
-                                              *ngIf="editing[rowIndex + '-' + column.prop]"
-                                              type="text"
-                                              [value]="value"
-                                            />
-                                          </ng-template>
-                            </ngx-datatable-column>
+                        <ngx-datatable-column 
+                            *ngIf="column.condition" 
+                            [resizeable]="false" 
+                            [name]="column.name"
+                            [prop]="column.prop">
+
+                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                <div 
+                                    style="width:100%; height: 100%;" 
+                                    title="Double click to edit"
+                                    (dblclick)="editing[rowIndex + '-' + column.prop] = true"
+                                    *ngIf="!editing[rowIndex + '-' + column.prop]">
+
+                                    <span *ngIf="!value">...</span>{{value}}
+                                </div>
+                                <input 
+                                    autofocus 
+                                    (blur)="updateValue($event, column.prop, rowIndex)"
+                                    *ngIf="editing[rowIndex + '-' + column.prop]" 
+                                    type="text" 
+                                    [value]="value" />
+                            </ng-template>
+                        </ngx-datatable-column>
                     </ng-template>
 
                 </ngx-datatable>
@@ -332,10 +411,13 @@
         </div>
     </div>
     <!--END BLOCK WITH TABS-->
+
+    <!-- START Submit button-->
     <div class="row">
         <button class="col-md-12 btn btn-info" type="submit" *ngIf="mode==='EDIT'">Save</button>
         <button class="col-md-12 btn btn-info" type="submit" *ngIf="mode==='DUPLICATE'">Duplicate</button>
         <button class="col-md-12 btn btn-info" type="submit" *ngIf="mode==='CREATE'">Create</button>
     </div>
+    <!-- END Submit button-->
 
 </form>

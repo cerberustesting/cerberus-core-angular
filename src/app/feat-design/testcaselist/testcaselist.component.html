@@ -1,5 +1,10 @@
-<app-datatable-page [page]="page" [columns]="columns" [servlet]="servlet" [selectedRows]="selectedRows"
-    [selection]="true" [refreshResults]="refreshResultsEvent.asObservable()">
+<app-datatable-page 
+    [pageSort]="defaultPageSort" 
+    [columns]="columns" 
+    [servlet]="servlet" 
+    [selectedRows]="selectedRows"
+    [selection]="true" 
+    [refreshResults]="refreshResultsEvent.asObservable()">
 
     <!--START Template for create button-->
     <ng-template datatable-filter-tmp>

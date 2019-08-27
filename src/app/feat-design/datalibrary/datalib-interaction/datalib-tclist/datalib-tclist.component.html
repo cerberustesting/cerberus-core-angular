@@ -1,25 +1,29 @@
+<!-- Side Content Header -->
 <div class="block-header">
     <h3 class="block-title">List of test cases affected by this entry</h3>
 </div>
+
+<!-- Side Content content -->
 <div class="block-content">
     <div class="accordion" id="accordionExample">
         <div class="card" *ngFor="let drop of requestResponseTable">
+            <!-- Title of the drop -->
             <div class="card-header" id="headingOne" [ngClass]="{'header-active': drop.expanded}">
                 <h2 class="mb-0">
                     <button class="btn btn-link" type="button" (click)="drop.expanded = !drop.expanded">
-                        {{drop[0]}} <i class="si"
-                            [ngClass]="{'si-arrow-down': !drop.expanded, 'si-arrow-right': drop.expanded}"></i>
+                        {{drop[0]}} <i class="si" [ngClass]="(drop.expanded)? 'si-arrow-right' : 'si-arrow-down'"></i>
                     </button>
                 </h2>
             </div>
-
+            <!-- Content of the drop -->
             <div id="collapseOne" class="collapse" [ngClass]="{'show' : drop.expanded}" aria-labelledby="headingOne"
                 data-parent="#accordionExample">
                 <ul class="list-group">
                     <li class="list-group-item" *ngFor="let testcase of drop[3]">
                         <a [routerLink]="['/design/testcasescript', testcase.link_test, testcase.link_testcase]">
                             {{testcase.TestCaseNumber}} : {{testcase.TestCaseDescription}}
-                        </a></li>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

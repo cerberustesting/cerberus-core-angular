@@ -1,0 +1,24 @@
+<div class="dd-handle" (click)="toggleChildren(label)">
+    <i class="fa fa-folder text-warning mr-1"></i> <span class="badge badge-primary"
+        [style.backgroundColor]="label.label.color"> {{label.label.value}}</span> <i *ngIf="label.children" class="si"
+        [ngClass]="{'si-arrow-right': label.expand, 'si-arrow-down': !label.expand}"></i>
+</div>
+<div class="progress">
+    <div class="progress-bar bg-succes" role="progressbar" [style.width]="label.values.OK+'%'"
+        [attr.aria-valuenow]="label.values.OK" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-danger" role="progressbar" [style.width]="label.values.KO+'%'"
+        [attr.aria-valuenow]="label.values.KO" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-warning" role="progressbar" [style.width]="label.values.FA+'%'"
+        [attr.aria-valuenow]="label.values.FA" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-warning" role="progressbar" [style.width]="label.values.NA+'%'"
+        [attr.aria-valuenow]="label.values.NA" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-info" role="progressbar" [style.width]="label.values.NE+'%'"
+        [attr.aria-valuenow]="label.values.NE" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-secondary" role="progressbar" [style.width]="label.values.CA+'%'"
+        [attr.aria-valuenow]="label.values.CA" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<ol class="dd-list" *ngIf="label.children && label.expand">
+    <li class="dd-item" data-id="23" *ngFor="let childLabel of label.children">
+        <app-label-progress [label]="childLabel"></app-label-progress>
+    </li>
+</ol>

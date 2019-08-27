@@ -17,6 +17,7 @@ import { TagDetailComponent } from './reportbytag/tag-detail/tag-detail.componen
 import { TagSelectionComponent } from './reportbytag/tag-selection/tag-selection.component';
 import { StatisticDurationComponent } from './reportbytag/graph/statistic-duration/statistic-duration.component';
 import { StatisticReliabilityComponent } from './reportbytag/graph/statistic-reliability/statistic-reliability.component';
+import { LabelProgressComponent } from './reportbytag/graph/reportby-label/label-progress/label-progress.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { StatisticReliabilityComponent } from './reportbytag/graph/statistic-rel
       TagDetailComponent,
       TagSelectionComponent,
       StatisticDurationComponent,
-      StatisticReliabilityComponent
+      StatisticReliabilityComponent,
+      LabelProgressComponent
   ],
   imports: [
     CommonModule,

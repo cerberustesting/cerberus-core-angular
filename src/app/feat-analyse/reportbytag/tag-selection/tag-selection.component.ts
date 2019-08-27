@@ -98,17 +98,21 @@ export class TagSelectionComponent implements OnInit {
     });
     this.filtersShowed = false;
   }
-  onScrollToEnd() {
+
+  /** onScrollToEnd
+   * * call by ng-select on scrolling to the last tag
+   */
+  onScrollToEnd(): void {
     this.fetchMore();
   }
 
-  selectedTagChange() {
-    
-    
+  /** selectedTagChange
+   * * load emit selected tag and chnge url queryParams
+   */
+  selectedTagChange(): void {       
     if (this.selectedTag) { 
       this.tagSelection.emit(this.selectedTag);
-      this.router.navigate([], { queryParams: { tag: this.selectedTag.tag } }); 
-      
+      this.router.navigate([], { queryParams: { tag: this.selectedTag.tag } });       
     }
     else { this.router.navigate([]); }
   }

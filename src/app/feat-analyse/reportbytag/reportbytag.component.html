@@ -1,25 +1,29 @@
 <!-- title section -->
-<div class="bg-body-light">
+<!-- ? keep if duplicate title
+  <div class="bg-body-light">
   <div class="content content-full">
     <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
       <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Execution Report</h1>
     </div>
   </div>
-</div>
+</div> -->
+
 
 <div class="content">
-
+  <!-- Selection block -->
   <app-tag-selection (tagSelection)="tagSelection($event)"></app-tag-selection>
 
-
+  <!-- Report block -->
   <div class="row" *ngIf="selectedTag">
     <!-- ! *ngIf="selectedTag"-->
     <div class="col-md-12">
 
-      <!--Menus on top right-->
+
       <div class="block block-rounded block-bordered">
+        <!--START block header -->
         <div class="block-header block-header-default">
           <h3 class="block-title">{{selectedTag.tag}} <small>execution report</small></h3>
+          <!--Menus on top right-->
           <div class="block-options">
             <button type="button" class="btn-block-option" data-toggle="block-option" data-action="fullscreen_toggle"><i
                 class="si si-size-fullscreen"></i></button>
@@ -32,46 +36,63 @@
                 class="si si-doc"></i></button>
           </div>
         </div>
+        <!--END block header -->
         <div class="block-content">
           <div class="row push">
+            <!-- Fix informations (Tag detail and Report by status) -->
             <div class="col-md-6">
               <app-tag-detail></app-tag-detail>
             </div>
             <div class="col-md-6">
               <app-reportby-status [selectedTag]="selectedTag"></app-reportby-status>
             </div>
+
             <div class="content">
               <div class="block block-rounded block-bordered">
+                <!-- The tabs header -->
                 <ul class="nav nav-tabs nav-tabs-block justify-content-end js-tabs-enabled" data-toggle="tabs"
                   role="tablist">
                   <li class="nav-item">
                     <a class="nav-link" [ngClass]="{'active': reportView}" (click)="toggleReportView(true)">Report</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" [ngClass]="{'active': !reportView}" (click)="toggleReportView(false)">Analyse</a>
+                    <a class="nav-link" [ngClass]="{'active': !reportView}"
+                      (click)="toggleReportView(false)">Analyse</a>
                   </li>
                 </ul>
+                <!-- START Tab Report -->
                 <div class="block-content tab-content row push" id="chartsView" *ngIf="reportView">
-                    <div class="col-md-6"><app-reportby-testfolder class="report-charts"></app-reportby-testfolder></div>
-                  <div class="col-md-6"><app-reportby-label class="report-charts"></app-reportby-label></div>
-                  <div class="col-md-6" *ngFor="let chart of chartsOther"><app-reportby-other *ngIf="chart.display" [chart]="chart" class="report-charts"></app-reportby-other></div>
-                  <div class="col-md-6"><app-statistic-duration class="report-charts"></app-statistic-duration></div>
-                  <div class="col-md-6"><app-statistic-reliability class="report-charts"></app-statistic-reliability></div>
+                  <div class="col-md-6">
+                    <app-reportby-testfolder class="report-charts"></app-reportby-testfolder>
+                  </div>
+                  <div class="col-md-6">
+                    <app-reportby-label class="report-charts"></app-reportby-label>
+                  </div>
+                  <ng-template ngFor [ngForOf]="chartsOther" let-chart>
+                      <div class="col-md-6" *ngIf="chart.display">
+                          <app-reportby-other [chart]="chart" class="report-charts">
+                          </app-reportby-other>
+                        </div>
+                  </ng-template>                  
+                  <div class="col-md-6" *ngIf="displayStatisticsDurationExecution">
+                    <app-statistic-duration class="report-charts"></app-statistic-duration>
+                  </div>
+                  <div class="col-md-6" *ngIf="displayStatisticsReliability">
+                    <app-statistic-reliability class="report-charts"></app-statistic-reliability>
+                  </div>
                 </div>
-
-
-
-              </div>
-              <div class="block-content tab-content" id="listView" *ngIf="!reportView">
-                <div class="col-md-12">
-                  <app-bugreport [selectedTagData]="selectedTagData"></app-bugreport>
+                <!-- END Tab Report -->
+                
+                <!-- START Tab Analyse -->
+                <div class="block-content tab-content" id="listView" *ngIf="!reportView">
+                  <div class="col-md-12">
+                    <app-bugreport [selectedTagData]="selectedTagData"></app-bugreport>
+                  </div>
                 </div>
+                <!-- END Tab Analyse -->
               </div>
             </div>
           </div>
-
-
-
         </div>
       </div>
     </div>

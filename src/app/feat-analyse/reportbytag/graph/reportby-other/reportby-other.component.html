@@ -8,11 +8,6 @@
     </div>
     <div class="block-content row" *ngIf="expand">
       <div class="col-md-5">
-        <!-- <ul class="list-group">
-          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let label of chart.labels; let i=index">{{label}}
-              <span class="badge badge-pill" [style.backgroundColor]="chart.colors[0].backgroundColor[i]">{{chart.data[i]}}%</span>
-          </li>
-        </ul> -->
         <div class="form-group" *ngFor="let label of chart.labels; let i=index">
             <div class="input-group push">
                 <div class="input-group-prepend">

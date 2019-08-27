@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 
 @Component({
   selector: 'app-reportby-label',
@@ -7,31 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportbyLabelComponent implements OnInit {
 
-  labelTree = [
-    {
-      label: { value: 'parent 1' }, values: { KO: 20, OK: 50, FA: 30 }, children: [
-        { label: { value: 'child 1' }, values: { KO: 20, OK: 50, FA: 30 } },
-        { label: { value: 'child 2' }, values: { KO: 20, OK: 50, FA: 30 } },
-        { label: { value: 'child 3' }, values: { KO: 20, OK: 50, FA: 30 } },
-        { label: { value: 'child 4' }, values: { KO: 20, OK: 50, FA: 30 } }
-      ]
-    },
-    { label: { value: 'lone label'}, values: {KO: 20, OK: 50, FA: 30} },
-    {
-      label: { value: 'parent 2' }, values: {KO: 20, OK: 50, FA: 30}, children: [
-        { label: { value: 'child 1' }, values: {KO: 20, OK: 50, FA: 30} },
-        { label: { value: 'child 2' }, values: {KO: 20, OK: 50, FA: 30} }
-      ]
-    },
-  ];
-  expand: boolean = true;
-  toggleChildren(label) {
-    label.expand = !((label.expand)? true : false);
-  }
+  private labelTree: Array<any> = [];
+  private expand: boolean = true;
 
-  constructor() { }
+  constructor(private reportingService: ReportingService) { }
 
   ngOnInit() {
+    this.reportingService.observableReportLabel.subscribe(response => {
+      this.labelTree = response;
+    });
   }
 
 }

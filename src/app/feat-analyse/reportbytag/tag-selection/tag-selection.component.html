@@ -5,7 +5,7 @@
         <h3 class="block-title">Tag <small>selection</small></h3>
       </div>
       <div class="block-content row">
-        <!-- tag selection section -->
+        <!-- START tag selection section -->
         <div class="col-md-12 row push">
           <div class="col-md-12">
             <ng-select [items]="tagsBuffer" [virtualScroll]="true" [loading]="loading" bindLabel="tag"
@@ -15,7 +15,6 @@
                 <small class="form-text text-muted">Loaded {{tagsBuffer.length}} of {{tagsList.length}}</small>
               </ng-template>
               <ng-template ng-option-tmp let-item="item" let-index="index">
-                <!-- <b>{{item.id}}</b> {{item.tag}} -->
                 <div class="block block-rounded block-bordered mb-0">
                   <div class="block-header block-header-default">
                     <h3 class="block-title font-size-sm">{{item.tag}}</h3>
@@ -40,6 +39,9 @@
               </ng-template>
             </ng-select>
           </div>
+          <!-- END tag selection section -->
+
+          <!-- START collapse button -->
           <div class="col-md-12 text-center">
             <button type="button" class="btn btn-outline-secondary heigthNgSelect no-border"
               (click)="filtersShowed = !filtersShowed" [ngClass]="selectedTag ? '' : 'disabled'"
@@ -49,8 +51,12 @@
               <span> Filters</span>
             </button>
           </div>
+          <!-- END collapse button -->
         </div>
+
         <!-- filters section -->
+
+        <!-- START countries filter -->
         <div *ngIf="filtersShowed && selectedTag && countriesList" class="col-md-6"
           (mouseenter)="mouseEnterCountriesFilter() " (mouseleave)="mouseLeaveCountriesFilter()">
           <div class="block block-rounded block-bordered">
@@ -76,6 +82,9 @@
             </div>
           </div>
         </div>
+        <!-- END countries filter -->
+
+        <!-- START Status filter -->
         <div *ngIf="filtersShowed && selectedTag" class="col-md-6">
           <div class="block block-rounded block-bordered">
             <div class="block-header">
@@ -101,6 +110,9 @@
             </div>
           </div>
         </div>
+        <!-- END Status filter -->
+
+        <!-- START Widget filter -->
         <div *ngIf="filtersShowed && selectedTag" class="col-md-12 push">
           <div class="block block-rounded block-bordered">
             <div class="block-header">
@@ -169,6 +181,7 @@
             </div>
           </div>
         </div>
+        <!-- END Widget filter -->
       </div>
     </div>
   </div>

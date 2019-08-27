@@ -3,19 +3,24 @@
     <h3 class="block-title">Tag <small>detail</small></h3>
   </div>
   <div class="block-content">
+    <!-- START Main part-->
     <div class="row">
-    <div class="form-group col-md-6">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text input-group-text-alt">
-            Start
-          </span>
+      <!-- START Start group -->
+      <div class="form-group col-md-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text input-group-text-alt">
+              Start
+            </span>
+          </div>
+          <span type="text" class="form-control form-control-alt text-center" id="StartTime">
+            <i class="fa fa-calendar-alt mr-1"></i> {{ tagDetail.start | date:'d MMMM yyyy   H:mm' }} </span>
         </div>
-        <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-          <i class="fa fa-calendar-alt mr-1"></i> {{ tagDetail.start | date:'d MMMM yyyy   H:mm' }} </span>
       </div>
-    </div>
-    <div class="form-group col-md-6">
+      <!-- END Start group -->
+
+      <!-- START End group -->
+      <div class="form-group col-md-6">
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text input-group-text-alt">
@@ -26,53 +31,42 @@
             <i class="fa fa-calendar-alt mr-1"></i> {{ tagDetail.end | date:'d MMMM yyyy   H:mm' }} </span>
         </div>
       </div>
-    <!-- <div class="form-group col-md-6">
+      <!-- END End group -->
+
+      <!-- START Duration group -->
+      <div class="form-group col-md-6">
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text input-group-text-alt">
-              Start
+              Duration
             </span>
           </div>
           <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-            <i class="fa fa-clock mr-1"></i> 14:00 </span>
+            <i class="fa fa-stopwatch mr-1"></i> {{ tagDetail.duration }} min.</span>
         </div>
-      </div> -->
-    <!-- <div class="form-group col-md-6">
+      </div>
+      <!-- END Duration group -->
+
+      <!-- START CI Result group -->
+      <div class="form-group col-md-6">
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text input-group-text-alt">
-              End
+              CI Result
             </span>
           </div>
-          <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-            <i class="fa fa-clock mr-1"></i> 14:30 (+1d) </span>
+          <span type="text" style="color: green;" class="form-control form-control-alt text-center" id="CIResult">
+            <i class="fa fa-check mr-1"></i> {{ tagDetail.ciResult }} </span>
         </div>
-      </div> -->
-    <div class="form-group col-md-6">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text input-group-text-alt">
-            Duration
-          </span>
-        </div>
-        <span type="text" class="form-control form-control-alt text-center" id="StartTime">
-          <i class="fa fa-stopwatch mr-1"></i> {{ tagDetail.duration }} min.</span>
       </div>
+      <!-- END CI Result group -->
     </div>
-    <div class="form-group col-md-6">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text input-group-text-alt">
-            CI Result
-          </span>
-        </div>
-        <span type="text" style="color: green;" class="form-control form-control-alt text-center" id="CIResult">
-          <i class="fa fa-check mr-1"></i> {{ tagDetail.ciResult }} </span>
-      </div>
-    </div>
-  </div>
+    <!-- END Main part-->
     
+
+    <!-- START Advance part-->
     <div *ngIf="collapse" class="row">
+      <!-- START Launched by group -->
       <div class="form-group col-md-6">
         <div class="input-group">
           <div class="input-group-prepend">
@@ -84,17 +78,23 @@
             <i class="fa fa-user mr-1"></i> {{ tagDetail.usrCreated }} </span>
         </div>
       </div>
+      <!-- END Launched by group -->
+
+      <!-- START Campaign group -->
       <div class="form-group col-md-6">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text input-group-text-alt">
-                Campaign
-              </span>
-            </div>
-            <span type="text" class="form-control form-control-alt text-center" id="LatestExecution">
-               {{ tagDetail.campaign }} </span>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text input-group-text-alt">
+              Campaign
+            </span>
           </div>
+          <span type="text" class="form-control form-control-alt text-center" id="LatestExecution">
+            {{ tagDetail.campaign }} </span>
         </div>
+      </div>
+      <!-- END Campaign group -->
+
+      <!-- START Latest group -->
       <div class="form-group col-md-12">
         <div class="input-group">
           <div class="input-group-prepend">
@@ -106,10 +106,13 @@
             <i class="fa fa-calendar-alt mr-1"></i> {{ tagDetail.lastExecution | date:'d MMMM yyyy   H:mm' }} </span>
         </div>
       </div>
+      <!-- END Latest group -->
 
     </div>
+    <!-- END Advance part-->
 
-    <button class="col-md-12 btn btn-info" (click)="collapse = !collapse"><span *ngIf="collapse; else closeAdvance">Close Advance</span></button>
+    <button class="col-md-12 btn btn-info" (click)="collapse = !collapse"><span
+        *ngIf="collapse; else closeAdvance">Close Advance</span></button>
     <ng-template #closeAdvance>Advance</ng-template>
 
   </div>

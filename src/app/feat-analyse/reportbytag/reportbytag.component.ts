@@ -33,6 +33,8 @@ export class ReportbytagComponent implements OnInit {
   private showTceStatusFilterOptions: boolean;
   private reportView: boolean = true;
   private chartsOther: Array<any>;
+  private displayStatisticsDurationExecution: boolean;
+  private displayStatisticsReliability: boolean
   // DIRTY : need to create custom CSS class for earch TCE Status
 
   constructor(private http: HttpClient,
@@ -41,24 +43,38 @@ export class ReportbytagComponent implements OnInit {
     private InvariantsService: InvariantsService,
     private router: Router, 
     private headerTitleService: HeaderTitleService) { 
-      headerTitleService.setTitle("Report");
+      headerTitleService.setTitle("Report Execution");
     }
 
   ngOnInit() {
     this.ReportingService.observableReportOther.subscribe(response => {
       this.chartsOther = response;
     });
-
-    initChartJS();
+    this.ReportingService.observableReportStatisticsDurationExecution.subscribe(response => {
+      this.displayStatisticsDurationExecution = response.display;
+    });
+    this.ReportingService.observableReportStatisticsReliability.subscribe(response => {
+      this.displayStatisticsReliability = response.display;
+    });
     this.InvariantsService.getCountriesList();
     this.InvariantsService.getTceStatus();
     this.filtersShowed = false;
   }
-  tagSelection(value) { 
-    this.selectedTag = value;
+
+  /** tagSelection
+   * * load informations of selected tag
+   * @param value new tag selected
+   */
+  tagSelection(tag: ITag): void { 
+    this.selectedTag = tag;
     this.ReportingService.getTestCaseExecutionByTag(this.selectedTag.tag);
   }
-  toggleReportView(view) {
+
+  /** toggleReportView
+   * * set active tab (Report/Analyse)
+   * @param view 
+   */
+  toggleReportView(view: boolean): void {
     this.reportView = view;
   }
 }

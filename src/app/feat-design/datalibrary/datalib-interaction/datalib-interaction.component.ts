@@ -188,12 +188,11 @@ export class DatalibInteractionComponent implements OnInit {
     subdata['toDelete'] = !subdata['toDelete'];
   }
   
-  /**
-   * 
-   * @param row 
+  /** getRowClass
+   * * set the class 'to-delete' if the has to be delete
+   * @param row the row to set the class
    */
   getRowClass(row) {
-
     return {
       'to-delete': (row.toDelete) === true
     };

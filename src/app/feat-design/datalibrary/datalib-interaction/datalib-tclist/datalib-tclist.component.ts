@@ -14,11 +14,18 @@ export class DatalibTclistComponent implements OnInit {
   requestResponseTable: any; 
 
 
+
   constructor(private testService: TestService) { }
 
   ngOnInit() {
     this.testService.getTestDataLib(this.id, this.name, this.country, response => {
-      this.requestResponseTable = response.TestCasesList;
+      this.requestResponseTable = response.TestCasesList;     
+      this.requestResponseTable.forEach(test => {
+        test[3].forEach(testcase => {
+          testcase.link_test = encodeURIComponent(test[0]);
+          testcase.link_testcase = encodeURIComponent(testcase.TestCaseNumber);
+        });
+      });
     });
   }
 

@@ -16,8 +16,10 @@
             <div id="collapseOne" class="collapse" [ngClass]="{'show' : drop.expanded}" aria-labelledby="headingOne"
                 data-parent="#accordionExample">
                 <ul class="list-group">
-                    <li class="list-group-item" *ngFor="let testcase of drop[3]">{{testcase.TestCaseNumber}} :
-                        {{testcase.TestCaseDescription}}</li>
+                    <li class="list-group-item" *ngFor="let testcase of drop[3]">
+                        <a [routerLink]="['/design/testcasescript', testcase.link_test, testcase.link_testcase]">
+                            {{testcase.TestCaseNumber}} : {{testcase.TestCaseDescription}}
+                        </a></li>
                 </ul>
             </div>
         </div>

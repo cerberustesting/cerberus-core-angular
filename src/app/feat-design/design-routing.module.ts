@@ -11,6 +11,14 @@ const designRoutes: Routes = [
     component: TestcaselistComponent
   },
   {
+    path: 'testcasescript/:test/:testcase',
+    component: TestcasescriptComponent
+  },
+  {
+    path: 'testcasescript/:test',
+    component: TestcasescriptComponent
+  },
+  {
     path: 'testcasescript',
     component: TestcasescriptComponent
   },

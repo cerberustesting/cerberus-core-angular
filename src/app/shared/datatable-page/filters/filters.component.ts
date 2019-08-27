@@ -60,7 +60,6 @@ export class FiltersComponent implements OnInit {
   toggleColumn(column): void {
     column.active = !column.active;
     this.columnActive = this.columns.filter(a => a.active).length;
-    
   }
 
   /** applySystem

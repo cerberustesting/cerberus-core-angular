@@ -54,14 +54,20 @@
                 </div>
 
                 <div class="ng-select-addfilterscolumns mb-3">
-                    <ng-select class="column-selector mr-2" bindLabel="name" placeholder="Add Filters"
-                        [items]="searchableColumns" [closeOnSelect]="false" [searchable]="true" [clearable]="false">
-                        <!--Content in the top container-->
-                        <ng-template ng-label-tmp>
-                            <div>Add Filters</div>
+                    <ng-select class="custom column-selector mr-2" bindLabel="displayName" multiple="true"
+                        dropdownPosition="bottom" placeholder="Add Filters" [items]="searchableColumns"
+                        [closeOnSelect]="false" [searchable]="true" [clearable]="false">
+
+                        <!-- SELECTED VALUE(S) TEMPLATE -->
+                        <ng-template ng-multi-label-tmp let-items="items" let-search="searchTerm">
+                            <span class="nav-main-link-badge badge badge-pill badge-primary mr-2">
+                                <span>{{ activeFilters.length }}</span>
+                            </span>
                         </ng-template>
+                        <!-- END SELECTED VALUE(S) TEMPLATE -->
+
                         <!--List of filters (underline if selected)-->
-                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                             <div (click)="addFilter(item)">
                                 <span *ngIf="item.filterDisplayed; else elseTemplate" class="text-primary-dark bold">
                                     <i class="ml-1 fa fa-check-circle text-primary-dark"></i>
@@ -70,6 +76,7 @@
                                 <ng-template #elseTemplate>{{item.displayName}}</ng-template>
                             </div>
                         </ng-template>
+
                     </ng-select>
                 </div>
 

@@ -45,15 +45,6 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
         this.selectedTestCase = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('testcase'));
       }
     }
-    // parse query strings from URL
-    // this.activatedRoute.queryParams.subscribe(params => {
-    //   if (params['test']) {
-    //     this.selectedTest = params['test'];
-    //     if (params['testcase']) {
-    //       this.selectedTestCase = params['testcase'];
-    //     }
-    //   }
-    // });
     this.TestService.getTestsList();
     this.TestService.getProjectsList();
     this.SystemService.getApplicationList();
@@ -89,10 +80,8 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.testcase = null;
     if (this.selectedTest) {
       if (this.selectedTestCase) {
-        //this.router.navigate([], { queryParams: { test: this.selectedTest, testcase: this.selectedTestCase } });
         this.router.navigate(['/design/testcasescript', this.selectedTest, this.selectedTestCase]);
       } else {
-        //this.router.navigate([], { queryParams: { test: this.selectedTest } });
         this.router.navigate(['/design/testcasescript', this.selectedTest]);
       }
     }
@@ -100,7 +89,6 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
 
   receiveTestCase($event) {
     this.selectedTestCase = $event;
-    //this.router.navigate([], { queryParams: { test: this.selectedTest, testcase: this.selectedTestCase } });
     this.router.navigate(['/design/testcasescript', this.selectedTest, this.selectedTestCase]);
   }
 

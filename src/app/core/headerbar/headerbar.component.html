@@ -22,7 +22,7 @@
         <button type="button" class="btn btn-dual p-0 system-select-width text-left">
 
           <!-- SYSTEM SELECTION -->
-          <ng-select class="custom" [items]="systemsList" [closeOnSelect]="false" multiple="true"
+          <ng-select class="custom-icon" [items]="systemsList" [closeOnSelect]="false" multiple="true"
             (clear)="systemsList_OnClear()" (change)="systemsList_OnChange()" [(ngModel)]="selectedSystemsList"
             [dropdownPosition]="'bottom'" placeholder="No system selected" [searchFn]="customSearchSystem">
 

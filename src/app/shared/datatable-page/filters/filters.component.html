@@ -4,9 +4,24 @@
 
             <div class="form-inline">
 
+                <!-- CREATE ENTITY BUTTON (e.g. Create Test Case) -->
                 <ng-template *ngIf="filterTemplate" [ngTemplateOutlet]="filterTemplate"></ng-template>
+                <!-- END CREATE ENTITY BUTTON (e.g. Create Test Case) -->
 
+                <!-- QUICK SEARCH -->
                 <div class="input-group mr-4 mb-3">
+                    <div class="input-group-prepend">
+                        <button type="button" class="btn btn-primary">
+                            <i class="fa fa-search mr-2"></i>Quick Search
+                        </button>
+                    </div>
+                    <input id="quickSearch" type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
+                        [(ngModel)]="gloabalSearchModel" placeholder="Keyword">
+                </div>
+                <!-- END QUICK SEARCH -->
+
+                <!-- DISPLAYED COLUMNS SELECTION -->
+                <div class="input-group mr-4 mb-3 input-group-height">
                     <div class="input-group-prepend">
                         <span class="input-group-text">
                             <i class="fa fa-columns"></i>
@@ -42,19 +57,16 @@
 
                     </ng-select>
                 </div>
+                <!-- END DISPLAYED COLUMNS SELECTION -->
 
-                <div class="input-group mr-4 mb-3">
+                <!-- FILTERS SELECTION -->
+                <div class="input-group mr-4 mb-3 input-group-height">
                     <div class="input-group-prepend">
-                        <button type="button" class="btn btn-primary">
-                            <i class="fa fa-search mr-2"></i>Quick Search
-                        </button>
+                        <span class="input-group-text">
+                            <i class="fa fa-filter"></i>
+                        </span>
                     </div>
-                    <input id="quickSearch" type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
-                        [(ngModel)]="gloabalSearchModel" placeholder="Keyword">
-                </div>
-
-                <div class="ng-select-addfilterscolumns mb-3">
-                    <ng-select class="custom column-selector mr-2" bindLabel="displayName" multiple="true"
+                    <ng-select class="ng-select-addfilterscolumns custom-icon mr-2" bindLabel="displayName" multiple="true"
                         dropdownPosition="bottom" placeholder="Add Filters" [items]="searchableColumns"
                         [closeOnSelect]="false" [searchable]="true" [clearable]="false">
 
@@ -79,6 +91,7 @@
 
                     </ng-select>
                 </div>
+
 
                 <ng-template ngFor let-column [ngForOf]="columns">
                     <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column" [servlet]="servlet"

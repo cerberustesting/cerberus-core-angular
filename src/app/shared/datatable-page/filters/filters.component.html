@@ -1,5 +1,5 @@
 <div class="bg-body-light">
-    <div class="content content-full pb-0">
+    <div class="content content-full pb-0 m-0">
         <div class="d-flex flex-column flex-sm-row align-items-sm-center">
 
             <div class="form-inline">
@@ -53,12 +53,6 @@
                         [(ngModel)]="gloabalSearchModel" placeholder="Keyword">
                 </div>
 
-                <ng-template ngFor let-column [ngForOf]="columns">
-                    <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column" [servlet]="servlet"
-                        (applyFilterOutput)=applySystem() (remove)="removeFilter($event)">
-                    </app-filter>
-                </ng-template>
-
                 <div class="ng-select-addfilterscolumns mb-3">
                     <ng-select class="column-selector mr-2" bindLabel="name" placeholder="Add Filters"
                         [items]="searchableColumns" [closeOnSelect]="false" [searchable]="true" [clearable]="false">
@@ -79,13 +73,17 @@
                     </ng-select>
                 </div>
 
+                <ng-template ngFor let-column [ngForOf]="columns">
+                    <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column" [servlet]="servlet"
+                        (applyFilterOutput)=applySystem() (remove)="removeFilter($event)">
+                    </app-filter>
+                </ng-template>
+
             </div>
         </div>
     </div>
 </div>
 
-<div class="header-area bg-body-light">
-    <div class="content content-full">
-        <ng-template *ngIf="massActionTemplate" [ngTemplateOutlet]="massActionTemplate"></ng-template>
-    </div>
+<div class="header-area bg-body-light" style="height: 40px;">
+    <ng-template *ngIf="massActionTemplate" [ngTemplateOutlet]="massActionTemplate"></ng-template>
 </div>

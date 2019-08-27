@@ -46,6 +46,8 @@ export class FilterService {
                 SystemByFilterRaw.push(system.value);
               });
               systemByService = ',' + SystemByFilterRaw.join(',');
+            } else {
+              systemByService = ''; // prevent sending 'undefined' if no system are selected
             }
           } else {
             systemByService = '';

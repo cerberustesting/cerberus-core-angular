@@ -1,15 +1,21 @@
-
-  <div class="block block-bordered block-rounded">
-    <div class="block-header block-header-default">
-      <h3 class="block-title">Report <small>by Test Folder</small></h3>
-      <button type="button" class="btn-block-option" (click)="expand = !expand">
-          <i class="si" [ngClass]="{'si-arrow-down': !expand, 'si-arrow-up': expand}"></i>
-        </button>
-    </div>
-    
-    <div class="block-content row" *ngIf="expand && chart.datasets">
-      <canvas baseChart [datasets]="chart.datasets" [labels]="chart.label" [options]="chart.options"
-        [plugins]="chart.plugin" [legend]="chart.legend" [chartType]="'bar'">
-      </canvas>
-    </div>
+<div class="block block-bordered block-rounded">
+  <div class="block-header block-header-default">
+    <h3 class="block-title">Report <small>by Test Folder</small></h3>
+    <button type="button" class="btn-block-option" (click)="expand = !expand">
+        <i class="si" [ngClass]="(expand)? 'si-arrow-up' : 'si-arrow-down'"></i>
+      </button>
   </div>
+    
+  <div class="block-content row" *ngIf="expand && chart.datasets">
+    <!-- Chart definition -->
+    <canvas 
+      baseChart 
+      [datasets]="chart.datasets" 
+      [labels]="chart.label" 
+      [options]="chart.options"
+      [plugins]="chart.plugin" 
+      [legend]="chart.legend" 
+      [chartType]="'bar'">
+    </canvas>
+  </div>
+</div>

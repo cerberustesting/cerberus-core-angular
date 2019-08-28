@@ -12,30 +12,32 @@ declare var jQuery: any;
 })
 export class ReportbystatusComponent implements OnInit {
 
-  @Input() selectedTag: ITag;
+  @Input() selectedTag: ITag; // the represented tag
 
-  loadJS: Promise<any>;
-  private graphID: string = "graph_reportbystatus";
-  expand: boolean = true;
-  private statusList = this.reportingService.status;
+  expand: boolean = true; // display the block body ?
+  private statusList = this.reportingService.status; //status to display on left
+
+  // *** Chart informations ***
+  private labels: Label[]; // name of each arc (for popover and legend)
+  private colors: any; // arc colors
+  private data: number[]; // data of each arc
+  private activeState: Array<any>; // all status with data > 0
+  private options: ChartOptions = { // chart options
+    elements: {
+      arc: {
+        borderWidth: 0 //dissable borders
+      }
+    }
+  }
 
   constructor(private reportingService: ReportingService) {
 
   }
 
-  private labels: Label[];
-  private colors: any;
-  private data: number[];
-  private activeState: Array<any>;
-  private options: ChartOptions = {
-    elements: {
-      arc: {
-        borderWidth: 0
-      }
-    }
-  }
+  
 
   ngOnInit() {
+    // get all chart informations and parse them
     this.reportingService.observableReportStatus.subscribe(data => {
       this.activeState = data.status.filter(e => e.data > 0);
       this.labels = this.activeState.map(e => e.label);
@@ -45,7 +47,12 @@ export class ReportbystatusComponent implements OnInit {
 
   }
 
-  round(value) {
+  /** round
+   * * round value
+   * * use in html (can't use directly Math.round)
+   * @param value value to round
+   */
+  round(value: number): number {
     return Math.round(value);
   }
 

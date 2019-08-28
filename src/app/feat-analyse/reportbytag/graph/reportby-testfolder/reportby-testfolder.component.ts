@@ -10,17 +10,18 @@ import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 })
 export class ReportbyTestfolderComponent implements OnInit {
 
-  chart: {
-    datasets: ChartDataSets[],
-    label: Label[],
-    options : ChartOptions ,
-    legend: boolean,
+  private chart: { // chart informations
+    datasets: ChartDataSets[], // values for each test folder and status
+    label: Label[], // label of tests folders
+    options : ChartOptions,
+    legend: boolean, // display legend ?
   }
-  expand: boolean = true;
+  private expand: boolean = true; // the block content is display are collapse
 
   constructor(private reportingService: ReportingService) { }
 
   ngOnInit() {
+    // get chart informations from reportingService
     this.reportingService.observableReportTestFolder.subscribe(data => this.chart = data);
   }
 

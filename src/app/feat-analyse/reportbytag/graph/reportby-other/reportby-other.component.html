@@ -7,6 +7,7 @@
         </button>
     </div>
     <div class="block-content row" *ngIf="expand">
+      <!-- START Legends -->
       <div class="col-md-5">
         <div class="form-group" *ngFor="let label of chart.labels; let i=index">
             <div class="input-group push">
@@ -19,15 +20,20 @@
             </div>
         </div>
       </div>
+      <!-- END Legend -->
+
+      <!-- START chart definition -->
       <div class="col-md-7">
-        <canvas baseChart 
-        [data]="chart.data" 
-        [labels]="chart.labels" 
-        [legend]="chart.legend" 
-        [colors]="chart.colors" 
-        [chartType]="'polarArea'"
-        [options]="chart.options">
+        <canvas 
+          baseChart 
+          [data]="chart.data" 
+          [labels]="chart.labels" 
+          [legend]="chart.legend" 
+          [colors]="chart.colors" 
+          [chartType]="'polarArea'"
+          [options]="chart.options">
         </canvas>
       </div>
+      <!-- END chart definition -->
     </div>
   </div>

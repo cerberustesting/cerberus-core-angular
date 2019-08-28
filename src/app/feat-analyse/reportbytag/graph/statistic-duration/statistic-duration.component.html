@@ -1,19 +1,20 @@
-
   <div class="block block-bordered block-rounded">
     <div class="block-header block-header-default">
       <h3 class="block-title">Test Statistics <small>by Duration and Execution</small></h3>
       <button type="button" class="btn-block-option" (click)="expand = !expand">
-          <i class="si" [ngClass]="{'si-arrow-down': !expand, 'si-arrow-up': expand}"></i>
-        </button>
+        <i class="si" [ngClass]="{'si-arrow-down': !expand, 'si-arrow-up': expand}"></i>
+      </button>
     </div>
     <div class="block-content row" *ngIf="expand && chart.datasets">
         <div class="block-content row">
-            <canvas baseChart 
+          <!-- Chart definition -->
+          <canvas baseChart 
             [datasets]="chart.datasets" 
             [labels]="chart.labels" 
             [options]="chart.options"
             [legend]="chart.legend" 
-            [chartType]="'bar'"></canvas>
+            [chartType]="'bar'">
+          </canvas>
         </div>
     </div>
   </div>

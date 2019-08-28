@@ -8,7 +8,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ReportingService {
-  private campaignData: any;
+  private campaignData: any; // to fill Statistics charts
+  
+  // *** charts informations ***
   private tagDetail = {};
   private reportStatus = { status: [], total: 0 };
   private reportTestFolder = {};
@@ -16,8 +18,20 @@ export class ReportingService {
   private reportOther = [];
   private reportStatisticsReliability = {};
   private reportStatisticsDurationExecution = {};
-  selectedTagName: string;
-  status: Array<any> = [
+  private displayTestFolderReport = false;
+  private selectedTagName: string;  
+  private tagsList: Array<ITag>;
+  private colors = [ // colors for the non-status elements
+    '#0665d0',    
+    '#689550',
+    '#774aa4',
+    '#00a680',
+    '#314499',
+    '#3b5998',
+    '#6772e5',
+    '#dd4b39'
+  ];  
+  public status: Array<any> = [ // constant (colors are set for all charts)
     {
       label: "OK",
       color: "#689550",
@@ -55,33 +69,16 @@ export class ReportingService {
     }
   ]
 
-  observableTagDetail = new BehaviorSubject<any>(this.tagDetail);
-  observableReportStatus = new BehaviorSubject<any>(this.reportStatus);
-  observableReportTestFolder = new BehaviorSubject<any>(this.reportTestFolder);
-  observableReportLabel = new BehaviorSubject<any>(this.reportLabel);
-  observableReportOther = new BehaviorSubject<any>(this.reportOther);
-  observableReportStatisticsReliability = new BehaviorSubject<any>(this.reportStatisticsDurationExecution);
-  observableReportStatisticsDurationExecution = new BehaviorSubject<any>(this.reportStatisticsDurationExecution);
-
-  // variables
-  private tagsList: Array<ITag>;
-  // observables
-  observableTagsList = new BehaviorSubject<ITag[]>(this.tagsList);
-  observableLabelDisplay = new BehaviorSubject<boolean>(true);
-
-  displayTestFolderReport = false;
-  observableDisplayTestFolderReport = new BehaviorSubject<boolean>(this.displayTestFolderReport);
-
-  private colors = [
-    '#0665d0',    
-    '#689550',
-    '#774aa4',
-    '#00a680',
-    '#314499',
-    '#3b5998',
-    '#6772e5',
-    '#dd4b39'
-  ]
+  public observableTagDetail = new BehaviorSubject<any>(this.tagDetail);
+  public observableReportStatus = new BehaviorSubject<any>(this.reportStatus);
+  public observableReportTestFolder = new BehaviorSubject<any>(this.reportTestFolder);
+  public observableReportLabel = new BehaviorSubject<any>(this.reportLabel);
+  public observableReportOther = new BehaviorSubject<any>(this.reportOther);
+  public observableReportStatisticsReliability = new BehaviorSubject<any>(this.reportStatisticsDurationExecution);
+  public observableReportStatisticsDurationExecution = new BehaviorSubject<any>(this.reportStatisticsDurationExecution);
+  public observableTagsList = new BehaviorSubject<ITag[]>(this.tagsList);
+  public observableLabelDisplay = new BehaviorSubject<boolean>(true);
+  public observableDisplayTestFolderReport = new BehaviorSubject<boolean>(this.displayTestFolderReport);  
 
   constructor(private http: HttpClient) { }
 
@@ -98,7 +95,7 @@ export class ReportingService {
   }
 
   /** ReadTestCaseExecutionByTag
-   * * call the api to get tag informations then get campaign informations.
+   * * call the api to get tag informations then get campaign informations
    * @param callback function to execute with the tag information as parameter
    */
   ReadTestCaseExecutionByTag(callback: (any) => any) {    
@@ -198,21 +195,36 @@ export class ReportingService {
   parseReportTestFolder(response) {
     let labelList = [];
     let datasets = [];
-    let colors = [];
 
-    this.displayTestFolderReport = (response.functionChart.axis.length>1);
+    // don't display this chart if there is only one test folder
+    this.displayTestFolderReport = (response.functionChart.axis.length > 1);
 
     for (let axis of response.functionChart.axis) {
       labelList.push(axis.name);
     }
 
     for (let status of this.status) {
-      let temp = { data: [], label: status.label, backgroundColor: status.color, hoverBackgroundColor: status.color };
+
+      let statusInformations = { 
+        data: [], 
+        label: status.label, 
+        backgroundColor: status.color, 
+        hoverBackgroundColor: status.color 
+      };
+
       for (let axis of response.functionChart.axis) {
-        if (axis[status.label]) temp.data.push(axis[status.label].value);
-        else temp.data.push(0);
+        if (axis[status.label]) {
+          statusInformations.data.push(axis[status.label].value);
+        }
+        else {
+          statusInformations.data.push(0);
+        }
       }
-      if (temp.data.some(number => number != 0)) datasets.push(temp);
+      // add 'statusInformations' to datasets if at least one data is not null
+      if (statusInformations.data.some(number => number != 0)) {
+        datasets.push(statusInformations);
+      } 
+
     }
 
     this.reportTestFolder = {
@@ -236,8 +248,8 @@ export class ReportingService {
   }
 
   /** getValuesFromLabelStats
-   * @returns percentage for all stat
-   * @param stats the stats to return
+   * @returns percentage for all label stats
+   * @param stats the label stats to set
    */
   getValuesFromLabelStats(stats) {
     return { 

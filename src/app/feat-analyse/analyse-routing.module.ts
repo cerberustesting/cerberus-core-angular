@@ -5,6 +5,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 
 const analyseRoutes: Routes = [
   { path: 'report', component: ReportbytagComponent },
+  { path: 'report/:tag', component: ReportbytagComponent },
   { path: 'dashboard', component: DashboardComponent },
 ];
 

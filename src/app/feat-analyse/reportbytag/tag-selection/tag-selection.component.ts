@@ -66,17 +66,25 @@ export class TagSelectionComponent implements OnInit {
         this.tagsList = response;
         this.tagsBuffer = this.tagsList.slice(0, this.bufferSize);
         // parse query strings from URL
-        this.activatedRoute.queryParams.subscribe(params => {
-          var tagFromURL = params['tag'];
+        if (this.activatedRoute.snapshot.paramMap.has('tag')) {
+          let tagFromURL = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('tag'));
           if (tagFromURL) {
             if (this.ReportingService.tagExists(tagFromURL)) {
               this.selectedTag = this.ReportingService.findTag(tagFromURL);
-              this.selectedTagChange();
-              
-              
+              this.selectedTagChange();       
             }
           }
-        });
+        }
+        // this.activatedRoute.queryParams.subscribe(params => {
+        //   var tagFromURL = params['tag'];
+          
+        //   if (tagFromURL) {
+        //     if (this.ReportingService.tagExists(tagFromURL)) {
+        //       this.selectedTag = this.ReportingService.findTag(tagFromURL);
+        //       this.selectedTagChange();       
+        //     }
+        //   }
+        // });
       }
       
     });
@@ -110,7 +118,7 @@ export class TagSelectionComponent implements OnInit {
   selectedTagChange(): void {       
     if (this.selectedTag) { 
       this.tagSelection.emit(this.selectedTag);
-      this.router.navigate([], { queryParams: { tag: this.selectedTag.tag } });       
+      this.router.navigate(['/analyse/report', this.selectedTag.tag]);       
     }
     else { this.router.navigate([]); }
   }

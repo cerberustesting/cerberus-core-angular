@@ -62,10 +62,10 @@
                 </ul>
                 <!-- START Tab Report -->
                 <div class="block-content tab-content row push" id="chartsView" *ngIf="reportView">
-                  <div class="col-md-6">
+                  <div class="col-md-6" *ngIf="displayTestFolderReport">
                     <app-reportby-testfolder class="report-charts"></app-reportby-testfolder>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6" *ngIf="displayLabelReport">
                     <app-reportby-label class="report-charts"></app-reportby-label>
                   </div>
                   <ng-template ngFor [ngForOf]="chartsOther" let-chart>

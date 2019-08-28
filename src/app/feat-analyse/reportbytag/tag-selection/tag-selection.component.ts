@@ -65,15 +65,13 @@ export class TagSelectionComponent implements OnInit {
       if (response) {
         this.tagsList = response;
         this.tagsBuffer = this.tagsList.slice(0, this.bufferSize);
-        console.log(this.tagsBuffer[0]);
         // parse query strings from URL
         this.activatedRoute.queryParams.subscribe(params => {
           var tagFromURL = params['tag'];
           if (tagFromURL) {
             if (this.ReportingService.tagExists(tagFromURL)) {
               this.selectedTag = this.ReportingService.findTag(tagFromURL);
-              this.selectedTagChange()
-              //console.log("tag :", this.selectedTag);
+              this.selectedTagChange();
               
               
             }

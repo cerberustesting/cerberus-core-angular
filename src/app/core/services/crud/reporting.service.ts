@@ -77,6 +77,10 @@ export class ReportingService {
   private tagsList: Array<ITag>;
   // observables
   observableTagsList = new BehaviorSubject<ITag[]>(this.tagsList);
+  observableLabelDisplay = new BehaviorSubject<boolean>(true);
+
+  displayTestFolderReport = false;
+  observableDisplayTestFolderReport = new BehaviorSubject<boolean>(this.displayTestFolderReport);
 
   private colors = [
     '#0665d0',    
@@ -206,6 +210,8 @@ export class ReportingService {
     let datasets = [];
     let colors = [];
 
+    this.displayTestFolderReport = (response.functionChart.axis.length>1);
+
     for (let axis of response.functionChart.axis) {
       labelList.push(axis.name);
     }
@@ -236,6 +242,7 @@ export class ReportingService {
       legend: true
     }
     this.observableReportTestFolder.next(this.reportTestFolder);
+    this.observableDisplayTestFolderReport.next(this.displayTestFolderReport);
   }
 
   /** getValuesFromLabelStats
@@ -259,8 +266,9 @@ export class ReportingService {
   parseReportLabel(response) {    
 
     this.reportLabel = [];
-
-    for (let node of response.labelStat.labelTreeREQUIREMENT.concat(response.labelStat.labelTreeSTICKER)) {
+    let labelList = response.labelStat.labelTreeREQUIREMENT.concat(response.labelStat.labelTreeSTICKER)
+    if (labelList.length===0) this.observableLabelDisplay.next(false);
+    for (let node of labelList) {
       if(node.counter1WithChild!=0) this.reportLabel.push(this.parseLabelChildren(node));      
     }
     this.observableReportLabel.next(this.reportLabel);

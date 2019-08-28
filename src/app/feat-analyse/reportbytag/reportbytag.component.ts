@@ -34,7 +34,9 @@ export class ReportbytagComponent implements OnInit {
   private reportView: boolean = true;
   private chartsOther: Array<any>;
   private displayStatisticsDurationExecution: boolean;
-  private displayStatisticsReliability: boolean
+  private displayStatisticsReliability: boolean;
+  private displayLabelReport: boolean;
+  private displayTestFolderReport: boolean;
   // DIRTY : need to create custom CSS class for earch TCE Status
 
   constructor(private http: HttpClient,
@@ -56,6 +58,12 @@ export class ReportbytagComponent implements OnInit {
     this.ReportingService.observableReportStatisticsReliability.subscribe(response => {
       this.displayStatisticsReliability = response.display;
     });
+    this.ReportingService.observableLabelDisplay.subscribe(response => {
+      this.displayLabelReport = response;
+    });
+    this.ReportingService.observableDisplayTestFolderReport.subscribe(response => {
+      this.displayTestFolderReport = response;
+    })
     this.InvariantsService.getCountriesList();
     this.InvariantsService.getTceStatus();
     this.filtersShowed = false;

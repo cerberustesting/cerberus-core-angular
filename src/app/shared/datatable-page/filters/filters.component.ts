@@ -47,9 +47,9 @@ export class FiltersComponent implements OnInit {
     private testService: TestService,
     private sideContentService: SidecontentService) { }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.columnActive = this.columns.filter(a => a.active).length;
-    this.searchableColumns = this.columns.filter(a => a.searchable || a.filterMode===FILTER_MODE.SEARCH_FIELD);
+    this.searchableColumns = this.columns.filter(a => a.searchable || a.filterMode === FILTER_MODE.SEARCH_FIELD);
   }
 
   /**
@@ -74,8 +74,8 @@ export class FiltersComponent implements OnInit {
    */
   applyPage(): void {
     let a = document.getElementsByClassName("datatable-body")[0];
-    a.scroll(0,0);
-    a.scrollBy(0, (this.page.number-1) * this.page.size * 50 + 50);
+    a.scroll(0, 0);
+    a.scrollBy(0, (this.page.number - 1) * this.page.size * 50 + 50);
     this.pageApply.emit(this.page.number);
   }
 
@@ -83,7 +83,7 @@ export class FiltersComponent implements OnInit {
    * * In the gloabl search field, start search if there are more than 2 caracters and after 1/2 second
    */
   onKeyUp(): void {
-    if (this.gloabalSearchModel.length > 2){
+    if (this.gloabalSearchModel.length > 2) {
       setTimeout(() => this.applySystem(), 500);
     }
   }
@@ -95,12 +95,12 @@ export class FiltersComponent implements OnInit {
   addFilter(column: Column) {
     if (column.filterDisplayed) {
       column.sSearch = [];
-      this.activeFilters.splice(this.activeFilters.indexOf(column.contentName),1)
+      this.activeFilters.splice(this.activeFilters.indexOf(column.contentName), 1)
     } else {
       this.activeFilters.push(column.contentName)
     }
     column.filterDisplayed = !column.filterDisplayed;
-   
+
   }
 
   /** addFilterLike
@@ -124,6 +124,6 @@ export class FiltersComponent implements OnInit {
     this.activeFilters.splice(this.activeFilters.indexOf(columnContent), 1)
   }
 
-  
+
 
 }

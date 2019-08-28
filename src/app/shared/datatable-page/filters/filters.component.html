@@ -59,6 +59,26 @@
                 </div>
                 <!-- END DISPLAYED COLUMNS SELECTION -->
 
+
+                <!-- NEW FILTER SELECTION (WORK IN PROGRESS -->
+                <!-- <div class="dropdown mr-4 mb-3">
+                    <button type="button" class="btn btn-primary" id="filtersSelect" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-fw fa-filter mr-1"></i>
+                        Filters
+                        <span class="nav-main-link-badge badge badge-pill badge-light ml-1 mr-2">
+                            {{ activeFilters.length }}
+                        </span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdown-default-primary" x-placement="top-start"
+                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -2px, 0px);">
+                        <a *ngFor="let column of searchableColumns" class="dropdown-item" (click)="addFilter(column)">
+                            <i *ngIf="column.filterDisplayed" class="fa fa-check-circle text-primary-dark"></i>
+                            {{column.displayName}}
+                        </a>
+                    </div>
+                </div> -->
+
                 <!-- FILTERS SELECTION -->
                 <div class="input-group mr-4 mb-3 input-group-height">
                     <div class="input-group-prepend">
@@ -67,11 +87,11 @@
                         </span>
                     </div>
                     <ng-select class="ng-select-addfilterscolumns custom-icon mr-2" bindLabel="displayName"
-                        multiple="true" dropdownPosition="bottom" placeholder="Add Filters" [items]="searchableColumns"
-                        [closeOnSelect]="false" [searchable]="true" [clearable]="false">
+                        multiple="true" dropdownPosition="bottom" [items]="searchableColumns" [closeOnSelect]="false"
+                        [searchable]="false" [clearable]="false">
 
                         <!-- SELECTED VALUE(S) TEMPLATE -->
-                        <ng-template ng-multi-label-tmp let-items="items" let-search="searchTerm">
+                        <ng-template ng-multi-label-tmp let-items="items">
                             <span class="nav-main-link-badge badge badge-pill badge-primary mr-2">
                                 <span>{{ activeFilters.length }}</span>
                             </span>

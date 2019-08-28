@@ -19,48 +19,38 @@ export class ReportingService {
   selectedTagName: string;
   status: Array<any> = [
     {
-      label: "FA",
-      color: "#F0AD4E",
-      icon: 'fa-robot'
+      label: "OK",
+      color: "#689550",
+      icon: 'fa-check'
     },
     {
       label: "KO",
-      color: "#D9534F",
+      color: "#dd4b39",
       icon: 'fa-times'
     },
     {
+      label: "FA",
+      color: "#314499",
+      icon: 'fa-robot'
+    },
+    {
+      label: 'CA',
+      color: '#774aa4',
+      icon: 'fa-robot'
+    },    
+    {
       label: "NA",
-      color: '#aaa',
+      color: '#ffb119',
       icon: 'fa-robot'
     },
     {
       label: "NE",
-      color: '#aaa',
+      color: 'black',
       icon: 'fa-robot'
-    },
-    {
-      label: "OK",
-      color: "#5CB85C",
-      icon: 'fa-check'
-    },
+    },    
     {
       label: "PE",
-      color: '#aaa',
-      icon: 'fa-robot'
-    },
-    {
-      label: "QE",
-      color: '#aaa',
-      icon: 'fa-robot'
-    },
-    {
-      label: "QU",
-      color: '#aaa',
-      icon: 'fa-robot'
-    },
-    {
-      label: "WE",
-      color: '#aaa',
+      color: '#6772e5',
       icon: 'fa-robot'
     }
   ]
@@ -268,6 +258,7 @@ export class ReportingService {
     this.reportLabel = [];
     let labelList = response.labelStat.labelTreeREQUIREMENT.concat(response.labelStat.labelTreeSTICKER)
     if (labelList.length===0) this.observableLabelDisplay.next(false);
+    else this.observableLabelDisplay.next(true);
     for (let node of labelList) {
       if(node.counter1WithChild!=0) this.reportLabel.push(this.parseLabelChildren(node));      
     }

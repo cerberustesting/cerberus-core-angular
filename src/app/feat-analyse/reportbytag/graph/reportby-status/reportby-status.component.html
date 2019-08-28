@@ -15,32 +15,48 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 block">
                 <div class="block block-rounded">
                     <div class="block-content">
-                        <!--*** For all activeState ***-->
+                        <!-- START active Status -->
                         <div class="form-group" *ngFor="let status of activeState">
                             <div class="input-group push">
                                 <div class="input-group-prepend" ngbPopover="Successful execution"
                                     triggers="mouseenter:mouseleave">
-                                    <span class="input-group-text input-group-text-alt {{status.label | lowercase}}-bg">{{status.label}}</span>
+                                    <span 
+                                        class="input-group-text input-group-text-alt text-white" 
+                                        [style.backgroundColor]="status.color"
+                                        [style.borderColor]="status.color">
+                                        {{status.label}}
+                                    </span>
                                 </div>
-                                <span class="form-control form-control-alt text-center {{status.label | lowercase}}-color">{{status.data}}<i
-                                        class="fa {{status.label | lowercase}}-color ml-2" [ngClass]="status.icon"></i></span>
+                                <span 
+                                    class="form-control form-control-alt text-center"
+                                    [style.color]="status.color">
+                                    {{status.data}}<i class="fa ml-2" [ngClass]="status.icon"></i>
+                                </span>
                                 <div class="input-group-append">
-                                    <span class="input-group-text input-group-text-alt text-center {{status.label | lowercase}}-color"
-                                        id="percentageOK">{{round((status.data/selectedTag.nbExeUsefull)*100)}}%</span>
+                                    <span 
+                                        class="input-group-text input-group-text-alt text-center"
+                                        [style.color]="status.color">
+                                        {{round((status.data/selectedTag.nbExeUsefull)*100)}}%
+                                    </span>
                                 </div>
                             </div>
                         </div>
+                        <!-- END active Status -->
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-7">
-                <canvas [id]="graphID" class="js-chartjs-pie" height="250"></canvas>
-            </div> -->
             <div>
-                <canvas baseChart height="250" [data]="data" [labels]="labels" [chartType]="'pie'" [colors]="colors">
+                <canvas
+                    baseChart 
+                    height="250" 
+                    [data]="data" 
+                    [labels]="labels" 
+                    [chartType]="'pie'" 
+                    [options]="options"
+                    [colors]="colors">
                 </canvas>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 
 @Component({
   selector: 'app-label-progress',
@@ -8,7 +9,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class LabelProgressComponent implements OnInit {
   @Input() label: any;
 
-  constructor() { }
+  private statusList = this.reportingService.status;
+
+  constructor(private reportingService: ReportingService) { }
 
   ngOnInit() {
   }

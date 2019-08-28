@@ -17,15 +17,23 @@ export class ReportbystatusComponent implements OnInit {
   loadJS: Promise<any>;
   private graphID: string = "graph_reportbystatus";
   expand: boolean = true;
+  private statusList = this.reportingService.status;
 
   constructor(private reportingService: ReportingService) {
 
   }
 
-  labels: Label[];
-  colors: any;
-  data: number[];
-  activeState: Array<any>;
+  private labels: Label[];
+  private colors: any;
+  private data: number[];
+  private activeState: Array<any>;
+  private options: ChartOptions = {
+    elements: {
+      arc: {
+        borderWidth: 0
+      }
+    }
+  }
 
   ngOnInit() {
     this.reportingService.observableReportStatus.subscribe(data => {

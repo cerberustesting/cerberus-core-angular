@@ -76,7 +76,7 @@ export class ReportingService {
   // variables
   private tagsList: Array<ITag>;
   // observables
-  private observableTagsList = new BehaviorSubject<ITag[]>(this.tagsList);
+  observableTagsList = new BehaviorSubject<ITag[]>(this.tagsList);
 
   private colors = [
     '#0665d0',    

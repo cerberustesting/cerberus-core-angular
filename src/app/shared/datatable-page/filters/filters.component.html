@@ -11,12 +11,12 @@
                 <!-- QUICK SEARCH -->
                 <div class="input-group mr-4 mb-3">
                     <div class="input-group-prepend">
-                        <button type="button" class="btn btn-primary">
-                            <i class="fa fa-search mr-2"></i>Quick Search
-                        </button>
+                        <span class="input-group-text input-group-text-alt">
+                            <i class="fa fa-search"></i>
+                        </span>
                     </div>
-                    <input id="quickSearch" type="text" class="form-control" (keyup)="onKeyUp()" (blur)="applySystem()"
-                        [(ngModel)]="gloabalSearchModel" placeholder="Keyword">
+                    <input type="text" class="form-control form-control-alt" id="quickSearch" (keyup)="onKeyUp()"
+                        (blur)="applySystem()" [(ngModel)]="gloabalSearchModel" placeholder="Quick Search">
                 </div>
                 <!-- END QUICK SEARCH -->
 
@@ -66,8 +66,8 @@
                             <i class="fa fa-filter"></i>
                         </span>
                     </div>
-                    <ng-select class="ng-select-addfilterscolumns custom-icon mr-2" bindLabel="displayName" multiple="true"
-                        dropdownPosition="bottom" placeholder="Add Filters" [items]="searchableColumns"
+                    <ng-select class="ng-select-addfilterscolumns custom-icon mr-2" bindLabel="displayName"
+                        multiple="true" dropdownPosition="bottom" placeholder="Add Filters" [items]="searchableColumns"
                         [closeOnSelect]="false" [searchable]="true" [clearable]="false">
 
                         <!-- SELECTED VALUE(S) TEMPLATE -->

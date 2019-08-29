@@ -29,13 +29,15 @@ export class InvariantsService {
   environmentsList: Array<IInvariant>;
   appService: Array<any>;
   // system management
-  selectedSystemsList: Array<IInvariant> = [{ // DEFAULT SELECTION
-     description: "Cerberus Application",
-     gp1: "",
-     gp2: "",
-     gp3: "",
-     value: "CERBERUS"
-  }]; // TODO : remove 
+  // DEFAULT SELECTION
+  // TODO : remove
+  selectedSystemsList: Array<IInvariant> = [{
+    description: 'Cerberus Application',
+    gp1: '',
+    gp2: '',
+    gp3: '',
+    value: 'CERBERUS'
+  }];
   // observables
   observableCountriesList = new BehaviorSubject<IInvariant[]>(this.countriesList);
   observableEnvironments = new BehaviorSubject<IInvariant[]>(this.environmentsList);
@@ -73,13 +75,13 @@ export class InvariantsService {
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
-    getEnvironments() {
-        this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=environment')
-            .subscribe(response => {
-                this.environmentsList = response;
-                this.observableEnvironments.next(this.environmentsList);
-            }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
-    }
+  getEnvironments() {
+    this.http.get<IInvariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=environment')
+      .subscribe(response => {
+        this.environmentsList = response;
+        this.observableEnvironments.next(this.environmentsList);
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
+  }
 
   // input: the new list of selected system(s)
   // replace the service variable with the given list

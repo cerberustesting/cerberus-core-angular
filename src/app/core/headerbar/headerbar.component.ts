@@ -7,7 +7,7 @@ import { IUser } from 'src/app/shared/model/user.model';
 import { SidecontentService } from '../services/crud/sidecontent.service';
 import { NotificationService } from '../services/utils/notification.service';
 import { NotificationStyle } from '../services/utils/notification.model';
-import { HeaderTitleService } from '../services/crud/header-title.service';
+import { HeaderTitleService } from '../services/utils/header-title.service';
 
 @Component({
   selector: 'app-headerbar',
@@ -19,7 +19,7 @@ export class HeaderbarComponent implements OnInit {
 
   // system(s) list fetched from API
   private systemsList: Array<IInvariant> = [];
-  // selected system(s) list by the user 
+  // selected system(s) list by the user
   private selectedSystemsList: Array<IInvariant> = [];
 
   // user data from API
@@ -96,8 +96,7 @@ export class HeaderbarComponent implements OnInit {
     // if selectedSystems is undefined => empty array
     if (!this.selectedSystemsList) {
       numberOfSelectedSystems = 0;
-    }
-    else {
+    } else {
       numberOfSelectedSystems = this.selectedSystemsList.length;
     }
     return numberOfSelectedSystems;

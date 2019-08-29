@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
+import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 declare function initChartJS();
 
 @Component({

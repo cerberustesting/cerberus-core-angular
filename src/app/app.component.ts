@@ -15,16 +15,16 @@ export class AppComponent implements OnInit {
   nightMode: boolean;
 
   constructor(
-    private keycloak: KeycloakService,
-    private UserService: UserService,
-    private invariantsService: InvariantsService
+    private _keycloakService: KeycloakService,
+    private _userService: UserService,
+    private _invariantsService: InvariantsService
   ) { }
 
   ngOnInit() {
     this.nightMode = false;
-    this.keycloakAuth = this.keycloak.getKeycloakAuth();
-    this.UserService.getUser();
-    this.invariantsService.loadInvariants();
+    this.keycloakAuth = this._keycloakService.getKeycloakAuth();
+    this._userService.getUser();
+    this._invariantsService.loadInvariants();
   }
   toggleNightMode() {
     this.nightMode = !this.nightMode;

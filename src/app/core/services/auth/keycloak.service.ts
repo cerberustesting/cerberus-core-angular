@@ -78,7 +78,7 @@ export class KeycloakService {
   }
 
   getKeycloakAuth() {
-    //console.log(KeycloakService.auth.authz);
+    // console.log(KeycloakService.auth.authz);
     return KeycloakService.auth.authz;
   }
 

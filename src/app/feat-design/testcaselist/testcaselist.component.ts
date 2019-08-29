@@ -8,7 +8,7 @@ import { Filter } from 'src/app/shared/model/filter.model';
 import { SystemService } from 'src/app/core/services/crud/system.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
-import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
+import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { Subject } from 'rxjs';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';

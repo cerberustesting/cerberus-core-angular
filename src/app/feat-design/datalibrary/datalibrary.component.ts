@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Column } from 'src/app/shared/model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { DataLibColumnsData } from './datalibrary.columnsdata';
-import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
+import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { DatalibInteractionComponent, MODE } from './datalib-interaction/datalib-interaction.component';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

@@ -4,7 +4,7 @@ import { ITestCase } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { SystemService } from 'src/app/core/services/crud/system.service';
-import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
+import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { switchMap } from 'rxjs/operators';
 
 @Component({

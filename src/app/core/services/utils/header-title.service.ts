@@ -6,10 +6,12 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class HeaderTitleService {
 
-  constructor() { }
+  private title: string;
+  public observableTitle = new BehaviorSubject<string>(this.title);
 
-  private title: string = '';
-  public observableTitle =  new BehaviorSubject<string>(this.title);
+  constructor() {
+    this.title = '';
+  }
 
   setTitle(newTitle: string) {
     this.title = newTitle;

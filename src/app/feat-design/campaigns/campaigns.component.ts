@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CampainsColumnsData } from './campaigns-columnsdata';
 import { Column } from 'src/app/shared/model/column.model';
-import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
+import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 
 @Component({
   selector: 'app-campaigns',

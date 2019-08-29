@@ -5,7 +5,7 @@ import { ITag } from 'src/app/shared/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
-import { HeaderTitleService } from 'src/app/core/services/crud/header-title.service';
+import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 declare function initChartJS();
 
 @Component({

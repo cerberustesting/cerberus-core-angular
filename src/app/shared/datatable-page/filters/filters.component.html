@@ -60,8 +60,8 @@
                 <!-- END DISPLAYED COLUMNS SELECTION -->
 
 
-                <!-- NEW FILTER SELECTION (WORK IN PROGRESS -->
-                <!-- <div class="dropdown mr-4 mb-3">
+                <!-- NEW FILTER SELECTION (WORK IN PROGRESS) -->
+                <div class="dropdown mr-4 mb-3">
                     <button type="button" class="btn btn-primary" id="filtersSelect" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-filter mr-1"></i>
@@ -70,17 +70,17 @@
                             {{ activeFilters.length }}
                         </span>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdown-default-primary" x-placement="top-start"
+                    <div class="dropdown-menu filtersDropdown" aria-labelledby="dropdown-default-primary" x-placement="top-start"
                         style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -2px, 0px);">
-                        <a *ngFor="let column of searchableColumns" class="dropdown-item" (click)="addFilter(column)">
+                        <a *ngFor="let column of searchableColumns" class="dropdown-item link-cursor" (click)="addFilter(column)">
                             <i *ngIf="column.filterDisplayed" class="fa fa-check-circle text-primary-dark"></i>
                             {{column.displayName}}
                         </a>
                     </div>
-                </div> -->
+                </div>
 
                 <!-- FILTERS SELECTION -->
-                <div class="input-group mr-4 mb-3 input-group-height">
+                <!-- <div class="input-group mr-4 mb-3 input-group-height">
                     <div class="input-group-prepend">
                         <span class="input-group-text">
                             <i class="fa fa-filter"></i>
@@ -90,15 +90,12 @@
                         multiple="true" dropdownPosition="bottom" [items]="searchableColumns" [closeOnSelect]="false"
                         [searchable]="false" [clearable]="false">
 
-                        <!-- SELECTED VALUE(S) TEMPLATE -->
                         <ng-template ng-multi-label-tmp let-items="items">
                             <span class="nav-main-link-badge badge badge-pill badge-primary mr-2">
                                 <span>{{ activeFilters.length }}</span>
                             </span>
                         </ng-template>
-                        <!-- END SELECTED VALUE(S) TEMPLATE -->
 
-                        <!--List of filters (underline if selected)-->
                         <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                             <div (click)="addFilter(item)">
                                 <span *ngIf="item.filterDisplayed; else elseTemplate" class="text-primary-dark bold">
@@ -108,10 +105,8 @@
                                 <ng-template #elseTemplate>{{item.displayName}}</ng-template>
                             </div>
                         </ng-template>
-
                     </ng-select>
-                </div>
-
+                </div> -->
 
                 <ng-template ngFor let-column [ngForOf]="columns">
                     <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column" [servlet]="servlet"

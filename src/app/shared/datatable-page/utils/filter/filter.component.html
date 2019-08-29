@@ -22,7 +22,7 @@
     </span>
   </div>
 
-  <ng-select class="custom" [items]="dataList" [selectableGroup]="true" [multiple]="column.multiple"
+  <ng-select class="custom custom-icon" [items]="dataList" [selectableGroup]="true" [multiple]="column.multiple"
     [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" [(ngModel)]='model' (open)="updateModel()"
     (add)="onAdd($event)" (remove)="applyFilter()" (change)="onChange($event)" (clear)="applyFilter()"
     [clearable]="true" (close)="applyFilter()" (search)="onSearch($event)" (keyup.enter)="onKeyUpEnter($event)">
@@ -33,7 +33,7 @@
     </ng-template>
 
     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-search="searchTerm">
-      <i class="fa fa-fw fa-folder-open mr-2" style="color:#495057;"></i>
+      <!-- <i class="fa fa-fw fa-folder-open mr-2" style="color:#495057;"></i> -->
       <span class="nav-main-link-badge badge badge-pill badge-primary mr-2">
         <span *ngIf="items.length == 1"> {{ items[0] }}</span>
         <span *ngIf="items.length > 1"> {{ items.length }} </span>

@@ -30,44 +30,45 @@ export class HeaderbarComponent implements OnInit {
   private title: string;
 
   constructor(
-    private InvariantService: InvariantsService,
-    private Keycloak: KeycloakService,
-    private UserService: UserService,
-    private sideContentService: SidecontentService,
-    private NotificationService: NotificationService,
-    private hearderTitleService: HeaderTitleService
+    private _invariantsService: InvariantsService,
+    private _keycloakService: KeycloakService,
+    private _userService: UserService,
+    private _sideContentService: SidecontentService,
+    private _notificationService: NotificationService,
+    private _hearderTitleService: HeaderTitleService
   ) { }
 
   ngOnInit() {
     // fetch data from User (could be done at a higher level)
-    this.UserService.observableAccountLink.subscribe(r => { if (r) { this.user = r; } })
-    this.userFullName = this.Keycloak.getFullName();
+    this._userService.observableAccountLink.subscribe(r => { if (r) { this.user = r; } });
+    this.userFullName = this._keycloakService.getFullName();
 
     // fetch the system list from invariant list
-    this.InvariantService.observableSystems.subscribe(response => { this.systemsList = response; });
-    this.InvariantService.getSystems();
+    this._invariantsService.observableSystems.subscribe(response => { this.systemsList = response; });
+    this._invariantsService.getSystems();
 
     // subscribe to selected system(s) list
-    this.InvariantService.observableSystemsSelected.subscribe(r => { this.selectedSystemsList = r; });
+    this._invariantsService.observableSystemsSelected.subscribe(r => { this.selectedSystemsList = r; });
 
-    this.hearderTitleService.observableTitle.subscribe(newTitle => this.title = newTitle)
+    this._hearderTitleService.observableTitle.subscribe(newTitle => this.title = newTitle);
   }
 
   systemsList_OnChange(): void {
     // send the new list of selected system(s) to the service
-    this.InvariantService.updateSelectedSystemList(this.selectedSystemsList);
+    this._invariantsService.updateSelectedSystemList(this.selectedSystemsList);
     // TODO : order the selected system(s) at the beginning
-    //this.systemsList = this.systemsList.filter(system => this.systemModel.includes(system.value)).concat(this.systemsList.filter(system => !this.systemModel.includes(system.value)));
+    // this.systemsList = this.systemsList.filter(system => this.systemModel.includes(system.value))
+    // .concat(this.systemsList.filter(system => !this.systemModel.includes(system.value)));
   }
 
   systemsList_OnClear(): void {
     // empty the selected system(s) array
     this.selectedSystemsList = new Array<IInvariant>();
-    this.InvariantService.updateSelectedSystemList(this.selectedSystemsList);
+    this._invariantsService.updateSelectedSystemList(this.selectedSystemsList);
   }
 
   selectAllSystems(): void {
-    this.InvariantService.selectAllSystems();
+    this._invariantsService.selectAllSystems();
   }
 
   clearAllSystems(): void {
@@ -78,8 +79,11 @@ export class HeaderbarComponent implements OnInit {
     // we check that the selectedSystems array is defined
     // since ng-select component override declaration
     // which means undefined == empty in this case
-    if (this.selectedSystemsList) { return this.selectedSystemsList.filter(s => s.value == systemName).length > 0; }
-    else { return false; }
+    if (this.selectedSystemsList) {
+      return this.selectedSystemsList.filter(s => s.value === systemName).length > 0;
+    } else {
+      return false;
+    }
   }
 
   areAllSystemsSelected(): boolean {
@@ -90,8 +94,12 @@ export class HeaderbarComponent implements OnInit {
     let numberOfSelectedSystems: number;
     // due to ng-select behavior
     // if selectedSystems is undefined => empty array
-    if (!this.selectedSystemsList) { numberOfSelectedSystems = 0; }
-    else { numberOfSelectedSystems = this.selectedSystemsList.length; }
+    if (!this.selectedSystemsList) {
+      numberOfSelectedSystems = 0;
+    }
+    else {
+      numberOfSelectedSystems = this.selectedSystemsList.length;
+    }
     return numberOfSelectedSystems;
   }
 
@@ -101,23 +109,30 @@ export class HeaderbarComponent implements OnInit {
   }
 
   logout(): void {
-    this.Keycloak.logout();
+    this._keycloakService.logout();
   }
 
   openUserSettingsPage(): void {
-    window.open(this.user.menu.accountLink, "_blank");
+    window.open(this.user.menu.accountLink, '_blank');
   }
 
   // DEBUG FUNCTION : feel free to edit them!
   debug(): void {
-    this.sideContentService.openSideBlock();
+    this._sideContentService.openSideBlock();
   }
 
   debug2(): void {
-    this.NotificationService.createANotification("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", NotificationStyle.Info, true, 5000);
+    this._notificationService.createANotification(
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit,' +
+      ' sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
+      ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi' +
+      ' ut aliquip ex ea commodo consequat.',
+      NotificationStyle.Info,
+      true,
+      5000);
   }
 
   refreshInvariants() {
-    this.InvariantService.loadInvariants();
+    this._invariantsService.loadInvariants();
   }
 }

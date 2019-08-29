@@ -1,10 +1,10 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderbarComponent } from "./headerbar/headerbar.component";
-import { FooterComponent } from "./footer/footer.component";
-import { SidebarComponent } from "./sidebar/sidebar.component";
-import { AppRoutingModule } from "../app-routing.module";
-import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
+import { HeaderbarComponent } from './headerbar/headerbar.component';
+import { FooterComponent } from './footer/footer.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { AppRoutingModule } from '../app-routing.module';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { SharedModule } from '../shared/shared.module';
 import { SideblockComponent } from './sideblock/sideblock.component';
 import { RunComponent } from '../shared/run/run.component';

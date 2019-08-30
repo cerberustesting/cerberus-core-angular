@@ -16,9 +16,8 @@ import { SidecontentService } from 'src/app/core/services/crud/sidecontent.servi
 })
 export class FiltersComponent implements OnInit {
 
-  private filterSectionToggle: boolean = true;
+  private columnsSectionMouseOver: boolean;
   private filterSectionMouseOver: boolean = false;
-  private test: Array<string> = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'];
 
   @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
@@ -50,6 +49,7 @@ export class FiltersComponent implements OnInit {
   ngOnInit() {
     this.columnActive = this.columns.filter(a => a.active).length;
     this.searchableColumns = this.columns.filter(a => a.searchable || a.filterMode === FILTER_MODE.SEARCH_FIELD);
+    this.columnsSectionMouseOver = false;
   }
 
   /**
@@ -124,6 +124,8 @@ export class FiltersComponent implements OnInit {
     this.activeFilters.splice(this.activeFilters.indexOf(columnContent), 1)
   }
 
-
+  toggleColumnsSelection() {
+    this.columnsSectionMouseOver = !this.columnsSectionMouseOver;
+  }
 
 }

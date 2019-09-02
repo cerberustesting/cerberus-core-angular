@@ -1,7 +1,6 @@
 <form [formGroup]="testcaseHeaderForm" (ngSubmit)="onSubmit(testcaseHeaderForm.value)">
 <div class="block-header">
     <!--Title-->
-    <!-- TODO : chose depend of mode-->
     <h3 *ngIf="mode==='EDIT'" class="block-title">Edit Test Case Header <small>ID : {{ testCase.testCase }}</small></h3>
     <h3 *ngIf="mode==='DUPLICATE'" class="block-title">Duplicate Test Case</h3>
     <h3 *ngIf="mode==='CREATE'" class="block-title">Create Test Case</h3>

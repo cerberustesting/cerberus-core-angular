@@ -1,10 +1,5 @@
-<app-datatable-page 
-    [pageSort]="defaultPageSort" 
-    [columns]="columns" 
-    [servlet]="servlet" 
-    [selectedRows]="selectedRows"
-    [selection]="true" 
-    [refreshResults]="refreshResultsEvent.asObservable()">
+<app-datatable-page [pageSort]="defaultPageSort" [columns]="columns" [servlet]="servlet" [selectedRows]="selectedRows"
+    [selection]="true" [refreshResults]="refreshResultsEvent.asObservable()">
 
     <!--START Template for create button-->
     <ng-template datatable-filter-tmp>
@@ -22,20 +17,18 @@
 
     <!--START Template for end rows buttons-->
     <ng-template datatable-end-line-tmp let-row="row">
-            <div class="row-menu">
-                    <div class="actions-section">
-                        <button class="btn btn-outline-danger" (click)="deleteTestCase(row)">
-                            <i class="fa fa-trash-alt"></i>
-                        </button>
+        <div class="row-menu">
+            <div class="actions-section">
+                <button class="btn btn-outline-danger" (click)="deleteTestCase(row)">
+                    <i class="fa fa-trash-alt"></i>
+                </button>
 
                 <button class="btn btn-outline-success">
                     <i class="fa fa-play"></i>
                 </button>
-
-                        <button class="btn btn-outline-info" (click)="editTestCaseHeader(row)">
-                            <i class="fa fa-pen"></i>
-                        </button>
-
+                <button class="btn btn-outline-info" (click)="editTestCaseHeader(row)">
+                    <i class="fa fa-pen"></i>
+                </button>
                 <button class="btn btn-outline-primary" (click)="duplicateTestCaseHeader(row)">
                     <i class="fa fa-copy"></i>
                 </button>

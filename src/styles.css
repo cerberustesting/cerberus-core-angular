@@ -55,6 +55,11 @@ ng-select.system-select .ng-dropdown-panel {
   left: 20px;
 }
 
+/*
+<ng select>
+
+apply the dashmix border color
+*/
 ng-select .ng-select-container {
   border: 1px solid #d8dfed !important;
 }

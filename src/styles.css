@@ -59,13 +59,39 @@ ng-select .ng-select-container {
   border: 1px solid #d8dfed !important;
 }
 
+/*
+<ng select> inside .input-group
+
+allow the border to stick to the right
+side of the .*-preprend element
+*/
 .input-group > ng-select:not(:first-child) .ng-select-container {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
 }
 
+/*
+"custom-icon" class for <ng select> 
+
+remove the default top-padding so that the icon
+<i> correctly align vertically 
+*/
 ng-select.custom-icon > .ng-select-container > .ng-value-container {
   padding-top: 0px !important;
+}
+
+/*
+"custom-sm" class for <ng select> 
+
+apply the correct height to the field according 
+to the bootstrap *-sm class 
+*/
+ng-select.custom-sm .ng-select-container {
+  min-height: 0.875rem !important;
+  height: 0.875rem;
+}
+ng-select.custom-sm {
+  font-size: 0.875rem !important;
 }
 
 .input-group-height {
@@ -82,4 +108,10 @@ ng-select.custom-icon > .ng-select-container > .ng-value-container {
 
 .nav-item {
   cursor: pointer;
+}
+
+.input-group-prepend > .custom-sm-font {
+  font-size: 0.875rem !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
 }

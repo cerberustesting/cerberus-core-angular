@@ -1,31 +1,34 @@
+<!-- TEXT SEARCH FIELD -->
 <div class="input-group mr-2 mb-3" *ngIf="column.filterMode==='SEARCH_FIELD'">
-  <div class="input-group-prepend link-cursor" (mouseenter)="mouseOverOnFilter = true"
+  <div class="input-group-prepend link-cursor form-control-sm p-0" (mouseenter)="mouseOverOnFilter = true"
     (mouseleave)="mouseOverOnFilter = false">
-    <span class="input-group-text">
-      <i class="fa fa-fw mr-2" (click)="removeFilter()" [ngClass]="mouseOverOnFilter ? 'fa-trash' : 'fa-filter'"
+    <span class="form-control-sm input-group-text custom-sm-font">
+      <i class="fa fa-fw mr-1" (click)="removeFilter()" [ngClass]="mouseOverOnFilter ? 'fa-trash' : 'fa-filter'"
         style="color:#495057;"></i>
       {{column.displayName}}
     </span>
   </div>
-  <input type="text" class="form-control" (keyup.enter)="validField()" (blur)="validField()" [(ngModel)]="data"
-    [placeholder]="column.placeholder">
+  <input type="text" class="form-control form-control-sm" (keyup.enter)="validField()" (blur)="validField()"
+    [(ngModel)]="data" [placeholder]="column.placeholder">
 </div>
+<!-- END TEXT SEARCH FIELD -->
 
+<!-- DROPDOWN FIELD -->
 <div class="input-group mr-2 mb-3" *ngIf="column.filterMode==='DROPDOWN'">
-
-  <div class="input-group-prepend link-cursor" (mouseenter)="mouseOverOnFilter = true"
+  <div class="input-group-prepend link-cursor form-control-sm p-0" (mouseenter)="mouseOverOnFilter = true"
     (mouseleave)="mouseOverOnFilter = false">
-    <span class="input-group-text">
-      <i class="fa fa-fw mr-2" (click)="removeFilter()" [ngClass]="mouseOverOnFilter ? 'fa-trash' : 'fa-filter'"
+    <span class="form-control-sm input-group-text custom-sm-font">
+      <i class="fa fa-fw mr-1" (click)="removeFilter()" [ngClass]="mouseOverOnFilter ? 'fa-trash' : 'fa-filter'"
         style="color:#495057;"></i>
       {{column.displayName}}
     </span>
   </div>
 
-  <ng-select class="custom custom-icon" [items]="dataList" [selectableGroup]="true" [multiple]="column.multiple"
-    [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" [(ngModel)]='model' (open)="updateModel()"
-    (add)="onAdd($event)" (remove)="applyFilter()" (change)="onChange($event)" (clear)="applyFilter()"
-    [clearable]="true" (close)="applyFilter()" (search)="onSearch($event)" (keyup.enter)="onKeyUpEnter($event)">
+  <ng-select class="custom custom-icon custom-sm" [items]="dataList" [selectableGroup]="true"
+    [multiple]="column.multiple" [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" [(ngModel)]='model'
+    (open)="updateModel()" (add)="onAdd($event)" (remove)="applyFilter()" (change)="onChange($event)"
+    (clear)="applyFilter()" [clearable]="true" (close)="applyFilter()" (search)="onSearch($event)"
+    (keyup.enter)="onKeyUpEnter($event)">
 
     <!-- NOT WORKING RIGHT NOW -->
     <ng-template *ngIf="column.type=='label'" ng-option-tmp let-item="item" let-index="index">
@@ -58,3 +61,4 @@
 
   </ng-select>
 </div>
+<!-- END DROPDOWN FIELD -->

@@ -1,5 +1,5 @@
 <div class="bg-body-light">
-    <div class="content content-full pb-0 m-0">
+    <div class="content content-full pb-0 m-0 pt-3">
         <div class="d-flex flex-column flex-sm-row align-items-sm-center">
 
             <div class="form-inline">
@@ -9,20 +9,23 @@
                 <!-- END CREATE ENTITY BUTTON (e.g. Create Test Case) -->
 
                 <!-- QUICK SEARCH -->
-                <div class="input-group mr-4 mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text input-group-text-alt">
-                            <i class="fa fa-search"></i>
-                        </span>
+                <div class="form-group mr-4 mb-3">
+                    <div class="input-group ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text input-group-text-alt">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control form-control-sm form-control-alt" id="quickSearch"
+                            (keyup)="onKeyUp()" (blur)="applySystem()" [(ngModel)]="gloabalSearchModel"
+                            placeholder="Quick Search">
                     </div>
-                    <input type="text" class="form-control form-control-alt" id="quickSearch" (keyup)="onKeyUp()"
-                        (blur)="applySystem()" [(ngModel)]="gloabalSearchModel" placeholder="Quick Search">
                 </div>
                 <!-- END QUICK SEARCH -->
 
                 <!-- DISPLAYED COLUMNS -->
-                <div class="dropdown dropright mr-4 mb-3">
-                    <button type="button" class="btn btn-primary" id="ColumnsSelect" data-toggle="dropdown"
+                <div class="dropdown mr-4 mb-3">
+                    <button type="button" class="btn btn-sm btn-primary" id="ColumnsSelect" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-columns mr-1"></i>
                         Columns
@@ -31,7 +34,7 @@
                         </span>
                     </button>
                     <div class="dropdown-menu filtersDropdown" aria-labelledby="dropdown-default-primary"
-                        x-placement="right-start"
+                        x-placement="bottom-start"
                         style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                         <div class="ml-1 mr-1 mb-1">
                             <button type="button" class="col-12 btn btn-sm btn-secondary mr-2 pt-1 pb-1"
@@ -51,7 +54,7 @@
 
                 <!-- FILTER SELECTION -->
                 <div class="dropdown dropright mr-4 mb-3">
-                    <button type="button" class="btn btn-primary" id="filtersSelect" data-toggle="dropdown"
+                    <button type="button" class="btn btn-sm btn-primary" id="filtersSelect" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-fw fa-filter mr-1"></i>
                         Filters

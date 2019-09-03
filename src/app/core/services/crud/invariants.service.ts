@@ -93,7 +93,7 @@ export class InvariantsService {
   // select all the systems at once
   selectAllSystems() {
     // fill a new list with all the system
-    let allSystemsList = new Array<IInvariant>();
+    const allSystemsList = new Array<IInvariant>();
     this.systemsList.forEach(system => {
       allSystemsList.push(system);
     });
@@ -120,8 +120,10 @@ export class InvariantsService {
       .subscribe(response => {
         this.prioritiesList = response;
         // DIRTY : add a new field in Invariant model to have the value in Integer
-        for (var key in this.prioritiesList) {
-          this.prioritiesList[key].valueInt = Number(this.prioritiesList[key].value);
+        for (const key in this.prioritiesList) {
+          if (key) {
+            this.prioritiesList[key].valueInt = Number(this.prioritiesList[key].value);
+          }
         }
         this.observablePriorities.next(this.prioritiesList);
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));

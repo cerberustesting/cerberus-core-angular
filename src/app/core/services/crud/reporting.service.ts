@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class ReportingService {
   private campaignData: any; // to fill Statistics charts
-  
   // *** charts informations ***
   private tagDetail = {};
   private reportStatus = { status: [], total: 0 };
@@ -19,10 +18,11 @@ export class ReportingService {
   private reportStatisticsReliability = {};
   private reportStatisticsDurationExecution = {};
   private displayTestFolderReport = false;
-  private selectedTagName: string;  
+  private selectedTagName: string;
   private tagsList: Array<ITag>;
-  private colors = [ // colors for the non-status elements
-    '#0665d0',    
+  private colors = [
+    // colors for the non-status elements
+    '#0665d0',
     '#689550',
     '#774aa4',
     '#00a680',
@@ -30,44 +30,44 @@ export class ReportingService {
     '#3b5998',
     '#6772e5',
     '#dd4b39'
-  ];  
+  ];
   public status: Array<any> = [ // constant (colors are set for all charts)
     {
-      label: "OK",
-      color: "#689550",
+      label: 'OK',
+      color: '#689550',
       icon: 'fa-check'
     },
     {
-      label: "KO",
-      color: "#dd4b39",
+      label: 'KO',
+      color: '#dd4b39',
       icon: 'fa-times'
     },
     {
-      label: "FA",
-      color: "#314499",
+      label: 'FA',
+      color: '#314499',
       icon: 'fa-robot'
     },
     {
       label: 'CA',
       color: '#774aa4',
       icon: 'fa-robot'
-    },    
+    },
     {
-      label: "NA",
+      label: 'NA',
       color: '#ffb119',
       icon: 'fa-robot'
     },
     {
-      label: "NE",
+      label: 'NE',
       color: 'black',
       icon: 'fa-robot'
-    },    
+    },
     {
-      label: "PE",
+      label: 'PE',
       color: '#6772e5',
       icon: 'fa-robot'
     }
-  ]
+  ];
 
   public observableTagDetail = new BehaviorSubject<any>(this.tagDetail);
   public observableReportStatus = new BehaviorSubject<any>(this.reportStatus);
@@ -78,7 +78,7 @@ export class ReportingService {
   public observableReportStatisticsDurationExecution = new BehaviorSubject<any>(this.reportStatisticsDurationExecution);
   public observableTagsList = new BehaviorSubject<ITag[]>(this.tagsList);
   public observableLabelDisplay = new BehaviorSubject<boolean>(true);
-  public observableDisplayTestFolderReport = new BehaviorSubject<boolean>(this.displayTestFolderReport);  
+  public observableDisplayTestFolderReport = new BehaviorSubject<boolean>(this.displayTestFolderReport);
 
   constructor(private http: HttpClient) { }
 
@@ -91,32 +91,36 @@ export class ReportingService {
         // @ts-ignore
         this.tagsList = response.contentTable;
         this.observableTagsList.next(this.tagsList);
-      })
+      });
   }
 
   /** ReadTestCaseExecutionByTag
    * * call the api to get tag informations then get campaign informations
    * @param callback function to execute with the tag information as parameter
    */
-  ReadTestCaseExecutionByTag(callback: (any) => any) {    
-    this.http.get<any>(environment.cerberus_api_url + '/ReadTestCaseExecutionByTag?Tag=' + this.selectedTagName + '&OK=on&KO=on&FA=on&NA=on&NE=on&WE=on&PE=on&QU=on&QE=on&CA=on&BE=on&CH=on&ES=on&FR=on&IT=on&LU=on&NL=on&PT=on&RU=on&UK=on&VI=on&PL=on&DE=on&RX=on&UF=on&env=on&country=on&robotDecli=on&app=on&')
+  ReadTestCaseExecutionByTag(callback: (any) => any) {
+    this.http.get<any>(environment.cerberus_api_url + '/ReadTestCaseExecutionByTag?Tag=' +
+      // TODO : no hardcoded countries..
+      this.selectedTagName + '&OK=on&KO=on&FA=on&NA=on&NE=on&WE=on&PE=on&QU=on&QE=on&CA=on&BE' +
+      '=on&CH=on&ES=on&FR=on&IT=on&LU=on&NL=on&PT=on&RU=on&UK=on&VI=on&PL=on&DE=on&RX=on&UF=on&' +
+      'env=on&country=on&robotDecli=on&app=on&')
       .subscribe(response => {
         this.http.get<any>(environment.cerberus_api_url + '/ReadCampaign?tag=true&&campaign=' + response.tagObject.campaign)
           .subscribe(campaignResponse => {
-            if(campaignResponse.contentTable) {
+            if (campaignResponse.contentTable) {
               this.campaignData = campaignResponse.contentTable.tag.slice(0, 10);
             } else {
               this.campaignData = [];
-            }           
+            }
             callback(response);
-          })
-      })
+          });
+      });
   }
 
   /** getTestCaseExecutionByTag
    * * call `ReadTestCaseExecutionByTag`
    * * parse the result to the graphs
-   * @param tag 
+   * @param tag
    */
   getTestCaseExecutionByTag(tag: string) {
     this.selectedTagName = tag;
@@ -137,8 +141,11 @@ export class ReportingService {
    * @returns true if the tag exist
    */
   tagExists(tag: string) {
-    if (tag != null) { return this.tagsList.filter(t => t.tag === tag).length > 0; }
-    else { return false; }
+    if (tag != null) {
+      return this.tagsList.filter(t => t.tag === tag).length > 0;
+    } else {
+      return false;
+    }
   }
 
   /** findTag
@@ -163,7 +170,7 @@ export class ReportingService {
       campaign: response.tagObject.campaign,
       usrCreated: response.tagObject.UsrCreated,
       ciResult: response.tagObject.ciResult,
-    }
+    };
     this.observableTagDetail.next(this.tagDetail);
   }
 
@@ -175,8 +182,8 @@ export class ReportingService {
     this.reportStatus = {
       total: 0,
       status: []
-    }
-    for (let status of this.status) {
+    };
+    for (const status of this.status) {
       this.reportStatus.status.push({
         label: status.label,
         icon: status.icon,
@@ -185,7 +192,7 @@ export class ReportingService {
       });
     }
     this.reportStatus.total = response.tagObject.nbExeUsefull;
-    this.observableReportStatus.next(this.reportStatus)
+    this.observableReportStatus.next(this.reportStatus);
   }
 
   /** parseReportTestFolder
@@ -193,37 +200,36 @@ export class ReportingService {
    * @param response the response to parse
    */
   parseReportTestFolder(response) {
-    let labelList = [];
-    let datasets = [];
+    const labelList = [];
+    const datasets = [];
 
     // don't display this chart if there is only one test folder
     this.displayTestFolderReport = (response.functionChart.axis.length > 1);
 
-    for (let axis of response.functionChart.axis) {
+    for (const axis of response.functionChart.axis) {
       labelList.push(axis.name);
     }
 
-    for (let status of this.status) {
+    for (const status of this.status) {
 
-      let statusInformations = { 
-        data: [], 
-        label: status.label, 
-        backgroundColor: status.color, 
-        hoverBackgroundColor: status.color 
+      let statusInformations = {
+        data: [],
+        label: status.label,
+        backgroundColor: status.color,
+        hoverBackgroundColor: status.color
       };
 
-      for (let axis of response.functionChart.axis) {
+      for (const axis of response.functionChart.axis) {
         if (axis[status.label]) {
           statusInformations.data.push(axis[status.label].value);
-        }
-        else {
+        } else {
           statusInformations.data.push(0);
         }
       }
       // add 'statusInformations' to datasets if at least one data is not null
       if (statusInformations.data.some(number => number != 0)) {
         datasets.push(statusInformations);
-      } 
+      }
 
     }
 
@@ -252,32 +258,33 @@ export class ReportingService {
    * @param stats the label stats to set
    */
   getValuesFromLabelStats(stats) {
-    return { 
-      KO: Math.round((stats.nbKO/stats.nbElementWithChild)*100), 
-      OK: Math.round((stats.nbOK/stats.nbElementWithChild)*100), 
-      FA: Math.round((stats.nbFA/stats.nbElementWithChild)*100), 
-      NA: Math.round((stats.nbNA/stats.nbElementWithChild)*100), 
-      NE: Math.round((stats.nbNE/stats.nbElementWithChild)*100), 
-      CA: Math.round((stats.nbCA/stats.nbElementWithChild)*100) }
+    return {
+      KO: Math.round((stats.nbKO / stats.nbElementWithChild) * 100),
+      OK: Math.round((stats.nbOK / stats.nbElementWithChild) * 100),
+      FA: Math.round((stats.nbFA / stats.nbElementWithChild) * 100),
+      NA: Math.round((stats.nbNA / stats.nbElementWithChild) * 100),
+      NE: Math.round((stats.nbNE / stats.nbElementWithChild) * 100),
+      CA: Math.round((stats.nbCA / stats.nbElementWithChild) * 100)
+    }
   }
 
   /** getValuesFromLabelStats
    * * parse the response for the Report by Label graph
    * @param stats the response to parse
    */
-  parseReportLabel(response) {    
+  parseReportLabel(response) {
 
     this.reportLabel = [];
     let labelList = response.labelStat.labelTreeREQUIREMENT.concat(response.labelStat.labelTreeSTICKER)
-    if (labelList.length===0) this.observableLabelDisplay.next(false);
+    if (labelList.length === 0) this.observableLabelDisplay.next(false);
     else this.observableLabelDisplay.next(true);
     for (let node of labelList) {
-      if(node.counter1WithChild!=0) this.reportLabel.push(this.parseLabelChildren(node));      
+      if (node.counter1WithChild != 0) this.reportLabel.push(this.parseLabelChildren(node));
     }
     this.observableReportLabel.next(this.reportLabel);
 
   }
-  
+
   /** parseLabelChildren
    * * parse children nodes
    * * RECURSIVE
@@ -287,7 +294,7 @@ export class ReportingService {
     if (label.nodes) {
       let children = [];
       for (let node of label.nodes) {
-        if(node.counter1WithChild!=0) children.push(this.parseLabelChildren(node))
+        if (node.counter1WithChild != 0) children.push(this.parseLabelChildren(node))
       }
       return { label: { value: label.label.label, color: label.label.color }, values: this.getValuesFromLabelStats(label.stats), children: children };
     } else {
@@ -326,25 +333,25 @@ export class ReportingService {
       let data = [];
       let display = false;
       for (let label in graphs[graph]) {
-        labels.push((label !== '')? label : 'none');
+        labels.push((label !== '') ? label : 'none');
         let sum = 0;
         graphs[graph][label].forEach(element => {
           sum += element;
         });
-        if (sum>0) display = true;
+        if (sum > 0) display = true;
         data.push(Math.round((sum / graphs[graph][label].length) * 10) / 10)
       }
-      if(data.length <=1) display = false
+      if (data.length <= 1) display = false
       let chart = {
         display: display,
         name: graph,
         data: data,
         legend: false,
         labels: labels,
-        colors: [ { 
-          backgroundColor: this.colors, 
+        colors: [{
+          backgroundColor: this.colors,
           borderColor: this.colors
-        } ],
+        }],
         options: {
           title: {
             display: true,
@@ -365,11 +372,11 @@ export class ReportingService {
    */
   parseStatisticReliability() {
     let datasets = [
-      { data: [], label: "Reliability", type: 'line' },
-      { data: [], label: "Results" },
+      { data: [], label: 'Reliability', type: 'line' },
+      { data: [], label: 'Results' },
     ]
     let labels = [];
-    let display = (this.campaignData.length>0)? true:false;
+    let display = (this.campaignData.length > 0) ? true : false;
 
     for (let tag of this.campaignData) {
       datasets[0].data.push((Math.round(tag.nbExeUsefull / tag.nbExe) * 100));
@@ -392,11 +399,11 @@ export class ReportingService {
    */
   parseStatisticDuration() {
     let datasets = [
-      { data: [], label: "Duration", type: 'line' },
-      { data: [], label: "Executions" },
+      { data: [], label: 'Duration', type: 'line' },
+      { data: [], label: 'Executions' },
     ]
     let labels = [];
-    let display = (this.campaignData.length>0)? true:false;
+    let display = (this.campaignData.length > 0) ? true : false;
 
     for (let tag of this.campaignData) {
       let dateEnd = new Date(tag.DateEndQueue);

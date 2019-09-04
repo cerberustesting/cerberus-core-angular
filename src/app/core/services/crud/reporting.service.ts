@@ -212,7 +212,7 @@ export class ReportingService {
 
     for (const status of this.status) {
 
-      let statusInformations = {
+      const statusInformations = {
         data: [],
         label: status.label,
         backgroundColor: status.color,
@@ -227,7 +227,7 @@ export class ReportingService {
         }
       }
       // add 'statusInformations' to datasets if at least one data is not null
-      if (statusInformations.data.some(number => number != 0)) {
+      if (statusInformations.data.some(number => number !== 0)) {
         datasets.push(statusInformations);
       }
 
@@ -248,7 +248,7 @@ export class ReportingService {
         }
       },
       legend: true
-    }
+    };
     this.observableReportTestFolder.next(this.reportTestFolder);
     this.observableDisplayTestFolderReport.next(this.displayTestFolderReport);
   }
@@ -265,7 +265,7 @@ export class ReportingService {
       NA: Math.round((stats.nbNA / stats.nbElementWithChild) * 100),
       NE: Math.round((stats.nbNE / stats.nbElementWithChild) * 100),
       CA: Math.round((stats.nbCA / stats.nbElementWithChild) * 100)
-    }
+    };
   }
 
   /** getValuesFromLabelStats
@@ -275,26 +275,32 @@ export class ReportingService {
   parseReportLabel(response) {
 
     this.reportLabel = [];
-    let labelList = response.labelStat.labelTreeREQUIREMENT.concat(response.labelStat.labelTreeSTICKER)
-    if (labelList.length === 0) this.observableLabelDisplay.next(false);
-    else this.observableLabelDisplay.next(true);
-    for (let node of labelList) {
-      if (node.counter1WithChild != 0) this.reportLabel.push(this.parseLabelChildren(node));
+    const labelList = response.labelStat.labelTreeREQUIREMENT.concat(response.labelStat.labelTreeSTICKER);
+    if (labelList.length === 0) {
+      this.observableLabelDisplay.next(false);
+    } else {
+      this.observableLabelDisplay.next(true);
+    }
+    for (const node of labelList) {
+      if (node.counter1WithChild != 0) {
+        this.reportLabel.push(this.parseLabelChildren(node));
+      }
     }
     this.observableReportLabel.next(this.reportLabel);
-
   }
 
   /** parseLabelChildren
    * * parse children nodes
    * * RECURSIVE
-   * @param label 
+   * @param label
    */
   parseLabelChildren(label) {
     if (label.nodes) {
-      let children = [];
-      for (let node of label.nodes) {
-        if (node.counter1WithChild != 0) children.push(this.parseLabelChildren(node))
+      const children = [];
+      for (const node of label.nodes) {
+        if (node.counter1WithChild !== 0) {
+          children.push(this.parseLabelChildren(node));
+        }
       }
       return { label: { value: label.label.label, color: label.label.color }, values: this.getValuesFromLabelStats(label.stats), children: children };
     } else {
@@ -309,62 +315,78 @@ export class ReportingService {
   parseOther(response) {
     this.reportOther = [];
 
-    let graphs = {
+    const graphs = {
       Countries: {},
       Environments: {},
       RobotDecli: {},
       Applications: {}
-    }
+    };
 
-    for (let table of response.statsChart.contentTable.split) {
-      let percentage = Math.round((table.OK / table.total) * 1000) / 10
-      if (!graphs.Countries[table.country]) graphs.Countries[table.country] = [];
+    for (const table of response.statsChart.contentTable.split) {
+      const percentage = Math.round((table.OK / table.total) * 1000) / 10;
+
+      if (!graphs.Countries[table.country]) {
+        graphs.Countries[table.country] = [];
+      }
       graphs.Countries[table.country].push(percentage);
-      if (!graphs.Environments[table.environment]) graphs.Environments[table.environment] = [];
+
+      if (!graphs.Environments[table.environment]) {
+        graphs.Environments[table.environment] = [];
+      }
       graphs.Environments[table.environment].push(percentage);
-      if (!graphs.RobotDecli[table.robotDecli]) graphs.RobotDecli[table.robotDecli] = [];
+
+      if (!graphs.RobotDecli[table.robotDecli]) {
+        graphs.RobotDecli[table.robotDecli] = [];
+      }
       graphs.RobotDecli[table.robotDecli].push(percentage);
-      if (!graphs.Applications[table.application]) graphs.Applications[table.application] = [];
+
+      if (!graphs.Applications[table.application]) {
+        graphs.Applications[table.application] = [];
+      }
       graphs.Applications[table.application].push(percentage);
     }
 
-    for (let graph in graphs) {
-      let labels = [];
-      let data = [];
-      let display = false;
-      for (let label in graphs[graph]) {
-        labels.push((label !== '') ? label : 'none');
-        let sum = 0;
-        graphs[graph][label].forEach(element => {
-          sum += element;
-        });
-        if (sum > 0) display = true;
-        data.push(Math.round((sum / graphs[graph][label].length) * 10) / 10)
-      }
-      if (data.length <= 1) display = false
-      let chart = {
-        display: display,
-        name: graph,
-        data: data,
-        legend: false,
-        labels: labels,
-        colors: [{
-          backgroundColor: this.colors,
-          borderColor: this.colors
-        }],
-        options: {
-          title: {
-            display: true,
-            text: 'percentage of OK\'s / ' + graph,
-          },
-          scale: {
-            display: false
+    for (const graph in graphs) {
+      if (graph) {
+        const labels = [];
+        const data = [];
+        let display = false;
+        for (const label in graphs[graph]) {
+          labels.push((label !== '') ? label : 'none');
+          let sum = 0;
+          graphs[graph][label].forEach(element => {
+            sum += element;
+          });
+          if (sum > 0) {
+            display = true;
+          }
+          data.push(Math.round((sum / graphs[graph][label].length) * 10) / 10);
+        }
+        if (data.length <= 1) display = false
+        const chart = {
+          display: display,
+          name: graph,
+          data: data,
+          legend: false,
+          labels: labels,
+          colors: [{
+            backgroundColor: this.colors,
+            borderColor: this.colors
+          }],
+          options: {
+            title: {
+              display: true,
+              text: 'percentage of OK\'s / ' + graph,
+            },
+            scale: {
+              display: false
+            }
           }
         }
+        this.reportOther.push(chart);
+        this.observableReportOther.next(this.reportOther);
       }
-      this.reportOther.push(chart);
     }
-    this.observableReportOther.next(this.reportOther);
   }
 
   /** parseStatisticReliability

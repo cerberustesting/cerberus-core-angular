@@ -1,0 +1,193 @@
+[
+    {
+        "reference": "Unknown",
+        "value1": null,
+        "value2": null
+    },
+    {
+        "reference": "verifyStringEqual",
+        "value1": "String 1",
+        "value2": "String 2",
+        "icon": "fa fa-equals"
+    },
+    {
+        "reference": "verifyStringDifferent",
+        "value1": "String 1",
+        "value2": "String 2",
+        "icon": "fa fa-not-equal"
+    },
+    {
+        "reference": "verifyStringGreater",
+        "value1": "String 1",
+        "value2": "String 2",
+        "icon": "fa fa-greater-than"
+    },
+    {
+        "reference": "verifyStringMinor",
+        "value1": "String 1",
+        "value2": "String 2",
+        "icon": "fa fa-less-than"
+    },
+    {
+        "reference": "verifyStringContains",
+        "value1": "String 1",
+        "value2": "String 2",
+        "icon": "fa fa-crop-alt"
+    },
+    {
+        "reference": "verifyNumericEquals",
+        "value1": "Number 1",
+        "value2": "Number 2",
+        "icon": "fa fa-equals"
+    },
+    {
+        "reference": "verifyNumericDifferent",
+        "value1": "Number 1",
+        "value2": "Number 2",
+        "icon": "fa fa-not-equal"
+    },
+    {
+        "reference": "verifyNumericGreater",
+        "value1": "Number 1",
+        "value2": "Number 2",
+        "icon": "fa fa-greater-than"
+    },
+    {
+        "reference": "verifyNumericGreaterOrEqual",
+        "value1": "Number 1",
+        "value2": "Number 2",
+        "icon": "fa fa-greater-than-equal"
+    },
+    {
+        "reference": "verifyNumericMinor",
+        "value1": "Number 1",
+        "value2": "Number 2",
+        "icon": "fa fa-less-than"
+    },
+    {
+        "reference": "verifyNumericMinorOrEqual",
+        "value1": "Number 1",
+        "value2": "Number 2",
+        "icon": "fa fa-less-than-equal"
+    },
+    {
+        "reference": "verifyElementPresent",
+        "value1": "Element path",
+        "value2": null,
+        "icon": "fa fa-code"
+    },
+    {
+        "reference": "verifyElementNotPresent",
+        "value1": "Element path",
+        "value2": null,
+        "icon": "fa fa-code"
+    },
+    {
+        "reference": "verifyElementVisible",
+        "value1": "Element path",
+        "value2": null,
+        "icon": "fa fa-search"
+    },
+    {
+        "reference": "verifyElementNotVisible",
+        "value1": "Element path",
+        "value2": null,
+        "icon": "fa fa-search"
+    },
+    {
+        "reference": "verifyElementEquals",
+        "value1": "Path",
+        "value2": "Expected Element",
+        "icon": "fa fa-equals"
+    },
+    {
+        "reference": "verifyElementDifferent",
+        "value1": "Path",
+        "value2": "Expected Element",
+        "icon": "fa fa-not-equal"
+    },
+    {
+        "reference": "verifyElementInElement",
+        "value1": "Master",
+        "value2": "Sub",
+        "icon": "fa fa-layer-group"
+    },
+    {
+        "reference": "verifyElementClickable",
+        "value1": "Element",
+        "value2": null,
+        "icon": "fa fa-mouse-pointer"
+    },
+    {
+        "reference": "verifyElementNotClickable",
+        "value1": "Element",
+        "value2": null,
+        "icon": "fa fa-mouse-pointer"
+    },
+    {
+        "reference": "verifyTextInElement",
+        "value1": "Element",
+        "value2": "Text",
+        "icon": "fa fa-heading"
+    },
+    {
+        "reference": "verifyTextNotInElement",
+        "value1": "Element",
+        "value2": "Text",
+        "icon": "fa fa-heading"
+    },
+    {
+        "reference": "verifyRegexInElement",
+        "value1": "Element",
+        "value2": "Regex",
+        "icon": "fa fa-registered"
+    },
+    {
+        "reference": "verifyTextInPage",
+        "value1": "Regex",
+        "value2": null,
+        "icon": "fa fa-heading"
+    },
+    {
+        "reference": "verifyTextNotInPage",
+        "value1": "Regex",
+        "value2": null,
+        "icon": "fa fa-heading"
+    },
+    {
+        "reference": "verifyTitle",
+        "value1": "Title",
+        "value2": null,
+        "icon": "fa fa-heading"
+    },
+    {
+        "reference": "verifyUrl",
+        "value1": "URL",
+        "value2": null,
+        "icon": "fa fa-code"
+    },
+    {
+        "reference": "verifyTextInDialog",
+        "value1": "Text",
+        "value2": null,
+        "icon": "fa fa-comment"
+    },
+    {
+        "reference": "verifyXmlTreeStructure",
+        "value1": "xPath",
+        "value2": "Tree",
+        "icon": "fa fa-stream"
+    },
+    {
+        "reference": "takeScreenshot",
+        "value1": null,
+        "value2": null,
+        "icon": "fa fa-camera"
+    },
+    {
+        "reference": "getPageSource",
+        "value1": null,
+        "value2": null,
+        "icon": "fa fa-code"
+    }
+]

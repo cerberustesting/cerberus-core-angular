@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, OnInit, Input, Output, TemplateRef, ContentChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, TemplateRef, ContentChild } from '@angular/core';
 import { Column } from '../model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
@@ -6,7 +6,6 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineAction } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
-import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 
 @Component({
   selector: 'app-datatable-page',
@@ -21,17 +20,17 @@ export class DatatablePageComponent implements OnInit {
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
   @Input() refreshResults: Observable<void>;
-  
+
 
   @ContentChild(DatatableFilterTmpDirective, { read: TemplateRef, static: true }) filterTemplate: TemplateRef<any>;
   @ContentChild(DatatableMassActionTmpDirective, { read: TemplateRef, static: true }) massActionTemplate: TemplateRef<any>;
   @ContentChild(DatatableEndLineAction, { read: TemplateRef, static: true }) endLineActionTemplate: TemplateRef<any>;
-  
 
+  name: String;
   private cache: any = {}; //number of displayed rows
-  private rows: Array<any> = []; //rows to display
+  rows: Array<any> = []; //rows to display
   private globalSearch: string; // value in global search field
-  private page: { // the default page informations
+  page: { // the default page informations
     number: number, // page number
     size: number, // number of rows on screen
     sort: any, // sort informations (column and direction)
@@ -40,8 +39,8 @@ export class DatatablePageComponent implements OnInit {
 
 
   constructor(
-    private testService: TestService, 
-    private filterService: FilterService, 
+    private testService: TestService,
+    private filterService: FilterService,
     private invariantsService: InvariantsService,
     private NotificationService: NotificationService) { }
 
@@ -53,16 +52,15 @@ export class DatatablePageComponent implements OnInit {
       totalCount: 0
     };
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
-      console.log('systemList change')
       this.cache = {};
       this.rows = [];
       this.page.number = 0;
       this.search();
     });
-    if(this.refreshResults) this.refreshResults.subscribe(() => this.applyFilters())
-    
+    if (this.refreshResults) this.refreshResults.subscribe(() => this.applyFilters())
+
   }
-  
+
 
   /**
    * search
@@ -71,12 +69,12 @@ export class DatatablePageComponent implements OnInit {
    */
   search(globalSearch?: string): void {
     this.globalSearch = (globalSearch) ? globalSearch : '';
-    
-    if (this.servlet && !this.cache[this.page.number] && this.page.size>0) {
+
+    if (this.servlet && !this.cache[this.page.number] && this.page.size > 0) {
       // console.log("Search : \n page number : " + this.page.number + '\n page size : ' + this.page.size);
       // console.log("cache :", this.cache);
-    this.cache[this.page.number] = true;
-      this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch), 
+      this.cache[this.page.number] = true;
+      this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch),
         (list: Array<any>, length: number) => {
           this.page.totalCount = length;
 
@@ -87,7 +85,7 @@ export class DatatablePageComponent implements OnInit {
 
           this.rows = rows;
 
-          
+
         });
     }
   }
@@ -110,10 +108,10 @@ export class DatatablePageComponent implements OnInit {
    */
   applyFilters(globalSearch?: string): void {
     let a = document.getElementsByClassName("datatable-body")[0];
-    a.scroll(0,0);
-    a.scrollBy(0,0); // scroll to the table top
+    a.scroll(0, 0);
+    a.scrollBy(0, 0); // scroll to the table top
     this.cache = {};
-    this.rows =  [];
+    this.rows = [];
     this.page.number = 0;
     this.search(globalSearch);
   }

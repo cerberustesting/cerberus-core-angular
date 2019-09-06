@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import * as $ from 'jquery';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 
 export enum MODE {
@@ -17,14 +16,14 @@ export enum MODE {
   styleUrls: ['./datalib-interaction.component.scss']
 })
 export class DatalibInteractionComponent implements OnInit {
-  
+
   // *** Inputs ***
   datalib: any; // datalib to edit
   mode: MODE; // EDIT / DUPLICATE / CREATE
   exit: (n: void) => void; //function to execute when press submit button
 
   // *** main form ***
-  private datalibForm: FormGroup;
+  datalibForm: FormGroup;
 
   // *** controle property ***
   paneActive = 1;
@@ -36,7 +35,7 @@ export class DatalibInteractionComponent implements OnInit {
   // *** select options list ***
   systemsList: any[];
   environmentList: any[] = [ // TODO : set dynamically
-    { value: '', description: ''},
+    { value: '', description: '' },
     { value: 'DEV', description: 'Developpement' },
     { value: 'QA', description: 'Quality Assurance' },
     { value: 'UAT', description: 'User Acceptance Test' },
@@ -60,9 +59,6 @@ export class DatalibInteractionComponent implements OnInit {
   // *** datalib properties ***
   data: any[];
 
-
-
-
   constructor(
     private invariantService: InvariantsService,
     private testService: TestService,
@@ -74,13 +70,13 @@ export class DatalibInteractionComponent implements OnInit {
     this.invariantService.getPropertyDatabaseList(); // TODO : remove to place at the top of project
     this.invariantService.getApplicationService();
     this.invariantService.observableAppService
-      .subscribe(rep => {if(rep) this.servicesList = [{service:''}].concat(rep);});
-    this.systemsList = [{value:''}].concat(this.invariantService.systemsList);
+      .subscribe(rep => { if (rep) this.servicesList = [{ service: '' }].concat(rep); });
+    this.systemsList = [{ value: '' }].concat(this.invariantService.systemsList);
     this.invariantService.observableCountriesList
-      .subscribe(rep => {if(rep) this.countriesList = [{value:''}].concat(rep);});
+      .subscribe(rep => { if (rep) this.countriesList = [{ value: '' }].concat(rep); });
 
     this.invariantService.observablePropertyDatabaseList
-      .subscribe(rep => {if(rep) this.databasesList = [{value:''}].concat(rep);});
+      .subscribe(rep => { if (rep) this.databasesList = [{ value: '' }].concat(rep); });
 
     if (this.datalib.testDataLibID) {
       this.testService.getDataLibData(this.datalib.testDataLibID, data => {
@@ -140,7 +136,7 @@ export class DatalibInteractionComponent implements OnInit {
    */
   onSubmit(values: any): void {
     for (let row in this.data) {
-      this.data[row]['toDelete'] = (this.data[row].toDelete)?true:false;
+      this.data[row]['toDelete'] = (this.data[row].toDelete) ? true : false;
       this.data[row].encrypt = (this.data[row].encrypt === 'Y') ? true : false
     }
     values['subDataList'] = JSON.stringify(this.data);
@@ -187,7 +183,7 @@ export class DatalibInteractionComponent implements OnInit {
   deleteSubdata(subdata): void {
     subdata['toDelete'] = !subdata['toDelete'];
   }
-  
+
   /** getRowClass
    * * set the class 'to-delete' if the has to be delete
    * @param row the row to set the class

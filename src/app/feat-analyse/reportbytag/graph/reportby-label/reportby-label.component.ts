@@ -9,7 +9,7 @@ import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 export class ReportbyLabelComponent implements OnInit {
 
   private labelTree: Array<any> = [];
-  private expand: boolean = true;
+  expand: boolean = true;
 
   constructor(private reportingService: ReportingService) { }
 

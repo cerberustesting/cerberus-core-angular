@@ -1,0 +1,59 @@
+{
+    "iTotalRecords": 5,
+    "hasPermissions": false,
+    "messageType": "OK",
+    "contentTable": [
+        {
+            "dateCreated": "Jun 19, 2012 9:56:06 AM",
+            "hasPermissions": false,
+            "test": "Business Activity Monitor",
+            "usrModif": "",
+            "description": "Business Activity Monitor Tests",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Jun 19, 2012 9:56:06 AM",
+            "hasPermissions": false,
+            "test": "Examples",
+            "usrModif": "",
+            "description": "Example Tests",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Jun 19, 2012 9:56:06 AM",
+            "hasPermissions": false,
+            "test": "Performance Monitor",
+            "usrModif": "",
+            "description": "Performance Monitor Tests",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Sep 3, 2018 11:59:20 AM",
+            "hasPermissions": false,
+            "test": "Post Testing",
+            "usrModif": "",
+            "description": "Post Tests",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Jan 1, 1970 1:01:01 AM",
+            "hasPermissions": false,
+            "test": "Pre Testing",
+            "usrModif": "",
+            "description": "Preliminary Tests",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        }
+    ],
+    "iTotalDisplayRecords": 5,
+    "message": "Test - SELECT was finished with success!"
+}

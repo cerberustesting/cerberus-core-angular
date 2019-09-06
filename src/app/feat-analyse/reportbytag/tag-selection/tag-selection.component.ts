@@ -12,12 +12,12 @@ import { IInvariant } from 'src/app/shared/model/invariants.model';
 })
 export class TagSelectionComponent implements OnInit {
   @Output() tagSelection = new EventEmitter<ITag>();
-  private tagsList: Array<ITag> = new Array();
+  tagsList: Array<ITag> = new Array();
   private tagsBuffer: Array<ITag> = new Array();
   private bufferSize = 50;
   private selectedTag: ITag = null;
   private countriesList: Array<IInvariant> = new Array();
-  
+
   private filtersShowed: boolean;
   private showCountriesFilterOptions: boolean;
   private showTceStatusFilterOptions: boolean;
@@ -71,13 +71,13 @@ export class TagSelectionComponent implements OnInit {
           if (tagFromURL) {
             if (this.ReportingService.tagExists(tagFromURL)) {
               this.selectedTag = this.ReportingService.findTag(tagFromURL);
-              this.selectedTagChange();       
+              this.selectedTagChange();
             }
           }
         }
         // this.activatedRoute.queryParams.subscribe(params => {
         //   var tagFromURL = params['tag'];
-          
+
         //   if (tagFromURL) {
         //     if (this.ReportingService.tagExists(tagFromURL)) {
         //       this.selectedTag = this.ReportingService.findTag(tagFromURL);
@@ -86,7 +86,7 @@ export class TagSelectionComponent implements OnInit {
         //   }
         // });
       }
-      
+
     });
     this.InvariantsService.getCountriesList();
     this.InvariantsService.getTceStatus();
@@ -115,10 +115,10 @@ export class TagSelectionComponent implements OnInit {
   /** selectedTagChange
    * * load emit selected tag and chnge url queryParams
    */
-  selectedTagChange(): void {       
-    if (this.selectedTag) { 
+  selectedTagChange(): void {
+    if (this.selectedTag) {
       this.tagSelection.emit(this.selectedTag);
-      this.router.navigate(['/analyse/report', this.selectedTag.tag]);       
+      this.router.navigate(['/analyse/report', this.selectedTag.tag]);
     }
     else { this.router.navigate([]); }
   }

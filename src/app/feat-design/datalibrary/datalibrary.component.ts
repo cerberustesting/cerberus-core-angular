@@ -19,13 +19,13 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 })
 export class DatalibraryComponent implements OnInit {
 
-  columns: Array<Column> = DataLibColumnsData; // get all columns from `datalibrary.columnsdata.ts`
+  private columns: Array<Column> = DataLibColumnsData; // get all columns from `datalibrary.columnsdata.ts`
 
   // *** parameters for the `datatable-page` component ***
-
-  defaultPageSort = [{ dir: "asc", prop: "testDataLibID" }];
-  servlet = '/ReadTestDataLib'; // the api to call to get datalib list
-  refreshResultsEvent: Subject<void> = new Subject<void>(); // the event to emit to refresh the table
+  
+  private defaultPageSort = [{ dir: "asc", prop: "testDataLibID" }];
+  private servlet = '/ReadTestDataLib'; // the api to call to get datalib list
+  private refreshResultsEvent: Subject<void> = new Subject<void>(); // the event to emit to refresh the table
 
   refreshResults() {
     this.refreshResultsEvent.next()
@@ -109,9 +109,9 @@ export class DatalibraryComponent implements OnInit {
     modalRef.componentInstance.fct = () => {
       this.testService.deleteTestDataLib(
         row.testDataLibID,
-        () => { this.refreshResults() }
+        () => {this.refreshResults()}
       );
-      this.NotificationService.createANotification('The datalib ' + row.name + ' (ID :' + row.testDataLibID + ') has been successfully deleted', NotificationStyle.Success);
+      this.NotificationService.createANotification('The datalib '+ row.name +' (ID :'+ row.testDataLibID +') has been successfully deleted', NotificationStyle.Success);
     };
   }
 
@@ -128,6 +128,6 @@ export class DatalibraryComponent implements OnInit {
     this.sideContentService.openSideBlock();
   }
 
-
+  
 
 }

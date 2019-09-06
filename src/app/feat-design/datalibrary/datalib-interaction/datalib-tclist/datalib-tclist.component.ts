@@ -14,7 +14,7 @@ export class DatalibTclistComponent implements OnInit {
   private country: string; // datalib country
 
   // ***  ***
-  requestResponseTable: any; //the informations to display
+  private requestResponseTable: any; //the informations to display
 
   constructor(private testService: TestService) { }
 

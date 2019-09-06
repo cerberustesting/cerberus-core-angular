@@ -18,16 +18,16 @@ import { HeaderTitleService } from '../services/utils/header-title.service';
 export class HeaderbarComponent implements OnInit {
 
   // system(s) list fetched from API
-  systemsList: Array<IInvariant> = [];
+  private systemsList: Array<IInvariant> = [];
   // selected system(s) list by the user
-  selectedSystemsList: Array<IInvariant> = [];
+  private selectedSystemsList: Array<IInvariant> = [];
 
   // user data from API
   private user: IUser;
   // user data from Keycloak
-  userFullName: string;
+  private userFullName: string;
 
-  title: string;
+  private title: string;
 
   constructor(
     private _invariantsService: InvariantsService,

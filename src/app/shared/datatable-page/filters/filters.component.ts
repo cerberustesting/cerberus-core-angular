@@ -36,10 +36,10 @@ export class FiltersComponent implements OnInit {
 
   private labelList: Array<ILabel>;
   private userSearch: any;
-  columnActive: number;
-  searchableColumns: Array<Column>;
-  gloabalSearchModel: string;
-  activeFilters: Array<string> = [];
+  private columnActive: number;
+  private searchableColumns: Array<Column>;
+  private gloabalSearchModel: string;
+  private activeFilters: Array<string> = [];
 
   constructor(private systemService: SystemService,
     private invariantService: InvariantsService,

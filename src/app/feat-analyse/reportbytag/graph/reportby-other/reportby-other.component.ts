@@ -8,13 +8,13 @@ import { ReportingService } from 'src/app/core/services/crud/reporting.service';
   templateUrl: './reportby-other.component.html',
   styleUrls: ['./reportby-other.component.scss']
 })
-export class ReportbyOtherComponent implements OnInit {
+export class ReportbyOtherComponent implements OnInit {  
   @Input() chart: any; //the chart informations to display
 
-  expand: boolean = true; // the content is display/collapse
+  private expand: boolean = true; // the content is display/collapse
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {  }
 
 }

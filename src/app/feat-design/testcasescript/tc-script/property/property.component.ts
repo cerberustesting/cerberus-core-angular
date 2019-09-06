@@ -15,8 +15,8 @@ import { DraganddropService } from '../draganddrop.service';
 export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   @Input('propertiesById') propertiesById: Array<IProperty>;
-  propertyName: string;
-  propertyNameIsInvalid: boolean;
+  private propertyName: string;
+  private propertyNameIsInvalid: boolean;
 
   // propertyValueAdded: sent when a new property value is added
   // in order to call addPropertyValue() from parent component
@@ -28,7 +28,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   // unassigned country list
   private propertiesList: Array<IProperty>;
-  unassignedCountriesList: Array<String>;
+  private unassignedCountriesList: Array<String>;
 
   // invariants
   private inv_countriesList: Array<IInvariant>;
@@ -40,7 +40,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   private testcaseheader: ITestCaseHeader;
   private showPropertyOptions: boolean;
-  showPropCountriesMainContent: boolean;
+  private showPropCountriesMainContent: boolean;
 
   constructor(
     private InvariantsService: InvariantsService,

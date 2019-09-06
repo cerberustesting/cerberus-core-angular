@@ -9,7 +9,7 @@ import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 export class LabelProgressComponent implements OnInit {
   @Input() label: any;
 
-  statusList = this.reportingService.status;
+  private statusList = this.reportingService.status;
 
   constructor(private reportingService: ReportingService) { }
 
@@ -21,7 +21,7 @@ export class LabelProgressComponent implements OnInit {
    * @param label label to toggle
    */
   toggleChildren(label) {
-    label.expand = !((label.expand) ? true : false);
+    label.expand = !((label.expand)? true : false);
   }
 
 }

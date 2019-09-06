@@ -10,13 +10,13 @@ import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 })
 export class ReportbyTestfolderComponent implements OnInit {
 
-  chart: { // chart informations
+  private chart: { // chart informations
     datasets: ChartDataSets[], // values for each test folder and status
     label: Label[], // label of tests folders
-    options: ChartOptions,
+    options : ChartOptions,
     legend: boolean, // display legend ?
   }
-  expand: boolean = true; // the block content is display are collapse
+  private expand: boolean = true; // the block content is display are collapse
 
   constructor(private reportingService: ReportingService) { }
 

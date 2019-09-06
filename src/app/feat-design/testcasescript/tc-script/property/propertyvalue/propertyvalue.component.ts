@@ -26,9 +26,9 @@ export class PropertyvalueComponent implements OnInit, OnDestroy {
   // in order to refresh the unassigned countries list
   @Output() propertyValueDeleted = new EventEmitter<boolean>();
 
-  DragAndDropId: string;
-  DragAndDropList: Array<string>;
-  showEmptyCountryList: boolean;
+  private DragAndDropId: string;
+  private DragAndDropList: Array<string>;
+  private showEmptyCountryList: boolean;
   private showAdvanced: boolean;
   // public inavariants
   private inv_propertyDatabaseList: Array<IInvariant>;

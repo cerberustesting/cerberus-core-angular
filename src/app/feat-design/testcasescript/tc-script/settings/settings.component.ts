@@ -12,9 +12,9 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 })
 export class SettingsComponent implements OnInit {
 
-  step: IStep;
-  action: IAction;
-  control: IControl;
+  private step: IStep;
+  private action: IAction;
+  private control: IControl;
   private readonly: boolean;
   private parentStepIndex: number;
   private parentActionIndex: number;

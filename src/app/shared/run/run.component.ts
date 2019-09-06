@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IInvariant } from '../model/invariants.model';
 import { InvariantsService } from '../../core/services/crud/invariants.service';
-import { IRunParameters, RunParameters } from './run.parameters';
+import { IRunParameters, RunParameters} from './run.parameters';
 import { RunService } from '../../core/services/crud/run.service';
 
 @Component({
@@ -13,17 +13,17 @@ import { RunService } from '../../core/services/crud/run.service';
 
 export class RunComponent implements OnInit {
 
-  @Input() testCases: Array<any>;
+  @Input() testCases:  Array<any>;
 
   private runParameters: IRunParameters = new RunParameters();
-  countriesList: Array<IInvariant> = [];
+  private countriesList: Array<IInvariant> = [];
   private selected_countriesList: Array<string> = [];
-  envList: Array<any> = [];
+  private envList: Array<any> = [];
 
   constructor(
-    private InvariantsService: InvariantsService,
-    private RunService: RunService
-  ) { }
+      private InvariantsService: InvariantsService,
+      private RunService: RunService
+  ) {}
 
   ngOnInit() {
     this.InvariantsService.getCountriesList();

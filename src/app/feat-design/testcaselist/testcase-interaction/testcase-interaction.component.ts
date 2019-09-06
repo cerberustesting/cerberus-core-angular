@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ITestCase, ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IApplication } from 'src/app/shared/model/application.model';
 import { SystemService } from 'src/app/core/services/crud/system.service';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { ITest } from 'src/app/shared/model/test.model';
-import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
@@ -30,27 +30,27 @@ export class TestcaseInteractionComponent implements OnInit {
   exit: (n: void) => void;
 
   // *** HTML control ***
-  private paneActive = 1;
-  private labelTab = 1;
+  paneActive = 1;
+  labelTab = 1;
 
   // *** Forms ***
-  private testcaseHeaderForm: FormGroup;
+  testcaseHeaderForm: FormGroup;
 
   // *** select lists ***
-  private booleanList: Array<any> = [
+  booleanList: Array<any> = [
     { value: true, text: 'Yes' },
     { value: false, text: 'No' }
   ];
-  private applicationsList: Array<IApplication>;
-  private statusList: Array<IInvariant>;
-  private typesList: Array<IInvariant>;
-  private priorityList: Array<IInvariant>;
-  private sprintsList: Array<any>; // ? add type
-  private revsList: Array<any>; // ? add type
-  private conditionsList: Array<IInvariant>;
-  private testsList: Array<ITest>;
+  applicationsList: Array<IApplication>;
+  statusList: Array<IInvariant>;
+  typesList: Array<IInvariant>;
+  priorityList: Array<IInvariant>;
+  sprintsList: Array<any>; // ? add type
+  revsList: Array<any>; // ? add type
+  conditionsList: Array<IInvariant>;
+  testsList: Array<ITest>;
   private countriesList: Array<IInvariant>;
-  private labelList = {
+  labelList = {
     batteries: [],
     requirements: [],
     stickers: []
@@ -58,9 +58,9 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // *** Other testcase properties ***
   private tcCountryList: Array<any> = [];
-  private testcaseList: Array<ITestCaseHeader> = [];
-  private dependencySelectedTestCase: ITestCaseHeader;
-  private dependencyTestCaseList: Array<any> = [];
+  testcaseList: Array<ITestCaseHeader> = [];
+  dependencySelectedTestCase: ITestCaseHeader;
+  dependencyTestCaseList: Array<any> = [];
 
   constructor(
     private invariantsService: InvariantsService,
@@ -85,11 +85,11 @@ export class TestcaseInteractionComponent implements OnInit {
         }
       });
       for (let country in this.testCase.countryList) this.tcCountryList.push(country);
-    } 
-    
+    }
 
-    
-    
+
+
+
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
     this.systemService.getApplicationList();
     this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
@@ -98,14 +98,14 @@ export class TestcaseInteractionComponent implements OnInit {
     this.invariantsService.observableCountriesList.subscribe(rep => this.countriesList = rep);
     this.invariantsService.observablePriorities.subscribe(rep => this.priorityList = rep);
     this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
-    
+
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
-    
+
     this.systemService.observableRevs.subscribe(rep => this.revsList = [{ versionName: '' }].concat(rep));
     this.testService.getTestsList();
     this.testService.observableTestsList.subscribe(rep => this.testsList = rep);
 
-    
+
 
 
     this.testcaseHeaderForm = this.formBuilder.group({
@@ -143,17 +143,17 @@ export class TestcaseInteractionComponent implements OnInit {
 
   getFromSystem(): void {
     if (this.testcaseHeaderForm.value.application) {
-      this.testCase.system = this.testcaseHeaderForm.value.application;      
+      this.testCase.system = this.testcaseHeaderForm.value.application;
       this.systemService.getLabelsHierarchyFromSystem(this.testCase.system, this.testCase.test, this.testCase.testCase);
       this.systemService.getSprintsFromSystem(this.testCase.system);
       this.systemService.getRevFromSystem(this.testCase.system);
     }
-    
+
   }
 
-  
 
-  
+
+
   /** toggleLabel
    * * call on label click
    * * toggle label selection
@@ -198,14 +198,14 @@ export class TestcaseInteractionComponent implements OnInit {
   addToDependencyTable(testCaseIndex): void {
     let testcase = this.testcaseList[testCaseIndex];
     let dependency = {
-      id: this.dependencyTestCaseList.sort((a, b) => (a.id<b.id)?1:-1)[0].id+1,
+      id: this.dependencyTestCaseList.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1,
       test: testcase.test,
       testcase: testcase.testCase,
       description: '',
       active: true
     };
-    if (!(this.dependencyTestCaseList.map(d=> d.test).includes(dependency.test) &&
-    this.dependencyTestCaseList.map(d=> d.testcase).includes(dependency.testcase))) {
+    if (!(this.dependencyTestCaseList.map(d => d.test).includes(dependency.test) &&
+      this.dependencyTestCaseList.map(d => d.testcase).includes(dependency.testcase))) {
       this.dependencyTestCaseList.push(dependency);
     } else {
       this.notificationService.createANotification('This TestCase is already selected !', NotificationStyle.Error);
@@ -236,7 +236,7 @@ export class TestcaseInteractionComponent implements OnInit {
       this.notificationService.createANotification("Please specify the Test Folder", NotificationStyle.Warning);
       return;
     }
-    
+
     if (!values.testCase) {
       this.notificationService.createANotification("Please specify the Test Case ID", NotificationStyle.Warning);
       return;
@@ -250,7 +250,7 @@ export class TestcaseInteractionComponent implements OnInit {
     for (let item in values) {
       queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item] || '') + '&';
     }
-    
+
     // fill countryList with all countries selected
     for (let country of this.countriesList) {
       countryList.push(
@@ -279,8 +279,8 @@ export class TestcaseInteractionComponent implements OnInit {
     } else {
       this.testService.updateTestCase(queryString).subscribe(rep => this.refreshTable());
     }
-    
-    
+
+
   }
 
   /** refreshTable

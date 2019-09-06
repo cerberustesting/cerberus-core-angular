@@ -1,0 +1,173 @@
+[
+    {
+        "reference": "text",
+        "value1": "Text",
+        "value2": null,
+        "description1": "Type plain text here.",
+        "fields": [
+            "length",
+            "nature",
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromDataLib",
+        "value1": "Data Library Name",
+        "value2": null,
+        "description1": "Type the Data Library name.",
+        "fields": [
+            "length",
+            "rowLimit",
+            "nature",
+            "retryNb",
+            "retryPeriod",
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromSql",
+        "value1": "Query",
+        "value2": null,
+        "description1": "Type the query according to its DB language.",
+        "description2": null,
+        "db": "Database",
+        "db_description": "Database Invariant defined in Cerberus",
+        "fields": [
+            "rowLimit",
+            "nature",
+            "retryNb",
+            "retryPeriod",
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromHtml",
+        "value1": "Element Path",
+        "value2": null,
+        "description1": "Type the path to the desired element using xPath.",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromHtmlVisible",
+        "value1": "Element Path",
+        "value2": null,
+        "description1": "Type the path to the desired element using xPath. It must be visible though.",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromJS",
+        "value1": "JavaScript script",
+        "value2": null,
+        "description1": "Type the JS script. To actually get the result, you must use 'return' method.",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getAttributeFromHtml",
+        "value1": "Element Path",
+        "value2": "Attribute Name",
+        "description1": "Type the path to the desired element using xPath.",
+        "icon_value2": "fa fa-at",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromCookie",
+        "value1": "Cookie name",
+        "value2": "Cookie Attribute",
+        "description1": "Type Cookie name.",
+        "icon_value2": "fa fa-cookie",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromXml",
+        "value1": "Element path",
+        "value2": "XML file or URL",
+        "description1": "Type the path to the desired element using xPath.",
+        "description2": "Optionnal",
+        "icon_value2": "fa fa-code",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getDifferencesFromXml",
+        "value1": "value1",
+        "value2": "value2",
+        "description1": "?",
+        "description2": "?",
+        "icon_value2": "",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromJson",
+        "value1": "Element Path",
+        "value2": "JSON file or URL",
+        "description1": "Type the path to the desired element using JSON.",
+        "icon_value2": "fa fa-code",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromCommand",
+        "value1": "Shell command",
+        "value2": null,
+        "description1": "Type the Shell command that you want to get value from.",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "getFromGroovy",
+        "value1": "Script",
+        "value2": null,
+        "description1": "Type the Groovy script. The actual result is the latest defined variable.",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "executeSoapFromLib",
+        "value1": "Service Library Name",
+        "value2": null,
+        "description1": "DEPRECATED",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
+        "reference": "executeSqlFromLib",
+        "value1": "SQL Library Name",
+        "value2": null,
+        "description1": "DEPRECATED",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    }
+]

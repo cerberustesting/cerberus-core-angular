@@ -25,11 +25,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class TestcaselistComponent implements OnInit {
 
 
-  private columns: Array<Column> = TestCasesColumnsData; // column list from `testcaselist.columnsdata.ts`  
-  private defaultPageSort = [{dir: "asc", prop : "testCase"}];
-  private selectedRows: Array<any> = []; // the selected rows in the table
-  private servlet :string = '/ReadTestCase'; //const : the api to call to refresh datatable results
-  private refreshResultsEvent: Subject<void> = new Subject<void>(); //the observable to refresh the table
+  columns: Array<Column> = TestCasesColumnsData; // column list from `testcaselist.columnsdata.ts`  
+  defaultPageSort = [{dir: "asc", prop : "testCase"}];
+  selectedRows: Array<any> = []; // the selected rows in the table
+  servlet :string = '/ReadTestCase'; //const : the api to call to refresh datatable results
+  refreshResultsEvent: Subject<void> = new Subject<void>(); //the observable to refresh the table
   
   constructor(
     private headerTitleService: HeaderTitleService,

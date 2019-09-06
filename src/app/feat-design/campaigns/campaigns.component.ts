@@ -10,12 +10,12 @@ import { HeaderTitleService } from 'src/app/core/services/utils/header-title.ser
 })
 export class CampaignsComponent implements OnInit {
 
-  private columns: Array<Column> = CampainsColumnsData; // column list  
-  private defaultPageSort = [{dir: "asc", prop : "testCase"}];
+  columns: Array<Column> = CampainsColumnsData; // column list  
+  defaultPageSort = [{ dir: "asc", prop: "testCase" }];
   private selectedRows: Array<any> = [];
-  private servlet :string = '/ReadCampaign'
+  servlet: string = '/ReadCampaign'
 
-  constructor(private headerTitleService: HeaderTitleService) { 
+  constructor(private headerTitleService: HeaderTitleService) {
     headerTitleService.setTitle("Campaigns");
   }
 

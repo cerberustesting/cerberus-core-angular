@@ -20,9 +20,9 @@ export class ReportbytagComponent implements OnInit {
   private bufferSize = 50;
   private numberOfItemsFromEndBeforeFetchingMore = 10;
   private loading = false;
-  private selectedTag: ITag = null;
+  selectedTag: ITag = null;
   private selectedTagData = null;
-  
+
   // variables
   private countriesList: Array<IInvariant> = new Array();
   private selected_countriesList: Array<string> = new Array();
@@ -43,10 +43,10 @@ export class ReportbytagComponent implements OnInit {
     private ReportingService: ReportingService,
     private activatedRoute: ActivatedRoute,
     private InvariantsService: InvariantsService,
-    private router: Router, 
-    private headerTitleService: HeaderTitleService) { 
-      headerTitleService.setTitle("Report Execution");
-    }
+    private router: Router,
+    private headerTitleService: HeaderTitleService) {
+    headerTitleService.setTitle("Report Execution");
+  }
 
   ngOnInit() {
     this.ReportingService.observableReportOther.subscribe(response => {
@@ -73,7 +73,7 @@ export class ReportbytagComponent implements OnInit {
    * * load informations of selected tag
    * @param value new tag selected
    */
-  tagSelection(tag: ITag): void { 
+  tagSelection(tag: ITag): void {
     this.selectedTag = tag;
     this.ReportingService.getTestCaseExecutionByTag(this.selectedTag.tag);
   }

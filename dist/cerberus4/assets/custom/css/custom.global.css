@@ -1,0 +1,13 @@
+.is-selected-valid {
+  border-color: #3b5998;
+  background-color: #3b5998;
+  color: white;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.border {
+  border-color: #6c757d;
+}

@@ -14,10 +14,10 @@ export class StepComponent implements OnInit {
   @Input('step') step: IStep;
   @Input('stepIndex') stepIndex: number;
   //@Input('isfirstStep') isFirstStep: boolean;
-  private showActionList: boolean;
+  showActionList: boolean;
   private stepIsReadOnly: boolean;
   private showControls: boolean;
-  private isFocused: boolean;
+  isFocused: boolean;
 
   constructor(
     private SettingsService: SettingsService,

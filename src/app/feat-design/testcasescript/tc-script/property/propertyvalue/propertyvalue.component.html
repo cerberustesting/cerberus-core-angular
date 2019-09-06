@@ -10,7 +10,7 @@
     <li *ngFor="let country of prop.country" class="nav-item" cdkDrag>
       <a class="nav-link">{{country}}</a>
     </li>
-    <li *ngIf="prop.country == 0 && showEmptyCountryList" class="nav-item default-cursor">
+    <li *ngIf="showEmptyCountryList" class="nav-item default-cursor">
       <a class="nav-link active text-muted">Empty</a>
     </li>
   </ul>

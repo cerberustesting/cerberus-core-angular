@@ -8,7 +8,6 @@ import { TrueindexPipe } from "./pipes/trueindex.pipe";
 import { UniqueproplistPipe } from "./pipes/uniqueproplist.pipe";
 import { LabelfilteringPipe } from "./pipes/labelfiltering.pipe";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
-import { LabelComponent } from './label/label.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatatablePageComponent } from './datatable-page/datatable-page.component';
 import { FiltersComponent } from "./datatable-page/filters/filters.component";
@@ -26,7 +25,6 @@ import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, Datatable
     TrueindexPipe,
     UniqueproplistPipe,
     LabelfilteringPipe,
-    LabelComponent,
     DatatablePageComponent,
     FiltersComponent,
     FilterComponent,

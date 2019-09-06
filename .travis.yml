@@ -1,13 +1,20 @@
 language: node_js
 node_js:
   - "10"
-
+dist: trusty
+sudo: required
 branches:
   only:
   - master
-
 before_script:
   - npm install -g @angular/cli
-
 script:
-- ng lint
+  - ng lint --force=true
+  - ng build --prod --base-href https://cerberustesting.github.io/cerberus-angular/
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/cerberus-angular
+  on:
+    branch: master

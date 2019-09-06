@@ -9,3 +9,6 @@ node_modules/
 
 # docker-compose generated files #
 compositions/*/localdata/
+
+#ignore the dist folder
+dist/

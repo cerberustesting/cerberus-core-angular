@@ -10,11 +10,9 @@ before_script:
   - npm install -g @angular/cli
 script:
   - ng lint --force=true
-  - ng build --prod --base-href https://nouxx.github.io/cerberus-angular/
+  - ng build --prod
 deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: dist/cerberus4
+  provider: script
+  script: bash deploy/scripts/deploy.sh
   on:
     branch: master

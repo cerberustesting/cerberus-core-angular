@@ -10,11 +10,11 @@ before_script:
   - npm install -g @angular/cli
 script:
   - ng lint --force=true
-  - ng build --prod --base-href https://cerberustesting.github.io/cerberus-angular/
-# deploy:
-#   provider: pages
-#   skip_cleanup: true
-#   github_token: $GITHUB_TOKEN
-#   local_dir: dist/cerberus-angular
-#   on:
-#     branch: master
+  - ng build --prod --base-href https://nouxx.github.io/cerberus-angular/
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/cerberus-angular
+  on:
+    branch: master

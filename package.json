@@ -27,6 +27,7 @@
     "@ng-bootstrap/ng-bootstrap": "^5.1.0",
     "@ng-select/ng-select": "^3.0.5",
     "@swimlane/ngx-datatable": "^15.0.2",
+    "adm-zip": "^0.4.13",
     "bootstrap": "^4.3.1",
     "bootstrap-colorpicker": "^3.0.3",
     "bootstrap-datepicker": "^1.8.0",

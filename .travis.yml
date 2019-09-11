@@ -13,6 +13,6 @@ script:
   - ng build --prod
 deploy:
   provider: script
-  script: bash deploy/scripts/deploy.sh
+  script: sh ./deploy/scripts/deploy.sh
   on:
     branch: master

@@ -1,3 +1,5 @@
+import npm_package from "../../package.json";
+
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
@@ -15,7 +17,8 @@ let API_endpoint: string = "https://qa.cerberus-testing.org";
 export const environment = {
   production: false,
   cerberus_api_url: API_endpoint,
-  keycloak: keycloakConfig
+  keycloak: keycloakConfig,
+  version: npm_package.version
 };
 
 /*

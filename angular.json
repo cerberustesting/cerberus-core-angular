@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cerberus4": {
+    "cerberus-front": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/cerberus4",
+            "outputPath": "dist/cerberus-front",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -55,18 +55,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "cerberus4:build"
+            "browserTarget": "cerberus-front:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "cerberus4:build:production"
+              "browserTarget": "cerberus-front:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cerberus4:build"
+            "browserTarget": "cerberus-front:build"
           }
         },
         "test": {
@@ -100,7 +100,7 @@
         }
       }
     },
-    "cerberus4-e2e": {
+    "cerberus-front-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -108,11 +108,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "cerberus4:serve"
+            "devServerTarget": "cerberus-front:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "cerberus4:serve:production"
+              "devServerTarget": "cerberus-front:serve:production"
             }
           }
         },
@@ -128,7 +128,7 @@
       }
     }
   },
-  "defaultProject": "cerberus4",
+  "defaultProject": "cerberus-front",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"

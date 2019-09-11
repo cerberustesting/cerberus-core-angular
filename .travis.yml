@@ -12,6 +12,7 @@ script:
   - ng lint --force=true
   - ng build --prod
 deploy:
+  skip_cleanup: true
   provider: script
   script: sh ./deploy/scripts/deploy.sh
   on:

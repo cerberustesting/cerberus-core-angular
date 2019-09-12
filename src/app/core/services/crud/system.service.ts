@@ -86,13 +86,11 @@ export class SystemService {
     for (let system of this.invariantsService.selectedSystemsList) {
       this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication?system='+system.value)
       .subscribe(response => {
-        console.log(response);
         // @ts-ignore
         this.applicationsList = this.applicationsList.concat(response.contentTable);
         // @ts-ignore
         // this.applicationsList = this.applicationsList.contentTable;
         this.observableApplicationList.next(this.applicationsList);
-        console.log(this.applicationsList);
       });
     }
     

@@ -83,6 +83,7 @@ export class TcHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    //this.refreshTestCase();
     if (this.TestService.refreshTC) {
       blockAPI('state_loading', this.block_id);
       var loadingAnimationTime = setInterval(() => {

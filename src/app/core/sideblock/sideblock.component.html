@@ -1,8 +1,5 @@
-<div class="block" >
-        <i class="fa fa-times-circle close-icon" (click)="close()"></i>
-        <span class="hide-icon">
-                <i class="fa" [ngClass]="hidden ? 'fa-arrow-circle-left' : 'fa-arrow-circle-right'" (click)="hide()"></i>
-        </span>
-        <ng-template #dynamic></ng-template>
-    
-</div>
+<!-- <i class="fa fa-times-circle close-icon" (click)="close()"></i> -->
+<span class="hide-icon">
+        <i class="fa" [ngClass]="hidden ? 'fa-arrow-circle-left' : 'fa-arrow-circle-right'" (click)="hide()"></i>
+</span>
+<ng-template #dynamic></ng-template>

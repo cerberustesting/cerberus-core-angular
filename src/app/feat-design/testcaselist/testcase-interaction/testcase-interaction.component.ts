@@ -9,13 +9,7 @@ import { ITest } from 'src/app/shared/model/test.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
-import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
-
-export enum TESTCASE_INTERACTION_MODE {
-  EDIT = 'EDIT',
-  DUPLICATE = 'DUPLICATE',
-  CREATE = 'CREATE',
-}
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -24,9 +18,12 @@ export enum TESTCASE_INTERACTION_MODE {
 })
 export class TestcaseInteractionComponent implements OnInit {
 
+  /** TITLE */
+  private saveButtonTitle: string;
+
   // *** Inputs ***
   testCase: any = {};
-  mode: TESTCASE_INTERACTION_MODE;
+  mode: INTERACTION_MODE;
   exit: (n: void) => void;
 
   // *** HTML control ***
@@ -71,6 +68,7 @@ export class TestcaseInteractionComponent implements OnInit {
     private sidecontentService: SidecontentService) { }
 
   ngOnInit() {
+    this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
     if (this.testCase) {
       this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
         this.testCase = testcaseHeader;
@@ -86,9 +84,6 @@ export class TestcaseInteractionComponent implements OnInit {
       });
       for (let country in this.testCase.countryList) this.tcCountryList.push(country);
     }
-
-
-
 
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
     this.systemService.getApplicationList();
@@ -274,7 +269,7 @@ export class TestcaseInteractionComponent implements OnInit {
     queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
     queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
 
-    if (this.mode = TESTCASE_INTERACTION_MODE.CREATE) {
+    if (this.mode = INTERACTION_MODE.CREATE) {
       this.testService.createTestCase(queryString).subscribe(rep => this.refreshTable());
     } else {
       this.testService.updateTestCase(queryString).subscribe(rep => this.refreshTable());
@@ -289,6 +284,10 @@ export class TestcaseInteractionComponent implements OnInit {
   refreshTable(): void {
     this.sidecontentService.closeSideBlock();
     this.exit();
+  }
+
+  closeSideContent() {
+    this.sidecontentService.closeSideBlock();
   }
 
 }

@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 
-export enum MODE {
-  EDIT = 'EDIT',
-  DUPLICATE = 'DUPLICATE',
-  CREATE = 'CREATE'
-}
 
 @Component({
   selector: 'app-datalib-interaction',
@@ -17,9 +12,11 @@ export enum MODE {
 })
 export class DatalibInteractionComponent implements OnInit {
 
+  private saveButtonTitle: string;
+
   // *** Inputs ***
   datalib: any; // datalib to edit
-  mode: MODE; // EDIT / DUPLICATE / CREATE
+  mode: INTERACTION_MODE; // EDIT / DUPLICATE / CREATE
   exit: (n: void) => void; //function to execute when press submit button
 
   // *** main form ***
@@ -66,6 +63,7 @@ export class DatalibInteractionComponent implements OnInit {
     private sidecontentService: SidecontentService) { }
 
   ngOnInit() {
+    this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
     this.invariantService.getCountriesList(); // TODO : remove to place at the top of project
     this.invariantService.getPropertyDatabaseList(); // TODO : remove to place at the top of project
     this.invariantService.getApplicationService();
@@ -85,7 +83,7 @@ export class DatalibInteractionComponent implements OnInit {
     }
 
     this.datalibForm = this.formBuilder.group({
-      testdatalibid: (this.mode === MODE.DUPLICATE) ? '' : this.datalib.testDataLibID,
+      testdatalibid: (this.mode === INTERACTION_MODE.DUPLICATE) ? '' : this.datalib.testDataLibID,
       name: this.datalib.name,
       type: this.datalib.type || 'INTERNAL',
       system: this.datalib.system,
@@ -146,7 +144,7 @@ export class DatalibInteractionComponent implements OnInit {
     for (let key in values) {
       formData.append(key, values[key] || '');
     }
-    if (this.mode === MODE.EDIT) {
+    if (this.mode === INTERACTION_MODE.EDIT) {
       this.testService.updateTestDataLib(formData).subscribe(() => this.refreshTable());
     } else {
       this.testService.createTestDataLib(formData).subscribe(() => this.refreshTable());
@@ -192,6 +190,10 @@ export class DatalibInteractionComponent implements OnInit {
     return {
       'to-delete': (row.toDelete) === true
     };
+  }
+
+  closeSideContent() {
+    this.sidecontentService.closeSideBlock();
   }
 
 }

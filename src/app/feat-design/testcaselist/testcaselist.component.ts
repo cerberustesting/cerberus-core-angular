@@ -10,10 +10,10 @@ import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { Subject } from 'rxjs';
-import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
-import { TestcaseInteractionComponent, TESTCASE_INTERACTION_MODE } from './testcase-interaction/testcase-interaction.component';
+import { TestcaseInteractionComponent} from './testcase-interaction/testcase-interaction.component';
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -57,7 +57,7 @@ export class TestcaselistComponent implements OnInit {
   editTestCaseHeader(testcase: any): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       testCase: testcase,
-      mode: TESTCASE_INTERACTION_MODE.EDIT,
+      mode: INTERACTION_MODE.EDIT,
       exit: () => {
         this.refreshResults();
       }
@@ -72,7 +72,7 @@ export class TestcaselistComponent implements OnInit {
   duplicateTestCaseHeader(testcase: any): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       testCase: testcase,
-      mode: TESTCASE_INTERACTION_MODE.DUPLICATE,
+      mode: INTERACTION_MODE.DUPLICATE,
       exit: () => {
         this.refreshResults();
       }
@@ -87,7 +87,7 @@ export class TestcaselistComponent implements OnInit {
   createTestCaseHeader(): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       testCase: {},
-      mode: TESTCASE_INTERACTION_MODE.CREATE,
+      mode: INTERACTION_MODE.CREATE,
       exit: () => {
         this.refreshResults();
       }

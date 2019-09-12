@@ -3,8 +3,8 @@ import { Column } from 'src/app/shared/model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { DataLibColumnsData } from './datalibrary.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
-import { DatalibInteractionComponent, MODE } from './datalib-interaction/datalib-interaction.component';
-import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
+import { DatalibInteractionComponent } from './datalib-interaction/datalib-interaction.component';
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
 import { DatalibTclistComponent } from './datalib-interaction/datalib-tclist/datalib-tclist.component';
@@ -49,7 +49,7 @@ export class DatalibraryComponent implements OnInit {
   createDatalib() {
     this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
       datalib: {},
-      mode: MODE.CREATE,
+      mode: INTERACTION_MODE.CREATE,
       exit: () => {
         this.refreshResults();
         this.NotificationService.createANotification('The datalib has been successfully created', NotificationStyle.Success);
@@ -70,7 +70,7 @@ export class DatalibraryComponent implements OnInit {
   editDataLib(row: any): void {
     this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
       datalib: row,
-      mode: MODE.EDIT,
+      mode: INTERACTION_MODE.EDIT,
       exit: () => {
         this.refreshResults();
         this.NotificationService.createANotification('The datalib has been successfully edited', NotificationStyle.Success);
@@ -87,7 +87,7 @@ export class DatalibraryComponent implements OnInit {
   duplicateDataLib(row: any): void {
     this.sideContentService.addComponentToSideBlock(DatalibInteractionComponent, {
       datalib: row,
-      mode: MODE.DUPLICATE,
+      mode: INTERACTION_MODE.DUPLICATE,
       exit: () => {
         this.refreshResults();
         this.NotificationService.createANotification('The datalib has been successfully duplicated', NotificationStyle.Success);

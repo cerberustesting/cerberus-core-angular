@@ -171,6 +171,7 @@ export class TestService {
   }
 
   getTestCase(test: string, testcase: string) {
+    console.log("getTestCase");
     if (test == null || testcase == null) {
       this.testcase = null;
     } else {

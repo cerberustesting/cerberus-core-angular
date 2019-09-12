@@ -25,7 +25,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     private InvariantService: InvariantsService,
     private SystemService: SystemService,
     private headerTitleService: HeaderTitleService
-  ) { 
+  ) {
     headerTitleService.setTitle("Testcase Edition");
   }
 

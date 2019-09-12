@@ -1,6 +1,5 @@
-import { 
-  Component, 
-  NgModule,
+import {
+  Component,
   OnInit,
   ViewChild,
   ViewContainerRef,
@@ -8,24 +7,23 @@ import {
 } from '@angular/core'
 import { SidecontentService } from '../services/crud/sidecontent.service';
 
-
 @Component({
   selector: 'app-sideblock',
   templateUrl: './sideblock.component.html',
   styleUrls: ['./sideblock.component.scss']
 })
 export class SideblockComponent implements OnInit {
+
+  // TODO : comment these Decorators
   @HostBinding('class.is-open')
   isOpen = false;
   title: string = '';
+
   @HostBinding('class.is-hidden') hidden: boolean = false;
 
-
-  @ViewChild('dynamic', {read: ViewContainerRef, static: true}) viewContainerRef: ViewContainerRef;
+  @ViewChild('dynamic', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 
   constructor(private sideContentService: SidecontentService) { }
-
-
 
   ngOnInit() {
     this.sideContentService.setRootViewContainerRef(this.viewContainerRef)
@@ -33,10 +31,7 @@ export class SideblockComponent implements OnInit {
       this.isOpen = isOpen;
     });
   }
-  close() {
-    this.isOpen = false;
-  }
   hide() {
     this.hidden = !this.hidden;
-    }
+  }
 }

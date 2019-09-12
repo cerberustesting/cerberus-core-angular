@@ -1,23 +1,20 @@
-<div class="row" *ngIf="testcaseheader">
+<div class="row">
     <div class="col-md-12">
         <div class="block block-rounded block-bordered" [id]="block_id">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Testcase <small>header</small></h3>
                 <div class="block-options">
                     <button type="button" class="btn-block-option" data-toggle="block-option"
-                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
-                    <!-- 
-                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="pinned_toggle">
-                        <i class="si si-pin"></i>
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i>
                     </button>
-                    -->
                     <button type="button" class="btn-block-option" data-toggle="block-option"
                         (click)="refreshTestCase()">
                         <i class="si si-refresh"></i>
                     </button>
-                    <button type="button" class="btn-block-option" data-toggle="block-option"
+                    <!-- <button type="button" class="btn-block-option" data-toggle="block-option"
                         data-action="content_toggle">
-                        <i class="si si-arrow-up"></i></button>
+                        <i class="si si-arrow-up"></i>
+                    </button> -->
                 </div>
             </div>
             <div class="block-content">

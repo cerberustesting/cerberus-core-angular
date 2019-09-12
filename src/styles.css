@@ -99,6 +99,21 @@ ng-select.custom-sm {
   font-size: 0.875rem !important;
 }
 
+/*
+"info" class for <i>
+
+add hover color for information icon popup
+*/
+i.info:hover {
+  color: #3b5998;
+}
+
+ngb-tabset.custom-sm a.nav-link {
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  font-size: 1rem;
+}
+
 .input-group-height {
   height: 38px;
 }

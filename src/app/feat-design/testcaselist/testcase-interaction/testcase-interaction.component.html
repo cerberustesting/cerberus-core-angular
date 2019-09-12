@@ -16,7 +16,7 @@
                 <button type="button" class="btn btn-sm btn-secondary" (click)="closeSideContent()">Close</button>
             </div>
             <!-- END SAVE / CLOSE BUTTON -->
-            
+
         </div>
         <div class="block-content">
             <!-- TEST FOLDER & TESTCASE FOLDER -->
@@ -25,7 +25,12 @@
                 <!-- TEST FOLDER SECTION -->
                 <div id="sideContent_TestFolder" class="col-md-6">
                     <div class="form-group">
-                        <label for="TestFolder">Test Folder</label>
+                        <label for="TestFolder">
+                            Test Folder
+                            <i class="fa fa-info-circle ml-0 info" placement="bottom"
+                                ngbPopover="A test is a transversal grouping of test case." popoverTitle="Test Folder"
+                                triggers="mouseenter:mouseleave"></i>
+                        </label>
                         <ng-select name="TestFolder" class="custom-sm" [items]="testsList" bindLabel="test"
                             bindValue="test" formControlName="test" placeholder="Select a Test">
                             <ng-template ng-label-tmp let-item="item">
@@ -42,7 +47,12 @@
                 <!-- TEST CASE SECTION -->
                 <div id="sideContent_TestCase" class="col-md-6">
                     <div class="form-group">
-                        <label for="TestCase">Test Case ID</label>
+                        <label for="TestCase">
+                            Test Case
+                            <i class="fa fa-info-circle ml-0 info" placement="bottom"
+                                ngbPopover="A testcase is a unique identifier for your scenario along with the Test Folder"
+                                popoverTitle="Test Case" triggers="mouseenter:mouseleave"></i>
+                        </label>
                         <input type="text" class="form-control form-control-sm" name="TestCase" placeholder="Text Input"
                             formControlName="testCase">
                     </div>
@@ -53,7 +63,120 @@
 
             <!-- TABS -->
             <div class="block block-rounded block-bordered">
-                <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+                <ngb-tabset class="nav nav-tabs nav-tabs-alt js-tabs-enabled custom-sm">
+
+                    <!-- DEFINITION TAB -->
+                    <ngb-tab title="Definition" class="nav-item">
+                        <ng-template ngbTabContent>
+                            <div class="block-content tab-content">
+                                <div class="row">
+
+                                    <!-- SHORT DESCRIPTION -->
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="ShortDescription">Short Description</label>
+                                            <input type="text" class="form-control form-control-sm"
+                                                id="sideContent_ShortDescription" name="ShortDescription"
+                                                placeholder="Test Case Short Description" formControlName="shortDesc">
+                                        </div>
+                                    </div>
+                                    <!-- END SHORT DESCRIPTION -->
+
+                                    <!-- APPLICATION -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ShortDescription">Application</label>
+                                            <ng-select name="Application" class="custom-sm" [items]="applicationsList"
+                                                bindLabel="application" bindValue="application"
+                                                formControlName="application" (change)="getFromSystem()"
+                                                placeholder="You must define an application">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <!-- END APPLICATION -->
+
+                                    <!-- STATUS -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Status">Status</label>
+                                            <select class="form-control form-control-sm" formControlName="status">
+                                                <option *ngFor="let status of statusList" [value]="status.value">
+                                                    {{ status.value }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- END STATUS -->
+
+                                    <!-- TYPE -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Type">Type</label>
+                                            <select class="form-control form-control-sm" formControlName="group">
+                                                <option *ngFor="let type of typesList" [value]="type.value">
+                                                    {{ type.value }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- END TYPE -->
+
+                                    <!-- PRIORITY -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Priority">Priority</label>
+                                            <select class="form-control form-control-sm" formControlName="priority">
+                                                <option *ngFor="let priority of priorityList" [value]="priority.value">
+                                                    {{ priority.value }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- END PRIORITY -->
+
+                                    <!-- FULL DESCRIPTION -->
+                                    <div class="col-md-12">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Detailed Description / Value Expected
+                                                </span>
+                                            </div>
+                                            <textarea class="form-control"></textarea>
+                                            <!--TODO-->
+                                        </div>
+                                    </div>
+                                    <!-- END FULL DESCRIPTION -->
+
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <!-- END DEFINITION TAB -->
+
+                    <ngb-tab title="Settings" class="nav-item">
+                        <ng-template ngbTabContent>
+                            <div class="block-content tab-content">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                                            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+
+                </ngb-tabset>
+
+                <!-- OLD VERSION -->
+
+                <!-- <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+
                     <li class="nav-item">
                         <a class="nav-link" [ngClass]="{'active': paneActive===1}"
                             (click)="paneActive = 1">Definition</a>
@@ -80,8 +203,10 @@
                             (click)="paneActive = 6">Tracability</a>
                     </li>
                 </ul>
+
+
                 <div class="block-content tab-content">
-                    <!--Definition TAB-->
+
                     <div class="tab-pane" [ngClass]="{'active': paneActive===1}" role="tabpanel">
                         <div class="row">
 
@@ -105,7 +230,6 @@
                                         <option *ngFor="let application of applicationsList"
                                             [value]="application.application">
                                             {{ application.application }}</option>
-                                        <!--TODO-->
                                     </select>
                                 </div>
                             </div>
@@ -119,7 +243,6 @@
                                         <option *ngFor="let status of statusList" [value]="status.value">
                                             {{ status.value }}
                                         </option>
-                                        <!--TODO-->
                                     </select>
                                 </div>
                             </div>
@@ -154,15 +277,14 @@
                                         <span class="input-group-text">Detailed Description / Value Expected </span>
                                     </div>
                                     <textarea class="form-control"></textarea>
-                                    <!--TODO-->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- END Definition tab-->
 
 
-                    <!-- START Execution Settings tab-->
+
+
                     <div class="tab-pane" [ngClass]="{'active': paneActive===2}" role="tabpanel">
                         <div class="row">
                             <div class="col-md-6">
@@ -217,7 +339,6 @@
                             <div class="col-md-12">
                                 <div class="block block-rounded block-bordered">
                                     Countries
-                                    <!--TODO-->
                                 </div>
                             </div>
 
@@ -309,7 +430,6 @@
                                                 <option *ngFor="let condition of conditionsList"
                                                     [value]="condition.value">
                                                     {{ condition.value }}
-                                                    <!--TODO-->
                                                 </option>
                                             </select>
                                         </div>
@@ -354,10 +474,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END Execution Settings tab-->
 
-
-                    <!-- START Label tab-->
                     <div class="tab-pane" [ngClass]="{'active': paneActive===3}" role="tabpanel">
                         <div class="block block-rounded block-bordered">
                             <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
@@ -412,9 +529,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END Label tab-->
 
-                    <!-- START Bug Report tab-->
                     <div class="tab-pane" [ngClass]="{'active': paneActive===4}" role="tabpanel">
                         <div class="row">
                             <div class="col-md-4">
@@ -426,7 +541,6 @@
                                 </div>
                             </div>
                             <div class="col-md-8">Bug Link</div>
-                            <!--TODO-->
                             <div class="col-md-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -437,10 +551,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END Bug Report tab-->
 
-
-                    <!-- START Dependency tab-->
                     <div class="tab-pane" [ngClass]="{'active': paneActive===5}" role="tabpanel">
                         <div class="row">
                             <div class="col-md-6">
@@ -468,7 +579,6 @@
                                 (click)="addToDependencyTable(dependencySelectedTestCase)"
                                 class="btn btn-info col-md-12">Add
                                 test case</button>
-                            <!--TODO : Add datatable and add it to query string-->
                             <div class="col-md-12">
                                 <table class="table">
                                     <thead>
@@ -498,10 +608,7 @@
 
                         </div>
                     </div>
-                    <!-- End Dependency tab-->
 
-
-                    <!-- START Tracability tab-->
                     <div class="tab-pane" [ngClass]="{'active': paneActive===6}" role="tabpanel">
                         <div class="row">
                             <div class="col-md-6">
@@ -545,10 +652,10 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END Tracability tab-->
-                </div>
+
+                </div> -->
             </div>
-            <!-- END TABS -->
+
         </div>
     </div>
 </form>

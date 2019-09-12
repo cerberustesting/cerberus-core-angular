@@ -18,8 +18,12 @@ import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud
 })
 export class TestcaseInteractionComponent implements OnInit {
 
+  // TODO: group the variables + functions semantically
+
   /** TITLE */
   saveButtonTitle: string;
+
+  tabsList
 
   // *** Inputs ***
   testCase: any = {};

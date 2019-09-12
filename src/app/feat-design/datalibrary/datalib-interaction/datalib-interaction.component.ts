@@ -12,7 +12,7 @@ import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud
 })
 export class DatalibInteractionComponent implements OnInit {
 
-  private saveButtonTitle: string;
+  saveButtonTitle: string;
 
   // *** Inputs ***
   datalib: any; // datalib to edit

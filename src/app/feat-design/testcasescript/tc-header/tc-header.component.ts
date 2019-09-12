@@ -29,9 +29,9 @@ export class TcHeaderComponent implements OnInit {
   private originalTest: string;
   private originalTestCase: string;
 
-  private block_id: string = "testcaseheader_block";
+  block_id: string = "testcaseheader_block";
 
-  private testsList: Array<ITest> = new Array<ITest>();
+  testsList: Array<ITest> = new Array<ITest>();
   private testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
 
   tabs: string[] = ['Definition', 'Execution', 'Label', 'Origin', 'Bug Report', 'Tracability'];

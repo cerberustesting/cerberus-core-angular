@@ -19,7 +19,7 @@ import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud
 export class TestcaseInteractionComponent implements OnInit {
 
   /** TITLE */
-  private saveButtonTitle: string;
+  saveButtonTitle: string;
 
   // *** Inputs ***
   testCase: any = {};

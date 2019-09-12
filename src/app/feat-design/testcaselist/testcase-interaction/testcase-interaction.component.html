@@ -1,42 +1,57 @@
 <form [formGroup]="testcaseHeaderForm" (ngSubmit)="onSubmit(testcaseHeaderForm.value)">
     <div class="block">
         <div class="block-header block-header-default">
-            <!--Title-->
-            <h3 *ngIf="mode==='EDIT'" class="block-title">Edit Test Case Header <small>ID :
-                    {{ testCase.testCase }}</small></h3>
-            <h3 *ngIf="mode==='DUPLICATE'" class="block-title">Duplicate Test Case</h3>
-            <h3 *ngIf="mode==='CREATE'" class="block-title">Create Test Case</h3>
+
+            <!-- SIDE CONTENT TITLE -->
+            <h3 class="block-title" [ngSwitch]="mode">
+                <span *ngSwitchCase="'CREATE'">Create Test Case</span>
+                <span *ngSwitchCase="'EDIT'">Edit Test Case Header</span>
+                <span *ngSwitchCase="'DUPLICATE'">Duplicate Test Case</span>
+            </h3>
+            <!-- END SIDE CONTENT TITLE -->
+
+            <!-- SAVE / CLOSE BUTTON -->
             <div class="block-options">
                 <button type="button" class="btn btn-sm btn-primary mr-1" type="submit">{{saveButtonTitle}}</button>
                 <button type="button" class="btn btn-sm btn-secondary" (click)="closeSideContent()">Close</button>
             </div>
+            <!-- END SAVE / CLOSE BUTTON -->
+            
         </div>
         <div class="block-content">
+            <!-- TEST FOLDER & TESTCASE FOLDER -->
             <div class="row">
-                <div class="col-md-6 input-group">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Test Folder</span>
-                        </div>
-                        <select class="form-control" formControlName="test">
-                            <option value="">Select test folder</option>
-                            <option *ngFor="let test of testsList" [value]="test.test">
-                                {{ test.test }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
 
-                <div class="col-md-6 input-group">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Test Case ID</span>
-                        </div>
-                        <input type="text" class="form-control" formControlName="testCase">
+                <!-- TEST FOLDER SECTION -->
+                <div id="sideContent_TestFolder" class="col-md-6">
+                    <div class="form-group">
+                        <label for="TestFolder">Test Folder</label>
+                        <ng-select name="TestFolder" class="custom-sm" [items]="testsList" bindLabel="test"
+                            bindValue="test" formControlName="test" placeholder="Select a Test">
+                            <ng-template ng-label-tmp let-item="item">
+                                {{item.test}} : {{item.description}}
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item">
+                                {{item.test}} : {{item.description}}
+                            </ng-template>
+                        </ng-select>
                     </div>
                 </div>
+                <!-- END TEST FOLDER SECTION -->
+
+                <!-- TEST CASE SECTION -->
+                <div id="sideContent_TestCase" class="col-md-6">
+                    <div class="form-group">
+                        <label for="TestCase">Test Case ID</label>
+                        <input type="text" class="form-control form-control-sm" name="TestCase" placeholder="Text Input"
+                            formControlName="testCase">
+                    </div>
+                </div>
+                <!-- END TEST CASE SECTION -->
 
             </div>
+
+            <!-- TABS -->
             <div class="block block-rounded block-bordered">
                 <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
                     <li class="nav-item">
@@ -533,7 +548,7 @@
                     <!-- END Tracability tab-->
                 </div>
             </div>
-
+            <!-- END TABS -->
         </div>
     </div>
 </form>

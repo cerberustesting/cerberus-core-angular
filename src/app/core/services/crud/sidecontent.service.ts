@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Injectable, Inject, ReflectiveInjector, Output, EventEmitter } from '@angular/core';
+import { ComponentFactoryResolver, Injectable, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 export enum INTERACTION_MODE {
@@ -23,7 +23,6 @@ export class SidecontentService {
     this.rootViewContainer = viewContainerRef;
   }
   addComponentToSideBlock(component: any, parameters?: {}) {
-    console.log("addComponentToSideBlock called");
     const factory = this.factoryResolver.resolveComponentFactory(component);
     let _component = factory.create(this.rootViewContainer.parentInjector);
     if (parameters) {

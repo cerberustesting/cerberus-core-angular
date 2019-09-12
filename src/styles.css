@@ -92,8 +92,8 @@ apply the correct height to the field according
 to the bootstrap *-sm class 
 */
 ng-select.custom-sm .ng-select-container {
-  min-height: 0.875rem !important;
-  height: 0.875rem;
+  min-height: 31px !important;
+  height: 31px !important;
 }
 ng-select.custom-sm {
   font-size: 0.875rem !important;

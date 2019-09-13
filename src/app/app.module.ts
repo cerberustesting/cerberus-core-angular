@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SessionInterceptorService } from './core/services/auth/session.interceptor.service';
 import { DesignModule } from './feat-design/design.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { DesignModule } from './feat-design/design.module';
     FilterPipeModule,
     SharedModule,
     BrowserAnimationsModule,
-    DesignModule
+    DesignModule,
+    CKEditorModule
   ],
   providers: [
     {

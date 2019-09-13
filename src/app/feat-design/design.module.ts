@@ -27,6 +27,7 @@ import { ActionsComponent } from './testcaselist/actions/actions.component';
 import { DatalibInteractionComponent } from './datalibrary/datalib-interaction/datalib-interaction.component';
 import { DatalibTclistComponent } from './datalibrary/datalib-interaction/datalib-tclist/datalib-tclist.component';
 import { TestcaseInteractionComponent } from './testcaselist/testcase-interaction/testcase-interaction.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { TestcaseInteractionComponent } from './testcaselist/testcase-interactio
     NgxDatatableModule,
     ReactiveFormsModule,    
     FormsModule,
+    CKEditorModule
   ],
   entryComponents: [
     DatalibInteractionComponent,

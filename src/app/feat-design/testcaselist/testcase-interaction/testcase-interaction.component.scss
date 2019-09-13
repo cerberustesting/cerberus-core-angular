@@ -1,3 +1,6 @@
-.save-btn {
-    margin-right: 30px;
+// set the fixed height for the ckeditor
+// TODO : make it stick to the bottom of the container
+:host ::ng-deep .ck-editor__editable_inline {
+  height: 20vh;
+  overflow-y: scroll;
 }

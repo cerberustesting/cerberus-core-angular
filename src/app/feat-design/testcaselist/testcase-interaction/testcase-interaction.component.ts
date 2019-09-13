@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -22,8 +23,11 @@ export class TestcaseInteractionComponent implements OnInit {
 
   /** TITLE */
   saveButtonTitle: string;
+  // _mode is used to print the mode value to the componetn
+  // once (every time ngOnInit is fired)
+  _mode: string;
 
-  tabsList
+  public Editor = ClassicEditor;
 
   // *** Inputs ***
   testCase: any = {};
@@ -73,6 +77,7 @@ export class TestcaseInteractionComponent implements OnInit {
 
   ngOnInit() {
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
+    this._mode = this.mode;
     if (this.testCase) {
       this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
         this.testCase = testcaseHeader;

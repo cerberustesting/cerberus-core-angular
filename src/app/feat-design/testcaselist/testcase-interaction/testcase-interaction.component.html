@@ -1,9 +1,9 @@
 <form [formGroup]="testcaseHeaderForm" (ngSubmit)="onSubmit(testcaseHeaderForm.value)">
-    <div class="block">
+    <div class="block no-shadow">
         <div class="block-header block-header-default">
 
             <!-- SIDE CONTENT TITLE -->
-            <h3 class="block-title" [ngSwitch]="mode">
+            <h3 class="block-title" [ngSwitch]="_mode">
                 <span *ngSwitchCase="'CREATE'">Create Test Case</span>
                 <span *ngSwitchCase="'EDIT'">Edit Test Case Header</span>
                 <span *ngSwitchCase="'DUPLICATE'">Duplicate Test Case</span>
@@ -28,7 +28,7 @@
                         <label for="TestFolder">
                             Test Folder
                             <i class="fa fa-info-circle ml-0 info" placement="bottom"
-                                ngbPopover="A test is a transversal grouping of test case." popoverTitle="Test Folder"
+                                ngbPopover="A test is a transversal grouping of Test Cases." popoverTitle="Test Folder"
                                 triggers="mouseenter:mouseleave"></i>
                         </label>
                         <ng-select name="TestFolder" class="custom-sm" [items]="testsList" bindLabel="test"
@@ -136,13 +136,11 @@
 
                                     <!-- FULL DESCRIPTION -->
                                     <div class="col-md-12">
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">Detailed Description / Value Expected
-                                                </span>
-                                            </div>
-                                            <textarea class="form-control"></textarea>
-                                            <!--TODO-->
+                                        <div class="form-group">
+                                            <label for="FullDescription">Full Description</label>
+                                            <ckeditor name="FullDescription" [editor]="Editor"
+                                                formControlName="behaviorOrValueExpected">
+                                            </ckeditor>
                                         </div>
                                     </div>
                                     <!-- END FULL DESCRIPTION -->

@@ -1,12 +1,17 @@
 # get project version from package.json
 version=$(grep -oP '(?<=version": ")[^"]*' ./package.json)
+archive=cerberus-front-${version}.zip
 
 # zip the dist folder
-zip cerberus-front-${version}.zip -r ./dist
+zip ${archive} -r ./dist
+echo "archive "${archive}" has been created"
 
 # move it to ./dist
-mv ./cerberus-front-${version}.zip ./dist
+mv ${archive} ./dist
+echo "archive moved to /dist folder"
 
 # remote copy to host
-echo "$CERBERUS_VM_HOST"
-#rcp "$CERBERUS_VM_HOST":/"$CERBERUS_VM_USER"/"$CERBERUS_VM_PASSWORD"/cerberus-front-${version}.zip
+host=$CERBERUS_VM_HOST
+user=$CERBERUS_VM_USER
+password=$CERBERUS_VM_PASSWORD
+#rcp cerberus-front-${version}.zip ${user}@${host}

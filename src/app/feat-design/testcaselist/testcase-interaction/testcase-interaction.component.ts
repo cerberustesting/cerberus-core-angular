@@ -27,11 +27,20 @@ export class TestcaseInteractionComponent implements OnInit {
   // once (every time ngOnInit is fired)
   _mode: string;
 
+  private testcaseheader_countryList: any;
+  private testcaseheader_countryList_custom: Array<string> = new Array<string>();
+
   public Editor = ClassicEditor;
 
   // *** Inputs ***
   testCase: any = {};
   mode: INTERACTION_MODE;
+
+  // Variable received from the addComponentToSideBlock method
+  // from testcaselist.component.ts
+  _test: string;
+  _testcase: string;
+
   exit: (n: void) => void;
 
   // *** HTML control ***
@@ -54,7 +63,7 @@ export class TestcaseInteractionComponent implements OnInit {
   revsList: Array<any>; // ? add type
   conditionsList: Array<IInvariant>;
   testsList: Array<ITest>;
-  private countriesList: Array<IInvariant>;
+  private inv_countries: Array<IInvariant>;
   labelList = {
     batteries: [],
     requirements: [],
@@ -81,6 +90,7 @@ export class TestcaseInteractionComponent implements OnInit {
     if (this.testCase) {
       this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
         this.testCase = testcaseHeader;
+        console.log(this.testCase);
         for (let dependency of this.testCase.dependencyList) {
           this.dependencyTestCaseList.push({
             id: dependency.id,
@@ -99,18 +109,13 @@ export class TestcaseInteractionComponent implements OnInit {
     this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
     this.invariantsService.observableTcStatus.subscribe(rep => this.statusList = rep);
     this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionsList = rep);
-    this.invariantsService.observableCountriesList.subscribe(rep => this.countriesList = rep);
+    this.invariantsService.observableCountriesList.subscribe(rep => this.inv_countries = rep);
     this.invariantsService.observablePriorities.subscribe(rep => this.priorityList = rep);
     this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
-
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
-
     this.systemService.observableRevs.subscribe(rep => this.revsList = [{ versionName: '' }].concat(rep));
     this.testService.getTestsList();
     this.testService.observableTestsList.subscribe(rep => this.testsList = rep);
-
-
-
 
     this.testcaseHeaderForm = this.formBuilder.group({
       test: this.testCase.test || '',
@@ -118,7 +123,7 @@ export class TestcaseInteractionComponent implements OnInit {
       originalTest: this.testCase.test, // ! const
       originalTestCase: this.testCase.testCase, // ! const
       active: this.testCase.tcActive,
-      activeProd: this.testCase.activePROD,
+      activePROD: this.testCase.activePROD,
       activeQA: this.testCase.activeQA,
       activeUAT: this.testCase.activeUAT,
       application: this.testCase.application,
@@ -154,9 +159,6 @@ export class TestcaseInteractionComponent implements OnInit {
     }
 
   }
-
-
-
 
   /** toggleLabel
    * * call on label click
@@ -256,7 +258,7 @@ export class TestcaseInteractionComponent implements OnInit {
     }
 
     // fill countryList with all countries selected
-    for (let country of this.countriesList) {
+    for (let country of this.inv_countries) {
       countryList.push(
         { country: country.value, toDelete: this.tcCountryList.map(c => c.country).includes(country.value) }
       )
@@ -297,6 +299,31 @@ export class TestcaseInteractionComponent implements OnInit {
 
   closeSideContent() {
     this.sidecontentService.closeSideBlock();
+  }
+
+  // DIRTY : converting an array of weird countryObject 
+  // from testcaseheader object in array of string
+  format_countryListToCustom(array: Array<any>): Array<string> {
+    const countryList = new Array<string>();
+    for (var country in array) {
+      countryList.push(country);
+    }
+    return countryList;
+  }
+
+  // DIRTY : converting an array of string countryObject 
+  // to an array of weird countryObject
+  format_countryListToRaw(array: Array<string>): Array<any> {
+    const countryList = new Array<any>();
+    for (var country in array) {
+      const c = {
+        country: country,
+        test: this.testCase.test,
+        testCase: this.testCase
+      }
+      countryList.push(c);
+    }
+    return countryList;
   }
 
 }

@@ -129,6 +129,29 @@ remove all the shadow effect
   box-shadow: none;
 }
 
+/*
+override the ngb popover class to set a default width
+*/
+.popover {
+  width: 55vh;
+}
+/*
+"custom-sm" class for for element with .custom-block
+
+reduce the padding and the margin bottom
+for .custom-control-inline, add padding left & right 
+*/
+.custom-block.custom-sm .custom-control-label {
+  padding: 0.25rem;
+}
+.custom-block.custom-sm {
+  margin-bottom: 0.75rem;
+}
+.custom-block.custom-sm.custom-control-inline .custom-control-label {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .input-group-height {
   height: 38px;
 }

@@ -151,23 +151,305 @@
                     </ngb-tab>
                     <!-- END DEFINITION TAB -->
 
+                    <!-- SETTINGS TAB -->
                     <ngb-tab title="Settings" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                                        </p>
+
+                                        <!-- ENVIRONMENT GROUP ACTIVATION -->
+                                        <div id="sideContent_globalActivation" class="form-group">
+                                            <label class="d-block">Environments Activation</label>
+                                            <div class="custom-control custom-switch custom-control-inline">
+                                                <input type="checkbox" id="globalActivation"
+                                                    class="custom-control-input" name="globalActivation"
+                                                    formControlName="active">
+                                                <label class="custom-control-label" for="globalActivation">
+                                                    Global
+                                                    <i class="fa fa-info-circle ml-0 info" placement="bottom"
+                                                        ngbPopover="This field define if the test is active or not. A test case that is not active cannot be executed."
+                                                        popoverTitle="Global Activation"
+                                                        triggers="mouseenter:mouseleave"></i>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-switch custom-control-inline">
+                                                <input type="checkbox" id="activeQA" class="custom-control-input"
+                                                    name="activeQA" formControlName="activeQA">
+                                                <label class="custom-control-label" for="activeQA">
+                                                    QA
+                                                    <i class="fa fa-info-circle ml-0 info" placement="bottom"
+                                                        ngbPopover="This field define if the test is active or in the QA environment group."
+                                                        popoverTitle="Active QA" triggers="mouseenter:mouseleave"></i>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-switch custom-control-inline">
+                                                <input type="checkbox" id="activeUAT" class="custom-control-input"
+                                                    name="activeUAT" formControlName="activeUAT">
+                                                <label class="custom-control-label" for="activeUAT">
+                                                    UAT
+                                                    <i class="fa fa-info-circle ml-0 info" placement="bottom"
+                                                        ngbPopover="This field define if the test is active or in the UAT environment group."
+                                                        popoverTitle="Active UAT" triggers="mouseenter:mouseleave"></i>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-switch custom-control-inline">
+                                                <input type="checkbox" id="activePROD" class="custom-control-input"
+                                                    name="activePROD" formControlName="activePROD">
+                                                <label class="custom-control-label" for="activePROD">
+                                                    PROD
+                                                    <i class="fa fa-info-circle ml-0 info" placement="bottom"
+                                                        ngbPopover="This field define if the test is active or in the PROD environment group."
+                                                        popoverTitle="Active PROD" triggers="mouseenter:mouseleave"></i>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <!-- END ENVIRONMENT GROUP ACTIVATION -->
+
+                                        <div class="form-group">
+                                            <label class="d-block">Country Activation</label>
+                                            <div *ngFor="let country of inv_countries"
+                                                class="custom-control block custom-block custom-control-info custom-sm custom-control-inline">
+                                                <input type="checkbox" class="custom-control-input" [id]="country.value"
+                                                    [name]="country.value" (click)="updateCheckedCountries(country)">
+                                                <label class="custom-control-label" [for]="country.value">
+                                                    <span class="d-block text-center">
+                                                        {{ country.value }}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="form-group row">
+                                            <label class="col-12 d-block">Version Activation</label>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="testcase">Sprint</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                From
+                                                            </span>
+                                                        </div>
+                                                        <select class="form-control br-tp-0" id="fromSprint"
+                                                            name="fromSprint" [(ngModel)]="testcaseheader.fromBuild"
+                                                            *ngIf="isThereAnySprintDefined">
+                                                            <option *ngFor="let sprint of sprints"
+                                                                [value]="sprint.versionName">
+                                                                {{ sprint.versionName }}
+                                                            </option>
+                                                        </select>
+                                                        <input *ngIf="!isThereAnySprintDefined" type="text"
+                                                            class="form-control br-tp-0" id="fromSprint"
+                                                            name="fromSprint" value="There is no sprint defined."
+                                                            disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                To
+                                                            </span>
+                                                        </div>
+                                                        <select class="form-control br-tp-0" id="toSprint"
+                                                            name="toSprint" [(ngModel)]="testcaseheader.toBuild"
+                                                            *ngIf="isThereAnySprintDefined">
+                                                            <option *ngFor="let sprint of sprints"
+                                                                [value]="sprint.versionName">
+                                                                {{ sprint.versionName }}
+                                                            </option>
+                                                        </select>
+                                                        <input *ngIf="!isThereAnySprintDefined" type="text"
+                                                            class="form-control br-tp-0" id="toSprint" name="toSprint"
+                                                            value="There is no sprint defined." disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="testcase">Revision</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                From
+                                                            </span>
+                                                        </div>
+                                                        <select class="form-control br-tp-0" id="fromRev" name="fromRev"
+                                                            [(ngModel)]="testcaseheader.fromRev"
+                                                            *ngIf="isThereAnyRevDefined">
+                                                            <option *ngFor="let rev of revs" [value]="rev.versionName">
+                                                                {{ rev.versionName }}
+                                                            </option>
+                                                        </select>
+                                                        <input *ngIf="!isThereAnyRevDefined" type="text"
+                                                            class="form-control br-tp-0" id="fromRev" name="fromRev"
+                                                            value="There is no rev defined." disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                To
+                                                            </span>
+                                                        </div>
+
+                                                        <select class="form-control br-tp-0" id="toRev" name="toRev"
+                                                            [(ngModel)]="testcaseheader.toRev"
+                                                            *ngIf="isThereAnyRevDefined">
+                                                            <option *ngFor="let rev of revs" [value]="rev.versionName">
+                                                                {{ rev.versionName }}
+                                                            </option>
+                                                        </select>
+                                                        <input *ngIf="!isThereAnyRevDefined" type="text"
+                                                            class="form-control br-tp-0" id="toRev" name="toRev"
+                                                            value="There is no rev defined." disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="testcase">Target <i
+                                                            class="fa fa-info-circle ml-0"></i></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                Sprint
+                                                            </span>
+                                                        </div>
+                                                        <select class="form-control br-tp-0" id="targetBuild"
+                                                            name="targetBuild" [(ngModel)]="testcaseheader.targetBuild"
+                                                            *ngIf="isThereAnySprintDefined">
+                                                            <option *ngFor="let sprint of sprints"
+                                                                [value]="sprint.versionName">
+                                                                {{ sprint.versionName }}
+                                                            </option>
+                                                        </select>
+                                                        <input *ngIf="!isThereAnySprintDefined" type="text"
+                                                            class="form-control br-tp-0" id="targetBuild"
+                                                            name="targetBuild" value="There is no sprint defined."
+                                                            disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                Revision
+                                                            </span>
+                                                        </div>
+                                                        <select class="form-control br-tp-0" id="targetRev"
+                                                            name="targetRev" [(ngModel)]="testcaseheader.targetRev"
+                                                            *ngIf="isThereAnyRevDefined">
+                                                            <option *ngFor="let rev of revs" [value]="rev.versionName">
+                                                                {{ rev.versionName }}
+                                                            </option>
+                                                        </select>
+                                                        <input *ngIf="!isThereAnyRevDefined" type="text"
+                                                            class="form-control br-tp-0" id="targetRev" name="targetRev"
+                                                            value="There is no rev defined." disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-12 d-block">Conditionnal Activation</label>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                Condition
+                                                            </span>
+                                                        </div>
+                                                        <select class="form-control br-tp-0" id="conditionOper"
+                                                            name="conditionOper"
+                                                            [(ngModel)]="testcaseheader.conditionOper">
+                                                            <option *ngFor='let condition of inv_condition_oper'
+                                                                [(ngValue)]='condition.value'>{{condition.value}} -
+                                                                {{condition.description}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                Value 1
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" class="form-control br-tp-0"
+                                                            id="conditionVal1" name="conditionVal1"
+                                                            [(ngModel)]='testcaseheader.conditionVal1'>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                Value 2
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" class="form-control br-tp-0"
+                                                            id="conditionVal2" name="conditionVal2"
+                                                            [(ngModel)]='testcaseheader.conditionVal2'>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-12 d-block">Robots Contraints</label>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="testcase">User Agent</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="far fa-user"></i>
+                                                            </span>
+                                                        </div>
+
+                                                        <input type="text" class="form-control br-tp-0" id="userAgent"
+                                                            name="userAgent" [(ngModel)]='testcaseheader.userAgent'>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="testcase">Screen Size</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="far fa-object-ungroup"></i>
+                                                            </span>
+                                                        </div>
+        
+                                                        <input type="text" class="form-control br-tp-0" id="screenSize"
+                                                            name="screenSize" [(ngModel)]='testcaseheader.screenSize'>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
                                     </div>
                                 </div>
                             </div>
                         </ng-template>
                     </ngb-tab>
+                    <!-- END SETTINGS TAB -->
 
                 </ngb-tabset>
 

@@ -42,7 +42,21 @@ export interface ITestCaseHeader {
     toRev: string;
     testCase: string;
     status: string;
+    dependencyList: Array<ITestCaseDependency>
     [key: string]: any
+}
+
+export interface ITestCaseDependency {
+    active: boolean;
+    depDescription: string;
+    depEvent: string;
+    depTest: string;
+    depTestCase: string;
+    description: string;
+    id: number;
+    test: string;
+    testCase: string;
+    type: string;
 }
 
 export interface ITestCase {

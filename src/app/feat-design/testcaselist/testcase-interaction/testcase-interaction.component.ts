@@ -23,29 +23,23 @@ export class TestcaseInteractionComponent implements OnInit {
 
   /** TITLE */
   saveButtonTitle: string;
-  // _mode is used to print the mode value to the componetn
+  // _mode is used to print the mode value to the component
   // once (every time ngOnInit is fired)
   _mode: string;
 
-  private testcaseheader_countryList: any;
+  // DIRTY : format the array of cou 
   private testcaseheader_countryList_custom: Array<string> = new Array<string>();
 
   public Editor = ClassicEditor;
-
-  // *** Inputs ***
-  testCase: any = {};
-  mode: INTERACTION_MODE;
 
   // Variable received from the addComponentToSideBlock method
   // from testcaselist.component.ts
   _test: string;
   _testcase: string;
+  testCase: any = {};
+  mode: INTERACTION_MODE;
 
   exit: (n: void) => void;
-
-  // *** HTML control ***
-  paneActive = 1;
-  labelTab = 1;
 
   // *** Forms ***
   testcaseHeaderForm: FormGroup;
@@ -55,15 +49,23 @@ export class TestcaseInteractionComponent implements OnInit {
     { value: true, text: 'Yes' },
     { value: false, text: 'No' }
   ];
+
+  // others cerberus entity
   applicationsList: Array<IApplication>;
-  statusList: Array<IInvariant>;
-  typesList: Array<IInvariant>;
-  priorityList: Array<IInvariant>;
-  sprintsList: Array<any>; // ? add type
-  revsList: Array<any>; // ? add type
-  conditionsList: Array<IInvariant>;
   testsList: Array<ITest>;
+  testcaseList: Array<ITestCaseHeader> = [];
+
+  // public invariants
+  private statusList: Array<IInvariant>;
+  private priorityList: Array<IInvariant>;
+  private sprintsList: Array<any>; // ? add type
+  private revsList: Array<any>; // ? add type
   private inv_countries: Array<IInvariant>;
+
+  // private invariants
+  private typesList: Array<IInvariant>;
+  private conditionsList: Array<IInvariant>;
+
   labelList = {
     batteries: [],
     requirements: [],
@@ -72,7 +74,7 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // *** Other testcase properties ***
   private tcCountryList: Array<any> = [];
-  testcaseList: Array<ITestCaseHeader> = [];
+
   dependencySelectedTestCase: ITestCaseHeader;
   dependencyTestCaseList: Array<any> = [];
 

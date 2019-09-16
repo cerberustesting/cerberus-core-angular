@@ -27,17 +27,35 @@ export class TestcaseInteractionComponent implements OnInit {
   // once (every time ngOnInit is fired)
   _mode: string;
 
-  // DIRTY : format the array of cou 
-  private testcaseheader_countryList_custom: Array<string> = new Array<string>();
-
   public Editor = ClassicEditor;
 
   // Variable received from the addComponentToSideBlock method
   // from testcaselist.component.ts
-  _test: string;
-  _testcase: string;
-  testCase: any = {};
+  private test: string;
+  private testcase: string;
+  // used to refresh the test case header  
+  testcaseheader: ITestCaseHeader = null;
   mode: INTERACTION_MODE;
+
+  // DIRTY : waiting for dev
+  // https://github.com/cerberustesting/cerberus-source/issues/2015
+  private testcaseheader_countryList_custom: Array<string> = new Array<string>();
+  feedCustomCountryList(): Array<string> {
+    const resArray = new Array<string>();
+    this.testcaseheader.countryList.forEach(element => {
+      resArray.push(element.country);
+    });
+    return resArray
+  }
+
+  isTheCountryDefined(country: string): boolean {
+    let res = this.testcaseheader_countryList_custom.indexOf(country);
+    if (res === -1) {
+      return false
+    } else {
+      return true
+    }
+  }
 
   exit: (n: void) => void;
 
@@ -89,25 +107,44 @@ export class TestcaseInteractionComponent implements OnInit {
   ngOnInit() {
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
     this._mode = this.mode;
-    if (this.testCase) {
-      this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
-        this.testCase = testcaseHeader;
-        console.log(this.testCase);
-        for (let dependency of this.testCase.dependencyList) {
-          this.dependencyTestCaseList.push({
-            id: dependency.id,
-            test: dependency.depTest,
-            testcase: dependency.depTestCase,
-            description: dependency.description,
-            active: dependency.active
-          });
-        }
-      });
-      for (let country in this.testCase.countryList) this.tcCountryList.push(country);
-    }
 
+    // init the form (will be set later)
+    this.testcaseHeaderForm = null;
+
+    // force the refresh to get latest testcase header information
+    this.testService.getTestCaseHeader(this.test, this.testcase);
+    // subscribe to the test case observable
+    this.testService.observableTestCaseHeader.subscribe(r => {
+      if (r) {
+        this.testcaseheader = r;
+        console.log(r);
+        // set the form
+        this.setFormValues();
+        this.refreshOthersDatas();
+
+        // DIRTY : waiting for dev
+        // https://github.com/cerberustesting/cerberus-source/issues/2015
+        this.testcaseheader_countryList_custom = this.feedCustomCountryList();
+      }
+    })
+    // if (this.testCase) {
+    //   this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
+    //     this.testCase = testcaseHeader;
+    //     for (let dependency of this.testCase.dependencyList) {
+    //       this.dependencyTestCaseList.push({
+    //         id: dependency.id,
+    //         test: dependency.depTest,
+    //         testcase: dependency.depTestCase,
+    //         description: dependency.description,
+    //         active: dependency.active
+    //       });
+    //     }
+    //   });
+    //   for (let country in this.testCase.countryList) this.tcCountryList.push(country);
+    // }
+
+    // subscriptions
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
-    this.systemService.getApplicationList();
     this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
     this.invariantsService.observableTcStatus.subscribe(rep => this.statusList = rep);
     this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionsList = rep);
@@ -116,50 +153,63 @@ export class TestcaseInteractionComponent implements OnInit {
     this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
     this.systemService.observableRevs.subscribe(rep => this.revsList = [{ versionName: '' }].concat(rep));
-    this.testService.getTestsList();
     this.testService.observableTestsList.subscribe(rep => this.testsList = rep);
-
-    this.testcaseHeaderForm = this.formBuilder.group({
-      test: this.testCase.test || '',
-      testCase: this.testCase.testCase,
-      originalTest: this.testCase.test, // ! const
-      originalTestCase: this.testCase.testCase, // ! const
-      active: this.testCase.tcActive,
-      activePROD: this.testCase.activePROD,
-      activeQA: this.testCase.activeQA,
-      activeUAT: this.testCase.activeUAT,
-      application: this.testCase.application,
-      behaviorOrValueExpected: this.testCase.behaviorOrValueExpected,
-      bugId: this.testCase.bugID,
-      comment: this.testCase.comment,
-      fromRev: this.testCase.fromRev,
-      fromSprint: this.testCase.fromBuild,
-      group: this.testCase.group,
-      implementer: this.testCase.implementer,
-      priority: this.testCase.priority,
-      shortDesc: this.testCase.description,
-      status: this.testCase.status,
-      targetRev: this.testCase.targetRev,
-      targetSprint: this.testCase.targetBuild,
-      conditionOper: this.testCase.conditionOper,
-      conditionVal1: this.testCase.conditionVal1,
-      conditionVal2: this.testCase.conditionVal2,
-      toRev: this.testCase.toRev,
-      toSprint: this.testCase.toBuild,
-      userAgent: this.testCase.userAgent,
-      screenSize: this.testCase.screenSize,
-    });
-    this.getFromSystem();
   }
 
-  getFromSystem(): void {
-    if (this.testcaseHeaderForm.value.application) {
-      this.testCase.system = this.testcaseHeaderForm.value.application;
-      this.systemService.getLabelsHierarchyFromSystem(this.testCase.system, this.testCase.test, this.testCase.testCase);
-      this.systemService.getSprintsFromSystem(this.testCase.system);
-      this.systemService.getRevFromSystem(this.testCase.system);
-    }
+  setFormValues() {
+    this.testcaseHeaderForm = this.formBuilder.group({
+      test: this.testcaseheader.test || '',
+      testCase: this.testcaseheader.testCase,
+      originalTest: this.testcaseheader.test, // ! const
+      originalTestCase: this.testcaseheader.testCase, // ! const
+      active: this.testcaseheader.tcActive,
+      activePROD: this.testcaseheader.activePROD,
+      activeQA: this.testcaseheader.activeQA,
+      activeUAT: this.testcaseheader.activeUAT,
+      application: this.testcaseheader.application,
+      behaviorOrValueExpected: this.testcaseheader.behaviorOrValueExpected,
+      bugId: this.testcaseheader.bugID,
+      comment: this.testcaseheader.comment,
+      fromRev: this.testcaseheader.fromRev,
+      fromSprint: this.testcaseheader.fromBuild,
+      group: this.testcaseheader.group,
+      implementer: this.testcaseheader.implementer,
+      priority: this.testcaseheader.priority,
+      shortDesc: this.testcaseheader.description,
+      status: this.testcaseheader.status,
+      targetRev: this.testcaseheader.targetRev,
+      targetSprint: this.testcaseheader.targetBuild,
+      conditionOper: this.testcaseheader.conditionOper,
+      conditionVal1: this.testcaseheader.conditionVal1,
+      conditionVal2: this.testcaseheader.conditionVal2,
+      toRev: this.testcaseheader.toRev,
+      toSprint: this.testcaseheader.toBuild,
+      userAgent: this.testcaseheader.userAgent,
+      screenSize: this.testcaseheader.screenSize
+    });
+  }
 
+  /**
+   * refresh datas that a test case header depends on:
+   * - invariants lists
+   * - tests, applications, labels, build lists
+   */
+  refreshOthersDatas() {
+    this.testService.getTestsList();
+    this.systemService.getApplicationList();
+    this.systemService.getLabelsHierarchyFromSystem(this.testcaseheader.system, this.testcaseheader.test, this.testcaseheader.testCase);
+    this.systemService.getSprintsFromSystem(this.testcaseheader.system);
+    this.systemService.getRevFromSystem(this.testcaseheader.system);
+  }
+
+  // TODO : clean it
+  getTCInformationFromSystem(): void {
+    if (this.testcaseHeaderForm.value.application) {
+      this.testcaseheader.system = this.testcaseHeaderForm.value.application;
+      this.systemService.getLabelsHierarchyFromSystem(this.testcaseheader.system, this.testcaseheader.test, this.testcaseheader.testCase);
+      this.systemService.getSprintsFromSystem(this.testcaseheader.system);
+      this.systemService.getRevFromSystem(this.testcaseheader.system);
+    }
   }
 
   /** toggleLabel
@@ -287,8 +337,6 @@ export class TestcaseInteractionComponent implements OnInit {
     } else {
       this.testService.updateTestCase(queryString).subscribe(rep => this.refreshTable());
     }
-
-
   }
 
   /** refreshTable
@@ -320,8 +368,8 @@ export class TestcaseInteractionComponent implements OnInit {
     for (var country in array) {
       const c = {
         country: country,
-        test: this.testCase.test,
-        testCase: this.testCase
+        test: this.testcaseheader.test,
+        testCase: this.testcaseheader
       }
       countryList.push(c);
     }

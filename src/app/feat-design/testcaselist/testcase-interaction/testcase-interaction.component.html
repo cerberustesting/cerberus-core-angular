@@ -1,4 +1,4 @@
-<form [formGroup]="testcaseHeaderForm" (ngSubmit)="onSubmit(testcaseHeaderForm.value)">
+<form *ngIf="testcaseHeaderForm" [formGroup]="testcaseHeaderForm" (ngSubmit)="onSubmit(testcaseHeaderForm.value)">
     <div class="block no-shadow">
         <div class="block-header block-header-default">
 
@@ -207,12 +207,14 @@
                                         </div>
                                         <!-- END ENVIRONMENT GROUP ACTIVATION -->
 
+                                        <!-- COUNTRY ACTIVATION -->
                                         <div class="form-group">
                                             <label class="d-block">Country Activation</label>
                                             <div *ngFor="let country of inv_countries"
                                                 class="custom-control block custom-block custom-control-info custom-sm custom-control-inline">
                                                 <input type="checkbox" class="custom-control-input" [id]="country.value"
-                                                    [name]="country.value" (click)="updateCheckedCountries(country)">
+                                                    [name]="country.value"
+                                                    [checked]="isTheCountryDefined(country.value)">
                                                 <label class="custom-control-label" [for]="country.value">
                                                     <span class="d-block text-center">
                                                         {{ country.value }}
@@ -220,6 +222,7 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        <!-- END COUNTRY ACTIVATION -->
 
                                         <!-- <div class="form-group row">
                                             <label class="col-12 d-block">Version Activation</label>

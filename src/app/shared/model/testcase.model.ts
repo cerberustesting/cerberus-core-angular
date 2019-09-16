@@ -25,7 +25,7 @@ export interface ITestCaseHeader {
     userAgent: string;
     origin?: string;
     priority: number;
-    countryList: any;
+    countryList: Array<any>;
     testCaseVersion: number;
     usrCreated: string;
     tcActive: string;

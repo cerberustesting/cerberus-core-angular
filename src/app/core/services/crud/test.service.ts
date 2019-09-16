@@ -27,11 +27,17 @@ export class TestService {
   testsList: Array<ITest> = new Array<ITest>();
   testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
   testcasesListLength: number;
+  // Data Library
   testdatalib: Array<any> = new Array<ITestCaseHeader>();
   testdatalibLength: number;
+  // Test case
+  testcase: ITestCase = null;
+  // DIRTY : waiting for #2016 ReadTestCase servlet : dependencies
+  // should only be one object
+  testcaseheader: ITestCaseHeader = null;
   testcase_labels: Array<ILabel> = new Array<ILabel>();
   testcase_properties: Array<IProperty>;
-  testcase: ITestCase = null;
+
   private testcaseheader_countriesList_format = new Array<string>();
   //project
   projectsList: Array<IProject> = new Array<IProject>();
@@ -46,10 +52,9 @@ export class TestService {
   observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
   observableTestCaseProperties = new BehaviorSubject<IProperty[]>(this.testcase_properties);
+  observableTestCaseHeader = new BehaviorSubject<ITestCaseHeader>(this.testcaseheader);
   // boolean
   refreshTC: boolean = false;
-
-
 
   constructor(
     private http: HttpClient,
@@ -112,7 +117,7 @@ export class TestService {
     return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, httpOptions)
       .pipe(tap(
         data => {
-          if (data.messageType==='OK') this.notificationService.createANotification('Testcase updated', NotificationStyle.Success);
+          if (data.messageType === 'OK') this.notificationService.createANotification('Testcase updated', NotificationStyle.Success);
           else this.notificationService.createANotification(data.message, NotificationStyle.Warning)
         },
         error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
@@ -122,7 +127,7 @@ export class TestService {
     return this.http.post<any>(environment.cerberus_api_url + '/CreateTestCase', queryString, httpOptions)
       .pipe(tap(
         data => {
-          if (data.messageType==='OK') this.notificationService.createANotification('Testcase created', NotificationStyle.Success);
+          if (data.messageType === 'OK') this.notificationService.createANotification('Testcase created', NotificationStyle.Success);
           else this.notificationService.createANotification(data.message, NotificationStyle.Warning)
         },
         error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
@@ -152,11 +157,11 @@ export class TestService {
   createTestDataLib(formData: FormData) {
     return this.http.post<any>(environment.cerberus_api_url + '/CreateTestDataLib', formData);
   }
-  deleteTestDataLib(id: string, callback: (n:void)=>void) {
+  deleteTestDataLib(id: string, callback: (n: void) => void) {
     this.http.post<any>(environment.cerberus_api_url + '/DeleteTestDataLib', 'testdatalibid=' + id, httpOptions)
       .subscribe((rep) => callback());
   }
-  deleteTestCase(test: string, testCase: string, callback: (n:void)=>void) {
+  deleteTestCase(test: string, testCase: string, callback: (n: void) => void) {
     this.http.post<any>(environment.cerberus_api_url + '/DeleteTestCase', 'test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testCase), httpOptions)
       .subscribe((rep) => callback());
   }
@@ -170,13 +175,20 @@ export class TestService {
     return this.http.post(environment.cerberus_api_url + '/ReadTestCase', '');
   }
 
+  /**
+  * Gets test case full content
+  * /!\ do not provide test case dependencies !
+  * @param test
+  * @param testcase
+  * @returns test case object
+  */
   getTestCase(test: string, testcase: string) {
-    console.log("getTestCase");
     if (test == null || testcase == null) {
       this.testcase = null;
     } else {
       this.http.get<ITestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withStep=true')
         .subscribe((response) => {
+          console.log(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase);
           this.testcase = response;
           this.observableTestCase.next(this.testcase);
           // format the countries List to an string array
@@ -187,8 +199,29 @@ export class TestService {
     }
   }
 
-  getTestCaseInformations(test: string, testcase: string, callback: (n:ITestCaseHeader)=>any) {
-    if (test&&testcase) {
+  /**
+  * Gets only test case header information
+  * /!\ do not provide steps/actions/controls
+  * @param test
+  * @param testcase
+  * @returns test case header object
+  */
+  getTestCaseHeader(test: string, testcase: string) {
+    if (test == null || testcase == null) {
+      this.testcaseheader = null;
+    } else {
+      this.http.get<ITestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase)
+        .subscribe((response) => {
+          //@ts-ignore
+          this.testcaseheader = response.contentTable;
+          this.observableTestCaseHeader.next(this.testcaseheader);
+        })
+    }
+  }
+
+  // TO DELETE : wrong name
+  getTestCaseInformations(test: string, testcase: string, callback: (n: ITestCaseHeader) => any) {
+    if (test && testcase) {
       this.http.get<any>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase)
         .subscribe((response) => callback(response.contentTable));
     }

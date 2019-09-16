@@ -56,9 +56,8 @@ export class TestcaselistComponent implements OnInit {
    */
   editTestCaseHeader(testcase: any): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      testCase: testcase,
-      _test: testcase.test,
-      _testcase: testcase.testCase,
+      test: testcase.test,
+      testcase: testcase.testCase,
       mode: INTERACTION_MODE.EDIT,
       exit: () => {
         this.refreshResults();

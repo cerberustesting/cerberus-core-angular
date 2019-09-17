@@ -15,6 +15,5 @@ host=$CERBERUS_VM_HOST
 user=$CERBERUS_VM_USER
 password=$CERBERUS_VM_PASSWORD
 
-sudo apt-get install sshpass
 sshpass -p ${password} ssh ${user}@${host}
 # rcp cerberus-front-${version}.zip ${user}@${host}

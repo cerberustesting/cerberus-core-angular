@@ -6,6 +6,10 @@ sudo: required
 branches:
   only:
   - master
+addons:
+  apt:
+    packages:
+    - sshpass
 before_script:
   - npm install -g @angular/cli
 script:

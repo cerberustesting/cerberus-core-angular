@@ -11,9 +11,5 @@ mv ${archive} ./dist
 echo "archive moved to /dist folder"
 
 # remote copy to host
-host=$CERBERUS_VM_HOST
-user=$CERBERUS_VM_USER
-password=$CERBERUS_VM_PASSWORD
-
-sshpass -p ${password} ssh ${user}@${host}
+sshpass -p "$CERBERUS_VM_PASSWORD" scp ./dist/${archive} $CERBERUS_VM_USER@$CERBERUS_VM_HOST:/root/
 # rcp cerberus-front-${version}.zip ${user}@${host}

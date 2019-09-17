@@ -13,7 +13,7 @@ addons:
 before_script:
   - npm install -g @angular/cli
 script:
-  - ng lint --force=true
+  #- ng lint --force=true
   - ng build --prod
 deploy:
   skip_cleanup: true

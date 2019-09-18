@@ -48,12 +48,21 @@ export class TestcaseInteractionComponent implements OnInit {
     return resArray
   }
 
-  isTheCountryDefined(country: string): boolean {
+  isTheCountrySelected(country: string): boolean {
     let res = this.testcaseheader_countryList_custom.indexOf(country);
     if (res === -1) {
       return false
     } else {
       return true
+    }
+  }
+
+  toggleCountry(country: string) {
+    if (this.isTheCountrySelected(country) === true) {
+      const index = this.testcaseheader_countryList_custom.indexOf(country);
+      this.testcaseheader_countryList_custom.splice(index, 1);
+    } else {
+      this.testcaseheader_countryList_custom.push(country);
     }
   }
 
@@ -127,21 +136,6 @@ export class TestcaseInteractionComponent implements OnInit {
         this.testcaseheader_countryList_custom = this.feedCustomCountryList();
       }
     })
-    // if (this.testCase) {
-    //   this.testService.getTestCaseInformations(this.testCase.test, this.testCase.testCase, testcaseHeader => {
-    //     this.testCase = testcaseHeader;
-    //     for (let dependency of this.testCase.dependencyList) {
-    //       this.dependencyTestCaseList.push({
-    //         id: dependency.id,
-    //         test: dependency.depTest,
-    //         testcase: dependency.depTestCase,
-    //         description: dependency.description,
-    //         active: dependency.active
-    //       });
-    //     }
-    //   });
-    //   for (let country in this.testCase.countryList) this.tcCountryList.push(country);
-    // }
 
     // subscriptions
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
@@ -312,7 +306,7 @@ export class TestcaseInteractionComponent implements OnInit {
     // fill countryList with all countries selected
     for (let country of this.inv_countries) {
       countryList.push(
-        { country: country.value, toDelete: this.tcCountryList.map(c => c.country).includes(country.value) }
+        { country: country.value, toDelete: !this.testcaseheader_countryList_custom.includes(country.value) }
       )
     }
 
@@ -332,7 +326,7 @@ export class TestcaseInteractionComponent implements OnInit {
     queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
     queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
 
-    if (this.mode = INTERACTION_MODE.CREATE) {
+    if (this.mode == INTERACTION_MODE.CREATE) {
       this.testService.createTestCase(queryString).subscribe(rep => this.refreshTable());
     } else {
       this.testService.updateTestCase(queryString).subscribe(rep => this.refreshTable());

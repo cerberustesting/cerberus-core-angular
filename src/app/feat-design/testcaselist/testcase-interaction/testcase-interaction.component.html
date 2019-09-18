@@ -160,7 +160,7 @@
 
                                         <!-- ENVIRONMENT GROUP ACTIVATION -->
                                         <div id="sideContent_globalActivation" class="form-group">
-                                            <label class="d-block">Environments Activation</label>
+                                            <label class="d-block">Environment Activation</label>
                                             <div class="custom-control custom-switch custom-control-inline">
                                                 <input type="checkbox" id="globalActivation"
                                                     class="custom-control-input" name="globalActivation"
@@ -214,7 +214,8 @@
                                                 class="custom-control block custom-block custom-control-info custom-sm custom-control-inline">
                                                 <input type="checkbox" class="custom-control-input" [id]="country.value"
                                                     [name]="country.value"
-                                                    [checked]="isTheCountryDefined(country.value)">
+                                                    [checked]="isTheCountrySelected(country.value)"
+                                                    (click)="toggleCountry(country.value)">
                                                 <label class="custom-control-label" [for]="country.value">
                                                     <span class="d-block text-center">
                                                         {{ country.value }}
@@ -223,6 +224,100 @@
                                             </div>
                                         </div>
                                         <!-- END COUNTRY ACTIVATION -->
+
+                                        <!-- VERSION ACTIVATION -->
+                                        <div class="form-group">
+                                            <label class="d-block">Version Activation</label>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+
+                                                <!-- FROM SPRINT -->
+                                                <div class="form-group">
+                                                    <label for="example-select">From Sprint</label>
+                                                    <select class="form-control form-control-sm"
+                                                        formControlName="fromSprint">
+                                                        <option *ngFor="let sprint of sprintsList"
+                                                            [value]="sprint.versionName">
+                                                            {{ sprint.versionName }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <!-- END FROM SPRINT -->
+
+                                                <!-- TO SPRINT -->
+                                                <div class="form-group">
+                                                    <label for="example-select">To Sprint</label>
+                                                    <select class="form-control form-control-sm"
+                                                        formControlName="toSprint">
+                                                        <option *ngFor="let sprint of sprintsList"
+                                                            [value]="sprint.versionName">
+                                                            {{ sprint.versionName }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <!-- END TO SPRINT -->
+                                            </div>
+
+                                            <div class="col-4">
+
+                                                <!-- FROM REV -->
+                                                <div class="form-group">
+                                                    <label for="example-select">From Rev</label>
+                                                    <select class="form-control form-control-sm"
+                                                        formControlName="fromRev">
+                                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                                            {{ rev.versionName }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <!-- END FROM REV -->
+
+                                                <!-- TO REV -->
+                                                <div class="form-group">
+                                                    <label for="example-select">To Rev</label>
+                                                    <select class="form-control form-control-sm"
+                                                        formControlName="toRev">
+                                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                                            {{ rev.versionName }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <!-- END TO REV -->
+                                            </div>
+
+                                            <div class="col-4">
+
+                                                <!-- TARGET SPRINT -->
+                                                <div class="form-group">
+                                                    <label for="example-select">Target Sprint</label>
+                                                    <select class="form-control form-control-sm"
+                                                        formControlName="targetSprint">
+                                                        <option *ngFor="let sprint of sprintsList"
+                                                            [value]="sprint.versionName">
+                                                            {{ sprint.versionName }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <!-- END TARGET SPRINT -->
+
+                                                <!-- TARGET REV -->
+                                                <div class="form-group">
+                                                    <label for="example-select">Target Sprint</label>
+                                                    <select class="form-control form-control-sm"
+                                                        formControlName="targetRev">
+                                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                                            {{ rev.versionName }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <!-- END TARGET REV -->
+                                            </div>
+
+                                        </div>
+                                        <!-- END VERSION ACTIVATION -->
+
+
 
                                         <!-- <div class="form-group row">
                                             <label class="col-12 d-block">Version Activation</label>

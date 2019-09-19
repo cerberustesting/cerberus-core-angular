@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/core/services/utils/notification.se
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -91,7 +92,16 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // private invariants
   private typesList: Array<IInvariant>;
-  private conditionsList: Array<IInvariant>;
+  private conditionOperList: Array<IInvariant>;
+
+  // Cross Reference array to display the correct input fields according to the selected condition
+  private crossReference_ConditionValue: Array<ICrossReference> = this.crossReferenceService.crossReference_ConditionValue;
+  hasConditionCrossReference(condition: string): boolean {
+    return this.crossReferenceService.hasCrossReference(condition, this.crossReferenceService.crossReference_ConditionValue);
+  }
+  findConditionCrossReference(condition: string): ICrossReference {
+    return this.crossReferenceService.findCrossReference(condition, this.crossReferenceService.crossReference_ConditionValue);
+  }
 
   labelList = {
     batteries: [],
@@ -108,6 +118,7 @@ export class TestcaseInteractionComponent implements OnInit {
   constructor(
     private invariantsService: InvariantsService,
     private systemService: SystemService,
+    private crossReferenceService: CrossreferenceService,
     private formBuilder: FormBuilder,
     private testService: TestService,
     private notificationService: NotificationService,
@@ -141,7 +152,7 @@ export class TestcaseInteractionComponent implements OnInit {
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
     this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
     this.invariantsService.observableTcStatus.subscribe(rep => this.statusList = rep);
-    this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionsList = rep);
+    this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionOperList = rep);
     this.invariantsService.observableCountriesList.subscribe(rep => this.inv_countries = rep);
     this.invariantsService.observablePriorities.subscribe(rep => this.priorityList = rep);
     this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
@@ -343,31 +354,6 @@ export class TestcaseInteractionComponent implements OnInit {
 
   closeSideContent() {
     this.sidecontentService.closeSideBlock();
-  }
-
-  // DIRTY : converting an array of weird countryObject 
-  // from testcaseheader object in array of string
-  format_countryListToCustom(array: Array<any>): Array<string> {
-    const countryList = new Array<string>();
-    for (var country in array) {
-      countryList.push(country);
-    }
-    return countryList;
-  }
-
-  // DIRTY : converting an array of string countryObject 
-  // to an array of weird countryObject
-  format_countryListToRaw(array: Array<string>): Array<any> {
-    const countryList = new Array<any>();
-    for (var country in array) {
-      const c = {
-        country: country,
-        test: this.testcaseheader.test,
-        testCase: this.testcaseheader
-      }
-      countryList.push(c);
-    }
-    return countryList;
   }
 
 }

@@ -226,10 +226,11 @@
                                         <!-- END COUNTRY ACTIVATION -->
 
                                         <!-- VERSION ACTIVATION -->
-                                        <div class="form-group">
+                                        <div class="form-group mb-0">
                                             <label class="d-block">Version Activation</label>
                                         </div>
                                         <div class="row">
+
                                             <div class="col-4">
 
                                                 <!-- FROM SPRINT -->
@@ -317,7 +318,64 @@
                                         </div>
                                         <!-- END VERSION ACTIVATION -->
 
+                                        <!-- CONDITION ACTIVATION -->
+                                        <div class="form-group mb-0">
+                                            <label class="d-block">Condition Activation</label>
+                                        </div>
+                                        <div class="row">
 
+                                            <div class="col-4">
+
+                                                <!-- CONDITION OPER -->
+                                                <div class="form-group">
+                                                    <label for="example-select">Condition</label>
+                                                    <select class="form-control form-control-sm"
+                                                        formControlName="conditionOper">
+                                                        <option *ngFor="let condition of conditionOperList"
+                                                            [value]="condition.value">
+                                                            {{ condition.value }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <!-- END CONDITION OPER  -->
+
+                                            </div>
+
+                                            <div class="col-4"
+                                                *ngIf="hasConditionCrossReference(testcaseHeaderForm.get('conditionOper').value)">
+
+                                                <!-- CONDITION VAL 1 -->
+                                                <div class="form-group"
+                                                    *ngIf="findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value1">
+                                                    <label for="ConditionValue1">
+                                                        {{ findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value1 }}
+                                                    </label>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        name="ConditionValue1" formControlName="conditionVal1">
+                                                </div>
+                                                <!-- END CONDITION VAL 1 -->
+
+                                            </div>
+
+                                            <div class="col-4"
+                                                *ngIf="hasConditionCrossReference(testcaseHeaderForm.get('conditionOper').value)">
+
+                                                <!-- CONDITION VAL 2 -->
+                                                <div class="form-group"
+                                                    *ngIf="findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value2">
+                                                    <label for="ConditionValue2">
+                                                        {{ findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value2 }}
+                                                    </label>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        name="ConditionValue2" formControlName="conditionVal2">
+                                                </div>
+                                                <!-- END CONDITION VAL 2 -->
+                                            </div>
+
+                                        </div>
+                                        <!-- END CONDITION ACTIVATION -->
+
+                                        
 
                                         <!-- <div class="form-group row">
                                             <label class="col-12 d-block">Version Activation</label>

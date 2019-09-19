@@ -10,6 +10,11 @@
         "value2": null
     },
     {
+        "reference": "ifPropertyNotExist",
+        "value1": "Property Name",
+        "value2": null
+    },
+    {
         "reference": "ifElementPresent",
         "value1": "Element",
         "value2": null
@@ -81,6 +86,11 @@
     },
     {
         "reference": "ifStringContains",
+        "value1": "String",
+        "value2": "Contains"
+    },
+    {
+        "reference": "ifStringNotContains",
         "value1": "String",
         "value2": "Contains"
     },

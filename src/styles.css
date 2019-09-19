@@ -152,6 +152,24 @@ for .custom-control-inline, add padding left & right
   padding-right: 0.75rem;
 }
 
+/*
+"font-weight" class for any element
+
+adjust the font-weight value
+*/
+.fw-400 {
+  font-weight: 400 !important;
+}
+
+/*
+"custom-form-group-sm" for div.form-group
+
+adjust the margin for form groups
+*/
+div.form-group.custom-form-group-sm {
+  margin-bottom: 0.5rem;
+}
+
 .input-group-height {
   height: 38px;
 }

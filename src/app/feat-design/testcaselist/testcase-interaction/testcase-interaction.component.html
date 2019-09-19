@@ -234,10 +234,10 @@
                                             <div class="col-4">
 
                                                 <!-- FROM SPRINT -->
-                                                <div class="form-group">
-                                                    <label for="example-select">From Sprint</label>
+                                                <div class="form-group custom-form-group-sm">
+                                                    <label for="fromSprint" class="fw-400">From Sprint</label>
                                                     <select class="form-control form-control-sm"
-                                                        formControlName="fromSprint">
+                                                        formControlName="fromSprint" name="fromSprint">
                                                         <option *ngFor="let sprint of sprintsList"
                                                             [value]="sprint.versionName">
                                                             {{ sprint.versionName }}
@@ -247,10 +247,10 @@
                                                 <!-- END FROM SPRINT -->
 
                                                 <!-- TO SPRINT -->
-                                                <div class="form-group">
-                                                    <label for="example-select">To Sprint</label>
+                                                <div class="form-group custom-form-group-sm">
+                                                    <label for="example-select" class="fw-400">To Sprint</label>
                                                     <select class="form-control form-control-sm"
-                                                        formControlName="toSprint">
+                                                        formControlName="toSprint" name="toSprint">
                                                         <option *ngFor="let sprint of sprintsList"
                                                             [value]="sprint.versionName">
                                                             {{ sprint.versionName }}
@@ -263,10 +263,10 @@
                                             <div class="col-4">
 
                                                 <!-- FROM REV -->
-                                                <div class="form-group">
-                                                    <label for="example-select">From Rev</label>
+                                                <div class="form-group custom-form-group-sm">
+                                                    <label for="fromRev" class="fw-400">From Rev</label>
                                                     <select class="form-control form-control-sm"
-                                                        formControlName="fromRev">
+                                                        formControlName="fromRev" name="fromRev">
                                                         <option *ngFor="let rev of revsList" [value]="rev.versionName">
                                                             {{ rev.versionName }}
                                                         </option>
@@ -275,10 +275,10 @@
                                                 <!-- END FROM REV -->
 
                                                 <!-- TO REV -->
-                                                <div class="form-group">
-                                                    <label for="example-select">To Rev</label>
-                                                    <select class="form-control form-control-sm"
-                                                        formControlName="toRev">
+                                                <div class="form-group custom-form-group-sm">
+                                                    <label for="toRev" class="fw-400">To Rev</label>
+                                                    <select class="form-control form-control-sm" formControlName="toRev"
+                                                        name="toRev">
                                                         <option *ngFor="let rev of revsList" [value]="rev.versionName">
                                                             {{ rev.versionName }}
                                                         </option>
@@ -290,10 +290,10 @@
                                             <div class="col-4">
 
                                                 <!-- TARGET SPRINT -->
-                                                <div class="form-group">
-                                                    <label for="example-select">Target Sprint</label>
+                                                <div class="form-group custom-form-group-sm">
+                                                    <label for="targetSprint" class="fw-400">Target Sprint</label>
                                                     <select class="form-control form-control-sm"
-                                                        formControlName="targetSprint">
+                                                        formControlName="targetSprint" name="targetSprint">
                                                         <option *ngFor="let sprint of sprintsList"
                                                             [value]="sprint.versionName">
                                                             {{ sprint.versionName }}
@@ -303,10 +303,10 @@
                                                 <!-- END TARGET SPRINT -->
 
                                                 <!-- TARGET REV -->
-                                                <div class="form-group">
-                                                    <label for="example-select">Target Sprint</label>
+                                                <div class="form-group custom-form-group-sm">
+                                                    <label for="targetRev" class="fw-400">Target Sprint</label>
                                                     <select class="form-control form-control-sm"
-                                                        formControlName="targetRev">
+                                                        formControlName="targetRev" name="targetRev">
                                                         <option *ngFor="let rev of revsList" [value]="rev.versionName">
                                                             {{ rev.versionName }}
                                                         </option>
@@ -328,7 +328,7 @@
 
                                                 <!-- CONDITION OPER -->
                                                 <div class="form-group">
-                                                    <label for="example-select">Condition</label>
+                                                    <label for="example-select" class="fw-400">Condition</label>
                                                     <select class="form-control form-control-sm"
                                                         formControlName="conditionOper">
                                                         <option *ngFor="let condition of conditionOperList"
@@ -347,7 +347,7 @@
                                                 <!-- CONDITION VAL 1 -->
                                                 <div class="form-group"
                                                     *ngIf="findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value1">
-                                                    <label for="ConditionValue1">
+                                                    <label for="ConditionValue1" class="fw-400">
                                                         {{ findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value1 }}
                                                     </label>
                                                     <input type="text" class="form-control form-control-sm"
@@ -363,7 +363,7 @@
                                                 <!-- CONDITION VAL 2 -->
                                                 <div class="form-group"
                                                     *ngIf="findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value2">
-                                                    <label for="ConditionValue2">
+                                                    <label for="ConditionValue2" class="fw-400">
                                                         {{ findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value2 }}
                                                     </label>
                                                     <input type="text" class="form-control form-control-sm"
@@ -375,7 +375,38 @@
                                         </div>
                                         <!-- END CONDITION ACTIVATION -->
 
-                                        
+                                        <!-- ROBOT CONSTRAINTS -->
+                                        <div class="form-group mb-0">
+                                            <label class="d-block">Robot Constraints</label>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-6">
+
+                                                <!-- USER AGENT -->
+                                                <div class="form-group">
+                                                    <label for="userAgent" class="fw-400">User Agent</label>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        name="userAgent" formControlName="userAgent">
+                                                </div>
+                                                <!-- END USER AGENT -->
+
+                                            </div>
+
+                                            <div class="col-6">
+
+                                                <!-- USER AGENT -->
+                                                <div class="form-group">
+                                                    <label for="screenSize" class="fw-400">Screen Size</label>
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        name="screenSize" formControlName="screenSize">
+                                                </div>
+                                                <!-- END USER AGENT -->
+
+                                            </div>
+                                        </div>
+                                        <!-- END ROBOT CONSTRAINTS -->
+
 
                                         <!-- <div class="form-group row">
                                             <label class="col-12 d-block">Version Activation</label>
@@ -606,6 +637,42 @@
                         </ng-template>
                     </ngb-tab>
                     <!-- END SETTINGS TAB -->
+
+                    <ngb-tab title="Labels" class="nav-item">
+                        <ng-template ngbTabContent>
+                            <div class="block-content tab-content">
+                                <div class="row">
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+
+                    <ngb-tab title="Bug Report" class="nav-item">
+                        <ng-template ngbTabContent>
+                            <div class="block-content tab-content">
+                                <div class="row">
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+
+                    <ngb-tab title="Dependency" class="nav-item">
+                        <ng-template ngbTabContent>
+                            <div class="block-content tab-content">
+                                <div class="row">
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+
+                    <ngb-tab title="Tracability" class="nav-item">
+                        <ng-template ngbTabContent>
+                            <div class="block-content tab-content">
+                                <div class="row">
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
 
                 </ngb-tabset>
 

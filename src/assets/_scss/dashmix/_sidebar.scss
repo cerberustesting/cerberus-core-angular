@@ -22,6 +22,7 @@
     left: 0;
     z-index: $zindex-sidebar;
     width: 100%;
+    height: 100%;
     background-color: $sidebar-bg;
     overflow-y: auto;
     transform: translateX(-100%) translateY(0) translateZ(0);

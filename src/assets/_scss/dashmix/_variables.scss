@@ -97,13 +97,14 @@ $main-nav-transition:               .25s ease-out !default;
 
 // Layout Spaces
 
-$space-base:                1.75rem !default;           // Content padding
-$space-mobile:              .875rem !default;           // Content padding in mobile
-$space-side:                1.25rem !default;           // Content padding inside side content
-$space-row-gutter-tiny:     .25rem !default;            // Row with tiny gutter
-$space-block:               1.25rem !default;           // Block padding
-$space-boxed:               1200px !default;            // Boxed content max width
-$space-narrow:              96% !default;               // Narrow content max width
+$space-base:                1.75rem !default;                   // Content padding
+$space-mobile:              .875rem !default;                   // Content padding in mobile
+$space-side:                1.25rem !default;                   // Content padding inside side content
+$space-row-gutter-tiny:     .25rem !default;                    // Row with tiny gutter
+$space-block:               1.25rem !default;                   // Block padding
+$space-boxed:               1200px !default;                    // Boxed content max width
+$space-narrow:              96% !default;                       // Narrow content max width
+$space-main-max-width:      1920px - $sidebar-width !default;   // Main content max width
 
 
 // Third Party

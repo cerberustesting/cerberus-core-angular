@@ -1,5 +1,5 @@
 /*!
- * Dashmix - v2.0.0
+ * Dashmix - v2.1.0
  * @author pixelcave - https://pixelcave.com
  * Copyright (c) 2019
  */
@@ -12340,7 +12340,7 @@ a.badge-secondary:focus, a.badge-secondary.focus {
 
 @media (min-width: 1200px) {
   .content.content-narrow {
-    max-width: 96% !important;
+    width: 96% !important;
   }
 }
 
@@ -12497,6 +12497,7 @@ a.badge-secondary:focus, a.badge-secondary.focus {
   left: 0;
   z-index: 1032;
   width: 100%;
+  height: 100%;
   background-color: #fff;
   overflow-y: auto;
   -webkit-transform: translateX(-100%) translateY(0) translateZ(0);
@@ -12622,6 +12623,7 @@ a.badge-secondary:focus, a.badge-secondary.focus {
   bottom: 0;
   z-index: 1034;
   width: 100%;
+  height: 100%;
   background-color: #fff;
   overflow-y: auto;
   -webkit-transform: translateX(100%) translateY(0) translateZ(0);
@@ -12681,12 +12683,19 @@ a.badge-secondary:focus, a.badge-secondary.focus {
   }
 }
 
+#page-container > #page-header .content-header,
+#page-container > #page-header .content,
+#page-container > #main-container .content,
+#page-container > #page-footer .content {
+  max-width: 1680px;
+}
+
 @media (min-width: 1200px) {
   #page-container.main-content-narrow > #page-header .content-header,
   #page-container.main-content-narrow > #page-header .content,
   #page-container.main-content-narrow > #main-container .content,
   #page-container.main-content-narrow > #page-footer .content {
-    max-width: 96%;
+    width: 96%;
   }
 }
 
@@ -12819,7 +12828,7 @@ a.badge-secondary:focus, a.badge-secondary.focus {
 
 #page-container.side-scroll #sidebar,
 #page-container.side-scroll #side-overlay {
-  overflow-y: hidden;
+  overflow-y: visible;
 }
 
 @media (min-width: 992px) {
@@ -13960,6 +13969,11 @@ a.block.block-themed .btn-block-option:focus,
   margin-bottom: .625rem;
 }
 
+.list-icons > li {
+  margin-bottom: 1.25rem;
+  padding-left: .5rem;
+}
+
 .list-activity > li {
   margin-bottom: .75rem;
   padding-bottom: .375rem;
@@ -14448,30 +14462,6 @@ a.item.item-link-pop:active {
   border-right-color: transparent;
 }
 
-.ribbon-light.ribbon-modern .ribbon-box::before {
-  border-color: #e6ebf4;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-light.ribbon-modern.ribbon-bottom .ribbon-box::before {
-  border-color: #e6ebf4;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
-
-.ribbon-light.ribbon-modern.ribbon-left .ribbon-box::before {
-  border-color: #e6ebf4;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-light.ribbon-modern.ribbon-left.ribbon-bottom .ribbon-box::before {
-  border-color: #e6ebf4;
-  border-top-color: transparent;
-  border-right-color: transparent;
-}
-
 .ribbon-dark .ribbon-box {
   color: #fff;
   background-color: #343a40;
@@ -14484,30 +14474,6 @@ a.item.item-link-pop:active {
 
 .ribbon-dark.ribbon-bookmark.ribbon-left .ribbon-box::before {
   border-color: #343a40;
-  border-right-color: transparent;
-}
-
-.ribbon-dark.ribbon-modern .ribbon-box::before {
-  border-color: #343a40;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-dark.ribbon-modern.ribbon-bottom .ribbon-box::before {
-  border-color: #343a40;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
-
-.ribbon-dark.ribbon-modern.ribbon-left .ribbon-box::before {
-  border-color: #343a40;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-dark.ribbon-modern.ribbon-left.ribbon-bottom .ribbon-box::before {
-  border-color: #343a40;
-  border-top-color: transparent;
   border-right-color: transparent;
 }
 
@@ -14526,30 +14492,6 @@ a.item.item-link-pop:active {
   border-right-color: transparent;
 }
 
-.ribbon-primary.ribbon-modern .ribbon-box::before {
-  border-color: #0665d0;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-primary.ribbon-modern.ribbon-bottom .ribbon-box::before {
-  border-color: #0665d0;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
-
-.ribbon-primary.ribbon-modern.ribbon-left .ribbon-box::before {
-  border-color: #0665d0;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-primary.ribbon-modern.ribbon-left.ribbon-bottom .ribbon-box::before {
-  border-color: #0665d0;
-  border-top-color: transparent;
-  border-right-color: transparent;
-}
-
 .ribbon-success .ribbon-box {
   color: #fff;
   background-color: #82b54b;
@@ -14562,30 +14504,6 @@ a.item.item-link-pop:active {
 
 .ribbon-success.ribbon-bookmark.ribbon-left .ribbon-box::before {
   border-color: #82b54b;
-  border-right-color: transparent;
-}
-
-.ribbon-success.ribbon-modern .ribbon-box::before {
-  border-color: #82b54b;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-success.ribbon-modern.ribbon-bottom .ribbon-box::before {
-  border-color: #82b54b;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
-
-.ribbon-success.ribbon-modern.ribbon-left .ribbon-box::before {
-  border-color: #82b54b;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-success.ribbon-modern.ribbon-left.ribbon-bottom .ribbon-box::before {
-  border-color: #82b54b;
-  border-top-color: transparent;
   border-right-color: transparent;
 }
 
@@ -14604,30 +14522,6 @@ a.item.item-link-pop:active {
   border-right-color: transparent;
 }
 
-.ribbon-info.ribbon-modern .ribbon-box::before {
-  border-color: #3c90df;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-info.ribbon-modern.ribbon-bottom .ribbon-box::before {
-  border-color: #3c90df;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
-
-.ribbon-info.ribbon-modern.ribbon-left .ribbon-box::before {
-  border-color: #3c90df;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-info.ribbon-modern.ribbon-left.ribbon-bottom .ribbon-box::before {
-  border-color: #3c90df;
-  border-top-color: transparent;
-  border-right-color: transparent;
-}
-
 .ribbon-warning .ribbon-box {
   color: #fff;
   background-color: #ffb119;
@@ -14643,30 +14537,6 @@ a.item.item-link-pop:active {
   border-right-color: transparent;
 }
 
-.ribbon-warning.ribbon-modern .ribbon-box::before {
-  border-color: #ffb119;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-warning.ribbon-modern.ribbon-bottom .ribbon-box::before {
-  border-color: #ffb119;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
-
-.ribbon-warning.ribbon-modern.ribbon-left .ribbon-box::before {
-  border-color: #ffb119;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-warning.ribbon-modern.ribbon-left.ribbon-bottom .ribbon-box::before {
-  border-color: #ffb119;
-  border-top-color: transparent;
-  border-right-color: transparent;
-}
-
 .ribbon-danger .ribbon-box {
   color: #fff;
   background-color: #e04f1a;
@@ -14679,30 +14549,6 @@ a.item.item-link-pop:active {
 
 .ribbon-danger.ribbon-bookmark.ribbon-left .ribbon-box::before {
   border-color: #e04f1a;
-  border-right-color: transparent;
-}
-
-.ribbon-danger.ribbon-modern .ribbon-box::before {
-  border-color: #e04f1a;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-danger.ribbon-modern.ribbon-bottom .ribbon-box::before {
-  border-color: #e04f1a;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
-
-.ribbon-danger.ribbon-modern.ribbon-left .ribbon-box::before {
-  border-color: #e04f1a;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.ribbon-danger.ribbon-modern.ribbon-left.ribbon-bottom .ribbon-box::before {
-  border-color: #e04f1a;
-  border-top-color: transparent;
   border-right-color: transparent;
 }
 
@@ -15202,6 +15048,24 @@ button.bg-sidebar-dark:focus {
 
 .bg-gd-sun-op {
   background: rgba(230, 92, 0, 0.5) linear-gradient(135deg, rgba(230, 92, 0, 0.5) 0%, rgba(249, 212, 35, 0.5) 100%) !important;
+}
+
+.bg-gd-white-op-r,
+.bg-gd-white-op-l,
+.bg-gd-white-op-rl {
+  background: rgba(255, 255, 255, 0.98);
+}
+
+@media (min-width: 768px) {
+  .bg-gd-white-op-r {
+    background: rgba(255, 255, 255, 0.3) 0% linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0% 0%, rgba(255, 255, 255, 0.98) 50% 100%) !important;
+  }
+  .bg-gd-white-op-l {
+    background: rgba(255, 255, 255, 0.3) 0% linear-gradient(-90deg, rgba(255, 255, 255, 0.3) 0% 0%, rgba(255, 255, 255, 0.98) 50% 100%) !important;
+  }
+  .bg-gd-white-op-rl {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.97) 30%, rgba(255, 255, 255, 0.97) 70%, rgba(255, 255, 255, 0.75) 100%);
+  }
 }
 
 .bg-default {
@@ -19905,10 +19769,15 @@ a.text-xplay-lighter:hover, a.text-xplay-lighter:focus {
           animation-name: slideOutUp;
 }
 
+/*!
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
 .fa,
 .fas,
 .far,
 .fal,
+.fad,
 .fab {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -20185,6 +20054,10 @@ readers do not read off random characters that represent icons */
 
 .fa-air-freshener:before {
   content: "\f5d0";
+}
+
+.fa-airbnb:before {
+  content: "\f834";
 }
 
 .fa-algolia:before {
@@ -20471,6 +20344,14 @@ readers do not read off random characters that represent icons */
   content: "\f24e";
 }
 
+.fa-balance-scale-left:before {
+  content: "\f515";
+}
+
+.fa-balance-scale-right:before {
+  content: "\f516";
+}
+
 .fa-ban:before {
   content: "\f05e";
 }
@@ -20523,6 +20404,10 @@ readers do not read off random characters that represent icons */
   content: "\f241";
 }
 
+.fa-battle-net:before {
+  content: "\f835";
+}
+
 .fa-bed:before {
   content: "\f236";
 }
@@ -20557,6 +20442,10 @@ readers do not read off random characters that represent icons */
 
 .fa-bicycle:before {
   content: "\f206";
+}
+
+.fa-biking:before {
+  content: "\f84a";
 }
 
 .fa-bimobject:before {
@@ -20671,6 +20560,22 @@ readers do not read off random characters that represent icons */
   content: "\f02e";
 }
 
+.fa-bootstrap:before {
+  content: "\f836";
+}
+
+.fa-border-all:before {
+  content: "\f84c";
+}
+
+.fa-border-none:before {
+  content: "\f850";
+}
+
+.fa-border-style:before {
+  content: "\f853";
+}
+
 .fa-bowling-ball:before {
   content: "\f436";
 }
@@ -20721,6 +20626,10 @@ readers do not read off random characters that represent icons */
 
 .fa-btc:before {
   content: "\f15a";
+}
+
+.fa-buffer:before {
+  content: "\f837";
 }
 
 .fa-bug:before {
@@ -21075,6 +20984,10 @@ readers do not read off random characters that represent icons */
   content: "\f268";
 }
 
+.fa-chromecast:before {
+  content: "\f838";
+}
+
 .fa-church:before {
   content: "\f51d";
 }
@@ -21289,6 +21202,10 @@ readers do not read off random characters that represent icons */
 
 .fa-copyright:before {
   content: "\f1f9";
+}
+
+.fa-cotton-bureau:before {
+  content: "\f89e";
 }
 
 .fa-couch:before {
@@ -21759,6 +21676,10 @@ readers do not read off random characters that represent icons */
   content: "\f153";
 }
 
+.fa-evernote:before {
+  content: "\f839";
+}
+
 .fa-exchange-alt:before {
   content: "\f362";
 }
@@ -21821,6 +21742,10 @@ readers do not read off random characters that represent icons */
 
 .fa-facebook-square:before {
   content: "\f082";
+}
+
+.fa-fan:before {
+  content: "\f863";
 }
 
 .fa-fantasy-flight-games:before {
@@ -22205,6 +22130,10 @@ readers do not read off random characters that represent icons */
 
 .fa-git:before {
   content: "\f1d3";
+}
+
+.fa-git-alt:before {
+  content: "\f841";
 }
 
 .fa-git-square:before {
@@ -22723,6 +22652,10 @@ readers do not read off random characters that represent icons */
   content: "\f7ad";
 }
 
+.fa-icons:before {
+  content: "\f86d";
+}
+
 .fa-id-badge:before {
   content: "\f2c1";
 }
@@ -22797,6 +22730,10 @@ readers do not read off random characters that represent icons */
 
 .fa-italic:before {
   content: "\f033";
+}
+
+.fa-itch-io:before {
+  content: "\f83a";
 }
 
 .fa-itunes:before {
@@ -23403,10 +23340,6 @@ readers do not read off random characters that represent icons */
   content: "\f5a8";
 }
 
-.fa-nintendo-switch:before {
-  content: "\f418";
-}
-
 .fa-node:before {
   content: "\f419";
 }
@@ -23651,6 +23584,10 @@ readers do not read off random characters that represent icons */
   content: "\f095";
 }
 
+.fa-phone-alt:before {
+  content: "\f879";
+}
+
 .fa-phone-slash:before {
   content: "\f3dd";
 }
@@ -23659,8 +23596,16 @@ readers do not read off random characters that represent icons */
   content: "\f098";
 }
 
+.fa-phone-square-alt:before {
+  content: "\f87b";
+}
+
 .fa-phone-volume:before {
   content: "\f2a0";
+}
+
+.fa-photo-video:before {
+  content: "\f87c";
 }
 
 .fa-php:before {
@@ -23959,6 +23904,10 @@ readers do not read off random characters that represent icons */
   content: "\f25d";
 }
 
+.fa-remove-format:before {
+  content: "\f87d";
+}
+
 .fa-renren:before {
   content: "\f18b";
 }
@@ -24077,6 +24026,10 @@ readers do not read off random characters that represent icons */
 
 .fa-safari:before {
   content: "\f267";
+}
+
+.fa-salesforce:before {
+  content: "\f83b";
 }
 
 .fa-sass:before {
@@ -24403,16 +24356,32 @@ readers do not read off random characters that represent icons */
   content: "\f15d";
 }
 
+.fa-sort-alpha-down-alt:before {
+  content: "\f881";
+}
+
 .fa-sort-alpha-up:before {
   content: "\f15e";
+}
+
+.fa-sort-alpha-up-alt:before {
+  content: "\f882";
 }
 
 .fa-sort-amount-down:before {
   content: "\f160";
 }
 
+.fa-sort-amount-down-alt:before {
+  content: "\f884";
+}
+
 .fa-sort-amount-up:before {
   content: "\f161";
+}
+
+.fa-sort-amount-up-alt:before {
+  content: "\f885";
 }
 
 .fa-sort-down:before {
@@ -24423,8 +24392,16 @@ readers do not read off random characters that represent icons */
   content: "\f162";
 }
 
+.fa-sort-numeric-down-alt:before {
+  content: "\f886";
+}
+
 .fa-sort-numeric-up:before {
   content: "\f163";
+}
+
+.fa-sort-numeric-up-alt:before {
+  content: "\f887";
 }
 
 .fa-sort-up:before {
@@ -24449,6 +24426,14 @@ readers do not read off random characters that represent icons */
 
 .fa-speakap:before {
   content: "\f3f3";
+}
+
+.fa-speaker-deck:before {
+  content: "\f83c";
+}
+
+.fa-spell-check:before {
+  content: "\f891";
 }
 
 .fa-spider:before {
@@ -24493,6 +24478,10 @@ readers do not read off random characters that represent icons */
 
 .fa-stack-overflow:before {
   content: "\f16c";
+}
+
+.fa-stackpath:before {
+  content: "\f842";
 }
 
 .fa-stamp:before {
@@ -24669,6 +24658,10 @@ readers do not read off random characters that represent icons */
 
 .fa-swimming-pool:before {
   content: "\f5c5";
+}
+
+.fa-symfony:before {
+  content: "\f83d";
 }
 
 .fa-synagogue:before {
@@ -25299,6 +25292,10 @@ readers do not read off random characters that represent icons */
   content: "\f40b";
 }
 
+.fa-voicemail:before {
+  content: "\f897";
+}
+
 .fa-volleyball-ball:before {
   content: "\f45f";
 }
@@ -25345,6 +25342,14 @@ readers do not read off random characters that represent icons */
 
 .fa-water:before {
   content: "\f773";
+}
+
+.fa-wave-square:before {
+  content: "\f83e";
+}
+
+.fa-waze:before {
+  content: "\f83f";
 }
 
 .fa-weebly:before {
@@ -25495,6 +25500,10 @@ readers do not read off random characters that represent icons */
   content: "\f19e";
 }
 
+.fa-yammer:before {
+  content: "\f840";
+}
+
 .fa-yandex:before {
   content: "\f413";
 }
@@ -25555,6 +25564,10 @@ readers do not read off random characters that represent icons */
   width: auto;
 }
 
+/*!
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
 @font-face {
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
@@ -25569,6 +25582,10 @@ readers do not read off random characters that represent icons */
   font-weight: 400;
 }
 
+/*!
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
 @font-face {
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
@@ -25584,6 +25601,10 @@ readers do not read off random characters that represent icons */
   font-weight: 900;
 }
 
+/*!
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
 @font-face {
   font-family: 'Font Awesome 5 Brands';
   font-style: normal;
@@ -26404,28 +26425,120 @@ readers do not read off random characters that represent icons */
 
 [data-simplebar] {
   position: relative;
-  z-index: 0;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: start;
+      justify-content: flex-start;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  -ms-flex-align: start;
+      align-items: flex-start;
+}
+
+.simplebar-wrapper {
   overflow: hidden;
+  width: inherit;
+  height: inherit;
+  max-width: inherit;
+  max-height: inherit;
+}
+
+.simplebar-mask {
+  direction: inherit;
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: auto !important;
+  height: auto !important;
+  z-index: 0;
+}
+
+.simplebar-offset {
+  direction: inherit !important;
+  box-sizing: inherit !important;
+  resize: none !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
   -webkit-overflow-scrolling: touch;
 }
 
-[data-simplebar="init"] {
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.simplebar-scroll-content {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  min-width: 100%;
-  box-sizing: content-box;
-}
-
-.simplebar-content {
-  overflow-x: scroll;
-  overflow-y: hidden !important;
+.simplebar-content-wrapper {
+  direction: inherit;
   box-sizing: border-box !important;
-  min-height: 100% !important;
+  position: relative;
+  display: block;
+  height: 100%;
+  /* Required for horizontal native scrollbar to not appear if parent is taller than natural height */
+  width: auto;
+  visibility: visible;
+  overflow: auto;
+  /* Scroll on this element otherwise element can't have a padding applied properly */
+  max-width: 100%;
+  /* Not required for horizontal scroll to trigger */
+  max-height: 100%;
+  /* Needed for vertical scroll to trigger */
+}
+
+.simplebar-content:after,
+.simplebar-content:before {
+  content: ' ';
+  display: table;
+}
+
+.simplebar-placeholder {
+  max-height: 100%;
+  max-width: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.simplebar-height-auto-observer-wrapper {
+  box-sizing: inherit !important;
+  height: 100%;
+  width: 100%;
+  max-width: 1px;
+  position: relative;
+  float: left;
+  max-height: 1px;
+  overflow: hidden;
+  z-index: -1;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  -ms-flex-positive: inherit;
+      flex-grow: inherit;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+}
+
+.simplebar-height-auto-observer {
+  box-sizing: inherit;
+  display: block;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1000%;
+  width: 1000%;
+  min-height: 1px;
+  min-width: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .simplebar-track {
@@ -26433,71 +26546,104 @@ readers do not read off random characters that represent icons */
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 11px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+[data-simplebar].simplebar-dragging .simplebar-content {
+  pointer-events: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+}
+
+[data-simplebar].simplebar-dragging .simplebar-track {
+  pointer-events: all;
 }
 
 .simplebar-scrollbar {
   position: absolute;
   right: 2px;
-  width: 5px;
+  width: 7px;
   min-height: 10px;
 }
 
-.simplebar-scrollbar::before {
+.simplebar-scrollbar:before {
   position: absolute;
-  content: "";
+  content: '';
   background: black;
   border-radius: 7px;
   left: 0;
   right: 0;
   opacity: 0;
-  transition: opacity .2s linear;
-  background: #022954;
-  background-clip: padding-box;
+  transition: opacity 0.2s linear;
 }
 
-.sidebar-dark #sidebar .simplebar-scrollbar::before {
-  background: #74b3fb;
+.simplebar-track .simplebar-scrollbar.simplebar-visible:before {
+  /* When hovered, remove all transitions from drag handle */
+  opacity: 0.5;
+  transition: opacity 0s linear;
 }
 
-.simplebar-track:hover .simplebar-scrollbar {
-  opacity: .5;
-  transition: opacity 0 linear;
-}
-
-.simplebar-track:hover .simplebar-scrollbar::before,
-.simplebar-track .simplebar-scrollbar.visible::before {
-  opacity: .5;
-}
-
-.simplebar-track.vertical {
+.simplebar-track.simplebar-vertical {
   top: 0;
+  width: 11px;
 }
 
-.simplebar-track.vertical .simplebar-scrollbar::before {
+.simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
   top: 2px;
   bottom: 2px;
 }
 
-.simplebar-track.horizontal {
+.simplebar-track.simplebar-horizontal {
   left: 0;
-  width: auto;
   height: 11px;
 }
 
-.simplebar-track.horizontal .simplebar-scrollbar::before {
+.simplebar-track.simplebar-horizontal .simplebar-scrollbar:before {
   height: 100%;
   left: 2px;
   right: 2px;
 }
 
-.horizontal.simplebar-track .simplebar-scrollbar {
+.simplebar-track.simplebar-horizontal .simplebar-scrollbar {
   right: auto;
+  left: 0;
   top: 2px;
   height: 7px;
   min-height: 0;
   min-width: 10px;
   width: auto;
+}
+
+/* Rtl support */
+[data-simplebar-direction='rtl'] .simplebar-track.simplebar-vertical {
+  right: auto;
+  left: 0;
+}
+
+.hs-dummy-scrollbar-size {
+  direction: rtl;
+  position: fixed;
+  opacity: 0;
+  visibility: hidden;
+  height: 500px;
+  width: 500px;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.simplebar-scrollbar {
+  width: 5px;
+}
+
+.simplebar-scrollbar::before {
+  background: #022954;
+}
+
+.sidebar-dark #sidebar .simplebar-scrollbar::before {
+  background: #74b3fb;
 }
 
 .datepicker {
@@ -26855,6 +27001,12 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   box-shadow: none;
 }
 
+.select2-container .select2-dropdown .select2-search__field:focus {
+  border-color: #5ba6fa;
+  box-shadow: 0 0 0 0.2rem rgba(6, 101, 208, 0.25);
+  outline: 0;
+}
+
 .select2-container--default .select2-selection--single {
   border-color: #d8dfed;
   border-radius: 0.25rem;
@@ -26899,6 +27051,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 .select2-container--default.select2-container--open .select2-selection--single {
   border-color: #5ba6fa;
   box-shadow: 0 0 0 0.2rem rgba(6, 101, 208, 0.25);
+  outline: 0;
 }
 
 .is-valid + .select2-container--default .select2-selection--single,
@@ -27139,4 +27292,37 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   border-color: #022954;
   background: #74b3fb;
   opacity: .25;
+}
+
+.flatpickr-weekdays {
+  height: 2rem;
+  -ms-flex-align: end;
+      align-items: flex-end;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected.inRange,
+.flatpickr-day.startRange.inRange,
+.flatpickr-day.endRange.inRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange:focus,
+.flatpickr-day.endRange:focus,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover,
+.flatpickr-day.selected.prevMonthDay,
+.flatpickr-day.startRange.prevMonthDay,
+.flatpickr-day.endRange.prevMonthDay,
+.flatpickr-day.selected.nextMonthDay,
+.flatpickr-day.startRange.nextMonthDay,
+.flatpickr-day.endRange.nextMonthDay {
+  border-color: #0665d0;
+  background: #0665d0;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+  fill: #0665d0;
 }

@@ -4,13 +4,20 @@
 
 #page-container {
     // Main content
+    > #page-header .content-header,
+    > #page-header .content,
+    > #main-container .content,
+    > #page-footer .content {
+        max-width: $space-main-max-width;
+    }
+
     @include media-breakpoint-up(xl) {
         &.main-content-narrow {
             > #page-header .content-header,
             > #page-header .content,
             > #main-container .content,
             > #page-footer .content {
-                max-width: $space-narrow;
+                width: $space-narrow;
             }
         }
     }
@@ -167,11 +174,11 @@
         box-shadow: none;
     }
 
-    // Side Scroll (Disable native scrolling, it will be enabled with JS)
+    // Side Scroll
     &.side-scroll {
         #sidebar,
         #side-overlay {
-            overflow-y: hidden;
+            overflow-y: visible;
         }
 
         @include media-breakpoint-up(lg) {

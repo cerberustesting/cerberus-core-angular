@@ -61,7 +61,7 @@
     }
 
     @include media-breakpoint-up(xl) {
-        &.content-narrow { max-width: $space-narrow !important; }
+        &.content-narrow { width: $space-narrow !important; }
     }
 
     &.content-boxed { max-width: $space-boxed !important; }

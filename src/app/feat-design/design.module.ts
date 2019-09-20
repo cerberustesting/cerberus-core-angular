@@ -39,6 +39,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { MatTreeModule } from '@angular/material/tree';
     ReactiveFormsModule,
     FormsModule,
     CKEditorModule,
-    MatTreeModule
+    MatTreeModule,
+    MatCheckboxModule,
+    MatIconModule
   ],
   entryComponents: [
     DatalibInteractionComponent,

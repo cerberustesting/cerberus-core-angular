@@ -170,6 +170,23 @@ div.form-group.custom-form-group-sm {
   margin-bottom: 0.5rem;
 }
 
+/*
+make sure the tabs content using ngbTabs 
+are full-width
+*/
+ngb-tabset div.tab-content {
+  width: 100% !important;
+}
+
+/* TODO: to comment */
+mat-tree-node button:hover {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+mat-tree-node button:focus {
+  box-shadow: none !important;
+}
+
 .input-group-height {
   height: 38px;
 }

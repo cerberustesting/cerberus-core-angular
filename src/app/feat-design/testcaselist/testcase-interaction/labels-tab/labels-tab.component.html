@@ -1,0 +1,60 @@
+<div class="js-nestable-connected-simple dd">
+    <ol class="dd-list">
+        <li class="dd-item dd-collapsed" data-id="1"><button class="dd-collapse" data-action="collapse"
+                type="button">Collapse</button><button class="dd-expand" data-action="expand"
+                type="button">Expand</button>
+            <div class="dd-handle">Bootstrap</div>
+            <ol class="dd-list">
+                <li class="dd-item" data-id="2">
+                    <div class="dd-handle">Themes</div>
+                </li>
+                <li class="dd-item" data-id="3">
+                    <div class="dd-handle">Documentation</div>
+                </li>
+            </ol>
+        </li>
+        <li class="dd-item dd-collapsed" data-id="4"><button class="dd-collapse" data-action="collapse"
+                type="button">Collapse</button><button class="dd-expand" data-action="expand"
+                type="button">Expand</button>
+            <div class="dd-handle">Learning</div>
+            <ol class="dd-list">
+                <li class="dd-item" data-id="5">
+                    <div class="dd-handle">Code</div>
+                </li>
+                <li class="dd-item" data-id="6">
+                    <div class="dd-handle">Tutorials</div>
+                </li>
+                <li class="dd-item" data-id="7">
+                    <div class="dd-handle">Articles</div>
+                </li>
+            </ol>
+        </li>
+        <li class="dd-item" data-id="8">
+            <div class="dd-handle">Design</div>
+        </li>
+        <li class="dd-item" data-id="9">
+            <div class="dd-handle">Coding</div>
+        </li>
+        <li class="dd-item" data-id="10">
+            <div class="dd-handle">Marketing</div>
+        </li>
+    </ol>
+</div>
+
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <!-- use a disabled button to provide padding for tree leaf -->
+        <button mat-icon-button disabled></button>
+        {{node.name}}
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        <button type="button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+            <!-- <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon> -->
+        </button>
+        {{node.name}}
+    </mat-tree-node>
+</mat-tree>

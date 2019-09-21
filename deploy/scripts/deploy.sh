@@ -13,3 +13,5 @@ echo "archive moved to /dist folder"
 # remote copy to host
 # ssh $CERBERUS_VM_USER@$CERBERUS_VM_HOST
 rcp ./dist/cerberus-front-${version}.zip $CERBERUS_VM_USER@$CERBERUS_VM_HOST:/opt/delivery
+
+rsh $CERBERUS_VM_USER@$CERBERUS_VM_HOST /opt/bin/deployQAFront.sh ${archive}

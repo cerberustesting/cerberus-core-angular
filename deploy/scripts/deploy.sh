@@ -12,4 +12,4 @@ echo "archive moved to /dist folder"
 
 # remote copy to host
 # ssh $CERBERUS_VM_USER@$CERBERUS_VM_HOST
-# rcp cerberus-front-${version}.zip ${user}@${host}
+rcp ./dist/cerberus-front-${version}.zip $CERBERUS_VM_USER@$CERBERUS_VM_HOST:/opt/delivery

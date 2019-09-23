@@ -12,6 +12,10 @@ export enum INTERACTION_MODE {
 })
 export class SidecontentService {
 
+  /** SIDE CONTENT SAVE BUTTON TITLE */
+  saveButtonTitle: string;
+  observableSaveButtonTitle = new BehaviorSubject<string>(this.saveButtonTitle);
+
   rootViewContainer: any;
   isOpen = false;
   @Output() change: EventEmitter<boolean> = new EventEmitter();
@@ -24,10 +28,12 @@ export class SidecontentService {
   }
   addComponentToSideBlock(component: any, parameters?: {}) {
     const factory = this.factoryResolver.resolveComponentFactory(component);
-    let _component = factory.create(this.rootViewContainer.parentInjector);
+    const _component = factory.create(this.rootViewContainer.parentInjector);
     if (parameters) {
-      for (let parameter in parameters) {
-        _component.instance[parameter] = parameters[parameter];
+      for (const parameter in parameters) {
+        if (parameter) {
+          _component.instance[parameter] = parameters[parameter];
+        }
       }
     }
     this.rootViewContainer.remove(0);
@@ -41,21 +47,19 @@ export class SidecontentService {
     this.isOpen = false;
     this.change.emit(this.isOpen);
   }
-  /** SIDE CONTENT SAVE BUTTON TITLE */
-  saveButtonTitle: string;
-  observableSaveButtonTitle = new BehaviorSubject<string>(this.saveButtonTitle);
+
   // returns the correct word depending on
   // the interaction mode
   getsaveButtonTitle(mode: INTERACTION_MODE): string {
     switch (mode) {
       case 'EDIT': {
-        return "Edit";
+        return 'Edit';
       }
       case 'CREATE': {
-        return "Create";
+        return 'Create';
       }
       case 'DUPLICATE': {
-        return "Duplicate";
+        return 'Duplicate';
       }
     }
   }

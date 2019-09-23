@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
 import { IUser } from 'src/app/shared/model/user.model';
 import { BehaviorSubject } from 'rxjs';
 

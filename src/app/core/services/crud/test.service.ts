@@ -15,8 +15,8 @@ import { NotificationStyle } from '../utils/notification.model';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    //'X-Requested-With': 'XMLHttpRequest',
-    //'Cookie:': 'JSESSIONID=2e0cb26156d548803026c75c051b'
+    // 'X-Requested-With': 'XMLHttpRequest',
+    // 'Cookie:': 'JSESSIONID=2e0cb26156d548803026c75c051b'
   })
 };
 
@@ -39,9 +39,9 @@ export class TestService {
   testcase_properties: Array<IProperty>;
 
   private testcaseheader_countriesList_format = new Array<string>();
-  //project
+  // project
   projectsList: Array<IProject> = new Array<IProject>();
-  //observables
+  // observables
   observableTestsList = new BehaviorSubject<ITest[]>(this.testsList);
   observableTestCasesList = new BehaviorSubject<ITestCaseHeader[]>(this.testcasesList);
   observableTestCasesListLength = new BehaviorSubject<number>(this.testcasesListLength);
@@ -54,13 +54,15 @@ export class TestService {
   observableTestCaseProperties = new BehaviorSubject<IProperty[]>(this.testcase_properties);
   observableTestCaseHeader = new BehaviorSubject<ITestCaseHeader>(this.testcaseheader);
   // boolean
-  refreshTC: boolean = false;
+  refreshTC: boolean;
 
   constructor(
     private http: HttpClient,
-    private TrueindexPipe: TrueindexPipe,
+    private trueindexPipe: TrueindexPipe,
     private notificationService: NotificationService
-  ) { }
+  ) {
+    this.refreshTC = false;
+  }
 
   getTestsList() {
     this.http.get<ITest[]>(environment.cerberus_api_url + '/ReadTest')
@@ -89,7 +91,7 @@ export class TestService {
           this.testcasesList = null;
           this.observableTestCasesList.next(this.testcasesList);
         }
-      })
+      });
   }
 
   getFromRequest(servlet: string, queryParameters: string, callback) {
@@ -99,8 +101,7 @@ export class TestService {
         if (response) {
           if (response.iTotalRecords > 0) {
             callback(response.contentTable, response.iTotalRecords);
-          }
-          else {
+          } else {
             this.testcasesList = null;
             this.observableTestDataLib.next(this.testcasesList);
           }
@@ -110,28 +111,34 @@ export class TestService {
 
   getColumnData(servlet: string, columnName: string) {
     // get all data from one column
-    let query = environment.cerberus_api_url + servlet + '?columnName=' + columnName;
+    const query = environment.cerberus_api_url + servlet + '?columnName=' + columnName;
     return this.http.get<ITestCaseHeader>(query);
   }
   updateTestCase(queryString) {
     return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, httpOptions)
       .pipe(tap(
         data => {
-          if (data.messageType === 'OK') this.notificationService.createANotification('Testcase updated', NotificationStyle.Success);
-          else this.notificationService.createANotification(data.message, NotificationStyle.Warning)
+          if (data.messageType === 'OK') {
+            this.notificationService.createANotification('Testcase updated', NotificationStyle.Success);
+          } else {
+            this.notificationService.createANotification(data.message, NotificationStyle.Warning);
+          }
         },
         error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
-      ))
+      ));
   }
   createTestCase(queryString) {
     return this.http.post<any>(environment.cerberus_api_url + '/CreateTestCase', queryString, httpOptions)
       .pipe(tap(
         data => {
-          if (data.messageType === 'OK') this.notificationService.createANotification('Testcase created', NotificationStyle.Success);
-          else this.notificationService.createANotification(data.message, NotificationStyle.Warning)
+          if (data.messageType === 'OK') {
+            this.notificationService.createANotification('Testcase created', NotificationStyle.Success);
+          } else {
+            this.notificationService.createANotification(data.message, NotificationStyle.Warning);
+          }
         },
         error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
-      ))
+      ));
   }
 
   getTestDataLib(testdatalibid: string, name: string, country: string, callback: (TestDataLib: any) => any) {
@@ -195,7 +202,7 @@ export class TestService {
           this.testcaseheader_countriesList_format = new Array<string>();
           this.testcaseheader_countriesList_format = this.convertCountriesList(this.testcase.info);
           this.getLabelsfromTestCase(test, testcase);
-        })
+        });
     }
   }
 
@@ -212,10 +219,10 @@ export class TestService {
     } else {
       this.http.get<ITestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase)
         .subscribe((response) => {
-          //@ts-ignore
+          // @ts-ignore
           this.testcaseheader = response.contentTable;
           this.observableTestCaseHeader.next(this.testcaseheader);
-        })
+        });
     }
   }
 
@@ -228,19 +235,21 @@ export class TestService {
   }
 
   getLabelsfromTestCase(test: string, testcase: string) {
-    var url = environment.cerberus_api_url + '/ReadTestCaseLabel?test=' + test + '&testcase=' + testcase
+    const url = environment.cerberus_api_url + '/ReadTestCaseLabel?test=' + test + '&testcase=' + testcase;
     this.http.get<ITestCaseLabel[]>(url)
       .subscribe((response) => {
         // @ts-ignore
-        var content_table = response.contentTable;
+        const content_table = response.contentTable;
         this.testcase_labels = [];
         // DIRTY : convert the ITestCaseLabel to Label : easier to manipulate
-        for (var tclabel in content_table) {
-          var label = content_table[tclabel].label;
-          this.testcase_labels.push(label);
+        for (const tclabel in content_table) {
+          if (tclabel) {
+            const label = content_table[tclabel].label;
+            this.testcase_labels.push(label);
+          }
         }
         this.observableTestCaseLabels.next(this.testcase_labels);
-      })
+      });
   }
 
   seletectedTestExist(test: string): boolean {
@@ -256,26 +265,26 @@ export class TestService {
   }
 
   getProperties(test: string, testcase: string) {
-    var url = environment.cerberus_api_url + '/GetPropertiesForTestCase?test=' + test + '&testcase=' + testcase
+    const url = environment.cerberus_api_url + '/GetPropertiesForTestCase?test=' + test + '&testcase=' + testcase;
     this.http.get<IProperty[]>(url)
       .subscribe((response) => {
-        // split the properties by country (one per country) 
+        // split the properties by country (one per country)
         this.testcase_properties = this.sanitizePropertiesList(response);
         this.observableTestCaseProperties.next(this.testcase_properties);
-      })
+      });
   }
 
   // DIRTY : add angular managed ids to separate properties uniquely
   sanitizePropertiesList(propList: Array<IProperty>): Array<IProperty> {
     let id = 0;
     propList.forEach((prop1) => {
-      let propName = prop1.property
+      const propName = prop1.property;
       id = id + 1;
-      if (propName == "") {
+      if (propName === '') {
         prop1.property_id = id;
       } else {
         propList.forEach((prop2) => {
-          if (prop2.property == propName) {
+          if (prop2.property === propName) {
             prop2.property_id = id;
           }
         });
@@ -286,17 +295,20 @@ export class TestService {
 
   // compute all the current properties and return a unique ID
   getNewPropertyID(): number {
-    let idsArray = new Array<number>();
+    const idsArray = new Array<number>();
     this.testcase_properties.forEach((prop) => {
       if (prop.property_id) { idsArray.push(prop.property_id); }
     });
-    if (idsArray.length == 0) { return 1; }
-    else { return Math.max(...idsArray) + 1; }
+    if (idsArray.length === 0) {
+      return 1;
+    } else {
+      return Math.max(...idsArray) + 1;
+    }
   }
 
   // rename several property values with the same property_id
   renameProperty(propList: Array<IProperty>, id: number, newName: string): Array<IProperty> {
-    propList.forEach((prop) => { if (prop.property_id == id) { prop.property = newName; } });
+    propList.forEach((prop) => { if (prop.property_id === id) { prop.property = newName; } });
     return propList;
   }
 
@@ -309,8 +321,8 @@ export class TestService {
   removePropertiesById(propList: Array<IProperty>, id: number): Array<IProperty> {
     // must loop backward to avoid having indexes problem when calling splice()
     for (let i = propList.length - 1; i >= 0; i--) {
-      let prop = propList[i];
-      if (prop.property_id == id) {
+      const prop = propList[i];
+      if (prop.property_id === id) {
         propList.splice(propList.indexOf(prop), 1);
       }
     }
@@ -319,24 +331,26 @@ export class TestService {
 
   // remove from the properties model a single propValue
   removePropertyValue(propList: Array<IProperty>, prop: IProperty): Array<IProperty> {
-    let propValue = propList.find(p => p == prop);
+    const propValue = propList.find(p => p === prop);
     propList.splice(this.testcase_properties.indexOf(propValue), 1);
     return propList;
   }
 
   filterPropertiesByid(propertiesList: Array<IProperty>, id: number): Array<IProperty> {
-    return propertiesList.filter(prop => prop.property_id == id);
+    return propertiesList.filter(prop => prop.property_id === id);
   }
 
   findPropertyNameById(propList: Array<IProperty>, id: number): string {
-    return propList.find(prop => prop.property_id == id).property
+    return propList.find(prop => prop.property_id === id).property;
   }
 
   // DIRTY : correct the model mistake
   convertCountriesList(testcaseheader: ITestCaseHeader): Array<string> {
-    var countriesList = new Array<string>();
-    for (var index in testcaseheader.countryList) {
-      countriesList.push(testcaseheader.countryList[index]);
+    const countriesList = new Array<string>();
+    for (const index in testcaseheader.countryList) {
+      if (index) {
+        countriesList.push(testcaseheader.countryList[index]);
+      }
     }
     return countriesList;
   }
@@ -346,7 +360,7 @@ export class TestService {
   }
 
   saveTestCaseHeader(testcaseheader: ITestCaseHeader, originalTest, originalTestCase) {
-    var data: ITestCaseHeader
+    let data: ITestCaseHeader;
     data = testcaseheader;
     // add the original test and testcase to the data to send
     data.originalTest = originalTest;
@@ -366,31 +380,31 @@ export class TestService {
 
   refreshStepSort(stepList: Array<IStep>): void {
     stepList.forEach((step, index) => {
-      var newIndex = this.TrueindexPipe.transform(index);
-      //console.log("step #"+newIndex+' descripton: '+step.description);
+      const newIndex = this.trueindexPipe.transform(index);
+      // console.log("step #"+newIndex+' descripton: '+step.description);
       step.sort = newIndex;
     });
   }
 
   refreshActionSort(actionList: Array<IAction>): void {
     actionList.forEach((action, index) => {
-      var newIndex = this.TrueindexPipe.transform(index);
-      //console.log("action #"+newIndex+' descripton: '+action.description);
+      const newIndex = this.trueindexPipe.transform(index);
+      // console.log("action #"+newIndex+' descripton: '+action.description);
       action.sort = newIndex;
     });
   }
 
   refreshControlSort(controlList: Array<IControl>): void {
     controlList.forEach((control, index) => {
-      var newIndex = this.TrueindexPipe.transform(index);
-      //console.log("control #"+newIndex+' descripton: '+control.description);
+      const newIndex = this.trueindexPipe.transform(index);
+      // console.log("control #"+newIndex+' descripton: '+control.description);
       control.sort = newIndex;
     });
   }
 
   saveTestCase(testcase: ITestCase) {
-    //this.refreshStepSortSequence(testcase.stepList);
-    console.log("TestCase Object to be saved");
+    // this.refreshStepSortSequence(testcase.stepList);
+    console.log('TestCase Object to be saved');
     console.log(testcase.stepList);
   }
 

@@ -282,7 +282,7 @@ export class ReportingService {
       this.observableLabelDisplay.next(true);
     }
     for (const node of labelList) {
-      if (node.counter1WithChild != 0) {
+      if (node.counter1WithChild !== 0) {
         this.reportLabel.push(this.parseLabelChildren(node));
       }
     }
@@ -352,17 +352,21 @@ export class ReportingService {
         const data = [];
         let display = false;
         for (const label in graphs[graph]) {
-          labels.push((label !== '') ? label : 'none');
-          let sum = 0;
-          graphs[graph][label].forEach(element => {
-            sum += element;
-          });
-          if (sum > 0) {
-            display = true;
+          if (label) {
+            labels.push((label !== '') ? label : 'none');
+            let sum = 0;
+            graphs[graph][label].forEach(element => {
+              sum += element;
+            });
+            if (sum > 0) {
+              display = true;
+            }
+            data.push(Math.round((sum / graphs[graph][label].length) * 10) / 10);
           }
-          data.push(Math.round((sum / graphs[graph][label].length) * 10) / 10);
         }
-        if (data.length <= 1) display = false
+        if (data.length <= 1) {
+          display = false;
+        }
         const chart = {
           display: display,
           name: graph,
@@ -382,7 +386,7 @@ export class ReportingService {
               display: false
             }
           }
-        }
+        };
         this.reportOther.push(chart);
         this.observableReportOther.next(this.reportOther);
       }
@@ -393,14 +397,14 @@ export class ReportingService {
    * * parse campaign data for the statistic by duration and execution graph
    */
   parseStatisticReliability() {
-    let datasets = [
+    const datasets = [
       { data: [], label: 'Reliability', type: 'line' },
       { data: [], label: 'Results' },
-    ]
-    let labels = [];
-    let display = (this.campaignData.length > 0) ? true : false;
+    ];
+    const labels = [];
+    const display = (this.campaignData.length > 0) ? true : false;
 
-    for (let tag of this.campaignData) {
+    for (const tag of this.campaignData) {
       datasets[0].data.push((Math.round(tag.nbExeUsefull / tag.nbExe) * 100));
       datasets[1].data.push(Math.round((tag.nbOK / tag.nbExe) * 100));
       labels.push(tag.tag);
@@ -420,17 +424,17 @@ export class ReportingService {
    * * parse campaign data for the statistic by reliability
    */
   parseStatisticDuration() {
-    let datasets = [
+    const datasets = [
       { data: [], label: 'Duration', type: 'line' },
       { data: [], label: 'Executions' },
-    ]
-    let labels = [];
-    let display = (this.campaignData.length > 0) ? true : false;
+    ];
+    const labels = [];
+    const display = (this.campaignData.length > 0) ? true : false;
 
-    for (let tag of this.campaignData) {
-      let dateEnd = new Date(tag.DateEndQueue);
-      let dateStart = new Date(tag.DateCreated);
-      let duration = Math.round((dateEnd.getTime() - dateStart.getTime()) / 6000) / 10
+    for (const tag of this.campaignData) {
+      const dateEnd = new Date(tag.DateEndQueue);
+      const dateStart = new Date(tag.DateCreated);
+      const duration = Math.round((dateEnd.getTime() - dateStart.getTime()) / 6000) / 10;
       datasets[0].data.push((duration > 0) ? duration : 0);
       datasets[1].data.push(tag.nbExe);
       labels.push(tag.tag);

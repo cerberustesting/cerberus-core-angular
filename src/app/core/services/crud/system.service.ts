@@ -33,7 +33,7 @@ export class SystemService {
       .subscribe(response => {
         this.sprints = response;
         // @ts-ignore
-        this.sprints = this.sprints.contentTable
+        this.sprints = this.sprints.contentTable;
         this.observableSprints.next(this.sprints);
       });
   }
@@ -43,7 +43,7 @@ export class SystemService {
       .subscribe(response => {
         this.revs = response;
         // @ts-ignore
-        this.revs = this.revs.contentTable
+        this.revs = this.revs.contentTable;
         this.observableRevs.next(this.revs);
       });
   }
@@ -53,22 +53,24 @@ export class SystemService {
       .subscribe(response => {
         this.labels = response;
         // @ts-ignore
-        this.labels = this.labels.contentTable
-        for (var index in this.labels) {
-          // DIRTY: delete the display property in JSON object
-          // @ts-ignore
-          delete this.labels[index].display;
+        this.labels = this.labels.contentTable;
+        for (const index in this.labels) {
+          if (index) {
+            // DIRTY: delete the display property in JSON object
+            // @ts-ignore
+            delete this.labels[index].display;
+          }
         }
         this.observableLabelsList.next(this.labels);
       });
   }
 
   getLabelsHierarchyFromSystem(system: string, test: string, testCase: string, ) {
-    this.http.get<any>(environment.cerberus_api_url + '/ReadLabel?system=' + system + '&withHierarchy=true&isSelectable=Y&testSelect=' + 
-    encodeURIComponent(test) + '&testCaseSelect=' + encodeURIComponent(testCase))
+    this.http.get<any>(environment.cerberus_api_url + '/ReadLabel?system=' + system + '&withHierarchy=true&isSelectable=Y&testSelect=' +
+      encodeURIComponent(test) + '&testCaseSelect=' + encodeURIComponent(testCase))
       .subscribe(response => {
         // @ts-ignore
-        this.labelsHierarchy = response.labelHierarchy
+        this.labelsHierarchy = response.labelHierarchy;
         this.observableLabelsHierarchyList.next(this.labelsHierarchy);
       });
   }
@@ -78,22 +80,22 @@ export class SystemService {
   }
 
   filterLabels(labellist: ILabel[], type: string) {
-    return labellist.filter(labellist => labellist.type === type);
+    return labellist.filter(label => label.type === type);
   }
 
   getApplicationList() {
     this.applicationsList = [];
-    for (let system of this.invariantsService.selectedSystemsList) {
-      this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication?system='+system.value)
-      .subscribe(response => {
-        // @ts-ignore
-        this.applicationsList = this.applicationsList.concat(response.contentTable);
-        // @ts-ignore
-        // this.applicationsList = this.applicationsList.contentTable;
-        this.observableApplicationList.next(this.applicationsList);
-      });
+    for (const system of this.invariantsService.selectedSystemsList) {
+      this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication?system=' + system.value)
+        .subscribe(response => {
+          // @ts-ignore
+          this.applicationsList = this.applicationsList.concat(response.contentTable);
+          // @ts-ignore
+          // this.applicationsList = this.applicationsList.contentTable;
+          this.observableApplicationList.next(this.applicationsList);
+        });
     }
-    
+
   }
 
   getApplication(application: string) {
@@ -103,7 +105,7 @@ export class SystemService {
         // @ts-ignore
         this.application = this.application.contentTable;
         this.observableApplication.next(this.application);
-      })
+      });
   }
 
 }

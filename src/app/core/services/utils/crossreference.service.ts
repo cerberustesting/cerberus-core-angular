@@ -4,7 +4,7 @@ import condition_value from 'src/assets/data/cross_references/condition_value.js
 import action_value from 'src/assets/data/cross_references/action_value.json';
 import control_value from 'src/assets/data/cross_references/control_value.json';
 
-export class CrossReference {
+export interface ICrossReference {
   reference: string;
   value1?: string;
   value2?: string;
@@ -19,8 +19,6 @@ export class CrossReference {
   icon_value2?: string;
   fields?: Array<string>;
 }
-
-export interface ICrossReference extends CrossReference { }
 
 @Injectable({
   providedIn: 'root'

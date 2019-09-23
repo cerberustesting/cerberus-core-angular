@@ -9,12 +9,13 @@ declare function initChartJS();
 })
 export class DashboardComponent implements OnInit {
 
-  private filterSectionToggle: boolean = true;
-  private filterSectionMouseOver: boolean = false;
-  private test: Array<string> = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'];
+  private filterSectionToggle: boolean;
+  private filterSectionMouseOver: boolean;
 
   constructor(private headerTitleService: HeaderTitleService) {
-    headerTitleService.setTitle("Dashboard");
+    headerTitleService.setTitle('Dashboard');
+    this.filterSectionMouseOver = true;
+    this.filterSectionMouseOver = false;
   }
 
   ngOnInit() {

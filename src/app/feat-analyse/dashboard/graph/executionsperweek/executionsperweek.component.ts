@@ -9,20 +9,21 @@ declare var jQuery: any;
 export class ExecutionsperweekComponent implements OnInit {
 
   loadJS: Promise<any>;
-  graphID: string = "graph_executionperweek";
+  graphID: string;
 
   constructor() {
     this.loadJS = new Promise((resolve) => {
       this.initChartJSLines();
       resolve(true);
     });
+    this.graphID = 'graph_executionperweek';
   }
 
   public initChartJSLines() {
     jQuery(() => {
       let chartLines;
       // Get Chart Containers
-      let chartLinesCon = jQuery('#' + this.graphID);
+      const chartLinesCon = jQuery('#' + this.graphID);
       // Set Chart and Chart Data variables
       let chartLinesBarsRadarData;
       // Lines/Bar/Radar Chart Data
@@ -44,7 +45,7 @@ export class ExecutionsperweekComponent implements OnInit {
       };
       // Init Charts
       if (chartLinesCon.length) {
-        //@ts-ignore
+        // @ts-ignore
         chartLines = new Chart(chartLinesCon, { type: 'line', data: chartLinesBarsRadarData });
       }
     });

@@ -186,16 +186,16 @@ export class SidebarComponent implements OnInit {
     { name: 'Run', data: this.runMenu, expanded: false },
     { name: 'Analyse', data: this.analyseMenu, expanded: false },
     { name: 'Configure', data: this.configureMenu, expanded: false }
-  ]
+  ];
   write = console.log;
   toggleNightMode() {
     this.nightModeOutput.emit();
   }
 
   toggleMenu(menu) {
-    for (let section of this.menus) {
-      for (let li of section.data) {
-        if (li !== menu) li.expanded = false;
+    for (const section of this.menus) {
+      for (const li of section.data) {
+        if (li !== menu) { li.expanded = false; }
       }
     }
     menu.expanded = !menu.expanded;

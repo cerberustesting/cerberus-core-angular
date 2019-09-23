@@ -17,16 +17,16 @@ export class SideblockComponent implements OnInit {
   // TODO : comment these Decorators
   @HostBinding('class.is-open')
   isOpen = false;
-  title: string = '';
+  title = '';
 
-  @HostBinding('class.is-hidden') hidden: boolean = false;
+  @HostBinding('class.is-hidden') hidden = false;
 
   @ViewChild('dynamic', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 
   constructor(private sideContentService: SidecontentService) { }
 
   ngOnInit() {
-    this.sideContentService.setRootViewContainerRef(this.viewContainerRef)
+    this.sideContentService.setRootViewContainerRef(this.viewContainerRef);
     this.sideContentService.change.subscribe(isOpen => {
       this.isOpen = isOpen;
     });

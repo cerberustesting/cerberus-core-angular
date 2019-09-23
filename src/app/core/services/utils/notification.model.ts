@@ -1,13 +1,13 @@
 /**
  * User Notification
- * 
+ *
  * @param message: text to be displayed
  * @param style: style to apply (e.g. 'success', 'warning', 'info')
  * @param dismissable: boolean to allow the user to dismiss the notification
  * @param duration: duration (in ms) of the notification before its disappear
- * 
+ *
  */
-export class Notification {
+export class Notification implements INotification {
     message: string;
     style: string;
     dismissable: boolean;
@@ -21,12 +21,12 @@ export class Notification {
     }
 }
 
-export interface INotification extends Notification { }
+export interface INotification { }
 
 // NOTIFICATION STYLE ENUM
 export enum NotificationStyle {
-    Info = "alert-info",
-    Success = "alert-success",
-    Warning = "alert-warning",
-    Error = "alert-danger",
+    Info = 'alert-info',
+    Success = 'alert-success',
+    Warning = 'alert-warning',
+    Error = 'alert-danger',
   }

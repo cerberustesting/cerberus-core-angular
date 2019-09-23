@@ -3,7 +3,7 @@ import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 import { KeycloakInstance } from 'keycloak-js';
 import { UserService } from './core/services/crud/user.service';
 import { InvariantsService } from './core/services/crud/invariants.service';
-import { environment } from 'src/environments/environment'
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     this.keycloakAuth = this._keycloakService.getKeycloakAuth();
     this._userService.getUser();
     this._invariantsService.loadInvariants();
-    console.log("cerberus-front application version is : " + environment.version)
+    console.log('cerberus-front application version is : ' + environment.version);
   }
   toggleNightMode() {
     this.nightMode = !this.nightMode;

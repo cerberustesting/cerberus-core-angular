@@ -7,8 +7,11 @@ import { ReportingService } from 'src/app/core/services/crud/reporting.service';
   styleUrls: ['./statistic-duration.component.scss']
 })
 export class StatisticDurationComponent implements OnInit {
-  chart: any; // the chart informations
-  expand: boolean = true; // the block content is display are collapse
+
+  // the chart informations
+  chart: any;
+  // the block content is display are collapse
+  expand: boolean;
 
   constructor(private reportingService: ReportingService) { }
 
@@ -16,6 +19,7 @@ export class StatisticDurationComponent implements OnInit {
     this.reportingService.observableReportStatisticsDurationExecution.subscribe(response => {
       this.chart = response;
     });
+    this.expand = true;
   }
 
 }

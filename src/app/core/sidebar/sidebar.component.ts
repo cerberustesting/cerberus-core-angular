@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  @Input('nightMode') nightMode: boolean;
+  @Input('nightMode') _nightMode: boolean;
   @Output() nightModeOutput = new EventEmitter<void>();
 
   testManagementMenu = [

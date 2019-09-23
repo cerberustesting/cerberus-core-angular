@@ -1,6 +1,6 @@
 import { Column, COLUMN_TYPE } from 'src/app/shared/model/column.model';
 
-export var CampainsColumnsData: Column[] = [
+export let CampainsColumnsData: Column[] = [
     {
         displayName: 'Test Campaign',
         apiName: 'campaign',

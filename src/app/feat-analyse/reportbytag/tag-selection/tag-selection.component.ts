@@ -29,48 +29,48 @@ export class TagSelectionComponent implements OnInit {
 
   private TceStatus_Class: Array<any> = new Array(
     {
-      status: "OK",
-      class: "success"
+      status: 'OK',
+      class: 'success'
     },
     {
-      status: "KO",
-      class: "danger"
+      status: 'KO',
+      class: 'danger'
     },
     {
-      status: "FA",
-      class: "warning"
+      status: 'FA',
+      class: 'warning'
     },
     {
-      status: "PE",
-      class: "info"
+      status: 'PE',
+      class: 'info'
     },
     {
-      status: "NA",
-      class: "warning"
+      status: 'NA',
+      class: 'warning'
     },
     {
-      status: "CA",
-      class: "light"
+      status: 'CA',
+      class: 'light'
     }
   );
 
-  constructor(private ReportingService: ReportingService,
+  constructor(private reportingService: ReportingService,
     private activatedRoute: ActivatedRoute,
-    private InvariantsService: InvariantsService,
+    private invariantsService: InvariantsService,
     private router: Router) { }
 
   ngOnInit() {
-    this.ReportingService.getTagList();
-    this.ReportingService.observableTagsList.subscribe(response => {
+    this.reportingService.getTagList();
+    this.reportingService.observableTagsList.subscribe(response => {
       if (response) {
         this.tagsList = response;
         this.tagsBuffer = this.tagsList.slice(0, this.bufferSize);
         // parse query strings from URL
         if (this.activatedRoute.snapshot.paramMap.has('tag')) {
-          let tagFromURL = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('tag'));
+          const tagFromURL = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('tag'));
           if (tagFromURL) {
-            if (this.ReportingService.tagExists(tagFromURL)) {
-              this.selectedTag = this.ReportingService.findTag(tagFromURL);
+            if (this.reportingService.tagExists(tagFromURL)) {
+              this.selectedTag = this.reportingService.findTag(tagFromURL);
               this.selectedTagChange();
             }
           }
@@ -81,25 +81,29 @@ export class TagSelectionComponent implements OnInit {
         //   if (tagFromURL) {
         //     if (this.ReportingService.tagExists(tagFromURL)) {
         //       this.selectedTag = this.ReportingService.findTag(tagFromURL);
-        //       this.selectedTagChange();       
+        //       this.selectedTagChange();
         //     }
         //   }
         // });
       }
 
     });
-    this.InvariantsService.getCountriesList();
-    this.InvariantsService.getTceStatus();
-    this.InvariantsService.observableCountriesList.subscribe(response => {
+    this.invariantsService.getCountriesList();
+    this.invariantsService.getTceStatus();
+    this.invariantsService.observableCountriesList.subscribe(response => {
       this.countriesList = response;
-      for (var index in this.countriesList) {
-        this.selected_countriesList[index] = this.countriesList[index].value;
+      for (const index in this.countriesList) {
+        if (index) {
+          this.selected_countriesList[index] = this.countriesList[index].value;
+        }
       }
     });
-    this.InvariantsService.observableTceStatusList.subscribe(response => {
+    this.invariantsService.observableTceStatusList.subscribe(response => {
       this.tceStatusList = response;
-      for (var index in this.tceStatusList) {
-        this.selected_tceStatusList[index] = this.tceStatusList[index].value;
+      for (const index in this.tceStatusList) {
+        if (index) {
+          this.selected_tceStatusList[index] = this.tceStatusList[index].value;
+        }
       }
     });
     this.filtersShowed = false;
@@ -119,8 +123,7 @@ export class TagSelectionComponent implements OnInit {
     if (this.selectedTag) {
       this.tagSelection.emit(this.selectedTag);
       this.router.navigate(['/analyse/report', this.selectedTag.tag]);
-    }
-    else { this.router.navigate([]); }
+    } else { this.router.navigate([]); }
   }
 
   onScroll({ end }) {
@@ -136,7 +139,7 @@ export class TagSelectionComponent implements OnInit {
     setTimeout(() => {
       this.loading = false;
       this.tagsBuffer = this.tagsBuffer.concat(more);
-    }, 1)
+    }, 1);
   }
 
   clearTag() {
@@ -154,8 +157,10 @@ export class TagSelectionComponent implements OnInit {
     return this.selected_countriesList.filter(c => c === country).length > 0;
   }
   selectAllCountries() {
-    for (var index in this.countriesList) {
-      this.selected_countriesList[index] = this.countriesList[index].value;
+    for (const index in this.countriesList) {
+      if (index) {
+        this.selected_countriesList[index] = this.countriesList[index].value;
+      }
     }
   }
   UnselectAllCountries() {
@@ -164,12 +169,12 @@ export class TagSelectionComponent implements OnInit {
   updateCountriesList($event, country: string) {
     if (!$event.target.checked) {
       // unchek : the country is removed
-      var index = this.selected_countriesList.indexOf(country);
+      const index = this.selected_countriesList.indexOf(country);
       this.selected_countriesList.splice(index, 1);
     } else {
       // check : the country is added
       // if it is not already in the array
-      if (this.selected_countriesList.indexOf(country) == -1) {
+      if (this.selected_countriesList.indexOf(country) === -1) {
         this.selected_countriesList.push(country);
       }
     }
@@ -180,8 +185,10 @@ export class TagSelectionComponent implements OnInit {
     return this.selected_tceStatusList.filter(s => s === tcestatus).length > 0;
   }
   selectAllTCEStatus() {
-    for (var index in this.tceStatusList) {
-      this.selected_tceStatusList[index] = this.tceStatusList[index].value;
+    for (const index in this.tceStatusList) {
+      if (index) {
+        this.selected_tceStatusList[index] = this.tceStatusList[index].value;
+      }
     }
   }
   UnselectAllTCEStatus() {
@@ -190,12 +197,12 @@ export class TagSelectionComponent implements OnInit {
   updateTCEStatusList($event, status: string) {
     if (!$event.target.checked) {
       // unchek : the status is removed
-      var index = this.selected_tceStatusList.indexOf(status);
+      const index = this.selected_tceStatusList.indexOf(status);
       this.selected_tceStatusList.splice(index, 1);
     } else {
       // check : the status is added
       // if it is not already in the array
-      if (this.selected_tceStatusList.indexOf(status) == -1) {
+      if (this.selected_tceStatusList.indexOf(status) === -1) {
         this.selected_tceStatusList.push(status);
       }
     }

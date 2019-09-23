@@ -7,7 +7,7 @@
  * @param duration: duration (in ms) of the notification before its disappear
  *
  */
-export class Notification implements INotification {
+export class Notification {
     message: string;
     style: string;
     dismissable: boolean;
@@ -21,7 +21,6 @@ export class Notification implements INotification {
     }
 }
 
-export interface INotification { }
 
 // NOTIFICATION STYLE ENUM
 export enum NotificationStyle {

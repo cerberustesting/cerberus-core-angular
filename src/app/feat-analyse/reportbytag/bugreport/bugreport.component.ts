@@ -9,7 +9,7 @@ declare function Helpers(helperName: string);
 export class BugreportComponent implements OnInit {
   @Input() selectedTagData: any;
 
-  constructor() { 
+  constructor() {
     Helpers('easy-pie-chart');
   }
 

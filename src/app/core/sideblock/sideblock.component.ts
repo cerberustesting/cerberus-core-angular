@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-  HostBinding
-} from '@angular/core'
+import { Component, OnInit, ViewChild, ViewContainerRef, HostBinding } from '@angular/core';
 import { SidecontentService } from '../services/crud/sidecontent.service';
 
 @Component({

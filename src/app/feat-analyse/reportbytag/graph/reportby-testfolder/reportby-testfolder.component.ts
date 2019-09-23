@@ -15,14 +15,15 @@ export class ReportbyTestfolderComponent implements OnInit {
     label: Label[], // label of tests folders
     options: ChartOptions,
     legend: boolean, // display legend ?
-  }
-  expand: boolean = true; // the block content is display are collapse
+  };
+  expand: boolean; // the block content is display are collapse
 
   constructor(private reportingService: ReportingService) { }
 
   ngOnInit() {
     // get chart informations from reportingService
     this.reportingService.observableReportTestFolder.subscribe(data => this.chart = data);
+    this.expand = true;
   }
 
 }

@@ -17,7 +17,7 @@ export class TagDetailComponent implements OnInit {
   ngOnInit() {
     this.reportingService.observableTagDetail.subscribe(tagDetail => {
       this.tagDetail = tagDetail;
-    })
+    });
   }
 
 }

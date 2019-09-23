@@ -17,7 +17,7 @@ export class DatalibInteractionComponent implements OnInit {
   // *** Inputs ***
   datalib: any; // datalib to edit
   mode: INTERACTION_MODE; // EDIT / DUPLICATE / CREATE
-  exit: (n: void) => void; //function to execute when press submit button
+  exit: (n: void) => void; // function to execute when press submit button
 
   // *** main form ***
   datalibForm: FormGroup;
@@ -27,7 +27,7 @@ export class DatalibInteractionComponent implements OnInit {
   serviceCollapse = false;
   sqlCollapse = false;
   csvCollapse = false;
-  columns: Array<any>
+  columns: Array<any>;
 
   // *** select options list ***
   systemsList: any[];
@@ -42,12 +42,6 @@ export class DatalibInteractionComponent implements OnInit {
   ];
   editing = {};
 
-  updateValue(event, cell, rowIndex) {
-    this.editing[rowIndex + '-' + cell] = false;
-    this.data[rowIndex][cell] = event.target.value;
-    this.data = [...this.data];
-  }
-
   countriesList: any[];
   databasesList: any[];
 
@@ -55,6 +49,12 @@ export class DatalibInteractionComponent implements OnInit {
 
   // *** datalib properties ***
   data: any[];
+
+  updateValue(event, cell, rowIndex) {
+    this.editing[rowIndex + '-' + cell] = false;
+    this.data[rowIndex][cell] = event.target.value;
+    this.data = [...this.data];
+  }
 
   constructor(
     private invariantService: InvariantsService,
@@ -68,13 +68,13 @@ export class DatalibInteractionComponent implements OnInit {
     this.invariantService.getPropertyDatabaseList(); // TODO : remove to place at the top of project
     this.invariantService.getApplicationService();
     this.invariantService.observableAppService
-      .subscribe(rep => { if (rep) this.servicesList = [{ service: '' }].concat(rep); });
+      .subscribe(rep => { if (rep) { this.servicesList = [{ service: '' }].concat(rep); } });
     this.systemsList = [{ value: '' }].concat(this.invariantService.systemsList);
     this.invariantService.observableCountriesList
-      .subscribe(rep => { if (rep) this.countriesList = [{ value: '' }].concat(rep); });
+      .subscribe(rep => { if (rep) { this.countriesList = [{ value: '' }].concat(rep); } });
 
     this.invariantService.observablePropertyDatabaseList
-      .subscribe(rep => { if (rep) this.databasesList = [{ value: '' }].concat(rep); });
+      .subscribe(rep => { if (rep) { this.databasesList = [{ value: '' }].concat(rep); } });
 
     if (this.datalib.testDataLibID) {
       this.testService.getDataLibData(this.datalib.testDataLibID, data => {
@@ -118,14 +118,14 @@ export class DatalibInteractionComponent implements OnInit {
    */
   setColumns(): void {
     this.columns = [
-      { name: 'Sub-data', prop: 'subData', condition: "true" },
-      { name: 'Encrypt', prop: 'encrypt', condition: "true" },
+      { name: 'Sub-data', prop: 'subData', condition: 'true' },
+      { name: 'Encrypt', prop: 'encrypt', condition: 'true' },
       { name: 'Value', prop: 'value', condition: this.datalibForm.value.type === 'INTERNAL' },
       { name: 'Column', prop: 'column', condition: this.datalibForm.value.type === 'SQL' },
       { name: 'Parsing Answer', prop: 'parsingAnswer', condition: this.datalibForm.value.type === 'SERVICE' },
       { name: 'Column Position', prop: 'columnPosition', condition: this.datalibForm.value.type === 'CSV' },
-      { name: 'Description', prop: 'description', condition: "true" }
-    ]
+      { name: 'Description', prop: 'description', condition: 'true' }
+    ];
   }
 
   /** onSubmit

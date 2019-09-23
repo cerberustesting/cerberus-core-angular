@@ -31,7 +31,7 @@ export class ReportbytagComponent implements OnInit {
   private filtersShowed: boolean;
   private showCountriesFilterOptions: boolean;
   private showTceStatusFilterOptions: boolean;
-  private reportView: boolean = true;
+  private reportView: boolean;
   private chartsOther: Array<any>;
   private displayStatisticsDurationExecution: boolean;
   private displayStatisticsReliability: boolean;
@@ -40,33 +40,34 @@ export class ReportbytagComponent implements OnInit {
   // DIRTY : need to create custom CSS class for earch TCE Status
 
   constructor(private http: HttpClient,
-    private ReportingService: ReportingService,
+    private reportingService: ReportingService,
     private activatedRoute: ActivatedRoute,
-    private InvariantsService: InvariantsService,
+    private invariantsService: InvariantsService,
     private router: Router,
     private headerTitleService: HeaderTitleService) {
-    headerTitleService.setTitle("Report Execution");
+    headerTitleService.setTitle('Report Execution');
   }
 
   ngOnInit() {
-    this.ReportingService.observableReportOther.subscribe(response => {
+    this.reportingService.observableReportOther.subscribe(response => {
       this.chartsOther = response;
     });
-    this.ReportingService.observableReportStatisticsDurationExecution.subscribe(response => {
+    this.reportingService.observableReportStatisticsDurationExecution.subscribe(response => {
       this.displayStatisticsDurationExecution = response.display;
     });
-    this.ReportingService.observableReportStatisticsReliability.subscribe(response => {
+    this.reportingService.observableReportStatisticsReliability.subscribe(response => {
       this.displayStatisticsReliability = response.display;
     });
-    this.ReportingService.observableLabelDisplay.subscribe(response => {
+    this.reportingService.observableLabelDisplay.subscribe(response => {
       this.displayLabelReport = response;
     });
-    this.ReportingService.observableDisplayTestFolderReport.subscribe(response => {
+    this.reportingService.observableDisplayTestFolderReport.subscribe(response => {
       this.displayTestFolderReport = response;
-    })
-    this.InvariantsService.getCountriesList();
-    this.InvariantsService.getTceStatus();
+    });
+    this.invariantsService.getCountriesList();
+    this.invariantsService.getTceStatus();
     this.filtersShowed = false;
+    this.reportView = true;
   }
 
   /** tagSelection
@@ -75,12 +76,12 @@ export class ReportbytagComponent implements OnInit {
    */
   tagSelection(tag: ITag): void {
     this.selectedTag = tag;
-    this.ReportingService.getTestCaseExecutionByTag(this.selectedTag.tag);
+    this.reportingService.getTestCaseExecutionByTag(this.selectedTag.tag);
   }
 
   /** toggleReportView
    * * set active tab (Report/Analyse)
-   * @param view 
+   * @param view
    */
   toggleReportView(view: boolean): void {
     this.reportView = view;

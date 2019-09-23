@@ -10,7 +10,7 @@ import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 export class StatisticReliabilityComponent implements OnInit {
 
   chart: any; // chart informations
-  expand: boolean = true; // the block content is display are collapse
+  expand: boolean; // the block content is display are collapse
 
   constructor(private reportingService: ReportingService) { }
 
@@ -18,6 +18,7 @@ export class StatisticReliabilityComponent implements OnInit {
     this.reportingService.observableReportStatisticsReliability.subscribe(response => {
       this.chart = response;
     });
+    this.expand = true;
   }
 
 }

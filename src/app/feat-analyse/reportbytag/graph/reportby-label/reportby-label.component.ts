@@ -9,11 +9,12 @@ import { ReportingService } from 'src/app/core/services/crud/reporting.service';
 export class ReportbyLabelComponent implements OnInit {
 
   private labelTree: Array<any> = [];
-  expand: boolean = true;
+  expand: boolean;
 
   constructor(private reportingService: ReportingService) { }
 
   ngOnInit() {
+    this.expand = true;
     this.reportingService.observableReportLabel.subscribe(response => {
       this.labelTree = response;
     });

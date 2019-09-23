@@ -12,29 +12,31 @@ declare var jQuery: any;
 })
 export class ReportbystatusComponent implements OnInit {
 
-  @Input() selectedTag: ITag; // the represented tag
+  @Input() selectedTag: ITag;
 
-  expand: boolean = true; // display the block body ?
-  private statusList = this.reportingService.status; //status to display on left
+  expand: boolean;
+  private statusList = this.reportingService.status;
 
   // *** Chart informations ***
-  private labels: Label[]; // name of each arc (for popover and legend)
-  private colors: any; // arc colors
-  private data: number[]; // data of each arc
-  private activeState: Array<any>; // all status with data > 0
-  private options: ChartOptions = { // chart options
+  // name of each arc (for popover and legend)
+  private labels: Label[];
+  // arc colors
+  private colors: any;
+  // data of each arc
+  private data: number[];
+  // all status with data > 0
+  private activeState: Array<any>;
+  private options: ChartOptions = {
+    // chart options
     elements: {
       arc: {
-        borderWidth: 0 //dissable borders
+        // dissable borders
+        borderWidth: 0
       }
     }
-  }
+  };
 
-  constructor(private reportingService: ReportingService) {
-
-  }
-
-  
+  constructor(private reportingService: ReportingService) { }
 
   ngOnInit() {
     // get all chart informations and parse them
@@ -42,9 +44,9 @@ export class ReportbystatusComponent implements OnInit {
       this.activeState = data.status.filter(e => e.data > 0);
       this.labels = this.activeState.map(e => e.label);
       this.data = this.activeState.map(e => e.data);
-      this.colors = [ { backgroundColor: this.activeState.map(e => e.color) } ];
+      this.colors = [{ backgroundColor: this.activeState.map(e => e.color) }];
     });
-
+    this.expand = true;
   }
 
   /** round

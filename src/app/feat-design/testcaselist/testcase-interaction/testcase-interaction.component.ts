@@ -12,6 +12,7 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
+import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -34,38 +35,9 @@ export class TestcaseInteractionComponent implements OnInit {
   // from testcaselist.component.ts
   private test: string;
   private testcase: string;
-  // used to refresh the test case header  
+  // used to refresh the test case header
   testcaseheader: ITestCaseHeader = null;
   mode: INTERACTION_MODE;
-
-  // DIRTY : waiting for dev
-  // https://github.com/cerberustesting/cerberus-source/issues/2015
-  private testcaseheader_countryList_custom: Array<string> = new Array<string>();
-  feedCustomCountryList(): Array<string> {
-    const resArray = new Array<string>();
-    this.testcaseheader.countryList.forEach(element => {
-      resArray.push(element.country);
-    });
-    return resArray
-  }
-
-  isTheCountrySelected(country: string): boolean {
-    let res = this.testcaseheader_countryList_custom.indexOf(country);
-    if (res === -1) {
-      return false
-    } else {
-      return true
-    }
-  }
-
-  toggleCountry(country: string) {
-    if (this.isTheCountrySelected(country) === true) {
-      const index = this.testcaseheader_countryList_custom.indexOf(country);
-      this.testcaseheader_countryList_custom.splice(index, 1);
-    } else {
-      this.testcaseheader_countryList_custom.push(country);
-    }
-  }
 
   exit: (n: void) => void;
 
@@ -96,12 +68,6 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ConditionValue: Array<ICrossReference> = this.crossReferenceService.crossReference_ConditionValue;
-  hasConditionCrossReference(condition: string): boolean {
-    return this.crossReferenceService.hasCrossReference(condition, this.crossReferenceService.crossReference_ConditionValue);
-  }
-  findConditionCrossReference(condition: string): ICrossReference {
-    return this.crossReferenceService.findCrossReference(condition, this.crossReferenceService.crossReference_ConditionValue);
-  }
 
   labelList = {
     batteries: [],
@@ -114,6 +80,42 @@ export class TestcaseInteractionComponent implements OnInit {
 
   dependencySelectedTestCase: ITestCaseHeader;
   dependencyTestCaseList: Array<any> = [];
+
+  // DIRTY : waiting for dev
+  // https://github.com/cerberustesting/cerberus-source/issues/2015
+  private testcaseheader_countryList_custom: Array<string> = new Array<string>();
+  feedCustomCountryList(): Array<string> {
+    const resArray = new Array<string>();
+    this.testcaseheader.countryList.forEach(element => {
+      resArray.push(element.country);
+    });
+    return resArray;
+  }
+
+  isTheCountrySelected(country: string): boolean {
+    const res = this.testcaseheader_countryList_custom.indexOf(country);
+    if (res === -1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  toggleCountry(country: string) {
+    if (this.isTheCountrySelected(country) === true) {
+      const index = this.testcaseheader_countryList_custom.indexOf(country);
+      this.testcaseheader_countryList_custom.splice(index, 1);
+    } else {
+      this.testcaseheader_countryList_custom.push(country);
+    }
+  }
+
+  hasConditionCrossReference(condition: string): boolean {
+    return this.crossReferenceService.hasCrossReference(condition, this.crossReferenceService.crossReference_ConditionValue);
+  }
+  findConditionCrossReference(condition: string): ICrossReference {
+    return this.crossReferenceService.findCrossReference(condition, this.crossReferenceService.crossReference_ConditionValue);
+  }
 
   constructor(
     private invariantsService: InvariantsService,
@@ -146,7 +148,7 @@ export class TestcaseInteractionComponent implements OnInit {
         // https://github.com/cerberustesting/cerberus-source/issues/2015
         this.testcaseheader_countryList_custom = this.feedCustomCountryList();
       }
-    })
+    });
 
     // subscriptions
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
@@ -231,7 +233,7 @@ export class TestcaseInteractionComponent implements OnInit {
   /** onTestChange
    * * call on test selection
    * * load all testcase from the chosen test
-   * @param test 
+   * @param test
    */
   onTestChange(test) {
     this.testService.getTestCasesList(test);
@@ -256,11 +258,11 @@ export class TestcaseInteractionComponent implements OnInit {
   /** addToDependencyTable
    * * add the testcase to the table
    * * if the testcase is already in the table notify the error
-   * @param testCaseIndex 
+   * @param testCaseIndex;
    */
   addToDependencyTable(testCaseIndex): void {
-    let testcase = this.testcaseList[testCaseIndex];
-    let dependency = {
+    const testcase = this.testcaseList[testCaseIndex];
+    const dependency = {
       id: this.dependencyTestCaseList.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1,
       test: testcase.test,
       testcase: testcase.testCase,
@@ -278,7 +280,7 @@ export class TestcaseInteractionComponent implements OnInit {
   /** removeDependency
    * * call on click on the trash button
    * * delete the dependency from the table
-   * @param dependencyIndex 
+   * @param dependencyIndex
    */
   removeDependency(dependencyIndex): void {
     this.dependencyTestCaseList.splice(dependencyIndex, 1);
@@ -291,43 +293,49 @@ export class TestcaseInteractionComponent implements OnInit {
   onSubmit(values: any): void {
 
     if (!values.application) {
-      this.notificationService.createANotification("Please specify the name of the application", NotificationStyle.Warning);
+      this.notificationService.createANotification('Please specify the name of the application', NotificationStyle.Warning);
       return;
     }
 
     if (!values.test) {
-      this.notificationService.createANotification("Please specify the Test Folder", NotificationStyle.Warning);
+      this.notificationService.createANotification('Please specify the Test Folder', NotificationStyle.Warning);
       return;
     }
 
     if (!values.testCase) {
-      this.notificationService.createANotification("Please specify the Test Case ID", NotificationStyle.Warning);
+      this.notificationService.createANotification('Please specify the Test Case ID', NotificationStyle.Warning);
       return;
     }
 
-    let queryString = ""; // the query string to send
-    let countryList = []; //the format countrylist
-    let labelList = []; //the format labelList
+    let queryString: string;
+    queryString = '';
+    // the query string to send
+    const countryList = []; // the format countrylist
+    const labelList = []; // the format labelList
 
     // add all items from the form  group
-    for (let item in values) {
-      queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item] || '') + '&';
+    for (const item in values) {
+      if (item) {
+        queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item] || '') + '&';
+      }
     }
 
     // fill countryList with all countries selected
-    for (let country of this.inv_countries) {
+    for (const country of this.inv_countries) {
       countryList.push(
         { country: country.value, toDelete: !this.testcaseheader_countryList_custom.includes(country.value) }
       )
     }
 
     // fill labelList with all labels selected
-    for (let type in this.labelList) {
-      for (let label of this.labelList[type]) {
-        if (label.state.selected) {
-          labelList.push(
-            { labelId: label.id, toDelete: false }
-          )
+    for (const type in this.labelList) {
+      if (type) {
+        for (const label of this.labelList[type]) {
+          if (label.state.selected) {
+            labelList.push(
+              { labelId: label.id, toDelete: false }
+            );
+          }
         }
       }
     }
@@ -337,7 +345,7 @@ export class TestcaseInteractionComponent implements OnInit {
     queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
     queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
 
-    if (this.mode == INTERACTION_MODE.CREATE) {
+    if (this.mode === INTERACTION_MODE.CREATE) {
       this.testService.createTestCase(queryString).subscribe(rep => this.refreshTable());
     } else {
       this.testService.updateTestCase(queryString).subscribe(rep => this.refreshTable());

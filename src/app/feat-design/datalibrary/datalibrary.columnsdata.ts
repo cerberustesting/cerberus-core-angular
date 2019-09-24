@@ -1,8 +1,8 @@
 import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
 
-export var DataLibColumnsData: Column[] = [
+export const DataLibColumnsData: Column[] = [
   {
-    displayName: "ID",
+    displayName: 'ID',
     contentName: 'testDataLibID',
     active: false,
     defaultActive: false,
@@ -15,7 +15,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select ID',
   },
   {
-    displayName: "Name",
+    displayName: 'Name',
     contentName: 'name',
     active: true,
     defaultActive: true,
@@ -27,7 +27,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Name',
   },
   {
-    displayName: "Type",
+    displayName: 'Type',
     contentName: 'type',
     active: true,
     defaultActive: true,
@@ -38,7 +38,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Type',
   },
   {
-    displayName: "Description",
+    displayName: 'Description',
     contentName: 'description',
     active: true,
     defaultActive: true,
@@ -50,7 +50,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Description',
   },
   {
-    displayName: "System",
+    displayName: 'System',
     contentName: 'system',
     active: true,
     defaultActive: true,
@@ -61,7 +61,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select System',
   },
   {
-    displayName: "Environment",
+    displayName: 'Environment',
     contentName: 'environment',
     active: true,
     defaultActive: true,
@@ -73,7 +73,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Environment',
   },
   {
-    displayName: "Country",
+    displayName: 'Country',
     contentName: 'country',
     active: true,
     defaultActive: true,
@@ -84,7 +84,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Country',
   },
   {
-    displayName: "Group",
+    displayName: 'Group',
     contentName: 'group',
     active: false,
     sSearch: [],
@@ -94,7 +94,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Group',
   },
   {
-    displayName: "Value",
+    displayName: 'Value',
     contentName: 'subDataValue',
     active: false,
     sSearch: [],
@@ -105,7 +105,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Value',
   },
   {
-    displayName: "Database",
+    displayName: 'Database',
     contentName: 'database',
     active: false,
     sSearch: [],
@@ -115,7 +115,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Database',
   },
   {
-    displayName: "Script",
+    displayName: 'Script',
     contentName: 'script',
     active: false,
     sSearch: [],
@@ -126,7 +126,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Script',
   },
   {
-    displayName: "Database",
+    displayName: 'Database',
     contentName: 'databaseUrl',
     active: false,
     sSearch: [],
@@ -136,7 +136,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Database',
   },
   {
-    displayName: "Service",
+    displayName: 'Service',
     contentName: 'service',
     active: false,
     sSearch: [],
@@ -146,7 +146,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Service',
   },
   {
-    displayName: "Service Path",
+    displayName: 'Service Path',
     contentName: 'servicePath',
     active: false,
     sSearch: [],
@@ -156,7 +156,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Service Path',
   },
   {
-    displayName: "Operation",
+    displayName: 'Operation',
     contentName: 'method',
     active: false,
     sSearch: [],
@@ -166,7 +166,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Operation',
   },
   {
-    displayName: "Envelope",
+    displayName: 'Envelope',
     contentName: 'envelope',
     active: false,
     sSearch: [],
@@ -176,7 +176,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Envelope',
   },
   {
-    displayName: "Database CSV",
+    displayName: 'Database CSV',
     contentName: 'tdl.databaseCsv',
     active: false,
     sSearch: [],
@@ -186,7 +186,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Database CSV',
   },
   {
-    displayName: "C SV URL",
+    displayName: 'C SV URL',
     contentName: 'csvUrl',
     active: false,
     sSearch: [],
@@ -196,7 +196,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select C SV URL',
   },
   {
-    displayName: "Separator",
+    displayName: 'Separator',
     contentName: 'separator',
     active: false,
     sSearch: [],
@@ -206,7 +206,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Separator',
   },
   {
-    displayName: "Creation Date",
+    displayName: 'Creation Date',
     contentName: 'created',
     active: false,
     sSearch: [],
@@ -216,7 +216,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Creation Date',
   },
   {
-    displayName: "Creator",
+    displayName: 'Creator',
     contentName: 'creator',
     active: false,
     sSearch: [],
@@ -226,7 +226,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Creator',
   },
   {
-    displayName: "Modification Date",
+    displayName: 'Modification Date',
     contentName: 'lastModified',
     active: false,
     sSearch: [],
@@ -236,7 +236,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Modification Date',
   },
   {
-    displayName: "Last Modifier",
+    displayName: 'Last Modifier',
     contentName: 'lastModifier',
     active: false,
     sSearch: [],
@@ -246,7 +246,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Last Modifier',
   },
   {
-    displayName: "Column",
+    displayName: 'Column',
     contentName: 'subDataColumn',
     active: false,
     sSearch: [],
@@ -256,7 +256,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Column',
   },
   {
-    displayName: "Parsing Answer",
+    displayName: 'Parsing Answer',
     contentName: 'subDataParsingAnswer',
     active: false,
     sSearch: [],
@@ -266,7 +266,7 @@ export var DataLibColumnsData: Column[] = [
     placeholder: 'Select Parsing Answer',
   },
   {
-    displayName: "Column Position",
+    displayName: 'Column Position',
     contentName: 'subDataColumnPosition',
     active: false,
     sSearch: [],

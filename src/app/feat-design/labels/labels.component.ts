@@ -8,8 +8,8 @@ import { HeaderTitleService } from 'src/app/core/services/utils/header-title.ser
 })
 export class LabelsComponent implements OnInit {
 
-  constructor(private headerTitleService: HeaderTitleService) { 
-    headerTitleService.setTitle("Labels");
+  constructor(private headerTitleService: HeaderTitleService) {
+    headerTitleService.setTitle('Labels');
   }
 
   ngOnInit() {

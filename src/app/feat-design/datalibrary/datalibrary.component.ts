@@ -23,12 +23,12 @@ export class DatalibraryComponent implements OnInit {
 
   // *** parameters for the `datatable-page` component ***
 
-  defaultPageSort = [{ dir: "asc", prop: "testDataLibID" }];
+  defaultPageSort = [{ dir: 'asc', prop: 'testDataLibID' }];
   servlet = '/ReadTestDataLib'; // the api to call to get datalib list
   refreshResultsEvent: Subject<void> = new Subject<void>(); // the event to emit to refresh the table
 
   refreshResults() {
-    this.refreshResultsEvent.next()
+    this.refreshResultsEvent.next();
   }
 
   constructor(
@@ -36,9 +36,9 @@ export class DatalibraryComponent implements OnInit {
     private sideContentService: SidecontentService,
     private modalService: NgbModal,
     private testService: TestService,
-    private NotificationService: NotificationService
+    private notificationService: NotificationService
   ) {
-    headerTitleService.setTitle("Data Library");
+    headerTitleService.setTitle('Data Library');
   }
 
   ngOnInit() { }
@@ -52,14 +52,14 @@ export class DatalibraryComponent implements OnInit {
       mode: INTERACTION_MODE.CREATE,
       exit: () => {
         this.refreshResults();
-        this.NotificationService.createANotification('The datalib has been successfully created', NotificationStyle.Success);
+        this.notificationService.createANotification('The datalib has been successfully created', NotificationStyle.Success);
       }
     });
     this.sideContentService.openSideBlock();
   }
 
   // *********************************
-  // *** End Row buttons functions ***  
+  // *** End Row buttons functions ***
   // *********************************
 
   /**
@@ -73,7 +73,7 @@ export class DatalibraryComponent implements OnInit {
       mode: INTERACTION_MODE.EDIT,
       exit: () => {
         this.refreshResults();
-        this.NotificationService.createANotification('The datalib has been successfully edited', NotificationStyle.Success);
+        this.notificationService.createANotification('The datalib has been successfully edited', NotificationStyle.Success);
       }
     });
     this.sideContentService.openSideBlock();
@@ -90,7 +90,7 @@ export class DatalibraryComponent implements OnInit {
       mode: INTERACTION_MODE.DUPLICATE,
       exit: () => {
         this.refreshResults();
-        this.NotificationService.createANotification('The datalib has been successfully duplicated', NotificationStyle.Success);
+        this.notificationService.createANotification('The datalib has been successfully duplicated', NotificationStyle.Success);
       }
     });
     this.sideContentService.openSideBlock();
@@ -104,20 +104,20 @@ export class DatalibraryComponent implements OnInit {
   deleteDataLib(row: any) {
     const modalRef = this.modalService.open(CustomModalComponent);
     modalRef.componentInstance.title = 'Delete Test Data Library Entry';
-    modalRef.componentInstance.text = "Do you want to delete Test Data Library '" + row.name + "' \
-    of system '" + row.system + "' (ID : " + row.testDataLibID + ") ?";
+    modalRef.componentInstance.text =  'Do you want to delete Test Data Library "'
+    + row.name + '" of system ' + row.system + ' (ID : ' + row.testDataLibID + ') ?';
     modalRef.componentInstance.fct = () => {
       this.testService.deleteTestDataLib(
         row.testDataLibID,
-        () => { this.refreshResults() }
+        () => { this.refreshResults(); }
       );
-      this.NotificationService.createANotification('The datalib ' + row.name + ' (ID :' + row.testDataLibID + ') has been successfully deleted', NotificationStyle.Success);
+      this.notificationService.createANotification('The datalib ' + row.name + ' (ID :' + row.testDataLibID + ') has been successfully deleted', NotificationStyle.Success);
     };
   }
 
   /** openTCList
    * * open the testcase list link wich use the datalib in the side content
-   * @param datalib the selected datalib 
+   * @param datalib the selected datalib
    */
   openTCList(datalib): void {
     this.sideContentService.addComponentToSideBlock(DatalibTclistComponent, {

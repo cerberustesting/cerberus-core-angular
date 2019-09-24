@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { UserPreferencesService } from '../services/utils/userpreferences.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,8 +8,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  @Input('nightMode') _nightMode: boolean;
-  @Output() nightModeOutput = new EventEmitter<void>();
+  private nightMode: boolean;
+
+  constructor(
+    private userPreferencesService: UserPreferencesService
+  ) { }
 
   testManagementMenu = [
     {
@@ -187,9 +191,9 @@ export class SidebarComponent implements OnInit {
     { name: 'Analyse', data: this.analyseMenu, expanded: false },
     { name: 'Configure', data: this.configureMenu, expanded: false }
   ];
-  write = console.log;
+
   toggleNightMode() {
-    this.nightModeOutput.emit();
+    this.userPreferencesService.toggleNightMode();
   }
 
   toggleMenu(menu) {
@@ -201,8 +205,9 @@ export class SidebarComponent implements OnInit {
     menu.expanded = !menu.expanded;
   }
 
-  constructor() { }
-
-  ngOnInit() { }
+  ngOnInit() {
+    // subscribe to nightMode changes
+    this.userPreferencesService.observableNightMode.subscribe(r => { this.nightMode = r; });
+  }
 
 }

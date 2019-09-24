@@ -21,21 +21,6 @@
       </div>
       <!-- END STEP INDEX -->
 
-      <!-- STEP DESCRIPTION 
-      <div class="input-group-prepend">
-        <a [id]="'step'+stepIndex+'description'" class="input-group-text" data-toggle="collapse" data-parent="#stepList"
-          [href]="'#step'+stepIndex+'toggle'" aria-expanded="false" [attr.aria-controls]="'step'+stepIndex+'toggle'"
-          (click)="showActionList = !showActionList">
-          {{step.description}}</a>
-      </div>
-      END STEP DESCRIPTION -->
-
-      <!-- STEP DESCRIPTION 
-      <input type="text" [id]="'step'+stepIndex+'description'" [(ngModel)]="step.description" class="form-control"
-        [name]="'step'+stepIndex+'description'" placeholder="Step Description" [readonly]="stepIsReadOnly"
-        (click)="showActionList = !showActionList">
-      END STEP DESCRIPTION -->
-
       <!-- STEP DESCRIPTION -->
       <h3 class="input-group-text">{{step.description}}</h3>
       <!-- END STEP DESCRIPTION -->

@@ -4,6 +4,7 @@ import { KeycloakInstance } from 'keycloak-js';
 import { UserService } from './core/services/crud/user.service';
 import { InvariantsService } from './core/services/crud/invariants.service';
 import { environment } from 'src/environments/environment';
+import { UserPreferencesService } from './core/services/utils/userpreferences.service';
 
 @Component({
   selector: 'app-root',
@@ -13,22 +14,22 @@ import { environment } from 'src/environments/environment';
 export class AppComponent implements OnInit {
 
   public keycloakAuth: KeycloakInstance;
-  nightMode: boolean;
+  public nightMode: boolean;
 
   constructor(
-    private _keycloakService: KeycloakService,
-    private _userService: UserService,
-    private _invariantsService: InvariantsService
+    private keycloakService: KeycloakService,
+    private userService: UserService,
+    private invariantsService: InvariantsService,
+    private userPreferencesService: UserPreferencesService
   ) { }
 
   ngOnInit() {
-    this.nightMode = false;
-    this.keycloakAuth = this._keycloakService.getKeycloakAuth();
-    this._userService.getUser();
-    this._invariantsService.loadInvariants();
+    // subscribe to nightMode changes
+    this.userPreferencesService.observableNightMode.subscribe(r => { this.nightMode = r; });
+    this.keycloakAuth = this.keycloakService.getKeycloakAuth();
+    this.userService.getUser();
+    this.invariantsService.loadInvariants();
     console.log('cerberus-front application version is : ' + environment.version);
   }
-  toggleNightMode() {
-    this.nightMode = !this.nightMode;
-  }
+
 }

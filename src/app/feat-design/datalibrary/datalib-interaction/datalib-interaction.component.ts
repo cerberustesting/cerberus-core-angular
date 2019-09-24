@@ -133,16 +133,21 @@ export class DatalibInteractionComponent implements OnInit {
    * @param values values to submit
    */
   onSubmit(values: any): void {
-    for (let row in this.data) {
-      this.data[row]['toDelete'] = (this.data[row].toDelete) ? true : false;
-      this.data[row].encrypt = (this.data[row].encrypt === 'Y') ? true : false
+    for (const row in this.data) {
+      if (row) {
+        this.data[row]['toDelete'] = (this.data[row].toDelete) ? true : false;
+        this.data[row].encrypt = (this.data[row].encrypt === 'Y') ? true : false;
+      }
+
     }
     values['subDataList'] = JSON.stringify(this.data);
-    if (!values.file) values.file = 'undifined'
+    if (!values.file) { values.file = 'undifined'; }
 
-    let formData = new FormData();
-    for (let key in values) {
-      formData.append(key, values[key] || '');
+    const formData = new FormData();
+    for (const key in values) {
+      if (key) {
+        formData.append(key, values[key] || '');
+      }
     }
     if (this.mode === INTERACTION_MODE.EDIT) {
       this.testService.updateTestDataLib(formData).subscribe(() => this.refreshTable());
@@ -156,7 +161,7 @@ export class DatalibInteractionComponent implements OnInit {
    */
   refreshTable(): void {
     this.sidecontentService.closeSideBlock();
-    this.exit(); //reload rows in datatable
+    this.exit(); // reload rows in datatable
   }
 
   /**addSubdata

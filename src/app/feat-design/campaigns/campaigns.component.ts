@@ -14,7 +14,7 @@ export class CampaignsComponent implements OnInit {
   columns: Array<Column> = CampainsColumnsData;
   defaultPageSort = [{ dir: 'asc', prop: 'testCase' }];
   private selectedRows: Array<any>;
-  servlet: string = '/ReadCampaign';
+  servlet = '/ReadCampaign';
 
   constructor(private headerTitleService: HeaderTitleService) {
     headerTitleService.setTitle('Campaigns');

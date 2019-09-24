@@ -8,7 +8,7 @@ import { UserPreferencesService } from '../services/utils/userpreferences.servic
 })
 export class SidebarComponent implements OnInit {
 
-  private nightMode: boolean;
+  public nightMode: boolean;
 
   constructor(
     private userPreferencesService: UserPreferencesService

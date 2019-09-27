@@ -139,7 +139,7 @@ export class TestcaseInteractionComponent implements OnInit {
     this.testService.observableTestCaseHeader.subscribe(r => {
       if (r) {
         this.testcaseheader = r;
-        console.log(r);
+
         // set the form
         this.setFormValues();
         this.refreshOthersDatas();
@@ -324,7 +324,7 @@ export class TestcaseInteractionComponent implements OnInit {
     for (const country of this.inv_countries) {
       countryList.push(
         { country: country.value, toDelete: !this.testcaseheader_countryList_custom.includes(country.value) }
-      )
+      );
     }
 
     // fill labelList with all labels selected

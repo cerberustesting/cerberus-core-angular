@@ -1,8 +1,11 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, OnInit, Input } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
+import { TestService } from 'src/app/core/services/crud/test.service';
+import { ILabel } from 'src/app/shared/model/label.model';
+import { SystemService } from 'src/app/core/services/crud/system.service';
 
 export class TodoItemNode {
   children: TodoItemNode[];
@@ -91,14 +94,6 @@ export class ChecklistDatabase {
     }, []);
   }
 
-  /** Add an item to to-do list */
-  insertItem(parent: TodoItemNode, name: string) {
-    if (parent.children) {
-      parent.children.push({ item: name } as TodoItemNode);
-      this.dataChange.next(this.data);
-    }
-  }
-
   updateItem(node: TodoItemNode, name: string) {
     node.item = name;
     this.dataChange.next(this.data);
@@ -114,7 +109,20 @@ export class ChecklistDatabase {
   styleUrls: ['./labels-tab.component.scss'],
   providers: [ChecklistDatabase]
 })
-export class LabelsTabComponent {
+export class LabelsTabComponent implements OnInit {
+
+  // test and testcase
+  @Input('test') test: string;
+  @Input('testcase') testcase: string;
+  @Input('system') system: string;
+
+  // list of selected labels in the testcase
+  private testcaseLabelsList: Array<ILabel>;
+
+  // list of all available labels
+  private labelsList: Array<ILabel>;
+
+
   /** Map from flat node to nested node. This helps us finding the nested node to be modified */
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
 
@@ -136,7 +144,9 @@ export class LabelsTabComponent {
   /** The selection for checklist */
   checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
 
-  constructor(private _database: ChecklistDatabase) {
+  constructor(private _database: ChecklistDatabase,
+    private testService: TestService,
+    private systemService: SystemService) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
       this.isExpandable, this.getChildren);
     this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
@@ -145,6 +155,22 @@ export class LabelsTabComponent {
     _database.dataChange.subscribe(data => {
       this.dataSource.data = data;
     });
+  }
+
+  ngOnInit() {
+
+    this.testService.getLabelsfromTestCase(this.test, this.testcase);
+    this.testService.observableTestCaseLabels.subscribe(r => {
+      this.testcaseLabelsList = r;
+    });
+
+    this.systemService.getLabelsFromSystem(this.system);
+    // TODO: change the call to get the hierarchy
+    this.systemService.observableLabelsList.subscribe(r => {
+      console.log(r);
+      this.labelsList = r;
+    });
+
   }
 
   getLevel = (node: TodoItemFlatNode) => node.level;

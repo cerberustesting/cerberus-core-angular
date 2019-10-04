@@ -208,3 +208,13 @@ mat-tree-node button:focus {
   padding-left: 0.5rem !important;
   padding-right: 0.5rem !important;
 }
+
+/*
+"link-cursor" class for any element
+
+change the cursor to help the user notice
+the element is clickable
+*/
+.link-cursor {
+  cursor: pointer !important;
+}

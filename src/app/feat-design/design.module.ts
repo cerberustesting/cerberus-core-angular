@@ -29,6 +29,7 @@ import { DatalibInteractionComponent } from './datalibrary/datalib-interaction/d
 import { DatalibTclistComponent } from './datalibrary/datalib-interaction/datalib-tclist/datalib-tclist.component';
 import { TestcaseInteractionComponent } from './testcaselist/testcase-interaction/testcase-interaction.component';
 import { LabelsTabComponent } from './testcaselist/testcase-interaction/labels-tab/labels-tab.component';
+import { LabelNodeComponent } from './testcaselist/testcase-interaction/labels-tab/label-node/label-node.component';
 
 // Pipes
 import { FilterPipeModule } from 'ngx-filter-pipe';
@@ -38,9 +39,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { MatTreeModule } from '@angular/material/tree';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -64,7 +63,8 @@ import { MatIconModule } from '@angular/material/icon';
     DatalibInteractionComponent,
     DatalibTclistComponent,
     TestcaseInteractionComponent,
-    LabelsTabComponent
+    LabelsTabComponent,
+    LabelNodeComponent
   ],
   imports: [
     CommonModule,
@@ -76,10 +76,7 @@ import { MatIconModule } from '@angular/material/icon';
     NgxDatatableModule,
     ReactiveFormsModule,
     FormsModule,
-    CKEditorModule,
-    MatTreeModule,
-    MatCheckboxModule,
-    MatIconModule
+    CKEditorModule
   ],
   entryComponents: [
     DatalibInteractionComponent,

@@ -1,0 +1,26 @@
+<div [id]="'label_'+node.label.label">
+
+    <span [ngStyle]="{'color': node.nodes ? '' : 'transparent'}" [ngClass]="node.nodes ? 'link-cursor': ''">
+        <i class="fa mr-2" [ngClass]="showChildren ? 'fa-chevron-down' : 'fa-chevron-right'"
+            (click)="toggleChildren()"></i>
+    </span>
+
+    <div class="custom-control custom-checkbox custom-control-inline custom-control-primary mb-1">
+        <input type="checkbox" class="custom-control-input" [id]="'select_'+node.label.label"
+            [name]="'select_'+node.label.label" [(ngModel)]="node.state.selected">
+        <label class="custom-control-label" [for]="'select_'+node.label.label">
+            <span class="badge badge-primary" [ngStyle]="{'background-color': node.label.color}">
+                {{node.label.label}}
+            </span>
+            <span class="fw400 ml-2">{{node.label.description}}</span>
+        </label>
+    </div>
+
+    <div *ngIf="showChildren">
+        <div *ngIf="node.nodes" class="ml-4">
+            <div *ngFor="let labelNode of node.nodes">
+                <app-label-node [node]="labelNode"></app-label-node>
+            </div>
+        </div>
+    </div>
+</div>

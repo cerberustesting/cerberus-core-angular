@@ -22,19 +22,19 @@ export class LabelsTabComponent implements OnInit {
 
   // label hierarchy (selected & available to selection)
   public labelsList: any;
+  public labelType: string;
 
   constructor(
     private systemService: SystemService) {
   }
 
   ngOnInit() {
-
     this.systemService.getLabelsHierarchyFromSystem(this.system, this.test, this.testcase);
     this.systemService.observableLabelsHierarchyList.subscribe(r => {
       this.labelsList = r;
       console.log(this.labelsList);
     });
-
+    this.labelType = 'stickers';
   }
 
 }

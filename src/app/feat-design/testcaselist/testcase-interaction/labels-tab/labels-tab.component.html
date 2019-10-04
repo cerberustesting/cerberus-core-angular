@@ -1,6 +1,38 @@
-<div class="form-group">
-    <label>Stickers</label>
+<div class="row text-center push">
+    <div class="col-4">
+        <button type="button" class="btn btn-sm mr-1" (click)="labelType = 'stickers'"
+            [ngClass]="labelType == 'stickers' ? 'btn-primary' : 'btn-outline-primary'">
+            <i class="fa fa-fw fa-tag mr-1"></i> Stickers
+        </button>
+    </div>
+    <div class="col-4">
+        <button type="button" class="btn btn-sm mr-1" (click)="labelType = 'requirements'"
+            [ngClass]="labelType == 'requirements' ? 'btn-primary' : 'btn-outline-primary'">
+            <i class="fa fa-fw fa-check-circle mr-1"></i> Requirements
+        </button>
+    </div>
+    <div class="col-4">
+        <button type="button" class="btn btn-sm mr-1" (click)="labelType = 'batteries'"
+            [ngClass]="labelType == 'batteries' ? 'btn-primary' : 'btn-outline-primary'">
+            <i class="fa fa-fw fa-play-circle mr-1"></i> Batteries
+        </button>
+    </div>
+</div>
+
+<div *ngIf="labelType == 'stickers'">
     <div *ngFor="let labelNode of labelsList.stickers">
+        <app-label-node [node]="labelNode"></app-label-node>
+    </div>
+</div>
+
+<div *ngIf="labelType == 'requirements'">
+    <div *ngFor="let labelNode of labelsList.requirements">
+        <app-label-node [node]="labelNode"></app-label-node>
+    </div>
+</div>
+
+<div *ngIf="labelType == 'batteries'">
+    <div *ngFor="let labelNode of labelsList.batteries">
         <app-label-node [node]="labelNode"></app-label-node>
     </div>
 </div>

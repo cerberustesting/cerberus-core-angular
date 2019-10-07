@@ -43,8 +43,8 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
   showPropCountriesMainContent: boolean;
 
   constructor(
-    private InvariantsService: InvariantsService,
-    private TestService: TestService,
+    private invariantsService: InvariantsService,
+    private testService: TestService,
     private DragAndDropService: DraganddropService,
     private cdRef: ChangeDetectorRef
   ) { }
@@ -57,7 +57,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   ngOnChanges() {
     this.propertyNameIsInvalid = false;
-    //console.log("ngOnChanges, current prop name:" + this.propertiesById[0].property);
+    // console.log("ngOnChanges, current prop name:" + this.propertiesById[0].property);
     this.propertyName = this.propertiesById[0].property;
   }
 
@@ -65,12 +65,12 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
     this.propertyName = this.propertiesById[0].property;
     this.showPropCountriesMainContent = true;
     this.unassignedCountriesList = new Array<string>();
-    this.TestService.observableTestCase.subscribe(r => { this.testcaseheader = r.info; });
+    this.testService.observableTestCase.subscribe(r => { this.testcaseheader = r.info; });
     this.DragAndDropService.observablePropCountriesList.subscribe(r => { if (r) { this.DragAndDropList = r; } });
-    this.TestService.observableTestCaseProperties.subscribe(r => { this.propertiesList = r; });
-    this.InvariantsService.observablePropertyTypeList.subscribe(r => { this.inv_propertyTypeList = r; });
-    this.InvariantsService.observableCountriesList.subscribe(r => { this.inv_countriesList = r; if (r) { this.defineUnassginedCountries(); } });
-    this.DragAndDropId = "propcountries-droplist-unassigned";
+    this.testService.observableTestCaseProperties.subscribe(r => { this.propertiesList = r; });
+    this.invariantsService.observablePropertyTypeList.subscribe(r => { this.inv_propertyTypeList = r; });
+    this.invariantsService.observableCountriesList.subscribe(r => { this.inv_countriesList = r; if (r) { this.defineUnassginedCountries(); } });
+    this.DragAndDropId = 'propcountries-droplist-unassigned';
     this.DragAndDropService.addIDToPropCountriesList(this.DragAndDropId);
     this.showPropertyOptions = false;
     this.propertyNameIsInvalid = false;
@@ -91,14 +91,14 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
     this.unassignedCountriesList = new Array<string>();
     this.inv_countriesList.forEach((country) => {
       // consider the country only if it is enabled in the TC header
-      if (this.TestService.convertCountriesList(this.testcaseheader).includes(country.value)) {
+      if (this.testService.convertCountriesList(this.testcaseheader).includes(country.value)) {
         let isCountryAssigned = false;
         this.propertiesById.forEach((prop) => {
           if (prop.country.includes(country.value)) {
             isCountryAssigned = true;
           }
-        })
-        if (isCountryAssigned == false) {
+        });
+        if (isCountryAssigned === false) {
           this.unassignedCountriesList.push(country.value);
         }
       }
@@ -114,20 +114,20 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
     this.propertyValueRemoved.emit(propValue);
   }
 
-  // one way data binding has been implemented 
+  // one way data binding has been implemented
   // since we must ensure the property name that we are trying to insert
   // isn't already an existing property
   setPropertyName(newName: string) {
-    console.log("setPropertyName with name: " + newName);
-    var id = this.propertiesById[0].property_id;
-    if (this.propertiesList.find(p => p.property == newName)) {
+    console.log('setPropertyName with name: ' + newName);
+    const id = this.propertiesById[0].property_id;
+    if (this.propertiesList.find(p => p.property === newName)) {
       // property name already exists
       this.propertyNameIsInvalid = true;
-    } else if (newName == "") {
+    } else if (newName === '') {
       this.propertyNameIsInvalid = true;
     } else {
-      // feeded property name doesn't exist 
-      this.TestService.renameProperty(this.propertiesById, id, newName);
+      // feeded property name doesn't exist
+      this.testService.renameProperty(this.propertiesById, id, newName);
       this.propertyNameIsInvalid = false;
     }
   }

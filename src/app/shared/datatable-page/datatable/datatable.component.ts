@@ -10,7 +10,7 @@ import { TestService } from 'src/app/core/services/crud/test.service';
 export class DatatableComponent implements OnInit {
 
   @Input() rows: any[];
-  @Input() columns: Array<Column>
+  @Input() columns: Array<Column>;
   @Input() testcaseslist: boolean;
   @Input() massAction: boolean;
   @Input() selection: boolean;
@@ -25,7 +25,7 @@ export class DatatableComponent implements OnInit {
 
   @Output() pageUpdate = new EventEmitter<number>();
   @Output() sort = new EventEmitter<void>();
-  @ViewChild("dataTable", { static: true }) table: any;
+  @ViewChild('dataTable', { static: true }) table: any;
   @Input() name?: string;
   columnActive: number;
 
@@ -89,7 +89,7 @@ export class DatatableComponent implements OnInit {
    * * Select all charged columns
    */
   selectAll(): void {
-    for (let row of this.rows) {
+    for (const row of this.rows) {
       if (!this.selected.includes(row)) {
         this.selected.push(row);
       }
@@ -100,20 +100,20 @@ export class DatatableComponent implements OnInit {
   /**
    * onPage
    * * Change current page informations
-   * @param pageInfo 
+   * @param pageInfo
    */
   onPage(pageInfo: any): void {
     this.page.number = pageInfo.offset;
     this.page.size = pageInfo.pageSize;
     this.applyChange();
   }
-  
+
   /** onActivate
    * * toggle end row buttons
    * @param event generate with angular
    */
-  onActivate(event: any) {    
-    this.rows.forEach(r=>r.activate=false);
+  onActivate(event: any) {
+    this.rows.forEach(r => r.activate = false);
     event.row.activate = true;
   }
 }

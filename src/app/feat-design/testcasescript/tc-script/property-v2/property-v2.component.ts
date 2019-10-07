@@ -17,11 +17,10 @@ export class PropertyV2Component implements OnInit {
   @ViewChild('propertyTable', { static: false }) table: any;
 
   constructor(
-    private invariantService: InvariantsService, 
-    private formBuilder: FormBuilder, 
+    private invariantService: InvariantsService,
+    private formBuilder: FormBuilder,
     private testService: TestService) { }
-  
-  
+
   private editing: Array<boolean>;
   private propertyForms: Array<any>;
   private propertyType: Array<any>;
@@ -41,12 +40,12 @@ export class PropertyV2Component implements OnInit {
     },
     {
       name: 'Value',
-      bindValue: 'value1', //I suppose
+      bindValue: 'value1', // I suppose
     },
-  ];  
+  ];
 
   ngOnInit(): void {
-    this.testService.observableTestCase.subscribe(response => { this.testcaseheader = response.info; }); //get current TC header
+    this.testService.observableTestCase.subscribe(response => { this.testcaseheader = response.info; }); // get current TC header
     this.propertyType = this.invariantService.propertyTypeList;
     this.propertyDatabase = this.invariantService.propertyDatabaseList;
     this.propertyNature = this.invariantService.propertyNatureList;
@@ -61,12 +60,14 @@ export class PropertyV2Component implements OnInit {
         nature: e.nature,
         cacheExpire: e.cacheExpire,
         rank: e.rank
-      })
+      });
     });
     // get countries from testcase
     this.testCaseCountryList = [];
-    for (let country in this.testcase.info.countryList) {
-      this.testCaseCountryList.push(country);
+    for (const country in this.testcase.info.countryList) {
+      if (country) {
+        this.testCaseCountryList.push(country);
+      }
     }
     this.updateSelectableCountries();
   }
@@ -75,7 +76,7 @@ export class PropertyV2Component implements OnInit {
    * updateValue
    * * Disable edition in the table row
    * TODO : Save new value
-   * @param rowIndex 
+   * @param rowIndex
    */
   updateValue(rowIndex): void {
     this.editing[rowIndex] = false;
@@ -86,19 +87,21 @@ export class PropertyV2Component implements OnInit {
    * * update selectable countries in property edition depended of already selected countries
    */
   updateSelectableCountries(): void {
-    let selectedCountriesByPropertyName = {};
+    const selectedCountriesByPropertyName = {};
     // fill selectedCountriesByPropertyName with selected countries split by property name
     this.propertiesList.forEach(property => {
-      if (!selectedCountriesByPropertyName[property.property]) selectedCountriesByPropertyName[property.property] = [];
+      if (!selectedCountriesByPropertyName[property.property]) {
+        selectedCountriesByPropertyName[property.property] = [];
+      }
       selectedCountriesByPropertyName[property.property] = selectedCountriesByPropertyName[property.property].concat(property.country);
     });
-    // set selectableCountries with countries of the testcase minus the already selected 
+    // set selectableCountries with countries of the testcase minus the already selected
     // countries from selectedCountriesByPropertyName and add country from that property
     this.propertiesList.forEach(property => {
       property.selectableCountries = this.testCaseCountryList.filter(country => !selectedCountriesByPropertyName[property.property].includes(country)).concat(property.country).sort();
     });
   }
-  
+
   /**
    * onActivate
    * * Call for each event on a row
@@ -106,7 +109,7 @@ export class PropertyV2Component implements OnInit {
    * @param event (generate by angular)
    */
   onActivate(event): void {
-    if (event.type == 'click') {
+    if (event.type === 'click') {
       this.table.rowDetail.toggleExpandRow(event.row);
     }
   }
@@ -119,9 +122,12 @@ export class PropertyV2Component implements OnInit {
    * @param country Country pressed
    */
   toggleChk(property, country): void {
-    if (property.country.includes(country)) property.country.splice(property.country.indexOf(country));
-    else property.country.push(country);
-    this.updateSelectableCountries()
+    if (property.country.includes(country)) {
+      property.country.splice(property.country.indexOf(country));
+    } else {
+      property.country.push(country);
+    }
+    this.updateSelectableCountries();
   }
 
   /**

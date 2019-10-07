@@ -21,17 +21,17 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private TestService: TestService,
+    private testService: TestService,
     private InvariantService: InvariantsService,
-    private SystemService: SystemService,
+    private systemService: SystemService,
     private headerTitleService: HeaderTitleService
   ) {
-    headerTitleService.setTitle("Testcase Edition");
+    headerTitleService.setTitle('Testcase Edition');
   }
 
   ngOnDestroy() {
     this.testcase = null;
-    this.TestService.observableTestCase.next(this.testcase);
+    this.testService.observableTestCase.next(this.testcase);
     this.selectedTest = null;
     this.selectedTestCase = null;
   }
@@ -45,17 +45,17 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
         this.selectedTestCase = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('testcase'));
       }
     }
-    this.TestService.getTestsList();
-    this.TestService.getProjectsList();
-    this.SystemService.getApplicationList();
-    this.TestService.observableTestCase.subscribe(response => {
+    this.testService.getTestsList();
+    this.testService.getProjectsList();
+    this.systemService.getApplicationList();
+    this.testService.observableTestCase.subscribe(response => {
       if (response) {
         this.testcase = response;
-        this.TestService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
-        this.SystemService.getLabelsFromSystem(this.testcase.info.system);
-        this.SystemService.getRevFromSystem(this.testcase.info.system);
-        this.SystemService.getSprintsFromSystem(this.testcase.info.system);
-        this.SystemService.getApplication(this.testcase.info.application);
+        this.testService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
+        this.systemService.getLabelsFromSystem(this.testcase.info.system);
+        this.systemService.getRevFromSystem(this.testcase.info.system);
+        this.systemService.getSprintsFromSystem(this.testcase.info.system);
+        this.systemService.getApplication(this.testcase.info.application);
       }
     });
     // public invariants

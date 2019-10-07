@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { ITestCase, ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { ITest } from 'src/app/shared/model/test.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
@@ -11,7 +11,7 @@ import { NotificationService } from 'src/app/core/services/utils/notification.se
   templateUrl: './tc-selector.component.html',
   styleUrls: ['./tc-selector.component.scss']
 })
-export class TcSelectorComponent implements OnInit {
+export class TcSelectorComponent implements OnInit, OnDestroy {
 
   @Input('test') selectedTest: string;
   @Input('testcase') selectedTestCase: string;
@@ -24,33 +24,33 @@ export class TcSelectorComponent implements OnInit {
   public testcase: ITestCase;
 
   constructor(
-    private TestService: TestService,
-    private SettingsService: SettingsService,
-    private Notification: NotificationService
+    private testService: TestService,
+    private settingsService: SettingsService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnDestroy() {
     this.testcase = null;
-    this.TestService.observableTestCase.next(this.testcase);
+    this.testService.observableTestCase.next(this.testcase);
     this.selectedTest = null;
     this.selectedTestCase = null;
   }
 
   ngOnInit() {
-    this.TestService.observableTestsList.subscribe(response => {
+    this.testService.observableTestsList.subscribe(response => {
       if (response) {
         if (response.length > 0) {
           this.testsList = response;
           if (this.selectedTest != null) {
             // secure the parsed test from URL
-            if (!this.TestService.seletectedTestExist(this.selectedTest)) {
-              console.error("the selected test doesn't exist");
-              this.Notification.createANotification("The selected test doesn't exist", NotificationStyle.Error, true, 5000);
+            if (!this.testService.seletectedTestExist(this.selectedTest)) {
+              console.error('the selected test doesn\'t exist');
+              this.notificationService.createANotification('The selected test doesn\'t exist', NotificationStyle.Error, true, 5000);
               // this.AlertService.displayMessage(Alert_selectedTestDoesNotExist);
               this.selectedTest = null;
             } else {
               this.SelectedTestChange.emit(this.selectedTest);
-              this.TestService.getTestCasesList(this.selectedTest);
+              this.testService.getTestCasesList(this.selectedTest);
             }
           }
         }
@@ -59,19 +59,19 @@ export class TcSelectorComponent implements OnInit {
       }
     });
 
-    this.TestService.observableTestCasesList.subscribe(response => {
+    this.testService.observableTestCasesList.subscribe(response => {
       if (response) {
         if (response.length > 0) {
           this.testcasesList = response;
           // secure the parsed test case from URL
           if (this.selectedTestCase != null && this.selectedTest != null) {
-            if (!this.TestService.selectedTestCaseExist(this.selectedTestCase)) {
-              console.error("the selected test case doesn't exist");
-              this.Notification.createANotification("The selected test casedoesn't exist", NotificationStyle.Error, true, 5000);
+            if (!this.testService.selectedTestCaseExist(this.selectedTestCase)) {
+              console.error('the selected test case doesn\'t exist');
+              this.notificationService.createANotification('The selected test casedoesn\t exist', NotificationStyle.Error, true, 5000);
               // this.AlertService.displayMessage(Alert_selectedTestCaseDoesNotExist);
               this.selectedTestCase = null;
             } else {
-              //this.SelectedTestChange.emit(this.selectedTest);
+              // this.SelectedTestChange.emit(this.selectedTest);
               this.refreshTestCase();
             }
           }
@@ -79,14 +79,15 @@ export class TcSelectorComponent implements OnInit {
       } else {
         this.testcasesList = null;
         if (this.selectedTest != null) {
-          if (this.TestService.seletectedTestExist(this.selectedTest))
-            console.warn("there is no corresponding test case for this test");
-          this.Notification.createANotification("There is no corresponding test case for this test", NotificationStyle.Warning, true, 5000);
+          if (this.testService.seletectedTestExist(this.selectedTest)) {
+            console.warn('there is no corresponding test case for this test');
+          }
+          this.notificationService.createANotification('There is no corresponding test case for this test', NotificationStyle.Warning, true, 5000);
           // this.AlertService.displayMessage(Alert_noTestCaseForATest);
         }
       }
     });
-    this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
+    this.testService.observableTestCase.subscribe(response => { this.testcase = response; });
   }
 
   clearSelectedTestCase() {
@@ -97,26 +98,26 @@ export class TcSelectorComponent implements OnInit {
   selectedTestChange() {
     this.clearSelectedTestCase();
     this.SelectedTestChange.emit(this.selectedTest);
-    this.TestService.getTestCasesList(this.selectedTest);
-    this.TestService.clearTestCase();
+    this.testService.getTestCasesList(this.selectedTest);
+    this.testService.clearTestCase();
   }
 
   selectedTestCaseChange() {
     this.SelectedTestCaseChange.emit(this.selectedTestCase);
     this.refreshTestCase();
-    this.TestService.getTestCase(this.selectedTest, this.selectedTestCase);
-    console.log("selectedTestCaseChange");
-    this.SettingsService.clearFocus();
+    this.testService.getTestCase(this.selectedTest, this.selectedTestCase);
+    console.log('selectedTestCaseChange');
+    this.settingsService.clearFocus();
   }
 
   refreshTestCase() {
-    if (this.selectedTest != null && this.TestService.seletectedTestExist(this.selectedTest)) {
-      if (this.selectedTestCase != null && this.TestService.selectedTestCaseExist(this.selectedTestCase)) {
-        this.TestService.getTestCase(this.selectedTest, this.selectedTestCase);
+    if (this.selectedTest != null && this.testService.seletectedTestExist(this.selectedTest)) {
+      if (this.selectedTestCase != null && this.testService.selectedTestCaseExist(this.selectedTestCase)) {
+        this.testService.getTestCase(this.selectedTest, this.selectedTestCase);
       }
     } else {
       this.testcase = null;
-      this.TestService.observableTestCase.next(this.testcase);
+      this.testService.observableTestCase.next(this.testcase);
     }
   }
 
@@ -126,7 +127,7 @@ export class TcSelectorComponent implements OnInit {
   }
 
   debug() {
-    console.log("Test: " + this.selectedTest + " Testcase: " + this.selectedTestCase);
+    console.log('Test: ' + this.selectedTest + ' Testcase: ' + this.selectedTestCase);
   }
 
 }

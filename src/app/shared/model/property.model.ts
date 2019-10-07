@@ -8,7 +8,7 @@ export class Property {
     country: Array<string>;
     nature: string;
     length: string;
-    rowLimit: number
+    rowLimit: number;
     cacheExpire: number;
     retryPeriod: number;
     retryNb: number;
@@ -16,15 +16,15 @@ export class Property {
     property_id?: number;
 
     constructor(id: number) {
-        this.property = "";
-        this.description = "";
-        this.type = "text";
-        this.value1 = "";
-        this.value2 = "";
-        this.database = "";
+        this.property = '';
+        this.description = '';
+        this.type = 'text';
+        this.value1 = '';
+        this.value2 = '';
+        this.database = '';
         this.country = new Array<string>();
-        this.nature = "";
-        this.length = "0";
+        this.nature = '';
+        this.length = '0';
         this.rowLimit = 0;
         this.cacheExpire = 0;
         this.retryPeriod = 0;

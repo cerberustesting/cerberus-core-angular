@@ -1,5 +1,5 @@
 export interface Filter {
-    name: string,
-    like: boolean,
-    value: string
+    name: string;
+    like: boolean;
+    value: string;
 }

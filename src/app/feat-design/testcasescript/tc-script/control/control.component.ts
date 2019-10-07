@@ -37,8 +37,8 @@ export class ControlComponent implements OnInit {
   constructor(
     private InvariantService: InvariantsService,
     private CrossReferenceService: CrossreferenceService,
-    private TestService: TestService,
-    private SettingsService: SettingsService
+    private testService: TestService,
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit() {
@@ -46,9 +46,9 @@ export class ControlComponent implements OnInit {
     this.control.toDelete = false;
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
-    this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
-    this.SettingsService.observableControl.subscribe(r => {
-      if (this.control == r) {
+    this.testService.observableTestCase.subscribe(response => { this.testcase = response; });
+    this.settingsService.observableControl.subscribe(r => {
+      if (this.control === r) {
         this.isFocused = true;
       } else {
         this.isFocused = false;
@@ -70,7 +70,7 @@ export class ControlComponent implements OnInit {
 
   focusOnControl(): void {
     // send the control to the settings service and thus, to the settings component
-    this.SettingsService.editControlSettings(this.control, this.readonly, this.parentStepIndex, this.parentActionIndex);
+    this.settingsService.editControlSettings(this.control, this.readonly, this.parentStepIndex, this.parentActionIndex);
   }
 
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }

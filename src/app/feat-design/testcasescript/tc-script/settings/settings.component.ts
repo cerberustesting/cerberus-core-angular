@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit {
 
   constructor(
     private InvariantService: InvariantsService,
-    private SettingsService: SettingsService,
+    private settingsService: SettingsService,
     private CrossReferenceService: CrossreferenceService
   ) { }
 
@@ -38,17 +38,17 @@ export class SettingsComponent implements OnInit {
     this.step = null;
     this.action = null;
     this.control = null;
-    this.SettingsService.observableStep.subscribe(response => { this.step = response; });
-    this.SettingsService.observableAction.subscribe(response => { this.action = response; });
-    this.SettingsService.observableControl.subscribe(response => { this.control = response; });
-    this.SettingsService.observableParentStepIndex.subscribe(response => { this.parentStepIndex = response; });
-    this.SettingsService.observableParentActionIndex.subscribe(response => { this.parentActionIndex = response; });
+    this.settingsService.observableStep.subscribe(response => { this.step = response; });
+    this.settingsService.observableAction.subscribe(response => { this.action = response; });
+    this.settingsService.observableControl.subscribe(response => { this.control = response; });
+    this.settingsService.observableParentStepIndex.subscribe(response => { this.parentStepIndex = response; });
+    this.settingsService.observableParentActionIndex.subscribe(response => { this.parentActionIndex = response; });
     // invariants subscription
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
     this.InvariantService.observableStepLoopList.subscribe(response => { this.inv_step_loop = response; });
     this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
-    this.SettingsService.observableReadOnlyMode.subscribe(response => { this.readonly = response; });
+    this.settingsService.observableReadOnlyMode.subscribe(response => { this.readonly = response; });
   }
 
   hasConditionCrossReference(condition: string): boolean { return this.CrossReferenceService.hasCrossReference(condition, this.CrossReferenceService.crossReference_ConditionValue); }

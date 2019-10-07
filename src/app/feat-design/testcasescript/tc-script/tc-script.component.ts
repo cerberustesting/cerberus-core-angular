@@ -26,23 +26,23 @@ export class TcScriptComponent implements OnInit {
   private activePropertyId: number;
   private activeProperty: Array<IProperty>;
   private propertyNameIsInvalid: boolean;
-  private oldVersion = false; //TODO : to remove and keep a version
+  private oldVersion = false; // TODO : to remove and keep a version
 
-  //@ViewChild(ChildComponent) child;
+  // @ViewChild(ChildComponent) child;
 
   constructor(
-    private TestService: TestService,
-    private InvariantsService: InvariantsService
+    private testService: TestService,
+    private invariantsService: InvariantsService
   ) { }
 
   ngOnInit() {
     this.activePropertyId = null;
     this.propertiesList = new Array<IProperty>();
     this.setActiveProperty();
-    this.TestService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
-    this.TestService.observableTestCaseProperties.subscribe(r => {
+    this.testService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
+    this.testService.observableTestCaseProperties.subscribe(r => {
       if (r) {
-        if (r.length != 0) {
+        if (r.length !== 0) {
           this.propertiesList = r;
           if (this.activePropertyId == null) {
             this.setActiveProperty(this.propertiesList[0].property_id);
@@ -59,46 +59,46 @@ export class TcScriptComponent implements OnInit {
 
   // pass the name of the property to insert a property
   addProperty() {
-    var newProp = new Property(this.TestService.getNewPropertyID());
+    const newProp = new Property(this.testService.getNewPropertyID());
     // add the countries from TC header to the new property
-    this.TestService.convertCountriesList(this.testcase.info).forEach((country) => {
+    this.testService.convertCountriesList(this.testcase.info).forEach((country) => {
       newProp.country.push(country);
-    })
-    this.TestService.addProperty(this.propertiesList, newProp);
+    });
+    this.testService.addProperty(this.propertiesList, newProp);
     this.setActiveProperty(newProp.property_id);
   }
 
   addPropertyValue(propId: number) {
-    let newProp = new Property(propId);
-    newProp.property = this.TestService.findPropertyNameById(this.propertiesList, propId);
-    this.TestService.addProperty(this.propertiesList, newProp);
+    const newProp = new Property(propId);
+    newProp.property = this.testService.findPropertyNameById(this.propertiesList, propId);
+    this.testService.addProperty(this.propertiesList, newProp);
     this.setActiveProperty(propId);
   }
 
   removePropertiesById(id: number) {
-    this.TestService.removePropertiesById(this.propertiesList, id);
-    if (this.propertiesList.length == 0) {
+    this.testService.removePropertiesById(this.propertiesList, id);
+    if (this.propertiesList.length === 0) {
       this.setActiveProperty(undefined);
     }
-    if (this.activePropertyId == id) {
+    if (this.activePropertyId === id) {
       this.setActiveProperty(this.propertiesList[0].property_id);
     }
   }
 
   removePropertyValue(prop: IProperty) {
-    console.log(this.TestService.filterPropertiesByid(this.propertiesList, prop.property_id).length);
-    if (this.TestService.filterPropertiesByid(this.propertiesList, prop.property_id).length == 1) {
+    console.log(this.testService.filterPropertiesByid(this.propertiesList, prop.property_id).length);
+    if (this.testService.filterPropertiesByid(this.propertiesList, prop.property_id).length === 1) {
       if (this.propertiesList.length >= 1) {
         this.setActiveProperty(undefined);
       }
     }
-    this.TestService.removePropertyValue(this.propertiesList, prop);
+    this.testService.removePropertyValue(this.propertiesList, prop);
     this.setActiveProperty(prop.property_id);
   }
 
   saveTestCase() {
     // send the testcase to the data service
-    this.TestService.saveTestCase(this.testcase);
+    this.testService.saveTestCase(this.testcase);
   }
 
   setActiveProperty(propId?: number) {
@@ -106,9 +106,9 @@ export class TcScriptComponent implements OnInit {
       this.activeProperty = new Array<IProperty>();
       this.activePropertyId = null;
     } else {
-      //console.log("setActiveProperty for id: " + propId);
+      // console.log("setActiveProperty for id: " + propId);
       this.activePropertyId = propId;
-      this.activeProperty = this.TestService.filterPropertiesByid(this.propertiesList, propId);
+      this.activeProperty = this.testService.filterPropertiesByid(this.propertiesList, propId);
     }
   }
 

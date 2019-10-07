@@ -17,7 +17,7 @@ import { SidecontentService } from 'src/app/core/services/crud/sidecontent.servi
 export class FiltersComponent implements OnInit {
 
   private columnsSectionMouseOver: boolean;
-  private filterSectionMouseOver: boolean = false;
+  private filterSectionMouseOver: boolean;
 
   @Input('columns') columns: Array<Column>;
   @Input('page') page: any;
@@ -29,10 +29,6 @@ export class FiltersComponent implements OnInit {
   @Input() massActionTemplate: any; // TODO : type TemplateRef
   @Output() systemApply = new EventEmitter<string>();
   @Output() pageApply = new EventEmitter<number>();
-
-  resetColumnDrop() {
-    this.columnActive = null;
-  }
 
   private labelList: Array<ILabel>;
   private userSearch: any;
@@ -50,6 +46,7 @@ export class FiltersComponent implements OnInit {
     this.columnActive = this.columns.filter(a => a.active).length;
     this.searchableColumns = this.columns.filter(a => a.searchable || a.filterMode === FILTER_MODE.SEARCH_FIELD);
     this.columnsSectionMouseOver = false;
+    this.filterSectionMouseOver = false;
   }
 
   /**
@@ -60,6 +57,10 @@ export class FiltersComponent implements OnInit {
   toggleColumn(column): void {
     column.active = !column.active;
     this.columnActive = this.columns.filter(a => a.active).length;
+  }
+
+  resetColumnDrop() {
+    this.columnActive = null;
   }
 
   /** applySystem
@@ -73,7 +74,7 @@ export class FiltersComponent implements OnInit {
    * * emit page modifications
    */
   applyPage(): void {
-    let a = document.getElementsByClassName("datatable-body")[0];
+    const a = document.getElementsByClassName('datatable-body')[0];
     a.scroll(0, 0);
     a.scrollBy(0, (this.page.number - 1) * this.page.size * 50 + 50);
     this.pageApply.emit(this.page.number);
@@ -95,9 +96,9 @@ export class FiltersComponent implements OnInit {
   addFilter(column: Column) {
     if (column.filterDisplayed) {
       column.sSearch = [];
-      this.activeFilters.splice(this.activeFilters.indexOf(column.contentName), 1)
+      this.activeFilters.splice(this.activeFilters.indexOf(column.contentName), 1);
     } else {
-      this.activeFilters.push(column.contentName)
+      this.activeFilters.push(column.contentName);
     }
     column.filterDisplayed = !column.filterDisplayed;
 
@@ -121,7 +122,7 @@ export class FiltersComponent implements OnInit {
   }
 
   removeFilter(columnContent: string) {
-    this.activeFilters.splice(this.activeFilters.indexOf(columnContent), 1)
+    this.activeFilters.splice(this.activeFilters.indexOf(columnContent), 1);
   }
 
   toggleColumnsSelection() {

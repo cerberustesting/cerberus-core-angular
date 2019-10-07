@@ -10,7 +10,7 @@ export class SettingsService {
   selectedStep: IStep = null;
   selectedAction: IAction = null;
   selectedControl: IControl = null;
-  readOnlyMode: boolean = false;
+  readOnlyMode: boolean;
   parentStepIndex: number;
   parentActionIndex: number;
 
@@ -21,7 +21,9 @@ export class SettingsService {
   observableParentStepIndex = new BehaviorSubject<number>(this.parentStepIndex);
   observableParentActionIndex = new BehaviorSubject<number>(this.parentActionIndex);
 
-  constructor() { }
+  constructor() {
+    this.readOnlyMode = false;
+  }
 
   editStepSettings(step: IStep, ro: boolean): void {
     this.selectedStep = step;

@@ -12,19 +12,19 @@ export class ScriptComponent implements OnInit {
 
   @Input('testcase') testcase: ITestCase;
 
-  constructor(private TestService: TestService) { }
+  constructor(private testService: TestService) { }
 
   ngOnInit() {
-    this.TestService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
+    this.testService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
   }
 
   dropStep(event: CdkDragDrop<IStep[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    this.TestService.refreshStepSort(this.testcase.stepList);
+    this.testService.refreshStepSort(this.testcase.stepList);
   }
 
   addAStep() {
-    var newStep = new Step(this.testcase.info.testCase, this.testcase.info.test, this.testcase.stepList.length + 1);
+    const newStep = new Step(this.testcase.info.testCase, this.testcase.info.test, this.testcase.stepList.length + 1);
     this.testcase.stepList.push(newStep);
     // useless to refresh the step sort here since we can only add at the end.
     // if later modification (e.g. adding a step after any step), please consider

@@ -41,8 +41,8 @@ export class ActionComponent implements OnInit {
   constructor(
     private InvariantService: InvariantsService,
     private CrossReferenceService: CrossreferenceService,
-    private TestService: TestService,
-    private SettingsService: SettingsService,
+    private testService: TestService,
+    private settingsService: SettingsService,
     private DragAndDropService: DraganddropService
   ) { }
 
@@ -52,12 +52,12 @@ export class ActionComponent implements OnInit {
     this.DragAndAdropAreaId = this.generateID();
     this.DragAndDropService.observableControlsIdList.subscribe(r => { this.DragAndDropControlIDList = r; });
     // @ts-ignore
-    if (this.action.controlList.length == 0) { this.showControlList = false; } else { this.showControlList = true; }
+    if (this.action.controlList.length === 0) { this.showControlList = false; } else { this.showControlList = true; }
     this.InvariantService.observableActionsList.subscribe(response => { this.inv_action = response; });
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
-    this.TestService.observableTestCase.subscribe(response => { this.testcase = response; });
-    this.SettingsService.observableAction.subscribe(r => {
-      if (this.action == r) {
+    this.testService.observableTestCase.subscribe(response => { this.testcase = response; });
+    this.settingsService.observableAction.subscribe(r => {
+      if (this.action === r) {
         this.isFocused = true;
       } else {
         this.isFocused = false;
@@ -71,16 +71,16 @@ export class ActionComponent implements OnInit {
   }
 
   addControl(destinationIndex: number): void {
-    var newControl = new Control(this.testcase.info.test, this.testcase.info.testCase, destinationIndex);
+    const newControl = new Control(this.testcase.info.test, this.testcase.info.testCase, destinationIndex);
     this.action.controlList.splice(destinationIndex, 0, newControl);
-    this.TestService.refreshControlSort(this.action.controlList);
+    this.testService.refreshControlSort(this.action.controlList);
     // force the control list to be displayed when adding a control
     this.showControlList = true;
   }
 
   focusOnAction(): void {
     // send the action to the settings service and thus, to the settings component
-    this.SettingsService.editActionSettings(this.action, this.readonly, this.parentStepIndex);
+    this.settingsService.editActionSettings(this.action, this.readonly, this.parentStepIndex);
   }
 
   dropControl(event: CdkDragDrop<IControl[]>) {
@@ -92,13 +92,13 @@ export class ActionComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
-    this.TestService.refreshControlSort(this.action.controlList);
+    this.testService.refreshControlSort(this.action.controlList);
     // show the control List when dragging to an action without control
-    if (this.showControlList == false) { this.showControlList = true }
+    if (this.showControlList === false) { this.showControlList = true; }
   }
 
   generateID() {
-    var id = 'control-droplist-' + this.DragAndDropService.getControlsListID();
+    const id = 'control-droplist-' + this.DragAndDropService.getControlsListID();
     this.DragAndDropService.addIDToControlList(id);
     return id;
   }
@@ -112,7 +112,7 @@ export class ActionComponent implements OnInit {
 
   controlEntered() {
     // make sure show the controls list when dragging a control from another list in the action
-    if (this.showControlList == false) {
+    if (this.showControlList === false) {
       this.showControlList = true;
       this.isDragging = true;
     }

@@ -6,7 +6,7 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 import { DraganddropService } from '../../draganddrop.service';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 
-export class PropertyType_Fields_CrossReference {
+export class PropertyTypeFieldsCrossReference {
   type: string;
   fields: Array<string>;
 }
@@ -32,12 +32,12 @@ export class PropertyvalueComponent implements OnInit, OnDestroy {
   private showAdvanced: boolean;
   // public inavariants
   private inv_propertyDatabaseList: Array<IInvariant>;
-  // private inavariants    
+  // private inavariants
   private inv_propertyTypeList: Array<IInvariant>;
   private inv_propertyNatureList: Array<IInvariant>;
 
   constructor(
-    private InvariantsService: InvariantsService,
+    private invariantsService: InvariantsService,
     private DragAndDropService: DraganddropService,
     private CrossReferenceService: CrossreferenceService
   ) { }
@@ -45,16 +45,16 @@ export class PropertyvalueComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.showEmptyCountryList = false;
     this.showAdvanced = false;
-    this.InvariantsService.observablePropertyTypeList.subscribe(r => { this.inv_propertyTypeList = r; });
-    this.InvariantsService.observablePropertyNatureList.subscribe(r => { this.inv_propertyNatureList = r; });
-    this.InvariantsService.observablePropertyDatabaseList.subscribe(r => { this.inv_propertyDatabaseList = r; });
-    this.DragAndDropId = "propcountries-droplist-" + this.index;
+    this.invariantsService.observablePropertyTypeList.subscribe(r => { this.inv_propertyTypeList = r; });
+    this.invariantsService.observablePropertyNatureList.subscribe(r => { this.inv_propertyNatureList = r; });
+    this.invariantsService.observablePropertyDatabaseList.subscribe(r => { this.inv_propertyDatabaseList = r; });
+    this.DragAndDropId = 'propcountries-droplist-' + this.index;
     this.DragAndDropService.addIDToPropCountriesList(this.DragAndDropId);
     this.DragAndDropService.observablePropCountriesList.subscribe(r => { this.DragAndDropList = r; });
   }
 
   generateID() {
-    var id = 'country-droplist-' + this.DragAndDropService.getControlsListID();
+    const id = 'country-droplist-' + this.DragAndDropService.getControlsListID();
     this.DragAndDropService.addIDToControlList(id);
     return id;
   }
@@ -73,12 +73,11 @@ export class PropertyvalueComponent implements OnInit, OnDestroy {
 
   dropOutPropCountry(event: CdkDragDrop<string[]>) {
     // when the item leaves the component (still dragging)
-    // if this is the last item 
-    if (event.container.data.length == 1) {
+    // if this is the last item
+    if (event.container.data.length === 1) {
       this.showEmptyCountryList = true;
-    }
-    // or we leave a element without country 
-    else if (event.container.data.length == 0) {
+    } else if (event.container.data.length === 0) {
+      // or we leave a element without country
       this.showEmptyCountryList = true;
     }
   }
@@ -86,7 +85,7 @@ export class PropertyvalueComponent implements OnInit, OnDestroy {
   dropInPropCountry(event: CdkDragDrop<string[]>) {
     // when the item enter the component (still dragging)
     // if we are entering a empty component
-    if (event.container.data.length == 0) {
+    if (event.container.data.length === 0) {
       this.showEmptyCountryList = false;
     }
   }
@@ -101,8 +100,8 @@ export class PropertyvalueComponent implements OnInit, OnDestroy {
 
   getValue1Width(type: string): string {
     switch (type) {
-      case 'getFromSql': { return '9' }
-      default: { return '12' }
+      case 'getFromSql': { return '9'; }
+      default: { return '12'; }
     }
   }
 
@@ -110,7 +109,7 @@ export class PropertyvalueComponent implements OnInit, OnDestroy {
     // remove the component ID from the drag & drop list
     // not mandatory but cleaner
     this.DragAndDropService.deleteIDFromPropCountriesList(this.DragAndDropId);
-    // clean the model 
+    // clean the model
     this.propertyValueDeleted.emit(true);
   }
 

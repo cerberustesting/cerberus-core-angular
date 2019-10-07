@@ -8,9 +8,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CustomModalComponent implements OnInit {
 
-  @Input() title:string;
+  @Input() title: string;
   @Input() text: string;
-  @Input() fct: (n: void)=>void;
+  @Input() fct: (n: void) => void;
 
   constructor(public activeModal: NgbActiveModal) { }
 

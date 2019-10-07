@@ -9,10 +9,10 @@ export class TagDetail {
     ciResult: string;
 
     constructor() {
-        this.start = "";
-        this.end = "";
-        this.duration = "";
-        this.ciResult = "";
+        this.start = '';
+        this.end = '';
+        this.duration = '';
+        this.ciResult = '';
     }
 }
 

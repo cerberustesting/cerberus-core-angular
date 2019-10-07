@@ -42,8 +42,8 @@ export interface ITestCaseHeader {
     toRev: string;
     testCase: string;
     status: string;
-    dependencyList: Array<ITestCaseDependency>
-    [key: string]: any
+    dependencyList: Array<ITestCaseDependency>;
+    [key: string]: any;
 }
 
 export interface ITestCaseDependency {
@@ -98,30 +98,30 @@ export class Step {
     dateModif: string;
 
     constructor(test: string, testCase: string, sort: number) {
-        this.objType = "step";
+        this.objType = 'step';
         this.test = test;
         this.testCase = testCase;
-        this.conditionOper = "always";
-        this.conditionVal1 = "";
-        this.conditionVal2 = "";
-        this.forceExe = "N";
-        this.loop = "onceIfConditionTrue";
-        this.useStep = "N";
+        this.conditionOper = 'always';
+        this.conditionVal1 = '';
+        this.conditionVal2 = '';
+        this.forceExe = 'N';
+        this.loop = 'onceIfConditionTrue';
+        this.useStep = 'N';
         this.isStepInUseByOtherTestCase = false;
-        this.useStepTest = "";
-        this.useStepTestCase = "";
-        this.inLibrary = "N";
+        this.useStepTest = '';
+        this.useStepTestCase = '';
+        this.inLibrary = 'N';
         this.initialStep = 0;
         this.useStepStep = 0;
         this.toDelete = false;
-        this.description = "";
+        this.description = '';
         this.actionList = new Array<IAction>();
         this.sort = sort;
         this.step = null;
-        this.dateCreated = "";
-        this.dateModif = "";
-        this.usrModif = "";
-        this.usrCreated = "";
+        this.dateCreated = '';
+        this.dateModif = '';
+        this.usrModif = '';
+        this.usrCreated = '';
     }
 }
 
@@ -146,22 +146,22 @@ export class Action {
     controlList: Array<IControl>;
 
     constructor(test: string, testcase: string, sort: number) {
-        this.objType = "action";
-        this.forceExeStatus = "";
+        this.objType = 'action';
+        this.forceExeStatus = '';
         this.test = test;
         this.testCase = testcase;
-        this.conditionOper = "always";
-        this.conditionVal1 = "";
-        this.conditionVal2 = "";
-        this.action = "doNothing";
-        this.value1 = "";
-        this.value2 = "";
-        this.description = "";
+        this.conditionOper = 'always';
+        this.conditionVal1 = '';
+        this.conditionVal2 = '';
+        this.action = 'doNothing';
+        this.value1 = '';
+        this.value2 = '';
+        this.description = '';
         this.sort = sort;
         this.sequence = null;
         this.step = null;
-        this.forceExeStatus = ""
-        this.screenshotFilename = "";
+        this.forceExeStatus = '';
+        this.screenshotFilename = '';
         this.controlList = new Array<IControl>();
     }
 }
@@ -188,18 +188,18 @@ export class Control {
     toDelete: boolean;
 
     constructor(test: string, testCase: string, sort: number) {
-        this.objType = "control";
+        this.objType = 'control';
         this.test = test;
         this.testCase = testCase;
-        this.conditionOper = "always";
-        this.conditionVal1 = "";
-        this.conditionVal2 = "";
-        this.description = "";
-        this.control = "Unknown";
-        this.value1 = "";
-        this.value2 = "";
-        this.fatal = "N";
-        this.screenshotFilename = "";
+        this.conditionOper = 'always';
+        this.conditionVal1 = '';
+        this.conditionVal2 = '';
+        this.description = '';
+        this.control = 'Unknown';
+        this.value1 = '';
+        this.value2 = '';
+        this.fatal = 'N';
+        this.screenshotFilename = '';
         this.sort = sort;
         this.sequence = null;
         this.controlSequence = null;

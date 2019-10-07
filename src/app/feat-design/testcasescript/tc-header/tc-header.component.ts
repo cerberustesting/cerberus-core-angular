@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { ITest } from 'src/app/shared/model/test.model';
@@ -17,7 +17,7 @@ declare function blockAPI(mode, id): void;
   templateUrl: './tc-header.component.html',
   styleUrls: ['./tc-header.component.scss']
 })
-export class TcHeaderComponent implements OnInit {
+export class TcHeaderComponent implements OnInit, OnChanges {
 
   @Input('test') selectedTest: string;
   @Input('testcase') selectedTestCase: string;
@@ -29,16 +29,16 @@ export class TcHeaderComponent implements OnInit {
   private originalTest: string;
   private originalTestCase: string;
 
-  block_id: string = "testcaseheader_block";
+  public block_id: string;
 
-  testsList: Array<ITest> = new Array<ITest>();
+  private testsList: Array<ITest> = new Array<ITest>();
   private testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
 
-  tabs: string[] = ['Definition', 'Execution', 'Label', 'Origin', 'Bug Report', 'Tracability'];
-  selectedTab: string;
+  private tabs: string[] = ['Definition', 'Execution', 'Label', 'Origin', 'Bug Report', 'Tracability'];
+  private selectedTab: string;
 
-  labels_tabs: string[] = ['Stickers', 'Requirements', 'Batteries'];
-  selectedLabelsTab: string;
+  private labels_tabs: string[] = ['Stickers', 'Requirements', 'Batteries'];
+  private selectedLabelsTab: string;
 
   // labels
   private labelsList: Array<ILabel>;
@@ -65,17 +65,19 @@ export class TcHeaderComponent implements OnInit {
   private inv_condition_oper: Array<IInvariant>;
 
   constructor(
-    private TestService: TestService,
+    private testService: TestService,
     private InvariantService: InvariantsService,
-    private SystemService: SystemService
+    private systemService: SystemService
   ) { }
 
   ngOnChanges() {
     if (this.testcaseheader) {
       // DIRTY
       this.testcaseheader_countryList_custom = new Array<string>();
-      for (var country in this.testcaseheader.countryList) {
-        this.testcaseheader_countryList_custom.push(country);
+      for (const country in this.testcaseheader.countryList) {
+        if (country) {
+          this.testcaseheader_countryList_custom.push(country);
+        }
       }
       this.originalTest = this.testcaseheader.test;
       this.originalTestCase = this.testcaseheader.testCase;
@@ -83,49 +85,55 @@ export class TcHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.refreshTestCase();
-    if (this.TestService.refreshTC) {
+    this.block_id = 'testcaseheader_block';
+    if (this.testService.refreshTC) {
       blockAPI('state_loading', this.block_id);
-      var loadingAnimationTime = setInterval(() => {
-        this.TestService.refreshTC = false;
+      const loadingAnimationTime = setInterval(() => {
+        this.testService.refreshTC = false;
         blockAPI('state_normal', this.block_id);
         clearInterval(loadingAnimationTime);
       }, 1000);
     } else {
       blockAPI('content_hide', this.block_id);
     }
-    this.TestService.observableTestsList.subscribe(response => { this.testsList = response; });
-    this.TestService.observableTestCasesList.subscribe(response => { this.testcasesList = response; });
-    this.TestService.observableTestCaseLabels.subscribe(response => { this.testcaseheader_labelsList = response; });
-    this.TestService.observableProjectsList.subscribe(response => { this.projectsList = response; });
+    this.testService.observableTestsList.subscribe(response => { this.testsList = response; });
+    this.testService.observableTestCasesList.subscribe(response => { this.testcasesList = response; });
+    this.testService.observableTestCaseLabels.subscribe(response => { this.testcaseheader_labelsList = response; });
+    this.testService.observableProjectsList.subscribe(response => { this.projectsList = response; });
     this.InvariantService.observableCountriesList.subscribe(response => { this.inv_countries = response; });
     this.InvariantService.observableTcStatus.subscribe(response => { this.inv_tcstatus = response; });
     this.InvariantService.observableGroupsList.subscribe(response => { this.inv_group = response; });
     this.InvariantService.observablePriorities.subscribe(response => { this.inv_priorities = response; });
-    this.InvariantService.observableOriginsList.subscribe(response => { this.inv_originsList = response; })
+    this.InvariantService.observableOriginsList.subscribe(response => { this.inv_originsList = response; });
     this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
-    this.SystemService.observableApplicationList.subscribe(response => { this.applicationsList = response; });
-    this.SystemService.observableApplication.subscribe(response => { this.application = response; });
-    this.SystemService.observableLabelsList.subscribe(response => {
+    this.systemService.observableApplicationList.subscribe(response => { this.applicationsList = response; });
+    this.systemService.observableApplication.subscribe(response => { this.application = response; });
+    this.systemService.observableLabelsList.subscribe(response => {
       this.labelsList = response;
       if (this.labelsList) {
-        this.stickersList = this.SystemService.filterLabels(this.labelsList, 'STICKER');
-        this.requirementsList = this.SystemService.filterLabels(this.labelsList, 'REQUIREMENT');
-        this.batteriesList = this.SystemService.filterLabels(this.labelsList, 'BATTERY');
+        this.stickersList = this.systemService.filterLabels(this.labelsList, 'STICKER');
+        this.requirementsList = this.systemService.filterLabels(this.labelsList, 'REQUIREMENT');
+        this.batteriesList = this.systemService.filterLabels(this.labelsList, 'BATTERY');
       }
     });
-    this.SystemService.observableSprints.subscribe(response => {
+    this.systemService.observableSprints.subscribe(response => {
       if (response) {
         this.sprints = response;
-        if (response.length > 0) { this.isThereAnySprintDefined = true; }
-        else { this.isThereAnySprintDefined = false; }
+        if (response.length > 0) {
+          this.isThereAnySprintDefined = true;
+        } else {
+          this.isThereAnySprintDefined = false;
+        }
       }
     });
-    this.SystemService.observableRevs.subscribe(response => {
+    this.systemService.observableRevs.subscribe(response => {
       if (response) {
         this.revs = response;
-        if (response.length > 0) { this.isThereAnyRevDefined = true; }
-        else { this.isThereAnyRevDefined = false; }
+        if (response.length > 0) {
+          this.isThereAnyRevDefined = true;
+        } else {
+          this.isThereAnyRevDefined = false;
+        }
       }
     });
     // set the default openened tab
@@ -134,13 +142,13 @@ export class TcHeaderComponent implements OnInit {
   }
 
   refreshTestCase() {
-    this.TestService.getTestsList();
-    this.TestService.getTestCase(this.selectedTest, this.selectedTestCase);
-    this.SystemService.getLabelsFromSystem(this.testcaseheader.system);
-    this.SystemService.getRevFromSystem(this.testcaseheader.system);
-    this.SystemService.getSprintsFromSystem(this.testcaseheader.system);
-    this.SystemService.getApplication(this.testcaseheader.application);
-    this.TestService.getProjectsList();
+    this.testService.getTestsList();
+    this.testService.getTestCase(this.selectedTest, this.selectedTestCase);
+    this.systemService.getLabelsFromSystem(this.testcaseheader.system);
+    this.systemService.getRevFromSystem(this.testcaseheader.system);
+    this.systemService.getSprintsFromSystem(this.testcaseheader.system);
+    this.systemService.getApplication(this.testcaseheader.application);
+    this.testService.getProjectsList();
     this.InvariantService.getCountriesList();
     this.InvariantService.getTcStatus();
     this.InvariantService.getOriginsList();
@@ -148,13 +156,13 @@ export class TcHeaderComponent implements OnInit {
     this.InvariantService.getGroupList();
     this.InvariantService.getOriginsList();
     this.InvariantService.getStepConditionOperList();
-    this.SystemService.getApplicationList();
-    this.TestService.refreshTC = true;
+    this.systemService.getApplicationList();
+    this.testService.refreshTC = true;
   }
 
   // DIRTY : the model should be an array of string, not a JSON object with {"FR": FR}
   updateCheckedCountries(country) {
-    var index = this.testcaseheader_countryList_custom.indexOf(country.value);
+    const index = this.testcaseheader_countryList_custom.indexOf(country.value);
     if (index >= 0) {
       // remove it
       this.testcaseheader_countryList_custom.splice(index, 1);
@@ -172,28 +180,30 @@ export class TcHeaderComponent implements OnInit {
 
   removeLabelFromTestCase(labelid: number) {
     if (this.isLabelPresentinTestCase(labelid)) {
-      var label = this.testcaseheader_labelsList.find(x => x.id === labelid);
-      var index = this.testcaseheader_labelsList.indexOf(label);
+      const label = this.testcaseheader_labelsList.find(x => x.id === labelid);
+      const index = this.testcaseheader_labelsList.indexOf(label);
       this.testcaseheader_labelsList.splice(index, 1);
     }
   }
 
   isLabelPresentinTestCase(labelid: number) {
-    return this.testcaseheader_labelsList.some(x => x.id == labelid);
+    return this.testcaseheader_labelsList.some(x => x.id = labelid);
   }
 
   redirectToBugID(): void {
-    if (this.testcaseheader.bugID != null) { window.open(this.application.bugTrackerNewUrl, "_blank"); }
+    if (this.testcaseheader.bugID != null) { window.open(this.application.bugTrackerNewUrl, '_blank'); }
   }
 
   saveTestCaseHeader() {
     this.testcaseheader_countryList = {};
-    for (var index in this.testcaseheader_countryList_custom) {
-      var country = this.testcaseheader_countryList_custom[index];
-      Object.assign(this.testcaseheader_countryList, { [country]: country });
+    for (const index in this.testcaseheader_countryList_custom) {
+      if (index) {
+        const country = this.testcaseheader_countryList_custom[index];
+        Object.assign(this.testcaseheader_countryList, { [country]: country });
+      }
     }
     this.testcaseheader.countryList = this.testcaseheader_countryList;
-    this.TestService.saveTestCaseHeader(this.testcaseheader, this.originalTest, this.originalTestCase);
+    this.testService.saveTestCaseHeader(this.testcaseheader, this.originalTest, this.originalTestCase);
   }
 
   debug() { }

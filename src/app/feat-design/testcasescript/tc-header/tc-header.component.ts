@@ -31,11 +31,11 @@ export class TcHeaderComponent implements OnInit, OnChanges {
 
   public block_id: string;
 
-  private testsList: Array<ITest> = new Array<ITest>();
+  public testsList: Array<ITest> = new Array<ITest>();
   private testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
 
-  private tabs: string[] = ['Definition', 'Execution', 'Label', 'Origin', 'Bug Report', 'Tracability'];
-  private selectedTab: string;
+  public tabs: string[] = ['Definition', 'Execution', 'Label', 'Origin', 'Bug Report', 'Tracability'];
+  public selectedTab: string;
 
   private labels_tabs: string[] = ['Stickers', 'Requirements', 'Batteries'];
   private selectedLabelsTab: string;

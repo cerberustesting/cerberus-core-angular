@@ -11,7 +11,7 @@ addons:
 before_script:
 - npm install -g @angular/cli
 script:
-#- ng lint --force=true
+- ng lint
 - ng build --prod
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_46e7356b76be_key -iv $encrypted_46e7356b76be_iv  -in deploy_rsa.enc -out /tmp/deploy_rsa -d

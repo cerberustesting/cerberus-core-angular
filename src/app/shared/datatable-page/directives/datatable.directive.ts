@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[datatable-filter-tmp]'
+  selector: '[cerberusDatatableFilter]'
 })
 export class DatatableFilterTmpDirective {
 
@@ -10,7 +10,7 @@ export class DatatableFilterTmpDirective {
 }
 
 @Directive({
-  selector: '[datatable-mass-action-tmp]'
+  selector: '[cerberusDatatableMassAction]'
 })
 export class DatatableMassActionTmpDirective {
 
@@ -19,9 +19,9 @@ export class DatatableMassActionTmpDirective {
 }
 
 @Directive({
-  selector: '[datatable-end-line-tmp]'
+  selector: '[cerberusDatatableEndLineAction]'
 })
-export class DatatableEndLineAction {
+export class DatatableEndLineActionDirective {
 
   constructor() { }
 

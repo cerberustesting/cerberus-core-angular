@@ -5,13 +5,13 @@
     [refreshResults]="refreshResultsEvent.asObservable()">
 
     <!--START Template for create datalib button-->
-    <ng-template datatable-filter-tmp>
+    <ng-template cerberusDatatableFilter>
         <button class="btn btn-info mr-4 mb-3" (click)="createDatalib()"><i class="fa fa-fw fa-plus download mr-2"></i>Datalib</button>
     </ng-template>
     <!--END Template for create datalib button-->
     
     <!--START Template for End Row Buttons-->
-    <ng-template datatable-end-line-tmp let-row="row">
+    <ng-template cerberusDatatableEndLineAction let-row="row">
         <div class="row-menu">
             <div class="actions-section">
                 <button class="btn btn-outline-danger" (click)="deleteDataLib(row)">

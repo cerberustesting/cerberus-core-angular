@@ -3,7 +3,7 @@ import { Column } from '../model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
-import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineAction } from './directives/datatable.directive';
+import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 
@@ -24,7 +24,7 @@ export class DatatablePageComponent implements OnInit {
 
   @ContentChild(DatatableFilterTmpDirective, { read: TemplateRef, static: true }) filterTemplate: TemplateRef<any>;
   @ContentChild(DatatableMassActionTmpDirective, { read: TemplateRef, static: true }) massActionTemplate: TemplateRef<any>;
-  @ContentChild(DatatableEndLineAction, { read: TemplateRef, static: true }) endLineActionTemplate: TemplateRef<any>;
+  @ContentChild(DatatableEndLineActionDirective, { read: TemplateRef, static: true }) endLineActionTemplate: TemplateRef<any>;
 
   name: String;
   private cache: any = {}; // number of displayed rows

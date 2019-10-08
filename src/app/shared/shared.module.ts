@@ -17,7 +17,7 @@ import { CustomModalComponent } from './custom-modal/custom-modal.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineAction } from './datatable-page/directives/datatable.directive';
+import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './datatable-page/directives/datatable.directive';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, Datatable
     NotificationsComponent,
     DatatableFilterTmpDirective,
     DatatableMassActionTmpDirective,
-    DatatableEndLineAction
+    DatatableEndLineActionDirective
   ],
   imports: [
     CommonModule,
@@ -61,7 +61,7 @@ import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, Datatable
     NotificationsComponent,
     DatatableFilterTmpDirective,
     DatatableMassActionTmpDirective,
-    DatatableEndLineAction
+    DatatableEndLineActionDirective
   ],
   providers: [
     TrueindexPipe,

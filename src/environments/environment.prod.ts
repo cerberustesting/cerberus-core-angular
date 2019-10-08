@@ -1,14 +1,14 @@
-import npm_package from "../../package.json";
+import npm_package from '../../package.json';
 
 // KEYCLOAK INFORMATION
-let keycloakConfig: any = {
+const keycloakConfig: any = {
   url: 'https://auth.cerberus-testing.org/auth',
   realm: 'CerberusQA',
   clientId: 'cerberus-angular'
 };
 
 // CERBERUS API ENDPOINT
-let API_endpoint: string = "https://qa.cerberus-testing.org";
+const API_endpoint = 'https://qa.cerberus-testing.org';
 
 export const environment = {
   production: true,

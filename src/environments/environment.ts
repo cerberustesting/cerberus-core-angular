@@ -1,18 +1,18 @@
-import npm_package from "../../package.json";
+import npm_package from '../../package.json';
 
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 // KEYCLOAK INFORMATION
-let keycloakConfig: any = {
+const keycloakConfig: any = {
   url: 'https://auth.cerberus-testing.org/auth',
   realm: 'CerberusQA',
   clientId: 'cerberus-angular'
 };
 
 // CERBERUS API ENDPOINT
-let API_endpoint: string = "https://qa.cerberus-testing.org";
+const API_endpoint = 'https://qa.cerberus-testing.org';
 
 export const environment = {
   production: false,

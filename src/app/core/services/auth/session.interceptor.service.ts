@@ -22,8 +22,8 @@ export class SessionInterceptorService implements HttpInterceptor {
   }
 
   addTokenToHeader(headers: HttpHeaders = new HttpHeaders()): Observable<HttpHeaders> {
-    // TODO: create is deprecated: use new Observable()
-    // use of keycloak-angular might be a better idea
+    // TODO: use of keycloak-angular might be a better idea
+    // tslint:disable-next-line
     return Observable.create(async (observer: Observer<any>) => {
       try {
         const token: string = await this._keycloakService.getToken();

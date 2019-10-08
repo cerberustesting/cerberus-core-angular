@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
-import { IAction, ITestCase, Control, IControl, Action } from 'src/app/shared/model/testcase.model';
+import { Action, ITestCase, Control } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 import { TestService } from 'src/app/core/services/crud/test.service';
@@ -15,7 +15,7 @@ import { DraganddropService } from '../draganddrop.service';
 })
 export class ActionComponent implements OnInit {
 
-  @Input('action') action: IAction;
+  @Input('action') action: Action;
   @Input('readonly') readonly: boolean;
   @Input('showContent') showControlList: boolean;
   @Input('parentStepIndex') parentStepIndex: number;
@@ -83,7 +83,7 @@ export class ActionComponent implements OnInit {
     this.settingsService.editActionSettings(this.action, this.readonly, this.parentStepIndex);
   }
 
-  dropControl(event: CdkDragDrop<IControl[]>) {
+  dropControl(event: CdkDragDrop<Control[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

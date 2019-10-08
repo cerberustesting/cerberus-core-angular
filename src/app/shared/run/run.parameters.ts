@@ -43,20 +43,20 @@ export class RunParameters {
         this.screensize = null;
         this.manualurl = 0;
         this.myhost = null;
-   this.mycontextroot = null;
-   this.myloginrelativeurl = null;
-   this.myenvdata = null;
-   this.tag = [];
-   this.screenshot = 0;
-   this.verbose = 1;
-   this.timeout = null;
-   this.pagesource = 1;
-   this.seleniumlog = 1;
-   this.manualexecution = 'N';
-   this.retries = 0;
-   this.priority = 1000;
-   this.outputformat = 'json';
-   this.executor = null;
+        this.mycontextroot = null;
+        this.myloginrelativeurl = null;
+        this.myenvdata = null;
+        this.tag = [];
+        this.screenshot = 0;
+        this.verbose = 1;
+        this.timeout = null;
+        this.pagesource = 1;
+        this.seleniumlog = 1;
+        this.manualexecution = 'N';
+        this.retries = 0;
+        this.priority = 1000;
+        this.outputformat = 'json';
+        this.executor = null;
     }
 }
-export interface IRunParameters extends RunParameters { }
+

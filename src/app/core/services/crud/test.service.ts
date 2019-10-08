@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ITest } from 'src/app/shared/model/test.model';
-import { ITestCaseHeader, ITestCase, IStep, IAction, IControl } from 'src/app/shared/model/testcase.model';
+import { ITestCaseHeader, ITestCase, Step, Action, Control } from 'src/app/shared/model/testcase.model';
 import { ILabel, ITestCaseLabel } from 'src/app/shared/model/label.model';
 import { IProject } from 'src/app/shared/model/project.model';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
-import { IProperty } from 'src/app/shared/model/property.model';
+import { Property } from 'src/app/shared/model/property.model';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../utils/notification.service';
-import { catchError, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { NotificationStyle } from '../utils/notification.model';
 
 const httpOptions = {
@@ -36,7 +36,7 @@ export class TestService {
   // should only be one object
   testcaseheader: ITestCaseHeader = null;
   testcase_labels: Array<ILabel> = new Array<ILabel>();
-  testcase_properties: Array<IProperty>;
+  testcase_properties: Array<Property>;
 
   private testcaseheader_countriesList_format = new Array<string>();
   // project
@@ -51,7 +51,7 @@ export class TestService {
   observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
   observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
-  observableTestCaseProperties = new BehaviorSubject<IProperty[]>(this.testcase_properties);
+  observableTestCaseProperties = new BehaviorSubject<Property[]>(this.testcase_properties);
   observableTestCaseHeader = new BehaviorSubject<ITestCaseHeader>(this.testcaseheader);
   // boolean
   refreshTC: boolean;
@@ -266,7 +266,7 @@ export class TestService {
 
   getProperties(test: string, testcase: string) {
     const url = environment.cerberus_api_url + '/GetPropertiesForTestCase?test=' + test + '&testcase=' + testcase;
-    this.http.get<IProperty[]>(url)
+    this.http.get<Property[]>(url)
       .subscribe((response) => {
         // split the properties by country (one per country)
         this.testcase_properties = this.sanitizePropertiesList(response);
@@ -275,7 +275,7 @@ export class TestService {
   }
 
   // DIRTY : add angular managed ids to separate properties uniquely
-  sanitizePropertiesList(propList: Array<IProperty>): Array<IProperty> {
+  sanitizePropertiesList(propList: Array<Property>): Array<Property> {
     let id = 0;
     propList.forEach((prop1) => {
       const propName = prop1.property;
@@ -307,18 +307,18 @@ export class TestService {
   }
 
   // rename several property values with the same property_id
-  renameProperty(propList: Array<IProperty>, id: number, newName: string): Array<IProperty> {
+  renameProperty(propList: Array<Property>, id: number, newName: string): Array<Property> {
     propList.forEach((prop) => { if (prop.property_id === id) { prop.property = newName; } });
     return propList;
   }
 
   // add a property
-  addProperty(propList: Array<IProperty>, prop: IProperty): Array<IProperty> {
+  addProperty(propList: Array<Property>, prop: Property): Array<Property> {
     propList.push(prop);
     return propList;
   }
 
-  removePropertiesById(propList: Array<IProperty>, id: number): Array<IProperty> {
+  removePropertiesById(propList: Array<Property>, id: number): Array<Property> {
     // must loop backward to avoid having indexes problem when calling splice()
     for (let i = propList.length - 1; i >= 0; i--) {
       const prop = propList[i];
@@ -330,17 +330,17 @@ export class TestService {
   }
 
   // remove from the properties model a single propValue
-  removePropertyValue(propList: Array<IProperty>, prop: IProperty): Array<IProperty> {
+  removePropertyValue(propList: Array<Property>, prop: Property): Array<Property> {
     const propValue = propList.find(p => p === prop);
     propList.splice(this.testcase_properties.indexOf(propValue), 1);
     return propList;
   }
 
-  filterPropertiesByid(propertiesList: Array<IProperty>, id: number): Array<IProperty> {
+  filterPropertiesByid(propertiesList: Array<Property>, id: number): Array<Property> {
     return propertiesList.filter(prop => prop.property_id === id);
   }
 
-  findPropertyNameById(propList: Array<IProperty>, id: number): string {
+  findPropertyNameById(propList: Array<Property>, id: number): string {
     return propList.find(prop => prop.property_id === id).property;
   }
 
@@ -378,7 +378,7 @@ export class TestService {
     */
   }
 
-  refreshStepSort(stepList: Array<IStep>): void {
+  refreshStepSort(stepList: Array<Step>): void {
     stepList.forEach((step, index) => {
       const newIndex = this.trueindexPipe.transform(index);
       // console.log("step #"+newIndex+' descripton: '+step.description);
@@ -386,7 +386,7 @@ export class TestService {
     });
   }
 
-  refreshActionSort(actionList: Array<IAction>): void {
+  refreshActionSort(actionList: Array<Action>): void {
     actionList.forEach((action, index) => {
       const newIndex = this.trueindexPipe.transform(index);
       // console.log("action #"+newIndex+' descripton: '+action.description);
@@ -394,7 +394,7 @@ export class TestService {
     });
   }
 
-  refreshControlSort(controlList: Array<IControl>): void {
+  refreshControlSort(controlList: Array<Control>): void {
     controlList.forEach((control, index) => {
       const newIndex = this.trueindexPipe.transform(index);
       // console.log("control #"+newIndex+' descripton: '+control.description);

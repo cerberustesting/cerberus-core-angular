@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, AfterViewChecked, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import { IProperty, Property } from 'src/app/shared/model/property.model';
+import { Property } from 'src/app/shared/model/property.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
@@ -14,7 +14,7 @@ import { DraganddropService } from '../draganddrop.service';
 })
 export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
-  @Input('propertiesById') propertiesById: Array<IProperty>;
+  @Input('propertiesById') propertiesById: Array<Property>;
   propertyName: string;
   propertyNameIsInvalid: boolean;
 
@@ -24,10 +24,10 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
 
   // propertyValueRemoved: sent when a new property value is removed
   // in order to kill the component if it is the last value
-  @Output() propertyValueRemoved = new EventEmitter<IProperty>();
+  @Output() propertyValueRemoved = new EventEmitter<Property>();
 
   // unassigned country list
-  private propertiesList: Array<IProperty>;
+  private propertiesList: Array<Property>;
   unassignedCountriesList: Array<String>;
 
   // invariants
@@ -109,7 +109,7 @@ export class PropertyComponent implements OnInit, OnChanges, AfterViewChecked {
     this.propertyValueAdded.emit(this.propertiesById[0].property_id);
   }
 
-  removeAPropertyValue(propValue: IProperty) {
+  removeAPropertyValue(propValue: Property) {
     // TO DO : si c'est la dernière: on prévient le parent component de refaire le focus sur une autre prop
     this.propertyValueRemoved.emit(propValue);
   }

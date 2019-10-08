@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IInvariant } from '../model/invariants.model';
 import { InvariantsService } from '../../core/services/crud/invariants.service';
-import { IRunParameters, RunParameters } from './run.parameters';
+import { RunParameters } from './run.parameters';
 import { RunService } from '../../core/services/crud/run.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class RunComponent implements OnInit {
 
   @Input() testCases: Array<any>;
 
-  private runParameters: IRunParameters = new RunParameters();
+  private runParameters: RunParameters = new RunParameters();
   countriesList: Array<IInvariant> = [];
   private selected_countriesList: Array<string> = [];
   envList: Array<any> = [];

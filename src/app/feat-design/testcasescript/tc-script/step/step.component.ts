@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IStep, IAction, Action } from 'src/app/shared/model/testcase.model';
+import { Step, Action } from 'src/app/shared/model/testcase.model';
 import { SettingsService } from '../settings/settings.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestService } from 'src/app/core/services/crud/test.service';
@@ -11,7 +11,7 @@ import { TestService } from 'src/app/core/services/crud/test.service';
 })
 export class StepComponent implements OnInit {
 
-  @Input('step') step: IStep;
+  @Input('step') step: Step;
   @Input('stepIndex') stepIndex: number;
   // @Input('isfirstStep') isFirstStep: boolean;
   showActionList: boolean;
@@ -71,7 +71,7 @@ export class StepComponent implements OnInit {
     }
   }
 
-  dropAction(event: CdkDragDrop<IAction[]>) {
+  dropAction(event: CdkDragDrop<Action[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     this.testService.refreshActionSort(this.step.actionList);
   }

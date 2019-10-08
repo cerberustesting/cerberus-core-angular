@@ -1,5 +1,5 @@
 export interface ITag {
-    detail: ITagDetail;
+    detail: TagDetail;
 }
 
 export class TagDetail {
@@ -16,4 +16,3 @@ export class TagDetail {
     }
 }
 
-export interface ITagDetail extends TagDetail { }

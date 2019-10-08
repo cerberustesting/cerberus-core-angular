@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IStep, IAction, IControl } from 'src/app/shared/model/testcase.model';
+import { Step, Action, Control } from 'src/app/shared/model/testcase.model';
 import { SettingsService } from './settings.service';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
@@ -12,9 +12,9 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 })
 export class SettingsComponent implements OnInit {
 
-  step: IStep;
-  action: IAction;
-  control: IControl;
+  step: Step;
+  action: Action;
+  control: Control;
   private readonly: boolean;
   private parentStepIndex: number;
   private parentActionIndex: number;

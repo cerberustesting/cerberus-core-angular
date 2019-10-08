@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportingService } from 'src/app/core/services/crud/reporting.service';
-import { ITagDetail, TagDetail } from 'src/app/shared/model/tag.model';
+import { TagDetail } from 'src/app/shared/model/tag.model';
 
 @Component({
   selector: 'app-tag-detail',
@@ -10,7 +10,7 @@ import { ITagDetail, TagDetail } from 'src/app/shared/model/tag.model';
 export class TagDetailComponent implements OnInit {
   collapse = false;
 
-  tagDetail: ITagDetail = new TagDetail();
+  tagDetail: TagDetail = new TagDetail();
 
   constructor(private reportingService: ReportingService) { }
 

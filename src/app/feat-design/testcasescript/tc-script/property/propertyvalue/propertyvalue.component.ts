@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ComponentRef } from '@angular/core';
-import { IProperty } from 'src/app/shared/model/property.model';
+import { Property } from 'src/app/shared/model/property.model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
@@ -18,7 +18,7 @@ export class PropertyTypeFieldsCrossReference {
 })
 export class PropertyvalueComponent implements OnInit, OnDestroy {
 
-  @Input('propertyvalue') prop: IProperty;
+  @Input('propertyvalue') prop: Property;
   @Input('index') index: number;
   @Input('showMainContent') showMainContent: boolean;
 

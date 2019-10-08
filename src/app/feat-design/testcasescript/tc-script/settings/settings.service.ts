@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IStep, IAction, IControl } from 'src/app/shared/model/testcase.model';
+import { Step, Action, Control } from 'src/app/shared/model/testcase.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -7,16 +7,16 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SettingsService {
 
-  selectedStep: IStep = null;
-  selectedAction: IAction = null;
-  selectedControl: IControl = null;
+  selectedStep: Step = null;
+  selectedAction: Action = null;
+  selectedControl: Control = null;
   readOnlyMode: boolean;
   parentStepIndex: number;
   parentActionIndex: number;
 
-  observableStep = new BehaviorSubject<IStep>(this.selectedStep);
-  observableAction = new BehaviorSubject<IAction>(this.selectedAction);
-  observableControl = new BehaviorSubject<IControl>(this.selectedControl);
+  observableStep = new BehaviorSubject<Step>(this.selectedStep);
+  observableAction = new BehaviorSubject<Action>(this.selectedAction);
+  observableControl = new BehaviorSubject<Control>(this.selectedControl);
   observableReadOnlyMode = new BehaviorSubject<boolean>(this.readOnlyMode);
   observableParentStepIndex = new BehaviorSubject<number>(this.parentStepIndex);
   observableParentActionIndex = new BehaviorSubject<number>(this.parentActionIndex);
@@ -25,7 +25,7 @@ export class SettingsService {
     this.readOnlyMode = false;
   }
 
-  editStepSettings(step: IStep, ro: boolean): void {
+  editStepSettings(step: Step, ro: boolean): void {
     this.selectedStep = step;
     this.selectedAction = null;
     this.selectedControl = null;
@@ -35,7 +35,7 @@ export class SettingsService {
     this.refreshVariable();
   }
 
-  editActionSettings(action: IAction, ro: boolean, parentStepIndex: number): void {
+  editActionSettings(action: Action, ro: boolean, parentStepIndex: number): void {
     this.selectedStep = null;
     this.selectedAction = action;
     this.selectedControl = null;
@@ -45,7 +45,7 @@ export class SettingsService {
     this.refreshVariable();
   }
 
-  editControlSettings(control: IControl, ro: boolean, parentStepIndex: number, parentActionIndex: number): void {
+  editControlSettings(control: Control, ro: boolean, parentStepIndex: number, parentActionIndex: number): void {
     this.selectedStep = null;
     this.selectedAction = null;
     this.selectedControl = control;

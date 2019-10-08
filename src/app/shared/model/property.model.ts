@@ -33,5 +33,3 @@ export class Property {
         this.property_id = id;
     }
 }
-
-export interface IProperty extends Property { }

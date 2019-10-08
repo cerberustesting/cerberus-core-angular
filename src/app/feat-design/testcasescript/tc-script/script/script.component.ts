@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ITestCase, IStep, Step } from 'src/app/shared/model/testcase.model';
+import { ITestCase, Step } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
@@ -18,7 +18,7 @@ export class ScriptComponent implements OnInit {
     this.testService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
   }
 
-  dropStep(event: CdkDragDrop<IStep[]>) {
+  dropStep(event: CdkDragDrop<Step[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     this.testService.refreshStepSort(this.testcase.stepList);
   }

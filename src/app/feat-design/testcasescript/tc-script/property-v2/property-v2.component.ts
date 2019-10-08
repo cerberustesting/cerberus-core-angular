@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { IProperty } from 'src/app/shared/model/property.model';
+import { Property } from 'src/app/shared/model/property.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ITestCaseHeader, ITestCase } from 'src/app/shared/model/testcase.model';

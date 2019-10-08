@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ITestCase, IStep, Step } from 'src/app/shared/model/testcase.model';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, OnInit, Input } from '@angular/core';
+import { ITestCase } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { IProperty, Property } from 'src/app/shared/model/property.model';
+import { Property } from 'src/app/shared/model/property.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 // import { PropertyComponent } from 'src/app/layout/pages/testcasescript/tc-script/property/property.component'
@@ -22,9 +21,9 @@ export class TcScriptComponent implements OnInit {
 
   private stepListBlockId: string;
 
-  private propertiesList: Array<IProperty>;
+  private propertiesList: Array<Property>;
   private activePropertyId: number;
-  private activeProperty: Array<IProperty>;
+  private activeProperty: Array<Property>;
   private propertyNameIsInvalid: boolean;
   private oldVersion = false; // TODO : to remove and keep a version
 
@@ -37,7 +36,7 @@ export class TcScriptComponent implements OnInit {
 
   ngOnInit() {
     this.activePropertyId = null;
-    this.propertiesList = new Array<IProperty>();
+    this.propertiesList = new Array<Property>();
     this.setActiveProperty();
     this.testService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
     this.testService.observableTestCaseProperties.subscribe(r => {
@@ -85,7 +84,7 @@ export class TcScriptComponent implements OnInit {
     }
   }
 
-  removePropertyValue(prop: IProperty) {
+  removePropertyValue(prop: Property) {
     console.log(this.testService.filterPropertiesByid(this.propertiesList, prop.property_id).length);
     if (this.testService.filterPropertiesByid(this.propertiesList, prop.property_id).length === 1) {
       if (this.propertiesList.length >= 1) {
@@ -103,7 +102,7 @@ export class TcScriptComponent implements OnInit {
 
   setActiveProperty(propId?: number) {
     if (!propId) {
-      this.activeProperty = new Array<IProperty>();
+      this.activeProperty = new Array<Property>();
       this.activePropertyId = null;
     } else {
       // console.log("setActiveProperty for id: " + propId);

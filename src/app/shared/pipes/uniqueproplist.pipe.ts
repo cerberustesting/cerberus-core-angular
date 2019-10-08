@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IProperty } from '../model/property.model';
+import { Property } from '../model/property.model';
 
 @Pipe({
   name: 'uniqueproplist',
@@ -7,8 +7,8 @@ import { IProperty } from '../model/property.model';
 })
 export class UniqueproplistPipe implements PipeTransform {
 
-  transform(propList: Array<IProperty>): Array<IProperty> {
-    const uniquePropertiesList = new Array<IProperty>();
+  transform(propList: Array<Property>): Array<Property> {
+    const uniquePropertiesList = new Array<Property>();
     propList.forEach((prop) => {
       if (!uniquePropertiesList.find(p => p.property_id === prop.property_id)) {
         uniquePropertiesList.push(prop);

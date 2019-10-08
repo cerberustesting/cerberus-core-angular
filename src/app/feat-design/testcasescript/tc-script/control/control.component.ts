@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IControl, ITestCase } from 'src/app/shared/model/testcase.model';
+import { Control, ITestCase } from 'src/app/shared/model/testcase.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
@@ -13,7 +13,7 @@ import { SettingsService } from '../settings/settings.service';
 })
 export class ControlComponent implements OnInit {
 
-  @Input('control') control: IControl;
+  @Input('control') control: Control;
   @Input('readonly') readonly: boolean;
   @Input('parentStepIndex') parentStepIndex: number;
   @Input('parentActionIndex') parentActionIndex: number;
@@ -56,7 +56,7 @@ export class ControlComponent implements OnInit {
     });
   }
 
-  flagForDeletion(control: IControl) { this.control.toDelete = !this.control.toDelete; this.debug(); }
+  flagForDeletion(control: Control) { this.control.toDelete = !this.control.toDelete; this.debug(); }
 
   addControl(destinationIndex: number): void {
     // send the desired position for the new Control to the Action component

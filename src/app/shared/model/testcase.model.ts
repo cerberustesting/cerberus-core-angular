@@ -65,7 +65,7 @@ export interface ITestCase {
     hasPermissionsUpdate: boolean;
     messageType: string;
     hasPermissionsStepLibrary: boolean;
-    stepList: Array<IStep>;
+    stepList: Array<Step>;
     message: string;
     hasPermissionsDelete: boolean;
     sEcho: number;
@@ -88,7 +88,7 @@ export class Step {
     initialStep: number;
     useStepStep: number;
     description: string;
-    actionList: Array<IAction>;
+    actionList: Array<Action>;
     sort: number;
     step: number;
     toDelete: boolean;
@@ -115,7 +115,7 @@ export class Step {
         this.useStepStep = 0;
         this.toDelete = false;
         this.description = '';
-        this.actionList = new Array<IAction>();
+        this.actionList = new Array<Action>();
         this.sort = sort;
         this.step = null;
         this.dateCreated = '';
@@ -124,8 +124,6 @@ export class Step {
         this.usrCreated = '';
     }
 }
-
-export interface IStep extends Step { }
 
 export class Action {
     objType: string;
@@ -143,7 +141,7 @@ export class Action {
     step: number;
     forceExeStatus: string;
     screenshotFilename: string;
-    controlList: Array<IControl>;
+    controlList: Array<Control>;
 
     constructor(test: string, testcase: string, sort: number) {
         this.objType = 'action';
@@ -162,11 +160,9 @@ export class Action {
         this.step = null;
         this.forceExeStatus = '';
         this.screenshotFilename = '';
-        this.controlList = new Array<IControl>();
+        this.controlList = new Array<Control>();
     }
 }
-
-export interface IAction extends Action { }
 
 export class Control {
     objType: string;
@@ -207,5 +203,3 @@ export class Control {
         this.toDelete = false;
     }
 }
-
-export interface IControl extends Control { }

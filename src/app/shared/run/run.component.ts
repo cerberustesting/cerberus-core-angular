@@ -21,25 +21,24 @@ export class RunComponent implements OnInit {
   envList: Array<any> = [];
 
   constructor(
-    private InvariantsService: InvariantsService,
-    private RunService: RunService
+    private invariantsService: InvariantsService,
+    private runService: RunService
   ) { }
 
   ngOnInit() {
-    this.InvariantsService.getCountriesList();
-    this.InvariantsService.observableCountriesList.subscribe(response => {
+    this.invariantsService.getCountriesList();
+    this.invariantsService.observableCountriesList.subscribe(response => {
       this.countriesList = response;
       for (const index in this.countriesList) {
-        this.selected_countriesList[index] = this.countriesList[index].value;
+        if (index) {
+          this.selected_countriesList[index] = this.countriesList[index].value;
+        }
       }
     });
 
-    this.InvariantsService.getEnvironments();
-    this.InvariantsService.observableEnvironments.subscribe(response => {
+    this.invariantsService.getEnvironments();
+    this.invariantsService.observableEnvironments.subscribe(response => {
       this.envList = response;
-      /*for (const index in this.envList) {
-          this.selected_countriesList[index] = this.countriesList[index].value;
-      }*/
     });
   }
 
@@ -55,7 +54,7 @@ export class RunComponent implements OnInit {
     } else {
       // check : the country is added
       // if it is not already in the array
-      if (this.selected_countriesList.indexOf(country) == -1) {
+      if (this.selected_countriesList.indexOf(country) === -1) {
         this.selected_countriesList.push(country);
       }
     }
@@ -66,15 +65,16 @@ export class RunComponent implements OnInit {
     this.runParameters.testcase = this.testCases[0].testCase;
     this.runParameters.test = this.testCases[0].test;
     this.runParameters.environment = this.envList[0].value;
-    let submit = new FormData();
+    const submit = new FormData();
 
-
-    for (let key in this.runParameters) {
-      submit.append(key, this.runParameters[key] || '');
+    for (const key in this.runParameters) {
+      if (key) {
+        submit.append(key, this.runParameters[key] || '');
+      }
     }
-    console.log(submit);
+    // console.log(submit);
 
-    this.RunService.addToExecutionQueue(submit);
+    this.runService.addToExecutionQueue(submit);
   }
 
 }

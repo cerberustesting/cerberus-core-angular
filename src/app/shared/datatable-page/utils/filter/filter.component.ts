@@ -20,7 +20,7 @@ export class FilterComponent implements OnInit {
   model = [];
   searchItems = [];
 
-  private mouseOverOnFilter: boolean = false;
+  private mouseOverOnFilter: boolean;
 
   constructor(private testService: TestService, private systemService: SystemService) { }
 
@@ -34,9 +34,13 @@ export class FilterComponent implements OnInit {
   }
 
   onChange(values) {
-    if (this.column.multiple) this.column.sSearch = values;
-    else if (values != '') this.column.sSearch = [values];
-    else this.column.sSearch = [];
+    if (this.column.multiple) {
+      this.column.sSearch = values;
+    } else if (values !== '') {
+      this.column.sSearch = [values];
+    } else {
+      this.column.sSearch = [];
+    }
   }
 
   updateModel() {
@@ -52,9 +56,10 @@ export class FilterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mouseOverOnFilter = false;
     /*use a different request to get label because need label AND color*/
 
-    if (!this.column.filterMode) this.column.filterMode = FILTER_MODE.DROPDOWN
+    if (!this.column.filterMode) { this.column.filterMode = FILTER_MODE.DROPDOWN; }
 
     if (this.column.type === 'label') {
       this.systemService.getLabelsFromSystem('');
@@ -82,7 +87,7 @@ export class FilterComponent implements OnInit {
   }
   onSelectAll() {
     /*Select all element that correspond to the search*/
-    let selectedElements = (this.searchItems.length > 0) ? this.searchItems : this.dataList;
+    const selectedElements = (this.searchItems.length > 0) ? this.searchItems : this.dataList;
     this.model = selectedElements;
     this.column.sSearch = this.model;
   }
@@ -100,7 +105,7 @@ export class FilterComponent implements OnInit {
     this.column.filterDisplayed = false;
     this.model = [];
     this.remove.emit(this.column.contentName);
-    this.applyFilter()
+    this.applyFilter();
   }
 
   validField(): void {

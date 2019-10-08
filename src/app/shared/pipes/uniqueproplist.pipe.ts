@@ -8,9 +8,9 @@ import { IProperty } from '../model/property.model';
 export class UniqueproplistPipe implements PipeTransform {
 
   transform(propList: Array<IProperty>): Array<IProperty> {
-    let uniquePropertiesList = new Array<IProperty>();
+    const uniquePropertiesList = new Array<IProperty>();
     propList.forEach((prop) => {
-      if (!uniquePropertiesList.find(p => p.property_id == prop.property_id)) {
+      if (!uniquePropertiesList.find(p => p.property_id === prop.property_id)) {
         uniquePropertiesList.push(prop);
       }
     });

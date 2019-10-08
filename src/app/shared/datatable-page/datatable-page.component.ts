@@ -27,8 +27,8 @@ export class DatatablePageComponent implements OnInit {
   @ContentChild(DatatableEndLineAction, { read: TemplateRef, static: true }) endLineActionTemplate: TemplateRef<any>;
 
   name: String;
-  private cache: any = {}; //number of displayed rows
-  rows: Array<any> = []; //rows to display
+  private cache: any = {}; // number of displayed rows
+  rows: Array<any> = []; // rows to display
   private globalSearch: string; // value in global search field
   page: { // the default page informations
     number: number, // page number
@@ -42,7 +42,7 @@ export class DatatablePageComponent implements OnInit {
     private testService: TestService,
     private filterService: FilterService,
     private invariantsService: InvariantsService,
-    private NotificationService: NotificationService) { }
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.page = {
@@ -57,8 +57,9 @@ export class DatatablePageComponent implements OnInit {
       this.page.number = 0;
       this.search();
     });
-    if (this.refreshResults) this.refreshResults.subscribe(() => this.applyFilters())
-
+    if (this.refreshResults) {
+      this.refreshResults.subscribe(() => this.applyFilters());
+    }
   }
 
 
@@ -95,7 +96,7 @@ export class DatatablePageComponent implements OnInit {
    * * to call when a new page is selected or scrolled
    * @param newPage new page number
    */
-  pageUpdate(newPage: number): void { //When selecting a new page    
+  pageUpdate(newPage: number): void { // When selecting a new page
     this.page.number = newPage;
     this.search();
   }
@@ -107,7 +108,7 @@ export class DatatablePageComponent implements OnInit {
    * @param globalSearch content of global search field
    */
   applyFilters(globalSearch?: string): void {
-    let a = document.getElementsByClassName("datatable-body")[0];
+    const a = document.getElementsByClassName('datatable-body')[0];
     a.scroll(0, 0);
     a.scrollBy(0, 0); // scroll to the table top
     this.cache = {};

@@ -31,7 +31,7 @@ export class NotificationsComponent implements OnInit {
       icon: 'fa-info',
       title: 'Info'
     }
-  ]
+  ];
 
   constructor(
     public snackBar: MatSnackBar,
@@ -50,11 +50,11 @@ export class NotificationsComponent implements OnInit {
 
   /**
    * Return the Cross Reference to get from a style, its icon and title
-   * 
-   * @param style: NotificationStyle 
+   *
+   * @param style: NotificationStyle
    * @returns: Cross Reference object with icon and title attribute
    */
   findCrossReferenceForStyle(style: string): any {
-    return this.crossReference_StyleIcon.find(cr => cr.style == style);
+    return this.crossReference_StyleIcon.find(cr => cr.style === style);
   }
 }

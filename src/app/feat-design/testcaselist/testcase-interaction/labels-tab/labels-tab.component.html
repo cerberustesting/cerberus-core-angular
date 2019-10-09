@@ -1,4 +1,4 @@
-<div class="row text-center push">
+<div class="row text-center push ">
     <div class="col-4">
         <button type="button" class="btn btn-sm mr-1" (click)="labelType = 'stickers'"
             [ngClass]="labelType == 'stickers' ? 'btn-primary' : 'btn-outline-primary'">
@@ -19,20 +19,22 @@
     </div>
 </div>
 
-<div *ngIf="labelType == 'stickers'">
-    <div *ngFor="let labelNode of labelsList.stickers">
-        <app-label-node [node]="labelNode"></app-label-node>
+<div class="scrollable">
+    <div *ngIf="labelType == 'stickers'">
+        <div *ngFor="let labelNode of labelsList.stickers">
+            <app-label-node [node]="labelNode"></app-label-node>
+        </div>
     </div>
-</div>
 
-<div *ngIf="labelType == 'requirements'">
-    <div *ngFor="let labelNode of labelsList.requirements">
-        <app-label-node [node]="labelNode"></app-label-node>
+    <div *ngIf="labelType == 'requirements'">
+        <div *ngFor="let labelNode of labelsList.requirements">
+            <app-label-node [node]="labelNode"></app-label-node>
+        </div>
     </div>
-</div>
 
-<div *ngIf="labelType == 'batteries'">
-    <div *ngFor="let labelNode of labelsList.batteries">
-        <app-label-node [node]="labelNode"></app-label-node>
+    <div *ngIf="labelType == 'batteries'">
+        <div *ngFor="let labelNode of labelsList.batteries">
+            <app-label-node [node]="labelNode"></app-label-node>
+        </div>
     </div>
 </div>

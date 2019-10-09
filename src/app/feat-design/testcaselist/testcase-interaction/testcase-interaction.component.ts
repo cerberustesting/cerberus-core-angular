@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
@@ -6,13 +6,13 @@ import { IApplication } from 'src/app/shared/model/application.model';
 import { SystemService } from 'src/app/core/services/crud/system.service';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { ITest } from 'src/app/shared/model/test.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
-import { query } from '@angular/animations';
+import { LabelsTabComponent, SelectedLabel } from './labels-tab/labels-tab.component';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -20,6 +20,8 @@ import { query } from '@angular/animations';
   styleUrls: ['./testcase-interaction.component.scss']
 })
 export class TestcaseInteractionComponent implements OnInit {
+
+  private selectedLabelsList: Array<SelectedLabel>;
 
   // TODO: group the variables + functions semantically
 
@@ -164,6 +166,10 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   setFormValues() {
+    // call the labels tab child component function
+    // to get the selected labels list
+    // console.log(this.labelsTab.getLabelsSelection());
+
     this.testcaseHeaderForm = this.formBuilder.group({
       test: this.testcaseheader.test || '',
       testCase: this.testcaseheader.testCase,
@@ -193,6 +199,7 @@ export class TestcaseInteractionComponent implements OnInit {
       toSprint: this.testcaseheader.toBuild,
       userAgent: this.testcaseheader.userAgent,
       screenSize: this.testcaseheader.screenSize
+      // labels list is added later (onSubmit)
     });
   }
 
@@ -332,9 +339,7 @@ export class TestcaseInteractionComponent implements OnInit {
       if (type) {
         for (const label of this.labelList[type]) {
           if (label.state.selected) {
-            labelList.push(
-              { labelId: label.id, toDelete: false }
-            );
+            labelList.push({ labelId: label.id, toDelete: false });
           }
         }
       }

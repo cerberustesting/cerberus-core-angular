@@ -26,8 +26,6 @@ export class LabelNodeComponent implements OnInit {
 
   ngOnInit() {
     this.showChildren = false;
-    console.log('node received');
-    console.log(this.node);
   }
 
   toggleChildren() {

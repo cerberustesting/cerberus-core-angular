@@ -181,7 +181,7 @@ export class TestcaseInteractionComponent implements OnInit {
       activeUAT: this.testcaseheader.activeUAT,
       application: this.testcaseheader.application,
       behaviorOrValueExpected: this.testcaseheader.behaviorOrValueExpected,
-      bugId: this.testcaseheader.bugID,
+      bugID: this.testcaseheader.bugID,
       comment: this.testcaseheader.comment,
       fromRev: this.testcaseheader.fromRev,
       fromSprint: this.testcaseheader.fromBuild,
@@ -201,6 +201,14 @@ export class TestcaseInteractionComponent implements OnInit {
       screenSize: this.testcaseheader.screenSize
       // labels list is added later (onSubmit)
     });
+  }
+
+  checkBugID() {
+    if (this.testcaseHeaderForm.get('bugID').value) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   /**
@@ -368,5 +376,4 @@ export class TestcaseInteractionComponent implements OnInit {
   closeSideContent() {
     this.sidecontentService.closeSideBlock();
   }
-
 }

@@ -653,19 +653,29 @@
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="bugID">Bug ID</label>
                                             <div class="input-group">
-                                                <input class="form-control form-control-sm" formControlName="bugID"
-                                                    id="sideContent_bugID" name="bugID" placeholder="Bug ID"
+                                                <input class="form-control form-control-sm" formControlName="bugId"
+                                                    id="sideContent_bugID" name="bugId" placeholder="Bug ID"
                                                     type="text">
                                                 <div class="input-group-append">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-dark"
-                                                        [disabled]="testcaseHeaderForm.get('bugID').value ? '' : 'true'">Go to Bug
+                                                    <button type="button" class="btn btn-sm btn-dark"
+                                                        [disabled]="testcaseHeaderForm.get('bugId').value ? '' : 'true'">Go
+                                                        to Bug
                                                     </button>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="bugID">Comment</label>
+                                            <div class="input-group">
+                                                <input class="form-control form-control-sm" formControlName="comment"
+                                                    id="sideContent_comment" name="comment" placeholder="Comment"
+                                                    type="text">
                                             </div>
                                         </div>
                                     </div>

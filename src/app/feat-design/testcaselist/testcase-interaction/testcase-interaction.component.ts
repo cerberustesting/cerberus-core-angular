@@ -181,7 +181,7 @@ export class TestcaseInteractionComponent implements OnInit {
       activeUAT: this.testcaseheader.activeUAT,
       application: this.testcaseheader.application,
       behaviorOrValueExpected: this.testcaseheader.behaviorOrValueExpected,
-      bugID: this.testcaseheader.bugID,
+      bugId: this.testcaseheader.bugID,
       comment: this.testcaseheader.comment,
       fromRev: this.testcaseheader.fromRev,
       fromSprint: this.testcaseheader.fromBuild,
@@ -334,6 +334,7 @@ export class TestcaseInteractionComponent implements OnInit {
         queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item] || '') + '&';
       }
     }
+    console.log(this.testcaseHeaderForm);
 
     // fill countryList with all countries selected
     for (const country of this.inv_countries) {

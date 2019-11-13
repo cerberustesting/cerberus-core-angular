@@ -80,8 +80,12 @@ export class TestcaseInteractionComponent implements OnInit {
   // *** Other testcase properties ***
   private tcCountryList: Array<any> = [];
 
+  dependencySelectedTest: string;
   dependencySelectedTestCase: ITestCaseHeader;
+  // DIRTY : input format
   dependencyTestCaseList: Array<any> = [];
+  // DIRTY : output format
+  dependencyTestCaseListOutput: Array<any> = [];
 
   // DIRTY : waiting for dev
   // https://github.com/cerberustesting/cerberus-source/issues/2015
@@ -149,6 +153,8 @@ export class TestcaseInteractionComponent implements OnInit {
         // DIRTY : waiting for dev
         // https://github.com/cerberustesting/cerberus-source/issues/2015
         this.testcaseheader_countryList_custom = this.feedCustomCountryList();
+
+        this.dependencyTestCaseList = this.testcaseheader.dependencyList;
       }
     });
 
@@ -250,24 +256,39 @@ export class TestcaseInteractionComponent implements OnInit {
    * * load all testcase from the chosen test
    * @param test
    */
-  onTestChange(test) {
-    this.testService.getTestCasesList(test);
-    this.testService.observableTestCasesList
-      .subscribe(testcaseList => {
-        if (testcaseList) {
-          this.testcaseList = testcaseList;
-        } else {
-          this.testcaseList = [];
-        }
-      });
+  onTestChange() {
+    // reset the selected test case value
+    this.dependencySelectedTestCase = null;
+    if (this.dependencySelectedTest !== null) {
+      this.testService.getTestCasesList(this.dependencySelectedTest);
+      this.testService.observableTestCasesList
+        .subscribe(testcaseList => {
+          if (testcaseList) {
+            this.testcaseList = testcaseList;
+          } else {
+            this.testcaseList = [];
+          }
+        });
+    } else {
+      this.testcaseList = [];
+    }
   }
 
   /** onTestCaseChange
    * * asign the selected testcase to dependencySelectedTestCase
    * @param testcase the testcase to asign
    */
-  onTestCaseChange(testcase) {
+  onTestCaseChange(testcase: ITestCaseHeader) {
+    console.log('onTestCaseChange called with test : ' + testcase.testCase);
     this.dependencySelectedTestCase = testcase;
+  }
+
+  enableAddToDependencyButton() {
+    if (this.dependencySelectedTestCase !== null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /** addToDependencyTable
@@ -275,21 +296,39 @@ export class TestcaseInteractionComponent implements OnInit {
    * * if the testcase is already in the table notify the error
    * @param testCaseIndex;
    */
-  addToDependencyTable(testCaseIndex): void {
-    const testcase = this.testcaseList[testCaseIndex];
+  addToDependencyTable(testcase: ITestCaseHeader): void {
+    console.log(testcase);
     const dependency = {
-      id: this.dependencyTestCaseList.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1,
-      test: testcase.test,
-      testcase: testcase.testCase,
+      // id: this.dependencyTestCaseList.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1,
+      id: this.dependencyTestCaseList.length + 1,
+      depTest: testcase.test,
+      depTestCase: testcase.testCase,
       description: '',
       active: true
     };
-    if (!(this.dependencyTestCaseList.map(d => d.test).includes(dependency.test) &&
-      this.dependencyTestCaseList.map(d => d.testcase).includes(dependency.testcase))) {
-      this.dependencyTestCaseList.push(dependency);
-    } else {
+    console.log(dependency);
+    // check that the dependency (with the same test & testcase) isn't selected yet
+    if ((this.dependencyTestCaseList.find(d => d.test === dependency.depTest)) && (this.dependencyTestCaseList.find(d => d.testcase === dependency.depTestCase))) {
       this.notificationService.createANotification('This TestCase is already selected !', NotificationStyle.Error);
+    } else {
+      this.dependencyTestCaseList.push(dependency);
     }
+  }
+
+  formatDependency(depList: any[]) {
+    const res = new Array<any>();
+    // format to be sent to /UpdateTestCase
+    depList.forEach(dep => {
+      const dependency = {
+        id: this.dependencyTestCaseList.length + 1,
+        test: dep.depTest,
+        testcase: dep.depTestCase,
+        description: dep.description,
+        active: dep.active
+      };
+      res.push(dependency);
+    });
+    return res;
   }
 
   /** removeDependency
@@ -334,7 +373,6 @@ export class TestcaseInteractionComponent implements OnInit {
         queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item] || '') + '&';
       }
     }
-    console.log(this.testcaseHeaderForm);
 
     // fill countryList with all countries selected
     for (const country of this.inv_countries) {
@@ -354,8 +392,10 @@ export class TestcaseInteractionComponent implements OnInit {
       }
     }
 
+    this.dependencyTestCaseListOutput = this.formatDependency(this.dependencyTestCaseList);
+
     // add all list to the queryString
-    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(this.dependencyTestCaseList)) + '&';
+    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(this.dependencyTestCaseListOutput)) + '&';
     queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
     queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
 

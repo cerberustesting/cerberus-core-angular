@@ -649,6 +649,7 @@
                     </ngb-tab>
                     <!-- END LABELS TAB-->
 
+                    <!-- BUG REPORT TAB -->
                     <ngb-tab title="Bug Report" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
@@ -683,16 +684,125 @@
                             </div>
                         </ng-template>
                     </ngb-tab>
+                    <!-- END BUG REPORT TAB -->
 
                     <ngb-tab title="Dependency" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
                                 <div class="row">
+
+                                    <!-- TEST -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="test">Test</label>
+                                            <ng-select name="test" class="custom-sm" [items]="testsList"
+                                                bindLabel="test" bindValue="test" placeholder="Select a Test"
+                                                [(ngModel)]="dependencySelectedTest" (change)="onTestChange()"
+                                                [ngModelOptions]="{standalone: true}">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <!-- END TEST -->
+
+                                    <!-- TEST CASE -->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="test">Test Case</label>
+                                            <ng-select name="testcase" class="custom-sm" [items]="testcaseList"
+                                                bindLabel="testCase" placeholder="Select a Test Case"
+                                                [(ngModel)]="dependencySelectedTestCase"
+                                                [ngModelOptions]="{standalone: true}">
+                                                <ng-template ng-option-tmp let-item="item">
+                                                    {{item.testCase}} : {{item.description}}
+                                                </ng-template>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <!-- END TEST CASE -->
+
+                                    <!-- ADD DEPENDENCY BUTTON -->
+                                    <div class="col-md-3 push">
+                                        <!-- <button type="button" class="btn btn-info col-md-12">
+                                            Add TC
+                                        </button> -->
+                                        <button type="button" class="btn btn-sm btn-primary mr-1"
+                                            [disabled]="dependencySelectedTestCase ? '' : 'true'"
+                                            (click)="addToDependencyTable(dependencySelectedTestCase)">
+                                            Add Dependency
+                                        </button>
+                                    </div>
+                                    <!-- END ADD DEPENDENCY BUTTON -->
+
+                                    <div class="col-md-12">
+                                        <!-- <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Actions</th>
+                                                    <th>Test Cases</th>
+                                                    <th>Activate</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    *ngFor="let dependency of dependencyTestCaseList; let index = index">
+                                                    <td><button class="btn btn-danger"
+                                                            (click)="removeDependency(index)"><i
+                                                                class="fa fa-trash"></i></button></td>
+                                                    <td>{{ dependency.test }} - {{ dependency.testcase }}</td>
+                                                    <td><input type="checkbox" name="activate"
+                                                            [(ngModel)]="dependency.active"
+                                                            [ngModelOptions]="{standalone: true}"></td>
+                                                    <td><input type="text" name="description"
+                                                            [(ngModel)]="dependency.description"
+                                                            [ngModelOptions]="{standalone: true}"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table> -->
+                                        <table class="table table-sm table-vcenter">
+                                            <thead>
+                                                <tr>
+                                                    <th>Test Case</th>
+                                                    <th>Description</th>
+                                                    <th class="text-center" style="width: 100px;">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let dep of dependencyTestCaseList">
+                                                    <td class="font-w600">
+                                                        {{dep.depTest}} - {{dep.depTestCase}}
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            name="example-text-input" placeholder="Description"
+                                                            [(ngModel)]="dep.description"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-sm"
+                                                                [ngClass]="dep.active ? 'btn-success' : 'btn-secondary'"
+                                                                (click)="dep.active = !dep.active">
+                                                                <i class="fa"
+                                                                    [ngClass]="dep.active ? 'fa-check' : 'fa-times'"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-sm btn-primary"
+                                                                (click)="removeDependency(dep)">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </div>
                             </div>
                         </ng-template>
                     </ngb-tab>
 
+                    <!-- AUDIT TAB -->
                     <ngb-tab title="Audit" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
@@ -803,6 +913,8 @@
                             </div>
                         </ng-template>
                     </ngb-tab>
+                    <!-- END AUDIT TAB -->
+
                 </ngb-tabset>
 
                 <!-- OLD VERSION -->

@@ -88,9 +88,11 @@ export class TestService {
           this.testcasesListLength = response.iTotalRecords;
           this.observableTestCasesList.next(this.testcasesList);
         } else {
-          this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
-          this.testcasesList = null;
-          this.observableTestCasesList.next(this.testcasesList);
+          if (test != null) {
+            this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
+            this.testcasesList = null;
+            this.observableTestCasesList.next(this.testcasesList);
+          }
         }
       });
   }

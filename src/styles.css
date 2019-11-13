@@ -100,6 +100,17 @@ ng-select.custom-sm {
 }
 
 /*
+"custom-sm" class for <div> 
+
+apply the correct height to the field according 
+to the bootstrap *-sm class 
+*/
+div.input-group.custom-sm .input-group-prepend {
+  min-height: 31px !important;
+  height: 31px !important;
+}
+
+/*
 "info" class for <i>
 
 add hover color for information icon popup

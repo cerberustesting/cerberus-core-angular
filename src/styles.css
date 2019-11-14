@@ -133,6 +133,10 @@ ngb-tabset.custom-sm a.nav-link {
   font-size: 1rem;
 }
 
+ngb-tabset > ul {
+  width: 100%;
+}
+
 /*
 "no-shadow" class for any element
 

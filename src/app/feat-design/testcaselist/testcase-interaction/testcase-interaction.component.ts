@@ -297,7 +297,6 @@ export class TestcaseInteractionComponent implements OnInit {
    * @param testCaseIndex;
    */
   addToDependencyTable(testcase: ITestCaseHeader): void {
-    console.log(testcase);
     const dependency = {
       // id: this.dependencyTestCaseList.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1,
       id: this.dependencyTestCaseList.length + 1,
@@ -306,7 +305,6 @@ export class TestcaseInteractionComponent implements OnInit {
       description: '',
       active: true
     };
-    console.log(dependency);
     // check that the dependency (with the same test & testcase) isn't selected yet
     if ((this.dependencyTestCaseList.find(d => d.test === dependency.depTest)) && (this.dependencyTestCaseList.find(d => d.testcase === dependency.depTestCase))) {
       this.notificationService.createANotification('This TestCase is already selected !', NotificationStyle.Error);
@@ -320,7 +318,7 @@ export class TestcaseInteractionComponent implements OnInit {
     // format to be sent to /UpdateTestCase
     depList.forEach(dep => {
       const dependency = {
-        id: this.dependencyTestCaseList.length + 1,
+        id: dep.id,
         test: dep.depTest,
         testcase: dep.depTestCase,
         description: dep.description,

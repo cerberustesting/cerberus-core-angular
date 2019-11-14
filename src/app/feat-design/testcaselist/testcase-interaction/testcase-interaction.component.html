@@ -734,40 +734,23 @@
                                     <!-- END ADD DEPENDENCY BUTTON -->
 
                                     <div class="col-md-12">
-                                        <!-- <table class="table table-sm">
-                                            <thead>
+
+                                        <div *ngIf="dependencyTestCaseList.length == 0"
+                                            class="block-content block-content-full block-content-sm bg-body-light text-center">
+                                            <div class="font-w600">No dependency selected</div>
+                                        </div>
+
+                                        <table *ngIf="dependencyTestCaseList.length > 0"
+                                            class="table table-sm table-vcenter">
+                                            <thead class="thead-light">
                                                 <tr>
-                                                    <th>Actions</th>
-                                                    <th>Test Cases</th>
-                                                    <th>Activate</th>
-                                                    <th>Description</th>
+                                                    <th class="pl-2">Test Case</th>
+                                                    <th class="pl-2">Description</th>
+                                                    <th class="text-center pl-2" style="width: 100px;">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr
-                                                    *ngFor="let dependency of dependencyTestCaseList; let index = index">
-                                                    <td><button class="btn btn-danger"
-                                                            (click)="removeDependency(index)"><i
-                                                                class="fa fa-trash"></i></button></td>
-                                                    <td>{{ dependency.test }} - {{ dependency.testcase }}</td>
-                                                    <td><input type="checkbox" name="activate"
-                                                            [(ngModel)]="dependency.active"
-                                                            [ngModelOptions]="{standalone: true}"></td>
-                                                    <td><input type="text" name="description"
-                                                            [(ngModel)]="dependency.description"
-                                                            [ngModelOptions]="{standalone: true}"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table> -->
-                                        <table class="table table-sm table-vcenter">
-                                            <thead>
-                                                <tr>
-                                                    <th>Test Case</th>
-                                                    <th>Description</th>
-                                                    <th class="text-center" style="width: 100px;">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+
                                                 <tr *ngFor="let dep of dependencyTestCaseList">
                                                     <td class="font-w600">
                                                         {{dep.depTest}} - {{dep.depTestCase}}
@@ -793,6 +776,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
+
                                             </tbody>
                                         </table>
                                     </div>

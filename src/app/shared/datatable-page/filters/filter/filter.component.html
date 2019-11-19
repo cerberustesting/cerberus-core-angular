@@ -26,8 +26,7 @@
 
   <ng-select class="custom custom-icon custom-sm" [items]="dataList" [selectableGroup]="true"
     [multiple]="column.multiple" [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" [(ngModel)]='model'
-    (open)="updateModel()" (add)="onAdd($event)" (remove)="applyFilter()" (change)="onChange($event)"
-    (clear)="applyFilter()" [clearable]="true" (close)="applyFilter()" (search)="onSearch($event)"
+    (change)="sendFilterValues(model)" (clear)="removeAFilter()" [clearable]="true"
     (keyup.enter)="onKeyUpEnter($event)">
 
     <!-- NOT WORKING RIGHT NOW -->

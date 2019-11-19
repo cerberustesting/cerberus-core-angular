@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, TemplateRef, ContentChild } from '@angular/core';
+import { Component, OnInit, Input, Output, TemplateRef, ContentChild, ViewChild } from '@angular/core';
 import { Column } from '../model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
@@ -6,6 +6,7 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-datatable-page',
@@ -20,7 +21,6 @@ export class DatatablePageComponent implements OnInit {
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
   @Input() refreshResults: Observable<void>;
-
 
   @ContentChild(DatatableFilterTmpDirective, { read: TemplateRef, static: true }) filterTemplate: TemplateRef<any>;
   @ContentChild(DatatableMassActionTmpDirective, { read: TemplateRef, static: true }) massActionTemplate: TemplateRef<any>;
@@ -62,7 +62,6 @@ export class DatatablePageComponent implements OnInit {
     }
   }
 
-
   /**
    * search
    * * get rows corresponding to filters and page infomations
@@ -75,18 +74,16 @@ export class DatatablePageComponent implements OnInit {
       // console.log("Search : \n page number : " + this.page.number + '\n page size : ' + this.page.size);
       // console.log("cache :", this.cache);
       this.cache[this.page.number] = true;
-      this.testService.getFromRequest(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch),
+      this.filterService.getContentForTable(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch),
         (list: Array<any>, length: number) => {
           this.page.totalCount = length;
-
           const start = this.page.number * this.page.size;
           const rows = [...this.rows];
-
           rows.splice(start, 0, ...list);
-
+          // update the table content
+          // this command is triggering the table update
           this.rows = rows;
-
-
+          //this.rows = [...this.rows];
         });
     }
   }

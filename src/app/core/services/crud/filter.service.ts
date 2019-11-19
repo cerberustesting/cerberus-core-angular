@@ -1,13 +1,48 @@
 import { Injectable } from '@angular/core';
 import { Column } from 'src/app/shared/model/column.model';
 import { InvariantsService } from './invariants.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+  })
+};
+
+export class ActiveFilter {
+  filter: string; // filter key
+  values: Array<any>; // option(s) selected for dropdown
+  term: string; // search term for filter like
+  mode: string; // filter mode (SEARCH_FIELD or DROPDOWN)
+
+  constructor(filter: string, values: Array<any>, term: string, mode: string) {
+    this.filter = filter;
+    this.values = values;
+    this.term = term;
+    this.mode = mode;
+  }
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilterService {
 
-  constructor(private invariantService: InvariantsService) { }
+  // obsolete
+  private tableContent: Array<any>;
+
+  // TODO: function to reset the variables (when browsing another page)
+
+  private activeFiltersList: Array<ActiveFilter>;
+
+  observableActiveFiltersList = new BehaviorSubject<ActiveFilter[]>(this.activeFiltersList);
+
+  constructor(private invariantService: InvariantsService,
+    private http: HttpClient) {
+    this.activeFiltersList = new Array<ActiveFilter>();
+  }
 
   generateQueryStringParameters(columnList: Array<Column>,
     pageInformation: { size: number, sort: any, number: number, totalCount: number },
@@ -75,4 +110,45 @@ export class FilterService {
     }
     return queryParameter.slice(0, -1); // removing the last '&'
   }
+
+  getContentForTable(servlet: string, queryParameters: string, callback) {
+    this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
+      .subscribe((response) => {
+        if (response) {
+          if (response.iTotalRecords > 0) {
+            callback(response.contentTable, response.iTotalRecords);
+          }
+        }
+      });
+  }
+
+  // add a new filter or new values for an existing values to the list
+  addAFilter(key: string, values: Array<any>, term: string, mode: string) {
+    const filter = new ActiveFilter(key, values, term, mode);
+    const similarFilter = this.activeFiltersList.find(f => f.filter === filter.filter);
+    if (similarFilter) {
+      // the filter is already active
+      const index = this.activeFiltersList.indexOf(similarFilter);
+      // update the values & term for this key
+      this.activeFiltersList[index].values = values;
+      this.activeFiltersList[index].term = term;
+    } else {
+      // add the new filter to the selection
+      this.activeFiltersList.push(filter);
+    }
+    this.observableActiveFiltersList.next(this.activeFiltersList);
+  }
+
+  // remove a filter from the active filters list
+  removeAFilter(key: string) {
+    const filter = this.activeFiltersList.find(f => f.filter === filter.filter);
+    // ensure that the filter is already active
+    if (filter) {
+      // removes it
+      const index = this.activeFiltersList.indexOf(filter);
+      this.activeFiltersList.splice(index, 1);
+    }
+    this.observableActiveFiltersList.next(this.activeFiltersList);
+  }
+
 }

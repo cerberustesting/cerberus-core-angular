@@ -52,37 +52,60 @@
                 </div>
                 <!-- END DISPLAYED COLUMNS -->
 
-                <!-- FILTER SELECTION -->
-                <div class="dropdown dropright mr-4 mb-3">
-                    <button type="button" class="btn btn-sm btn-primary" id="filtersSelect" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-fw fa-filter mr-1"></i>
-                        Filters
-                        <span class="nav-main-link-badge badge badge-pill badge-light ml-1 mr-1">
-                            {{ activeFilters.length }}
-                        </span>
-                    </button>
-                    <div class="dropdown-menu filtersDropdown" aria-labelledby="dropdown-default-primary"
-                        x-placement="right-start"
-                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                        <a *ngFor="let column of searchableColumns" class="dropdown-item link-cursor"
-                            (click)="addFilter(column)">
-                            <i *ngIf="column.filterDisplayed" class="fa fa-check-circle text-primary-dark"></i>
-                            <span *ngIf="!column.filterDisplayed" class="ml-1">{{column.displayName}}</span>
-                            <span *ngIf="column.filterDisplayed"
-                                class="text-primary-dark ml-1">{{column.displayName}}</span>
-                        </a>
-                    </div>
-                </div>
-                <!-- END FILTER SELECTION -->
+                <!-- FILTERS -->
+                <button type="button" class="btn btn-sm btn-primary mr-4 mb-3" id="filtersSelect"
+                    (click)="open(content)">
+                    <i class="fa fa-fw fa-filter mr-1"></i>
+                    Filters
+                    <span class="nav-main-link-badge badge badge-pill badge-light ml-1 mr-1">
+                        {{ activeFilters.length }}
+                    </span>
+                </button>
+                <!-- END FILTERS -->
 
-                <!-- ACTIVE FILTER LIST-->
-                <ng-template ngFor let-column [ngForOf]="columns">
-                    <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column" [servlet]="servlet"
-                        (applyFilterOutput)=applySystem() (remove)="removeFilter($event)">
-                    </app-filter>
+                <ng-template #content let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">Filters (Design in progress...)</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- FILTER SELECTION -->
+                        <div class="dropdown dropright mr-4 mb-3">
+                            <button type="button" class="btn btn-sm btn-primary" id="filtersSelect"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-fw fa-plus mr-1"></i>
+                                Add a Filter
+                            </button>
+                            <div class="dropdown-menu filtersDropdown" aria-labelledby="dropdown-default-primary"
+                                x-placement="right-start"
+                                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                                <a *ngFor="let column of searchableColumns" class="dropdown-item link-cursor"
+                                    (click)="addFilter(column)">
+                                    <i *ngIf="column.filterDisplayed" class="fa fa-check-circle text-primary-dark"></i>
+                                    <span *ngIf="!column.filterDisplayed" class="ml-1">{{column.displayName}}</span>
+                                    <span *ngIf="column.filterDisplayed"
+                                        class="text-primary-dark ml-1">{{column.displayName}}</span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- END FILTER SELECTION -->
+
+                        <!-- ACTIVE FILTER LIST-->
+                        <ng-template ngFor let-column [ngForOf]="columns">
+                            <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column"
+                                [servlet]="servlet" (applyFilterOutput)="applySystem()" (remove)="removeFilter($event)">
+                            </app-filter>
+                        </ng-template>
+                        <!-- END ACTIVE FILTER LIST-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark"
+                            (click)="modal.close('Save click')">Update</button>
+                    </div>
                 </ng-template>
-                <!-- END ACTIVE FILTER LIST-->
 
             </div>
         </div>

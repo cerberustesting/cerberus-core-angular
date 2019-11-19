@@ -11,7 +11,7 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatatablePageComponent } from './datatable-page/datatable-page.component';
 import { FiltersComponent } from './datatable-page/filters/filters.component';
-import { FilterComponent } from './datatable-page/utils/filter/filter.component';
+import { FilterComponent } from './datatable-page/filters/filter/filter.component';
 import { RunComponent } from './run/run.component';
 import { CustomModalComponent } from './custom-modal/custom-modal.component';
 import { MatSliderModule } from '@angular/material/slider';

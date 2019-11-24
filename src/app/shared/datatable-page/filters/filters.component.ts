@@ -6,7 +6,7 @@ import { TestService } from '../../../core/services/crud/test.service';
 import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
 import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
 import { FilterService, ActiveFilter } from 'src/app/core/services/crud/filter.service';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-filters',
@@ -52,6 +52,16 @@ export class FiltersComponent implements OnInit {
     this.columnsSectionMouseOver = false;
     this.filterSectionMouseOver = false;
     this.filterService.observableActiveFiltersList.subscribe(r => { this.activeFiltersList = r; });
+  }
+
+  // return the number of displayed filters
+  ActiveFilterCount(): number {
+    if (this.columns) {
+      // return the number of filter object
+      return this.columns.filter(f => f.filterDisplayed === true).length;
+    } else {
+      return 0;
+    }
   }
 
   open(content) {

@@ -63,50 +63,59 @@
                 </button>
                 <!-- END FILTERS -->
 
+                <!-- FILTERS MODAL-->
                 <ng-template #content let-modal>
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="modal-basic-title">Filters (Design in progress...)</h4>
-                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
 
-                        <!-- FILTER SELECTION -->
-                        <div class="dropdown dropright mr-4 mb-3">
-                            <button type="button" class="btn btn-sm btn-primary" id="filtersSelect"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-fw fa-plus mr-1"></i>
-                                Add a Filter
-                            </button>
-                            <div class="dropdown-menu filtersDropdown" aria-labelledby="dropdown-default-primary"
-                                x-placement="right-start"
-                                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                                <a *ngFor="let column of searchableColumns" class="dropdown-item link-cursor"
-                                    (click)="addFilter(column)">
-                                    <i *ngIf="column.filterDisplayed" class="fa fa-check-circle text-primary-dark"></i>
-                                    <span *ngIf="!column.filterDisplayed" class="ml-1">{{column.displayName}}</span>
-                                    <span *ngIf="column.filterDisplayed"
-                                        class="text-primary-dark ml-1">{{column.displayName}}</span>
-                                </a>
+                    <div class="block no-shadow">
+                        <div class="block-header block-rounded block-header-default">
+                            <h3 class="block-title"><i class="fa fa-filter fa-fw mr-1"></i>Filters</h3>
+                            <div class="block-options">
+                                <!-- FILTER SELECTION -->
+                                <div class="dropdown dropright mr-4 mb-3">
+                                    <button type="button" class="btn btn-sm btn-primary" id="filtersSelect"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-fw fa-plus mr-1"></i>
+                                        Add a Filter
+                                    </button>
+                                    <div class="dropdown-menu filtersDropdown"
+                                        aria-labelledby="dropdown-default-primary" x-placement="right-start"
+                                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                                        <a *ngFor="let column of searchableColumns" class="dropdown-item link-cursor"
+                                            (click)="addFilter(column)">
+                                            <i *ngIf="column.filterDisplayed"
+                                                class="fa fa-check-circle text-primary-dark"></i>
+                                            <span *ngIf="!column.filterDisplayed"
+                                                class="ml-1">{{column.displayName}}</span>
+                                            <span *ngIf="column.filterDisplayed"
+                                                class="text-primary-dark ml-1">{{column.displayName}}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- END FILTER SELECTION -->
+                                <button type="button" class="btn-block-option mr-2"
+                                    (click)="modal.close('Update click')">
+                                    <i class="fa fa-check mr-1"></i> Update
+                                </button>
                             </div>
                         </div>
-                        <!-- END FILTER SELECTION -->
+                        <div class="block-content">
 
-                        <!-- ACTIVE FILTER LIST-->
-                        <ng-template ngFor let-column [ngForOf]="columns">
-                            <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column"
-                                [servlet]="servlet" (applyFilterOutput)="applySystem()" (remove)="removeFilter($event)">
-                            </app-filter>
-                        </ng-template>
-                        <!-- END ACTIVE FILTER LIST-->
+                            <div *ngIf="ActiveFilterCount()===0" class="font-w600">No active filter</div>
+
+                            <!-- ACTIVE FILTER LIST-->
+                            <ng-template ngFor let-column [ngForOf]="columns">
+                                <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column"
+                                    [servlet]="servlet" (applyFilterOutput)="applySystem()"
+                                    (remove)="removeFilter($event)">
+                                </app-filter>
+                            </ng-template>
+                            <!-- END ACTIVE FILTER LIST-->
+
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-dark"
-                            (click)="modal.close('Save click')">Update</button>
-                    </div>
+
                 </ng-template>
-
+                <!-- END FILTERS MODAL -->
             </div>
         </div>
     </div>

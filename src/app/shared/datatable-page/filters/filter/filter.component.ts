@@ -129,12 +129,10 @@ export class FilterComponent implements OnInit {
     /*Select all element that correspond to the search*/
     const selectedElements = (this.searchItems.length > 0) ? this.searchItems : this.dataList;
     this.model = selectedElements;
-    //this.column.sSearch = this.model;
   }
   onClearAll() {
     /*Reset the model*/
     this.model = [];
-    //this.column.sSearch = [];
   }
 
   onSearch(event) {
@@ -149,7 +147,6 @@ export class FilterComponent implements OnInit {
   }
 
   validField(): void {
-    //this.column.sSearch = [this.data];
     this.sendFilterTerm(this.data);
     this.applyFilterOutput.emit();
   }

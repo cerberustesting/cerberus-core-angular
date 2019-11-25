@@ -43,7 +43,7 @@
   <div class="test content-side content-side-full">
     <ul class="nav-main">
       <li class="nav-main-item">
-        <a class="nav-main-link" routerLink="/analyse/dashboard" routerLinkActive="active">
+        <a class="nav-main-link" id='sideMenu_home' routerLink="/analyse/dashboard" routerLinkActive="active">
           <i class="nav-main-link-icon si si-cursor"></i>
           <span class="nav-main-link-name">Dashboard</span>
           <!-- <span class="nav-main-link-badge badge badge-pill badge-success">5</span> -->
@@ -58,7 +58,7 @@
           </a>
           <ul class="no-padding nav-main-submenu" *ngIf="menuitem.submenu && menuitem.expanded">
             <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
-              <a class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''"
+              <a [id]="'sideMenu_'+submenuitem.id" class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''"
                 [routerLink]="submenuitem.submenu ? null : submenuitem.link">
                 <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
                 <span class="nav-main-link-name">{{submenuitem.name}}</span>

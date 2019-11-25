@@ -22,7 +22,8 @@ export class SidebarComponent implements OnInit {
       submenu: [
         {
           name: 'Testcase List',
-          link: '/design/testcaseslist'
+          link: '/design/testcaseslist',
+          id: 'tcList'
         },
         {
           name: 'Testcase Edition',

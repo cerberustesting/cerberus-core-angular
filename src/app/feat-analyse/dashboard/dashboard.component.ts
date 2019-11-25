@@ -13,13 +13,13 @@ export class DashboardComponent implements OnInit {
   private filterSectionMouseOver: boolean;
 
   constructor(private headerTitleService: HeaderTitleService) {
-    headerTitleService.setTitle('Dashboard');
     this.filterSectionMouseOver = true;
     this.filterSectionMouseOver = false;
   }
 
   ngOnInit() {
     initChartJS();
+    this.headerTitleService.setTitle('Dashboard', 'dashboard');
   }
 
 }

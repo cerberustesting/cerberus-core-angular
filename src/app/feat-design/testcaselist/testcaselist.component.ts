@@ -37,11 +37,11 @@ export class TestcaselistComponent implements OnInit {
     private modalService: NgbModal,
     private testService: TestService,
     private notificationService: NotificationService) {
-    this.headerTitleService.setTitle('Testcase List');
   }
 
   ngOnInit() {
     this.servlet = '/ReadTestCase';
+    this.headerTitleService.setTitle('Testcase List', 'tcList');
   }
 
   /** refreshResults

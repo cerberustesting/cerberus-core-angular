@@ -27,7 +27,12 @@ export class HeaderbarComponent implements OnInit {
   // user data from Keycloak
   userFullName: string;
 
+  // page title
   title: string;
+  // page title id
+  // needed to differentiate page id other than from value
+  // since it language dependant
+  id: string;
 
   constructor(
     private _invariantsService: InvariantsService,
@@ -50,7 +55,7 @@ export class HeaderbarComponent implements OnInit {
     // subscribe to selected system(s) list
     this._invariantsService.observableSystemsSelected.subscribe(r => { this.selectedSystemsList = r; });
 
-    this._hearderTitleService.observableTitle.subscribe(newTitle => this.title = newTitle);
+    this._hearderTitleService.observableTitle.subscribe(r => { if (r) { this.title = r.titleValue; this.id = r.id; } });
   }
 
   systemsList_OnChange(): void {

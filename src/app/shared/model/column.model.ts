@@ -14,7 +14,7 @@ export interface Column {
     fieldActive?: boolean; // the text field filter is active
     placeholder?: string; // Placeholder of the corresponding filter
     multiple?: boolean; // can select multiple item at time
-    sSearch?: Array<any>; // values to filters
+    sSearch?: any; // values to filters (could be a string, or an array of string)
     flexGrow?: number; // width coefficient
 }
 

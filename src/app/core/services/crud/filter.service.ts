@@ -93,7 +93,13 @@ export class FilterService {
           }
           formData['sSearch_' + column] = systemByFilter + ((systemByFilter !== '' && systemByService !== '') ? ',' : '') + systemByService; // value(s) to filter
         } else {
-          formData['sSearch_' + column] = (columnListWithActiveFilter[column].sSearch) ? columnListWithActiveFilter[column].sSearch.join(',') : ''; // value(s) to filter
+          if (columnListWithActiveFilter[column].like === true) {
+            formData['sSearch_' + column] = columnListWithActiveFilter[column].sSearch;
+          } else if (columnListWithActiveFilter[column].multiple === false) {
+            formData['sSearch_' + column] = columnListWithActiveFilter[column].sSearch;
+          } else {
+            formData['sSearch_' + column] = (columnListWithActiveFilter[column].sSearch) ? columnListWithActiveFilter[column].sSearch.join(',') : ''; // value(s) to filter
+          }
         }
         // ? 'mDataProp_'
         // ? 'bRegex_'
@@ -123,32 +129,32 @@ export class FilterService {
   }
 
   // add a new filter or new values for an existing values to the list
-  addAFilter(key: string, values: Array<any>, term: string, mode: string) {
-    const filter = new ActiveFilter(key, values, term, mode);
-    const similarFilter = this.activeFiltersList.find(f => f.filter === filter.filter);
-    if (similarFilter) {
-      // the filter is already active
-      const index = this.activeFiltersList.indexOf(similarFilter);
-      // update the values & term for this key
-      this.activeFiltersList[index].values = values;
-      this.activeFiltersList[index].term = term;
-    } else {
-      // add the new filter to the selection
-      this.activeFiltersList.push(filter);
-    }
-    this.observableActiveFiltersList.next(this.activeFiltersList);
-  }
+  // addAFilter(key: string, values: Array<any>, term: string, mode: string) {
+  //   const filter = new ActiveFilter(key, values, term, mode);
+  //   const similarFilter = this.activeFiltersList.find(f => f.filter === filter.filter);
+  //   if (similarFilter) {
+  //     // the filter is already active
+  //     const index = this.activeFiltersList.indexOf(similarFilter);
+  //     // update the values & term for this key
+  //     this.activeFiltersList[index].values = values;
+  //     this.activeFiltersList[index].term = term;
+  //   } else {
+  //     // add the new filter to the selection
+  //     this.activeFiltersList.push(filter);
+  //   }
+  //   this.observableActiveFiltersList.next(this.activeFiltersList);
+  // }
 
   // remove a filter from the active filters list
-  removeAFilter(key: string) {
-    const filter = this.activeFiltersList.find(f => f.filter === filter.filter);
-    // ensure that the filter is already active
-    if (filter) {
-      // removes it
-      const index = this.activeFiltersList.indexOf(filter);
-      this.activeFiltersList.splice(index, 1);
-    }
-    this.observableActiveFiltersList.next(this.activeFiltersList);
-  }
+  // removeAFilter(key: string) {
+  //   const filter = this.activeFiltersList.find(f => f.filter === filter.filter);
+  //   // ensure that the filter is already active
+  //   if (filter) {
+  //     // removes it
+  //     const index = this.activeFiltersList.indexOf(filter);
+  //     this.activeFiltersList.splice(index, 1);
+  //   }
+  //   this.observableActiveFiltersList.next(this.activeFiltersList);
+  // }
 
 }

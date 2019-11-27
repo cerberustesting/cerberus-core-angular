@@ -71,6 +71,7 @@ export class DatatableComponent implements OnInit {
    * @param column column to filter
    */
   addFilter(column: Column): void {
+    console.log('addFilter from datatable.comp');
     column.filterDisplayed = !column.filterDisplayed;
   }
 

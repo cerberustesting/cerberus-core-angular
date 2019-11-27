@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, SimpleChanges, OnChanges } from '@angular/core';
 import { SystemService } from '../../../core/services/crud/system.service';
 import { ILabel } from '../../../shared/model/label.model';
 import { InvariantsService } from '../../../core/services/crud/invariants.service';
@@ -39,6 +39,8 @@ export class FiltersComponent implements OnInit {
   activeFilters: Array<string> = [];
   activeFiltersList: Array<ActiveFilter>;
 
+  new_ActiveFiltersList: Array<Column>;
+
   constructor(private systemService: SystemService,
     private invariantService: InvariantsService,
     private testService: TestService,
@@ -52,21 +54,30 @@ export class FiltersComponent implements OnInit {
     this.columnsSectionMouseOver = false;
     this.filterSectionMouseOver = false;
     this.filterService.observableActiveFiltersList.subscribe(r => { this.activeFiltersList = r; });
+    console.log(this.columns);
   }
 
-  // return the number of displayed filters
-  ActiveFilterCount(): number {
-    if (this.columns) {
-      // return the number of filter object
-      return this.columns.filter(f => f.filterDisplayed === true).length;
-    } else {
-      return 0;
-    }
+  // return the columns list that are being used as filter
+  getActiveFilters(): Array<Column> {
+    const ActiveFilters = this.columns.filter(fltr => fltr.filterDisplayed === true);
+    return ActiveFilters;
   }
 
-  open(content) {
+  // return the columns list that are being active: displayed in the table
+  getActiveColumns(): Array<Column> {
+    const ActiveColumns = this.columns.filter(fltr => fltr.active);
+    return ActiveColumns;
+  }
+
+  debug() {
+    console.log('debug from filters.comp');
+    console.log(this.columns);
+  }
+
+  // open the filters modal
+  openFiltersModal(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl' }).result.then((result) => {
-      // close
+      // triggered when modal is closed
       this.applySystem();
     }, (reason) => {
       // dismiss
@@ -115,17 +126,15 @@ export class FiltersComponent implements OnInit {
 
   /** addFilter
    * * Add select filter for that column
-   * @param column  column to filter
+   * @param column column to filter on
    */
   addFilter(column: Column) {
-    if (column.filterDisplayed) {
-      column.sSearch = [];
-      this.activeFilters.splice(this.activeFilters.indexOf(column.contentName), 1);
-    } else {
-      this.activeFilters.push(column.contentName);
-    }
+    console.log(this.columns);
+    console.log(column);
+    // toggle the filter display:
     column.filterDisplayed = !column.filterDisplayed;
-
+    // reset its values
+    column.sSearch = [];
   }
 
   /** addFilterLike
@@ -146,7 +155,7 @@ export class FiltersComponent implements OnInit {
   }
 
   removeFilter(columnContent: string) {
-    this.activeFilters.splice(this.activeFilters.indexOf(columnContent), 1);
+    // this.activeFilters.splice(this.activeFilters.indexOf(columnContent), 1);
   }
 
   toggleColumnsSelection() {

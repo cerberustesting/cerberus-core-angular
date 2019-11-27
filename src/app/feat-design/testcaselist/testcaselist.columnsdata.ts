@@ -12,7 +12,8 @@ export const TestCasesColumnsData: Column[] = [
         filterDisplayed: false,
         multiple: true,
         placeholder: 'Select applications',
-        sSearch: []
+        sSearch: [],
+        filterMode: FILTER_MODE.DROPDOWN,
     },
     {
         displayName: 'Test Folder',
@@ -22,6 +23,7 @@ export const TestCasesColumnsData: Column[] = [
         flexGrow: 100,
         defaultActive: true,
         searchable: true,
+        filterDisplayed: false,
         multiple: true,
         placeholder: 'Select test',
         sSearch: []
@@ -38,7 +40,8 @@ export const TestCasesColumnsData: Column[] = [
         filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Search TestCase',
-        sSearch: []
+        sSearch: [],
+        filterDisplayed: false,
     },
     {
         displayName: 'Labels',
@@ -130,11 +133,10 @@ export const TestCasesColumnsData: Column[] = [
         contentName: 'countryList',
         flexGrow: 200,
         active: false,
-
+        filterDisplayed: false,
         sSearch: []
 
     },
-
     /****/
     {
         displayName: 'Stickers',
@@ -214,7 +216,6 @@ export const TestCasesColumnsData: Column[] = [
         contentName: 'Project',
         filterDisplayed: false,
         active: false,
-
         multiple: true,
         placeholder: 'Select Project',
         sSearch: []
@@ -226,7 +227,6 @@ export const TestCasesColumnsData: Column[] = [
         contentName: 'origine',
         filterDisplayed: false,
         active: false,
-
         multiple: true,
         placeholder: 'Select Origine',
         sSearch: []
@@ -253,7 +253,8 @@ export const TestCasesColumnsData: Column[] = [
         active: false,
         multiple: true,
         placeholder: 'Select Type',
-        sSearch: []
+        sSearch: [],
+        filterDisplayed: false,
 
     },
     {
@@ -314,5 +315,4 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select User Modification',
         sSearch: []
-
     }];

@@ -30,7 +30,7 @@
                         <i class="fa fa-fw fa-columns mr-1"></i>
                         Columns
                         <span class="nav-main-link-badge badge badge-pill badge-light ml-1 mr-1">
-                            {{ columnActive }}
+                            {{ getActiveColumns().length }}
                         </span>
                     </button>
                     <div class="dropdown-menu filtersDropdown" aria-labelledby="dropdown-default-primary"
@@ -54,11 +54,11 @@
 
                 <!-- FILTERS -->
                 <button type="button" class="btn btn-sm btn-primary mr-4 mb-3" id="filtersSelect"
-                    (click)="open(content)">
+                    (click)="openFiltersModal(content)">
                     <i class="fa fa-fw fa-filter mr-1"></i>
                     Filters
                     <span class="nav-main-link-badge badge badge-pill badge-light ml-1 mr-1">
-                        {{ activeFilters.length }}
+                        {{ getActiveFilters().length }}
                     </span>
                 </button>
                 <!-- END FILTERS -->
@@ -94,19 +94,18 @@
                                 <!-- END FILTER SELECTION -->
                                 <button type="button" class="btn-block-option mr-2"
                                     (click)="modal.close('Update click')">
-                                    <i class="fa fa-check mr-1"></i> Update
+                                    <i class="fa fa-check mr-1"></i> Apply
                                 </button>
                             </div>
                         </div>
                         <div class="block-content">
 
-                            <div *ngIf="ActiveFilterCount()===0" class="font-w600">No active filter</div>
+                            <div *ngIf="getActiveFilters().length===0" class="font-w600">No active filter</div>
 
                             <!-- ACTIVE FILTER LIST-->
                             <ng-template ngFor let-column [ngForOf]="columns">
                                 <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column"
-                                    [servlet]="servlet" (applyFilterOutput)="applySystem()"
-                                    (remove)="removeFilter($event)">
+                                    [servlet]="servlet" (applyFilterOutput)="applySystem()">
                                 </app-filter>
                             </ng-template>
                             <!-- END ACTIVE FILTER LIST-->
@@ -116,6 +115,13 @@
 
                 </ng-template>
                 <!-- END FILTERS MODAL -->
+
+                <button type="button" class="btn btn-sm btn-primary mr-4 mb-3" id="filtersSelect"
+                    (click)="debug()">
+                    <i class="fa fa-fw fa-bug mr-1"></i>
+                    Debug
+                </button>
+
             </div>
         </div>
     </div>

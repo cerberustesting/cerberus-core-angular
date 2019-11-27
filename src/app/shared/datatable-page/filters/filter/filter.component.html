@@ -1,32 +1,19 @@
-<!-- TEXT SEARCH FIELD -->
-<!-- <div class="input-group mr-2 mb-3" *ngIf="column.filterMode==='SEARCH_FIELD'">
-  <div class="input-group-prepend link-cursor form-control-sm p-0" (mouseenter)="mouseOverOnFilter = true"
-    (mouseleave)="mouseOverOnFilter = false">
-    <span class="form-control-sm input-group-text custom-sm-font">
-      <i class="fa fa-fw mr-1" (click)="removeFilter()" [ngClass]="mouseOverOnFilter ? 'fa-trash' : 'fa-filter'"
-        style="color:#495057;"></i>
-      {{column.displayName}}
-    </span>
-  </div>
-  <input type="text" class="form-control form-control-sm" (keyup.enter)="validField()" (blur)="validField()"
-    [(ngModel)]="data" [placeholder]="column.placeholder">
-</div> -->
-<!-- END TEXT SEARCH FIELD -->
-
-
-<div class="block block-rounded block-bordered">
+<div *ngIf="column.filterDisplayed" class="block block-rounded block-bordered">
   <div class="block-header block-header-default">
     <h3 class="block-title">
-
-        <div class="form-group mb-0">
-            <div class="form-check form-check-inline">
-                <small>{{column.displayName}}</small>
-            </div>
-            <div *ngIf="column.filterMode==='SEARCH_FIELD'" class="form-check form-check-inline" style="min-width: 50%;">
-                <input type="text" class="form-control form-control-sm" (keyup.enter)="validField()" (blur)="validField()"
-                [(ngModel)]="data" [placeholder]="column.placeholder">
-            </div>
+      <div class="form-group mb-0">
+        <div class="form-check form-check-inline">
+          <small>{{column.displayName}}</small>
         </div>
+
+        <!-- TEXT SEARCH FIELD -->
+        <div *ngIf="column.filterMode==='SEARCH_FIELD'" class="form-check form-check-inline" style="min-width: 50%;">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="column.sSearch"
+            [placeholder]="column.placeholder">
+        </div>
+        <!-- END TEXT SEARCH FIELD -->
+
+      </div>
     </h3>
     <div class="block-options">
       <button type="button" class="btn-block-option" (click)="removeFilter()">
@@ -35,40 +22,46 @@
     </div>
   </div>
   <div *ngIf="column.filterMode==='DROPDOWN'" class="block-content row">
+
     <!-- DROPDOWN TYPE FIELD -->
-      <p class="col-4">
-        <ng-select class="custom custom-icon custom-sm" [items]="dataList" [selectableGroup]="true"
-          [multiple]="column.multiple" [closeOnSelect]="false" [bindValue]="id" [bindLabel]="label" [(ngModel)]='model'
-          (change)="sendFilterValues(model)" (clear)="removeAFilter()" [clearable]="true"
-          (keyup.enter)="onKeyUpEnter($event)">
+    <p class="col-4">
+      <ng-select class="custom custom-icon custom-sm" [items]="dataList" [selectableGroup]="true"
+        [multiple]="column.multiple" [closeOnSelect]="!column.multiple" [bindValue]="id" [bindLabel]="label"
+        [(ngModel)]='column.sSearch' [clearable]="true">
 
-          <!-- NOT WORKING RIGHT NOW -->
-          <ng-template *ngIf="column.type=='label'" ng-option-tmp let-item="item" let-index="index">
-            <div class="label" [style.background-color]="item.color">{{item.label}}</div>
-          </ng-template>
+        <!-- <ng-template *ngIf="column.type=='label'" ng-option-tmp let-item="item" let-index="index">
+          <div class="label" [style.background-color]="item.color">{{item.label}}</div>
+        </ng-template> -->
 
-          <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-search="searchTerm">
-            <!-- <i class="fa fa-fw fa-folder-open mr-2" style="color:#495057;"></i> -->
-            <span class="nav-main-link-badge badge badge-pill badge-primary mr-2">
-              {{ items.length }}
-            </span>
-          </ng-template>
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-search="searchTerm">
+          <span class="nav-main-link-badge badge badge-pill badge-primary mr-2">
+            {{ items.length }}
+          </span>
+        </ng-template>
 
-          <ng-template ng-header-tmp>
-            <div class="row ml-1 mr-1">
-              <!-- CLEAR ALL BUTTON -->
-              <button class="col btn btn-danger btn-sm" (click)="onClearAll()">
-                <i class="fa fa-fw fa-times mr-1"></i>
-                Clear all
-              </button>
-            </div>
-          </ng-template>
+        <ng-template ng-header-tmp>
+          <div class="row ml-1 mr-1">
 
-        </ng-select>
-      </p>
-      <p class="col-8">
-        <span *ngFor="let filterValue of model" class="badge badge-pill badge-primary mr-1">{{filterValue}}</span>
-      </p>
+            <!-- CLEAR ALL BUTTON -->
+            <button class="col btn btn-danger btn-sm" (click)="clearFilterValues()">
+              <i class="fa fa-fw fa-times mr-1"></i>
+              Clear all
+            </button>
+            <!-- END CLEAR ALL BUTTON -->
+
+          </div>
+        </ng-template>
+
+      </ng-select>
+    </p>
+
+    <!-- SELECTED VALUES LIST -->
+    <p class="col-8" *ngIf="column.multiple">
+      <span *ngFor="let filterValue of column.sSearch"
+        class="badge badge-pill badge-primary mr-1">{{filterValue}}</span>
+    </p>
+    <!-- END SELECTED VALUES LIST -->
     <!-- END DROPDOWN TYPE FIELD -->
+
   </div>
 </div>

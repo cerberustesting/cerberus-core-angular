@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, TemplateRef, ContentChild, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, TemplateRef, ContentChild, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { Column } from '../model/column.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
@@ -6,7 +6,6 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-datatable-page',

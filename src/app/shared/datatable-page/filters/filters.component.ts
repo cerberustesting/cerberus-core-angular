@@ -54,7 +54,6 @@ export class FiltersComponent implements OnInit {
     this.columnsSectionMouseOver = false;
     this.filterSectionMouseOver = false;
     this.filterService.observableActiveFiltersList.subscribe(r => { this.activeFiltersList = r; });
-    console.log(this.columns);
   }
 
   // return the columns list that are being used as filter
@@ -129,8 +128,6 @@ export class FiltersComponent implements OnInit {
    * @param column column to filter on
    */
   addFilter(column: Column) {
-    console.log(this.columns);
-    console.log(column);
     // toggle the filter display:
     column.filterDisplayed = !column.filterDisplayed;
     // reset its values

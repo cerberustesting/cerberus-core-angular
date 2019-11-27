@@ -105,7 +105,7 @@
                             <!-- ACTIVE FILTER LIST-->
                             <ng-template ngFor let-column [ngForOf]="columns">
                                 <app-filter *ngIf="column.filterDisplayed" class="filter-drop" [column]="column"
-                                    [servlet]="servlet" (applyFilterOutput)="applySystem()">
+                                    [servlet]="servlet">
                                 </app-filter>
                             </ng-template>
                             <!-- END ACTIVE FILTER LIST-->
@@ -116,11 +116,10 @@
                 </ng-template>
                 <!-- END FILTERS MODAL -->
 
-                <button type="button" class="btn btn-sm btn-primary mr-4 mb-3" id="filtersSelect"
-                    (click)="debug()">
+                <!-- <button type="button" class="btn btn-sm btn-primary mr-4 mb-3" id="filtersSelect" (click)="debug()">
                     <i class="fa fa-fw fa-bug mr-1"></i>
                     Debug
-                </button>
+                </button> -->
 
             </div>
         </div>

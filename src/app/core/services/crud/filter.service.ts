@@ -4,6 +4,7 @@ import { InvariantsService } from './invariants.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
+import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -117,6 +118,8 @@ export class FilterService {
     return queryParameter.slice(0, -1); // removing the last '&'
   }
 
+  // return the values to be displayed on a datatable
+  // according to filter, sort & search
   getContentForTable(servlet: string, queryParameters: string, callback) {
     this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
       .subscribe((response) => {
@@ -126,6 +129,13 @@ export class FilterService {
           }
         }
       });
+  }
+
+  // return the options list of possible values for a column
+  // that is filtered by a dropdown typed filter
+  getOptionsListForColumnsFiltering(servlet: string, columnName: string) {
+    const query = environment.cerberus_api_url + servlet + '?columnName=' + columnName;
+    return this.http.get<ITestCaseHeader>(query);
   }
 
   // add a new filter or new values for an existing values to the list

@@ -25,7 +25,6 @@ export class DatatablePageComponent implements OnInit {
   @ContentChild(DatatableMassActionTmpDirective, { read: TemplateRef, static: true }) massActionTemplate: TemplateRef<any>;
   @ContentChild(DatatableEndLineActionDirective, { read: TemplateRef, static: true }) endLineActionTemplate: TemplateRef<any>;
 
-  name: String;
   private cache: any = {}; // number of displayed rows
   rows: Array<any> = []; // rows to display
   private globalSearch: string; // value in global search field

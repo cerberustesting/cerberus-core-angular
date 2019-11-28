@@ -1,11 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, SimpleChanges, OnChanges } from '@angular/core';
-import { SystemService } from '../../../core/services/crud/system.service';
-import { ILabel } from '../../../shared/model/label.model';
-import { InvariantsService } from '../../../core/services/crud/invariants.service';
-import { TestService } from '../../../core/services/crud/test.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
-import { SidecontentService } from 'src/app/core/services/crud/sidecontent.service';
-import { FilterService, ActiveFilter } from 'src/app/core/services/crud/filter.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -15,46 +9,22 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class FiltersComponent implements OnInit {
 
-  private columnsSectionMouseOver: boolean;
-  private filterSectionMouseOver: boolean;
+  @Input('columns') columns: Array<Column>; // list of all available columns to be filtered on
+  @Input('page') page: any; // information about pagination
+  @Input('servlet') servlet: string; // endpoint to pass to the filters
+  @Input('selectedRows') selectedRows: any; // selected rows in the table
 
-  // list of all available columns to be filtered on
-  @Input('columns') columns: Array<Column>;
-  @Input('page') page: any;
-  @Input('selectedRows') selectedRows: any;
-  @Input('servlet') servlet: string;
-  @Input('selection') selection: boolean;
-  @Input() name?: string;
+  // angular templates declaration
   @Input() filterTemplate: any; // TODO : type TemplateRef
   @Input() massActionTemplate: any; // TODO : type TemplateRef
-  @Output() systemApply = new EventEmitter<string>();
-  @Output() pageApply = new EventEmitter<number>();
 
-  private labelList: Array<ILabel>;
-  private userSearch: any;
-  // number of active columns in the datatable
-  columnActive: number;
-  searchableColumns: Array<Column>;
-  gloabalSearchModel: string;
-  activeFilters: Array<string> = [];
-  activeFiltersList: Array<ActiveFilter>;
+  @Output() globalSearchContentChange = new EventEmitter<string>(); // emitter used to send the global search value to the parent component
 
-  new_ActiveFiltersList: Array<Column>;
+  globalSearch: string; // quick search content
 
-  constructor(private systemService: SystemService,
-    private invariantService: InvariantsService,
-    private testService: TestService,
-    private sideContentService: SidecontentService,
-    private filterService: FilterService,
-    private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal) { }
 
-  ngOnInit() {
-    this.columnActive = this.columns.filter(a => a.active).length;
-    this.searchableColumns = this.columns.filter(a => a.searchable || a.filterMode === FILTER_MODE.SEARCH_FIELD);
-    this.columnsSectionMouseOver = false;
-    this.filterSectionMouseOver = false;
-    this.filterService.observableActiveFiltersList.subscribe(r => { this.activeFiltersList = r; });
-  }
+  ngOnInit() { }
 
   // return the columns list that are being used as filter
   getActiveFilters(): Array<Column> {
@@ -68,65 +38,50 @@ export class FiltersComponent implements OnInit {
     return ActiveColumns;
   }
 
-  debug() {
-    console.log('debug from filters.comp');
-    console.log(this.columns);
+  // return the columns list that can be used to filter the content
+  getSearchableColumns(): Array<Column> {
+    const searchableColumns = this.columns.filter(fltr => fltr.searchable || fltr.filterMode === FILTER_MODE.SEARCH_FIELD);
+    return searchableColumns;
   }
 
   // open the filters modal
   openFiltersModal(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl' }).result.then((result) => {
       // triggered when modal is closed
-      this.applySystem();
+      this.sendGlobalSearchContent();
     }, (reason) => {
       // dismiss
     });
   }
 
-  /**
-   * toggleColumn
-   * * Change colmun activation from column selector
-   * @param column column to toggle
-   */
+  // change the activation of a column
+  // activation being if its displayed or not
   toggleColumn(column): void {
     column.active = !column.active;
-    this.columnActive = this.columns.filter(a => a.active).length;
   }
 
-  resetColumnDrop() {
-    this.columnActive = null;
+  // reset the columns default configuration
+  // according to the columnsdata file
+  resetDefaultColumns() {
+    this.columns.forEach(c => c.active = c.defaultActive);
   }
 
-  /** applySystem
-   * * emit filters
-   */
-  applySystem(): void {
-    this.systemApply.emit(this.gloabalSearchModel);
+  // send the quick search content (string)
+  // to the parent component to refresh the table content
+  sendGlobalSearchContent(): void {
+    this.globalSearchContentChange.emit(this.globalSearch);
   }
 
-  /** applyPage
-   * * emit page modifications
-   */
-  applyPage(): void {
-    const a = document.getElementsByClassName('datatable-body')[0];
-    a.scroll(0, 0);
-    a.scrollBy(0, (this.page.number - 1) * this.page.size * 50 + 50);
-    this.pageApply.emit(this.page.number);
-  }
-
-  /** onKeyUp
-   * * In the gloabl search field, start search if there are more than 2 caracters and after 1/2 second
-   */
-  onKeyUp(): void {
-    if (this.gloabalSearchModel.length > 2) {
-      setTimeout(() => this.applySystem(), 500);
+  // process the current global search value
+  // is triggered at every keypress on the input
+  keypressOnGlobalSearch(): void {
+    // send it only if it has more than 2 caracters
+    if (this.globalSearch.length > 2) {
+      setTimeout(() => this.sendGlobalSearchContent(), 500);
     }
   }
 
-  /** addFilter
-   * * Add select filter for that column
-   * @param column column to filter on
-   */
+  // enable a filter with no value
   addFilter(column: Column) {
     // toggle the filter display:
     column.filterDisplayed = !column.filterDisplayed;
@@ -134,29 +89,12 @@ export class FiltersComponent implements OnInit {
     column.sSearch = [];
   }
 
-  /** addFilterLike
-   * * Add search field for that column
-   * @param column column to filter
-   * TODO : remove
-   */
-  // addFilterLike(column: Column) {
-  //   column.fieldActive = !column.fieldActive;
+  // OBSOLETE
+  // applyPage(): void {
+  //   const a = document.getElementsByClassName('datatable-body')[0];
+  //   a.scroll(0, 0);
+  //   a.scrollBy(0, (this.page.number - 1) * this.page.size * 50 + 50);
+  //   this.pageApply.emit(this.page.number);
   // }
-
-  /** resetDefaultColumns
-   * * rest default column to display
-   */
-  resetDefaultColumns() {
-    this.columns.forEach(c => c.active = c.defaultActive);
-    this.columnActive = this.columns.filter(a => a.active).length;
-  }
-
-  removeFilter(columnContent: string) {
-    // this.activeFilters.splice(this.activeFilters.indexOf(columnContent), 1);
-  }
-
-  toggleColumnsSelection() {
-    this.columnsSectionMouseOver = !this.columnsSectionMouseOver;
-  }
 
 }

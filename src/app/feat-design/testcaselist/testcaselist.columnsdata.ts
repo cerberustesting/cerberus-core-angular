@@ -26,8 +26,8 @@ export const TestCasesColumnsData: Column[] = [
         filterDisplayed: false,
         multiple: true,
         placeholder: 'Select test',
-        sSearch: []
-
+        sSearch: [],
+        filterMode: FILTER_MODE.DROPDOWN,
     },
     {
         displayName: 'TestCase ID',
@@ -56,7 +56,7 @@ export const TestCasesColumnsData: Column[] = [
         flexGrow: 250,
         multiple: true,
         placeholder: 'Select Labels',
-        sSearch: []
+        sSearch: [],
     },
     {
         displayName: 'Description',
@@ -72,7 +72,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Search Description...',
         sSearch: []
-
     },
     {
         displayName: 'Status',
@@ -85,7 +84,8 @@ export const TestCasesColumnsData: Column[] = [
         flexGrow: 100,
         multiple: true,
         placeholder: 'Select status',
-        sSearch: []
+        sSearch: [],
+        filterMode: FILTER_MODE.DROPDOWN,
     },
     {
         displayName: 'Priority',
@@ -98,8 +98,8 @@ export const TestCasesColumnsData: Column[] = [
         flexGrow: 100,
         multiple: true,
         placeholder: 'Select Priority',
-        sSearch: []
-
+        sSearch: [],
+        filterMode: FILTER_MODE.DROPDOWN,
     },
     {
         displayName: 'System',
@@ -111,7 +111,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select System...',
         sSearch: []
-
     },
     {
         displayName: 'Global Activation',
@@ -124,7 +123,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: false,
         placeholder: 'Select Gloabl Activation',
         sSearch: []
-
     },
     {
         displayName: 'CountryList',
@@ -135,7 +133,6 @@ export const TestCasesColumnsData: Column[] = [
         active: false,
         filterDisplayed: false,
         sSearch: []
-
     },
     /****/
     {
@@ -149,7 +146,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select Stickers',
         sSearch: []
-
     },
     {
         displayName: 'Requirements',
@@ -162,7 +158,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select Requirement',
         sSearch: []
-
     },
     {
         displayName: 'Batteries',
@@ -208,7 +203,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select Function',
         sSearch: []
-
     },
     {
         displayName: 'Project',
@@ -219,7 +213,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select Project',
         sSearch: []
-
     },
     {
         displayName: 'Origine',
@@ -230,7 +223,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select Origine',
         sSearch: []
-
     },
     {
         displayName: 'Reference Origine',
@@ -243,7 +235,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select Reference Origine',
         sSearch: []
-
     },
     {
         displayName: 'Type',
@@ -255,7 +246,6 @@ export const TestCasesColumnsData: Column[] = [
         placeholder: 'Select Type',
         sSearch: [],
         filterDisplayed: false,
-
     },
     {
         displayName: 'Date Created',
@@ -268,7 +258,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select Date Created',
         sSearch: []
-
     },
     {
         displayName: 'User Created',
@@ -280,7 +269,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select User',
         sSearch: []
-
     },
     {
         displayName: 'TestCase Version',
@@ -291,7 +279,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select TestCase Version',
         sSearch: []
-
     },
     {
         displayName: 'Date Modification',
@@ -304,7 +291,6 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select Date Modification',
         sSearch: []
-
     },
     {
         displayName: 'User Modification',

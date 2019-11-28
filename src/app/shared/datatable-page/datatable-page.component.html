@@ -1,27 +1,11 @@
 <div class="page">
-<app-filters 
-    (systemApply)="applyFilters($event)" 
-    [page]="page" 
-    [columns]="columns"
-    [selectedRows]="selectedRows"
-    [servlet]="servlet"
-    [name]="name"
-    [selection]="selection"
-    [filterTemplate]="filterTemplate"
-    [massActionTemplate]="massActionTemplate">
-</app-filters>
+    <app-filters (globalSearchContentChange)="applyFilters($event)" [page]="page" [columns]="columns"
+        [selectedRows]="selectedRows" [servlet]="servlet" [filterTemplate]="filterTemplate"
+        [massActionTemplate]="massActionTemplate">
+    </app-filters>
 
-<app-table 
-    [rows]="rows" 
-    [columns]="columns" 
-    [testcaseslist]="true" 
-    [page]="page" 
-    [selection]="selection"
-    [massAction]="massAction"
-    [selected]="selectedRows"
-    [name]="name"
-    [endLineActionTemplate]="endLineActionTemplate"
-    (pageUpdate)="pageUpdate($event)"
-    (sort)="applyFilters($event)">
-</app-table>
+    <app-table [rows]="rows" [columns]="columns" [testcaseslist]="true" [page]="page" [selection]="selection"
+        [massAction]="massAction" [selected]="selectedRows" [endLineActionTemplate]="endLineActionTemplate"
+        (pageUpdate)="pageUpdate($event)" (sort)="applyFilters($event)">
+    </app-table>
 </div>

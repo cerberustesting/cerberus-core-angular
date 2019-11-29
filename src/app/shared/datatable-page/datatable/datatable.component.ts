@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter, HostBinding } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Column } from '../../model/column.model';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { NotificationService } from 'src/app/core/services/utils/notification.service';
+import { Notification, NotificationStyle } from 'src/app/core/services/utils/notification.model';
 
 @Component({
   selector: 'app-table',
@@ -10,7 +11,7 @@ import { TestService } from 'src/app/core/services/crud/test.service';
 export class DatatableComponent implements OnInit {
 
   @Input() rows: any[];
-  @Input() columns: Array<Column>;
+  @Input() columns: Array<Column>; // list of all available columns to be used in the table
   @Input() testcaseslist: boolean;
   @Input() massAction: boolean;
   @Input() selection: boolean;
@@ -31,7 +32,7 @@ export class DatatableComponent implements OnInit {
   @Input() name?: string;
   columnActive: number;
 
-  constructor() { }
+  constructor(private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.columnActive = this.columns.filter(a => a.active).length;
@@ -67,16 +68,16 @@ export class DatatableComponent implements OnInit {
     }
   }
 
-  /**
-   * addFilter
-   * * Add a select filter corresponding to the column
-   * @param column column to filter
-   */
+  // enable a new filter passing by parent component
   addFilter(column: Column): void {
-    // toggle the attribute that handles the activation of the filter
-    column.filterDisplayed = !column.filterDisplayed;
-    // send the event to open the filters modal
-    this.columnAddedForFiltering.emit();
+    // add the filter only if it isn't already added
+    if (column.filterDisplayed === false) {
+      column.filterDisplayed = true;
+      // send the event to open the filters modal
+      this.columnAddedForFiltering.emit();
+    } else {
+      this.notificationService.createANotification('The filter is already active and accessible on the filters section.', NotificationStyle.Info, true, 2500);
+    }
   }
 
   /**

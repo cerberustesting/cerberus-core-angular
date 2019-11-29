@@ -1,30 +1,15 @@
 <div class="data-table d-flex align-items-stretch">
-    <ngx-datatable #dataTable class="material fixed-header expandable d-flex align-items-stretch" 
-        [rows]="rows || []"
-        [columns]="columns" 
-        [columnMode]="'flex'" 
-        [rowHeight]="50" 
-        [headerHeight]="50" 
-        [footerHeight]="50"
-        [selected]="(selected)? selected :  ''" 
-        [selectionType]="(selection)? 'checkbox' : ''"
-        [selectAllRowsOnPage]="false" 
-        [scrollbarH]="false" 
-        [scrollbarV]="true" 
-        [externalSorting]="true"
-        [externalPaging]="true"
-        (select)='onSelect($event)' 
-        [count]="page.totalCount" 
-        [offset]="page.number"
-        (activate)="onActivate($event)"
-        (sort)="onSort($event)" 
-        (page)="onPage($event)">
-
+    <ngx-datatable #dataTable class="material fixed-header expandable d-flex align-items-stretch" [rows]="rows || []"
+        [columns]="columns" [columnMode]="'flex'" [rowHeight]="50" [headerHeight]="50" [footerHeight]="50"
+        [selected]="(selected)? selected :  ''" [selectionType]="(selection)? 'checkbox' : ''"
+        [selectAllRowsOnPage]="false" [scrollbarH]="false" [scrollbarV]="true" [externalSorting]="true"
+        [externalPaging]="true" (select)='onSelect($event)' [count]="page.totalCount" [offset]="page.number"
+        (activate)="onActivate($event)" (sort)="onSort($event)" (page)="onPage($event)">
 
         <!--CheckBox Column-->
         <ngx-datatable-column *ngIf="selection" [sortable]="false" [canAutoResize]="false" [draggable]="false"
             [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true" [width]="80">
-            
+
         </ngx-datatable-column>
 
         <!--Column from column array-->
@@ -38,13 +23,9 @@
                     <span class="datatable-header-cell-wrapper">
                         <span class="datatable-header-cell-label draggable"
                             (click)="sort(index)">{{ column.displayName }}</span>
-                        <i *ngIf="column.searchable" class="fa fa-filter btn filter-btn"
-                            [ngClass]="(column.dropActive)? 'btn-success' : 'btn-warning'"
-                            (click)="addFilter(column)"></i>
 
-                        <i *ngIf="column.like" class="fa fa-filter btn filter-btn"
-                            [ngClass]="(column.fieldActive)? 'btn-success' : 'btn-warning'"
-                            (click)="addFilter(column)"></i>
+                        <i *ngIf="column.filterAllowed" class="fa fa-filter btn filter-btn"
+                            [ngClass]="(column.filterDisplayed) ? 'filterActive' : ''" (click)="addFilter(column)"></i>
                     </span>
                 </ng-template>
 
@@ -58,7 +39,6 @@
                             <b>{{item.value}} </b>
                         </a>
                     </div>
-
 
                     <div *ngIf="column.type=='label'">
                         <div *ngIf="row[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
@@ -95,17 +75,14 @@
                 </ng-template>
             </ngx-datatable-column>
         </ng-template>
-                
 
         <!-- Action column -->
-        <ngx-datatable-column *ngIf="endLineActionTemplate" [sortable]="false" [canAutoResize]="false" [draggable]="false"
-            [resizeable]="false" [width]="1">
-            
-            
+        <ngx-datatable-column *ngIf="endLineActionTemplate" [sortable]="false" [canAutoResize]="false"
+            [draggable]="false" [resizeable]="false" [width]="1">
+
             <ng-template let-row="row" let-index="index" ngx-datatable-cell-template>
-                    <ng-template *ngIf="row.activate"
-                        [ngTemplateOutlet]="endLineActionTemplate"
-                        [ngTemplateOutletContext]="{ row: row }"></ng-template>
+                <ng-template *ngIf="row.activate" [ngTemplateOutlet]="endLineActionTemplate"
+                    [ngTemplateOutletContext]="{ row: row }"></ng-template>
             </ng-template>
         </ngx-datatable-column>
 

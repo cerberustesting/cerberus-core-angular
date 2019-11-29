@@ -1,14 +1,15 @@
 export interface Column {
-    displayName: string; // Display name in column header
+    displayName: string; // display name in column header
     contentName: string; // name of the property in this column
     active: boolean; // display in table ?
     defaultActive?: boolean; // active by default and after reset
     apiName: string; // name of the column in the api TODO
     type?: COLUMN_TYPE; // type of content
     like?: boolean; // the column can be filter with a search field
-    sortable?: boolean; // the column can be sortable
     searchable?: boolean; // the column can be filter with a dropdown
-    displayContentFunction?: (any) => string; // if some value need a function to be display
+    sortable?: boolean; // the column can be sortable
+    filterAllowed?: boolean; // enable the filtering on this column
+    displayContentFunction?: (any) => string; // if some value need a function to be displayed
     filterDisplayed?: boolean; // the dropdown filter is active
     filterMode?: FILTER_MODE;
     fieldActive?: boolean; // the text field filter is active

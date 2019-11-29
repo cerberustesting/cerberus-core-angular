@@ -14,6 +14,7 @@ export const TestCasesColumnsData: Column[] = [
         placeholder: 'Select applications',
         sSearch: [],
         filterMode: FILTER_MODE.DROPDOWN,
+        filterAllowed: true
     },
     {
         displayName: 'Test Folder',
@@ -28,6 +29,7 @@ export const TestCasesColumnsData: Column[] = [
         placeholder: 'Select test',
         sSearch: [],
         filterMode: FILTER_MODE.DROPDOWN,
+        filterAllowed: true
     },
     {
         displayName: 'TestCase ID',
@@ -42,6 +44,7 @@ export const TestCasesColumnsData: Column[] = [
         placeholder: 'Search TestCase',
         sSearch: [],
         filterDisplayed: false,
+        filterAllowed: true
     },
     {
         displayName: 'Labels',
@@ -57,6 +60,7 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Select Labels',
         sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'Description',
@@ -71,7 +75,8 @@ export const TestCasesColumnsData: Column[] = [
         filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Search Description...',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'Status',
@@ -86,6 +91,7 @@ export const TestCasesColumnsData: Column[] = [
         placeholder: 'Select status',
         sSearch: [],
         filterMode: FILTER_MODE.DROPDOWN,
+        filterAllowed: true
     },
     {
         displayName: 'Priority',
@@ -100,6 +106,7 @@ export const TestCasesColumnsData: Column[] = [
         placeholder: 'Select Priority',
         sSearch: [],
         filterMode: FILTER_MODE.DROPDOWN,
+        filterAllowed: true
     },
     {
         displayName: 'System',
@@ -110,7 +117,8 @@ export const TestCasesColumnsData: Column[] = [
         searchable: true,
         multiple: true,
         placeholder: 'Select System...',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'Global Activation',
@@ -122,7 +130,8 @@ export const TestCasesColumnsData: Column[] = [
         type: COLUMN_TYPE.BOOLEAN,
         multiple: false,
         placeholder: 'Select Gloabl Activation',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'CountryList',
@@ -132,7 +141,8 @@ export const TestCasesColumnsData: Column[] = [
         flexGrow: 200,
         active: false,
         filterDisplayed: false,
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     /****/
     {
@@ -145,7 +155,8 @@ export const TestCasesColumnsData: Column[] = [
         filterDisplayed: false,
         multiple: true,
         placeholder: 'Select Stickers',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'Requirements',
@@ -157,7 +168,8 @@ export const TestCasesColumnsData: Column[] = [
         sortable: false,
         multiple: true,
         placeholder: 'Select Requirement',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'Batteries',
@@ -166,7 +178,8 @@ export const TestCasesColumnsData: Column[] = [
         type: COLUMN_TYPE.LABEL,
         active: false,
         filterDisplayed: false,
-        sortable: false
+        sortable: false,
+        filterAllowed: true
     },
     {
         displayName: 'QA Activation',
@@ -174,7 +187,8 @@ export const TestCasesColumnsData: Column[] = [
         contentName: 'activePROD',
         active: false,
         filterDisplayed: false,
-        type: COLUMN_TYPE.BOOLEAN
+        type: COLUMN_TYPE.BOOLEAN,
+        filterAllowed: true
     },
     {
         displayName: 'UAT Activation',
@@ -182,7 +196,8 @@ export const TestCasesColumnsData: Column[] = [
         contentName: 'activeQA',
         active: false,
         filterDisplayed: false,
-        type: COLUMN_TYPE.BOOLEAN
+        type: COLUMN_TYPE.BOOLEAN,
+        filterAllowed: true
     },
     {
         displayName: 'PROD Activation',
@@ -190,7 +205,8 @@ export const TestCasesColumnsData: Column[] = [
         contentName: 'activeUAT',
         active: false,
         filterDisplayed: false,
-        type: COLUMN_TYPE.BOOLEAN
+        type: COLUMN_TYPE.BOOLEAN,
+        filterAllowed: true
     },
     {
         displayName: 'Function',
@@ -202,7 +218,8 @@ export const TestCasesColumnsData: Column[] = [
         filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Select Function',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'Project',
@@ -212,7 +229,8 @@ export const TestCasesColumnsData: Column[] = [
         active: false,
         multiple: true,
         placeholder: 'Select Project',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'Origine',
@@ -222,7 +240,8 @@ export const TestCasesColumnsData: Column[] = [
         active: false,
         multiple: true,
         placeholder: 'Select Origine',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'Reference Origine',
@@ -234,7 +253,8 @@ export const TestCasesColumnsData: Column[] = [
         filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Select Reference Origine',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: true
     },
     {
         displayName: 'Type',
@@ -246,6 +266,7 @@ export const TestCasesColumnsData: Column[] = [
         placeholder: 'Select Type',
         sSearch: [],
         filterDisplayed: false,
+        filterAllowed: true
     },
     {
         displayName: 'Date Created',
@@ -257,7 +278,8 @@ export const TestCasesColumnsData: Column[] = [
         filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Select Date Created',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: false
     },
     {
         displayName: 'User Created',
@@ -268,7 +290,8 @@ export const TestCasesColumnsData: Column[] = [
         active: false,
         multiple: true,
         placeholder: 'Select User',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: false
     },
     {
         displayName: 'TestCase Version',
@@ -278,7 +301,8 @@ export const TestCasesColumnsData: Column[] = [
         active: false,
         multiple: true,
         placeholder: 'Select TestCase Version',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: false
     },
     {
         displayName: 'Date Modification',
@@ -290,7 +314,8 @@ export const TestCasesColumnsData: Column[] = [
         filterMode: FILTER_MODE.SEARCH_FIELD,
         multiple: true,
         placeholder: 'Select Date Modification',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: false
     },
     {
         displayName: 'User Modification',
@@ -300,5 +325,6 @@ export const TestCasesColumnsData: Column[] = [
         active: false,
         multiple: true,
         placeholder: 'Select User Modification',
-        sSearch: []
+        sSearch: [],
+        filterAllowed: false
     }];

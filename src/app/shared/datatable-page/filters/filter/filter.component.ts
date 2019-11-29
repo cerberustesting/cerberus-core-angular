@@ -62,4 +62,5 @@ export class FilterComponent implements OnInit {
   removeFilter() {
     this.column.filterDisplayed = false;
   }
+
 }

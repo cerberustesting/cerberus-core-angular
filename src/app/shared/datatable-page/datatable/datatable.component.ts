@@ -25,6 +25,8 @@ export class DatatableComponent implements OnInit {
 
   @Output() pageUpdate = new EventEmitter<number>();
   @Output() sort = new EventEmitter<void>();
+  @Output() columnAddedForFiltering = new EventEmitter<void>();
+
   @ViewChild('dataTable', { static: true }) table: any;
   @Input() name?: string;
   columnActive: number;
@@ -71,8 +73,10 @@ export class DatatableComponent implements OnInit {
    * @param column column to filter
    */
   addFilter(column: Column): void {
-    console.log('addFilter from datatable.comp');
+    // toggle the attribute that handles the activation of the filter
     column.filterDisplayed = !column.filterDisplayed;
+    // send the event to open the filters modal
+    this.columnAddedForFiltering.emit();
   }
 
   /**

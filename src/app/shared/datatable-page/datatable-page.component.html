@@ -6,6 +6,6 @@
 
     <app-table [rows]="rows" [columns]="columns" [testcaseslist]="true" [page]="page" [selection]="selection"
         [massAction]="massAction" [selected]="selectedRows" [endLineActionTemplate]="endLineActionTemplate"
-        (pageUpdate)="pageUpdate($event)" (sort)="applyFilters($event)">
+        (pageUpdate)="pageUpdate($event)" (sort)="applyFilters($event)" (columnAddedForFiltering)="openFiltersModal()">
     </app-table>
 </div>

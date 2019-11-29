@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, TemplateRef } from '@angular/core';
 import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,6 +8,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./filters.component.scss']
 })
 export class FiltersComponent implements OnInit {
+
+  // modal template used to be able to call the openModal method from outside (without the template ref)
+  @ViewChild('content', { static: false }) private filtersModalTemplate: TemplateRef<any>;
 
   @Input('columns') columns: Array<Column>; // list of all available columns to be filtered on
   @Input('page') page: any; // information about pagination
@@ -45,8 +48,8 @@ export class FiltersComponent implements OnInit {
   }
 
   // open the filters modal
-  openFiltersModal(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl' }).result.then((result) => {
+  openFiltersModal() {
+    this.modalService.open(this.filtersModalTemplate, { ariaLabelledBy: 'modal-basic-title', size: 'xl' }).result.then((result) => {
       // triggered when modal is closed
       this.sendGlobalSearchContent();
     }, (reason) => {

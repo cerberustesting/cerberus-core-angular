@@ -94,7 +94,7 @@ export class FilterService {
           }
           formData['sSearch_' + column] = systemByFilter + ((systemByFilter !== '' && systemByService !== '') ? ',' : '') + systemByService; // value(s) to filter
         } else {
-          if (columnListWithActiveFilter[column].like === true) {
+          if (columnListWithActiveFilter[column].filterMode === 'SEARCH_FIELD') {
             formData['sSearch_' + column] = columnListWithActiveFilter[column].sSearch;
           } else if (columnListWithActiveFilter[column].multiple === false) {
             formData['sSearch_' + column] = columnListWithActiveFilter[column].sSearch;
@@ -107,7 +107,7 @@ export class FilterService {
         // ? 'bSearchable_'
         // ? 'bSortable_'
       }
-      formData['sLike'] = columnListWithActiveFilter.filter(c => c.like).map(column => column.apiName).join(','); // databaseName of like filters
+      formData['sLike'] = columnListWithActiveFilter.filter(c => c.filterMode === 'SEARCH_FIELD').map(column => column.apiName).join(','); // databaseName of like filters
     }
 
     for (const item in formData) {

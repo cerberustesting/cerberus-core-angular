@@ -42,8 +42,8 @@ export class FiltersComponent implements OnInit {
   }
 
   // return the columns list that can be used to filter the content
-  getSearchableColumns(): Array<Column> {
-    const searchableColumns = this.columns.filter(fltr => fltr.searchable || fltr.filterMode === FILTER_MODE.SEARCH_FIELD);
+  getFilterableColumns(): Array<Column> {
+    const searchableColumns = this.columns.filter(fltr => fltr.filterable === true);
     return searchableColumns;
   }
 

@@ -80,7 +80,7 @@
                                     <div class="dropdown-menu filtersDropdown"
                                         aria-labelledby="dropdown-default-primary" x-placement="right-start"
                                         style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                                        <a *ngFor="let column of getSearchableColumns()"
+                                        <a *ngFor="let column of getFilterableColumns()"
                                             class="dropdown-item link-cursor" (click)="addFilter(column)">
                                             <i *ngIf="column.filterDisplayed"
                                                 class="fa fa-check-circle text-primary-dark"></i>

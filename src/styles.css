@@ -150,7 +150,17 @@ remove all the shadow effect
 override the ngb popover class to set a default width
 */
 .popover {
-  width: 55vh;
+  display: inline-block;
+}
+
+/* 
+"popover-custom-width" class to add in any element with a popover
+
+override the default popover width
+use one of these class to choose the width of your popover
+*/
+.popover-custom-width-1 + ngb-popover-window {
+  width: 55vh !important;
 }
 /*
 "custom-sm" class for for element with .custom-block

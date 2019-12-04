@@ -29,21 +29,74 @@
 </div> -->
 
 
-<div *ngIf="(selectedRows.length>0)" class="btn-group btn-group-sm" data-toggle="buttons" role="group"
+<div *ngIf="getSelection()" class="btn-group btn-group-sm" data-toggle="buttons" role="group"
   aria-label="Icons Text group">
-  <button type="button" class="btn btn-outline-secondary">
+
+  <!-- EDIT SINGLE RAW BUTTON -->
+  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
+    ngbPopover="Edit Testcase Header" triggers="mouseenter:mouseleave" placement="top">
     <i class="fa fa-fw fa-pen"></i>
   </button>
-  <button type="button" class="btn btn-outline-secondary">
+  <!-- END EDIT SINGLE RAW BUTTON -->
+
+  <!-- EDIT LABELS BUTTON -->
+  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary" ngbPopover="Edit Labels"
+    triggers="mouseenter:mouseleave" placement="top">
     <i class="fa fa-fw fa-tag"></i>
   </button>
-  <button type="button" class="btn btn-outline-secondary">
+  <!-- END EDIT LABELS BUTTON -->
+
+  <!-- DUPLICATE BUTTON -->
+  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
+    ngbPopover="Duplicate Testcase" triggers="mouseenter:mouseleave" placement="top">
     <i class="fa fa-fw fa-copy"></i>
   </button>
-  <button type="button" class="btn btn-outline-secondary">
+  <!-- END DUPLICATE BUTTON -->
+
+  <!-- RUN BUTTON -->
+  <button type="button" class="btn btn-outline-secondary" ngbPopover="Run Testcase(s)" triggers="mouseenter:mouseleave"
+    placement="top">
     <i class="fa fa-fw fa-play"></i>
   </button>
-  <button type="button" class="btn btn-outline-secondary">
+  <!-- END RUN BUTTON -->
+
+  <!-- DELETE BUTTON -->
+  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
+    ngbPopover="Delete Testcase" triggers="mouseenter:mouseleave" placement="top">
     <i class="fa fa-fw fa-trash"></i>
   </button>
+  <!-- END DELETE BUTTON -->
+
+  <!-- MASS UPDATE STATUS BUTTON -->
+  <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary" ngbPopover="Update Status"
+    triggers="mouseenter:mouseleave" placement="top">
+    <i class="fa fa-fw fa-check-circle"></i>
+  </button>
+  <!-- END MASS UPDATE STATUS BUTTON -->
+
+  <!-- MASS UPDATE APPLICATION BUTTON -->
+  <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
+    ngbPopover="Update Applications" triggers="mouseenter:mouseleave" placement="top">
+    <i class="fa fa-fw fa-cube"></i>
+  </button>
+  <!-- END MASS UPDATE APPLICATION BUTTON -->
+
+  <!-- MASS UPDATE PRIORITY BUTTON -->
+  <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
+    ngbPopover="Update Priorities" triggers="mouseenter:mouseleave" placement="top">
+    <i class="fa fa-fw fa-exclamation"></i>
+  </button>
+  <!-- END MASS UPDATE PRIORITY BUTTON -->
+
+  <!-- MASS UPDATE LABELS BUTTON -->
+  <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary" ngbPopover="Update Labels"
+    triggers="mouseenter:mouseleave" placement="top">
+    <i class="fa fa-fw fa-tag"></i>
+  </button>
+  <!-- END MASS UPDATE LABELS BUTTON -->
+
+  <!-- <button type="button" class="btn btn-outline-secondary" (click)="debug()">
+    <i class="fa fa-fw fa-bug"></i>
+  </button> -->
+
 </div>

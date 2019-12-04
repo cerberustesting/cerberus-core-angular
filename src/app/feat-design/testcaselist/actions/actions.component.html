@@ -1,29 +1,49 @@
-<div class="actions-section">
+<!-- <div class="content content-full full-width">
   <button class="btn btn-outline-danger" *ngIf="(selectedRows.length>0)" placement="top" ngbPopover="Delete TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-trash-alt"></i>
-  </button> <!-- Delete TC -->
+  </button> 
 
   <button class="btn btn-outline-success" *ngIf="(selectedRows.length>0)" (click)="runTestCases(selectedRows)" placement="top" ngbPopover="Run TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-play"></i>
-  </button> <!-- Run TestCase -->
+  </button> 
 
   <button class="btn btn-outline-info" *ngIf="(selectedRows.length>0)" placement="top" ngbPopover="Edit TestCase Header" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-pen"></i>
-  </button> <!-- Edit TestCase Header -->  
+  </button> 
 
   <button class="btn btn-outline-primary" *ngIf="(selectedRows.length==1)" placement="top" ngbPopover="Duplicate TestCase" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-copy"></i>
-  </button> <!-- Duplicate TC --> 
+  </button> 
 
   <button class="btn btn-outline-info" *ngIf="(selectedRows.length>1)" placement="top" ngbPopover="Edit Label" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-tag"></i>
-  </button> <!-- Edit Label -->
+  </button> 
 
   <button class="btn btn-outline-info" *ngIf="(selectedRows.length>1)" placement="top" ngbPopover="Edit Status" triggers="mouseenter:mouseleave" container="body">
     <i class="fa fa-check-circle"></i>
-  </button> <!-- Edit Status -->
+  </button>
 
   <button class="btn btn-outline-info" *ngIf="(selectedRows.length>1)" placement="top" ngbPopover="Edit Priority" triggers="mouseenter:mouseleave" container="body">
       <i class="fa fa-exclamation"></i>
-  </button> <!-- Edit Priority -->
+  </button>
+</div> -->
+
+
+<div *ngIf="(selectedRows.length>0)" class="btn-group btn-group-sm" data-toggle="buttons" role="group"
+  aria-label="Icons Text group">
+  <button type="button" class="btn btn-outline-secondary">
+    <i class="fa fa-fw fa-pen"></i>
+  </button>
+  <button type="button" class="btn btn-outline-secondary">
+    <i class="fa fa-fw fa-tag"></i>
+  </button>
+  <button type="button" class="btn btn-outline-secondary">
+    <i class="fa fa-fw fa-copy"></i>
+  </button>
+  <button type="button" class="btn btn-outline-secondary">
+    <i class="fa fa-fw fa-play"></i>
+  </button>
+  <button type="button" class="btn btn-outline-secondary">
+    <i class="fa fa-fw fa-trash"></i>
+  </button>
 </div>

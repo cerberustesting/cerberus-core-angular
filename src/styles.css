@@ -235,3 +235,19 @@ the element is clickable
 .link-cursor {
   cursor: pointer !important;
 }
+
+/*
+"full-width" class for any element
+
+ensure the element take all the screen width
+*/
+.full-width {
+  width: 100% !important;
+}
+
+/*
+disable the maximum width limit for the page header
+*/
+#page-container > #main-container .content {
+  max-width: 100% !important;
+}

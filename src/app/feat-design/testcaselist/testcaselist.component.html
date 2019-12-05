@@ -19,7 +19,28 @@
     <ng-template cerberusDatatableEndLineAction let-row="row">
         <div class="row-menu">
             <div class="actions-section">
-                <button class="btn btn-outline-danger" (click)="deleteTestCase(row)">
+                <div class="btn-group btn-group-sm" data-toggle="buttons" role="group" aria-label="Icons Text group">
+                    <button type="button" class="btn btn-outline-secondary" (click)="editTestCaseHeader(row)">
+                        <i class="fa fa-fw fa-pen"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="duplicateTestCaseHeader(row)">
+                        <i class="fa fa-fw fa-copy"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">
+                        <i class="fa fa-fw fa-play"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="deleteTestCase(row)">
+                        <i class="fa fa-fw fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- <ng-template cerberusDatatableEndLineAction let-row="row">
+        <div class="row-menu">
+            <div class="actions-section">
+                <button class="btn btn-outline-danger" >
                     <i class="fa fa-trash-alt"></i>
                 </button>
 
@@ -34,7 +55,7 @@
                 </button>
             </div>
         </div>
-    </ng-template>
+    </ng-template> -->
     <!--END Template for end rows buttons-->
 
 </app-datatable-page>

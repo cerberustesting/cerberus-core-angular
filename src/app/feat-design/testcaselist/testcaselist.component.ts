@@ -50,9 +50,11 @@ export class TestcaselistComponent implements OnInit {
   refreshResults(): void {
     this.refreshResultsEvent.next();
   }
+
   /** editTestCaseHeader
-   * * Open sde content in edition mode for the selected testcase
-   * @param testcase the test to edit
+   * * Open side content in edition mode for the selected testcase (must be one)
+   * * sends only the test folder and test case id to the component
+   * @param testcase the testcase to edit, information from table row
    */
   editTestCaseHeader(testcase: any): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
@@ -67,12 +69,13 @@ export class TestcaselistComponent implements OnInit {
   }
 
   /** duplicateTestCaseHeader
-   * * Open sde content in duplicate mode for the selected testcase
-   * @param testcase the test to duplicate
+   * * Open side content in duplicate mode for the selected testcase (must be one)
+   * @param testcase the testcase to duplicate, information from table row
    */
   duplicateTestCaseHeader(testcase: any): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      testCase: testcase,
+      test: testcase.test,
+      testcase: testcase.testCase,
       mode: INTERACTION_MODE.DUPLICATE,
       exit: () => {
         this.refreshResults();

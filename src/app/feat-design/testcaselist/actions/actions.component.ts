@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RunComponent } from '../../../shared/run/run.component';
-import { SidecontentService } from '../../../core/services/crud/sidecontent.service';
+import { SidecontentService, INTERACTION_MODE } from '../../../core/services/crud/sidecontent.service';
+import { TestcaseInteractionComponent } from '../testcase-interaction/testcase-interaction.component';
 
 @Component({
   selector: 'app-actions',
@@ -28,6 +29,40 @@ export class ActionsComponent {
       }
     } else {
       return undefined;
+    }
+  }
+
+  /** editTestCaseHeader
+ * * Open side content in edition mode for the selected testcase (must be one)
+ * * sends only the test folder and test case id to the component
+ */
+  editTestCaseHeader(): void {
+    // execute only if one test case is selected
+    if (this.getSelection().length === 1) {
+      const testcase = this.selectedRows[0];
+      this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+        test: testcase.test,
+        testcase: testcase.testCase,
+        mode: INTERACTION_MODE.EDIT,
+      });
+      this.sideContentService.openSideBlock();
+    }
+  }
+
+  /** duplicateTestCaseHeader
+  * * Open side content in duplicate mode for the selected testcase (must be one)
+  * * sends only the test folder and test case id to the component
+  */
+  duplicateTestCaseHeader(): void {
+    // execute only if one test case is selected
+    if (this.getSelection().length === 1) {
+      const testcase = this.selectedRows[0];
+      this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+        test: testcase.test,
+        testcase: testcase.testCase,
+        mode: INTERACTION_MODE.DUPLICATE,
+      });
+      this.sideContentService.openSideBlock();
     }
   }
 

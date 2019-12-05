@@ -11,7 +11,6 @@ import { environment } from 'src/environments/environment';
 import { NotificationService } from '../utils/notification.service';
 import { tap } from 'rxjs/operators';
 import { NotificationStyle } from '../utils/notification.model';
-import { SelectedLabel } from 'src/app/feat-design/testcaselist/testcase-interaction/labels-tab/labels-tab.component';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -95,6 +94,67 @@ export class TestService {
           }
         }
       });
+  }
+
+  // TODO: merge the two getTestCaseList function (with the callback)
+  getTestCasesList_withCallback(test: string, callback) {
+    this.http.get<ITestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
+      .subscribe((response) => {
+        if (response.iTotalRecords > 0) {
+          callback(response.contentTable);
+        } else {
+          if (test != null) {
+            this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
+            this.testcasesList = null;
+            this.observableTestCasesList.next(this.testcasesList);
+          }
+        }
+      });
+  }
+
+  // return the "highest" test case ID for a test
+  // used for the duplication action
+  getLatestTestCaseId(testcaselist: Array<ITestCaseHeader>, test: string): string {
+    // create an array with only the testCase ID
+    const testCasesList = new Array<string>();
+    // @ts-ignore
+    testcaselist.forEach(tc => {
+      testCasesList.push(tc.testCase);
+    });
+    // get only the testcases with the correct syntax (e.g. 0001A)
+    const testCasesWithCorrectSyntaxList: Array<string> = testCasesList.filter(tc => this.isATestCaseIdIsIncremental(tc) === true);
+    // get only the numbers of the previous list
+    const testCaseIndexList = new Array<number>();
+    testCasesWithCorrectSyntaxList.forEach(tc => {
+      testCaseIndexList.push(Number(tc.substr(0, tc.length - 1)));
+    });
+    const maxIndex = Math.max(...testCaseIndexList) + 1;
+    // get the lenth of the maxindex (e.g. 22 => 2)
+    const maxIndexLength = String(maxIndex).length;
+    switch (maxIndexLength) {
+      case 1: { return '000' + maxIndex + 'A'; }
+      case 2: { return '00' + maxIndex + 'A'; }
+      case 3: { return '0' + maxIndex + 'A'; }
+      case 4: { return maxIndex + 'A'; }
+    }
+  }
+
+  // return true if the testcase ID is in the incremental format
+  // e.g. 0001A
+  isATestCaseIdIsIncremental(testcase: string): boolean {
+    // check that the last caracter is 'A'
+    if (testcase.substr(testcase.length - 1) === 'A') {
+      // remove the last caracter 'A'
+      const testcaseWithoutA = testcase.substr(0, testcase.length - 1);
+      // check that the previous caracters are numbers
+      if (!isNaN(Number(testcaseWithoutA))) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   getFromRequest(servlet: string, queryParameters: string, callback) {

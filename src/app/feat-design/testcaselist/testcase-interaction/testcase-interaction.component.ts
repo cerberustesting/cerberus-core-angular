@@ -37,6 +37,9 @@ export class TestcaseInteractionComponent implements OnInit {
   // from testcaselist.component.ts
   private test: string;
   private testcase: string;
+  // new test case ID when test folder has changed
+  private newTestCase: string;
+
   // used to refresh the test case header
   testcaseheader: ITestCaseHeader = null;
   mode: INTERACTION_MODE;
@@ -55,7 +58,11 @@ export class TestcaseInteractionComponent implements OnInit {
   // others cerberus entity
   applicationsList: Array<IApplication>;
   testsList: Array<ITest>;
+  // testcaseList used for dependencies
   testcaseList: Array<ITestCaseHeader> = [];
+
+  // testcaseList used for Test & Test case folder section
+  testcasesList: Array<ITestCaseHeader> = [];
 
   // public invariants
   private statusList: Array<IInvariant>;
@@ -135,6 +142,7 @@ export class TestcaseInteractionComponent implements OnInit {
   ngOnInit() {
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
     this._mode = this.mode;
+    console.log('mode is: ' + this.mode);
 
     // init the form (will be set later)
     this.testcaseHeaderForm = null;
@@ -149,6 +157,11 @@ export class TestcaseInteractionComponent implements OnInit {
         // set the form
         this.setFormValues();
         this.refreshOthersDatas();
+
+        // set the new testcase ID if it's create/duplicate mode
+        if (this.mode !== INTERACTION_MODE.EDIT) {
+          this.refreshNewTestCase();
+        }
 
         // DIRTY : waiting for dev
         // https://github.com/cerberustesting/cerberus-source/issues/2015
@@ -206,6 +219,21 @@ export class TestcaseInteractionComponent implements OnInit {
       userAgent: this.testcaseheader.userAgent,
       screenSize: this.testcaseheader.screenSize
       // labels list is added later (onSubmit)
+    });
+  }
+
+  // used if the user change the test folder selection
+  refreshNewTestCase(): void {
+    const newTest = this.testcaseHeaderForm.get('test').value;
+    // fetch the test cases list for that test folder
+    this.testService.getTestCasesList_withCallback(newTest, (tcList: Array<ITestCaseHeader>) => {
+      this.testcasesList = tcList;
+      // console.log('refreshNewTestCase for test=' + newTest);
+      // find the last unused test case id
+      this.newTestCase = this.testService.getLatestTestCaseId(this.testcasesList, newTest);
+      // edit the test case form value
+      this.testcaseHeaderForm.controls['testCase'].setValue(this.newTestCase);
+      // console.log('test case value form updated to : ' + this.newTestCase);
     });
   }
 

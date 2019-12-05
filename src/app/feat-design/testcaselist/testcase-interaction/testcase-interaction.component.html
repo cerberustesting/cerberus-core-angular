@@ -32,7 +32,8 @@
                                 triggers="mouseenter:mouseleave"></i>
                         </label>
                         <ng-select name="TestFolder" class="custom-sm" [items]="testsList" bindLabel="test"
-                            bindValue="test" formControlName="test" placeholder="Select a Test">
+                            bindValue="test" formControlName="test" placeholder="Select a Test"
+                            (change)="refreshNewTestCase()">
                             <ng-template ng-label-tmp let-item="item">
                                 {{item.test}} : {{item.description}}
                             </ng-template>
@@ -201,7 +202,8 @@
                                                     name="activePROD" formControlName="activePROD">
                                                 <label class="custom-control-label" for="activePROD">
                                                     PROD
-                                                    <i class="fa fa-info-circle ml-0 info popover-custom-width-1" placement="bottom"
+                                                    <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
+                                                        placement="bottom"
                                                         ngbPopover="This field define if the test is active or in the PROD environment group."
                                                         popoverTitle="Active PROD" triggers="mouseenter:mouseleave"></i>
                                                 </label>

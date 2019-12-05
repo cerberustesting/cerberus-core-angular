@@ -22,8 +22,7 @@
         <!-- Toggle Sidebar Style -->
         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
         <!-- Class Toggle, functionality initialized in Helpers.coreToggleClass() -->
-        <a class="js-class-toggle text-white-75" 
-          (click)="toggleNightMode()">
+        <a class="js-class-toggle text-white-75" (click)="toggleNightMode()">
           <i class="fa" [ngClass]="nightMode ? 'fa-toggle-on' : 'fa-toggle-off'" id="sidebar-style-toggler"></i>
         </a>
         <!-- END Toggle Sidebar Style -->
@@ -51,18 +50,22 @@
       </li>
       <ng-template ngFor let-menu [ngForOf]="menus">
         <li class="nav-main-heading">{{ menu.name }}</li>
-        <li class="nav-main-item" [ngClass]="{'open': menuitem.expanded&&menuitem.submenu}" style="cursor: pointer;" *ngFor='let menuitem of menu.data'>
-          <a class="nav-main-link" [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''" [routerLink]="menuitem.submenu ? null : menuitem.link" (click)="toggleMenu(menuitem)">
+        <li class="nav-main-item" [ngClass]="{'open': menuitem.expanded&&menuitem.submenu}" style="cursor: pointer;"
+          *ngFor='let menuitem of menu.data'>
+          <a [id]="'sideMenu_'+menuitem.id" class="nav-main-link"
+            [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''"
+            [routerLink]="menuitem.submenu ? null : menuitem.link" (click)="toggleMenu(menuitem)">
             <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
             <span class="nav-main-link-name">{{menuitem.name}}</span>
           </a>
           <ul class="no-padding nav-main-submenu" *ngIf="menuitem.submenu && menuitem.expanded">
             <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
-              <a [id]="'sideMenu_'+submenuitem.id" class="nav-main-link" [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''"
+              <a [id]="'sideMenu_'+submenuitem.id" class="nav-main-link"
+                [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''"
                 [routerLink]="submenuitem.submenu ? null : submenuitem.link">
                 <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
                 <span class="nav-main-link-name">{{submenuitem.name}}</span>
-              </a>              
+              </a>
             </li>
           </ul>
         </li>

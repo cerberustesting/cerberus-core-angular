@@ -19,6 +19,7 @@ export class SidebarComponent implements OnInit {
       name: 'Test',
       icon_class: 'si-grid',
       expanded: false,
+      id: 'test',
       submenu: [
         {
           name: 'Testcase List',

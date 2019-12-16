@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { RunComponent } from '../../../shared/run/run.component';
 import { SidecontentService, INTERACTION_MODE } from '../../../core/services/crud/sidecontent.service';
 import { TestcaseInteractionComponent } from '../testcase-interaction/testcase-interaction.component';
+import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 
 @Component({
   selector: 'app-actions',
@@ -12,7 +13,11 @@ export class ActionsComponent {
 
   // the array with all the selected rows
   // the object type depends on the table (ex: test case)
-  @Input() selectedRows: Array<any>;
+  @Input('selectedRows') selectedRows: Array<any>;
+
+  // event that will be triggered when go to script button is clicked
+  // sends the correct row to the parent component to use its function
+  @Output() redirectToScriptButtonClicked = new EventEmitter<ITestCaseHeader>();
 
   constructor(
     private sideContentService: SidecontentService
@@ -64,6 +69,12 @@ export class ActionsComponent {
       });
       this.sideContentService.openSideBlock();
     }
+  }
+
+  // send the row to the testcaselist component
+  // to use its redirect function
+  redirectToScript(row: ITestCaseHeader) {
+    this.redirectToScriptButtonClicked.emit(row);
   }
 
   debug() {

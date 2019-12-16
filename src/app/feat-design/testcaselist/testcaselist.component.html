@@ -11,11 +11,11 @@
 
     <!--START Template for mass action buttons-->
     <ng-template cerberusDatatableMassAction>
-        <app-actions [selectedRows]="selectedRows"></app-actions>
+        <app-actions [selectedRows]="selectedRows" (redirectToScriptButtonClicked)="redirectToTestCaseScript($event)"></app-actions>
     </ng-template>
     <!--END Template for mass action buttons-->
 
-    <!--START Template for end rows buttons-->
+    <!-- START Template for end rows buttons -->
     <ng-template cerberusDatatableEndLineAction let-row="row">
         <div class="row-menu">
             <div class="actions-section">
@@ -23,14 +23,14 @@
                     <button type="button" class="btn btn-outline-secondary" (click)="editTestCaseHeader(row)">
                         <i class="fa fa-fw fa-pen"></i>
                     </button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="redirectToTestCaseScript(row)">
+                        <i class="fa fa-fw fa-list-ol"></i>
+                    </button>
                     <button type="button" class="btn btn-outline-secondary" (click)="duplicateTestCaseHeader(row)">
                         <i class="fa fa-fw fa-copy"></i>
                     </button>
                     <button type="button" class="btn btn-outline-secondary">
                         <i class="fa fa-fw fa-play"></i>
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary" (click)="deleteTestCase(row)">
-                        <i class="fa fa-fw fa-trash-alt"></i>
                     </button>
                 </div>
             </div>

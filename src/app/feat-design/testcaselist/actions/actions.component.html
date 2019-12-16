@@ -8,12 +8,12 @@
   </button>
   <!-- END EDIT SINGLE RAW BUTTON -->
 
-  <!-- EDIT LABELS BUTTON -->
-  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary" ngbPopover="Edit Labels"
-    triggers="mouseenter:mouseleave" placement="top">
-    <i class="fa fa-fw fa-tag"></i>
+  <!-- EDIT SCRIPT BUTTON -->
+  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary" ngbPopover="Edit Script"
+    triggers="mouseenter:mouseleave" placement="top" (click)="redirectToScript(getSelection()[0])">
+    <i class="fa fa-fw fa-list-ol"></i>
   </button>
-  <!-- END EDIT LABELS BUTTON -->
+  <!-- END EDIT SCRIPT BUTTON -->
 
   <!-- DUPLICATE BUTTON -->
   <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"

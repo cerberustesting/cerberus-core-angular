@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TestService } from '../../core/services/crud/test.service';
-import { ITestCaseHeader } from '../../shared/model/testcase.model';
-import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { Column } from 'src/app/shared/model/column.model';
-import { LabelfilteringPipe } from 'src/app/shared/pipes/labelfiltering.pipe';
-import { Filter } from 'src/app/shared/model/filter.model';
-import { SystemService } from 'src/app/core/services/crud/system.service';
-import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { Subject } from 'rxjs';
@@ -16,6 +10,8 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 import { TestcaseInteractionComponent } from './testcase-interaction/testcase-interaction.component';
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 
 @Component({
   selector: 'app-testcaselist',
@@ -36,7 +32,8 @@ export class TestcaselistComponent implements OnInit {
     private sideContentService: SidecontentService,
     private modalService: NgbModal,
     private testService: TestService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -118,4 +115,14 @@ export class TestcaselistComponent implements OnInit {
       );
     };
   }
+
+  // redirect to the corresponding script page
+  redirectToTestCaseScript(row: ITestCaseHeader) {
+    const test = encodeURIComponent(row.test);
+    const testcase = encodeURIComponent(row.testCase);
+    this.router.navigate(['/design/testcasescript/' + test + '/' + testcase]);
+  }
+
 }
+
+

@@ -31,7 +31,7 @@ export class HeaderTitleService {
   // method to set the title object
   // that will be sent to the corresponding (page) component
   setTitle(newTitle: string, id?: string): void {
-    console.log('setTitle called with : newTitle=' + newTitle + ' & id=' + id);
+    // console.log('setTitle called with : newTitle=' + newTitle + ' & id=' + id);
     if (!id) { id = 'notDefined'; }
     const newPageTitle = new PageTitle(newTitle, id);
     this.observableTitle.next(newPageTitle);

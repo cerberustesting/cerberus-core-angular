@@ -123,6 +123,7 @@ export class TestcaselistComponent implements OnInit {
     this.router.navigate(['/design/testcasescript/' + test + '/' + testcase]);
   }
 
+  runSingleTestCase(): void {
+    this.notificationService.createANotification('This feature hasn\'t been implemented', NotificationStyle.Info, true);
+  }
 }
-
-

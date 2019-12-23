@@ -25,14 +25,14 @@
 
   <!-- RUN BUTTON -->
   <button type="button" class="btn btn-outline-secondary" ngbPopover="Run Testcase(s)" triggers="mouseenter:mouseleave"
-    placement="top">
+    placement="top" (click)="runTestCases(getSelection())">
     <i class="fa fa-fw fa-play"></i>
   </button>
   <!-- END RUN BUTTON -->
 
   <!-- DELETE BUTTON -->
   <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
-    ngbPopover="Delete Testcase" triggers="mouseenter:mouseleave" placement="top">
+    ngbPopover="Delete Testcase" triggers="mouseenter:mouseleave" placement="top" (click)="deleteTestCase(getSelection()[0])">
     <i class="fa fa-fw fa-trash"></i>
   </button>
   <!-- END DELETE BUTTON -->

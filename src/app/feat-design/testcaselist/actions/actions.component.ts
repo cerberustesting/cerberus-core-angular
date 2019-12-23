@@ -3,6 +3,9 @@ import { RunComponent } from '../../../shared/run/run.component';
 import { SidecontentService, INTERACTION_MODE } from '../../../core/services/crud/sidecontent.service';
 import { TestcaseInteractionComponent } from '../testcase-interaction/testcase-interaction.component';
 import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { NotificationService } from 'src/app/core/services/utils/notification.service';
+import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
+import { TestService } from 'src/app/core/services/crud/test.service';
 
 @Component({
   selector: 'app-actions',
@@ -20,7 +23,9 @@ export class ActionsComponent {
   @Output() redirectToScriptButtonClicked = new EventEmitter<ITestCaseHeader>();
 
   constructor(
-    private sideContentService: SidecontentService
+    private sideContentService: SidecontentService,
+    private notificationService: NotificationService,
+    private testService: TestService
   ) { }
 
   // return the selected rows to the view
@@ -71,6 +76,20 @@ export class ActionsComponent {
     }
   }
 
+  // delete the test case (mass deletion isn't possible)
+  deleteTestCase(testcaseheader: ITestCaseHeader) {
+    let notifStyle = NotificationStyle.Info;
+    this.testService.deleteTestCase(testcaseheader.test, testcaseheader.testCase, (message, status) => {
+      switch (status) {
+        case 'OK': { notifStyle = NotificationStyle.Success; break; }
+        case 'KO': { notifStyle = NotificationStyle.Error; break; }
+      }
+      this.notificationService.createANotification(message, notifStyle);
+      // TODO: refresh the table content
+    });
+
+  }
+
   // send the row to the testcaselist component
   // to use its redirect function
   redirectToScript(row: ITestCaseHeader) {
@@ -82,7 +101,9 @@ export class ActionsComponent {
   }
 
   runTestCases(selectedRows) {
-    this.sideContentService.addComponentToSideBlock(RunComponent, { testCases: selectedRows });
-    this.sideContentService.openSideBlock();
+    this.notificationService.createANotification('This feature hasn\'t been implemented', NotificationStyle.Info, true);
+    // work in progress
+    // this.sideContentService.addComponentToSideBlock(RunComponent, { testCases: selectedRows });
+    // this.sideContentService.openSideBlock();
   }
 }

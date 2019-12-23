@@ -1,11 +1,9 @@
 import { Component, OnInit, Input, Output, TemplateRef, ContentChild, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { Column } from '../model/column.model';
-import { TestService } from 'src/app/core/services/crud/test.service';
 import { FilterService } from 'src/app/core/services/crud/filter.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
-import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { FiltersComponent } from './filters/filters.component';
 
 @Component({
@@ -40,10 +38,8 @@ export class DatatablePageComponent implements OnInit {
   };
 
   constructor(
-    private testService: TestService,
     private filterService: FilterService,
-    private invariantsService: InvariantsService,
-    private notificationService: NotificationService) { }
+    private invariantsService: InvariantsService) { }
 
   ngOnInit() {
     this.page = {
@@ -119,6 +115,5 @@ export class DatatablePageComponent implements OnInit {
     this.page.number = 0;
     this.search(globalSearch);
   }
-
 
 }

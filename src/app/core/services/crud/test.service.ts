@@ -177,6 +177,7 @@ export class TestService {
     const query = environment.cerberus_api_url + servlet + '?columnName=' + columnName;
     return this.http.get<ITestCaseHeader>(query);
   }
+
   updateTestCase(queryString) {
     return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, httpOptions)
       .pipe(tap(
@@ -190,6 +191,7 @@ export class TestService {
         error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
       ));
   }
+
   createTestCase(queryString) {
     return this.http.post<any>(environment.cerberus_api_url + '/CreateTestCase', queryString, httpOptions)
       .pipe(tap(
@@ -221,21 +223,24 @@ export class TestService {
         }
       });
   }
+
   updateTestDataLib(formData: FormData) {
     return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestDataLib', formData);
   }
+
   createTestDataLib(formData: FormData) {
     return this.http.post<any>(environment.cerberus_api_url + '/CreateTestDataLib', formData);
   }
+
   deleteTestDataLib(id: string, callback: (n: void) => void) {
     this.http.post<any>(environment.cerberus_api_url + '/DeleteTestDataLib', 'testdatalibid=' + id, httpOptions)
       .subscribe((rep) => callback());
   }
-  deleteTestCase(test: string, testCase: string, callback: (n: void) => void) {
-    this.http.post<any>(environment.cerberus_api_url + '/DeleteTestCase', 'test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testCase), httpOptions)
-      .subscribe((rep) => callback());
-  }
 
+  deleteTestCase(test: string, testCase: string, callback: (msg: string, status: string) => void) {
+    this.http.post<any>(environment.cerberus_api_url + '/DeleteTestCase', 'test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testCase), httpOptions)
+      .subscribe((rep) => callback(rep.message, rep.messageType));
+  }
 
   filtreTestCase(filterTable): Observable<ITestCaseHeader> {
     return this.http.post<ITestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase', filterTable, httpOptions);

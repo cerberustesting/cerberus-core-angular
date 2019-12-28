@@ -1,0 +1,24 @@
+<div class="block block-rounded block-bordered mb-0">
+
+    <!-- TABLE HEADER -->
+    <div class="block-header block-header-default" style="background-color:#e7eaf2;">
+        <div class="row full-width">
+            <div class="col-3">
+                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">property name</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">type</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">value</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">countries</h3>
+            </div>
+        </div>
+    </div>
+    <!-- END TABLE HEADER -->
+
+</div>
+
+<app-propertygroup *ngFor="let propertygroup of propertyGroups" [propertygroup]="propertygroup"></app-propertygroup>

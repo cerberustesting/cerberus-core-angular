@@ -336,8 +336,8 @@ export class TestService {
     const url = environment.cerberus_api_url + '/GetPropertiesForTestCase?test=' + test + '&testcase=' + testcase;
     this.http.get<Property[]>(url)
       .subscribe((response) => {
-        // split the properties by country (one per country)
-        this.testcase_properties = this.sanitizePropertiesList(response);
+        // this.testcase_properties = this.sanitizePropertiesList(response);
+        this.testcase_properties = response;
         this.observableTestCaseProperties.next(this.testcase_properties);
       });
   }

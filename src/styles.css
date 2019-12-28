@@ -261,3 +261,15 @@ disable the maximum width limit for the page header
 #page-container > #main-container .content {
   max-width: 100% !important;
 }
+
+/*
+"no-background" class for any element
+
+remove background, focus effect and border
+to allow any element to blend in its container
+*/
+.no-background {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}

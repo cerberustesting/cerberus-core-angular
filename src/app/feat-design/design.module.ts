@@ -17,19 +17,18 @@ import { TcScriptComponent } from './testcasescript/tc-script/tc-script.componen
 import { StepComponent } from './testcasescript/tc-script/step/step.component';
 import { ActionComponent } from './testcasescript/tc-script/action/action.component';
 import { ControlComponent } from './testcasescript/tc-script/control/control.component';
-import { PropertyComponent } from './testcasescript/tc-script/property/property.component';
-import { PropertyvalueComponent } from './testcasescript/tc-script/property/propertyvalue/propertyvalue.component';
+import { PropertyvalueComponent } from './testcasescript/tc-script/property-v3/propertyvalue/propertyvalue.component';
 import { SettingsComponent } from './testcasescript/tc-script/settings/settings.component';
 import { DatalibraryComponent } from './datalibrary/datalibrary.component';
 import { ScriptComponent } from './testcasescript/tc-script/script/script.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
-import { PropertyV2Component } from './testcasescript/tc-script/property-v2/property-v2.component';
 import { ActionsComponent } from './testcaselist/actions/actions.component';
 import { DatalibInteractionComponent } from './datalibrary/datalib-interaction/datalib-interaction.component';
 import { DatalibTclistComponent } from './datalibrary/datalib-interaction/datalib-tclist/datalib-tclist.component';
 import { TestcaseInteractionComponent } from './testcaselist/testcase-interaction/testcase-interaction.component';
 import { LabelsTabComponent } from './testcaselist/testcase-interaction/labels-tab/labels-tab.component';
 import { LabelNodeComponent } from './testcaselist/testcase-interaction/labels-tab/label-node/label-node.component';
+import { PropertyV3Component } from './testcasescript/tc-script/property-v3/property-v3.component';
 
 // Pipes
 import { FilterPipeModule } from 'ngx-filter-pipe';
@@ -39,7 +38,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
+import { PropertygroupComponent } from './testcasescript/tc-script/property-v3/propertygroup/propertygroup.component';
 
 @NgModule({
   declarations: [
@@ -52,19 +51,19 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     StepComponent,
     ActionComponent,
     ControlComponent,
-    PropertyComponent,
     PropertyvalueComponent,
     SettingsComponent,
     ScriptComponent,
     DatalibraryComponent,
     CampaignsComponent,
-    PropertyV2Component,
     ActionsComponent,
     DatalibInteractionComponent,
     DatalibTclistComponent,
     TestcaseInteractionComponent,
     LabelsTabComponent,
-    LabelNodeComponent
+    LabelNodeComponent,
+    PropertyV3Component,
+    PropertygroupComponent
   ],
   imports: [
     CommonModule,

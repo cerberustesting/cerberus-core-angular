@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PropertyV2Component } from './property-v2.component';
+import { PropertyV3Component } from './property-v3.component';
 
-describe('PropertyV2Component', () => {
-  let component: PropertyV2Component;
-  let fixture: ComponentFixture<PropertyV2Component>;
+describe('PropertyV3Component', () => {
+  let component: PropertyV3Component;
+  let fixture: ComponentFixture<PropertyV3Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PropertyV2Component ]
+      declarations: [ PropertyV3Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PropertyV2Component);
+    fixture = TestBed.createComponent(PropertyV3Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

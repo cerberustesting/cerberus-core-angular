@@ -45,56 +45,14 @@
 
       <!-- PROPERTIES TAB -->
       <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
-        <!-- PROPERTIES CONTENT -->
-        <div class="row">
-          <div class="col-md-12" *ngIf="!oldVersion">
-          <app-property-v2 [properties]="propertiesList" [testcase]="testcase"></app-property-v2>
-          </div>
-          <ng-template [ngIf]="oldVersion">
-            <!-- PROPERTY LIST -->
-          <div class="col-md-4">
-              <ul *ngIf="propertiesList" class="list-group push">
-                <li *ngFor="let property of propertiesList | uniqueproplist" class="list-group-item"
-                  [ngClass]="property.property_id == activePropertyId ? 'active' : ''"
-                  (click)="setActiveProperty(property.property_id)">
-                  {{ property.property ? property.property : 'Property Name' }} (id: {{ property.property_id }})
-                  <button class="btn-block-option" name="deleteProp" type="button" style="float: right;"
-                    (click)="removePropertiesById(property.property_id)">
-                    <i class="far fa-fw fa-trash-alt"
-                      [ngClass]="property.property_id == activePropertyId ? 'white' : ''"></i>
-                  </button>
-                </li>
-              </ul>
-              <button type="button" class="btn btn-outline-primary" (click)="addProperty()">
-                <i class="fa fa-fw fa-plus mr-1"></i>
-                Property
-              </button>
-            </div>
-            <!-- END PROPERTY LIST -->
-  
-            <!-- ACTIVE PROPERTY CONTENT -->
-            <div *ngIf="activeProperty.length > 0" class="col-md-8">
-  
-              <app-property [propertiesById]="activeProperty" (propertyValueAdded)="addPropertyValue($event)" (propertyValueRemoved)="removePropertyValue($event)"></app-property>
-              
-            </div>
-            <div *ngIf="activeProperty.length == 0" class="col-md-8">
-              <div class="block block-rounded block-bordered block-rounded">
-                <div class="block-header block-header-default">
-                  <h3 class="block-title text-center"><small>No property selected</small></h3>
-                </div>
-              </div>
-            </div>
-            <!-- END ACTIVE PROPERTY CONTENT -->
-          </ng-template>
-          
 
-        </div>
-        <!-- END PROPERTIES CONTENT -->
+        <app-property-v3 [test]="testcase.info.test" [testcase]="testcase.info.testCase"></app-property-v3>
+
       </div>
       <!-- END PROPERTIES TAB -->
     </div>
     <!-- END TABS -->
+
     <div id="testcasescript_modal_footer" class="row push">
       <div class="col-md-12 text-center">
         <button type="button" class="btn btn-info mr-1" (click)="saveTestCase()">

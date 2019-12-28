@@ -14,9 +14,7 @@ export class ScriptComponent implements OnInit {
 
   constructor(private testService: TestService) { }
 
-  ngOnInit() {
-    this.testService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
-  }
+  ngOnInit() { }
 
   dropStep(event: CdkDragDrop<Step[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

@@ -1,0 +1,26 @@
+<div class="block block-rounded block-bordered">
+    <div class="block-header block-header-default">
+        <div class="row full-width">
+            <div class="col-3">
+                <button class="btn btn-sm btn-light no-background ml-4"
+                    (click)="propertyValueDetailsDisplay = !propertyValueDetailsDisplay">
+                    <i class="fa" [ngClass]="propertyValueDetailsDisplay ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                </button>
+            </div>
+            <div class="col-3">
+                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">
+                    {{propertyvalue.type}}</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">
+                    {{propertyvalue.value1 | slice:0:30}}</h3>
+            </div>
+            <div class="col-3">
+                <span *ngFor="let country of propertyvalue.country" class="badge badge-info mr-1">{{country}}</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="propertyValueDetailsDisplay" class="block-content">
+        <p>Under developement...</p>
+    </div>
+</div>

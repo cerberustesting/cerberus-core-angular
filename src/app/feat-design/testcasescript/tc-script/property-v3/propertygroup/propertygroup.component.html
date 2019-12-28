@@ -1,0 +1,19 @@
+<div class="block-header" style="border-bottom: 1px solid #e7eaf2;">
+    <div class="row full-width">
+        <div class="col-9">
+            <button class="btn btn-sm btn-light no-background"
+                (click)="propertyValuesDisplayed = !propertyValuesDisplayed">
+                <i class="fa" [ngClass]="propertyValuesDisplayed ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+            </button>
+            {{propertygroup.property}}
+            <span class="badge badge-primary ml-1">{{propertygroup.values.length}}</span>
+        </div>
+        <div class="col-3">
+            <span *ngFor="let country of propertygroup.countriesList" class="badge badge-info mr-1">{{country}}</span>
+        </div>
+    </div>
+</div>
+<div *ngIf="propertyValuesDisplayed">
+    <app-propertyvalue *ngFor="let propertyvalue of propertygroup.values" [propertyvalue]="propertyvalue">
+    </app-propertyvalue>
+</div>

@@ -38,7 +38,6 @@ export class TcScriptComponent implements OnInit {
     this.activePropertyId = null;
     this.propertiesList = new Array<Property>();
     this.setActiveProperty();
-    this.testService.getProperties(this.testcase.info.test, this.testcase.info.testCase);
     this.testService.observableTestCaseProperties.subscribe(r => {
       if (r) {
         if (r.length !== 0) {

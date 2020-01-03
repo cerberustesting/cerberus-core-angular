@@ -110,6 +110,33 @@ div.input-group.custom-sm .input-group-prepend {
   height: 31px !important;
 }
 
+div.input-group.custom-sm .input-group-append {
+  min-height: 31px !important;
+  height: 31px !important;
+}
+
+/*
+"custom-sm" class for any element
+
+apply the correct height to the field according 
+to the bootstrap *-sm class 
+*/
+.custom-sm {
+  min-height: 31px !important;
+  height: 31px !important;
+}
+
+/*
+"custom-sm" class for any *.badge elements
+
+apply the correct margin to the badge according 
+to the bootstrap *-sm class 
+*/
+.badge.custom-margin-sm {
+  margin-top: 6px !important;
+  margin-bottom: 6px !important;
+}
+
 /*
 "info" class for <i>
 

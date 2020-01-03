@@ -1,4 +1,4 @@
-<div class="block block-rounded block-bordered mb-0" [id]="'propertyValue'+index">
+<div class="block block-bordered mb-0" [id]="'propertyValue'+index">
     <div class="block-header block-header-default block-header-sm">
         <div class="row full-width">
             <div class="col-3">
@@ -9,7 +9,7 @@
                 </button>
                 <!-- END SHOW / HIDE BUTTON -->
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <!-- PROPERTY VALUE TYPE -->
                 <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">
                     {{propertyvalue.type}}</h3>
@@ -21,7 +21,7 @@
                     {{propertyvalue.value1 | slice:0:30}}</h3>
                 <!-- PROPERTY VALUE VALUE1 PREVIEW -->
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <!-- SELECTED COUNTRIES LIST -->
                 <span *ngFor="let country of formatCountryList(testcase.info.countryList)"
                     [ngClass]="isACountrySelected(country) ? 'badge-primary' : 'badge-secondary'"

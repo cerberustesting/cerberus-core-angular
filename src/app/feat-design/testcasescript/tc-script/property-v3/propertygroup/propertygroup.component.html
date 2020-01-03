@@ -1,26 +1,33 @@
-<div class="block-header block-header-sm" style="border-bottom: 1px solid #e7eaf2;">
+<div class="block-header block-header-sm" style="border: 1px solid #e7eaf2;">
     <div class="row full-width">
-        <div class="col-9">
+        <div class="col-3">
+            <div class="input-group">
 
-            <!-- SHOW / HIDE BUTTON -->
-            <button class="btn btn-sm btn-light no-background"
-                (click)="propertyValuesDisplayed = !propertyValuesDisplayed">
-                <i class="fa" [ngClass]="propertyValuesDisplayed ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-            </button>
-            <!-- SHOW / HIDE BUTTON -->
+                <!-- SHOW / HIDE BUTTON -->
+                <button class="btn btn-sm btn-light no-background custom-sm"
+                    (click)="propertyValuesDisplayed = !propertyValuesDisplayed">
+                    <i class="fa" [ngClass]="propertyValuesDisplayed ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                </button>
+                <!-- SHOW / HIDE BUTTON -->
 
-            <!-- PROPERTY NAME -->
-            {{propertygroup.property}}
-            <!-- END PROPERTY NAME -->
+                <!-- NUMBER OF VALUES -->
+                <div class="input-group-prepend custom-sm">
+                    <span class="badge badge-primary custom-margin-sm  mr-2 mt-2 mb-2">
+                        {{propertygroup.values.length}}
+                    </span>
+                </div>
+                <!-- END NUMBER OF VALUES -->
 
-            <!-- NUMBER OF VALUES -->
-            <span class="badge badge-primary ml-1">{{propertygroup.values.length}}</span>
-            <!-- END NUMBER OF VALUES -->
+                <!-- PROPERTY NAME -->
+                <input type="text" class="form-control form-control-alt form-control-sm"
+                    [(ngModel)]="propertygroup.property">
+                <!-- END PROPERTY NAME -->
 
+            </div>
         </div>
 
         <!-- COUNTRY LIST -->
-        <div class="col-3">
+        <div class="col-4 offset-5">
             <span *ngFor="let country of formatCountryList(testcase.info.countryList)" class="badge link-default mr-1"
                 [ngClass]="isACountrySelected(country) ? 'badge-primary' : 'badge-secondary'">{{country}}</span>
         </div>

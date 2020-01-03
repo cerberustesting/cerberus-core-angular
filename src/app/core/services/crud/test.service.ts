@@ -96,6 +96,19 @@ export class TestService {
       });
   }
 
+  // DIRTY: convert {FR: FR} style object
+  // to Array of string, an iterable
+  // waiting for https://github.com/cerberustesting/cerberus-source/issues/2015
+  formatCountryList(rawList: any): Array<string> {
+    const newArray: string[] = [];
+    for (const key in rawList) {
+      if (rawList.hasOwnProperty(key)) {
+        newArray.push(rawList[key]);
+      }
+    }
+    return newArray;
+  }
+
   // TODO: merge the two getTestCaseList function (with the callback)
   getTestCasesList_withCallback(test: string, callback) {
     this.http.get<ITestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)

@@ -247,6 +247,15 @@ the element is clickable
 }
 
 /*
+"link-auto" class for any element
+
+set the cursor back to default shape
+*/
+.link-default {
+  cursor: default !important;
+}
+
+/*
 "full-width" class for any element
 
 ensure the element take all the screen width
@@ -272,4 +281,14 @@ to allow any element to blend in its container
   background-color: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
+}
+
+/*
+"block-header-sm" class for block header
+
+reduce the height of a block-header
+*/
+div.block-header.block-header-sm {
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.35rem !important;
 }

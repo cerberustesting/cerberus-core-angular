@@ -13,12 +13,15 @@
   </div>
 
   <div class="block-content">
+
     <!-- TABS -->
     <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
       <li *ngFor="let tab of tabs" class="nav-item">
         <a class="nav-link" [ngClass]="selectedTab == tab ? 'active show' : ''" (click)="selectedTab = tab">{{tab}}</a>
       </li>
     </ul>
+    <!-- END TABS -->
+
     <div class="block-content tab-content">
 
       <!-- SCRIPT TAB -->
@@ -46,24 +49,21 @@
       <!-- PROPERTIES TAB -->
       <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
 
-        <app-property-v3 [test]="testcase.info.test" [testcase]="testcase.info.testCase"></app-property-v3>
+        <app-property-v3 [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase">
+        </app-property-v3>
 
       </div>
       <!-- END PROPERTIES TAB -->
     </div>
-    <!-- END TABS -->
 
+    <!-- BOTTOM SECTION -->
     <div id="testcasescript_modal_footer" class="row push">
       <div class="col-md-12 text-center">
         <button type="button" class="btn btn-info mr-1" (click)="saveTestCase()">
           <i class="fa fa-fw fa-check mr-1"></i> Save
         </button>
-        <!-- 
-        <button type="button" class="btn btn-secondary mr-1" (click)="debug()">
-          <i class="fa fa-fw fa-bug mr-1"></i> Debug
-        </button>
-        -->
       </div>
     </div>
+    <!-- END BOTTOM SECTION -->
   </div>
 </div>

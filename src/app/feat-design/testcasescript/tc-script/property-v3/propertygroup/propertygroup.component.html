@@ -1,19 +1,39 @@
-<div class="block-header" style="border-bottom: 1px solid #e7eaf2;">
+<div class="block-header block-header-sm" style="border-bottom: 1px solid #e7eaf2;">
     <div class="row full-width">
         <div class="col-9">
+
+            <!-- SHOW / HIDE BUTTON -->
             <button class="btn btn-sm btn-light no-background"
                 (click)="propertyValuesDisplayed = !propertyValuesDisplayed">
                 <i class="fa" [ngClass]="propertyValuesDisplayed ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
             </button>
+            <!-- SHOW / HIDE BUTTON -->
+
+            <!-- PROPERTY NAME -->
             {{propertygroup.property}}
+            <!-- END PROPERTY NAME -->
+
+            <!-- NUMBER OF VALUES -->
             <span class="badge badge-primary ml-1">{{propertygroup.values.length}}</span>
+            <!-- END NUMBER OF VALUES -->
+
         </div>
+
+        <!-- COUNTRY LIST -->
         <div class="col-3">
-            <span *ngFor="let country of propertygroup.countriesList" class="badge badge-info mr-1">{{country}}</span>
+            <span *ngFor="let country of formatCountryList(testcase.info.countryList)" class="badge link-default mr-1"
+                [ngClass]="isACountrySelected(country) ? 'badge-primary' : 'badge-secondary'">{{country}}</span>
         </div>
+        <!-- END COUNTRY LIST -->
     </div>
 </div>
+
 <div *ngIf="propertyValuesDisplayed">
-    <app-propertyvalue *ngFor="let propertyvalue of propertygroup.values" [propertyvalue]="propertyvalue">
+
+    <!-- PROPERTY VALUES LIST -->
+    <app-propertyvalue *ngFor="let propertyvalue of propertygroup.values; let i = index" [propertyvalue]="propertyvalue"
+        [testcase]="testcase" [propertyvalueIndex]="i" [propertygroup]="propertygroup">
     </app-propertyvalue>
+    <!-- END PROPERTY VALUES LIST -->
+
 </div>

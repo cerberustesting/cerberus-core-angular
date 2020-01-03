@@ -1,26 +1,38 @@
-<div class="block block-rounded block-bordered">
-    <div class="block-header block-header-default">
+<div class="block block-rounded block-bordered mb-0" [id]="'propertyValue'+index">
+    <div class="block-header block-header-default block-header-sm">
         <div class="row full-width">
             <div class="col-3">
+                <!-- SHOW / HIDE BUTTON -->
                 <button class="btn btn-sm btn-light no-background ml-4"
                     (click)="propertyValueDetailsDisplay = !propertyValueDetailsDisplay">
                     <i class="fa" [ngClass]="propertyValueDetailsDisplay ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
                 </button>
+                <!-- END SHOW / HIDE BUTTON -->
             </div>
             <div class="col-3">
+                <!-- PROPERTY VALUE TYPE -->
                 <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">
                     {{propertyvalue.type}}</h3>
+                <!-- END PROPERTY VALUE TYPE -->
             </div>
             <div class="col-3">
+                <!-- PROPERTY VALUE VALUE1 PREVIEW -->
                 <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">
                     {{propertyvalue.value1 | slice:0:30}}</h3>
+                <!-- PROPERTY VALUE VALUE1 PREVIEW -->
             </div>
             <div class="col-3">
-                <span *ngFor="let country of propertyvalue.country" class="badge badge-info mr-1">{{country}}</span>
+                <!-- SELECTED COUNTRIES LIST -->
+                <span *ngFor="let country of formatCountryList(testcase.info.countryList)"
+                    [ngClass]="isACountrySelected(country) ? 'badge-primary' : 'badge-secondary'"
+                    class="badge link-cursor mr-1" (click)="toggleCountry(country)">{{country}}</span>
+                <!-- SELECTED COUNTRIES LIST -->
             </div>
         </div>
     </div>
+    <!-- PROPERTY VALUE CONTENT -->
     <div *ngIf="propertyValueDetailsDisplay" class="block-content">
         <p>Under developement...</p>
     </div>
+    <!-- END PROPERTY VALUE CONTENT -->
 </div>

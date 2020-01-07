@@ -116,17 +116,6 @@ div.input-group.custom-sm .input-group-append {
 }
 
 /*
-"custom-sm" class for any element
-
-apply the correct height to the field according 
-to the bootstrap *-sm class 
-*/
-.custom-sm {
-  min-height: 31px !important;
-  height: 31px !important;
-}
-
-/*
 "custom-sm" class for any *.badge elements
 
 apply the correct margin to the badge according 

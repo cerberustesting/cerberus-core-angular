@@ -3,7 +3,8 @@ import { TestService } from 'src/app/core/services/crud/test.service';
 import { Property } from 'src/app/shared/model/property.model';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
 
-export class PropertyByName {
+// a property group is a group of property values by name
+export class ProperyGroup {
   property: string; // name of the property values
   values: Array<Property>; // list of all properties values
 }
@@ -25,7 +26,7 @@ export class PropertyV3Component implements OnInit {
   // raw list of properties
   private propertiesList: Array<Property>;
   // property groups : properties grouped by name
-  public propertyGroups: Array<PropertyByName>;
+  public propertyGroups: Array<ProperyGroup>;
 
   constructor(private testService: TestService) { }
 
@@ -53,7 +54,7 @@ export class PropertyV3Component implements OnInit {
     // list of unique property names
     const propertiesNameList = new Array<string>();
     // final object that is build along the function
-    const propertiesValuesByName = new Array<PropertyByName>();
+    const propertiesValuesByName = new Array<ProperyGroup>();
     // fill the array with unique names
     this.propertiesList.forEach(propvalue => {
       if (!propertiesNameList.includes(propvalue.property)) {
@@ -62,7 +63,7 @@ export class PropertyV3Component implements OnInit {
     });
     // build the final object for each prop name
     propertiesNameList.forEach(propname => {
-      const propValueByName = new PropertyByName();
+      const propValueByName = new ProperyGroup();
       propValueByName.property = propname;
       propValueByName.values = this.propertiesList.filter(propvvalue => propvvalue.property === propname);
       propertiesValuesByName.push(propValueByName);

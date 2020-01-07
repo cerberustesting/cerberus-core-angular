@@ -22,6 +22,7 @@
 </div>
 
 <!-- LIST OF PROPERTY GROUP -->
-<app-propertygroup *ngFor="let propertygroup of propertyGroups" [propertygroup]="propertygroup" [testcase]="testcase">
+<app-propertygroup *ngFor="let propertygroup of propertyGroups" [propertygroup]="propertygroup" [testcase]="testcase"
+    [propertyGroups]="propertyGroups">
 </app-propertygroup>
 <!-- END LIST OF PROPERTY GROUP -->

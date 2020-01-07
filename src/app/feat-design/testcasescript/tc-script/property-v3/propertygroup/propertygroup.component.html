@@ -8,7 +8,7 @@
                     (click)="propertyValuesDisplayed = !propertyValuesDisplayed">
                     <i class="fa" [ngClass]="propertyValuesDisplayed ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
                 </button>
-                <!-- SHOW / HIDE BUTTON -->
+                <!-- END SHOW / HIDE BUTTON -->
 
                 <!-- NUMBER OF VALUES -->
                 <div class="input-group-prepend custom-sm">
@@ -20,8 +20,16 @@
 
                 <!-- PROPERTY NAME -->
                 <input type="text" class="form-control form-control-alt form-control-sm"
-                    [(ngModel)]="propertygroup.property">
+                    [value]="propertygroup.property" (keyup)="onPropertyNameChange($event)"
+                    [ngClass]="propertyNameIsAlreadyUsed ? 'is-invalid' : ''">
                 <!-- END PROPERTY NAME -->
+
+                <!-- ERROR SIGN -->
+                <button *ngIf="propertyNameIsAlreadyUsed" class="btn btn-sm btn-light no-background custom-sm red-color"
+                    ngbPopover="The property name is already used" triggers="mouseenter:mouseleave">
+                    <i class="fa fa-exclamation-triangle"></i>
+                </button>
+                <!-- END ERROR SIGN -->
 
             </div>
         </div>

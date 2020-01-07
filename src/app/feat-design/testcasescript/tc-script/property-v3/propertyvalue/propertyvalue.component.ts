@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Property } from 'src/app/shared/model/property.model';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { PropertyByName } from '../property-v3.component';
+import { ProperyGroup } from '../property-v3.component';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 
@@ -16,7 +16,7 @@ export class PropertyvalueComponent implements OnInit {
   @Input('propertyvalue') propertyvalue: Property; // property value
   @Input('propertyvalueIndex') index: number; // index to build ids
   @Input('testcase') testcase: ITestCase; // full testcase object
-  @Input('propertygroup') propertygroup: PropertyByName; // property group object will all values from others properties values
+  @Input('propertygroup') propertygroup: ProperyGroup; // property group object will all values from others properties values
 
   // boolean to handle property value detail display
   public propertyValueDetailsDisplay: boolean;

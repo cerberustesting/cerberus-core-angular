@@ -1,4 +1,5 @@
-<div class="block-header block-header-sm" style="border: 1px solid #e7eaf2;">
+<div class="block-header block-header-sm" style="border: 1px solid #e7eaf2;" (mouseenter)="showActions=true"
+    (mouseleave)="showActions=false">
     <div class="row full-width">
         <div class="col-3">
             <div class="input-group">
@@ -28,6 +29,13 @@
                 <button *ngIf="propertyNameIsAlreadyUsed" class="btn btn-sm btn-light no-background custom-sm red-color"
                     ngbPopover="The property name is already used" triggers="mouseenter:mouseleave">
                     <i class="fa fa-exclamation-triangle"></i>
+                </button>
+                <!-- END ERROR SIGN -->
+
+                <!-- ERROR SIGN -->
+                <button *ngIf="showActions" class="btn btn-sm btn-light no-background custom-sm" ngbPopover="Add Value"
+                    triggers="mouseenter:mouseleave">
+                    <i class="fa fa-plus"></i>
                 </button>
                 <!-- END ERROR SIGN -->
 

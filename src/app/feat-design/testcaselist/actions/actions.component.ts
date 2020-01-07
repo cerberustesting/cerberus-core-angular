@@ -1,5 +1,4 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { RunComponent } from '../../../shared/run/run.component';
 import { SidecontentService, INTERACTION_MODE } from '../../../core/services/crud/sidecontent.service';
 import { TestcaseInteractionComponent } from '../testcase-interaction/testcase-interaction.component';
 import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';

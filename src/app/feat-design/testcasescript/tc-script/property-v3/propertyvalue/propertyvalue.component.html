@@ -3,10 +3,10 @@
         <div class="row full-width">
             <div class="col-3">
                 <!-- SHOW / HIDE BUTTON -->
-                <button class="btn btn-sm btn-light no-background ml-4"
+                <button class="btn btn-sm btn-light no-background ml-4 mr-3"
                     (click)="propertyValueDetailsDisplay = !propertyValueDetailsDisplay">
                     <i class="fa" [ngClass]="propertyValueDetailsDisplay ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                </button>
+                </button> <span class="fs-1">{{propertyvalue.property}}</span>
                 <!-- END SHOW / HIDE BUTTON -->
             </div>
             <div class="col-2">

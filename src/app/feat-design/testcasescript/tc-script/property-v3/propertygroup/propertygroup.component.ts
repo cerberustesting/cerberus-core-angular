@@ -16,6 +16,9 @@ export class PropertygroupComponent implements OnInit {
   // boolean to handle the validation of the property group name
   public propertyNameIsAlreadyUsed: boolean;
 
+  // boolean to handle hoover fields
+  public showActions: boolean;
+
   @Input('propertygroup') propertygroup: ProperyGroup; // property grouped by name
   @Input('testcase') testcase: ITestCase; // full testcase object
   @Input('propertyGroups') propertyGroups: Array<ProperyGroup>; // list of all property groups
@@ -27,6 +30,8 @@ export class PropertygroupComponent implements OnInit {
     this.propertyValuesDisplayed = false;
     // by default, all names are unique
     this.propertyNameIsAlreadyUsed = false;
+    // by default, hide actions
+    this.showActions = false;
   }
 
   // use the format function from test service
@@ -51,12 +56,21 @@ export class PropertygroupComponent implements OnInit {
       // if the property name is already used, its value is set to the old one
       // to avoid conflict
       this.propertygroup.property = oldValue;
+      this.renameAllPropertyValues(oldValue);
       this.propertyNameIsAlreadyUsed = true;
     } else {
       // if the property name is not used, its value is set to the new one
       this.propertygroup.property = newValue;
+      this.renameAllPropertyValues(newValue);
       this.propertyNameIsAlreadyUsed = false;
     }
+  }
+
+  // rename all the property values
+  renameAllPropertyValues(newName: string) {
+    this.propertygroup.values.forEach(propvalue => {
+      propvalue.property = newName;
+    });
   }
 
   // return true if the property name is already set for another group

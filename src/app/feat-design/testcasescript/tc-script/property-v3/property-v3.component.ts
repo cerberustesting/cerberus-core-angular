@@ -7,6 +7,11 @@ import { ITestCase } from 'src/app/shared/model/testcase.model';
 export class ProperyGroup {
   property: string; // name of the property values
   values: Array<Property>; // list of all properties values
+
+  constructor(property: string) {
+    this.property = property;
+    this.values = [];
+  }
 }
 
 @Component({
@@ -23,7 +28,7 @@ export class PropertyV3Component implements OnInit {
 
   @Input('testcase') testcase: ITestCase; // full testcase object
 
-  // raw list of properties
+  // raw list of properties (used only to store the API result)
   private propertiesList: Array<Property>;
   // property groups : properties grouped by name
   public propertyGroups: Array<ProperyGroup>;
@@ -50,6 +55,7 @@ export class PropertyV3Component implements OnInit {
     });
   }
 
+  // refresh the property groups
   groupPropertiesByName(): void {
     // list of unique property names
     const propertiesNameList = new Array<string>();
@@ -63,8 +69,7 @@ export class PropertyV3Component implements OnInit {
     });
     // build the final object for each prop name
     propertiesNameList.forEach(propname => {
-      const propValueByName = new ProperyGroup();
-      propValueByName.property = propname;
+      const propValueByName = new ProperyGroup(propname);
       propValueByName.values = this.propertiesList.filter(propvvalue => propvvalue.property === propname);
       propertiesValuesByName.push(propValueByName);
     });
@@ -72,4 +77,32 @@ export class PropertyV3Component implements OnInit {
     this.propertyGroups = propertiesValuesByName;
   }
 
+  // create a new empty property
+  addAPropertyGroup(): void {
+    const newPropertyGroup = new ProperyGroup(this.getLatestNewPropertyName());
+    console.log(this.getLatestNewPropertyName());
+    this.propertyGroups.push(newPropertyGroup);
+    console.log(this.propertyGroups);
+  }
+
+  // new property group name are generated following:
+  // 'NewProperty1', 'NewProperty2', ...
+  // this function returns the latest  incremental name
+  getLatestNewPropertyName(): string {
+    // if we find a property group with a name starting with 'NewProperty'
+    if (this.propertyGroups.find(propgroup => propgroup.property.startsWith('NewProperty')) !== undefined) {
+      // get the content after the prefix 'NewProperty'
+      const indexes = new Array<number>();
+      this.propertyGroups.filter(propgroup => propgroup.property.startsWith('NewProperty')).forEach(propgroup => {
+        if (!isNaN(Number(propgroup.property.substring(11)))) {
+          indexes.push(Number(propgroup.property.substring(11)));
+        }
+      });
+      const maxIndex = Math.max(...indexes);
+      return 'NewProperty' + String(maxIndex + 1);
+    } else {
+      return 'NewProperty1';
+    }
+
+  }
 }

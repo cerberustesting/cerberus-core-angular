@@ -122,5 +122,4 @@ export class ActionComponent implements OnInit {
     this.isDragging = false;
   }
 
-
 }

@@ -5,7 +5,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DatatableComponent } from './datatable-page/datatable/datatable.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TrueindexPipe } from './pipes/trueindex.pipe';
-import { UniqueproplistPipe } from './pipes/uniqueproplist.pipe';
 import { LabelfilteringPipe } from './pipes/labelfiltering.pipe';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -23,7 +22,6 @@ import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, Datatable
   declarations: [
     DatatableComponent,
     TrueindexPipe,
-    UniqueproplistPipe,
     LabelfilteringPipe,
     DatatablePageComponent,
     FiltersComponent,
@@ -53,7 +51,6 @@ import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, Datatable
     DatatableComponent,
     FormsModule,
     TrueindexPipe,
-    UniqueproplistPipe,
     LabelfilteringPipe,
     NgbPopoverModule,
     FiltersComponent,

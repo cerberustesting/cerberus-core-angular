@@ -13,15 +13,15 @@
 <!-- END STEP LIST -->
 
 <div *ngIf="testcase.stepList.length == 0" class="push">
-    <p>The test case is empty <i class="far fa-frown-open"></i></p>
+  <p>The test case is empty <i class="far fa-frown-open"></i></p>
 </div>
 
 <div class="push">
   <div>
-    <button type="button" class="btn btn-outline-primary mr-3" (click)="addAStep()">
+    <button type="button" class="btn btn-outline-primary btn-sm mr-3" (click)="addAStep()">
       <i class="fa fa-fw fa-plus mr-1"></i>Step
     </button>
-    <button type="button" class="btn btn-outline-primary">
+    <button type="button" class="btn btn-outline-primary btn-sm">
       <i class="fa fa-fw fa-plus mr-1"></i>Used Step
     </button>
   </div>

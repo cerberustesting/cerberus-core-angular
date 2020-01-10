@@ -13,9 +13,8 @@ export class Property {
     retryPeriod: number;
     retryNb: number;
     rank: number;
-    property_id?: number;
 
-    constructor(id: number) {
+    constructor() {
         this.property = '';
         this.description = '';
         this.type = 'text';
@@ -30,6 +29,5 @@ export class Property {
         this.retryPeriod = 0;
         this.retryNb = 0;
         this.rank = 1;
-        this.property_id = id;
     }
 }

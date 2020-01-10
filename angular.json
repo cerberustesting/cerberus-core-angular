@@ -24,6 +24,9 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/assets/dashmix/css/dashmix.min.css",
+              "src/assets/dashmix/css/themes/xmodern.min.css",
+              "src/assets/custom/css/custom.global.css",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/nestable2/dist/jquery.nestable.min.css"
             ],
@@ -31,7 +34,7 @@
               "node_modules/jquery-sparkline/jquery.sparkline.min.js",
               "node_modules/chart.js/dist/Chart.bundle.min.js",
               "node_modules/nestable2/dist/jquery.nestable.min.js",
-              "src/assets/js/custom.global.js"
+              "src/assets/custom/js/custom.global.js"
             ]
           },
           "configurations": {

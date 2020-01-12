@@ -1,13 +1,42 @@
-<div class="block block-bordered mb-0" [id]="'propertyValue'+index">
+<div class="block block-bordered mb-0" [id]="'propertyValue'+index" (mouseenter)="showActions=true"
+    (mouseleave)="showActions=false">
     <div class="block-header block-header-default block-header-sm">
         <div class="row full-width">
             <div class="col-3">
-                <!-- SHOW / HIDE BUTTON -->
-                <button class="btn btn-sm btn-light no-background ml-4 mr-3"
-                    (click)="propertyValueDetailsDisplay = !propertyValueDetailsDisplay">
-                    <i class="fa" [ngClass]="propertyValueDetailsDisplay ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                </button> <span class="fs-1">{{propertyvalue.property}}</span>
-                <!-- END SHOW / HIDE BUTTON -->
+                <div class="input-group custom-sm">
+
+                    <!-- SHOW / HIDE BUTTON -->
+                    <button class="btn btn-sm btn-light no-background ml-4"
+                        (click)="propertyValueDetailsDisplay = !propertyValueDetailsDisplay">
+                        <i class="fa"
+                            [ngClass]="propertyValueDetailsDisplay ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                    </button>
+                    <!-- END SHOW / HIDE BUTTON -->
+
+                    <!-- NUMBER OF VALUES -->
+                    <div class="input-group-prepend">
+                        <span class="input-group-text no-background fs-1">
+                            {{ propertyvalue.property }}
+                        </span>
+                    </div>
+                    <!-- END NUMBER OF VALUES -->
+
+                    <!-- DUPLICATE VALUE BUTTON -->
+                    <button *ngIf="showActions" class="btn btn-sm btn-light no-background custom-sm"
+                        ngbPopover="Duplicate Value" triggers="mouseenter:mouseleave"
+                        (click)="duplicateAPropertyValue()">
+                        <i class="fa fa-copy"></i>
+                    </button>
+                    <!-- END DUPLICATE VALUE BUTTON -->
+
+                    <!-- DELETE VALUE BUTTON -->
+                    <button *ngIf="showActions" class="btn btn-sm btn-light no-background custom-sm"
+                        ngbPopover="Delete Value" triggers="mouseenter:mouseleave" (click)="deleteAPropertyValue()">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    <!-- END DELETE VALUE BUTTON -->
+
+                </div>
             </div>
             <div class="col-2">
                 <!-- PROPERTY VALUE TYPE -->

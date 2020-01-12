@@ -32,12 +32,12 @@
                 </button>
                 <!-- END ERROR SIGN -->
 
-                <!-- ERROR SIGN -->
+                <!-- ADD VALUE BUTTON -->
                 <button *ngIf="showActions" class="btn btn-sm btn-light no-background custom-sm" ngbPopover="Add Value"
-                    triggers="mouseenter:mouseleave">
+                    triggers="mouseenter:mouseleave" (click)="addAPropertyValue()">
                     <i class="fa fa-plus"></i>
                 </button>
-                <!-- END ERROR SIGN -->
+                <!-- END ADD VALUE BUTTON -->
 
             </div>
         </div>
@@ -55,7 +55,8 @@
 
     <!-- PROPERTY VALUES LIST -->
     <app-propertyvalue *ngFor="let propertyvalue of propertygroup.values; let i = index" [propertyvalue]="propertyvalue"
-        [testcase]="testcase" [propertyvalueIndex]="i" [propertygroup]="propertygroup">
+        [testcase]="testcase" [propertyvalueIndex]="i" [propertygroup]="propertygroup"
+        (propertyValueDuplication)="duplicateAPropertyValue($event)">
     </app-propertyvalue>
     <!-- END PROPERTY VALUES LIST -->
 

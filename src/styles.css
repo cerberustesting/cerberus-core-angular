@@ -115,6 +115,11 @@ div.input-group.custom-sm .input-group-append {
   height: 31px !important;
 }
 
+div.input-group.custom-sm .input-group-textackground {
+  min-height: 31px !important;
+  height: 31px !important;
+}
+
 /*
 "custom-sm" class for any *.badge elements
 

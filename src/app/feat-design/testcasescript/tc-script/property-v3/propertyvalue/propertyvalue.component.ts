@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Property } from 'src/app/shared/model/property.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { PropertyValue, ProperyGroup } from 'src/app/shared/model/property.model';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { ProperyGroup } from '../property-v3.component';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 
@@ -13,13 +12,19 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 })
 export class PropertyvalueComponent implements OnInit {
 
-  @Input('propertyvalue') propertyvalue: Property; // property value
+  @Input('propertyvalue') propertyvalue: PropertyValue; // property value
   @Input('propertyvalueIndex') index: number; // index to build ids
   @Input('testcase') testcase: ITestCase; // full testcase object
   @Input('propertygroup') propertygroup: ProperyGroup; // property group object will all values from others properties values
 
+  // event to send to parent component with the name of the property to be duplicated
+  @Output() propertyValueDuplication = new EventEmitter<PropertyValue>();
+
   // boolean to handle property value detail display
   public propertyValueDetailsDisplay: boolean;
+
+  // boolean to handle the display of the actions (duplicate, delete)
+  public showActions: boolean;
 
   constructor(
     private testService: TestService,
@@ -29,6 +34,8 @@ export class PropertyvalueComponent implements OnInit {
   ngOnInit() {
     // hide details by default
     this.propertyValueDetailsDisplay = false;
+    // hide by default the actions
+    this.showActions = false;
   }
 
   // call the format functino from test service
@@ -74,6 +81,16 @@ export class PropertyvalueComponent implements OnInit {
       // if the country is not selected anywhere, add it to the selection
       this.addCountryToSelection(country);
     }
+  }
+
+  // send the property value to the parent component to be added to the list
+  duplicateAPropertyValue() {
+    this.propertyValueDuplication.emit(this.propertyvalue);
+  }
+
+  // send the property value to the parent component to be removed from the list
+  deleteAPropertyValue() {
+    // TODO
   }
 
 }

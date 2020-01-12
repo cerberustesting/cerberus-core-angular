@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { Property } from 'src/app/shared/model/property.model';
+import { PropertyValue } from 'src/app/shared/model/property.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 // import { PropertyComponent } from 'src/app/layout/pages/testcasescript/tc-script/property/property.component'

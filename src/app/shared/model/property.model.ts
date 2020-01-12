@@ -1,4 +1,4 @@
-export class Property {
+export class PropertyValue {
     property: string;
     description: string;
     type: string;
@@ -14,8 +14,8 @@ export class Property {
     retryNb: number;
     rank: number;
 
-    constructor() {
-        this.property = '';
+    constructor(property: string) {
+        this.property = property;
         this.description = '';
         this.type = 'text';
         this.value1 = '';
@@ -29,5 +29,16 @@ export class Property {
         this.retryPeriod = 0;
         this.retryNb = 0;
         this.rank = 1;
+    }
+}
+
+// a property group is a group of property values by name
+export class ProperyGroup {
+    property: string; // name of the property values
+    values: Array<PropertyValue>; // list of all properties values
+
+    constructor(property: string) {
+        this.property = property;
+        this.values = [];
     }
 }

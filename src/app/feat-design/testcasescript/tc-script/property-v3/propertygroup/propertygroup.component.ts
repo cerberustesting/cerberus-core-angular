@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { ProperyGroup } from '../property-v3.component';
+import { ProperyGroup, PropertyValue } from 'src/app/shared/model/property.model';
 
 @Component({
   selector: 'app-propertygroup',
@@ -67,9 +67,9 @@ export class PropertygroupComponent implements OnInit {
   }
 
   // rename all the property values
-  renameAllPropertyValues(newName: string) {
+  renameAllPropertyValues(name: string) {
     this.propertygroup.values.forEach(propvalue => {
-      propvalue.property = newName;
+      propvalue.property = name;
     });
   }
 
@@ -87,6 +87,32 @@ export class PropertygroupComponent implements OnInit {
       // if a property with the same name is found, returns true
       return true;
     }
+  }
+
+  // create a new empty property value
+  addAPropertyValue() {
+    const newpropvalue = new PropertyValue(this.propertygroup.property);
+    this.propertygroup.values.push(newpropvalue);
+  }
+
+  // add the same property value to the group (with empty country list)
+  duplicateAPropertyValue(propvalue: PropertyValue) {
+    // create a new property value object and map all the values from the recevied object
+    // Angular seems to maintin the input binding with the model..
+    const newpropvalue = new PropertyValue(propvalue.property);
+    newpropvalue.cacheExpire = propvalue.cacheExpire;
+    newpropvalue.database = propvalue.database;
+    newpropvalue.description = propvalue.description;
+    newpropvalue.length = propvalue.length;
+    newpropvalue.nature = propvalue.nature;
+    newpropvalue.rank = propvalue.rank;
+    newpropvalue.retryNb = propvalue.retryNb;
+    newpropvalue.retryPeriod = propvalue.retryPeriod;
+    newpropvalue.rowLimit = propvalue.rowLimit;
+    newpropvalue.type = propvalue.type;
+    newpropvalue.value1 = propvalue.value1;
+    newpropvalue.value2 = propvalue.value2;
+    this.propertygroup.values.push(newpropvalue);
   }
 
 }

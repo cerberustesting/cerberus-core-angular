@@ -6,7 +6,7 @@ import { ITestCaseHeader, ITestCase, Step, Action, Control } from 'src/app/share
 import { ILabel, ITestCaseLabel } from 'src/app/shared/model/label.model';
 import { IProject } from 'src/app/shared/model/project.model';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
-import { Property } from 'src/app/shared/model/property.model';
+import { PropertyValue } from 'src/app/shared/model/property.model';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../utils/notification.service';
 import { tap } from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class TestService {
   // should only be one object
   testcaseheader: ITestCaseHeader = null;
   testcase_labels: Array<ILabel> = new Array<ILabel>();
-  testcase_properties: Array<Property>;
+  testcase_properties: Array<PropertyValue>;
 
   private testcaseheader_countriesList_format = new Array<string>();
   // project
@@ -51,7 +51,7 @@ export class TestService {
   observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
   observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
-  observableTestCaseProperties = new BehaviorSubject<Property[]>(this.testcase_properties);
+  observableTestCaseProperties = new BehaviorSubject<PropertyValue[]>(this.testcase_properties);
   observableTestCaseHeader = new BehaviorSubject<ITestCaseHeader>(this.testcaseheader);
   // boolean
   refreshTC: boolean;
@@ -347,7 +347,7 @@ export class TestService {
 
   getProperties(test: string, testcase: string) {
     const url = environment.cerberus_api_url + '/GetPropertiesForTestCase?test=' + test + '&testcase=' + testcase;
-    this.http.get<Property[]>(url)
+    this.http.get<PropertyValue[]>(url)
       .subscribe((response) => {
         // this.testcase_properties = this.sanitizePropertiesList(response);
         this.testcase_properties = response;

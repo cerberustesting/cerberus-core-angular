@@ -1,18 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { Property } from 'src/app/shared/model/property.model';
+import { PropertyValue, ProperyGroup } from 'src/app/shared/model/property.model';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
-
-// a property group is a group of property values by name
-export class ProperyGroup {
-  property: string; // name of the property values
-  values: Array<Property>; // list of all properties values
-
-  constructor(property: string) {
-    this.property = property;
-    this.values = [];
-  }
-}
 
 @Component({
   selector: 'app-property-v3',
@@ -29,7 +18,7 @@ export class PropertyV3Component implements OnInit {
   @Input('testcase') testcase: ITestCase; // full testcase object
 
   // raw list of properties (used only to store the API result)
-  private propertiesList: Array<Property>;
+  private propertiesList: Array<PropertyValue>;
   // property groups : properties grouped by name
   public propertyGroups: Array<ProperyGroup>;
 

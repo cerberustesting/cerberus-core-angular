@@ -4,6 +4,8 @@ import { ITestCase } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 
 @Component({
   selector: 'app-propertyvalue',
@@ -26,9 +28,13 @@ export class PropertyvalueComponent implements OnInit {
   // boolean to handle the display of the actions (duplicate, delete)
   public showActions: boolean;
 
+  // private invariants
+  private propertyTypesList: Array<IInvariant>;
+
   constructor(
     private testService: TestService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private invariantService: InvariantsService
   ) { }
 
   ngOnInit() {
@@ -36,6 +42,8 @@ export class PropertyvalueComponent implements OnInit {
     this.propertyValueDetailsDisplay = false;
     // hide by default the actions
     this.showActions = false;
+    // subscribe to property type invariants
+    this.invariantService.observablePropertyTypeList.subscribe(r => { if (r) { this.propertyTypesList = r; } });
   }
 
   // call the format functino from test service
@@ -90,7 +98,26 @@ export class PropertyvalueComponent implements OnInit {
 
   // send the property value to the parent component to be removed from the list
   deleteAPropertyValue() {
-    // TODO
+    this.propertyvalue.toDelete = !this.propertyvalue.toDelete;
+  }
+
+  // return the text to display according to the property value deletion status
+  getDeletionPopoverText(): string {
+    if (this.propertyvalue.toDelete === true) {
+      return 'This property will be deleted after saving';
+    } else {
+      return 'Delete value';
+    }
+  }
+
+  // return true if the delete button should be displayed
+  // in the situation the propery value is flagged for deletion
+  isDeleteButtonDisplayed(): boolean {
+    if (this.showActions === true || this.propertyvalue.toDelete === true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

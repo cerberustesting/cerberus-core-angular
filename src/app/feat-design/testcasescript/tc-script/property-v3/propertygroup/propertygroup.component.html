@@ -39,6 +39,15 @@
                 </button>
                 <!-- END ADD VALUE BUTTON -->
 
+                <!-- DELETE VALUES BUTTON -->
+                <button *ngIf="isDeleteButtonDisplayed()" class="btn btn-sm no-background custom-sm"
+                    [ngbPopover]="getDeletionPopoverText()" triggers="mouseenter:mouseleave"
+                    (click)="removePropertyGroup()"
+                    [ngClass]="propertygroup.toDelete == true ? 'to-delete-color' : 'btn-light'">
+                    <i class=" fa fa-trash"></i>
+                </button>
+                <!-- END DELETE VALUE BUTTON -->
+
             </div>
         </div>
 

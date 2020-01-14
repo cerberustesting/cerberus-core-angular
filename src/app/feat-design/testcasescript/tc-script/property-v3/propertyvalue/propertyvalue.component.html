@@ -1,6 +1,7 @@
 <div class="block block-bordered mb-0" [id]="'propertyValue'+index" (mouseenter)="showActions=true"
     (mouseleave)="showActions=false">
     <div class="block-header block-header-default block-header-sm">
+        <!-- ROW HEADER -->
         <div class="row full-width">
             <div class="col-3">
                 <div class="input-group custom-sm">
@@ -15,7 +16,8 @@
 
                     <!-- NUMBER OF VALUES -->
                     <div class="input-group-prepend">
-                        <span class="input-group-text no-background fs-1">
+                        <span class="input-group-text no-background fs-1"
+                            [ngClass]="propertyvalue.toDelete == true ? 'to-delete-color' : ''">
                             {{ propertyvalue.property }}
                         </span>
                     </div>
@@ -30,8 +32,10 @@
                     <!-- END DUPLICATE VALUE BUTTON -->
 
                     <!-- DELETE VALUE BUTTON -->
-                    <button *ngIf="showActions" class="btn btn-sm btn-light no-background custom-sm"
-                        ngbPopover="Delete Value" triggers="mouseenter:mouseleave" (click)="deleteAPropertyValue()">
+                    <button *ngIf="isDeleteButtonDisplayed()" class="btn btn-sm no-background custom-sm"
+                        [ngbPopover]="getDeletionPopoverText()" triggers="mouseenter:mouseleave"
+                        (click)="deleteAPropertyValue()"
+                        [ngClass]="propertyvalue.toDelete == true ? 'to-delete-color' : 'btn-light'">
                         <i class="fa fa-trash"></i>
                     </button>
                     <!-- END DELETE VALUE BUTTON -->
@@ -58,10 +62,45 @@
                 <!-- SELECTED COUNTRIES LIST -->
             </div>
         </div>
+        <!-- ROW HEADER -->
+
     </div>
     <!-- PROPERTY VALUE CONTENT -->
-    <div *ngIf="propertyValueDetailsDisplay" class="block-content">
-        <p>Under developement...</p>
+    <div *ngIf="propertyValueDetailsDisplay" class="row block-content pl-5">
+
+        <!-- TYPE FIELD -->
+        <div class="col-3">
+            <div class="form-group">
+                <div class="input-group custom-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            type
+                        </span>
+                    </div>
+                    <select class="form-control form-control-sm" name="type" [(ngModel)]="propertyvalue.type">
+                        <option *ngFor="let inv of propertyTypesList">{{ inv.value }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- END TYPE FIELD -->
+
+        <!-- DESCRIPTION FIELD -->
+        <div class="col-9">
+            <div class="form-group">
+                <div class="input-group custom-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            description
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-sm" name="description"
+                        [(ngModel)]="propertyvalue.description">
+                </div>
+            </div>
+        </div>
+        <!-- END DESCRIPTION FIELD -->
+
     </div>
     <!-- END PROPERTY VALUE CONTENT -->
 </div>

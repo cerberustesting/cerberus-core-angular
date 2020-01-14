@@ -31,10 +31,12 @@
               "node_modules/nestable2/dist/jquery.nestable.min.css"
             ],
             "scripts": [
+              "src/assets/dashmix/js/dashmix.core.min.js",
+              "src/assets/dashmix/js/dashmix.app.min.js",
+              "src/assets/custom/js/custom.global.js",
               "node_modules/jquery-sparkline/jquery.sparkline.min.js",
               "node_modules/chart.js/dist/Chart.bundle.min.js",
-              "node_modules/nestable2/dist/jquery.nestable.min.js",
-              "src/assets/custom/js/custom.global.js"
+              "node_modules/nestable2/dist/jquery.nestable.min.js"
             ]
           },
           "configurations": {

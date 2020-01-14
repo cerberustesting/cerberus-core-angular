@@ -13,6 +13,7 @@ export class PropertyValue {
     retryPeriod: number;
     retryNb: number;
     rank: number;
+    toDelete: boolean;
 
     constructor(property: string) {
         this.property = property;
@@ -29,6 +30,7 @@ export class PropertyValue {
         this.retryPeriod = 0;
         this.retryNb = 0;
         this.rank = 1;
+        this.toDelete = false;
     }
 }
 
@@ -36,9 +38,11 @@ export class PropertyValue {
 export class ProperyGroup {
     property: string; // name of the property values
     values: Array<PropertyValue>; // list of all properties values
+    toDelete: boolean;
 
     constructor(property: string) {
         this.property = property;
         this.values = [];
+        this.toDelete = false;
     }
 }

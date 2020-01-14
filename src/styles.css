@@ -247,6 +247,15 @@ mat-tree-node button:focus {
   background-color: #f9dcd1;
 }
 
+/*
+"to-delete-color" class for any element
+
+apply the "*-danger* color from dashmix
+*/
+.to-delete-color {
+  color: #e04f1a !important;
+}
+
 .nav-item {
   cursor: pointer;
 }

@@ -93,6 +93,7 @@ export class PropertygroupComponent implements OnInit {
   addAPropertyValue() {
     const newpropvalue = new PropertyValue(this.propertygroup.property);
     this.propertygroup.values.push(newpropvalue);
+    this.propertyValuesDisplayed = true;
   }
 
   // add the same property value to the group (with empty country list)
@@ -113,6 +114,29 @@ export class PropertygroupComponent implements OnInit {
     newpropvalue.value1 = propvalue.value1;
     newpropvalue.value2 = propvalue.value2;
     this.propertygroup.values.push(newpropvalue);
+  }
+
+  // return the text to display according to the property group deletion status
+  getDeletionPopoverText(): string {
+    if (this.propertygroup.toDelete === true) {
+      return 'This properties will be deleted after saving';
+    } else {
+      return 'Delete values';
+    }
+  }
+
+  // return true if the delete button should be displayed
+  // in the situation the propery group is flagged for deletion
+  isDeleteButtonDisplayed(): boolean {
+    if (this.showActions === true || this.propertygroup.toDelete === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  removePropertyGroup() {
+    this.propertygroup.toDelete = true;
   }
 
 }

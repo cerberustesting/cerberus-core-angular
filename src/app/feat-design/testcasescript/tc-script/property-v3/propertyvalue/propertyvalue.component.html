@@ -77,7 +77,8 @@
                             type
                         </span>
                     </div>
-                    <select class="form-control form-control-sm" name="type" [(ngModel)]="propertyvalue.type">
+                    <select class="form-control form-control-sm" name="type" [(ngModel)]="propertyvalue.type"
+                        (change)="onTypeChange($event)">
                         <option *ngFor="let inv of propertyTypesList">{{ inv.value }}</option>
                     </select>
                 </div>
@@ -100,6 +101,12 @@
             </div>
         </div>
         <!-- END DESCRIPTION FIELD -->
+
+        <!-- VALUE EDITOR -->
+        <div class="col-12">
+            <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="propertyvalue.value1"></ngx-monaco-editor>
+        </div>
+        <!-- END VALUE EDITOR -->
 
     </div>
     <!-- END PROPERTY VALUE CONTENT -->

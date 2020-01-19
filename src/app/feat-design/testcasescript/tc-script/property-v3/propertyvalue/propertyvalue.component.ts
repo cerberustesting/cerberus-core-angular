@@ -6,6 +6,7 @@ import { NotificationService } from 'src/app/core/services/utils/notification.se
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
+import { CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
 
 @Component({
   selector: 'app-propertyvalue',
@@ -13,6 +14,9 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
   styleUrls: ['./propertyvalue.component.scss']
 })
 export class PropertyvalueComponent implements OnInit {
+
+  // code editor options
+  editorOptions = { theme: 'vs', language: 'plaintext' };
 
   @Input('propertyvalue') propertyvalue: PropertyValue; // property value
   @Input('propertyvalueIndex') index: number; // index to build ids
@@ -34,7 +38,8 @@ export class PropertyvalueComponent implements OnInit {
   constructor(
     private testService: TestService,
     private notificationService: NotificationService,
-    private invariantService: InvariantsService
+    private invariantService: InvariantsService,
+    private crossReferenceService: CrossreferenceService
   ) { }
 
   ngOnInit() {
@@ -117,6 +122,17 @@ export class PropertyvalueComponent implements OnInit {
       return true;
     } else {
       return false;
+    }
+  }
+
+  // update the language type for the editor
+  onTypeChange(event: any) {
+    const newType = event.target.value;
+    if (this.crossReferenceService.hasCrossReference(newType, this.crossReferenceService.crossReference_PropertyTypeLanguage) === false) {
+      this.editorOptions.language = 'plaintext';
+    } else {
+      // @ts-ignore
+      this.editorOptions = this.crossReferenceService.findCrossReference(newType, this.crossReferenceService.crossReference_PropertyTypeLanguage);
     }
   }
 

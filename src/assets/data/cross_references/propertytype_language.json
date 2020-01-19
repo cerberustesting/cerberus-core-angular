@@ -1,0 +1,14 @@
+[
+    {
+        "reference": "getFromJS",
+        "language": "javascript"
+    },
+    {
+        "reference": "getFromSQL",
+        "language": "mysql"
+    },
+    {
+        "reference": "getFromGroovy",
+        "language": "java"
+    }
+]

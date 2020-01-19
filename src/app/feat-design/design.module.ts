@@ -39,6 +39,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PropertygroupComponent } from './testcasescript/tc-script/property-v3/propertygroup/propertygroup.component';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { PropertygroupComponent } from './testcasescript/tc-script/property-v3/p
     NgxDatatableModule,
     ReactiveFormsModule,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+    MonacoEditorModule.forRoot()
   ],
   entryComponents: [
     DatalibInteractionComponent,

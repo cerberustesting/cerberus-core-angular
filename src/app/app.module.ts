@@ -11,7 +11,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SessionInterceptorService } from './core/services/auth/session.interceptor.service';
 import { DesignModule } from './feat-design/design.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     SharedModule,
     BrowserAnimationsModule,
     DesignModule,
-    CKEditorModule
+    CKEditorModule,
+    MonacoEditorModule.forRoot()
   ],
   providers: [
     {

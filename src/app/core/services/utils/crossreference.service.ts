@@ -3,6 +3,7 @@ import propertytype_value from 'src/assets/data/cross_references/propertytype_va
 import condition_value from 'src/assets/data/cross_references/condition_value.json';
 import action_value from 'src/assets/data/cross_references/action_value.json';
 import control_value from 'src/assets/data/cross_references/control_value.json';
+import propertytype_language from 'src/assets/data/cross_references/propertytype_language.json';
 
 export interface ICrossReference {
   reference: string;
@@ -18,6 +19,7 @@ export interface ICrossReference {
   icon_value1?: string;
   icon_value2?: string;
   fields?: Array<string>;
+  language?: string;
 }
 
 @Injectable({
@@ -30,6 +32,7 @@ export class CrossreferenceService {
   public crossReference_ActionValue: Array<ICrossReference> = action_value;
   public crossReference_ControlValue: Array<ICrossReference> = control_value;
   public crossReference_PropertyTypeValue: Array<ICrossReference> = propertytype_value;
+  public crossReference_PropertyTypeLanguage: Array<ICrossReference> = propertytype_language;
 
   constructor() { }
 

@@ -6,12 +6,19 @@ import { SettingsService } from '../tc-script/settings/settings.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
+import { TestcaseInteractionComponent } from 'src/app/feat-design/testcaselist/testcase-interaction/testcase-interaction.component';
+import { Subject } from 'rxjs';
+
+
+
 @Component({
   selector: 'app-tc-selector',
   templateUrl: './tc-selector.component.html',
   styleUrls: ['./tc-selector.component.scss']
 })
 export class TcSelectorComponent implements OnInit, OnDestroy {
+
 
   @Input('test') selectedTest: string;
   @Input('testcase') selectedTestCase: string;
@@ -23,10 +30,13 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   public testcasesList: Array<ITestCaseHeader>;
   public testcase: ITestCase;
 
+  refreshResultsEvent: Subject<void> = new Subject<void>(); // the observable to refresh the table
   constructor(
     private testService: TestService,
     private settingsService: SettingsService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+
+    private sideContentService: SidecontentService
   ) { }
 
   ngOnDestroy() {
@@ -90,6 +100,10 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     this.testService.observableTestCase.subscribe(response => { this.testcase = response; });
   }
 
+  refreshResults(): void {
+    this.refreshResultsEvent.next();
+  }
+
   clearSelectedTestCase() {
     this.selectedTestCase = null;
     this.SelectedTestCaseChange.emit(this.selectedTestCase);
@@ -130,4 +144,19 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     console.log('Test: ' + this.selectedTest + ' Testcase: ' + this.selectedTestCase);
   }
 
+  /** duplicateTestCaseHeader
+   * * Open side content in duplicate mode for the selected testcase (must be one)
+   * @param testcase the testcase to duplicate, information from table row
+   */
+  duplicateTestCaseHeader(testcase: any): void {
+    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+      test: testcase.test,
+      testcase: testcase.testCase,
+      mode: INTERACTION_MODE.DUPLICATE,
+      exit: () => {
+        this.refreshResults();
+      }
+    });
+    this.sideContentService.openSideBlock();
+  }
 }

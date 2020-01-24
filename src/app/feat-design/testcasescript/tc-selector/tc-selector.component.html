@@ -33,8 +33,9 @@
           <div class="col-md-6">
             <div class="form-group" *ngIf="selectedTest && testcasesList">
               <label for="testcase">Test Case</label>
-              <ng-select [items]="testcasesList" (change)="selectedTestCaseChange()" bindLabel="testCase" bindValue="testCase"
-                placeholder="Select a Test Case" [(ngModel)]='selectedTestCase' [clearable]="false" [searchFn]="customSearchFn">
+              <ng-select [items]="testcasesList" (change)="selectedTestCaseChange()" bindLabel="testCase"
+                bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase' [clearable]="false"
+                [searchFn]="customSearchFn">
                 <ng-template ng-label-tmp let-item="item">
                   {{item.testCase}} : {{item.description}}
                 </ng-template>
@@ -57,11 +58,18 @@
 
         <div class="row push" *ngIf="testcase">
 
-          <div class="col-md-6 text-center">
+          <div class="col-md-7 text-center">
+            <button type="button" class="fa fa-fw fa-bug" ></button>
+
+            <!-- GO TO BUG BUTTON -->
+
+            <!-- END GO TO BUG BUTTON -->
+
+            <button type="button" class="nav-main-link-icon si si-tag"  style="width:30px"></button>
             <div class="dropdown">
               <button type="button" class="btn btn-light dropdown-toggle full-width border" id="dropdown-default-light"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Go to
+                <span class="fa fa-history mr-1"></span> Execution
               </button>
               <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
@@ -72,13 +80,14 @@
                 <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-file-archive mr-1"></i> Logs</a>
               </div>
             </div>
-          </div>
 
-          <div class="col-md-6 text-center">
+
+
             <div class="dropdown">
+
               <button type="button" class="btn btn-light dropdown-toggle full-width border" id="dropdown-default-light"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Run
+                <span class="fa fa-fw fa-play"></span> Run
               </button>
               <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
@@ -93,6 +102,10 @@
                   Queue and See</a>
               </div>
             </div>
+            <button type="button" class="nav-main-link-icon si si-settings" ></button>
+            <button type="button" class="fa fa-fw fa-save" ></button>
+            <button type="button" class="fa fa-fw fa-copy"  (click)="duplicateTestCaseHeader(row)"></button>
+            <button type="button" class="fa fa-trash-alt" ></button>
           </div>
         </div>
       </div>

@@ -1,11 +1,11 @@
-<div class="content">
+<div class="content-test">
 
+  <!-- TEST CASE SELECTOR COMPONENT -->
   <app-tc-selector [test]='selectedTest' (SelectedTestChange)='receiveTest($event)' [testcase]='selectedTestCase'
     (SelectedTestCaseChange)='receiveTestCase($event)'>
   </app-tc-selector>
-
-  <app-tc-header *ngIf='testcase' [test]='selectedTest' [testcase]='selectedTestCase' [testcaseheader]="testcase.info"></app-tc-header>
+  <!-- END TEST CASE SELECTOR COMPONENT -->
 
   <app-tc-script *ngIf='testcase' [testcase]="testcase"></app-tc-script>
-
+  
 </div>

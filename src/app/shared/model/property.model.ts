@@ -14,6 +14,8 @@ export class PropertyValue {
     retryNb: number;
     rank: number;
     toDelete: boolean;
+    fromTest?: string;
+    fromTestCase?: string;
 
     constructor(property: string) {
         this.property = property;

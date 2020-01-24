@@ -22,7 +22,7 @@
                 <!-- PROPERTY NAME -->
                 <input type="text" class="form-control form-control-alt form-control-sm"
                     [value]="propertygroup.property" (keyup)="onPropertyNameChange($event)"
-                    [ngClass]="propertyNameIsAlreadyUsed ? 'is-invalid' : ''">
+                    [ngClass]="propertyNameIsAlreadyUsed ? 'is-invalid' : ''" [disabled]="inherited">
                 <!-- END PROPERTY NAME -->
 
                 <!-- ERROR SIGN -->

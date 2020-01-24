@@ -15,7 +15,11 @@ export class PropertyV3Component implements OnInit {
   @Input('testfolder') testfolder: string;
   @Input('testcaseid') testcaseid: string;
 
-  @Input('testcase') testcase: ITestCase; // full testcase object
+  // inherited properties mode
+  @Input('inherited') inherited: boolean;
+
+  // full testcase object
+  @Input('testcase') testcase: ITestCase;
 
   // raw list of properties (used only to store the API result)
   private propertiesList: Array<PropertyValue>;
@@ -35,13 +39,20 @@ export class PropertyV3Component implements OnInit {
       this.testService.getProperties(this.testfolder, this.testcaseid);
     }
 
-    // subscribe to any propertiesList change
-    this.testService.observableTestCaseProperties.subscribe(r => {
-      if (r) {
-        this.propertiesList = r;
-        this.groupPropertiesByName();
-      }
-    });
+    // depending on the mode, use a different properties list
+    if (this.inherited === true) {
+      this.propertiesList = this.testcase.inheritedProp;
+      this.groupPropertiesByName();
+    } else {
+      // subscribe to any propertiesList change
+      this.testService.observableTestCaseProperties.subscribe(r => {
+        if (r) {
+          this.propertiesList = r;
+          this.groupPropertiesByName();
+        }
+      });
+    }
+
   }
 
   // refresh the property groups

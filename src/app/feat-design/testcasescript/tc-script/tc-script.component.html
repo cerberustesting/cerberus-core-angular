@@ -49,11 +49,23 @@
       <!-- PROPERTIES TAB -->
       <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
 
-        <app-property-v3 [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase">
+        <app-property-v3 [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase"
+          [inherited]="false">
         </app-property-v3>
 
       </div>
       <!-- END PROPERTIES TAB -->
+
+      <!-- INHERITED PROPERTIES TAB -->
+      <div *ngIf="selectedTab == tabs[2]" class="tab-pane active show" id="inheritedPropertiesTab" role="tabpanel">
+
+        <app-property-v3 [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase"
+          [inherited]="true">
+        </app-property-v3>
+
+      </div>
+      <!-- END INHERITED PROPERTIES TAB -->
+
     </div>
 
     <!-- BOTTOM SECTION -->

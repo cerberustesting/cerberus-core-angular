@@ -1,3 +1,5 @@
+import { PropertyValue } from './property.model';
+
 export interface ITestCaseHeader {
     conditionOper: string;
     howTo: string;
@@ -61,7 +63,7 @@ export interface ITestCaseDependency {
 
 export interface ITestCase {
     info: ITestCaseHeader;
-    inheritedProp: Array<string>;
+    inheritedProp: Array<PropertyValue>;
     hasPermissionsUpdate: boolean;
     messageType: string;
     hasPermissionsStepLibrary: boolean;

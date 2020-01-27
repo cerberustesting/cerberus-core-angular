@@ -9,7 +9,7 @@
           <!-- Test Selection -->
           <div class="col-md-6" *ngIf="testsList">
             <div class="form-group">
-              <label for="test">Test</label>
+           
               <!--
                 <select class="form-control br-tp-0" id="test" name="test" [(ngModel)]='selectedTest' (ngModelChange)='selectedTestChange()'
                   [ngClass]="selectedTest ? 'is-selected-valid' : ''">
@@ -18,6 +18,8 @@
                   </option>
                 </select>
                  -->
+                 <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
+                 <button class="btn btn-outline-secondary" >Folder</button>
               <ng-select [items]="testsList" (change)="selectedTestChange()" bindLabel="test" bindValue="test"
                 placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
                 <ng-template ng-label-tmp let-item="item">
@@ -29,10 +31,13 @@
               </ng-select>
             </div>
           </div>
+        </div>
           <!-- Test Case Selection -->
+          
           <div class="col-md-6">
             <div class="form-group" *ngIf="selectedTest && testcasesList">
-              <label for="testcase">Test Case</label>
+              <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
+              <button class="btn btn-outline-secondary" >Test Case</button>
               <ng-select [items]="testcasesList" (change)="selectedTestCaseChange()" bindLabel="testCase"
                 bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase' [clearable]="false"
                 [searchFn]="customSearchFn">
@@ -55,42 +60,53 @@
             </div>
           </div>
         </div>
+      </div>
 
         <div class="row push" *ngIf="testcase">
 
-          <div class="col-md-7 text-center">
-            <button type="button" class="fa fa-fw fa-bug" ></button>
+          
+          <div class="col-md text-right"  >
+            <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
 
-            <!-- GO TO BUG BUTTON -->
+              <!-- GO TO BUG BUTTON -->
+
+            <button class="btn btn-outline-secondary mr-2 mb-2" >
+              <i class="fa fa-fw fa-bug"></i>
+          </button>
 
             <!-- END GO TO BUG BUTTON -->
 
-            <button type="button" class="nav-main-link-icon si si-tag"  style="width:30px"></button>
-            <div class="dropdown">
-              <button type="button" class="btn btn-light dropdown-toggle full-width border" id="dropdown-default-light"
+            <!-- GO TO TAG BUTTON -->
+            <button class="btn btn-outline-secondary mr-4 mb-2" >
+              <i class="fa fa-fw fa-tag"></i>
+          </button>
+          <!-- END GO TO TAG BUTTON -->
+
+           <!-- GO TO EXECUTION BUTTON -->
+
+              <button  class="btn btn-outline-secondary dropdown-toggle mr-2 mb-2" id="dropdown-default-light"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="fa fa-history mr-1"></span> Execution
               </button>
               <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
-                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                style="position: absolute; will-change: transform; top: 0px; left: 100px; transform: translate3d(0px, 38px, 0px);">
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-history mr-1"></i> Last Execution</a>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Execution List</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Testcase List</a>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-file-archive mr-1"></i> Logs</a>
               </div>
-            </div>
+          
+            <!-- END GO TO EXECUTION BUTTON -->
 
+           <!-- GO TO RUN BUTTON -->
 
-
-            <div class="dropdown">
-
-              <button type="button" class="btn btn-light dropdown-toggle full-width border" id="dropdown-default-light"
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle mr-4 mb-2" id="dropdown-default-light"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="fa fa-fw fa-play"></span> Run
               </button>
               <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
-                style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                style="position: absolute; will-change: transform; top: 0px; left: 100px; transform: translate3d(0px, 38px, 0px);">
                 <a class="dropdown-item" href="javascript:void(0)"><i class="si si-control-play mr-1"></i> Run
                   Testcase</a>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="si si-control-play mr-1"></i> Rerun
@@ -101,12 +117,42 @@
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Rerun from
                   Queue and See</a>
               </div>
-            </div>
-            <button type="button" class="nav-main-link-icon si si-settings" ></button>
-            <button type="button" class="fa fa-fw fa-save" ></button>
-            <button type="button" class="fa fa-fw fa-copy"  (click)="duplicateTestCaseHeader(row)"></button>
-            <button type="button" class="fa fa-trash-alt" ></button>
+
+              <!-- END GO TO RUN BUTTON -->
+            
+              <!-- GO TO COG BUTTON -->
+            <button class="btn btn-outline-secondary mr-4 mb-2" >
+              <i class="fa fa-fw fa-cog"></i>
+          </button>
+
+          <!-- END GO TO COG BUTTON -->
+
+          <!-- GO TO SAVE BUTTON -->
+
+            <button class="btn btn-info js-click-ripple-enabled mr-2 mb-2">
+              <i class="fa fa-fw fa-save"></i>
+          </button>
+          
+          <!-- END GO TO SAVE BUTTON -->
+
+          <!-- GO TO COPY BUTTON -->
+
+          <button class="btn btn-outline-secondary mr-2 mb-2" (click)="duplicateTestCaseHeader(row)">
+            <i class="fa fa-fw fa-copy"></i>
+        </button>
+
+        <!-- END GO TO COPY BUTTON -->
+
+        <!-- GO TO TRASH BUTTON -->
+
+        <button class="btn btn-outline-secondary mb-2" >
+          <i class="fa fa-trash-alt"></i>
+      </button>
+
+      <!-- END GO TO TRASH BUTTON -->
+
           </div>
+        </div>
         </div>
       </div>
     </div>

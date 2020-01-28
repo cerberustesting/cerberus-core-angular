@@ -1,15 +1,13 @@
 <div class="row">
   <div class="col-md-12">
     <div class="block block-rounded">
-      <div class="block-header block-header-default">
-        <h3 class="block-title">Testcase <small>selection</small></h3>
-      </div>
+
       <div class="block-content">
         <div class="row">
           <!-- Test Selection -->
           <div class="col-md-6" *ngIf="testsList">
             <div class="form-group">
-           
+
               <!--
                 <select class="form-control br-tp-0" id="test" name="test" [(ngModel)]='selectedTest' (ngModelChange)='selectedTestChange()'
                   [ngClass]="selectedTest ? 'is-selected-valid' : ''">
@@ -18,38 +16,38 @@
                   </option>
                 </select>
                  -->
-                 <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
-                 <button class="btn btn-outline-secondary" >Folder</button>
-              <ng-select [items]="testsList" (change)="selectedTestChange()" bindLabel="test" bindValue="test"
-                placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
-                <ng-template ng-label-tmp let-item="item">
-                  {{item.test}} : {{item.description}}
-                </ng-template>
-                <ng-template ng-option-tmp let-item="item">
-                  {{item.test}} : {{item.description}}
-                </ng-template>
-              </ng-select>
+              <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
+                <button class="btn btn-outline-secondary">Folder</button>
+                <ng-select [items]="testsList" (change)="selectedTestChange()" bindLabel="test" bindValue="test"
+                  placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{item.test}} : {{item.description}}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item">
+                    {{item.test}} : {{item.description}}
+                  </ng-template>
+                </ng-select>
+              </div>
             </div>
           </div>
-        </div>
           <!-- Test Case Selection -->
-          
-          <div class="col-md-6" >
+
+          <div class="col-md-6">
             <div class="form-group" *ngIf="selectedTest && testcasesList">
               <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
-              <button class="btn btn-outline-secondary" >Test Case</button>
-              <ng-select [items]="testcasesList" (change)="selectedTestCaseChange()" bindLabel="testCase"
-                bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase' [clearable]="false"
-                [searchFn]="customSearchFn">
-                <ng-template ng-label-tmp let-item="item">
-                  {{item.testCase}} : {{item.description}}
-                </ng-template>
-                <ng-template ng-option-tmp let-item="item">
-                  <div>{{item.testCase}} :<span> {{item.description}}</span></div>
-                  <small><b>Priority: </b>{{item.priority}} | <b>Status:</b> {{item.status}}</small>
-                </ng-template>
-              </ng-select>
-              <!--
+                <button class="btn btn-outline-secondary">TestCase</button>
+                <ng-select [items]="testcasesList" (change)="selectedTestCaseChange()" bindLabel="testCase"
+                  bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase'
+                  [clearable]="false" [searchFn]="customSearchFn">
+                  <ng-template ng-label-tmp let-item="item">
+                    {{item.testCase}} : {{item.description}}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item">
+                    <div>{{item.testCase}} :<span> {{item.description}}</span></div>
+                    <small><b>Priority: </b>{{item.priority}} | <b>Status:</b> {{item.status}}</small>
+                  </ng-template>
+                </ng-select>
+                <!--
                 <select class="form-control br-tp-0" id="testcase" name="testcase" [(ngModel)]='selectedTestCase'
                   (ngModelChange)='selectedTestCaseChange()' [ngClass]="selectedTestCase ? 'is-selected-valid' : ''">
                   <option [ngValue]="null">Select a Test Case</option>
@@ -57,34 +55,34 @@
                     }} </option>
                 </select>
               -->
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
         <div class="row push" *ngIf="testcase">
 
-          
-          <div class="col-md text-right"  >
+
+          <div class="col-md-4 offset-md-6">
             <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
 
               <!-- GO TO BUG BUTTON -->
 
-            <button class="btn btn-outline-secondary mr-2 mb-2" >
-              <i class="fa fa-fw fa-bug"></i>
-          </button>
+              <button class="btn btn-outline-secondary mr-2 mb-2" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)">
+                <i class="fa fa-fw fa-bug"></i>
+              </button>
 
-            <!-- END GO TO BUG BUTTON -->
+              <!-- END GO TO BUG BUTTON -->
 
-            <!-- GO TO TAG BUTTON -->
-            <button class="btn btn-outline-secondary mr-4 mb-2" >
-              <i class="fa fa-fw fa-tag"></i>
-          </button>
-          <!-- END GO TO TAG BUTTON -->
+              <!-- GO TO TAG BUTTON -->
+              <button class="btn btn-outline-secondary mr-4 mb-2" (click)="tagTestCaseHeader(selectedTest, selectedTestCase)">
+                <i class="fa fa-fw fa-tag"></i>
+              </button>
+              <!-- END GO TO TAG BUTTON -->
 
-           <!-- GO TO EXECUTION BUTTON -->
+              <!-- GO TO EXECUTION BUTTON -->
 
-              <button  class="btn btn-outline-secondary dropdown-toggle mr-2 mb-2" id="dropdown-default-light"
+              <button class="btn btn-outline-secondary dropdown-toggle mr-2 mb-2" id="dropdown-default-light"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="fa fa-history mr-1"></span> Execution
               </button>
@@ -96,13 +94,13 @@
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Testcase List</a>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-file-archive mr-1"></i> Logs</a>
               </div>
-          
-            <!-- END GO TO EXECUTION BUTTON -->
 
-           <!-- GO TO RUN BUTTON -->
+              <!-- END GO TO EXECUTION BUTTON -->
 
-              <button type="button" class="btn btn-outline-secondary dropdown-toggle mr-4 mb-2" id="dropdown-default-light"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <!-- GO TO RUN BUTTON -->
+
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle mr-4 mb-2"
+                id="dropdown-default-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="fa fa-fw fa-play"></span> Run
               </button>
               <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
@@ -119,40 +117,40 @@
               </div>
 
               <!-- END GO TO RUN BUTTON -->
-            
+
               <!-- GO TO COG BUTTON -->
-            <button class="btn btn-outline-secondary mr-4 mb-2" >
-              <i class="fa fa-fw fa-cog"></i>
-          </button>
+              <button class="btn btn-outline-secondary mr-4 mb-2"(click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)">
+                <i class="fa fa-fw fa-cog"></i>
+              </button>
 
-          <!-- END GO TO COG BUTTON -->
+              <!-- END GO TO COG BUTTON -->
 
-          <!-- GO TO SAVE BUTTON -->
+              <!-- GO TO SAVE BUTTON -->
 
-            <button class="btn btn-info js-click-ripple-enabled mr-2 mb-2">
-              <i class="fa fa-fw fa-save"></i>
-          </button>
-          
-          <!-- END GO TO SAVE BUTTON -->
+              <button class="btn btn-info js-click-ripple-enabled mr-2 mb-2">
+                <i class="fa fa-fw fa-save"></i>
+              </button>
 
-          <!-- GO TO COPY BUTTON -->
+              <!-- END GO TO SAVE BUTTON -->
 
-          <button class="btn btn-outline-secondary mr-2 mb-2" (click)="duplicateTestCaseHeader(row)">
-            <i class="fa fa-fw fa-copy"></i>
-        </button>
+              <!-- GO TO COPY BUTTON -->
 
-        <!-- END GO TO COPY BUTTON -->
+              <button class="btn btn-outline-secondary mr-2 mb-2" (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)">
+                <i class="fa fa-fw fa-copy"></i>
+              </button>
 
-        <!-- GO TO TRASH BUTTON -->
+              <!-- END GO TO COPY BUTTON -->
 
-        <button class="btn btn-outline-secondary mb-2" >
-          <i class="fa fa-trash-alt"></i>
-      </button>
+              <!-- GO TO TRASH BUTTON -->
 
-      <!-- END GO TO TRASH BUTTON -->
+              <button class="btn btn-outline-secondary mb-2">
+                <i class="fa fa-trash-alt"></i>
+              </button>
 
+              <!-- END GO TO TRASH BUTTON -->
+
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

@@ -11,7 +11,6 @@ import { TestcaseInteractionComponent } from 'src/app/feat-design/testcaselist/t
 import { Subject } from 'rxjs';
 
 
-
 @Component({
   selector: 'app-tc-selector',
   templateUrl: './tc-selector.component.html',
@@ -146,13 +145,53 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
 
   /** duplicateTestCaseHeader
    * * Open side content in duplicate mode for the selected testcase (must be one)
-   * @param testcase the testcase to duplicate, information from table row
+   * @param test the test folder to duplicate, information from selection
+   * @param testcase the test case id to duplicate, information from selection
    */
-  duplicateTestCaseHeader(testcase: any): void {
+  duplicateTestCaseHeader(test: string , testcase: string ): void {
+    console.log(test);
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: testcase.test,
-      testcase: testcase.testCase,
+      test: test,
+      testcase: testcase,
       mode: INTERACTION_MODE.DUPLICATE,
+      exit: () => {
+        this.refreshResults();
+      }
+    });
+    this.sideContentService.openSideBlock();
+  }
+
+    /** BugTestCaseHeader
+   * * Open side content in duplicate mode for the selected testcase (must be one)
+   * @param test the test folder to duplicate, information from selection
+   * @param testcase the test case id to duplicate, information from selection
+   */
+
+  bugTestCaseHeader(test: string , testcase: string ): void {
+    console.log(test);
+    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+      test: test,
+      testcase: testcase,
+      mode: INTERACTION_MODE.DUPLICATE,
+      exit: () => {
+        this.refreshResults();
+      }
+    });
+    this.sideContentService.openSideBlock();
+  }
+
+      /** TagTestCaseHeader
+   * * Open side content in duplicate mode for the selected testcase (must be one)
+   * @param test the test folder to duplicate, information from selection
+   * @param testcase the test case id to duplicate, information from selection
+   */
+
+  tagTestCaseHeader(test: string , testcase: string ): void {
+    console.log(test);
+    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+      test: test,
+      testcase: testcase,
+      mode: INTERACTION_MODE.EDIT,
       exit: () => {
         this.refreshResults();
       }

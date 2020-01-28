@@ -33,16 +33,16 @@
                 <!-- END ERROR SIGN -->
 
                 <!-- ADD VALUE BUTTON -->
-                <button *ngIf="showActions" class="btn btn-sm btn-light no-background custom-sm" ngbPopover="Add Value"
-                    triggers="mouseenter:mouseleave" (click)="addAPropertyValue()">
+                <button *ngIf="showActions && inherited == false" class="btn btn-sm btn-light no-background custom-sm"
+                    ngbPopover="Add Value" triggers="mouseenter:mouseleave" (click)="addAPropertyValue()">
                     <i class="fa fa-plus"></i>
                 </button>
                 <!-- END ADD VALUE BUTTON -->
 
                 <!-- DELETE VALUES BUTTON -->
-                <button *ngIf="isDeleteButtonDisplayed()" class="btn btn-sm no-background custom-sm"
-                    [ngbPopover]="getDeletionPopoverText()" triggers="mouseenter:mouseleave"
-                    (click)="removePropertyGroup()"
+                <button *ngIf="isDeleteButtonDisplayed() && inherited == false"
+                    class="btn btn-sm no-background custom-sm" [ngbPopover]="getDeletionPopoverText()"
+                    triggers="mouseenter:mouseleave" (click)="removePropertyGroup()"
                     [ngClass]="propertygroup.toDelete == true ? 'to-delete-color' : 'btn-light'">
                     <i class=" fa fa-trash"></i>
                 </button>
@@ -65,7 +65,7 @@
     <!-- PROPERTY VALUES LIST -->
     <app-propertyvalue *ngFor="let propertyvalue of propertygroup.values; let i = index" [propertyvalue]="propertyvalue"
         [testcase]="testcase" [propertyvalueIndex]="i" [propertygroup]="propertygroup"
-        (propertyValueDuplication)="duplicateAPropertyValue($event)">
+        (propertyValueDuplication)="duplicateAPropertyValue($event)" [inherited]="inherited">
     </app-propertyvalue>
     <!-- END PROPERTY VALUES LIST -->
 

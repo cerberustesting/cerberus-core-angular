@@ -16,12 +16,13 @@ import { CrossreferenceService } from 'src/app/core/services/utils/crossreferenc
 export class PropertyvalueComponent implements OnInit {
 
   // code editor options
-  editorOptions = { theme: 'vs', language: 'plaintext' };
+  editorOptions: any;
 
   @Input('propertyvalue') propertyvalue: PropertyValue; // property value
   @Input('propertyvalueIndex') index: number; // index to build ids
   @Input('testcase') testcase: ITestCase; // full testcase object
   @Input('propertygroup') propertygroup: ProperyGroup; // property group object will all values from others properties values
+  @Input('inherited') inherited: boolean; // true if the property is in read-only mode
 
   // event to send to parent component with the name of the property to be duplicated
   @Output() propertyValueDuplication = new EventEmitter<PropertyValue>();
@@ -49,6 +50,8 @@ export class PropertyvalueComponent implements OnInit {
     this.showActions = false;
     // subscribe to property type invariants
     this.invariantService.observablePropertyTypeList.subscribe(r => { if (r) { this.propertyTypesList = r; } });
+    // configure the code editor
+    this.editorOptions = { theme: 'vs', language: 'plaintext', readOnly: this.inherited };
   }
 
   // call the format functino from test service
@@ -81,18 +84,20 @@ export class PropertyvalueComponent implements OnInit {
   // fired when a country badge is clicked
   // add the country, removes it or do nothing accordingly
   toggleCountry(country: string): void {
-    if (this.isACountrySelectedInPropertyGroup(country)) {
-      // if the country is already selected for another property value
-      // if we are trying to select it, we do nothing
-      if (!this.isACountrySelected(country)) {
-        this.notificationService.createANotification('This country is already in use in another property. You must unselect it first for that property.', NotificationStyle.Info);
+    if (this.inherited === false) {
+      if (this.isACountrySelectedInPropertyGroup(country)) {
+        // if the country is already selected for another property value
+        // if we are trying to select it, we do nothing
+        if (!this.isACountrySelected(country)) {
+          this.notificationService.createANotification('This country is already in use in another property. You must unselect it first for that property.', NotificationStyle.Info);
+        } else {
+          // if we are trying to unselect it, we removes it
+          this.removeCountryFromSelection(country);
+        }
       } else {
-        // if we are trying to unselect it, we removes it
-        this.removeCountryFromSelection(country);
+        // if the country is not selected anywhere, add it to the selection
+        this.addCountryToSelection(country);
       }
-    } else {
-      // if the country is not selected anywhere, add it to the selection
-      this.addCountryToSelection(country);
     }
   }
 
@@ -134,6 +139,12 @@ export class PropertyvalueComponent implements OnInit {
       // @ts-ignore
       this.editorOptions = this.crossReferenceService.findCrossReference(newType, this.crossReferenceService.crossReference_PropertyTypeLanguage);
     }
+  }
+
+  // return a boolean to handle the "disable" attribute for fields
+  // if the property is displayed as inherited
+  areFieldsEnabled(): boolean {
+    return this.inherited;
   }
 
 }

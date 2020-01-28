@@ -24,17 +24,17 @@
                     <!-- END NUMBER OF VALUES -->
 
                     <!-- DUPLICATE VALUE BUTTON -->
-                    <button *ngIf="showActions" class="btn btn-sm btn-light no-background custom-sm"
-                        ngbPopover="Duplicate Value" triggers="mouseenter:mouseleave"
-                        (click)="duplicateAPropertyValue()">
+                    <button *ngIf="showActions && inherited == false"
+                        class="btn btn-sm btn-light no-background custom-sm" ngbPopover="Duplicate Value"
+                        triggers="mouseenter:mouseleave" (click)="duplicateAPropertyValue()">
                         <i class="fa fa-copy"></i>
                     </button>
                     <!-- END DUPLICATE VALUE BUTTON -->
 
                     <!-- DELETE VALUE BUTTON -->
-                    <button *ngIf="isDeleteButtonDisplayed()" class="btn btn-sm no-background custom-sm"
-                        [ngbPopover]="getDeletionPopoverText()" triggers="mouseenter:mouseleave"
-                        (click)="deleteAPropertyValue()"
+                    <button *ngIf="isDeleteButtonDisplayed() && inherited == false"
+                        class="btn btn-sm no-background custom-sm" [ngbPopover]="getDeletionPopoverText()"
+                        triggers="mouseenter:mouseleave" (click)="deleteAPropertyValue()"
                         [ngClass]="propertyvalue.toDelete == true ? 'to-delete-color' : 'btn-light'">
                         <i class="fa fa-trash"></i>
                     </button>
@@ -42,25 +42,29 @@
 
                 </div>
             </div>
+
+            <!-- PROPERTY VALUE TYPE -->
             <div class="col-2">
-                <!-- PROPERTY VALUE TYPE -->
                 <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">
                     {{propertyvalue.type}}</h3>
-                <!-- END PROPERTY VALUE TYPE -->
             </div>
+            <!-- END PROPERTY VALUE TYPE -->
+
+            <!-- PROPERTY VALUE VALUE1 PREVIEW -->
             <div class="col-3">
-                <!-- PROPERTY VALUE VALUE1 PREVIEW -->
                 <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">
                     {{propertyvalue.value1 | slice:0:30}}</h3>
-                <!-- PROPERTY VALUE VALUE1 PREVIEW -->
             </div>
+            <!-- PROPERTY VALUE VALUE1 PREVIEW -->
+
+            <!-- SELECTED COUNTRIES LIST -->
             <div class="col-4">
-                <!-- SELECTED COUNTRIES LIST -->
                 <span *ngFor="let country of formatCountryList(testcase.info.countryList)"
                     [ngClass]="isACountrySelected(country) ? 'badge-primary' : 'badge-secondary'"
                     class="badge link-cursor mr-1" (click)="toggleCountry(country)">{{country}}</span>
-                <!-- SELECTED COUNTRIES LIST -->
             </div>
+            <!-- SELECTED COUNTRIES LIST -->
+
         </div>
         <!-- ROW HEADER -->
 
@@ -78,7 +82,7 @@
                         </span>
                     </div>
                     <select class="form-control form-control-sm" name="type" [(ngModel)]="propertyvalue.type"
-                        (change)="onTypeChange($event)">
+                        (change)="onTypeChange($event)" [disabled]="areFieldsEnabled()">
                         <option *ngFor="let inv of propertyTypesList">{{ inv.value }}</option>
                     </select>
                 </div>
@@ -96,7 +100,7 @@
                         </span>
                     </div>
                     <input type="text" class="form-control form-control-sm" name="description"
-                        [(ngModel)]="propertyvalue.description">
+                        [(ngModel)]="propertyvalue.description" [disabled]="areFieldsEnabled()">
                 </div>
             </div>
         </div>
@@ -104,10 +108,15 @@
 
         <!-- VALUE EDITOR -->
         <div class="col-12">
-            <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="propertyvalue.value1"></ngx-monaco-editor>
+            <div class="form-group">
+                <label for="example-textarea-input">Value</label>
+                <ngx-monaco-editor class="form-control" [options]="editorOptions" [(ngModel)]="propertyvalue.value1">
+                </ngx-monaco-editor>
+            </div>
         </div>
         <!-- END VALUE EDITOR -->
 
     </div>
     <!-- END PROPERTY VALUE CONTENT -->
+
 </div>

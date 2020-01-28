@@ -12,3 +12,7 @@ compositions/*/localdata/
 
 #ignore the dist folder
 dist/
+
+# ignore the js folders from dashmix (vendored code)
+src/assets/dashmix/js/
+src/assets/dashmix/_es6/pages/

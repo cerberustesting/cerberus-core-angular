@@ -286,7 +286,7 @@ a.block {
     font-weight: normal;
     transition: transform .15s ease-out, opacity .15s ease-out, box-shadow .15s ease-out;
 
-    @include hover {
+    @include hover() {
         color: $body-color;
         opacity: .65;
     }
@@ -410,7 +410,7 @@ a.block {
         top: 1px;
     }
 
-    @include hover {
+    @include hover() {
         text-decoration: none;
         color: theme-color("primary-light");
     }
@@ -436,7 +436,7 @@ a.block {
         color: $white;
         opacity: .7;
 
-        @include hover {
+        @include hover() {
             color: $white;
             opacity: 1;
         }

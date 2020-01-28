@@ -34,7 +34,8 @@
                    $main-nav-submenu-bg,
                    $main-nav-link-icon-dark-color,
                    $main-nav-link-dark-hover-bg,
-                   $main-nav-submenu-dark-bg) {
+                   $main-nav-submenu-dark-bg,
+                   $btn-alt-primary-bg) {
     // Scaffolding
     body {
         color: $body-color;
@@ -49,7 +50,7 @@
             background-color: $link-color;
         }
 
-        @include hover {
+        @include hover() {
             color: $link-hover-color;
         }
     }
@@ -117,7 +118,7 @@
     .btn-link {
         color: $link-color;
 
-        @include hover {
+        @include hover() {
             color: $link-hover-color;
         }
     }
@@ -128,6 +129,14 @@
 
     .btn-outline-primary {
         @include button-outline-variant($brand-primary);
+    }
+
+    .btn-alt-primary {
+        @include button-alt-variant($btn-alt-primary-bg, $brand-darker);
+    }
+
+    .btn-alt-secondary {
+        @include button-alt-variant($body-bg, $body-color);
     }
 
     .btn-hero-primary {
@@ -259,7 +268,7 @@
         a {
             border-bottom-color: $body-bg;
 
-            @include hover {
+            @include hover() {
                 background-color: $body-bg-light;
             }
 
@@ -452,7 +461,7 @@
 
     .table-hover {
         tbody tr {
-            @include hover {
+            @include hover() {
                 background-color: darken($body-bg, 1.5%);
             }
         }
@@ -696,7 +705,7 @@
     a.block {
         color: $body-color;
 
-        @include hover {
+        @include hover() {
             color: $body-color;
         }
 
@@ -736,7 +745,7 @@
     .btn-block-option {
         color: $brand-primary;
 
-        @include hover {
+        @include hover() {
             color: $brand-light;
         }
 
@@ -903,7 +912,7 @@
         a {
             border-bottom-color: $body-bg;
 
-            @include hover {
+            @include hover() {
                 background-color: $body-bg-light;
             }
         }
@@ -999,7 +1008,7 @@
             color: $body-color;
         }
 
-        @include hover {
+        @include hover() {
             background-color: $white;
             border-color: $brand-primary;
 
@@ -1018,7 +1027,7 @@
         .fc-event {
             color: $body-color-dark;
 
-            @include hover {
+            @include hover() {
                 color: $body-color;
             }
         }

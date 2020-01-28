@@ -55,6 +55,8 @@ $btn-hero-padding-x-sm:     1.25rem !default;
 $btn-hero-padding-y-lg:     .875rem !default;
 $btn-hero-padding-x-lg:     2.25rem !default;
 
+$btn-alt-primary-bg:        lighten(theme-color("primary-lighter"), 18%);
+
 
 // Header
 
@@ -104,7 +106,7 @@ $space-row-gutter-tiny:     .25rem !default;                    // Row with tiny
 $space-block:               1.25rem !default;                   // Block padding
 $space-boxed:               1200px !default;                    // Boxed content max width
 $space-narrow:              96% !default;                       // Narrow content max width
-$space-main-max-width:      1920px - $sidebar-width !default;   // Main content max width
+$space-main-max-width:      1920px !default;                    // Main content max width
 
 
 // Third Party

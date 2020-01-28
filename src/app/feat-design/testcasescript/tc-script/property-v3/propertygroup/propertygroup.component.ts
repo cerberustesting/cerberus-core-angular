@@ -22,7 +22,7 @@ export class PropertygroupComponent implements OnInit {
   @Input('propertygroup') propertygroup: ProperyGroup; // property grouped by name
   @Input('testcase') testcase: ITestCase; // full testcase object
   @Input('propertyGroups') propertyGroups: Array<ProperyGroup>; // list of all property groups
-  @Input('inherited') inherited: boolean; // inherited properties mode
+  @Input('inherited') inherited: boolean; // true if the property is in read-only
 
   constructor(private testService: TestService) { }
 

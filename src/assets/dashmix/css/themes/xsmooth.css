@@ -1,7 +1,7 @@
 /*!
- * Dashmix - v2.1.0
+ * Dashmix - v2.2.0
  * @author pixelcave - https://pixelcave.com
- * Copyright (c) 2019
+ * Copyright (c) 2020
  */
 body {
   color: #495057;
@@ -358,6 +358,9 @@ button.bg-sidebar-dark:focus {
 }
 
 .btn-primary:focus, .btn-primary.focus {
+  color: #fff;
+  background-color: #643e8a;
+  border-color: #5e3a81;
   box-shadow: 0 0 0 0.2rem rgba(139, 101, 178, 0.5);
 }
 
@@ -409,6 +412,80 @@ button.bg-sidebar-dark:focus {
 .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
 .show > .btn-outline-primary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(119, 74, 164, 0.5);
+}
+
+.btn-alt-primary {
+  color: #442a5e;
+  background-color: #d5c6e5;
+  border-color: #d5c6e5;
+}
+
+.btn-alt-primary:hover {
+  color: #442a5e;
+  background-color: #c2abd9;
+  border-color: #c2abd9;
+}
+
+.btn-alt-primary:focus, .btn-alt-primary.focus {
+  color: #442a5e;
+  background-color: #c2abd9;
+  border-color: #c2abd9;
+  box-shadow: 0 0 0 0.2rem rgba(183, 155, 210, 0.25);
+}
+
+.btn-alt-primary.disabled, .btn-alt-primary:disabled {
+  color: #212529;
+  background-color: #d5c6e5;
+  border-color: #d5c6e5;
+}
+
+.btn-alt-primary:not(:disabled):not(.disabled):active, .btn-alt-primary:not(:disabled):not(.disabled).active,
+.show > .btn-alt-primary.dropdown-toggle {
+  color: #1e1329;
+  background-color: #b79bd2;
+  border-color: #b79bd2;
+}
+
+.btn-alt-primary:not(:disabled):not(.disabled):active:focus, .btn-alt-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-alt-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(183, 155, 210, 0.25);
+}
+
+.btn-alt-secondary {
+  color: #495057;
+  background-color: #f7f5fa;
+  border-color: #f7f5fa;
+}
+
+.btn-alt-secondary:hover {
+  color: #495057;
+  background-color: #e3dced;
+  border-color: #e3dced;
+}
+
+.btn-alt-secondary:focus, .btn-alt-secondary.focus {
+  color: #495057;
+  background-color: #e3dced;
+  border-color: #e3dced;
+  box-shadow: 0 0 0 0.2rem rgba(214, 204, 230, 0.25);
+}
+
+.btn-alt-secondary.disabled, .btn-alt-secondary:disabled {
+  color: #212529;
+  background-color: #f7f5fa;
+  border-color: #f7f5fa;
+}
+
+.btn-alt-secondary:not(:disabled):not(.disabled):active, .btn-alt-secondary:not(:disabled):not(.disabled).active,
+.show > .btn-alt-secondary.dropdown-toggle {
+  color: #262a2d;
+  background-color: #d6cce6;
+  border-color: #d6cce6;
+}
+
+.btn-alt-secondary:not(:disabled):not(.disabled):active:focus, .btn-alt-secondary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-alt-secondary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(214, 204, 230, 0.25);
 }
 
 .btn-hero-primary {
@@ -996,6 +1073,13 @@ select.form-control:focus::-ms-value {
   border-radius: 0.25rem;
 }
 
+.was-validated :valid ~ .valid-feedback,
+.was-validated :valid ~ .valid-tooltip,
+.is-valid ~ .valid-feedback,
+.is-valid ~ .valid-tooltip {
+  display: block;
+}
+
 .was-validated .form-control:valid, .form-control.is-valid {
   border-color: #82b54b;
 }
@@ -1005,12 +1089,6 @@ select.form-control:focus::-ms-value {
   box-shadow: 0 0 0 0.2rem rgba(130, 181, 75, 0.25);
 }
 
-.was-validated .form-control:valid ~ .valid-feedback,
-.was-validated .form-control:valid ~ .valid-tooltip, .form-control.is-valid ~ .valid-feedback,
-.form-control.is-valid ~ .valid-tooltip {
-  display: block;
-}
-
 .was-validated .custom-select:valid, .custom-select.is-valid {
   border-color: #82b54b;
 }
@@ -1018,18 +1096,6 @@ select.form-control:focus::-ms-value {
 .was-validated .custom-select:valid:focus, .custom-select.is-valid:focus {
   border-color: #82b54b;
   box-shadow: 0 0 0 0.2rem rgba(130, 181, 75, 0.25);
-}
-
-.was-validated .custom-select:valid ~ .valid-feedback,
-.was-validated .custom-select:valid ~ .valid-tooltip, .custom-select.is-valid ~ .valid-feedback,
-.custom-select.is-valid ~ .valid-tooltip {
-  display: block;
-}
-
-.was-validated .form-control-file:valid ~ .valid-feedback,
-.was-validated .form-control-file:valid ~ .valid-tooltip, .form-control-file.is-valid ~ .valid-feedback,
-.form-control-file.is-valid ~ .valid-tooltip {
-  display: block;
 }
 
 .was-validated .form-check-input:valid ~ .form-check-label, .form-check-input.is-valid ~ .form-check-label {
@@ -1050,12 +1116,6 @@ select.form-control:focus::-ms-value {
   border-color: #82b54b;
 }
 
-.was-validated .custom-control-input:valid ~ .valid-feedback,
-.was-validated .custom-control-input:valid ~ .valid-tooltip, .custom-control-input.is-valid ~ .valid-feedback,
-.custom-control-input.is-valid ~ .valid-tooltip {
-  display: block;
-}
-
 .was-validated .custom-control-input:valid:checked ~ .custom-control-label::before, .custom-control-input.is-valid:checked ~ .custom-control-label::before {
   border-color: #9bc46f;
   background-color: #9bc46f;
@@ -1071,12 +1131,6 @@ select.form-control:focus::-ms-value {
 
 .was-validated .custom-file-input:valid ~ .custom-file-label, .custom-file-input.is-valid ~ .custom-file-label {
   border-color: #82b54b;
-}
-
-.was-validated .custom-file-input:valid ~ .valid-feedback,
-.was-validated .custom-file-input:valid ~ .valid-tooltip, .custom-file-input.is-valid ~ .valid-feedback,
-.custom-file-input.is-valid ~ .valid-tooltip {
-  display: block;
 }
 
 .was-validated .custom-file-input:valid:focus ~ .custom-file-label, .custom-file-input.is-valid:focus ~ .custom-file-label {
@@ -1107,6 +1161,13 @@ select.form-control:focus::-ms-value {
   border-radius: 0.25rem;
 }
 
+.was-validated :invalid ~ .invalid-feedback,
+.was-validated :invalid ~ .invalid-tooltip,
+.is-invalid ~ .invalid-feedback,
+.is-invalid ~ .invalid-tooltip {
+  display: block;
+}
+
 .was-validated .form-control:invalid, .form-control.is-invalid {
   border-color: #e04f1a;
 }
@@ -1116,12 +1177,6 @@ select.form-control:focus::-ms-value {
   box-shadow: 0 0 0 0.2rem rgba(224, 79, 26, 0.25);
 }
 
-.was-validated .form-control:invalid ~ .invalid-feedback,
-.was-validated .form-control:invalid ~ .invalid-tooltip, .form-control.is-invalid ~ .invalid-feedback,
-.form-control.is-invalid ~ .invalid-tooltip {
-  display: block;
-}
-
 .was-validated .custom-select:invalid, .custom-select.is-invalid {
   border-color: #e04f1a;
 }
@@ -1129,18 +1184,6 @@ select.form-control:focus::-ms-value {
 .was-validated .custom-select:invalid:focus, .custom-select.is-invalid:focus {
   border-color: #e04f1a;
   box-shadow: 0 0 0 0.2rem rgba(224, 79, 26, 0.25);
-}
-
-.was-validated .custom-select:invalid ~ .invalid-feedback,
-.was-validated .custom-select:invalid ~ .invalid-tooltip, .custom-select.is-invalid ~ .invalid-feedback,
-.custom-select.is-invalid ~ .invalid-tooltip {
-  display: block;
-}
-
-.was-validated .form-control-file:invalid ~ .invalid-feedback,
-.was-validated .form-control-file:invalid ~ .invalid-tooltip, .form-control-file.is-invalid ~ .invalid-feedback,
-.form-control-file.is-invalid ~ .invalid-tooltip {
-  display: block;
 }
 
 .was-validated .form-check-input:invalid ~ .form-check-label, .form-check-input.is-invalid ~ .form-check-label {
@@ -1161,12 +1204,6 @@ select.form-control:focus::-ms-value {
   border-color: #e04f1a;
 }
 
-.was-validated .custom-control-input:invalid ~ .invalid-feedback,
-.was-validated .custom-control-input:invalid ~ .invalid-tooltip, .custom-control-input.is-invalid ~ .invalid-feedback,
-.custom-control-input.is-invalid ~ .invalid-tooltip {
-  display: block;
-}
-
 .was-validated .custom-control-input:invalid:checked ~ .custom-control-label::before, .custom-control-input.is-invalid:checked ~ .custom-control-label::before {
   border-color: #e97044;
   background-color: #e97044;
@@ -1182,12 +1219,6 @@ select.form-control:focus::-ms-value {
 
 .was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {
   border-color: #e04f1a;
-}
-
-.was-validated .custom-file-input:invalid ~ .invalid-feedback,
-.was-validated .custom-file-input:invalid ~ .invalid-tooltip, .custom-file-input.is-invalid ~ .invalid-feedback,
-.custom-file-input.is-invalid ~ .invalid-tooltip {
-  display: block;
 }
 
 .was-validated .custom-file-input:invalid:focus ~ .custom-file-label, .custom-file-input.is-invalid:focus ~ .custom-file-label {

@@ -10,7 +10,7 @@
 .nav-main-heading {
     padding-top: 1.75rem;
     padding-bottom: .25rem;
-    font-size: $font-size-sm;
+    font-size: .8125rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .0625rem;
@@ -34,7 +34,7 @@
     min-height: 2.25rem;
     font-size: $font-size-sm;
     font-weight: $font-weight-bold;
-    line-height: 1rem;
+    line-height: 1.25rem;
     color: $body-color;
     border-radius: $border-radius-sm;
 
@@ -122,6 +122,8 @@
 
     .nav-main-link {
         margin: 0;
+        padding-top: .375rem;
+        padding-bottom: .375rem;
         padding-left: 0;
         min-height: 2rem;
         color: rgba($body-color, .75);

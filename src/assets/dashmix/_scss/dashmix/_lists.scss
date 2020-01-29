@@ -62,7 +62,7 @@
     transition: transform .3s ease-out;
     border-radius: $border-radius-sm;
 
-    @include hover {
+    @include hover() {
         cursor: move;
         border-left-color: rgba(0,0,0,.3);
         transform: translateX(.25rem);

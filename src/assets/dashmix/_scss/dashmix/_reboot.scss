@@ -47,7 +47,7 @@ a {
         }
     }
 
-    @include hover {
+    @include hover() {
         &.link-fx::before {
             visibility: visible;
             transform: scale(1);

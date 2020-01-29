@@ -1,21 +1,94 @@
-<div class="row">
+<div class="bg-body-light">
+  <div class="content content-full full-width pb-3 m-0 pt-3">
+    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+
+      <!-- LEFT SECTION -->
+      <div class="flex-sm-fill font-w400 form-inline mb-0">
+        <div class="form-check-inline mr-4">
+
+          <!-- TEST FOLDER SELECTION -->
+          <div *ngIf="testcasesList" class="input-group custom-sm mr-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-group-text-alt custom-sm-font">
+                Test Folder
+              </span>
+            </div>
+            <ng-select [items]="testsList" class="custom-sm" (change)="selectedTestChange()" bindLabel="test"
+              bindValue="test" placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
+              <ng-template ng-label-tmp let-item="item">
+                {{item.test}} : {{item.description}}
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item">
+                {{item.test}} : {{item.description}}
+              </ng-template>
+            </ng-select>
+          </div>
+          <!-- END TEST FOLDER SELECTION -->
+
+          <!-- TEST CASE ID SELECTION -->
+          <div class="input-group custom-sm">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-group-text-alt custom-sm-font">
+                Test Case ID
+              </span>
+            </div>
+            <ng-select [items]="testcasesList" class="custom-sm" (change)="selectedTestCaseChange()"
+              bindLabel="testCase" bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase'
+              [clearable]="false" [searchFn]="customSearchFn">
+              <ng-template ng-label-tmp let-item="item">
+                {{item.testCase}} : {{item.description}}
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item">
+                <div>{{item.testCase}} :<span> {{item.description}}</span></div>
+                <small><b>Priority: </b>{{item.priority}} | <b>Status:</b> {{item.status}}</small>
+              </ng-template>
+            </ng-select>
+          </div>
+          <!-- END TEST CASE ID SELECTION -->
+
+        </div>
+
+      </div>
+      <!-- END LEFT SECTION -->
+
+      <!-- RIGHT SECTION -->
+      <div *ngIf="testcase" class="flex-sm-00-auto form-inline ml-sm-3" aria-label="breadcrumb">
+
+        <div class="form-check-inline">
+          <div class="btn-group btn-group-sm" role="group" aria-label="Small Horizontal Primary">
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-bug"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-tag"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-cog"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-save"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-copy"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-trash"></i></button>
+          </div>
+        </div>
+
+      </div>
+      <!-- END RIGHT SECTION -->
+
+    </div>
+  </div>
+</div>
+
+<!-- 
+  <div class="row">
   <div class="col-md-12">
     <div class="block block-rounded">
 
       <div class="block-content">
         <div class="row">
-          <!-- Test Selection -->
+
           <div class="col-md-6" *ngIf="testsList">
             <div class="form-group">
 
-              <!--
                 <select class="form-control br-tp-0" id="test" name="test" [(ngModel)]='selectedTest' (ngModelChange)='selectedTestChange()'
                   [ngClass]="selectedTest ? 'is-selected-valid' : ''">
                   <option [ngValue]="null">Select a Test</option>
                   <option *ngFor='let test of testsList' [value]="test.test"> {{test.test}} - {{test.description}}
                   </option>
                 </select>
-                 -->
               <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
                 <button class="btn btn-outline-secondary">Folder</button>
                 <ng-select [items]="testsList" (change)="selectedTestChange()" bindLabel="test" bindValue="test"
@@ -30,12 +103,11 @@
               </div>
             </div>
           </div>
-          <!-- Test Case Selection -->
 
           <div class="col-md-6">
             <div class="form-group" *ngIf="selectedTest && testcasesList">
               <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
-                <button class="btn btn-outline-secondary">TestCase</button>
+                <button class="btn btn-outline-secondary">Test Case</button>
                 <ng-select [items]="testcasesList" (change)="selectedTestCaseChange()" bindLabel="testCase"
                   bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase'
                   [clearable]="false" [searchFn]="customSearchFn">
@@ -47,14 +119,12 @@
                     <small><b>Priority: </b>{{item.priority}} | <b>Status:</b> {{item.status}}</small>
                   </ng-template>
                 </ng-select>
-                <!--
                 <select class="form-control br-tp-0" id="testcase" name="testcase" [(ngModel)]='selectedTestCase'
                   (ngModelChange)='selectedTestCaseChange()' [ngClass]="selectedTestCase ? 'is-selected-valid' : ''">
                   <option [ngValue]="null">Select a Test Case</option>
                   <option *ngFor="let tc of testcasesList" [value]="tc.testCase"> {{ tc.testCase}} : {{ tc.description
                     }} </option>
                 </select>
-              -->
               </div>
             </div>
           </div>
@@ -66,7 +136,6 @@
           <div class="col-md-4 offset-md-6">
             <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
 
-              <!-- GO TO BUG BUTTON -->
 
               <button class="btn btn-outline-secondary mr-2 mb-2" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)">
                 <i class="fa fa-fw fa-bug"></i>
@@ -94,11 +163,6 @@
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Testcase List</a>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-file-archive mr-1"></i> Logs</a>
               </div>
-
-              <!-- END GO TO EXECUTION BUTTON -->
-
-              <!-- GO TO RUN BUTTON -->
-
               <button type="button" class="btn btn-outline-secondary dropdown-toggle mr-4 mb-2"
                 id="dropdown-default-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="fa fa-fw fa-play"></span> Run
@@ -147,7 +211,6 @@
                 <i class="fa fa-trash-alt"></i>
               </button>
 
-              <!-- END GO TO TRASH BUTTON -->
 
             </div>
           </div>
@@ -155,4 +218,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
+-->

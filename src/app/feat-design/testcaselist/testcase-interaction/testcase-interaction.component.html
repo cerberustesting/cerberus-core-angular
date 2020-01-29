@@ -64,10 +64,10 @@
 
             <!-- TABS -->
             <div class="block block-rounded block-bordered">
-                <ngb-tabset class="nav nav-tabs nav-tabs-alt js-tabs-enabled custom-sm">
+                <ngb-tabset #tabset="ngbTabset" class="nav nav-tabs nav-tabs-alt js-tabs-enabled custom-sm">
 
                     <!-- DEFINITION TAB -->
-                    <ngb-tab title="Definition" class="nav-item">
+                    <ngb-tab title="Definition" id="static-1" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
                                 <div class="row">
@@ -153,7 +153,7 @@
                     <!-- END DEFINITION TAB -->
 
                     <!-- SETTINGS TAB -->
-                    <ngb-tab title="Settings" class="nav-item">
+                    <ngb-tab title="Settings" id="static-2" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
                                 <div class="row">
@@ -420,7 +420,7 @@
                     <!-- END SETTINGS TAB -->
 
                     <!-- LABELS TAB-->
-                    <ngb-tab title="Labels" class="nav-item">
+                    <ngb-tab title="Labels" id="static-3" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content scrollable">
                                 <app-labels-tab [test]="test" [testcase]="testcase" [system]="testcaseheader.system">
@@ -431,7 +431,7 @@
                     <!-- END LABELS TAB-->
 
                     <!-- BUG REPORT TAB -->
-                    <ngb-tab title="Bug Report" class="nav-item">
+                    <ngb-tab title="Bug Report" id="static-4" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
                                 <div class="row">
@@ -467,7 +467,7 @@
                     </ngb-tab>
                     <!-- END BUG REPORT TAB -->
 
-                    <ngb-tab title="Dependency" class="nav-item">
+                    <ngb-tab title="Dependency" id="static-5" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
                                 <div class="row">
@@ -568,7 +568,7 @@
                     </ngb-tab>
 
                     <!-- AUDIT TAB -->
-                    <ngb-tab title="Audit" class="nav-item">
+                    <ngb-tab title="Audit" id="static-6" class="nav-item">
                         <ng-template ngbTabContent>
                             <div class="block-content tab-content">
                                 <div class="row">

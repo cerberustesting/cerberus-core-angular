@@ -31,6 +31,9 @@ export class TestcaseInteractionComponent implements OnInit {
   // once (every time ngOnInit is fired)
   _mode: string;
 
+
+  tab: string;
+
   public Editor = ClassicEditor;
 
   // Variable received from the addComponentToSideBlock method

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
@@ -13,13 +13,14 @@ import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
 import { LabelsTabComponent, SelectedLabel } from './labels-tab/labels-tab.component';
+import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-testcase-interaction',
   templateUrl: './testcase-interaction.component.html',
   styleUrls: ['./testcase-interaction.component.scss']
 })
-export class TestcaseInteractionComponent implements OnInit {
+export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
 
   private selectedLabelsList: Array<SelectedLabel>;
 
@@ -31,15 +32,21 @@ export class TestcaseInteractionComponent implements OnInit {
   // once (every time ngOnInit is fired)
   _mode: string;
 
-
-  tab: string;
-
   public Editor = ClassicEditor;
 
   // Variable received from the addComponentToSideBlock method
   // from testcaselist.component.ts
   private test: string;
   private testcase: string;
+  // id of the active tab (used to open the side content on a specific tab)
+  private activeTab: string;
+
+  // tabset object
+  // ViewChildren is used instead of ViewChild because of *ngIf
+  // https://stackoverflow.com/questions/34947154/angular-2-viewchild-annotation-returns-undefined/39759051#39759051
+  @ViewChildren('tabset')
+  public tabset: QueryList<NgbTabset>;
+
   // new test case ID when test folder has changed
   private newTestCase: string;
 
@@ -145,7 +152,6 @@ export class TestcaseInteractionComponent implements OnInit {
   ngOnInit() {
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
     this._mode = this.mode;
-    console.log('mode is: ' + this.mode);
 
     // init the form (will be set later)
     this.testcaseHeaderForm = null;
@@ -185,6 +191,12 @@ export class TestcaseInteractionComponent implements OnInit {
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
     this.systemService.observableRevs.subscribe(rep => this.revsList = [{ versionName: '' }].concat(rep));
     this.testService.observableTestsList.subscribe(rep => this.testsList = rep);
+  }
+
+  ngAfterViewInit() {
+    this.tabset.changes.subscribe((comps: QueryList<NgbTabset>) => {
+      comps.first.select('settingsTab');
+    });
   }
 
   setFormValues() {

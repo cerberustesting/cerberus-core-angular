@@ -5,11 +5,8 @@ import { TestService } from 'src/app/core/services/crud/test.service';
 import { SettingsService } from '../tc-script/settings/settings.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
-
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 import { TestcaseInteractionComponent } from 'src/app/feat-design/testcaselist/testcase-interaction/testcase-interaction.component';
-import { Subject } from 'rxjs';
-
 
 @Component({
   selector: 'app-tc-selector',
@@ -22,19 +19,21 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   @Input('test') selectedTest: string;
   @Input('testcase') selectedTestCase: string;
 
+  // event fired when the test and testcase value change
   @Output() SelectedTestChange = new EventEmitter<string>();
   @Output() SelectedTestCaseChange = new EventEmitter<string>();
 
+  // list of test folders
   public testsList: Array<ITest>;
+  // list of testcase id corresponding to the selected test folder
   public testcasesList: Array<ITestCaseHeader>;
+  // testcase object according to test folder and testcase id
   public testcase: ITestCase;
 
-  refreshResultsEvent: Subject<void> = new Subject<void>(); // the observable to refresh the table
   constructor(
     private testService: TestService,
     private settingsService: SettingsService,
     private notificationService: NotificationService,
-
     private sideContentService: SidecontentService
   ) { }
 
@@ -46,6 +45,8 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    // subscription to test folder list changes
     this.testService.observableTestsList.subscribe(response => {
       if (response) {
         if (response.length > 0) {
@@ -68,6 +69,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       }
     });
 
+    // subscription to test case id list changes
     this.testService.observableTestCasesList.subscribe(response => {
       if (response) {
         if (response.length > 0) {
@@ -96,18 +98,18 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
         }
       }
     });
+
+    // subscribe to testcase object (updated when combination of test folder & id changes)
     this.testService.observableTestCase.subscribe(response => { this.testcase = response; });
   }
 
-  refreshResults(): void {
-    this.refreshResultsEvent.next();
-  }
-
+  // set to null the test case id
   clearSelectedTestCase() {
     this.selectedTestCase = null;
     this.SelectedTestCaseChange.emit(this.selectedTestCase);
   }
 
+  // fired when the selected test folder changes
   selectedTestChange() {
     this.clearSelectedTestCase();
     this.SelectedTestChange.emit(this.selectedTest);
@@ -115,14 +117,15 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     this.testService.clearTestCase();
   }
 
+  // fired when the selected test case id changes
   selectedTestCaseChange() {
     this.SelectedTestCaseChange.emit(this.selectedTestCase);
     this.refreshTestCase();
     this.testService.getTestCase(this.selectedTest, this.selectedTestCase);
-    console.log('selectedTestCaseChange');
     this.settingsService.clearFocus();
   }
 
+  // get the corresponding test case according to the selection
   refreshTestCase() {
     if (this.selectedTest != null && this.testService.seletectedTestExist(this.selectedTest)) {
       if (this.selectedTestCase != null && this.testService.selectedTestCaseExist(this.selectedTestCase)) {
@@ -134,13 +137,10 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     }
   }
 
+  // search function for test case id select
   customSearchFn(term: string, item: ITestCaseHeader) {
     term = term.toLocaleLowerCase();
     return item.testCase.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1 || item.status.toLocaleLowerCase() === term;
-  }
-
-  debug() {
-    console.log('Test: ' + this.selectedTest + ' Testcase: ' + this.selectedTestCase);
   }
 
   /** duplicateTestCaseHeader
@@ -148,37 +148,29 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
    * @param test the test folder to duplicate, information from selection
    * @param testcase the test case id to duplicate, information from selection
    */
-  duplicateTestCaseHeader(test: string , testcase: string ): void {
-    console.log(test);
+  duplicateTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
-      mode: INTERACTION_MODE.DUPLICATE,
-      exit: () => {
-        this.refreshResults();
-      }
+      mode: INTERACTION_MODE.DUPLICATE
     });
     this.sideContentService.openSideBlock();
   }
 
-    /** BugTestCaseHeader
+  /** BugTestCaseHeader
    * * Open side content in duplicate mode for the selected testcase (must be one)
    * @param test the test folder to duplicate, information from selection
    * @param testcase the test case id to duplicate, information from selection
    */
-
-  bugTestCaseHeader(test: string , testcase: string ): void {
-    console.log(test);
+  bugTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
-      mode: INTERACTION_MODE.EDIT,
-      exit: () => {
-        this.refreshResults();
-      }
+      mode: INTERACTION_MODE.DUPLICATE
     });
     this.sideContentService.openSideBlock();
   }
+
 
       /** TagTestCaseHeader
    * * Open side content in duplicate mode for the selected testcase (must be one)
@@ -194,9 +186,6 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       testcase: testcase,
       mode: INTERACTION_MODE.EDIT,
       activeTab: 'labelsTab',
-      exit: () => {
-        this.refreshResults();
-      }
     });
     this.sideContentService.openSideBlock();
   }

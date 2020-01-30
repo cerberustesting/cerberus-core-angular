@@ -55,19 +55,30 @@
       <div *ngIf="testcase" class="flex-sm-00-auto form-inline ml-sm-3" aria-label="breadcrumb">
 
         <div class="form-check-inline">
-          <div class="btn-group btn-group-sm" role="group" aria-label="Small Horizontal Primary">
-            <button type="button" class="btn btn-primary" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)" placement="bottom-start"
-            ngbPopover="button to go directly to Bug Report." popoverTitle="Bug Report" triggers="mouseenter:mouseleave"><i class="fa fa-fw fa-bug"></i></button>
-            <button type="button" class="btn btn-primary" (click)="tagTestCaseHeader(selectedTest, selectedTestCase)"placement="bottom"
-            ngbPopover="button to go directly to Labels." popoverTitle="Labels" triggers="mouseenter:mouseleave"><i class="fa fa-fw fa-tag"></i></button>
-            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-cog"placement="bottom"
-              ngbPopover="button to go directly to Setting." popoverTitle="Settings" triggers="mouseenter:mouseleave"></i></button>
-            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-save"placement="bottom"
-              ngbPopover="Button for Save." popoverTitle="Save" triggers="mouseenter:mouseleave"></i></button>
-            <button type="button" class="btn btn-primary" (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)"placement="bottom"
-            ngbPopover="button to go directly to Duplicate Test Case." popoverTitle="Duplicate Test Case" triggers="mouseenter:mouseleave"><i class="fa fa-fw fa-copy"></i></button>
-            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-trash"placement="bottom"
-              ngbPopover="Button for Delete." popoverTitle="Delete" triggers="mouseenter:mouseleave"></i></button>
+          <div class="btn-group btn-group-sm" role="group" aria-label="testCaseShortcuts">
+
+            <!-- GO TO BUG REPORT BUTTON -->
+            <button type="button" class="btn btn-primary" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)"
+              placement="bottom-start" ngbPopover="button to go directly to Bug Report." popoverTitle="Bug Report"
+              triggers="mouseenter:mouseleave">
+              <i class="fa fa-fw fa-bug"></i>
+            </button>
+            <!-- END GO TO BUG REPORT BUTTON -->
+
+            <button type="button" class="btn btn-primary" (click)="tagTestCaseHeader(selectedTest, selectedTestCase)"
+              placement="bottom" ngbPopover="button to go directly to Labels." popoverTitle="Labels"
+              triggers="mouseenter:mouseleave"><i class="fa fa-fw fa-tag"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-cog" placement="bottom"
+                ngbPopover="button to go directly to Setting." popoverTitle="Settings"
+                triggers="mouseenter:mouseleave"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-save" placement="bottom"
+                ngbPopover="Button for Save." popoverTitle="Save" triggers="mouseenter:mouseleave"></i></button>
+            <button type="button" class="btn btn-primary"
+              (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)" placement="bottom"
+              ngbPopover="button to go directly to Duplicate Test Case." popoverTitle="Duplicate Test Case"
+              triggers="mouseenter:mouseleave"><i class="fa fa-fw fa-copy"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-trash" placement="bottom"
+                ngbPopover="Button for Delete." popoverTitle="Delete" triggers="mouseenter:mouseleave"></i></button>
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';

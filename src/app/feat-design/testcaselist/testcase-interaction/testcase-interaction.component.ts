@@ -14,6 +14,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
 import { LabelsTabComponent, SelectedLabel } from './labels-tab/labels-tab.component';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { startWith, tap, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -194,11 +195,9 @@ export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout ( ( )  =>  {
-    this.tabset.changes.subscribe((comps: QueryList<NgbTabset>) => {
-      comps.first.select(this.activeTab);
+      this.tabset.changes.subscribe((comps: QueryList<NgbTabset>) => {
+      comps.first.select(this.activeTab) , delay(0);
     });
-     }, 1000);
   }
 
   setFormValues() {

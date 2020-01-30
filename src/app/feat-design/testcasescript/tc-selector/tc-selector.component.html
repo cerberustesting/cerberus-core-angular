@@ -55,19 +55,37 @@
       <div *ngIf="testcase" class="flex-sm-00-auto form-inline ml-sm-3" aria-label="breadcrumb">
 
         <div class="form-check-inline">
-          <div class="btn-group btn-group-sm" role="group" aria-label="Small Horizontal Primary">
-            <button type="button" class="btn btn-primary" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)" placement="bottom-start"
-            ngbPopover="go to Bug Report." triggers="mouseenter:mouseleave"><i class="fa fa-fw fa-bug"></i></button>
-            <button type="button" class="btn btn-primary" (click)="tagTestCaseHeader(selectedTest, selectedTestCase)"placement="bottom"
-            ngbPopover="go to Labels." triggers="mouseenter:mouseleave"><i class="fa fa-fw fa-tag"></i></button>
-            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-cog"placement="bottom"
-              ngbPopover="go to Setting." triggers="mouseenter:mouseleave"></i></button>
-            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-save"placement="bottom"
-              ngbPopover="for Save." triggers="mouseenter:mouseleave"></i></button>
-            <button type="button" class="btn btn-primary" (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)"placement="bottom"
-            ngbPopover="go to Duplicate Test Case." triggers="mouseenter:mouseleave"><i class="fa fa-fw fa-copy"></i></button>
-            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-trash"placement="bottom"
-              ngbPopover="For Delete." triggers="mouseenter:mouseleave"></i></button>
+          <div class="btn-group btn-group-sm" role="group" aria-label="testCaseShortcuts">
+
+            <!-- GO TO BUG REPORT BUTTON -->
+            <button type="button" class="btn btn-primary" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)"
+              ngbPopover="Go to Bug Report" placement="bottom" triggers="mouseenter:mouseleave">
+              <i class="fa fa-fw fa-bug"></i>
+            </button>
+            <!-- END GO TO BUG REPORT BUTTON -->
+
+            <!-- GO TO LABELS BUTTON -->
+            <button type="button" class="btn btn-primary" (click)="tagTestCaseHeader(selectedTest,selectedTestCase)"
+              ngbPopover="Go to Labels" placement="bottom" triggers="mouseenter:mouseleave">
+              <i class="fa fa-fw fa-tag"></i>
+            </button>
+            <!-- END GO TO LABELS BUTTON -->
+
+            <!-- GO TO SETTINGS BUTTON -->
+            <button type="button" class="btn btn-primary" ngbPopover="Go to Settings" placement="bottom"
+              triggers="mouseenter:mouseleave">
+              <i class="fa fa-fw fa-cog"></i>
+            </button>
+            <!-- END GO TO SETTINGS BUTTON -->
+
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-save" placement="bottom"
+                ngbPopover="Save the script" triggers="mouseenter:mouseleave"></i></button>
+            <button type="button" class="btn btn-primary"
+              (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)" placement="bottom"
+              ngbPopover="Duplicate Test Case" triggers="mouseenter:mouseleave"><i
+                class="fa fa-fw fa-copy"></i></button>
+            <button type="button" class="btn btn-primary"><i class="fa fa-fw fa-trash" placement="bottom"
+                ngbPopover="Delete the Test Case" triggers="mouseenter:mouseleave"></i></button>
           </div>
         </div>
 

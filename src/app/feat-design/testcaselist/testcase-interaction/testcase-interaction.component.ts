@@ -194,9 +194,11 @@ export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    setTimeout ( ( )  =>  {
     this.tabset.changes.subscribe((comps: QueryList<NgbTabset>) => {
-      comps.first.select('settingsTab');
+      comps.first.select(this.activeTab);
     });
+     }, 1000);
   }
 
   setFormValues() {

@@ -18,7 +18,7 @@ import { Subject } from 'rxjs';
 })
 export class TcSelectorComponent implements OnInit, OnDestroy {
 
-
+  @Input('activeTab') selectedActivetab: string;
   @Input('test') selectedTest: string;
   @Input('testcase') selectedTestCase: string;
 
@@ -172,7 +172,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
-      mode: INTERACTION_MODE.DUPLICATE,
+      mode: INTERACTION_MODE.EDIT,
       exit: () => {
         this.refreshResults();
       }
@@ -184,6 +184,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
    * * Open side content in duplicate mode for the selected testcase (must be one)
    * @param test the test folder to duplicate, information from selection
    * @param testcase the test case id to duplicate, information from selection
+   * @param activeTab
    */
 
   tagTestCaseHeader(test: string , testcase: string ): void {
@@ -192,6 +193,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.EDIT,
+      activeTab: 'labelsTab',
       exit: () => {
         this.refreshResults();
       }

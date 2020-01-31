@@ -14,7 +14,7 @@ export class TcScriptComponent implements OnInit {
   @Input('testcase') testcase: ITestCase;
   private inv_countriesList: Array<IInvariant>;
 
-  private tabs: string[] = ['Script', 'Properties', 'Inherited Properties'];
+  private tabs: string[] = ['Script', 'Properties'];
   private selectedTab: string;
 
   private stepListBlockId: string;

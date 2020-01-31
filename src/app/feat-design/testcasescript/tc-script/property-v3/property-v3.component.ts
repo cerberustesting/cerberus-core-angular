@@ -103,6 +103,10 @@ export class PropertyV3Component implements OnInit {
     } else {
       return 'NewProperty1';
     }
+  }
 
+  // return the correct title depending on the inherited prop
+  getTitle(): string {
+    if (this.inherited === true) { return 'Inherited Properties'; } else { return 'Properties'; }
   }
 }

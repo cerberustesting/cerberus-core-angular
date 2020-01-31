@@ -16,6 +16,9 @@ export class PropertygroupComponent implements OnInit {
   // boolean to handle the validation of the property group name
   public propertyNameIsAlreadyUsed: boolean;
 
+  // boolean to detect if the the property name is present in the inherited prop list
+  public propertyNameIsInherited: boolean;
+
   // boolean to handle hoover fields
   public showActions: boolean;
 
@@ -33,6 +36,8 @@ export class PropertygroupComponent implements OnInit {
     this.propertyNameIsAlreadyUsed = false;
     // by default, hide actions
     this.showActions = false;
+    // check if the property name is present in the inherited prop
+    this.refreshInheritedStatus(this.propertygroup.property);
   }
 
   // use the format function from test service
@@ -58,11 +63,13 @@ export class PropertygroupComponent implements OnInit {
       // to avoid conflict
       this.propertygroup.property = oldValue;
       this.renameAllPropertyValues(oldValue);
+      this.refreshInheritedStatus(oldValue);
       this.propertyNameIsAlreadyUsed = true;
     } else {
       // if the property name is not used, its value is set to the new one
       this.propertygroup.property = newValue;
       this.renameAllPropertyValues(newValue);
+      this.refreshInheritedStatus(newValue);
       this.propertyNameIsAlreadyUsed = false;
     }
   }
@@ -90,6 +97,32 @@ export class PropertygroupComponent implements OnInit {
     }
   }
 
+  // return true if the property name is present in the inherited properties of the test case
+  isAPropertyNameIsInherited(propname: string): boolean {
+    const listOfInheritedProp = this.testcase.inheritedProp;
+    const listOfInheritedPropNames = new Array<string>();
+    // create an array with all unique properties names
+    listOfInheritedProp.forEach(propvalue => {
+      if (!listOfInheritedPropNames.includes(propvalue.property)) {
+        listOfInheritedPropNames.push(propvalue.property);
+      }
+    });
+    return listOfInheritedPropNames.includes(propname);
+  }
+
+  // process the property group name and update
+  // the propertyNameIsInherited boolean
+  refreshInheritedStatus(propname: string) {
+    // perform the actions only if the component isn't in inherited mode
+    if (this.inherited === false) {
+      if (this.isAPropertyNameIsInherited(propname) === true) {
+        this.propertyNameIsInherited = true;
+      } else {
+        this.propertyNameIsInherited = false;
+      }
+    }
+  }
+
   // create a new empty property value
   addAPropertyValue() {
     const newpropvalue = new PropertyValue(this.propertygroup.property);
@@ -100,7 +133,7 @@ export class PropertygroupComponent implements OnInit {
   // add the same property value to the group (with empty country list)
   duplicateAPropertyValue(propvalue: PropertyValue) {
     // create a new property value object and map all the values from the recevied object
-    // Angular seems to maintin the input binding with the model..
+    // Angular seems to maintain the input binding with the model..
     const newpropvalue = new PropertyValue(propvalue.property);
     newpropvalue.cacheExpire = propvalue.cacheExpire;
     newpropvalue.database = propvalue.database;

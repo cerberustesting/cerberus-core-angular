@@ -48,6 +48,13 @@
                 </button>
                 <!-- END DELETE VALUE BUTTON -->
 
+                <!-- OVERWRITE SIGN -->
+                <button *ngIf="propertyNameIsInherited" class="btn btn-sm btn-light no-background custom-sm grey-color"
+                    ngbPopover="This property override an inherited property" triggers="mouseenter:mouseleave">
+                    <i class="fa fa-star"></i>
+                </button>
+                <!-- END OVERWRITE SIGN -->
+
             </div>
         </div>
 

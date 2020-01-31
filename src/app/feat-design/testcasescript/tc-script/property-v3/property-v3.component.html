@@ -1,32 +1,50 @@
-<button type="button" class="btn btn-sm btn-primary mr-1 mb-3" (click)="addAPropertyGroup()">
-    <i class="fa fa-fw fa-plus mr-1"></i> Property
-</button>
+<div class="push">
+    <div class="form-group">
 
-<div class="block block-bordered mb-0">
+        <!-- TITLE -->
+        <div class="form-check form-check-inline">
+            <label class="d-block">{{ getTitle() }}</label>
+        </div>
+        <!-- END TITLE -->
 
-    <!-- TABLE HEADER -->
-    <div class="block-header block-header-default" style="background-color:#e7eaf2;">
-        <div class="row full-width">
-            <div class="col-3">
-                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">property name</h3>
-            </div>
-            <div class="col-2">
-                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">type</h3>
-            </div>
-            <div class="col-3">
-                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">value</h3>
-            </div>
-            <div class="col-4">
-                <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">countries</h3>
+        <!-- ADD PROPERTY BUTTON -->
+        <div class="form-check form-check-inline">
+            <button *ngIf="inherited == false" type="button" class="btn btn-sm btn-primary mr-1 mb-3"
+                (click)="addAPropertyGroup()">
+                <i class="fa fa-fw fa-plus mr-1"></i> Property
+            </button>
+        </div>
+        <!-- END ADD PROPERTY BUTTON -->
+
+    </div>
+    <div class="block block-bordered mb-0">
+
+        <!-- TABLE HEADER -->
+        <div class="block-header block-header-default" style="background-color:#e7eaf2;">
+            <div class="row full-width">
+                <div class="col-3">
+                    <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">property name
+                    </h3>
+                </div>
+                <div class="col-2">
+                    <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">type</h3>
+                </div>
+                <div class="col-3">
+                    <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">value</h3>
+                </div>
+                <div class="col-4">
+                    <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">countries</h3>
+                </div>
             </div>
         </div>
+        <!-- END TABLE HEADER -->
+        
     </div>
-    <!-- END TABLE HEADER -->
+
+    <!-- LIST OF PROPERTY GROUP -->
+    <app-propertygroup *ngFor="let propertygroup of propertyGroups" [propertygroup]="propertygroup"
+        [testcase]="testcase" [propertyGroups]="propertyGroups" [inherited]="inherited">
+    </app-propertygroup>
+    <!-- END LIST OF PROPERTY GROUP -->
 
 </div>
-
-<!-- LIST OF PROPERTY GROUP -->
-<app-propertygroup *ngFor="let propertygroup of propertyGroups" [propertygroup]="propertygroup" [testcase]="testcase"
-    [propertyGroups]="propertyGroups" [inherited]="inherited">
-</app-propertygroup>
-<!-- END LIST OF PROPERTY GROUP -->

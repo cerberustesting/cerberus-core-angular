@@ -154,7 +154,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.DUPLICATE,
-      activeTab: 'settingsTab',
+      activeTab: 'definitionTab',
     });
     this.sideContentService.openSideBlock();
   }
@@ -207,6 +207,23 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       testcase: testcase,
       mode: INTERACTION_MODE.EDIT,
       activeTab: 'settingsTab',
+    });
+    this.sideContentService.openSideBlock();
+  }
+      /** TagTestCaseHeader
+   * * Open side content in duplicate mode for the selected testcase (must be one)
+   * @param test the test folder to duplicate, information from selection
+   * @param testcase the test case id to duplicate, information from selection
+   * @param activeTab
+   */
+
+  createTestCaseHeader(test: string , testcase: string ): void {
+    console.log(test);
+    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+      test: test,
+      testcase: testcase,
+      mode: INTERACTION_MODE.CREATE,
+      activeTab: 'definitionTab',
     });
     this.sideContentService.openSideBlock();
   }

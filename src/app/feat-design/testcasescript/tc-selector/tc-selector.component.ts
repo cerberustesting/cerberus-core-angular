@@ -7,6 +7,8 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 import { TestcaseInteractionComponent } from 'src/app/feat-design/testcaselist/testcase-interaction/testcase-interaction.component';
+import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-tc-selector',
@@ -34,7 +36,8 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     private testService: TestService,
     private settingsService: SettingsService,
     private notificationService: NotificationService,
-    private sideContentService: SidecontentService
+    private sideContentService: SidecontentService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnDestroy() {
@@ -184,7 +187,6 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
    */
 
   tagTestCaseHeader(test: string , testcase: string ): void {
-    console.log(test);
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
@@ -199,9 +201,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
    * @param testcase the test case id to duplicate, information from selection
    * @param activeTab
    */
-
-  settingTestCaseHeader(test: string , testcase: string ): void {
-    console.log(test);
+  settingTestCaseHeader(test: string , testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
@@ -216,18 +216,32 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
    * @param testcase the test case id to duplicate, information from selection
    * @param activeTab
    */
-
-  createTestCaseHeader(test: string , testcase: string ): void {
-    console.log(test);
+  createTestCaseHeader(test: string , testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.CREATE,
-      activeTab: 'definitionTab',
+      activeTab: 'settingsTab',
     });
     this.sideContentService.openSideBlock();
   }
+      /** TagTestCaseHeader
+   * * Open side content in duplicate mode for the selected testcase (must be one)
+   * @param test the test folder to duplicate, information from selection
+   * @param testcase the test case id to duplicate, information from selection
+   */
+  deleteTestCase(test: string , testcase: string): void {
+    const modalRef = this.modalService.open(CustomModalComponent);
+    modalRef.componentInstance.title = 'Delete Test Case';
+    modalRef.componentInstance.text = 'Do you want to delete Test Case ' + test + '" - "' + testcase + '" ?';
+    modalRef.componentInstance.fct = () => {
+      this.testService.deleteTestCase(
+        test,
+        testcase,
+        () => {
+          this.notificationService.createANotification('The testCase ' + test + ' - ' + testcase + ' has been successfully deleted', NotificationStyle.Success);
+        }
+      );
+    };
+  }
 }
-
-
-

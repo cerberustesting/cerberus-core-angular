@@ -15,7 +15,7 @@ import { ICrossReference, CrossreferenceService } from 'src/app/core/services/ut
 import { LabelsTabComponent, SelectedLabel } from './labels-tab/labels-tab.component';
 import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 import { startWith, tap, delay } from 'rxjs/operators';
-import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -143,7 +143,6 @@ export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    private cd: ChangeDetectorRef,
     private invariantsService: InvariantsService,
     private systemService: SystemService,
     private crossReferenceService: CrossreferenceService,
@@ -155,6 +154,7 @@ export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
     this._mode = this.mode;
+
 
     // init the form (will be set later)
     this.testcaseHeaderForm = null;
@@ -197,9 +197,9 @@ export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log( this.tabset.changes.subscribe((comps: QueryList<NgbTabset>) => {
+      this.tabset.changes.subscribe((comps: QueryList<NgbTabset>) => {
       comps.first.select(this.activeTab);
-   }));
+   });
   }
 
   setFormValues() {

@@ -22,7 +22,7 @@ import { startWith, tap, delay } from 'rxjs/operators';
   templateUrl: './testcase-interaction.component.html',
   styleUrls: ['./testcase-interaction.component.scss']
 })
-export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
+export class TestcaseInteractionComponent implements OnInit {
 
   private selectedLabelsList: Array<SelectedLabel>;
 
@@ -42,6 +42,8 @@ export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
   private testcase: string;
   // id of the active tab (used to open the side content on a specific tab)
   private activeTab: string;
+  private tabs: string[] = ['definition', 'settings', 'labels', 'bugs', 'dependency', 'audit'];
+  private selectedTab: string;
 
   // tabset object
   // ViewChildren is used instead of ViewChild because of *ngIf
@@ -149,7 +151,7 @@ export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private testService: TestService,
     private notificationService: NotificationService,
-    private sidecontentService: SidecontentService) { }
+    private sidecontentService: SidecontentService) { this.selectedTab = null; }
 
   ngOnInit() {
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
@@ -194,12 +196,6 @@ export class TestcaseInteractionComponent implements OnInit, AfterViewInit {
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
     this.systemService.observableRevs.subscribe(rep => this.revsList = [{ versionName: '' }].concat(rep));
     this.testService.observableTestsList.subscribe(rep => this.testsList = rep);
-  }
-
-  ngAfterViewInit() {
-      this.tabset.changes.subscribe((comps: QueryList<NgbTabset>) => {
-      comps.first.select(this.activeTab);
-   });
   }
 
   setFormValues() {

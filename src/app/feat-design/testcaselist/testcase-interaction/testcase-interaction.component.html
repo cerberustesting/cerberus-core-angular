@@ -63,416 +63,406 @@
             </div>
 
             <!-- TABS -->
-            <div class="block block-rounded block-bordered">
-                <ngb-tabset #tabset="ngbTabset" class="nav nav-tabs nav-tabs-alt js-tabs-enabled custom-sm">
+            <div class="block block-rounded block-bordered" *ngIf="testcase">
 
-                    <!-- DEFINITION TAB -->
-                    <ngb-tab title="Definition" id="definitionTab" class="nav-item">
-                        <ng-template ngbTabContent>
-                            <div class="block-content tab-content">
+                <div class="block-content">
+
+                    <!-- TABS -->
+                    <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
+                      <li *ngFor="let tab of tabs" class="nav-item">
+                        <a class="nav-link" [ngClass]="selectedTab == tab ? 'active show' : ''" (click)="selectedTab = tab">{{tab}}</a>
+                      </li>
+                    </ul>
+                    <!-- END TABS -->
+                
+                    <div class="block-content tab-content">
+                
+                      <!-- SCRIPT TAB -->
+                      <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
+                
+                        <!-- SCRIPT CONTENT -->
+                        <div class="row">
+
+                            <!-- SHORT DESCRIPTION -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="ShortDescription">Short Description</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        id="sideContent_ShortDescription" name="ShortDescription"
+                                        placeholder="Test Case Short Description" formControlName="shortDesc">
+                                </div>
+                            </div>
+                            <!-- END SHORT DESCRIPTION -->
+
+                            <!-- APPLICATION -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="ShortDescription">Application</label>
+                                    <ng-select name="Application" class="custom-sm" [items]="applicationsList"
+                                        bindLabel="application" bindValue="application"
+                                        formControlName="application" (change)="getFromSystem()"
+                                        placeholder="You must define an application">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <!-- END APPLICATION -->
+
+                            <!-- STATUS -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Status">Status</label>
+                                    <select class="form-control form-control-sm" formControlName="status">
+                                        <option *ngFor="let status of statusList" [value]="status.value">
+                                            {{ status.value }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- END STATUS -->
+
+                            <!-- TYPE -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Type">Type</label>
+                                    <select class="form-control form-control-sm" formControlName="group">
+                                        <option *ngFor="let type of typesList" [value]="type.value">
+                                            {{ type.value }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- END TYPE -->
+
+                            <!-- PRIORITY -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Priority">Priority</label>
+                                    <select class="form-control form-control-sm" formControlName="priority">
+                                        <option *ngFor="let priority of priorityList" [value]="priority.value">
+                                            {{ priority.value }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- END PRIORITY -->
+
+                            <!-- FULL DESCRIPTION -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="FullDescription">Full Description</label>
+                                    <ckeditor name="FullDescription" [editor]="Editor"
+                                        formControlName="behaviorOrValueExpected">
+                                    </ckeditor>
+                                </div>
+                            </div>
+                            <!-- END FULL DESCRIPTION -->
+
+                        </div>
+
+                        </div>
+                      <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <!-- ENVIRONMENT GROUP ACTIVATION -->
+                                <div id="sideContent_globalActivation" class="form-group">
+                                    <label class="d-block">Environment Activation</label>
+                                    <div class="custom-control custom-switch custom-control-inline">
+                                        <input type="checkbox" id="globalActivation"
+                                            class="custom-control-input" name="globalActivation"
+                                            formControlName="active">
+                                        <label class="custom-control-label" for="globalActivation">
+                                            Global
+                                            <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
+                                                placement="bottom"
+                                                ngbPopover="This field define if the test is active or not. A test case that is not active cannot be executed."
+                                                popoverTitle="Global Activation"
+                                                triggers="mouseenter:mouseleave"></i>
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-switch custom-control-inline">
+                                        <input type="checkbox" id="activeQA" class="custom-control-input"
+                                            name="activeQA" formControlName="activeQA">
+                                        <label class="custom-control-label" for="activeQA">
+                                            QA
+                                            <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
+                                                placement="bottom"
+                                                ngbPopover="This field define if the test is active or in the QA environment group."
+                                                popoverTitle="Active QA" triggers="mouseenter:mouseleave"></i>
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-switch custom-control-inline">
+                                        <input type="checkbox" id="activeUAT" class="custom-control-input"
+                                            name="activeUAT" formControlName="activeUAT">
+                                        <label class="custom-control-label" for="activeUAT">
+                                            UAT
+                                            <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
+                                                placement="bottom"
+                                                ngbPopover="This field define if the test is active or in the UAT environment group."
+                                                popoverTitle="Active UAT" triggers="mouseenter:mouseleave"></i>
+                                        </label>
+                                    </div>
+                                    <div class="custom-control custom-switch custom-control-inline">
+                                        <input type="checkbox" id="activePROD" class="custom-control-input"
+                                            name="activePROD" formControlName="activePROD">
+                                        <label class="custom-control-label" for="activePROD">
+                                            PROD
+                                            <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
+                                                placement="bottom"
+                                                ngbPopover="This field define if the test is active or in the PROD environment group."
+                                                popoverTitle="Active PROD" triggers="mouseenter:mouseleave"></i>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <!-- END ENVIRONMENT GROUP ACTIVATION -->
+
+                                <!-- COUNTRY ACTIVATION -->
+                                <div class="form-group">
+                                    <label class="d-block">Country Activation</label>
+                                    <div *ngFor="let country of inv_countries"
+                                        class="custom-control block custom-block custom-control-info custom-sm custom-control-inline">
+                                        <input type="checkbox" class="custom-control-input" [id]="country.value"
+                                            [name]="country.value"
+                                            [checked]="isTheCountrySelected(country.value)"
+                                            (click)="toggleCountry(country.value)">
+                                        <label class="custom-control-label" [for]="country.value">
+                                            <span class="d-block text-center">
+                                                {{ country.value }}
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- END COUNTRY ACTIVATION -->
+
+                                <!-- VERSION ACTIVATION -->
+                                <div class="form-group mb-0">
+                                    <label class="d-block">Version Activation</label>
+                                </div>
                                 <div class="row">
 
-                                    <!-- SHORT DESCRIPTION -->
-                                    <div class="col-md-12">
+                                    <div class="col-4">
+
+                                        <!-- FROM SPRINT -->
+                                        <div class="form-group custom-form-group-sm">
+                                            <label for="fromSprint" class="fw-400">From Sprint</label>
+                                            <select class="form-control form-control-sm"
+                                                formControlName="fromSprint" name="fromSprint">
+                                                <option *ngFor="let sprint of sprintsList"
+                                                    [value]="sprint.versionName">
+                                                    {{ sprint.versionName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- END FROM SPRINT -->
+
+                                        <!-- TO SPRINT -->
+                                        <div class="form-group custom-form-group-sm">
+                                            <label for="example-select" class="fw-400">To Sprint</label>
+                                            <select class="form-control form-control-sm"
+                                                formControlName="toSprint" name="toSprint">
+                                                <option *ngFor="let sprint of sprintsList"
+                                                    [value]="sprint.versionName">
+                                                    {{ sprint.versionName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- END TO SPRINT -->
+                                    </div>
+
+                                    <div class="col-4">
+
+                                        <!-- FROM REV -->
+                                        <div class="form-group custom-form-group-sm">
+                                            <label for="fromRev" class="fw-400">From Rev</label>
+                                            <select class="form-control form-control-sm"
+                                                formControlName="fromRev" name="fromRev">
+                                                <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                                    {{ rev.versionName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- END FROM REV -->
+
+                                        <!-- TO REV -->
+                                        <div class="form-group custom-form-group-sm">
+                                            <label for="toRev" class="fw-400">To Rev</label>
+                                            <select class="form-control form-control-sm" formControlName="toRev"
+                                                name="toRev">
+                                                <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                                    {{ rev.versionName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- END TO REV -->
+                                    </div>
+
+                                    <div class="col-4">
+
+                                        <!-- TARGET SPRINT -->
+                                        <div class="form-group custom-form-group-sm">
+                                            <label for="targetSprint" class="fw-400">Target Sprint</label>
+                                            <select class="form-control form-control-sm"
+                                                formControlName="targetSprint" name="targetSprint">
+                                                <option *ngFor="let sprint of sprintsList"
+                                                    [value]="sprint.versionName">
+                                                    {{ sprint.versionName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- END TARGET SPRINT -->
+
+                                        <!-- TARGET REV -->
+                                        <div class="form-group custom-form-group-sm">
+                                            <label for="targetRev" class="fw-400">Target Sprint</label>
+                                            <select class="form-control form-control-sm"
+                                                formControlName="targetRev" name="targetRev">
+                                                <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                                    {{ rev.versionName }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- END TARGET REV -->
+                                    </div>
+
+                                </div>
+                                <!-- END VERSION ACTIVATION -->
+
+                                <!-- CONDITION ACTIVATION -->
+                                <div class="form-group mb-0">
+                                    <label class="d-block">Condition Activation</label>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-4">
+
+                                        <!-- CONDITION OPER -->
                                         <div class="form-group">
-                                            <label for="ShortDescription">Short Description</label>
+                                            <label for="example-select" class="fw-400">Condition</label>
+                                            <select class="form-control form-control-sm"
+                                                formControlName="conditionOper">
+                                                <option *ngFor="let condition of conditionOperList"
+                                                    [value]="condition.value">
+                                                    {{ condition.value }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- END CONDITION OPER  -->
+
+                                    </div>
+
+                                    <div class="col-4"
+                                        *ngIf="hasConditionCrossReference(testcaseHeaderForm.get('conditionOper').value)">
+
+                                        <!-- CONDITION VAL 1 -->
+                                        <div class="form-group"
+                                            *ngIf="findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value1">
+                                            <label for="ConditionValue1" class="fw-400">
+                                                {{ findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value1 }}
+                                            </label>
                                             <input type="text" class="form-control form-control-sm"
-                                                id="sideContent_ShortDescription" name="ShortDescription"
-                                                placeholder="Test Case Short Description" formControlName="shortDesc">
+                                                name="ConditionValue1" formControlName="conditionVal1">
                                         </div>
-                                    </div>
-                                    <!-- END SHORT DESCRIPTION -->
+                                        <!-- END CONDITION VAL 1 -->
 
-                                    <!-- APPLICATION -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="ShortDescription">Application</label>
-                                            <ng-select name="Application" class="custom-sm" [items]="applicationsList"
-                                                bindLabel="application" bindValue="application"
-                                                formControlName="application" (change)="getFromSystem()"
-                                                placeholder="You must define an application">
-                                            </ng-select>
-                                        </div>
                                     </div>
-                                    <!-- END APPLICATION -->
 
-                                    <!-- STATUS -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="Status">Status</label>
-                                            <select class="form-control form-control-sm" formControlName="status">
-                                                <option *ngFor="let status of statusList" [value]="status.value">
-                                                    {{ status.value }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- END STATUS -->
+                                    <div class="col-4"
+                                        *ngIf="hasConditionCrossReference(testcaseHeaderForm.get('conditionOper').value)">
 
-                                    <!-- TYPE -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="Type">Type</label>
-                                            <select class="form-control form-control-sm" formControlName="group">
-                                                <option *ngFor="let type of typesList" [value]="type.value">
-                                                    {{ type.value }}
-                                                </option>
-                                            </select>
+                                        <!-- CONDITION VAL 2 -->
+                                        <div class="form-group"
+                                            *ngIf="findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value2">
+                                            <label for="ConditionValue2" class="fw-400">
+                                                {{ findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value2 }}
+                                            </label>
+                                            <input type="text" class="form-control form-control-sm"
+                                                name="ConditionValue2" formControlName="conditionVal2">
                                         </div>
+                                        <!-- END CONDITION VAL 2 -->
                                     </div>
-                                    <!-- END TYPE -->
-
-                                    <!-- PRIORITY -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="Priority">Priority</label>
-                                            <select class="form-control form-control-sm" formControlName="priority">
-                                                <option *ngFor="let priority of priorityList" [value]="priority.value">
-                                                    {{ priority.value }}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- END PRIORITY -->
-
-                                    <!-- FULL DESCRIPTION -->
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="FullDescription">Full Description</label>
-                                            <ckeditor name="FullDescription" [editor]="Editor"
-                                                formControlName="behaviorOrValueExpected">
-                                            </ckeditor>
-                                        </div>
-                                    </div>
-                                    <!-- END FULL DESCRIPTION -->
 
                                 </div>
-                            </div>
-                        </ng-template>
-                    </ngb-tab>
-                    <!-- END DEFINITION TAB -->
+                                <!-- END CONDITION ACTIVATION -->
 
-                    <!-- SETTINGS TAB -->
-                    <ngb-tab title="Settings" id="settingsTab" class="nav-item">
-                        <ng-template ngbTabContent>
-                            <div class="block-content tab-content">
+                                <!-- ROBOT CONSTRAINTS -->
+                                <div class="form-group mb-0">
+                                    <label class="d-block">Robot Constraints</label>
+                                </div>
                                 <div class="row">
-                                    <div class="col-md-12">
 
-                                        <!-- ENVIRONMENT GROUP ACTIVATION -->
-                                        <div id="sideContent_globalActivation" class="form-group">
-                                            <label class="d-block">Environment Activation</label>
-                                            <div class="custom-control custom-switch custom-control-inline">
-                                                <input type="checkbox" id="globalActivation"
-                                                    class="custom-control-input" name="globalActivation"
-                                                    formControlName="active">
-                                                <label class="custom-control-label" for="globalActivation">
-                                                    Global
-                                                    <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
-                                                        placement="bottom"
-                                                        ngbPopover="This field define if the test is active or not. A test case that is not active cannot be executed."
-                                                        popoverTitle="Global Activation"
-                                                        triggers="mouseenter:mouseleave"></i>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-switch custom-control-inline">
-                                                <input type="checkbox" id="activeQA" class="custom-control-input"
-                                                    name="activeQA" formControlName="activeQA">
-                                                <label class="custom-control-label" for="activeQA">
-                                                    QA
-                                                    <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
-                                                        placement="bottom"
-                                                        ngbPopover="This field define if the test is active or in the QA environment group."
-                                                        popoverTitle="Active QA" triggers="mouseenter:mouseleave"></i>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-switch custom-control-inline">
-                                                <input type="checkbox" id="activeUAT" class="custom-control-input"
-                                                    name="activeUAT" formControlName="activeUAT">
-                                                <label class="custom-control-label" for="activeUAT">
-                                                    UAT
-                                                    <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
-                                                        placement="bottom"
-                                                        ngbPopover="This field define if the test is active or in the UAT environment group."
-                                                        popoverTitle="Active UAT" triggers="mouseenter:mouseleave"></i>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-switch custom-control-inline">
-                                                <input type="checkbox" id="activePROD" class="custom-control-input"
-                                                    name="activePROD" formControlName="activePROD">
-                                                <label class="custom-control-label" for="activePROD">
-                                                    PROD
-                                                    <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
-                                                        placement="bottom"
-                                                        ngbPopover="This field define if the test is active or in the PROD environment group."
-                                                        popoverTitle="Active PROD" triggers="mouseenter:mouseleave"></i>
-                                                </label>
-                                            </div>
+                                    <div class="col-6">
 
-                                        </div>
-                                        <!-- END ENVIRONMENT GROUP ACTIVATION -->
-
-                                        <!-- COUNTRY ACTIVATION -->
+                                        <!-- USER AGENT -->
                                         <div class="form-group">
-                                            <label class="d-block">Country Activation</label>
-                                            <div *ngFor="let country of inv_countries"
-                                                class="custom-control block custom-block custom-control-info custom-sm custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input" [id]="country.value"
-                                                    [name]="country.value"
-                                                    [checked]="isTheCountrySelected(country.value)"
-                                                    (click)="toggleCountry(country.value)">
-                                                <label class="custom-control-label" [for]="country.value">
-                                                    <span class="d-block text-center">
-                                                        {{ country.value }}
-                                                    </span>
-                                                </label>
-                                            </div>
+                                            <label for="userAgent" class="fw-400">User Agent</label>
+                                            <input type="text" class="form-control form-control-sm"
+                                                name="userAgent" formControlName="userAgent">
                                         </div>
-                                        <!-- END COUNTRY ACTIVATION -->
+                                        <!-- END USER AGENT -->
 
-                                        <!-- VERSION ACTIVATION -->
-                                        <div class="form-group mb-0">
-                                            <label class="d-block">Version Activation</label>
+                                    </div>
+
+                                    <div class="col-6">
+
+                                        <!-- USER AGENT -->
+                                        <div class="form-group">
+                                            <label for="screenSize" class="fw-400">Screen Size</label>
+                                            <input type="text" class="form-control form-control-sm"
+                                                name="screenSize" formControlName="screenSize">
                                         </div>
-                                        <div class="row">
-
-                                            <div class="col-4">
-
-                                                <!-- FROM SPRINT -->
-                                                <div class="form-group custom-form-group-sm">
-                                                    <label for="fromSprint" class="fw-400">From Sprint</label>
-                                                    <select class="form-control form-control-sm"
-                                                        formControlName="fromSprint" name="fromSprint">
-                                                        <option *ngFor="let sprint of sprintsList"
-                                                            [value]="sprint.versionName">
-                                                            {{ sprint.versionName }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <!-- END FROM SPRINT -->
-
-                                                <!-- TO SPRINT -->
-                                                <div class="form-group custom-form-group-sm">
-                                                    <label for="example-select" class="fw-400">To Sprint</label>
-                                                    <select class="form-control form-control-sm"
-                                                        formControlName="toSprint" name="toSprint">
-                                                        <option *ngFor="let sprint of sprintsList"
-                                                            [value]="sprint.versionName">
-                                                            {{ sprint.versionName }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <!-- END TO SPRINT -->
-                                            </div>
-
-                                            <div class="col-4">
-
-                                                <!-- FROM REV -->
-                                                <div class="form-group custom-form-group-sm">
-                                                    <label for="fromRev" class="fw-400">From Rev</label>
-                                                    <select class="form-control form-control-sm"
-                                                        formControlName="fromRev" name="fromRev">
-                                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">
-                                                            {{ rev.versionName }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <!-- END FROM REV -->
-
-                                                <!-- TO REV -->
-                                                <div class="form-group custom-form-group-sm">
-                                                    <label for="toRev" class="fw-400">To Rev</label>
-                                                    <select class="form-control form-control-sm" formControlName="toRev"
-                                                        name="toRev">
-                                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">
-                                                            {{ rev.versionName }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <!-- END TO REV -->
-                                            </div>
-
-                                            <div class="col-4">
-
-                                                <!-- TARGET SPRINT -->
-                                                <div class="form-group custom-form-group-sm">
-                                                    <label for="targetSprint" class="fw-400">Target Sprint</label>
-                                                    <select class="form-control form-control-sm"
-                                                        formControlName="targetSprint" name="targetSprint">
-                                                        <option *ngFor="let sprint of sprintsList"
-                                                            [value]="sprint.versionName">
-                                                            {{ sprint.versionName }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <!-- END TARGET SPRINT -->
-
-                                                <!-- TARGET REV -->
-                                                <div class="form-group custom-form-group-sm">
-                                                    <label for="targetRev" class="fw-400">Target Sprint</label>
-                                                    <select class="form-control form-control-sm"
-                                                        formControlName="targetRev" name="targetRev">
-                                                        <option *ngFor="let rev of revsList" [value]="rev.versionName">
-                                                            {{ rev.versionName }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <!-- END TARGET REV -->
-                                            </div>
-
-                                        </div>
-                                        <!-- END VERSION ACTIVATION -->
-
-                                        <!-- CONDITION ACTIVATION -->
-                                        <div class="form-group mb-0">
-                                            <label class="d-block">Condition Activation</label>
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-4">
-
-                                                <!-- CONDITION OPER -->
-                                                <div class="form-group">
-                                                    <label for="example-select" class="fw-400">Condition</label>
-                                                    <select class="form-control form-control-sm"
-                                                        formControlName="conditionOper">
-                                                        <option *ngFor="let condition of conditionOperList"
-                                                            [value]="condition.value">
-                                                            {{ condition.value }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                                <!-- END CONDITION OPER  -->
-
-                                            </div>
-
-                                            <div class="col-4"
-                                                *ngIf="hasConditionCrossReference(testcaseHeaderForm.get('conditionOper').value)">
-
-                                                <!-- CONDITION VAL 1 -->
-                                                <div class="form-group"
-                                                    *ngIf="findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value1">
-                                                    <label for="ConditionValue1" class="fw-400">
-                                                        {{ findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value1 }}
-                                                    </label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        name="ConditionValue1" formControlName="conditionVal1">
-                                                </div>
-                                                <!-- END CONDITION VAL 1 -->
-
-                                            </div>
-
-                                            <div class="col-4"
-                                                *ngIf="hasConditionCrossReference(testcaseHeaderForm.get('conditionOper').value)">
-
-                                                <!-- CONDITION VAL 2 -->
-                                                <div class="form-group"
-                                                    *ngIf="findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value2">
-                                                    <label for="ConditionValue2" class="fw-400">
-                                                        {{ findConditionCrossReference(testcaseHeaderForm.get('conditionOper').value).value2 }}
-                                                    </label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        name="ConditionValue2" formControlName="conditionVal2">
-                                                </div>
-                                                <!-- END CONDITION VAL 2 -->
-                                            </div>
-
-                                        </div>
-                                        <!-- END CONDITION ACTIVATION -->
-
-                                        <!-- ROBOT CONSTRAINTS -->
-                                        <div class="form-group mb-0">
-                                            <label class="d-block">Robot Constraints</label>
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-6">
-
-                                                <!-- USER AGENT -->
-                                                <div class="form-group">
-                                                    <label for="userAgent" class="fw-400">User Agent</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        name="userAgent" formControlName="userAgent">
-                                                </div>
-                                                <!-- END USER AGENT -->
-
-                                            </div>
-
-                                            <div class="col-6">
-
-                                                <!-- USER AGENT -->
-                                                <div class="form-group">
-                                                    <label for="screenSize" class="fw-400">Screen Size</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        name="screenSize" formControlName="screenSize">
-                                                </div>
-                                                <!-- END USER AGENT -->
-
-                                            </div>
-                                        </div>
-                                        <!-- END ROBOT CONSTRAINTS -->
+                                        <!-- END USER AGENT -->
 
                                     </div>
                                 </div>
-                            </div>
-                        </ng-template>
-                    </ngb-tab>
-                    <!-- END SETTINGS TAB -->
+                                <!-- END ROBOT CONSTRAINTS -->
 
-                    <!-- LABELS TAB-->
-                    <ngb-tab title="Labels" id="labelsTab" class="nav-item">
-                        <ng-template ngbTabContent>
+                            </div>
+                        </div>
+                      </div>
+                      <div *ngIf="selectedTab == tabs[2]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
                             <div class="block-content tab-content scrollable">
                                 <app-labels-tab [test]="test" [testcase]="testcase" [system]="testcaseheader.system">
                                 </app-labels-tab>
                             </div>
-                        </ng-template>
-                    </ngb-tab>
-                    <!-- END LABELS TAB-->
+                      </div>
+                      <div *ngIf="selectedTab == tabs[3]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
 
-                    <!-- BUG REPORT TAB -->
-                    <ngb-tab title="Bug Report" id="bugReportTab" class="nav-item">
-                        <ng-template ngbTabContent>
-                            <div class="block-content tab-content">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="bugID">Bug ID</label>
-                                            <div class="input-group">
-                                                <input class="form-control form-control-sm" formControlName="bugId"
-                                                    id="sideContent_bugID" name="bugId" placeholder="Bug ID"
-                                                    type="text">
-                                                <div class="input-group-append">
-                                                    <button type="button" class="btn btn-sm btn-dark"
-                                                        [disabled]="testcaseHeaderForm.get('bugId').value ? '' : 'true'">Go
-                                                        to Bug
-                                                    </button>
+                                <div class="block-content tab-content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="bugID">Bug ID</label>
+                                                <div class="input-group">
+                                                    <input class="form-control form-control-sm" formControlName="bugId"
+                                                        id="sideContent_bugID" name="bugId" placeholder="Bug ID"
+                                                        type="text">
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-sm btn-dark"
+                                                            [disabled]="testcaseHeaderForm.get('bugId').value ? '' : 'true'">Go
+                                                            to Bug
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="bugID">Comment</label>
+                                                <div class="input-group">
+                                                    <input class="form-control form-control-sm" formControlName="comment"
+                                                        id="sideContent_comment" name="comment" placeholder="Comment"
+                                                        type="text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="bugID">Comment</label>
-                                            <div class="input-group">
-                                                <input class="form-control form-control-sm" formControlName="comment"
-                                                    id="sideContent_comment" name="comment" placeholder="Comment"
-                                                    type="text">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
-                        </ng-template>
-                    </ngb-tab>
-                    <!-- END BUG REPORT TAB -->
+                      </div>
+                      <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
 
-                    <!-- DEPENDENCY TAB -->
-                    <ngb-tab title="Dependency" id="dependencyTab" class="nav-item">
-                        <ng-template ngbTabContent>
                             <div class="block-content tab-content">
                                 <div class="row">
-
                                     <!-- TEST -->
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -565,13 +555,8 @@
 
                                 </div>
                             </div>
-                        </ng-template>
-                    </ngb-tab>
-                    <!-- END DEPENDENCY TAB -->
-
-                    <!-- AUDIT TAB -->
-                    <ngb-tab title="Audit" id="auditTab" class="nav-item">
-                        <ng-template ngbTabContent>
+                      </div>
+                      <div *ngIf="selectedTab == tabs[5]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
                             <div class="block-content tab-content">
                                 <div class="row">
 
@@ -678,11 +663,9 @@
 
                                 </div>
                             </div>
-                        </ng-template>
-                    </ngb-tab>
-                    <!-- END AUDIT TAB -->
-
-                </ngb-tabset>
+                      </div>
+                    </div>
+                </div>
 
                 <!-- OLD VERSION -->
 

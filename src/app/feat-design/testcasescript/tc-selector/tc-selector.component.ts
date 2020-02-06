@@ -17,7 +17,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class TcSelectorComponent implements OnInit, OnDestroy {
 
-  @Input('activeTab') activetab: string;
+  @Input('tabs') selectedtabs: string[];
   @Input('test') selectedTest: string;
   @Input('testcase') selectedTestCase: string;
 
@@ -31,6 +31,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   public testcasesList: Array<ITestCaseHeader>;
   // testcase object according to test folder and testcase id
   public testcase: ITestCase;
+  tabs: any;
 
   constructor(
     private testService: TestService,
@@ -150,40 +151,37 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
    * * Open side content in duplicate mode for the selected testcase (must be one)
    * @param test the test folder to duplicate, information from selection
    * @param testcase the test case id to duplicate, information from selection
-   * @param activeTab
    */
   duplicateTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.DUPLICATE,
-      activeTab: 'definitionTab',
+      selectedTab: 'definition',
     });
     this.sideContentService.openSideBlock();
   }
 
   /** BugTestCaseHeader
-   * * Open side content in duplicate mode for the selected testcase (must be one)
-   * @param test the test folder to duplicate, information from selection
-   * @param testcase the test case id to duplicate, information from selection
-   * @param activeTab
+   * * Open side content in edit mode for the selected testcase (must be one)
+   * @param test the test folder to edit, information from selection
+   * @param testcase the test case id to edit, information from selection
    */
   bugTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.EDIT,
-      activeTab: 'bugReportTab',
+      selectedTab: 'bugs',
     });
     this.sideContentService.openSideBlock();
   }
 
 
-      /** TagTestCaseHeader
-   * * Open side content in duplicate mode for the selected testcase (must be one)
-   * @param test the test folder to duplicate, information from selection
-   * @param testcase the test case id to duplicate, information from selection
-   * @param activeTab
+   /** TagTestCaseHeader
+   * * Open side content in edit mode for the selected testcase (must be one)
+   * @param test the test folder to edit, information from selection
+   * @param testcase the test case id to edit, information from selection
    */
 
   tagTestCaseHeader(test: string , testcase: string ): void {
@@ -191,44 +189,27 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.EDIT,
-      activeTab: 'labelsTab',
+      selectedTab: 'labels',
     });
     this.sideContentService.openSideBlock();
   }
-     /** TagTestCaseHeader
-   * * Open side content in duplicate mode for the selected testcase (must be one)
-   * @param test the test folder to duplicate, information from selection
-   * @param testcase the test case id to duplicate, information from selection
-   * @param activeTab
+   /** SettingTestCaseHeader
+   * * Open side content in edit mode for the selected testcase (must be one)
+   * @param test the test folder to edit, information from selection
+   * @param testcase the test case id to edit, information from selection
    */
   settingTestCaseHeader(test: string , testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.EDIT,
-      activeTab: 'settingsTab',
+      selectedTab: 'settings',
     });
     this.sideContentService.openSideBlock();
   }
-      /** TagTestCaseHeader
-   * * Open side content in duplicate mode for the selected testcase (must be one)
-   * @param test the test folder to duplicate, information from selection
-   * @param testcase the test case id to duplicate, information from selection
-   * @param activeTab
-   */
-  createTestCaseHeader(test: string , testcase: string): void {
-    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: test,
-      testcase: testcase,
-      mode: INTERACTION_MODE.CREATE,
-      activeTab: 'settingsTab',
-    });
-    this.sideContentService.openSideBlock();
-  }
-      /** TagTestCaseHeader
-   * * Open side content in duplicate mode for the selected testcase (must be one)
-   * @param test the test folder to duplicate, information from selection
-   * @param testcase the test case id to duplicate, information from selection
+   /** DeleteTestCaseHeader
+   * @param test the test folder to delete, information from selection
+   * @param testcase the test case id to delete, information from selection
    */
   deleteTestCase(test: string , testcase: string): void {
     const modalRef = this.modalService.open(CustomModalComponent);

@@ -55,42 +55,42 @@
       <div class="btn-group btn-group-sm" role="group" aria-label="testCaseShortcuts">
 
         <!-- GO TO BUG REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)"
+        <button type="button" class="btn btn-primary" id="bug-button" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)"
           ngbPopover="Go to Bug Report" placement="bottom" triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-bug"></i>
         </button>
         <!-- END GO TO BUG REPORT BUTTON -->
 
         <!-- GO TO LABELS BUTTON -->
-        <button type="button" class="btn btn-primary" (click)="tagTestCaseHeader(selectedTest,selectedTestCase)"
+        <button type="button" class="btn btn-primary" id="labels-button" (click)="tagTestCaseHeader(selectedTest,selectedTestCase)"
           ngbPopover="Go to Labels" placement="bottom" triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-tag"></i>
         </button>
         <!-- END GO TO LABELS BUTTON -->
 
         <!-- GO TO SETTINGS BUTTON -->
-        <button type="button" class="btn btn-primary" (click)="settingTestCaseHeader(selectedTest,selectedTestCase)"
+        <button type="button" class="btn btn-primary" id="settings-button" (click)="settingTestCaseHeader(selectedTest,selectedTestCase)"
           ngbPopover="Go to Settings" placement="bottom" triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-cog"></i>
         </button>
         <!-- END GO TO SETTINGS BUTTON -->
 
         <!-- GO TO SAVE REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" 
+        <button type="button" class="btn btn-primary" id="save-button"
           ngbPopover="Save the script" placement="bottom" triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-save"></i>
         </button>
         <!-- GO TO SAVE REPORT BUTTON -->
 
         <!-- GO TO DUPLICATE REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)"
+        <button type="button" class="btn btn-primary" id="duplicate-button" (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)"
           ngbPopover="Duplicate Test Case" placement="bottom" triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-copy"></i>
         </button>
         <!-- GO TO DUPLICATE REPORT BUTTON -->
 
         <!-- GO TO DELETE REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" (click)="deleteTestCase(selectedTest, selectedTestCase)"
+        <button type="button" class="btn btn-primary" id="delete-button" (click)="deleteTestCase(selectedTest, selectedTestCase)"
         ngbPopover="Delete the Test Case" placement="left" triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-trash"></i>
         </button>

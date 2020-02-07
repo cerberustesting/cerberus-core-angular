@@ -80,9 +80,7 @@ export class PropertyV3Component implements OnInit {
   // create a new empty property
   addAPropertyGroup(): void {
     const newPropertyGroup = new ProperyGroup(this.getLatestNewPropertyName());
-    console.log(this.getLatestNewPropertyName());
     this.propertyGroups.push(newPropertyGroup);
-    console.log(this.propertyGroups);
   }
 
   // new property group name are generated following:

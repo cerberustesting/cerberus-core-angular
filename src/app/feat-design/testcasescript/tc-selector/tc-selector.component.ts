@@ -30,6 +30,8 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   public testcasesList: Array<ITestCaseHeader>;
   // testcase object according to test folder and testcase id
   public testcase: ITestCase;
+
+  // TODO: add a comment
   tabs: any;
 
   constructor(
@@ -104,6 +106,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
 
     // subscribe to testcase object (updated when combination of test folder & id changes)
     this.testService.observableTestCase.subscribe(response => { this.testcase = response; });
+
   }
 
   // set to null the test case id
@@ -156,7 +159,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.DUPLICATE,
-      selectedTab: 'definition',
+      selectedTab: 'Definition',
     });
     this.sideContentService.openSideBlock();
   }
@@ -171,7 +174,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.EDIT,
-      selectedTab: 'bugs',
+      selectedTab: 'Bugs',
     });
     this.sideContentService.openSideBlock();
   }
@@ -188,7 +191,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.EDIT,
-      selectedTab: 'labels',
+      selectedTab: 'Labels',
     });
     this.sideContentService.openSideBlock();
   }
@@ -202,7 +205,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       test: test,
       testcase: testcase,
       mode: INTERACTION_MODE.EDIT,
-      selectedTab: 'settings',
+      selectedTab: 'Settings',
     });
     this.sideContentService.openSideBlock();
   }

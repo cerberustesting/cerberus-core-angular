@@ -159,6 +159,20 @@ ngb-tabset > ul {
 }
 
 /*
+"custom-sm" class to <ul>
+
+apply the correct height to the field according 
+to the bootstrap *-sm class 
+*/
+ul.custom-sm a.nav-link {
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 0.875rem !important;
+}
+
+/*
 "no-shadow" class for any element
 
 remove all the shadow effect

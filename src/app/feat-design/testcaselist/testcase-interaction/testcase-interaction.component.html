@@ -62,7 +62,7 @@
 
             </div>
 
-            <!-- TABS -->
+            <!-- TABS CONTENTS -->
             <div class="block block-rounded block-bordered" *ngIf="testcase">
                 <div class="block-content p-0">
 
@@ -78,7 +78,9 @@
                     <div class="block-content tab-content">
 
                         <!-- SCRIPT TAB -->
-                        <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="propertiesTab"
+
+                        <!-- DEFINITION DEPENDENCY -->
+                        <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="definitionTab" role="tabpanel"
                             role="tabpanel">
 
                             <!-- SCRIPT CONTENT -->
@@ -161,8 +163,10 @@
                             </div>
 
                         </div>
+                        <!-- END DEFINITION DEPENDENCY -->
 
-                        <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab"
+                        <!-- SETTINGS DEPENDENCY -->
+                        <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="settingsTab" role="tabpanel"
                             role="tabpanel">
                             <div class="row">
                                 <div class="col-md-12">
@@ -421,15 +425,19 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- END SETTINGS DEPENDENCY -->
 
-                        <div *ngIf="selectedTab == tabs[2]" class="tab-pane active show" id="propertiesTab"
+                        <!-- LABELS DEPENDENCY -->
+                        <div *ngIf="selectedTab == tabs[2]" class="tab-pane active show" id="labelsTab" role="tabpanel"
                             role="tabpanel">
                             <app-labels-tab [test]="test" [testcase]="testcase" [system]="testcaseheader.system">
                             </app-labels-tab>
 
                         </div>
+                        <!-- END LABELS DEPENDENCY -->
 
-                        <div *ngIf="selectedTab == tabs[3]" class="tab-pane active show" id="propertiesTab"
+                        <!-- BUGS DEPENDENCY -->
+                        <div *ngIf="selectedTab == tabs[3]" class="tab-pane active show" id="bugsTab" role="tabpanel"
                             role="tabpanel">
 
                             <div class="row">
@@ -460,8 +468,10 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- END BUGS DEPENDENCY -->
 
-                        <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="propertiesTab"
+                        <!-- AUDIT DEPENDENCY -->
+                        <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="dependencyTab" role="tabpanel"
                             role="tabpanel">
 
                             <div class="row">
@@ -558,6 +568,7 @@
                             </div>
 
                         </div>
+                        <!-- END AUDIT DEPENDENCY -->
 
                         <!-- AUDIT TAB -->
                         <div *ngIf="selectedTab == tabs[5]" class="tab-pane active show" id="auditTab" role="tabpanel">
@@ -667,9 +678,12 @@
                             </div>
                         </div>
                         <!-- END AUDIT TAB -->
+
+                        <!-- END SCRIPT TAB -->
                     </div>
                 </div>
             </div>
+            <!-- END TABS CONTENTS -->
         </div>
     </div>
 </form>

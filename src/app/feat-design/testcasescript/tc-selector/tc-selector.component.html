@@ -7,7 +7,7 @@
         <div class="form-check-inline mr-4">
 
           <!-- TEST FOLDER SELECTION -->
-          <div *ngIf="testcasesList" class="input-group custom-sm mr-3">
+          <div *ngIf="testsList" class="input-group custom-sm mr-3">
             <div class="input-group-prepend">
               <span class="input-group-text input-group-text-alt custom-sm-font">
                 Test Folder
@@ -26,7 +26,7 @@
           <!-- END TEST FOLDER SELECTION -->
 
           <!-- TEST CASE ID SELECTION -->
-          <div class="input-group custom-sm">
+          <div *ngIf="selectedTest" class="input-group custom-sm">
             <div class="input-group-prepend">
               <span class="input-group-text input-group-text-alt custom-sm-font">
                 Test Case ID

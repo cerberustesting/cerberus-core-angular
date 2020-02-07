@@ -1,9 +1,9 @@
 <!-- TEST CASE SELECTOR COMPONENT -->
 <app-tc-selector [test]='selectedTest' (SelectedTestChange)='receiveTest($event)' [testcase]='selectedTestCase'
-  (SelectedTestCaseChange)='receiveTestCase($event)'>
+  (SelectedTestCaseChange)='receiveTestCase($event)' (SaveScriptEvent)="sendSaveScriptEvent()">
 </app-tc-selector>
 <!-- END TEST CASE SELECTOR COMPONENT -->
 
 <!-- SCRIPT PAGE CONTENT -->
-<app-tc-script *ngIf='testcase' [testcase]="testcase"></app-tc-script>
+<app-tc-script *ngIf='testcase' [testcase]="testcase" [saveScriptEvent]="saveScriptEvent.asObservable()"></app-tc-script>
 <!-- END SCRIPT PAGE CONTENT -->

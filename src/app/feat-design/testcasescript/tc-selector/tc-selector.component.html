@@ -78,12 +78,12 @@
         </button>
         <!-- END GO TO SETTINGS BUTTON -->
 
-        <!-- GO TO SAVE REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" id="save-button" ngbPopover="Save the script" placement="bottom"
-          triggers="mouseenter:mouseleave">
+        <!-- SAVE SCRIPT BUTTON -->
+        <button type="button" class="btn btn-primary" id="saveButton" ngbPopover="Save the script" placement="bottom"
+          triggers="mouseenter:mouseleave" (click)="sendSaveScriptEvent()">
           <i class="fa fa-fw fa-save"></i>
         </button>
-        <!-- GO TO SAVE REPORT BUTTON -->
+        <!-- SAVE SCRIPT BUTTON -->
 
         <!-- GO TO DUPLICATE REPORT BUTTON -->
         <button type="button" class="btn btn-primary" id="duplicate-button"

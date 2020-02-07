@@ -34,26 +34,19 @@ export class TestcaseInteractionComponent implements OnInit {
   // once (every time ngOnInit is fired)
   _mode: string;
 
+  // Editor object
   public Editor = ClassicEditor;
 
   // Variable received from the addComponentToSideBlock method
+
   // from testcaselist.component.ts
   private test: string;
   private testcase: string;
-  // id of the active tab (used to open the side content on a specific tab)
-  private activeTab: string;
-
-  // TODO: add a comment
-  private tabs: Array<string>;
-
-  // TODO: add a comment
+  // tabs currently active
   private selectedTab: string;
 
-  // tabset object
-  // ViewChildren is used instead of ViewChild because of *ngIf
-  // https://stackoverflow.com/questions/34947154/angular-2-viewchild-annotation-returns-undefined/39759051#39759051
-  @ViewChildren('tabset')
-  public tabset: QueryList<NgbTabset>;
+  // list of tabs
+  private tabs: Array<string>;
 
   // new test case ID when test folder has changed
   private newTestCase: string;
@@ -157,7 +150,7 @@ export class TestcaseInteractionComponent implements OnInit {
     private notificationService: NotificationService,
     private sidecontentService: SidecontentService) {
     this.selectedTab = null;
-    this.tabs = ['Definition', 'Settings', 'Labels', 'Bugs', 'Dependency', 'Audit'];
+    this.tabs = ['Definition', 'Settings', 'Labels', 'Bugs', 'Dependencies', 'Audit'];
   }
 
   ngOnInit() {
@@ -262,6 +255,7 @@ export class TestcaseInteractionComponent implements OnInit {
     });
   }
 
+  // return true if the form has a value for bug ID
   checkBugID() {
     if (this.testcaseHeaderForm.get('bugID').value) {
       return false;
@@ -332,7 +326,6 @@ export class TestcaseInteractionComponent implements OnInit {
    * @param testcase the testcase to asign
    */
   onTestCaseChange(testcase: ITestCaseHeader) {
-    console.log('onTestCaseChange called with test : ' + testcase.testCase);
     this.dependencySelectedTestCase = testcase;
   }
 

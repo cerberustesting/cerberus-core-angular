@@ -5,7 +5,7 @@ import { TestService } from 'src/app/core/services/crud/test.service';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { SystemService } from 'src/app/core/services/crud/system.service';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
-import { switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-testcasescript',
@@ -17,6 +17,9 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
   selectedTest: string;
   selectedTestCase: string;
   testcase: ITestCase;
+
+  // event to be fired when the 'save script' button is pressed
+  saveScriptEvent: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -39,6 +42,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.selectedTest = null;
     this.selectedTestCase = null;
+
     if (this.activatedRoute.snapshot.paramMap.has('test')) {
       this.selectedTest = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('test'));
       if (this.activatedRoute.snapshot.paramMap.has('testcase')) {
@@ -57,6 +61,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
         this.systemService.getApplication(this.testcase.info.application);
       }
     });
+
     // public invariants
     this.InvariantService.getCountriesList();
     this.InvariantService.getTcStatus();
@@ -91,8 +96,9 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.router.navigate(['/design/testcasescript', this.selectedTest, this.selectedTestCase]);
   }
 
-  debug() {
-    console.log(this.testcase);
+  // send the save script event to the child component
+  sendSaveScriptEvent() {
+    this.saveScriptEvent.next();
   }
 
 }

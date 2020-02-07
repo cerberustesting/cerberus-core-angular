@@ -3,6 +3,7 @@ import { ITestCase } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tc-script',
@@ -11,17 +12,21 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 })
 export class TcScriptComponent implements OnInit {
 
+  // full testcase object with step content
   @Input('testcase') testcase: ITestCase;
+
+  // list of countries
   private inv_countriesList: Array<IInvariant>;
 
+  // event received from parent to trigger the saveScript function
+  @Input() saveScriptEvent: Observable<void>;
+
+  // list of tabs
   private tabs: string[] = ['Script', 'Properties'];
+  // currently active tab
   private selectedTab: string;
 
-  private stepListBlockId: string;
-
   private oldVersion = false; // TODO : to remove and keep a version
-
-  // @ViewChild(ChildComponent) child;
 
   constructor(
     private testService: TestService,
@@ -30,13 +35,14 @@ export class TcScriptComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTab = this.tabs[0];
+    this.saveScriptEvent.subscribe(() => this.saveTestCase());
   }
 
+  // send the new script to the API for saving
   saveTestCase() {
     // send the testcase to the data service
-    this.testService.saveTestCase(this.testcase);
+    // this.testService.saveTestCase(this.testcase);
+    console.log('SAVE SCRIPT');
+    // TODO : complete the testservice function
   }
-
-  debug() { }
-
 }

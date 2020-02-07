@@ -23,6 +23,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   // event fired when the test and testcase value change
   @Output() SelectedTestChange = new EventEmitter<string>();
   @Output() SelectedTestCaseChange = new EventEmitter<string>();
+  @Output() SaveScriptEvent = new EventEmitter<void>();
 
   // list of test folders
   public testsList: Array<ITest>;
@@ -179,14 +180,13 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     this.sideContentService.openSideBlock();
   }
 
+  /** TagTestCaseHeader
+  * * Open side content in edit mode for the selected testcase (must be one)
+  * @param test the test folder to edit, information from selection
+  * @param testcase the test case id to edit, information from selection
+  */
 
-   /** TagTestCaseHeader
-   * * Open side content in edit mode for the selected testcase (must be one)
-   * @param test the test folder to edit, information from selection
-   * @param testcase the test case id to edit, information from selection
-   */
-
-  tagTestCaseHeader(test: string , testcase: string ): void {
+  tagTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
@@ -195,12 +195,13 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     });
     this.sideContentService.openSideBlock();
   }
-   /** SettingTestCaseHeader
-   * * Open side content in edit mode for the selected testcase (must be one)
-   * @param test the test folder to edit, information from selection
-   * @param testcase the test case id to edit, information from selection
-   */
-  settingTestCaseHeader(test: string , testcase: string): void {
+
+  /** SettingTestCaseHeader
+  * * Open side content in edit mode for the selected testcase (must be one)
+  * @param test the test folder to edit, information from selection
+  * @param testcase the test case id to edit, information from selection
+  */
+  settingTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
       testcase: testcase,
@@ -209,11 +210,12 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     });
     this.sideContentService.openSideBlock();
   }
-   /** DeleteTestCaseHeader
-   * @param test the test folder to delete, information from selection
-   * @param testcase the test case id to delete, information from selection
-   */
-  deleteTestCase(test: string , testcase: string): void {
+
+  /** DeleteTestCaseHeader
+  * @param test the test folder to delete, information from selection
+  * @param testcase the test case id to delete, information from selection
+  */
+  deleteTestCase(test: string, testcase: string): void {
     const modalRef = this.modalService.open(CustomModalComponent);
     modalRef.componentInstance.title = 'Delete Test Case';
     modalRef.componentInstance.text = 'Do you want to delete Test Case ' + test + '" - "' + testcase + '" ?';
@@ -226,5 +228,10 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
         }
       );
     };
+  }
+
+  // send an event to the parent component to save the script
+  sendSaveScriptEvent() {
+    this.SaveScriptEvent.emit();
   }
 }

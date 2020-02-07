@@ -17,7 +17,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class TcSelectorComponent implements OnInit, OnDestroy {
 
-  @Input('tabs') selectedtabs: string[];
   @Input('test') selectedTest: string;
   @Input('testcase') selectedTestCase: string;
 

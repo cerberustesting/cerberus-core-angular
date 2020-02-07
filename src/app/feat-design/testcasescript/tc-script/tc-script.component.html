@@ -1,77 +1,65 @@
-<div class="block block-rounded block-bordered" *ngIf="testcase">
+<div *ngIf="testcase" class="block-content pt-0">
 
-  <div class="block-header block-header-default">
-    <h3 class="block-title">Testcase <small>script</small></h3>
-    <div class="block-options">
-      <button type="button" class="btn-block-option" data-toggle="block-option" data-action="fullscreen_toggle"><i
-          class="si si-size-fullscreen"></i></button>
-      <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
-        data-action-mode="demo">
-        <i class="si si-refresh"></i>
+  <!-- TABS -->
+  <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled custom-sm" data-toggle="tabs" role="tablist">
+    <li *ngFor="let tab of tabs" class="nav-item">
+      <a class="nav-link" [ngClass]="selectedTab == tab ? 'active show' : ''" (click)="selectedTab = tab">{{tab}}</a>
+    </li>
+  </ul>
+  <!-- END TABS -->
+
+  <div class="block-content tab-content">
+
+    <!-- SCRIPT TAB -->
+    <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="scriptTab" role="tabpanel">
+
+      <!-- SCRIPT CONTENT -->
+      <div class="row">
+
+        <!-- STEP LIST -->
+        <div class="col-md-6">
+          <app-script [testcase]="testcase"></app-script>
+        </div>
+        <!-- END STEP LIST -->
+
+        <!-- SETTINGS TOOLBAR -->
+        <div class="col-md-6">
+          <app-settings></app-settings>
+        </div>
+        <!-- END SETTINGS TOOLBAR -->
+
+      </div>
+      <!-- END SCRIPT CONTENT -->
+
+    </div>
+    <!-- END SCRIPT TAB -->
+
+    <!-- PROPERTIES TAB -->
+    <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
+
+      <!-- PROPERTIES -->
+      <app-property-v3 [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase"
+        [inherited]="false">
+      </app-property-v3>
+
+      <!-- INHERITED PROPERTIES -->
+      <app-property-v3 [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase"
+        [inherited]="true">
+      </app-property-v3>
+
+    </div>
+    <!-- END PROPERTIES TAB -->
+
+  </div>
+
+  <!-- BOTTOM SECTION -->
+  <div id="testcasescript_modal_footer" class="row push">
+    <div class="col-md-12 text-center">
+      <button type="button" class="btn btn-info mr-1" (click)="saveTestCase()">
+        <i class="fa fa-fw fa-check mr-1"></i> Save
       </button>
     </div>
   </div>
+  <!-- END BOTTOM SECTION -->
 
-  <div class="block-content">
-
-    <!-- TABS -->
-    <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled" data-toggle="tabs" role="tablist">
-      <li *ngFor="let tab of tabs" class="nav-item">
-        <a class="nav-link" [ngClass]="selectedTab == tab ? 'active show' : ''" (click)="selectedTab = tab">{{tab}}</a>
-      </li>
-    </ul>
-    <!-- END TABS -->
-
-    <div class="block-content tab-content">
-
-      <!-- SCRIPT TAB -->
-      <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="scriptTab" role="tabpanel">
-
-        <!-- SCRIPT CONTENT -->
-
-        <div class="row">
-
-          <!-- STEP LIST -->
-          <div class="col-md-6">
-            <app-script [testcase]="testcase"></app-script>
-          </div>
-          <!-- END STEP LIST -->
-          <!-- SETTINGS TOOLBAR -->
-          <div class="col-md-6">
-            <app-settings></app-settings>
-          </div>
-          <!-- END SETTINGS TOOLBAR -->
-        </div>
-        <!-- END SCRIPT CONTENT -->
-      </div>
-      <!-- END SCRIPT TAB -->
-
-      <!-- PROPERTIES TAB -->
-      <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
-
-        <!-- PROPERTIES -->
-        <app-property-v3 [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase"
-          [inherited]="false">
-        </app-property-v3>
-
-        <!-- INHERITED PROPERTIES -->
-        <app-property-v3 [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase"
-          [inherited]="true">
-        </app-property-v3>
-
-      </div>
-      <!-- END PROPERTIES TAB -->
-
-    </div>
-
-    <!-- BOTTOM SECTION -->
-    <div id="testcasescript_modal_footer" class="row push">
-      <div class="col-md-12 text-center">
-        <button type="button" class="btn btn-info mr-1" (click)="saveTestCase()">
-          <i class="fa fa-fw fa-check mr-1"></i> Save
-        </button>
-      </div>
-    </div>
-    <!-- END BOTTOM SECTION -->
-  </div>
 </div>

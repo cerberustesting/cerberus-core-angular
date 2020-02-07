@@ -42,7 +42,11 @@ export class TestcaseInteractionComponent implements OnInit {
   private testcase: string;
   // id of the active tab (used to open the side content on a specific tab)
   private activeTab: string;
-  private tabs: string[] = ['definition', 'settings', 'labels', 'bugs', 'dependency', 'audit'];
+
+  // TODO: add a comment
+  private tabs: Array<string>;
+
+  // TODO: add a comment
   private selectedTab: string;
 
   // tabset object
@@ -151,12 +155,14 @@ export class TestcaseInteractionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private testService: TestService,
     private notificationService: NotificationService,
-    private sidecontentService: SidecontentService) { this.selectedTab = null; }
+    private sidecontentService: SidecontentService) {
+    this.selectedTab = null;
+    this.tabs = ['Definition', 'Settings', 'Labels', 'Bugs', 'Dependency', 'Audit'];
+  }
 
   ngOnInit() {
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
     this._mode = this.mode;
-
 
     // init the form (will be set later)
     this.testcaseHeaderForm = null;
@@ -184,6 +190,11 @@ export class TestcaseInteractionComponent implements OnInit {
         this.dependencyTestCaseList = this.testcaseheader.dependencyList;
       }
     });
+
+    // if we haven't received any selected tab, set it to its default value
+    if (this.selectedTab === null) {
+      this.selectedTab = this.tabs[0];
+    }
 
     // subscriptions
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);

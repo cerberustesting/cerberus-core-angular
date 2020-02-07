@@ -13,7 +13,7 @@
                 Test Folder
               </span>
             </div>
-            <ng-select [items]="testsList" class="custom-sm" (change)="selectedTestChange()" bindLabel="test"
+            <ng-select [items]="testsList" class="custom-sm custom-width-1" (change)="selectedTestChange()" bindLabel="test"
               bindValue="test" placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
               <ng-template ng-label-tmp let-item="item">
                 {{item.test}} : {{item.description}}
@@ -32,7 +32,7 @@
                 Test Case ID
               </span>
             </div>
-            <ng-select [items]="testcasesList" class="custom-sm" (change)="selectedTestCaseChange()"
+            <ng-select [items]="testcasesList" class="custom-sm custom-width-1" (change)="selectedTestCaseChange()"
               bindLabel="testCase" bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase'
               [clearable]="false" [searchFn]="customSearchFn">
               <ng-template ng-label-tmp let-item="item">

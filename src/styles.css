@@ -86,6 +86,16 @@ ng-select.custom-icon > .ng-select-container > .ng-value-container {
 }
 
 /*
+"custom-width-1" class for <ng select> 
+
+set a minimum width for ng-select
+*/
+ng-select.custom-width-1 {
+  min-width: 300px !important;
+  max-width: 500px !important;
+}
+
+/*
 "custom-sm" class for <ng select> 
 
 apply the correct height to the field according 

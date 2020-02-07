@@ -55,179 +55,55 @@
       <div class="btn-group btn-group-sm" role="group" aria-label="testCaseShortcuts">
 
         <!-- GO TO BUG REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" id="bug-button" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)"
-          ngbPopover="Go to Bug Report" placement="bottom" triggers="mouseenter:mouseleave">
+        <button type="button" class="btn btn-primary" id="bug-button"
+          (click)="bugTestCaseHeader(selectedTest, selectedTestCase)" ngbPopover="Go to Bug Report" placement="bottom"
+          triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-bug"></i>
         </button>
         <!-- END GO TO BUG REPORT BUTTON -->
 
         <!-- GO TO LABELS BUTTON -->
-        <button type="button" class="btn btn-primary" id="labels-button" (click)="tagTestCaseHeader(selectedTest,selectedTestCase)"
-          ngbPopover="Go to Labels" placement="bottom" triggers="mouseenter:mouseleave">
+        <button type="button" class="btn btn-primary" id="labels-button"
+          (click)="tagTestCaseHeader(selectedTest,selectedTestCase)" ngbPopover="Go to Labels" placement="bottom"
+          triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-tag"></i>
         </button>
         <!-- END GO TO LABELS BUTTON -->
 
         <!-- GO TO SETTINGS BUTTON -->
-        <button type="button" class="btn btn-primary" id="settings-button" (click)="settingTestCaseHeader(selectedTest,selectedTestCase)"
-          ngbPopover="Go to Settings" placement="bottom" triggers="mouseenter:mouseleave">
+        <button type="button" class="btn btn-primary" id="settings-button"
+          (click)="settingTestCaseHeader(selectedTest,selectedTestCase)" ngbPopover="Go to Settings" placement="bottom"
+          triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-cog"></i>
         </button>
         <!-- END GO TO SETTINGS BUTTON -->
 
         <!-- GO TO SAVE REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" id="save-button"
-          ngbPopover="Save the script" placement="bottom" triggers="mouseenter:mouseleave">
+        <button type="button" class="btn btn-primary" id="save-button" ngbPopover="Save the script" placement="bottom"
+          triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-save"></i>
         </button>
         <!-- GO TO SAVE REPORT BUTTON -->
 
         <!-- GO TO DUPLICATE REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" id="duplicate-button" (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)"
-          ngbPopover="Duplicate Test Case" placement="bottom" triggers="mouseenter:mouseleave">
+        <button type="button" class="btn btn-primary" id="duplicate-button"
+          (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)" ngbPopover="Duplicate Test Case"
+          placement="bottom" triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-copy"></i>
         </button>
         <!-- GO TO DUPLICATE REPORT BUTTON -->
 
         <!-- GO TO DELETE REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" id="delete-button" (click)="deleteTestCase(selectedTest, selectedTestCase)"
-        ngbPopover="Delete the Test Case" placement="left" triggers="mouseenter:mouseleave">
+        <button type="button" class="btn btn-primary" id="delete-button"
+          (click)="deleteTestCase(selectedTest, selectedTestCase)" ngbPopover="Delete the Test Case" placement="left"
+          triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa-trash"></i>
         </button>
-      </div>
-      <!-- GO TO DELETE REPORT BUTTON -->
+        <!-- GO TO DELETE REPORT BUTTON -->
 
+      </div>
       <!-- END RIGHT SECTION -->
 
     </div>
   </div>
 </div>
-
-<!-- 
-  <div class="row">
-  <div class="col-md-12">
-    <div class="block block-rounded">
-
-      <div class="block-content">
-        <div class="row">
-
-          <div class="col-md-6" *ngIf="testsList">
-            <div class="form-group">
-
-                <select class="form-control br-tp-0" id="test" name="test" [(ngModel)]='selectedTest' (ngModelChange)='selectedTestChange()'
-                  [ngClass]="selectedTest ? 'is-selected-valid' : ''">
-                  <option [ngValue]="null">Select a Test</option>
-                  <option *ngFor='let test of testsList' [value]="test.test"> {{test.test}} - {{test.description}}
-                  </option>
-                </select>
-              <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
-                <button class="btn btn-outline-secondary">Folder</button>
-                <ng-select [items]="testsList" (change)="selectedTestChange()" bindLabel="test" bindValue="test"
-                  placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
-                  <ng-template ng-label-tmp let-item="item">
-                    {{item.test}} : {{item.description}}
-                  </ng-template>
-                  <ng-template ng-option-tmp let-item="item">
-                    {{item.test}} : {{item.description}}
-                  </ng-template>
-                </ng-select>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group" *ngIf="selectedTest && testcasesList">
-              <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
-                <button class="btn btn-outline-secondary">Test Case</button>
-                <ng-select [items]="testcasesList" (change)="selectedTestCaseChange()" bindLabel="testCase"
-                  bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase'
-                  [clearable]="false" [searchFn]="customSearchFn">
-                  <ng-template ng-label-tmp let-item="item">
-                    {{item.testCase}} : {{item.description}}
-                  </ng-template>
-                  <ng-template ng-option-tmp let-item="item">
-                    <div>{{item.testCase}} :<span> {{item.description}}</span></div>
-                    <small><b>Priority: </b>{{item.priority}} | <b>Status:</b> {{item.status}}</small>
-                  </ng-template>
-                </ng-select>
-                <select class="form-control br-tp-0" id="testcase" name="testcase" [(ngModel)]='selectedTestCase'
-                  (ngModelChange)='selectedTestCaseChange()' [ngClass]="selectedTestCase ? 'is-selected-valid' : ''">
-                  <option [ngValue]="null">Select a Test Case</option>
-                  <option *ngFor="let tc of testcasesList" [value]="tc.testCase"> {{ tc.testCase}} : {{ tc.description
-                    }} </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row push" *ngIf="testcase">
-
-
-          <div class="col-md-4 offset-md-6">
-            <div class="btn-group" role="group" aria-label="Horizontal Alternate Danger">
-
-
-              <button class="btn btn-outline-secondary mr-2 mb-2" (click)="bugTestCaseHeader(selectedTest, selectedTestCase)">
-                <i class="fa fa-fw fa-bug"></i>
-              </button>
-
-              <button class="btn btn-outline-secondary mr-4 mb-2" (click)="tagTestCaseHeader(selectedTest, selectedTestCase)">
-                <i class="fa fa-fw fa-tag"></i>
-              </button>
-
-              <button class="btn btn-outline-secondary dropdown-toggle mr-2 mb-2" id="dropdown-default-light"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="fa fa-history mr-1"></span> Execution
-              </button>
-              <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
-                style="position: absolute; will-change: transform; top: 0px; left: 100px; transform: translate3d(0px, 38px, 0px);">
-                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-history mr-1"></i> Last Execution</a>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Execution List</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Testcase List</a>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="far fa-file-archive mr-1"></i> Logs</a>
-              </div>
-              <button type="button" class="btn btn-outline-secondary dropdown-toggle mr-4 mb-2"
-                id="dropdown-default-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="fa fa-fw fa-play"></span> Run
-              </button>
-              <div class="dropdown-menu full-width" aria-labelledby="dropdown-default-light" x-placement="bottom-start"
-                style="position: absolute; will-change: transform; top: 0px; left: 100px; transform: translate3d(0px, 38px, 0px);">
-                <a class="dropdown-item" href="javascript:void(0)"><i class="si si-control-play mr-1"></i> Run
-                  Testcase</a>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="si si-control-play mr-1"></i> Rerun
-                  Testcase</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Rerun from
-                  Queue</a>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-list mr-1"></i> Rerun from
-                  Queue and See</a>
-              </div>
-
-              <button class="btn btn-outline-secondary mr-4 mb-2"(click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)">
-                <i class="fa fa-fw fa-cog"></i>
-              </button>
-
-              <button class="btn btn-info js-click-ripple-enabled mr-2 mb-2">
-                <i class="fa fa-fw fa-save"></i>
-              </button>
-
-
-              <button class="btn btn-outline-secondary mr-2 mb-2" (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)">
-                <i class="fa fa-fw fa-copy"></i>
-              </button>
-
-              <button class="btn btn-outline-secondary mb-2">
-                <i class="fa fa-trash-alt"></i>
-              </button>
-
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> 
--->

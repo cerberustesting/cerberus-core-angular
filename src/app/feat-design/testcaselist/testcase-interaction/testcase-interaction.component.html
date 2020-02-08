@@ -3,7 +3,7 @@
         <div class="block-header block-header-default">
 
             <!-- SIDE CONTENT TITLE -->
-            <h3 class="block-title" [ngSwitch]="_mode">
+            <h3 class="block-title" [ngSwitch]="mode">
                 <span *ngSwitchCase="'CREATE'">Create Test Case</span>
                 <span *ngSwitchCase="'EDIT'">Edit Test Case Header</span>
                 <span *ngSwitchCase="'DUPLICATE'">Duplicate Test Case</span>
@@ -226,7 +226,7 @@
                                     <!-- COUNTRY ACTIVATION -->
                                     <div class="form-group">
                                         <label class="d-block">Country Activation</label>
-                                        <div *ngFor="let country of inv_countries"
+                                        <div *ngFor="let country of countriesList"
                                             class="custom-control block custom-block custom-control-info custom-sm custom-control-inline">
                                             <input type="checkbox" class="custom-control-input" [id]="country.value"
                                                 [name]="country.value" [checked]="isTheCountrySelected(country.value)"

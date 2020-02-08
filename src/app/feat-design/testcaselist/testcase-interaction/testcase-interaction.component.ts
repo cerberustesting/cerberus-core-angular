@@ -42,7 +42,7 @@ export class TestcaseInteractionComponent implements OnInit {
   private newTestCase: string;
 
   // form that is submitted to to the API
-  private testcaseHeaderForm: FormGroup;
+  public testcaseHeaderForm: FormGroup;
   // detailled description value Editor object
   public Editor = ClassicEditor;
 

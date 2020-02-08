@@ -228,6 +228,7 @@ export class TestService {
         }
       });
   }
+
   getDataLibData(testdatalibId: string, callback: (data: any) => any) {
     this.http.get<any>(environment.cerberus_api_url + '/ReadTestDataLibData?testdatalibid=' + testdatalibId)
       .subscribe((response) => {
@@ -276,7 +277,6 @@ export class TestService {
     } else {
       this.http.get<ITestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withStep=true')
         .subscribe((response) => {
-          console.log(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase);
           this.testcase = response;
           this.observableTestCase.next(this.testcase);
           // format the countries List to an string array

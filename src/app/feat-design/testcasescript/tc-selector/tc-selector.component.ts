@@ -84,7 +84,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
           if (this.selectedTestCase != null && this.selectedTest != null) {
             if (!this.testService.selectedTestCaseExist(this.selectedTestCase)) {
               console.error('the selected test case doesn\'t exist');
-              this.notificationService.createANotification('The selected test casedoesn\t exist', NotificationStyle.Error, true, 5000);
+              this.notificationService.createANotification('The selected test case doesn\t exist', NotificationStyle.Error, true, 5000);
               // this.AlertService.displayMessage(Alert_selectedTestCaseDoesNotExist);
               this.selectedTestCase = null;
             } else {
@@ -172,8 +172,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
    */
   bugTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: test,
-      testcase: testcase,
+      testcaseheader: this.testcase.info,
       mode: INTERACTION_MODE.EDIT,
       selectedTab: 'Bugs',
     });
@@ -188,8 +187,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
 
   tagTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: test,
-      testcase: testcase,
+      testcaseheader: this.testcase.info,
       mode: INTERACTION_MODE.EDIT,
       selectedTab: 'Labels',
     });
@@ -203,8 +201,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   */
   settingTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: test,
-      testcase: testcase,
+      testcaseheader: this.testcase.info,
       mode: INTERACTION_MODE.EDIT,
       selectedTab: 'Settings',
     });

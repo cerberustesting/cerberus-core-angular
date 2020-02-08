@@ -12,8 +12,6 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
-import { ILabel } from 'src/app/shared/model/label.model';
-
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -95,7 +93,7 @@ export class TestcaseInteractionComponent implements OnInit {
   // ???
   exit: (n: void) => void;
 
-  // convert the malformed contries list to array of string
+  // convert the malformed contries list to array of string (remove test and test case attributes)
   feedCustomCountryList(): Array<string> {
     const resArray = new Array<string>();
     this.testcaseheader.countryList.forEach(element => {
@@ -114,7 +112,7 @@ export class TestcaseInteractionComponent implements OnInit {
     }
   }
 
-  // select or unselect a country when its cliked
+  // select or unselect a country when its clicked
   toggleCountry(country: string) {
     if (this.isTheCountrySelected(country) === true) {
       const index = this.testcaseheader_countryList_custom.indexOf(country);
@@ -147,6 +145,7 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   ngOnInit() {
+
     // set the correct title for the save button (depending on the mode)
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
 
@@ -159,16 +158,32 @@ export class TestcaseInteractionComponent implements OnInit {
     }
 
     // force the refresh to get latest testcase header information
-    this.testService.getTestCaseHeader(this.test, this.testcase);
+    if (this.testcaseheader === null) {
+      // if no testcaseheader object has been passed from addComponentToSideBlock()
+      // use the test & testcase id passed
+      // DIRTY : need API rework
+      this.testService.getTestCaseHeader(this.test, this.testcase);
+    } else {
+      // use the ones from the testcase header instead
+      this.testService.getTestCaseHeader(this.testcaseheader.test, this.testcaseheader.testCase);
+    }
 
     // subscribe to the test case observable
     this.testService.observableTestCaseHeader.subscribe(r => {
       if (r) {
+        // if no testcaseheader object has been passed from addComponentToSideBlock()
+        // the testcaseheader variable is still null
+        // DIRTY : need API rework
+        if (this.testcaseheader === null) {
+          this.refreshOthersDatas();
+        } else {
+          this.refreshOthersDatas(true);
+        }
+
         this.testcaseheader = r;
 
         // set the form
         this.setFormValues();
-        this.refreshOthersDatas();
 
         // set the new testcase ID if it's create/duplicate mode
         if (this.mode !== INTERACTION_MODE.EDIT) {
@@ -258,8 +273,10 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   // refresh datas essential for test case header interaction (tests, applications list...)
-  refreshOthersDatas() {
-    this.testService.getTestsList();
+  refreshOthersDatas(flag?: boolean) {
+    if (flag === undefined) {
+      this.testService.getTestsList();
+    }
     this.systemService.getApplicationList();
     this.systemService.getLabelsHierarchyFromSystem(this.testcaseheader.system, this.testcaseheader.test, this.testcaseheader.testCase);
     this.systemService.getSprintsFromSystem(this.testcaseheader.system);

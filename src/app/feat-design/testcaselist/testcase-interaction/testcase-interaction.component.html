@@ -63,7 +63,7 @@
             </div>
 
             <!-- TABS CONTENTS -->
-            <div class="block block-rounded block-bordered" *ngIf="testcase">
+            <div class="block block-rounded block-bordered" *ngIf="testcaseheader">
                 <div class="block-content p-0">
 
                     <!-- TABS -->
@@ -80,8 +80,8 @@
                         <!-- SCRIPT TAB -->
 
                         <!-- DEFINITION DEPENDENCY -->
-                        <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="definitionTab" role="tabpanel"
-                            role="tabpanel">
+                        <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="definitionTab"
+                            role="tabpanel" role="tabpanel">
 
                             <!-- SCRIPT CONTENT -->
                             <div class="row">
@@ -166,8 +166,8 @@
                         <!-- END DEFINITION DEPENDENCY -->
 
                         <!-- SETTINGS DEPENDENCY -->
-                        <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="settingsTab" role="tabpanel"
-                            role="tabpanel">
+                        <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="settingsTab"
+                            role="tabpanel" role="tabpanel">
                             <div class="row">
                                 <div class="col-md-12">
 
@@ -471,8 +471,8 @@
                         <!-- END BUGS DEPENDENCY -->
 
                         <!-- AUDIT DEPENDENCY -->
-                        <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="dependencyTab" role="tabpanel"
-                            role="tabpanel">
+                        <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="dependencyTab"
+                            role="tabpanel" role="tabpanel">
 
                             <div class="row">
                                 <!-- TEST -->

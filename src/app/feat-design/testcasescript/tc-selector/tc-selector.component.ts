@@ -157,8 +157,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
    */
   duplicateTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: test,
-      testcase: testcase,
+      testcaseheader: this.testcase.info,
       mode: INTERACTION_MODE.DUPLICATE,
       selectedTab: 'Definition',
     });

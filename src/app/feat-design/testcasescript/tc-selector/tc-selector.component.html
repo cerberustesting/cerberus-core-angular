@@ -7,13 +7,13 @@
         <div class="form-check-inline mr-4">
 
           <!-- TEST FOLDER SELECTION -->
-          <div *ngIf="testsList" class="input-group custom-sm mr-3">
+          <div *ngIf="testsList" id="TestFolder" class="input-group custom-sm mr-3">
             <div class="input-group-prepend">
               <span class="input-group-text input-group-text-alt custom-sm-font">
                 Test Folder
               </span>
             </div>
-            <ng-select [items]="testsList" id="TestFolder" class="custom-sm custom-width-1" (change)="selectedTestChange()" bindLabel="test"
+            <ng-select [items]="testsList" class="custom-sm custom-width-1" (change)="selectedTestChange()" bindLabel="test"
               bindValue="test" placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
               <ng-template ng-label-tmp let-item="item">
                 {{item.test}} : {{item.description}}
@@ -26,13 +26,13 @@
           <!-- END TEST FOLDER SELECTION -->
 
           <!-- TEST CASE ID SELECTION -->
-          <div *ngIf="selectedTest" class="input-group custom-sm">
+          <div *ngIf="selectedTest" id= "TestID" class="input-group custom-sm">
             <div class="input-group-prepend">
               <span class="input-group-text input-group-text-alt custom-sm-font">
                 Test Case ID
               </span>
             </div>
-            <ng-select [items]="testcasesList" id= "TestID" class="custom-sm custom-width-1" (change)="selectedTestCaseChange()"
+            <ng-select [items]="testcasesList" class="custom-sm custom-width-1" (change)="selectedTestCaseChange()"
               bindLabel="testCase" bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase'
               [clearable]="false" [searchFn]="customSearchFn">
               <ng-template ng-label-tmp let-item="item">

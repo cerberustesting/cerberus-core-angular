@@ -40,11 +40,6 @@ export class PropertygroupComponent implements OnInit {
     this.refreshInheritedStatus(this.propertygroup.property);
   }
 
-  // use the format function from test service
-  formatCountryList(rawList: any) {
-    return this.testService.formatCountryList(rawList);
-  }
-
   // check in all the property values if the country is selected
   // returns true if the country is fetched
   // return false if not

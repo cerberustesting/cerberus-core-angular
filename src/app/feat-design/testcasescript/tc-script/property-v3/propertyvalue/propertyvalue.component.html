@@ -1,7 +1,7 @@
 <div class="block block-bordered mb-0" [id]="'propertyValue'+index" (mouseenter)="showActions=true"
     (mouseleave)="showActions=false">
     <div class="block-header block-header-default block-header-sm">
-        
+
         <!-- ROW HEADER -->
         <div class="row full-width">
             <div class="col-3">
@@ -61,9 +61,9 @@
 
             <!-- SELECTED COUNTRIES LIST -->
             <div class="col-4">
-                <span *ngFor="let country of formatCountryList(testcase.info.countryList)"
-                    [ngClass]="isACountrySelected(country) ? 'badge-primary' : 'badge-secondary'"
-                    class="badge link-cursor mr-1" (click)="toggleCountry(country)">{{country}}</span>
+                <span *ngFor="let country of testcase.info.countryList"
+                    [ngClass]="isACountrySelected(country.country) ? 'badge-primary' : 'badge-secondary'"
+                    class="badge link-cursor mr-1" (click)="toggleCountry(country.country)">{{country.country}}</span>
             </div>
             <!-- SELECTED COUNTRIES LIST -->
 

@@ -60,8 +60,8 @@
 
         <!-- COUNTRY LIST -->
         <div class="col-4 offset-5">
-            <span *ngFor="let country of formatCountryList(testcase.info.countryList)" class="badge link-default mr-1"
-                [ngClass]="isACountrySelected(country) ? 'badge-primary' : 'badge-secondary'">{{country}}</span>
+            <span *ngFor="let country of testcase.info.countryList" class="badge link-default mr-1"
+                [ngClass]="isACountrySelected(country.country) ? 'badge-primary' : 'badge-secondary'">{{country.country}}</span>
         </div>
         <!-- END COUNTRY LIST -->
     </div>

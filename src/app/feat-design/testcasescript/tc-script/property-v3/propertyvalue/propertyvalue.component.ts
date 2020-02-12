@@ -54,11 +54,6 @@ export class PropertyvalueComponent implements OnInit {
     this.editorOptions = { theme: 'vs', language: 'plaintext', readOnly: this.inherited };
   }
 
-  // call the format functino from test service
-  formatCountryList(rawList: any): Array<string> {
-    return this.testService.formatCountryList(rawList);
-  }
-
   // return true if the country is selected in the property value
   isACountrySelected(country: string): boolean {
     return this.propertyvalue.country.includes(country);

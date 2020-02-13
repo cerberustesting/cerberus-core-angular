@@ -4,11 +4,11 @@ import { PropertyValue, ProperyGroup } from 'src/app/shared/model/property.model
 import { ITestCase } from 'src/app/shared/model/testcase.model';
 
 @Component({
-  selector: 'app-property-v3',
-  templateUrl: './property-v3.component.html',
-  styleUrls: ['./property-v3.component.scss']
+  selector: 'app-properties',
+  templateUrl: './properties.component.html',
+  styleUrls: ['./properties.component.scss']
 })
-export class PropertyV3Component implements OnInit {
+export class PropertiesComponent implements OnInit {
 
   // unique couple (folder, id) used for querying the API
   // to refresh the properties list

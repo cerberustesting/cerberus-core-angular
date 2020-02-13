@@ -17,7 +17,7 @@ import { TcScriptComponent } from './testcasescript/tc-script/tc-script.componen
 import { StepComponent } from './testcasescript/tc-script/step/step.component';
 import { ActionComponent } from './testcasescript/tc-script/action/action.component';
 import { ControlComponent } from './testcasescript/tc-script/control/control.component';
-import { PropertyvalueComponent } from './testcasescript/tc-script/property-v3/propertyvalue/propertyvalue.component';
+import { PropertyvalueComponent } from './testcasescript/tc-script/properties/propertyvalue/propertyvalue.component';
 import { SettingsComponent } from './testcasescript/tc-script/settings/settings.component';
 import { DatalibraryComponent } from './datalibrary/datalibrary.component';
 import { ScriptComponent } from './testcasescript/tc-script/script/script.component';
@@ -28,7 +28,7 @@ import { DatalibTclistComponent } from './datalibrary/datalib-interaction/datali
 import { TestcaseInteractionComponent } from './testcaselist/testcase-interaction/testcase-interaction.component';
 import { LabelsTabComponent } from './testcaselist/testcase-interaction/labels-tab/labels-tab.component';
 import { LabelNodeComponent } from './testcaselist/testcase-interaction/labels-tab/label-node/label-node.component';
-import { PropertyV3Component } from './testcasescript/tc-script/property-v3/property-v3.component';
+import { PropertiesComponent } from './testcasescript/tc-script/properties/properties.component';
 
 // Pipes
 import { FilterPipeModule } from 'ngx-filter-pipe';
@@ -38,7 +38,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { PropertygroupComponent } from './testcasescript/tc-script/property-v3/propertygroup/propertygroup.component';
+import { PropertygroupComponent } from './testcasescript/tc-script/properties/propertygroup/propertygroup.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 @NgModule({
@@ -63,7 +63,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     TestcaseInteractionComponent,
     LabelsTabComponent,
     LabelNodeComponent,
-    PropertyV3Component,
+    PropertiesComponent,
     PropertygroupComponent
   ],
   imports: [

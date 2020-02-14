@@ -1,18 +1,18 @@
 <div class="row text-center push scrollable">
     <div class="col-4">
-        <button type="button" class="btn btn-sm mr-1" (click)="labelType = 'stickers'"
+        <button type="button" class="btn btn-sm mr-1" id="stickers" (click)="labelType = 'stickers'"
             [ngClass]="labelType == 'stickers' ? 'btn-primary' : 'btn-outline-primary'">
             <i class="fa fa-fw fa-tag mr-1"></i> Stickers
         </button>
     </div>
     <div class="col-4">
-        <button type="button" class="btn btn-sm mr-1" (click)="labelType = 'requirements'"
+        <button type="button" class="btn btn-sm mr-1" id="requirements" (click)="labelType = 'requirements'"
             [ngClass]="labelType == 'requirements' ? 'btn-primary' : 'btn-outline-primary'">
             <i class="fa fa-fw fa-check-circle mr-1"></i> Requirements
         </button>
     </div>
     <div class="col-4">
-        <button type="button" class="btn btn-sm mr-1" (click)="labelType = 'batteries'"
+        <button type="button" class="btn btn-sm mr-1" id="batteries" (click)="labelType = 'batteries'"
             [ngClass]="labelType == 'batteries' ? 'btn-primary' : 'btn-outline-primary'">
             <i class="fa fa-fw fa-play-circle mr-1"></i> Batteries
         </button>

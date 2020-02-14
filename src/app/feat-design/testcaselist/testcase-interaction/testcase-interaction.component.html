@@ -254,7 +254,7 @@
                                                 <select class="form-control form-control-sm"
                                                     formControlName="fromSprint" name="fromSprint">
                                                     <option *ngFor="let sprint of sprintsList"
-                                                        [value]="sprint.versionName">
+                                                        [value]="sprint.versionName" [id]="sprint.versionName">
                                                         {{ sprint.versionName }}
                                                     </option>
                                                 </select>
@@ -267,7 +267,7 @@
                                                 <select class="form-control form-control-sm" formControlName="toSprint"
                                                     name="toSprint">
                                                     <option *ngFor="let sprint of sprintsList"
-                                                        [value]="sprint.versionName">
+                                                        [value]="sprint.versionName" [id]="sprint.versionName" >
                                                         {{ sprint.versionName }}
                                                     </option>
                                                 </select>
@@ -282,7 +282,7 @@
                                                 <label for="fromRev" class="fw-400">From Rev</label>
                                                 <select class="form-control form-control-sm" formControlName="fromRev"
                                                     name="fromRev">
-                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName" [id]="rev.versionName">
                                                         {{ rev.versionName }}
                                                     </option>
                                                 </select>
@@ -294,7 +294,7 @@
                                                 <label for="toRev" class="fw-400">To Rev</label>
                                                 <select class="form-control form-control-sm" formControlName="toRev"
                                                     name="toRev">
-                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName" [id]="rev.versionName">
                                                         {{ rev.versionName }}
                                                     </option>
                                                 </select>
@@ -310,7 +310,7 @@
                                                 <select class="form-control form-control-sm"
                                                     formControlName="targetSprint" name="targetSprint">
                                                     <option *ngFor="let sprint of sprintsList"
-                                                        [value]="sprint.versionName">
+                                                        [value]="sprint.versionName" [id]="sprint.versionName">
                                                         {{ sprint.versionName }}
                                                     </option>
                                                 </select>
@@ -322,7 +322,7 @@
                                                 <label for="targetRev" class="fw-400">Target Sprint</label>
                                                 <select class="form-control form-control-sm" formControlName="targetRev"
                                                     name="targetRev">
-                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName">
+                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName" [id]="rev.versionName">
                                                         {{ rev.versionName }}
                                                     </option>
                                                 </select>
@@ -347,7 +347,7 @@
                                                 <select class="form-control form-control-sm"
                                                     formControlName="conditionOper">
                                                     <option *ngFor="let condition of conditionOperList"
-                                                        [value]="condition.value">
+                                                        [value]="condition.value" [id]="condition.value">
                                                         {{ condition.value }}
                                                     </option>
                                                 </select>

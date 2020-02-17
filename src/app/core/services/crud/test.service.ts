@@ -24,17 +24,26 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TestService {
+  // list of test folders
   testsList: Array<ITest> = new Array<ITest>();
+
+  // list of testcase id corresponding to the previous test folders list
   testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
+
+  // TODO: clean this?
   testcasesListLength: number;
-  // Data Library
+
+  // list of data library
   testdatalib: Array<any> = new Array<ITestCaseHeader>();
-  testdatalibLength: number;
-  // Test case
+
+  // full testcase object
   testcase: ITestCase = null;
+
   // DIRTY : waiting for #2016 ReadTestCase servlet : dependencies
   // should only be one object
   testcaseheader: ITestCaseHeader = null;
+
+
   testcase_labels: Array<ILabel> = new Array<ILabel>();
   testcase_properties: Array<PropertyValue>;
 

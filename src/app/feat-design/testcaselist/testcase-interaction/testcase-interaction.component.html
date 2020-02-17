@@ -18,6 +18,7 @@
             <!-- END SAVE / CLOSE BUTTON -->
 
         </div>
+
         <div class="block-content">
             <!-- TEST FOLDER & TESTCASE FOLDER -->
             <div class="row">
@@ -62,24 +63,22 @@
 
             </div>
 
-            <!-- TABS CONTENTS -->
             <div class="block block-rounded block-bordered" *ngIf="testcaseheader">
                 <div class="block-content p-0">
 
-                    <!-- TABS -->
+                    <!-- TABS LIST-->
                     <ul class="nav nav-tabs nav-tabs-alt js-tabs-enabled custom-sm" data-toggle="tabs" role="tablist">
                         <li *ngFor="let tab of tabs" class="nav-item">
                             <a class="nav-link" [ngClass]="selectedTab == tab ? 'active show' : ''"
                                 (click)="selectedTab = tab">{{tab}}</a>
                         </li>
                     </ul>
-                    <!-- END TABS -->
+                    <!-- END TABS LIST -->
 
+                    <!-- TABS CONTENTS -->
                     <div class="block-content tab-content">
 
-                        <!-- SCRIPT TAB -->
-
-                        <!-- DEFINITION DEPENDENCY -->
+                        <!-- DEFINITION TAB -->
                         <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="definitionTab"
                             role="tabpanel" role="tabpanel">
 
@@ -163,9 +162,9 @@
                             </div>
 
                         </div>
-                        <!-- END DEFINITION DEPENDENCY -->
+                        <!-- END TAB -->
 
-                        <!-- SETTINGS DEPENDENCY -->
+                        <!-- SETTINGS TAB -->
                         <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="settingsTab"
                             role="tabpanel" role="tabpanel">
                             <div class="row">
@@ -267,7 +266,7 @@
                                                 <select class="form-control form-control-sm" formControlName="toSprint"
                                                     name="toSprint">
                                                     <option *ngFor="let sprint of sprintsList"
-                                                        [value]="sprint.versionName" [id]="sprint.versionName" >
+                                                        [value]="sprint.versionName" [id]="sprint.versionName">
                                                         {{ sprint.versionName }}
                                                     </option>
                                                 </select>
@@ -282,7 +281,8 @@
                                                 <label for="fromRev" class="fw-400">From Rev</label>
                                                 <select class="form-control form-control-sm" formControlName="fromRev"
                                                     name="fromRev">
-                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName" [id]="rev.versionName">
+                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName"
+                                                        [id]="rev.versionName">
                                                         {{ rev.versionName }}
                                                     </option>
                                                 </select>
@@ -294,7 +294,8 @@
                                                 <label for="toRev" class="fw-400">To Rev</label>
                                                 <select class="form-control form-control-sm" formControlName="toRev"
                                                     name="toRev">
-                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName" [id]="rev.versionName">
+                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName"
+                                                        [id]="rev.versionName">
                                                         {{ rev.versionName }}
                                                     </option>
                                                 </select>
@@ -322,7 +323,8 @@
                                                 <label for="targetRev" class="fw-400">Target Sprint</label>
                                                 <select class="form-control form-control-sm" formControlName="targetRev"
                                                     name="targetRev">
-                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName" [id]="rev.versionName">
+                                                    <option *ngFor="let rev of revsList" [value]="rev.versionName"
+                                                        [id]="rev.versionName">
                                                         {{ rev.versionName }}
                                                     </option>
                                                 </select>
@@ -425,18 +427,18 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- END SETTINGS DEPENDENCY -->
+                        <!-- END TAB -->
 
-                        <!-- LABELS DEPENDENCY -->
+                        <!-- LABELS TAB -->
                         <div *ngIf="selectedTab == tabs[2]" class="tab-pane active show" id="labelsTab" role="tabpanel"
                             role="tabpanel">
                             <app-labels-tab [test]="test" [testcase]="testcase" [system]="testcaseheader.system">
                             </app-labels-tab>
 
                         </div>
-                        <!-- END LABELS DEPENDENCY -->
+                        <!-- END TAB -->
 
-                        <!-- BUGS DEPENDENCY -->
+                        <!-- BUGS TAB -->
                         <div *ngIf="selectedTab == tabs[3]" class="tab-pane active show" id="bugsTab" role="tabpanel"
                             role="tabpanel">
 
@@ -468,9 +470,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- END BUGS DEPENDENCY -->
+                        <!-- END TAB -->
 
-                        <!-- AUDIT DEPENDENCY -->
+                        <!-- DEPENDENCY TAB -->
                         <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="dependencyTab"
                             role="tabpanel" role="tabpanel">
 
@@ -568,7 +570,7 @@
                             </div>
 
                         </div>
-                        <!-- END AUDIT DEPENDENCY -->
+                        <!-- DEPENDENCY TAB -->
 
                         <!-- AUDIT TAB -->
                         <div *ngIf="selectedTab == tabs[5]" class="tab-pane active show" id="auditTab" role="tabpanel">
@@ -679,11 +681,11 @@
                         </div>
                         <!-- END AUDIT TAB -->
 
-                        <!-- END SCRIPT TAB -->
                     </div>
+                    <!-- END TABS CONTENTS -->
+
                 </div>
             </div>
-            <!-- END TABS CONTENTS -->
         </div>
     </div>
 </form>

@@ -101,7 +101,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="ShortDescription">Application</label>
-                                        <ng-select name="Application" class="custom-sm" [items]="applicationsList"
+                                        <ng-select name="Application" class="custom-sm" id="application" [items]="applicationsList"
                                             bindLabel="application" bindValue="application"
                                             formControlName="application" (change)="getFromSystem()"
                                             placeholder="You must define an application">
@@ -114,7 +114,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="Status">Status</label>
-                                        <select class="form-control form-control-sm" formControlName="status">
+                                        <select class="form-control form-control-sm" id="status" formControlName="status">
                                             <option *ngFor="let status of statusList" [value]="status.value">
                                                 {{ status.value }}
                                             </option>
@@ -127,7 +127,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="Type">Type</label>
-                                        <select class="form-control form-control-sm" formControlName="group">
+                                        <select class="form-control form-control-sm" id="type" formControlName="group">
                                             <option *ngFor="let type of typesList" [value]="type.value">
                                                 {{ type.value }}
                                             </option>
@@ -140,7 +140,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="Priority">Priority</label>
-                                        <select class="form-control form-control-sm" formControlName="priority">
+                                        <select class="form-control form-control-sm" id="priority" formControlName="priority">
                                             <option *ngFor="let priority of priorityList" [value]="priority.value">
                                                 {{ priority.value }}
                                             </option>

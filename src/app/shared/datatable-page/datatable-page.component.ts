@@ -5,6 +5,8 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { FiltersComponent } from './filters/filters.component';
+import { SystemService } from 'src/app/core/services/crud/system.service';
+import { IInvariant } from '../model/invariants.model';
 
 @Component({
   selector: 'app-datatable-page',
@@ -37,6 +39,8 @@ export class DatatablePageComponent implements OnInit {
     totalCount: number // total of element in the database
   };
 
+  private selectedSystemsList: Array<IInvariant>;
+
   constructor(
     private filterService: FilterService,
     private invariantsService: InvariantsService) { }
@@ -49,6 +53,7 @@ export class DatatablePageComponent implements OnInit {
       totalCount: 0
     };
     this.invariantsService.observableSystemsSelected.subscribe(rep => {
+      this.selectedSystemsList = rep;
       this.cache = {};
       this.rows = [];
       this.page.number = 0;

@@ -25,19 +25,13 @@ export class InvariantsService {
   propertyTypeList: Array<IInvariant>;
   propertyNatureList: Array<IInvariant>;
   propertyDatabaseList: Array<IInvariant>;
-  systemsList: Array<IInvariant>;
+  systemsList: Array<any>;
   environmentsList: Array<IInvariant>;
   appService: Array<any>;
   // system management
   // DEFAULT SELECTION
-  // TODO : remove
-  selectedSystemsList: Array<IInvariant> = [{
-    description: 'Cerberus Application',
-    gp1: '',
-    gp2: '',
-    gp3: '',
-    value: 'CERBERUS'
-  }];
+  selectedSystemsList: Array<string>;
+
   // observables
   observableCountriesList = new BehaviorSubject<IInvariant[]>(this.countriesList);
   observableEnvironments = new BehaviorSubject<IInvariant[]>(this.environmentsList);
@@ -85,7 +79,7 @@ export class InvariantsService {
 
   // input: the new list of selected system(s)
   // replace the service variable with the given list
-  updateSelectedSystemList(newSystemsList: Array<IInvariant>): void {
+  updateSelectedSystemList(newSystemsList: Array<string>): void {
     this.selectedSystemsList = newSystemsList;
     this.observableSystemsSelected.next(this.selectedSystemsList);
   }
@@ -93,7 +87,7 @@ export class InvariantsService {
   // select all the systems at once
   selectAllSystems() {
     // fill a new list with all the system
-    const allSystemsList = new Array<IInvariant>();
+    const allSystemsList = new Array<string>();
     this.systemsList.forEach(system => {
       allSystemsList.push(system);
     });

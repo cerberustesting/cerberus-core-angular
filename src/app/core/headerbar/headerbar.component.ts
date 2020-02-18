@@ -17,10 +17,10 @@ import { HeaderTitleService } from '../services/utils/header-title.service';
 })
 export class HeaderbarComponent implements OnInit {
 
-  // system(s) list fetched from API
-  systemsList: Array<IInvariant> = [];
+  // system(s) list fetched from API (must be string because we have a misalignement with default systems from user)
+  systemsList: Array<string> = [];
   // selected system(s) list by the user
-  selectedSystemsList: Array<IInvariant> = [];
+  selectedSystemsList: Array<string> = [];
 
   // user data from API
   private user: IUser;
@@ -44,16 +44,13 @@ export class HeaderbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     // fetch data from User (could be done at a higher level)
-    this._userService.observableAccountLink.subscribe(r => { if (r) { this.user = r; } });
+    this._userService.observableAccountLink.subscribe(r => { if (r) { this.user = r; this.systemsList = this.user.system; this.selectedSystemsList = this.user.defaultSystem; } });
     this.userFullName = this._keycloakService.getFullName();
 
-    // fetch the system list from invariant list
-    this._invariantsService.observableSystems.subscribe(response => { this.systemsList = response; });
-    this._invariantsService.getSystems();
-
     // subscribe to selected system(s) list
-    this._invariantsService.observableSystemsSelected.subscribe(r => { this.selectedSystemsList = r; });
+    this._invariantsService.observableSystemsSelected.subscribe(r => { });
 
     this._hearderTitleService.observableTitle.subscribe(r => { if (r) { this.title = r.titleValue; this.id = r.id; } });
   }
@@ -68,7 +65,7 @@ export class HeaderbarComponent implements OnInit {
 
   systemsList_OnClear(): void {
     // empty the selected system(s) array
-    this.selectedSystemsList = new Array<IInvariant>();
+    this.selectedSystemsList = new Array<string>();
     this._invariantsService.updateSelectedSystemList(this.selectedSystemsList);
   }
 
@@ -85,7 +82,7 @@ export class HeaderbarComponent implements OnInit {
     // since ng-select component override declaration
     // which means undefined == empty in this case
     if (this.selectedSystemsList) {
-      return this.selectedSystemsList.filter(s => s.value === systemName).length > 0;
+      return this.selectedSystemsList.filter(s => s === systemName).length > 0;
     } else {
       return false;
     }

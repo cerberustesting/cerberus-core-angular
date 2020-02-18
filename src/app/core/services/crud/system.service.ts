@@ -86,7 +86,7 @@ export class SystemService {
   getApplicationList() {
     this.applicationsList = [];
     for (const system of this.invariantsService.selectedSystemsList) {
-      this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication?system=' + system.value)
+      this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication?system=' + system)
         .subscribe(response => {
           // @ts-ignore
           this.applicationsList = this.applicationsList.concat(response.contentTable);

@@ -5,5 +5,7 @@ export interface IUser {
     };
     login: string;
     language: string;
+    defaultSystem: any;
+    system: Array<string>;
     // TODO : complete the interface
 }

@@ -30,7 +30,7 @@
             <ng-template ng-multi-label-tmp let-items="items" let-search="searchTerm">
               <i class="fa fa-fw fa-folder-open mr-2" style="color:#495057;"></i>
               <span *ngIf="selectedSystemsList" class="nav-main-link-badge badge badge-pill badge-primary mr-2">
-                <span *ngIf="selectedSystemsList.length == 1"> {{ selectedSystemsList[0].value }}</span>
+                <span *ngIf="selectedSystemsList.length == 1"> {{ selectedSystemsList[0] }}</span>
                 <span *ngIf="selectedSystemsList.length > 1"> {{ selectedSystemsList.length }} </span>
               </span>
             </ng-template>
@@ -39,9 +39,9 @@
             <!-- OPTION(S) TEMPLATE -->
             <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
               <b>
-                <span *ngIf="!isASystemSelected(item.value)">{{item.value}}</span>
-                <span *ngIf="isASystemSelected(item.value)" class="text-primary-dark bold">{{item.value}}</span>
-                <i *ngIf="isASystemSelected(item.value)" class="ml-1 fa fa-check-circle text-primary-dark"></i>
+                <span *ngIf="!isASystemSelected(item)">{{item}}</span>
+                <span *ngIf="isASystemSelected(item)" class="text-primary-dark bold">{{item}}</span>
+                <i *ngIf="isASystemSelected(item)" class="ml-1 fa fa-check-circle text-primary-dark"></i>
               </b>
             </ng-template>
             <!-- END OPTION(S) TEMPLATE -->

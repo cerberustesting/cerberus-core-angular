@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -45,9 +46,18 @@ export class FilterService {
     this.activeFiltersList = new Array<ActiveFilter>();
   }
 
-  generateQueryStringParameters(columnList: Array<Column>,
+  /**
+  * getContentForTable function
+  * returns all filters in a url-encoded string
+  * @params columnList : list of columns and their values
+  * @params pageInformation : information on the current page
+  * @params globalSearch : quick search keyword
+ */
+  generateQueryStringParameters(
+    columnList: Array<Column>,
     pageInformation: { size: number, sort: any, number: number, totalCount: number },
-    globalSearch: string): string {
+    globalSearch: string
+  ): string {
     let queryParameter = '';
     const formData = {};
     const columnListWithActiveFilter = columnList.filter(e => e.sSearch)
@@ -83,7 +93,7 @@ export class FilterService {
             const systemByFilterRaw = new Array<String>();
             if (this.invariantService.selectedSystemsList.length !== 0) {
               this.invariantService.selectedSystemsList.forEach(system => {
-                systemByFilterRaw.push(system.value);
+                systemByFilterRaw.push(system);
               });
               systemByService = ',' + systemByFilterRaw.join(',');
             } else {
@@ -110,17 +120,19 @@ export class FilterService {
       formData['sLike'] = columnListWithActiveFilter.filter(c => c.filterMode === 'SEARCH_FIELD').map(column => column.apiName).join(','); // databaseName of like filters
     }
 
-    for (const item in formData) {
-      if (item) {
-        queryParameter += encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&';
-      }
-    }
+    // encode the whole formData content
+    for (const item in formData) { if (item) { queryParameter += encodeURIComponent(item) + '=' + encodeURIComponent(formData[item]) + '&'; } }
+
     return queryParameter.slice(0, -1); // removing the last '&'
   }
 
-  // return the values to be displayed on a datatable
-  // according to filter, sort & search
-  getContentForTable(servlet: string, queryParameters: string, callback) {
+  /**
+   * getContentForTable method
+   * returns datable content
+   * @params servlet : api endpoint
+   * @params queryParameters : url-encoded filters
+  */
+  getContentForTable(servlet: string, queryParameters: string, callback): void {
     this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
       .subscribe((response) => {
         if (response) {

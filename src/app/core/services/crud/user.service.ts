@@ -30,6 +30,19 @@ export class UserService {
       });
   }
 
+  updateUser(newSystemsList: Array<string>) {
+    // store the userId (login from KC standpoint)
+    const userId = this.user.login;
+    // build the query parameters
+    let queryParameters = 'id=' + userId + '&';
+    newSystemsList.forEach(system => { queryParameters += 'MysSystem=' + encodeURIComponent(system) + '&'; });
+    // remove the last '&'
+    queryParameters = queryParameters.slice(0, queryParameters.length - 1);
+    // perform the call WITHOUT refreshing any observable to avoid
+    this.http.get<any>(environment.cerberus_api_url + '/UpdateMyUserSystem?' + queryParameters);
+    // TODO: catch HTTP errors
+  }
+
   /**
    * format the dirty format of user default system : [\"CERBERUS\",\"US-nouxx\"] to an array of string
    * @params rawList : list of system in the raw format

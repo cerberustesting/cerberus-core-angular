@@ -56,11 +56,10 @@ export class HeaderbarComponent implements OnInit {
   }
 
   systemsList_OnChange(): void {
-    // send the new list of selected system(s) to the service
+    // send the new list of selected system(s) to the invariants service (for datatable filtering)
     this._invariantsService.updateSelectedSystemList(this.selectedSystemsList);
-    // TODO : order the selected system(s) at the beginning
-    // this.systemsList = this.systemsList.filter(system => this.systemModel.includes(system.value))
-    // .concat(this.systemsList.filter(system => !this.systemModel.includes(system.value)));
+    // send the new systems list to the API call
+    this._userService.updateUser(this.selectedSystemsList);
   }
 
   systemsList_OnClear(): void {

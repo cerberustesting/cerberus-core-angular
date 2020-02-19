@@ -30,7 +30,7 @@ export class InvariantsService {
   appService: Array<any>;
   // system management
   // DEFAULT SELECTION
-  selectedSystemsList: Array<string>;
+  selectedSystemsList: Array<string> = [];
 
   // observables
   observableCountriesList = new BehaviorSubject<IInvariant[]>(this.countriesList);

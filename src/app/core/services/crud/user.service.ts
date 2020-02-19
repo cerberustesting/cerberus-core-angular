@@ -22,7 +22,7 @@ export class UserService {
       .subscribe(response => {
         this.user = response;
 
-        // DIRTY : format the default system list, 
+        // DIRTY : format the default system list,
         // waiting for https://github.com/cerberustesting/cerberus-source/issues/2096 to be removed
         this.user.defaultSystem = this.formatDefaultSystemList(this.user.defaultSystem);
 

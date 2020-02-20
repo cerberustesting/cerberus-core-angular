@@ -41,12 +41,12 @@ export class UserService {
     const userId = this.user.login;
     // build the query parameters
     let queryParameters = 'id=' + userId + '&';
-    newSystemsList.forEach(system => { queryParameters += 'MysSystem=' + encodeURIComponent(system) + '&'; });
+    newSystemsList.forEach(system => { queryParameters += 'MySystem=' + encodeURIComponent(system) + '&'; });
     // remove the last '&'
     queryParameters = queryParameters.slice(0, queryParameters.length - 1);
     // perform the call WITHOUT refreshing any observable
-    this.http.get<any>(environment.cerberus_api_url + '/UpdateMyUserSystem?' + queryParameters);
-    console.log(environment.cerberus_api_url + '/UpdateMyUserSystem?' + queryParameters);
+    this.http.get<Array<string>>(environment.cerberus_api_url + '/UpdateMyUserSystem?' + queryParameters)
+      .subscribe(res => { });
     // TODO: catch HTTP errors
   }
 

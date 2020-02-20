@@ -6,7 +6,6 @@ import { UserService } from '../services/crud/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
 import { SidecontentService } from '../services/crud/sidecontent.service';
 import { NotificationService } from '../services/utils/notification.service';
-import { NotificationStyle } from '../services/utils/notification.model';
 import { HeaderTitleService } from '../services/utils/header-title.service';
 
 @Component({
@@ -17,69 +16,88 @@ import { HeaderTitleService } from '../services/utils/header-title.service';
 })
 export class HeaderbarComponent implements OnInit {
 
-  // system(s) list fetched from API (must be string because we have a misalignement with default systems from user)
-  systemsList: Array<string> = [];
   // selected system(s) list by the user
-  selectedSystemsList: Array<string> = [];
+  // using another variable while the format isn't correct
+  private selectedSystemsList: Array<string> = [];
 
   // user data from API
-  private user: IUser;
+  public user: IUser;
+
   // user data from Keycloak
-  userFullName: string;
+  public userFullName: string; // full user displayed name
 
   // page title
-  title: string;
+  public title: string;
   // page title id
-  // needed to differentiate page id other than from value
-  // since it language dependant
-  id: string;
+  public id: string;
 
   constructor(
-    private _invariantsService: InvariantsService,
-    private _keycloakService: KeycloakService,
-    private _userService: UserService,
-    private _sideContentService: SidecontentService,
-    private _notificationService: NotificationService,
-    private _hearderTitleService: HeaderTitleService
-  ) { }
+    private invariantsService: InvariantsService,
+    private keycloakService: KeycloakService,
+    private userService: UserService,
+    private sideContentService: SidecontentService,
+    private notificationService: NotificationService,
+    private hearderTitleService: HeaderTitleService
+  ) { this.user = null; }
 
   ngOnInit() {
 
-    // fetch data from User (could be done at a higher level)
-    this._userService.observableAccountLink.subscribe(r => { if (r) { this.user = r; this.systemsList = this.user.system; this.selectedSystemsList = this.user.defaultSystem; } });
-    this.userFullName = this._keycloakService.getFullName();
+    // fetch data from User (could be done at an higher level)
+    this.userService.observableUser.subscribe(r => { if (r) { this.user = r; this.selectedSystemsList = this.user.defaultSystem; } });
+
+    // get user full name
+    this.userFullName = this.keycloakService.getFullName();
 
     // subscribe to selected system(s) list
-    this._invariantsService.observableSystemsSelected.subscribe(r => { });
+    this.invariantsService.observableSystemsSelected.subscribe(r => { });
 
-    this._hearderTitleService.observableTitle.subscribe(r => { if (r) { this.title = r.titleValue; this.id = r.id; } });
+    // subscrie to the title value and id
+    this.hearderTitleService.observableTitle.subscribe(r => { if (r) { this.title = r.titleValue; this.id = r.id; } });
   }
 
+  /**
+   * method triggered on every user systems list values changes.
+   * send the new list to the user API (to save it) and to another service for data filtering.
+   */
   systemsList_OnChange(): void {
     // send the new list of selected system(s) to the invariants service (for datatable filtering)
-    this._invariantsService.updateSelectedSystemList(this.selectedSystemsList);
+    this.invariantsService.updateSelectedSystemList(this.selectedSystemsList);
     // send the new systems list to the API call
-    this._userService.updateUser(this.selectedSystemsList);
+    this.userService.updateUserSystemList(this.selectedSystemsList);
   }
 
+  /**
+   * method triggered on every clean of the system select
+   * properly empty the select systems list variable
+   */
   systemsList_OnClear(): void {
     // empty the selected system(s) array
     this.selectedSystemsList = new Array<string>();
-    this._invariantsService.updateSelectedSystemList(this.selectedSystemsList);
+    this.invariantsService.updateSelectedSystemList(this.selectedSystemsList);
   }
 
+  /**
+   * select all the available systems from the list
+  */
   selectAllSystems(): void {
-    this._invariantsService.selectAllSystems();
+    this.invariantsService.selectAllSystems();
   }
 
+  /**
+   * clear the user systems list variable
+   */
   clearAllSystems(): void {
     this.systemsList_OnClear();
   }
 
+  /**
+   * @param systemName the name of the system to check
+   * return true if the system is selected by the user, false instead
+   */
   isASystemSelected(systemName: string): boolean {
     // we check that the selectedSystems array is defined
     // since ng-select component override declaration
-    // which means undefined == empty in this case
+    // which means undefined = empty in this case
     if (this.selectedSystemsList) {
       return this.selectedSystemsList.filter(s => s === systemName).length > 0;
     } else {
@@ -87,10 +105,16 @@ export class HeaderbarComponent implements OnInit {
     }
   }
 
+  /**
+   * return true if all available systems are selected.
+   */
   areAllSystemsSelected(): boolean {
-    return this.numberOfSelectedSystems() === this.systemsList.length;
+    return this.numberOfSelectedSystems() === this.user.system.length;
   }
 
+  /**
+   * return the number of selected systems by the user.
+   */
   numberOfSelectedSystems(): number {
     let numberOfSelectedSystems: number;
     // due to ng-select behavior
@@ -103,36 +127,35 @@ export class HeaderbarComponent implements OnInit {
     return numberOfSelectedSystems;
   }
 
-  customSearchSystem(term: string, item: IInvariant) {
+  /**
+   * custom search function for the system select
+   * @param term keyword to filter on
+   * @param item ?
+   */
+  customSearchSystem(term: string, item: IInvariant): boolean {
     term = term.toLowerCase();
     return item.value.toLowerCase().indexOf(term) > -1 || item.value.toLowerCase() === term;
   }
 
+  /**
+   * calls the logout method from keycloak service.
+   */
   logout(): void {
-    this._keycloakService.logout();
+    this.keycloakService.logout();
   }
 
+  /**
+   * open (in a new tab) the keycloak user settings page
+   */
   openUserSettingsPage(): void {
     window.open(this.user.menu.accountLink, '_blank');
   }
 
-  // DEBUG FUNCTION : feel free to edit them!
+  /**
+   * debug function: does random things depending on the last person who edit it..
+   */
   debug(): void {
-    this._sideContentService.openSideBlock();
+    this.sideContentService.openSideBlock();
   }
 
-  debug2(): void {
-    this._notificationService.createANotification(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit,' +
-      ' sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' +
-      ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi' +
-      ' ut aliquip ex ea commodo consequat.',
-      NotificationStyle.Info,
-      true,
-      5000);
-  }
-
-  refreshInvariants() {
-    this._invariantsService.loadInvariants();
-  }
 }

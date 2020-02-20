@@ -1,8 +1,7 @@
-<!-- Header -->
 <header id="page-header">
-  <!-- Header Content -->
   <div class="content-header">
-    <!-- Left Section -->
+
+    <!-- LEFT SECTION -->
     <div>
       <div class="d-inline-block" style="color:white;">
         <i class="fa fa-angle-right mr-1"></i>
@@ -10,26 +9,22 @@
       </div>
 
     </div>
-    <!-- END Left Section -->
+    <!-- END LEFT SECTION -->
 
-    <!-- Right Section -->
+    <!-- RIGHT SECTION -->
     <div class="d-inline-block">
-      <div class="d-inline-block" style="margin-right: 20px;">
-        <button class="btn btn-info" (click)="refreshInvariants()">Refresh Invariants</button>
-      </div>
 
-      <div class="d-inline-block">
+      <!-- SYSTEM SELECTION -->
+      <div *ngIf="user" class="d-inline-block mr-2">
         <button type="button" class="btn btn-dual p-0 system-select-width text-left">
-
-          <!-- SYSTEM SELECTION -->
-          <ng-select class="custom-icon" [items]="systemsList" [closeOnSelect]="false" multiple="true"
+          <ng-select class="custom-icon custom-sm" [items]="user.system" [closeOnSelect]="false" multiple="true"
             (clear)="systemsList_OnClear()" (change)="systemsList_OnChange()" [(ngModel)]="selectedSystemsList"
             [dropdownPosition]="'bottom'" placeholder="No system selected" [searchFn]="customSearchSystem">
 
             <!-- SELECTED VALUE(S) TEMPLATE -->
             <ng-template ng-multi-label-tmp let-items="items" let-search="searchTerm">
               <i class="fa fa-fw fa-folder-open mr-2" style="color:#495057;"></i>
-              <span *ngIf="selectedSystemsList" class="nav-main-link-badge badge badge-pill badge-primary mr-2">
+              <span *ngIf="selectedSystemsList" class="nav-main-link-badge badge badge-pill badge-primary mt-1 mr-2">
                 <span *ngIf="selectedSystemsList.length == 1"> {{ selectedSystemsList[0] }}</span>
                 <span *ngIf="selectedSystemsList.length > 1"> {{ selectedSystemsList.length }} </span>
               </span>
@@ -66,14 +61,13 @@
             <!-- END TOP BUTTONS : CLEAR / SELECT ALL -->
 
           </ng-select>
-          <!-- END SYSTEM SELECTION -->
-
         </button>
       </div>
+      <!-- END SYSTEM SELECTION -->
 
-      <!-- User Dropdown -->
+      <!-- USER DROPDOWN -->
       <div class="dropdown d-inline-block">
-        <button type="button" class="btn btn-dual" id="page-header-user-dropdown" data-toggle="dropdown"
+        <button type="button" class="btn btn-dual btn-sm" id="page-header-user-dropdown" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-fw fa-user mr-1"></i>
           <span class="d-none d-sm-inline-block">{{ userFullName }}</span>
@@ -96,21 +90,12 @@
           </div>
         </div>
       </div>
-      <!-- END User Dropdown -->
-
-      <button type="button" class="btn btn-dual" (click)="debug()">
-        <i class="fa fa-fw fa-bug"></i>
-      </button>
-
-      <button type="button" class="btn btn-dual" (click)="debug2()">
-        <i class="fa fa-fw fa-info"></i>
-      </button>
+      <!-- END USER DROPDOWN -->
 
     </div>
-    <!-- END Right Section -->
+    <!-- END RIGHT SECTION -->
 
   </div>
-  <!-- END Header Content -->
 
   <!-- Header Loader -->
   <!-- Please check out the Loaders page under Components category to see examples of showing/hiding it -->
@@ -124,4 +109,3 @@
   <!-- END Header Loader -->
 
 </header>
-<!-- END Header -->

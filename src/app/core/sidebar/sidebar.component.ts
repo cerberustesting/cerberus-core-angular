@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserPreferencesService } from '../services/utils/userpreferences.service';
+import { IUser } from 'src/app/shared/model/user.model';
+import { UserService } from '../services/crud/user.service';
+import { MenuItem } from 'src/app/shared/model/front/menu.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,208 +11,381 @@ import { UserPreferencesService } from '../services/utils/userpreferences.servic
 })
 export class SidebarComponent implements OnInit {
 
+  // user information
+  private user: IUser;
+
   public nightMode: boolean;
 
+  /** menu item currently expanded */
+  private currentActiveMenu: MenuItem;
+
   constructor(
-    private userPreferencesService: UserPreferencesService
-  ) { }
+    private userPreferencesService: UserPreferencesService,
+    private userService: UserService
+  ) { this.currentActiveMenu = null; }
 
-  testManagementMenu = [
-    {
-      name: 'Test',
-      icon_class: 'si-grid',
-      expanded: false,
-      id: 'test',
-      submenu: [
-        {
-          name: 'Testcase List',
-          link: '/design/testcaseslist',
-          id: 'tcList'
-        },
-        {
-          name: 'Testcase Edition',
-          link: '/design/testcasescript'
-        }
-      ]
-    },
-    {
-      name: 'Data',
-      icon_class: 'si-layers',
-      expanded: false,
-      submenu: [{
-        name: 'Data Library',
-        link: '/design/datalibrary'
-      },
-      {
-        name: 'Services',
-        link: '/servicelibrary'
-      }]
-    },
-    {
-      name: 'Campaigns',
-      link: '/design/campaigns',
-      icon_class: 'si-paper-clip',
-      expanded: false
-    },
-    {
-      name: 'Labels',
-      link: '/labels',
-      icon_class: 'si-tag',
-      expanded: false
-    }
-  ];
-  runMenu = [
-    {
-      name: 'Run',
-      icon_class: 'si-control-play',
-      expanded: false,
-      link: '/run'
-    },
-    {
-      name: 'Queue Management',
-      link: '/queue',
-      icon_class: 'si-list',
-      expanded: false
-    },
-    {
-      name: 'Robots',
-      link: '/robots',
-      icon_class: 'si-rocket',
-      expanded: false
-    }
-  ];
-  analyseMenu = [
-    {
-      name: 'Executions List',
-      icon_class: 'si-control-forward',
-      link: '/executions',
-      expanded: false
-    },
-    {
-      name: 'Report',
-      link: '/analyse/report',
-      icon_class: 'si-pie-chart',
-      expanded: false
-    }
-  ];
-  configureMenu = [
-    {
-      name: 'Applications',
-      icon_class: 'si-screen-desktop',
-      expanded: false,
-      submenu: [{
-        name: 'Application List',
-        link: '/applications'
-      },
-      {
-        name: 'Application Object',
-        link: '/appobjects'
-      },
-      {
-        name: 'Deployment Type',
-        link: '/deployment'
-      }]
-    },
-    {
-      name: 'Integration',
-      icon_class: 'si-equalizer',
-      expanded: false,
-      submenu: [{
-        name: 'Environment',
-        link: '/dashboard'
-      },
-      {
-        name: 'Integration Status',
-        link: '/dashboard'
-      },
-      {
-        name: 'Build Revision',
-        link: '/dashboard'
-      },
-      {
-        name: 'Build Content',
-        link: '/dashboard'
-      },
-      {
-        name: 'Project',
-        link: '/dashboard'
-      },
-      {
-        name: 'Batch',
-        link: '/dashboard'
-      }]
-    },
-    {
-      name: 'Administration',
-      link: '/dashboard',
-      icon_class: 'si-settings',
-      expanded: false,
-      submenu: [{
-        name: 'User Management',
-        link: '/dashboard'
-      },
-      {
-        name: 'Logs',
-        link: '/dashboard'
-      },
-      {
-        name: 'Parameters',
-        link: '/dashboard'
-      },
-      {
-        name: 'Invariants',
-        link: '/dashboard'
-      },
-      {
-        name: 'DB Maintenance',
-        link: '/dashboard'
-      },
-      {
-        name: 'Monitoring',
-        link: '/dashboard'
-      }]
-    }
-  ];
-  infoMenu = [
-    {
-      name: 'Info',
-      icon_class: 'si-question',
-      expanded: false,
-      link: '/dashboard',
-      submenu: [{
-        name: 'Documentation',
-        link: '/dashboard'
-      },
-      {
-        name: 'Tutorials',
-        link: '/dasboard'
-      }]
-    }
-  ];
-
-  menus = [
-    { name: 'Design', data: this.testManagementMenu, expanded: false },
-    { name: 'Run', data: this.runMenu, expanded: false },
-    { name: 'Analyse', data: this.analyseMenu, expanded: false },
-    { name: 'Configure', data: this.configureMenu, expanded: false }
-  ];
+  // menu content
+  public menu: Array<MenuItem>;
 
   toggleNightMode() {
     this.userPreferencesService.toggleNightMode();
   }
 
   toggleMenu(menu) {
-    for (const section of this.menus) {
-      for (const li of section.data) {
-        if (li !== menu) { li.expanded = false; }
+    // browse through every first level of menu
+    for (const submenu1 of this.menu) {
+      // browse through every seconde level of menu
+      for (const li of submenu1.submenu) {
+        // if the menuitem corresponds to the one passed in parameters
+        if (li !== menu) {
+          // collapse every menu item
+          li.expanded = false;
+        }
       }
     }
+
+    // then toggles back to true
     menu.expanded = !menu.expanded;
+
+    // if the current active menu is being toggled
+    if (this.currentActiveMenu === menu) {
+      // empty the active menu variable
+      this.currentActiveMenu = null;
+    } else {
+      // save the menu item
+      this.currentActiveMenu = menu;
+    }
   }
 
   ngOnInit() {
     // subscribe to nightMode changes
     this.userPreferencesService.observableNightMode.subscribe(r => { this.nightMode = r; });
+    // subscribe to user changes
+    this.userService.observableUser.subscribe(r => {
+      this.user = r;
+      if (this.user) {
+        this.buildMenu();
+      }
+    });
+  }
+
+  /** expande the active menu item */
+  mouseEnterInSidebar() {
+    const menuItem = this.findASecondLevelMenuItem(this.currentActiveMenu);
+    console.log(menuItem);
+    if (menuItem) {
+      menuItem.expanded = true;
+    }
+  }
+
+  /** collapse the active menu item */
+  mouseLeaveFromSidebar() {
+    const menuItem = this.findASecondLevelMenuItem(this.currentActiveMenu);
+    if (menuItem) {
+      menuItem.expanded = false;
+    }
+  }
+
+  /** return the MenuItem object corresponding to the one passed in parameters in the global menu variable
+   * return null if there is no expanded menu
+   * @param menuItem object to search
+   */
+  findASecondLevelMenuItem(menuItem: MenuItem): MenuItem {
+    if (this.currentActiveMenu) {
+      // instantiate the menu item object to be found
+      let res = null;
+      // for each submenus (first level)
+      this.menu.forEach(firstLevelMenu => {
+        console.log('searching in menu named ' + firstLevelMenu.name);
+        // if the menu item is found
+        const found = firstLevelMenu.submenu.find(menuitem => menuitem === menuItem);
+        if (found) { res = found; }
+      });
+      return res;
+    } else {
+      return null;
+    }
+  }
+
+  /** build the menu tree structure */
+  buildMenu() {
+    this.menu = [
+      {
+        name: 'Design',
+        expanded: false,
+        authorized: true,
+        id: 'designSection',
+        submenu: [
+          {
+            name: 'Test',
+            icon_class: 'si-grid',
+            expanded: false,
+            authorized: true,
+            id: 'testMenu',
+            submenu: [
+              {
+                name: 'Test Case List',
+                expanded: false,
+                id: 'tcListMenu',
+                link: '/design/testcaseslist',
+                authorized: this.user.group.includes('TestRO')
+              },
+              {
+                name: 'Test Case Edition',
+                expanded: false,
+                id: 'tcEditionMenu',
+                link: '/design/testcasescript',
+                authorized: this.user.group.includes('Test')
+              }
+            ]
+          },
+          {
+            name: 'Data',
+            icon_class: 'si-layers',
+            expanded: false,
+            authorized: true,
+            id: 'dataMenu',
+            submenu: [
+              {
+                name: 'Data Library',
+                link: '/pagenotfound',
+                authorized: true,
+                id: 'dataLibMenu',
+                expanded: false
+              },
+              {
+                name: 'Services',
+                link: '/pagenotfound',
+                authorized: true,
+                id: 'servicesMenu',
+                expanded: false
+              }
+            ]
+          },
+          {
+            name: 'Campaigns',
+            link: '/pagenotfound',
+            icon_class: 'si-paper-clip',
+            id: 'campaignsMenu',
+            expanded: false,
+            authorized: true
+          },
+          {
+            name: 'Labels',
+            link: '/pagenotfound',
+            icon_class: 'si-tag',
+            authorized: true,
+            expanded: false,
+            id: 'labelsMenu'
+          }
+        ]
+      },
+      {
+        name: 'Automate',
+        expanded: false,
+        authorized: true,
+        id: 'automateSection',
+        submenu: [
+          {
+            name: 'Run',
+            id: 'runMenu',
+            authorized: true,
+            icon_class: 'si-control-play',
+            expanded: false,
+            link: '/pagenotfound'
+          },
+          {
+            name: 'Queue Management',
+            id: 'queueManageentMenu',
+            authorized: true,
+            link: '/pagenotfound',
+            icon_class: 'si-list',
+            expanded: false
+          },
+          {
+            name: 'Robots',
+            id: 'robotsMenu',
+            authorized: true,
+            link: '/pagenotfound',
+            icon_class: 'si-rocket',
+            expanded: false
+          }
+        ]
+      },
+      {
+        name: 'Analyse',
+        expanded: false,
+        authorized: true,
+        id: 'analyseSection',
+        submenu: [
+          {
+            name: 'Reports',
+            id: 'reportMenu',
+            authorized: true,
+            link: '/analyse/report',
+            icon_class: 'si-pie-chart',
+            expanded: false
+          }
+        ]
+      },
+      {
+        name: 'Configure',
+        expanded: false,
+        authorized: true,
+        id: 'configure',
+        submenu: [
+          {
+            name: 'Applications',
+            icon_class: 'si-screen-desktop',
+            expanded: false,
+            id: 'applications',
+            authorized: true,
+            submenu: [
+              {
+                name: 'Application List',
+                link: '/applications',
+                expanded: false,
+                authorized: true,
+                id: 'applicationsMenu'
+              },
+              {
+                name: 'Application Object',
+                link: '/appobjects',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Deployment Type',
+                link: '/deployment',
+                expanded: false,
+                authorized: true,
+                id: 'deploymentMenu'
+              }
+            ]
+          },
+          {
+            name: 'Integration',
+            icon_class: 'si-equalizer',
+            expanded: false,
+            id: 'integration',
+            authorized: true,
+            submenu: [
+              {
+                name: 'Environment',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Integration Status',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Build Revision',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Build Content',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Project',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Batch',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              }
+            ]
+          },
+          {
+            name: 'Administration',
+            link: '/dashboard',
+            icon_class: 'si-settings',
+            expanded: false,
+            authorized: true,
+            id: 'administration',
+            submenu: [
+              {
+                name: 'User Management',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Logs',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Parameters',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Invariants',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'DB Maintenance',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              },
+              {
+                name: 'Monitoring',
+                link: '/dashboard',
+                expanded: false,
+                authorized: true,
+                id: 'applicationObjectsMenu'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: 'Help',
+        expanded: false,
+        authorized: true,
+        id: 'helpSection',
+        submenu: [
+          {
+            name: 'Documentation',
+            id: 'tcListMenu',
+            icon_class: 'si-question',
+            link: '/pagenotfound',
+            authorized: true,
+            expanded: false
+          }
+        ]
+      }
+    ];
   }
 
 }

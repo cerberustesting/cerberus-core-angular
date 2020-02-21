@@ -7,5 +7,6 @@ export interface IUser {
     language: string;
     defaultSystem: any;
     system: Array<string>;
+    group: Array<string>;
     // TODO : complete the interface
 }

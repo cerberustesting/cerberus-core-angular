@@ -1,5 +1,6 @@
 <!-- Sidebar -->
-<nav id="sidebar" aria-label="Main Navigation">
+<nav id="sidebar" aria-label="Main Navigation" (mouseenter)="mouseEnterInSidebar()"
+  (mouseleave)="mouseLeaveFromSidebar()">
   <!-- Side Header -->
   <div class="bg-header-dark">
     <div class="content-header bg-white-10">
@@ -44,31 +45,34 @@
       <li class="nav-main-item">
         <a class="nav-main-link" id='sideMenu_home' routerLink="/analyse/dashboard" routerLinkActive="active">
           <i class="nav-main-link-icon si si-cursor"></i>
-          <span class="nav-main-link-name">Dashboard</span>
-          <!-- <span class="nav-main-link-badge badge badge-pill badge-success">5</span> -->
+          <span class="nav-main-link-name">Home</span>
         </a>
       </li>
-      <ng-template ngFor let-menu [ngForOf]="menus">
+      <ng-template ngFor let-menu [ngForOf]="menu">
+
         <li class="nav-main-heading">{{ menu.name }}</li>
-        <li class="nav-main-item" [ngClass]="{'open': menuitem.expanded&&menuitem.submenu}" style="cursor: pointer;"
-          *ngFor='let menuitem of menu.data'>
-          <a [id]="'sideMenu_'+menuitem.id" class="nav-main-link"
-            [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''"
-            [routerLink]="menuitem.submenu ? null : menuitem.link" (click)="toggleMenu(menuitem)">
-            <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
-            <span class="nav-main-link-name">{{menuitem.name}}</span>
-          </a>
-          <ul class="no-padding nav-main-submenu" *ngIf="menuitem.submenu && menuitem.expanded">
-            <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
-              <a [id]="'sideMenu_'+submenuitem.id" class="nav-main-link"
-                [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''"
-                [routerLink]="submenuitem.submenu ? null : submenuitem.link">
-                <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si" [ngClass]="submenuitem.icon_class"></i>
-                <span class="nav-main-link-name">{{submenuitem.name}}</span>
-              </a>
-            </li>
-          </ul>
-        </li>
+        <div>
+          <li class="nav-main-item" [ngClass]="{'open': menuitem.expanded&&menuitem.submenu}" style="cursor: pointer;"
+            *ngFor='let menuitem of menu.submenu'>
+            <a *ngIf="menuitem.authorized === true" [id]="'sideMenu_'+menuitem.id" class="nav-main-link"
+              [ngClass]="menuitem.submenu ? 'nav-main-link-submenu' : ''"
+              [routerLink]="menuitem.submenu ? null : menuitem.link" (click)="toggleMenu(menuitem)">
+              <i *ngIf="menuitem.icon_class" class="nav-main-link-icon si" [ngClass]="menuitem.icon_class"></i>
+              <span class="nav-main-link-name">{{menuitem.name}}</span>
+            </a>
+            <ul class="no-padding nav-main-submenu" *ngIf="menuitem.submenu && menuitem.expanded">
+              <li class="nav-main-item" *ngFor="let submenuitem of menuitem.submenu">
+                <a *ngIf="submenuitem.authorized === true" [id]="'sideMenu_'+submenuitem.id" class="nav-main-link"
+                  [ngClass]="submenuitem.submenu ? 'nav-main-link-submenu' : ''"
+                  [routerLink]="submenuitem.submenu ? null : submenuitem.link">
+                  <i *ngIf="submenuitem.icon_class" class="nav-main-link-icon si"
+                    [ngClass]="submenuitem.icon_class"></i>
+                  <span class="nav-main-link-name">{{submenuitem.name}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </div>
       </ng-template>
     </ul>
   </div>

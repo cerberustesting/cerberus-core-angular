@@ -3,6 +3,7 @@ import { UserPreferencesService } from '../services/utils/userpreferences.servic
 import { IUser } from 'src/app/shared/model/user.model';
 import { UserService } from '../services/crud/user.service';
 import { MenuItem } from 'src/app/shared/model/front/menu.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,7 +22,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private userPreferencesService: UserPreferencesService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) { this.currentActiveMenu = null; }
 
   // menu content
@@ -72,7 +74,6 @@ export class SidebarComponent implements OnInit {
   /** expande the active menu item */
   mouseEnterInSidebar() {
     const menuItem = this.findASecondLevelMenuItem(this.currentActiveMenu);
-    console.log(menuItem);
     if (menuItem) {
       menuItem.expanded = true;
     }
@@ -96,7 +97,6 @@ export class SidebarComponent implements OnInit {
       let res = null;
       // for each submenus (first level)
       this.menu.forEach(firstLevelMenu => {
-        console.log('searching in menu named ' + firstLevelMenu.name);
         // if the menu item is found
         const found = firstLevelMenu.submenu.find(menuitem => menuitem === menuItem);
         if (found) { res = found; }
@@ -148,14 +148,14 @@ export class SidebarComponent implements OnInit {
             submenu: [
               {
                 name: 'Data Library',
-                link: '/pagenotfound',
+                link: '/datalibs',
                 authorized: true,
-                id: 'dataLibMenu',
+                id: '/design/dataLibMenu',
                 expanded: false
               },
               {
                 name: 'Services',
-                link: '/pagenotfound',
+                link: '/design/services',
                 authorized: true,
                 id: 'servicesMenu',
                 expanded: false
@@ -164,15 +164,15 @@ export class SidebarComponent implements OnInit {
           },
           {
             name: 'Campaigns',
-            link: '/pagenotfound',
-            icon_class: 'si-paper-clip',
+            link: '/design/campaigns',
+            icon_class: 'si-folderc',
             id: 'campaignsMenu',
             expanded: false,
             authorized: true
           },
           {
             name: 'Labels',
-            link: '/pagenotfound',
+            link: '/design/labels',
             icon_class: 'si-tag',
             authorized: true,
             expanded: false,
@@ -181,24 +181,24 @@ export class SidebarComponent implements OnInit {
         ]
       },
       {
-        name: 'Automate',
+        name: 'Run',
         expanded: false,
         authorized: true,
-        id: 'automateSection',
+        id: 'runSection',
         submenu: [
           {
-            name: 'Run',
-            id: 'runMenu',
+            name: 'Run Tests',
+            id: 'runTestsMenu',
             authorized: true,
             icon_class: 'si-control-play',
             expanded: false,
-            link: '/pagenotfound'
+            link: '/run/runtests'
           },
           {
             name: 'Queue Management',
-            id: 'queueManageentMenu',
+            id: 'queueManagementMenu',
             authorized: true,
-            link: '/pagenotfound',
+            link: '/run/queue',
             icon_class: 'si-list',
             expanded: false
           },
@@ -206,7 +206,7 @@ export class SidebarComponent implements OnInit {
             name: 'Robots',
             id: 'robotsMenu',
             authorized: true,
-            link: '/pagenotfound',
+            link: '/run/robots',
             icon_class: 'si-rocket',
             expanded: false
           }

@@ -3,7 +3,7 @@
 
     <!--START Template for create button-->
     <ng-template cerberusDatatableFilter>
-        <button type="button" class="btn btn-sm btn-info" (click)="createTestCaseHeader()">
+        <button type="button" class="btn btn-sm btn-info" (click)="createTestCaseHeader()" id="createTestCaseButton">
             <i class="fa fa-fw fa-plus download mr-2"></i>Test Case
         </button>
     </ng-template>
@@ -11,7 +11,8 @@
 
     <!--START Template for mass action buttons-->
     <ng-template cerberusDatatableMassAction>
-        <app-actions [selectedRows]="selectedRows" (redirectToScriptButtonClicked)="redirectToTestCaseScript($event)"></app-actions>
+        <app-actions [selectedRows]="selectedRows" (redirectToScriptButtonClicked)="redirectToTestCaseScript($event)">
+        </app-actions>
     </ng-template>
     <!--END Template for mass action buttons-->
 

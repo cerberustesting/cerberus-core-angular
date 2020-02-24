@@ -170,8 +170,8 @@
                                     <div id="sideContent_globalActivation" class="form-group">
                                         <label class="d-block">Environment Activation</label>
                                         <div class="custom-control custom-switch custom-control-inline">
-                                            <input type="checkbox" id="globalActivation" class="custom-control-input"
-                                                name="globalActivation" formControlName="active">
+                                            <input type="checkbox" class="custom-control-input" id="globalActivation" 
+                                                name="globalActivation" formControlName="active" [(ngModel)]="Globalselected" [ngClass]="Globalselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="globalActivation">
                                                 Global
                                                 <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
@@ -183,7 +183,7 @@
                                         </div>
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" id="activeQA" class="custom-control-input"
-                                                name="activeQA" formControlName="activeQA">
+                                                name="activeQA" formControlName="activeQA" [(ngModel)]="QAselected" [ngClass]="QAselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="activeQA">
                                                 QA
                                                 <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
@@ -194,7 +194,7 @@
                                         </div>
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" id="activeUAT" class="custom-control-input"
-                                                name="activeUAT" formControlName="activeUAT">
+                                                name="activeUAT" formControlName="activeUAT" [(ngModel)]="UATselected" [ngClass]="UATselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="activeUAT">
                                                 UAT
                                                 <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
@@ -205,7 +205,7 @@
                                         </div>
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" id="activePROD" class="custom-control-input"
-                                                name="activePROD" formControlName="activePROD">
+                                                name="activePROD" formControlName="activePROD" [(ngModel)]="PRODselected" [ngClass]="PRODselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="activePROD">
                                                 PROD
                                                 <i class="fa fa-info-circle ml-0 info popover-custom-width-1"

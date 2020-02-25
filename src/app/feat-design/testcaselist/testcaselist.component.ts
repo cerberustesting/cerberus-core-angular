@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TestService } from '../../core/services/crud/test.service';
 import { Column } from 'src/app/shared/model/column.model';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
@@ -12,6 +12,7 @@ import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.c
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { DatatablePageComponent } from 'src/app/shared/datatable-page/datatable-page.component';
 
 @Component({
   selector: 'app-testcaselist',
@@ -26,6 +27,9 @@ export class TestcaselistComponent implements OnInit {
   selectedRows: Array<any> = []; // the selected rows in the table
   servlet: string;  // const : the api to call to refresh datatable results
   refreshResultsEvent: Subject<void> = new Subject<void>(); // the observable to refresh the table
+
+  /** child datatable component */
+  @ViewChild(DatatablePageComponent, { static: false }) private datatablepageComponent: DatatablePageComponent;
 
   constructor(
     private headerTitleService: HeaderTitleService,
@@ -86,8 +90,11 @@ export class TestcaselistComponent implements OnInit {
    * @param testcase the test to create
    */
   createTestCaseHeader(): void {
+    const firstRowInTable = this.datatablepageComponent.getFirstRow();
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      testCase: {},
+      test: firstRowInTable.test,
+      testcase: firstRowInTable.testCase,
+      application: firstRowInTable.application,
       mode: INTERACTION_MODE.CREATE,
       exit: () => {
         this.refreshResults();

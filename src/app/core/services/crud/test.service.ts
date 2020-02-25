@@ -39,6 +39,9 @@ export class TestService {
   // full testcase object
   testcase: ITestCase = null;
 
+  // max id that can be used for a test folder
+  maxTestCase: number = null;
+
   // DIRTY : waiting for #2016 ReadTestCase servlet : dependencies
   // should only be one object
   testcaseheader: TestCaseHeader = null;
@@ -62,6 +65,7 @@ export class TestService {
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
   observableTestCaseProperties = new BehaviorSubject<PropertyValue[]>(this.testcase_properties);
   observableTestCaseHeader = new BehaviorSubject<TestCaseHeader>(this.testcaseheader);
+  observableMaxTestCaseID = new BehaviorSubject<number>(this.maxTestCase);
   // boolean
   refreshTC: boolean;
 
@@ -339,6 +343,17 @@ export class TestService {
           }
         }
         this.observableTestCaseLabels.next(this.testcase_labels);
+      });
+  }
+
+  /** get the latest incremental ID for a test folder */
+  getMaxTestCase(test: string): void {
+    const url = environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&getMaxTC=true';
+    this.http.get<any[]>(url)
+      .subscribe(response => {
+        // @ts-ignore
+        const maxTestCase = response.maxTestCase;
+        this.observableMaxTestCaseID.next(maxTestCase);
       });
   }
 

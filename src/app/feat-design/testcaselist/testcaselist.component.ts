@@ -11,7 +11,7 @@ import { TestcaseInteractionComponent } from './testcase-interaction/testcase-in
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
 
 @Component({
   selector: 'app-testcaselist',
@@ -117,7 +117,7 @@ export class TestcaselistComponent implements OnInit {
   }
 
   // redirect to the corresponding script page
-  redirectToTestCaseScript(row: ITestCaseHeader) {
+  redirectToTestCaseScript(row: TestCaseHeader) {
     const test = encodeURIComponent(row.test);
     const testcase = encodeURIComponent(row.testCase);
     this.router.navigate(['/design/testcasescript/' + test + '/' + testcase]);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IApplication } from 'src/app/shared/model/application.model';
@@ -30,7 +30,7 @@ export class TestcaseInteractionComponent implements OnInit {
   private selectedTab: string;
 
   // testcase header object refreshed by test and test folder variables
-  private testcaseheader: ITestCaseHeader = null;
+  private testcaseheader: TestCaseHeader = null;
   // DIRTY : waiting for dev
   // https://github.com/cerberustesting/cerberus-source/issues/2015
   private testcaseheader_countryList_custom: Array<string> = new Array<string>();
@@ -50,7 +50,7 @@ export class TestcaseInteractionComponent implements OnInit {
   private saveButtonTitle: string;
 
   // testcaseList used for Test & Test case folder section
-  private testcasesList: Array<ITestCaseHeader> = [];
+  private testcasesList: Array<TestCaseHeader> = [];
 
   // public invariants
   private statusList: Array<IInvariant>;
@@ -81,9 +81,9 @@ export class TestcaseInteractionComponent implements OnInit {
   // selected test
   dependencySelectedTest: string;
   // selected testcase id
-  dependencySelectedTestCase: ITestCaseHeader;
+  dependencySelectedTestCase: TestCaseHeader;
   // testcaseList used for dependencies
-  private testcaseList: Array<ITestCaseHeader> = [];
+  private testcaseList: Array<TestCaseHeader> = [];
 
   // DIRTY : input format
   dependencyTestCaseList: Array<any> = [];
@@ -252,7 +252,7 @@ export class TestcaseInteractionComponent implements OnInit {
   refreshNewTestCase(): void {
     const newTest = this.testcaseHeaderForm.get('test').value;
     // fetch the test cases list for that test folder
-    this.testService.getTestCasesList_withCallback(newTest, (tcList: Array<ITestCaseHeader>) => {
+    this.testService.getTestCasesList_withCallback(newTest, (tcList: Array<TestCaseHeader>) => {
       this.testcasesList = tcList;
       // console.log('refreshNewTestCase for test=' + newTest);
       // find the last unused test case id
@@ -315,7 +315,7 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   // fired when the selected test case id (for dependencies) changes
-  onTestCaseChange(testcase: ITestCaseHeader): void {
+  onTestCaseChange(testcase: TestCaseHeader): void {
     this.dependencySelectedTestCase = testcase;
   }
 
@@ -329,7 +329,7 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   // add a testcase id to the tc dependencies
-  addToDependencyTable(testcase: ITestCaseHeader): void {
+  addToDependencyTable(testcase: TestCaseHeader): void {
     const dependency = {
       // id: this.dependencyTestCaseList.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1,
       id: this.dependencyTestCaseList.length + 1,

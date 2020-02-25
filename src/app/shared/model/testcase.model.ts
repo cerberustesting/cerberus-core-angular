@@ -1,6 +1,6 @@
 import { PropertyValue } from './property.model';
 
-export interface ITestCaseHeader {
+export class TestCaseHeader {
     conditionOper: string;
     howTo: string;
     project?: string;
@@ -18,6 +18,7 @@ export interface ITestCaseHeader {
     lastExecutionStatus: string;
     activeQA: string;
     group: string;
+    conditionVal3: string;
     conditionVal2: string;
     test: string;
     ticket: string;
@@ -46,6 +47,33 @@ export interface ITestCaseHeader {
     status: string;
     dependencyList: Array<ITestCaseDependency>;
     [key: string]: any;
+
+    constructor(test: string, testcase: string) {
+        this.test = test;
+        this.testCase = testcase;
+        this.description = '';
+        this.application = '';
+        this.type = 'AUTOMATED';
+        this.priority = 0;
+        this.status = '';
+        this.tcActive = 'Y';
+        this.activeQA = 'Y';
+        this.activeUAT = 'Y';
+        this.activePROD = 'N';
+        this.countryList = [];
+        this.fromBuild = '';
+        this.fromRev = '';
+        this.toBuild = '';
+        this.toRev = '';
+        this.targetBuild = '';
+        this.targetRev = '';
+        this.conditionOper = '';
+        this.conditionVal1 = '';
+        this.conditionVal2 = '';
+        this.conditionVal3 = '';
+        this.userAgent = '';
+        this.screenSize = '';
+    }
 }
 
 export interface ITestCaseDependency {
@@ -62,7 +90,7 @@ export interface ITestCaseDependency {
 }
 
 export interface ITestCase {
-    info: ITestCaseHeader;
+    info: TestCaseHeader;
     inheritedProp: Array<PropertyValue>;
     hasPermissionsUpdate: boolean;
     messageType: string;

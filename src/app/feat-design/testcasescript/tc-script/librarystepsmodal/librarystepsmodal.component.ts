@@ -28,19 +28,15 @@ export class LibraryStepsModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.observableUser.subscribe(response =>{
+    this.userService.observableUser.subscribe(response => {
       this.user = response;
     });
     this.userService.getUser();
 
-    console.log("USER = " + this.user);
-
     this.testService.observableLibraryStepList.subscribe(response => {
        this.librarySteps = response;
       });
-    this.testService.getLibraryStepList('Cerberus');
-
-
+    this.testService.getLibraryStepList(this.user.defaultSystem);
 
   }
 }

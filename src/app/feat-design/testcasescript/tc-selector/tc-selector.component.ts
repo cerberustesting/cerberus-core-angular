@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { ITestCase, ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { ITestCase, TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { ITest } from 'src/app/shared/model/test.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { SettingsService } from '../tc-script/settings/settings.service';
@@ -28,7 +28,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   // list of test folders
   public testsList: Array<ITest>;
   // list of testcase id corresponding to the selected test folder
-  public testcasesList: Array<ITestCaseHeader>;
+  public testcasesList: Array<TestCaseHeader>;
   // testcase object according to test folder and testcase id
   public testcase: ITestCase;
 
@@ -145,7 +145,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   }
 
   // search function for test case id select
-  customSearchFn(term: string, item: ITestCaseHeader) {
+  customSearchFn(term: string, item: TestCaseHeader) {
     term = term.toLocaleLowerCase();
     return item.testCase.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1 || item.status.toLocaleLowerCase() === term;
   }

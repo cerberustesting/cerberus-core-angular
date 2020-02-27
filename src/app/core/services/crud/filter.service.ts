@@ -4,7 +4,7 @@ import { InvariantsService } from './invariants.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 
 const httpOptions = {
@@ -147,7 +147,7 @@ export class FilterService {
   // that is filtered by a dropdown typed filter
   getOptionsListForColumnsFiltering(servlet: string, columnName: string) {
     const query = environment.cerberus_api_url + servlet + '?columnName=' + columnName;
-    return this.http.get<ITestCaseHeader>(query);
+    return this.http.get<TestCaseHeader>(query);
   }
 
   // add a new filter or new values for an existing values to the list

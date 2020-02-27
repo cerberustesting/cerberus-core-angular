@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ITestCase, Step } from 'src/app/shared/model/testcase.model';
 import { TestService } from 'src/app/core/services/crud/test.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { LibraryStepsModalComponent } from '../librarystepsmodal/librarystepsmodal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-script',
@@ -12,9 +14,14 @@ export class ScriptComponent implements OnInit {
 
   @Input('testcase') testcase: ITestCase;
 
-  constructor(private testService: TestService) { }
+  constructor(private testService: TestService, private modalService: NgbModal) {
+  }
 
   ngOnInit() { }
+
+  openLibraryStepsModal() {
+    this.modalService.open(LibraryStepsModalComponent);
+  }
 
   dropStep(event: CdkDragDrop<Step[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -29,5 +36,4 @@ export class ScriptComponent implements OnInit {
     // - using splice() instead of push
     // - call TestService.refreshStepSort(this.testcase.stepList)
   }
-
 }

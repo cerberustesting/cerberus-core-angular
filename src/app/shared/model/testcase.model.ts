@@ -1,51 +1,91 @@
 import { PropertyValue } from './property.model';
 
-export interface ITestCaseHeader {
-    conditionOper: string;
-    howTo: string;
-    project?: string;
-    description: string;
-    fromRev: string;
-    implementer: string;
-    hasPermissionsCreate: boolean;
-    activePROD: string;
-    fromBuild: string;
-    screenSize: string;
-    dateCreated: string;
-    refOrigine: string;
-    bugID: string;
-    function: string;
-    lastExecutionStatus: string;
-    activeQA: string;
-    group: string;
-    conditionVal2: string;
+export class TestCaseHeader {
     test: string;
-    ticket: string;
-    conditionVal1: string;
-    usrModif: string;
-    toBuild: string;
-    userAgent: string;
-    origin?: string;
+    testCase: string;
+    description: string;
+    application: string;
+    status: string;
+    group: string;
     priority: number;
+    behaviorOrValueExpected: string;
+    tcActive: string;
+    activeQA: string;
+    activeUAT: string;
+    activePROD: string;
     countryList: Array<any>;
+    fromBuild: string;
+    toBuild: string;
+    fromRev: string;
+    toRev: string;
+    targetBuild: string;
+    targetRev: string;
+    conditionOper: string;
+    conditionVal1: string;
+    conditionVal2: string;
+    conditionVal3: string;
+    userAgent: string;
+    screenSize: string;
+    labelList: Array<any>;
+    bugID: any;
+    comment: string;
+    dependencyList: Array<ITestCaseDependency>;
+    implementer: string;
+    executor: string;
     testCaseVersion: number;
     usrCreated: string;
-    tcActive: string;
-    targetRev: string;
-    hasPermissionsUpdate: boolean;
-    activeUAT: string;
-    system: string;
-    application: string;
-    behaviorOrValueExpected: string;
-    comment: string;
-    targetBuild: string;
+    dateCreated: string;
+    usrModif: string;
     dateModif: string;
-    hasPermissionsDelete: boolean;
-    toRev: string;
-    testCase: string;
-    status: string;
-    dependencyList: Array<ITestCaseDependency>;
+    system: string;
     [key: string]: any;
+
+    constructor(
+        test: string,
+        testcase: string,
+        application: string,
+        group: string,
+        priority: number,
+        status: string,
+        countryList: Array<any>
+    ) {
+        this.test = test;
+        this.testCase = testcase;
+        this.description = '';
+        this.application = application;
+        this.group = group;
+        this.priority = priority;
+        this.status = status;
+        this.behaviorOrValueExpected = '';
+        this.tcActive = 'Y';
+        this.activeQA = 'Y';
+        this.activeUAT = 'Y';
+        this.activePROD = 'N';
+        this.countryList = countryList;
+        this.fromBuild = '';
+        this.fromRev = '';
+        this.toBuild = '';
+        this.toRev = '';
+        this.targetBuild = '';
+        this.targetRev = '';
+        this.conditionOper = '';
+        this.conditionVal1 = '';
+        this.conditionVal2 = '';
+        this.conditionVal3 = '';
+        this.userAgent = '';
+        this.screenSize = '';
+        this.labelList = [];
+        this.bugID = [];
+        this.comment = '';
+        this.dependencyList = [];
+        this.implementer = '';
+        this.executor = '';
+        this.testCaseVersion = 0;
+        this.dateCreated = '';
+        this.usrCreated = '';
+        this.dateModif = '';
+        this.usrModif = '';
+    }
 }
 
 export interface ITestCaseDependency {
@@ -62,7 +102,7 @@ export interface ITestCaseDependency {
 }
 
 export interface ITestCase {
-    info: ITestCaseHeader;
+    info: TestCaseHeader;
     inheritedProp: Array<PropertyValue>;
     hasPermissionsUpdate: boolean;
     messageType: string;

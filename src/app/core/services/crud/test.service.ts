@@ -66,13 +66,8 @@ export class TestService {
   observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
   observableTestCaseProperties = new BehaviorSubject<PropertyValue[]>(this.testcase_properties);
-<<<<<<< HEAD
   observableTestCaseHeader = new BehaviorSubject<ITestCaseHeader>(this.testcaseheader);
   observableLibraryStepList = new BehaviorSubject<Step[]>(this.libraryStepList);
-=======
-  observableTestCaseHeader = new BehaviorSubject<TestCaseHeader>(this.testcaseheader);
-  observableMaxTestCaseID = new BehaviorSubject<number>(this.maxTestCase);
->>>>>>> cdd076a58afb50cae91a15cbe147ed6a0bea04d7
   // boolean
   refreshTC: boolean;
 

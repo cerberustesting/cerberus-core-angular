@@ -52,7 +52,7 @@
       <!-- END LEFT SECTION -->
 
       <!-- RIGHT SECTION -->
-      <div class="btn-group btn-group-sm" role="group" aria-label="testCaseShortcuts">
+      <div *ngIf="selectedTestCase" class="btn-group btn-group-sm" role="group" aria-label="testCaseShortcuts">
 
         <!-- GO TO BUG REPORT BUTTON -->
         <button type="button" class="btn btn-primary" id="bug-button"

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { TestService } from 'src/app/core/services/crud/test.service';
-import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { ITest } from 'src/app/shared/model/test.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
@@ -22,7 +22,7 @@ export class TcHeaderComponent implements OnInit, OnChanges {
   @Input('test') selectedTest: string;
   @Input('testcase') selectedTestCase: string;
 
-  @Input('testcaseheader') testcaseheader: ITestCaseHeader;
+  @Input('testcaseheader') testcaseheader: TestCaseHeader;
   private testcaseheader_countryList: any;
   private testcaseheader_countryList_custom: Array<string> = new Array<string>();
   private testcaseheader_labelsList: Array<ILabel>;
@@ -32,7 +32,7 @@ export class TcHeaderComponent implements OnInit, OnChanges {
   public block_id: string;
 
   public testsList: Array<ITest> = new Array<ITest>();
-  private testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
+  private testcasesList: Array<TestCaseHeader> = new Array<TestCaseHeader>();
 
   public tabs: string[] = ['Definition', 'Execution', 'Label', 'Origin', 'Bug Report', 'Tracability'];
   public selectedTab: string;

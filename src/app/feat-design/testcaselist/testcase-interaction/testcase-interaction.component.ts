@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ITestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
 import { IApplication } from 'src/app/shared/model/application.model';
@@ -20,17 +20,18 @@ import { ICrossReference, CrossreferenceService } from 'src/app/core/services/ut
 })
 export class TestcaseInteractionComponent implements OnInit {
 
-  /* variables received from the addComponentToSideBlock method */
+  /** variables received from the addComponentToSideBlock method */
   // from testcaselist.component.ts
   private test: string;
   private testcase: string;
+  private application: string;
   // mode to interact with the test case header
   private mode: INTERACTION_MODE;
   // tabs currently active (used to set the active tab)
   private selectedTab: string;
 
   // testcase header object refreshed by test and test folder variables
-  private testcaseheader: ITestCaseHeader = null;
+  private testcaseheader: TestCaseHeader = null;
   // DIRTY : waiting for dev
   // https://github.com/cerberustesting/cerberus-source/issues/2015
   private testcaseheader_countryList_custom: Array<string> = new Array<string>();
@@ -50,7 +51,7 @@ export class TestcaseInteractionComponent implements OnInit {
   private saveButtonTitle: string;
 
   // testcaseList used for Test & Test case folder section
-  private testcasesList: Array<ITestCaseHeader> = [];
+  private testcasesList: Array<TestCaseHeader> = [];
 
   // public invariants
   private statusList: Array<IInvariant>;
@@ -81,9 +82,9 @@ export class TestcaseInteractionComponent implements OnInit {
   // selected test
   dependencySelectedTest: string;
   // selected testcase id
-  dependencySelectedTestCase: ITestCaseHeader;
+  dependencySelectedTestCase: TestCaseHeader;
   // testcaseList used for dependencies
-  private testcaseList: Array<ITestCaseHeader> = [];
+  private testcaseList: Array<TestCaseHeader> = [];
 
   // DIRTY : input format
   dependencyTestCaseList: Array<any> = [];
@@ -145,63 +146,10 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   ngOnInit() {
-
     // set the correct title for the save button (depending on the mode)
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
 
-    // init the form (values will be set later)
-    this.testcaseHeaderForm = null;
-
-    // if we haven't received any selected tab, set it to its default value
-    if (this.selectedTab === null) {
-      this.selectedTab = this.tabs[0];
-    }
-
-    // force the refresh to get latest testcase header information
-    if (this.testcaseheader === null) {
-      // if no testcaseheader object has been passed from addComponentToSideBlock()
-      // use the test & testcase id passed
-      // DIRTY : need API rework
-      this.testService.getTestCaseHeader(this.test, this.testcase);
-    } else {
-      // use the ones from the testcase header instead
-      this.testService.getTestCaseHeader(this.testcaseheader.test, this.testcaseheader.testCase);
-    }
-
-    // subscribe to the test case observable
-    this.testService.observableTestCaseHeader.subscribe(r => {
-      if (r) {
-        // if no testcaseheader object has been passed from addComponentToSideBlock()
-        // the testcaseheader variable is still null
-        // DIRTY : need API rework
-        if (this.testcaseheader === null) {
-          this.refreshOthersDatas();
-        } else {
-          this.refreshOthersDatas(true);
-        }
-
-        this.testcaseheader = r;
-
-        // set the form
-        this.setFormValues();
-
-        // set the new testcase ID if it's create/duplicate mode
-        if (this.mode !== INTERACTION_MODE.EDIT) {
-          this.refreshNewTestCase();
-        }
-
-        // format the countries list
-        // DIRTY : waiting for dev
-        // https://github.com/cerberustesting/cerberus-source/issues/2015
-        this.testcaseheader_countryList_custom = this.feedCustomCountryList();
-
-        // feed the dependencies list
-        this.dependencyTestCaseList = this.testcaseheader.dependencyList;
-
-      }
-    });
-
-    // subscriptions
+    // subscribe to invariants and others lists
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
     this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
     this.invariantsService.observableTcStatus.subscribe(rep => this.statusList = rep);
@@ -212,6 +160,90 @@ export class TestcaseInteractionComponent implements OnInit {
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
     this.systemService.observableRevs.subscribe(rep => this.revsList = [{ versionName: '' }].concat(rep));
     this.testService.observableTestsList.subscribe(rep => this.testsList = rep);
+
+    // init the form (values will be set later)
+    this.testcaseHeaderForm = null;
+
+    // if we haven't received any selected tab, set it to its default value
+    if (this.selectedTab === null) {
+      this.selectedTab = this.tabs[0];
+    }
+
+    // behave differently according to the mode
+    if (this.mode === INTERACTION_MODE.CREATE) {
+      // if the mode is CREATE
+      // need the test & testcase from testcaselist component
+      // create a new testcaseheader object
+
+      // TODO: call the API to fetch the latest incremental ID and pass it
+      // waiting for https://github.com/cerberustesting/cerberus-source/issues/2100 to address the topic completely
+
+      this.testcaseheader = new TestCaseHeader(
+        this.test,
+        this.testcase,
+        this.application,
+        this.typesList[0].value,
+        Number(this.priorityList[0].value),
+        this.statusList[0].value,
+        this.countriesList
+      );
+
+      // set the form
+      this.setFormValues();
+
+      // set the correct value for the max test case
+      this.refreshNewTestCase();
+
+    } else {
+
+      // force the refresh to get latest testcase header information
+      if (this.testcaseheader === null) {
+        // if no testcaseheader object has been passed from addComponentToSideBlock()
+        // use the test & testcase id passed
+        // DIRTY : need API rework
+        this.testService.getTestCaseHeader(this.test, this.testcase);
+      } else {
+        // use the ones from the testcase header instead
+        this.testService.getTestCaseHeader(this.testcaseheader.test, this.testcaseheader.testCase);
+      }
+
+      // subscribe to the test case observable
+      this.testService.observableTestCaseHeader.subscribe(r => {
+        if (r) {
+          // if no testcaseheader object has been passed from addComponentToSideBlock()
+          // the testcaseheader variable is still null
+          // DIRTY : need API rework
+          if (this.testcaseheader === null) {
+            this.refreshOthersDatas();
+          } else {
+            this.refreshOthersDatas(true);
+          }
+
+          this.testcaseheader = r;
+
+          // set the form
+          this.setFormValues();
+
+          // set the new testcase ID if it's create/duplicate mode
+          if (this.mode !== INTERACTION_MODE.EDIT) {
+            this.refreshNewTestCase();
+          }
+
+          // format the countries list
+          // DIRTY : waiting for dev
+          // https://github.com/cerberustesting/cerberus-source/issues/2015
+          this.testcaseheader_countryList_custom = this.feedCustomCountryList();
+
+          // feed the dependencies list
+          this.dependencyTestCaseList = this.testcaseheader.dependencyList;
+
+        }
+      });
+
+    }
+
+    /** this component needs a code refacto to make it cleaner but IT NEEDS the testcase endpoint rework  */
+
   }
 
   setFormValues() {
@@ -252,14 +284,12 @@ export class TestcaseInteractionComponent implements OnInit {
   refreshNewTestCase(): void {
     const newTest = this.testcaseHeaderForm.get('test').value;
     // fetch the test cases list for that test folder
-    this.testService.getTestCasesList_withCallback(newTest, (tcList: Array<ITestCaseHeader>) => {
+    this.testService.getTestCasesList_withCallback(newTest, (tcList: Array<TestCaseHeader>) => {
       this.testcasesList = tcList;
-      // console.log('refreshNewTestCase for test=' + newTest);
       // find the last unused test case id
       this.newTestCase = this.testService.getLatestTestCaseId(this.testcasesList, newTest);
       // edit the test case form value
       this.testcaseHeaderForm.controls['testCase'].setValue(this.newTestCase);
-      // console.log('test case value form updated to : ' + this.newTestCase);
     });
   }
 
@@ -315,7 +345,7 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   // fired when the selected test case id (for dependencies) changes
-  onTestCaseChange(testcase: ITestCaseHeader): void {
+  onTestCaseChange(testcase: TestCaseHeader): void {
     this.dependencySelectedTestCase = testcase;
   }
 
@@ -329,7 +359,7 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   // add a testcase id to the tc dependencies
-  addToDependencyTable(testcase: ITestCaseHeader): void {
+  addToDependencyTable(testcase: TestCaseHeader): void {
     const dependency = {
       // id: this.dependencyTestCaseList.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1,
       id: this.dependencyTestCaseList.length + 1,

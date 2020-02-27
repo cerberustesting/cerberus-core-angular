@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ITest } from 'src/app/shared/model/test.model';
-import { ITestCaseHeader, ITestCase, Step, Action, Control } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader, ITestCase, Step, Action, Control } from 'src/app/shared/model/testcase.model';
 import { ILabel, ITestCaseLabel } from 'src/app/shared/model/label.model';
 import { IProject } from 'src/app/shared/model/project.model';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
@@ -28,20 +28,23 @@ export class TestService {
   testsList: Array<ITest> = new Array<ITest>();
 
   // list of testcase id corresponding to the previous test folders list
-  testcasesList: Array<ITestCaseHeader> = new Array<ITestCaseHeader>();
+  testcasesList: Array<TestCaseHeader> = new Array<TestCaseHeader>();
 
   // TODO: clean this?
   testcasesListLength: number;
 
   // list of data library
-  testdatalib: Array<any> = new Array<ITestCaseHeader>();
+  testdatalib: Array<any> = new Array<TestCaseHeader>();
 
   // full testcase object
   testcase: ITestCase = null;
 
+  // max id that can be used for a test folder
+  maxTestCase: number = null;
+
   // DIRTY : waiting for #2016 ReadTestCase servlet : dependencies
   // should only be one object
-  testcaseheader: ITestCaseHeader = null;
+  testcaseheader: TestCaseHeader = null;
 
   libraryStepList: Array<Step> = new Array<Step>();
 
@@ -54,7 +57,7 @@ export class TestService {
   projectsList: Array<IProject> = new Array<IProject>();
   // observables
   observableTestsList = new BehaviorSubject<ITest[]>(this.testsList);
-  observableTestCasesList = new BehaviorSubject<ITestCaseHeader[]>(this.testcasesList);
+  observableTestCasesList = new BehaviorSubject<TestCaseHeader[]>(this.testcasesList);
   observableTestCasesListLength = new BehaviorSubject<number>(this.testcasesListLength);
   observableTestDataLib = new BehaviorSubject<any[]>(this.testcasesList);
   observableTestDataLibLength = new BehaviorSubject<number>(this.testcasesListLength);
@@ -63,8 +66,13 @@ export class TestService {
   observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
   observableTestCaseProperties = new BehaviorSubject<PropertyValue[]>(this.testcase_properties);
+<<<<<<< HEAD
   observableTestCaseHeader = new BehaviorSubject<ITestCaseHeader>(this.testcaseheader);
   observableLibraryStepList = new BehaviorSubject<Step[]>(this.libraryStepList);
+=======
+  observableTestCaseHeader = new BehaviorSubject<TestCaseHeader>(this.testcaseheader);
+  observableMaxTestCaseID = new BehaviorSubject<number>(this.maxTestCase);
+>>>>>>> cdd076a58afb50cae91a15cbe147ed6a0bea04d7
   // boolean
   refreshTC: boolean;
 
@@ -92,7 +100,7 @@ export class TestService {
   }
 
   getTestCasesList(test: string) {
-    this.http.get<ITestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
+    this.http.get<TestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
       .subscribe((response) => {
         if (response.iTotalRecords > 0) {
           this.testcasesList = response.contentTable;
@@ -143,7 +151,7 @@ export class TestService {
 
   // TODO: merge the two getTestCaseList function (with the callback)
   getTestCasesList_withCallback(test: string, callback) {
-    this.http.get<ITestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
+    this.http.get<TestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
       .subscribe((response) => {
         if (response.iTotalRecords > 0) {
           callback(response.contentTable);
@@ -159,7 +167,7 @@ export class TestService {
 
   // return the "highest" test case ID for a test
   // used for the duplication action
-  getLatestTestCaseId(testcaselist: Array<ITestCaseHeader>, test: string): string {
+  getLatestTestCaseId(testcaselist: Array<TestCaseHeader>, test: string): string {
     // create an array with only the testCase ID
     const testCasesList = new Array<string>();
     // @ts-ignore
@@ -204,7 +212,7 @@ export class TestService {
 
   getFromRequest(servlet: string, queryParameters: string, callback) {
     // get data for datatable
-    this.http.post<ITestCaseHeader>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
+    this.http.post<TestCaseHeader>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
       .subscribe((response) => {
         if (response) {
           if (response.iTotalRecords > 0) {
@@ -220,7 +228,7 @@ export class TestService {
   getColumnData(servlet: string, columnName: string) {
     // get all data from one column
     const query = environment.cerberus_api_url + servlet + '?columnName=' + columnName;
-    return this.http.get<ITestCaseHeader>(query);
+    return this.http.get<TestCaseHeader>(query);
   }
 
   updateTestCase(queryString) {
@@ -288,8 +296,8 @@ export class TestService {
       .subscribe((rep) => callback(rep.message, rep.messageType));
   }
 
-  filtreTestCase(filterTable): Observable<ITestCaseHeader> {
-    return this.http.post<ITestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase', filterTable, httpOptions);
+  filtreTestCase(filterTable): Observable<TestCaseHeader> {
+    return this.http.post<TestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase', filterTable, httpOptions);
   }
 
   postTestCasesList(formData): Observable<any> {
@@ -340,7 +348,7 @@ export class TestService {
   }
 
   // TO DELETE : wrong name
-  getTestCaseInformations(test: string, testcase: string, callback: (n: ITestCaseHeader) => any) {
+  getTestCaseInformations(test: string, testcase: string, callback: (n: TestCaseHeader) => any) {
     if (test && testcase) {
       this.http.get<any>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase)
         .subscribe((response) => callback(response.contentTable));
@@ -362,6 +370,17 @@ export class TestService {
           }
         }
         this.observableTestCaseLabels.next(this.testcase_labels);
+      });
+  }
+
+  /** get the latest incremental ID for a test folder */
+  getMaxTestCase(test: string): void {
+    const url = environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&getMaxTC=true';
+    this.http.get<any[]>(url)
+      .subscribe(response => {
+        // @ts-ignore
+        const maxTestCase = response.maxTestCase;
+        this.observableMaxTestCaseID.next(maxTestCase);
       });
   }
 
@@ -388,7 +407,7 @@ export class TestService {
   }
 
   // DIRTY : correct the model mistake
-  convertCountriesList(testcaseheader: ITestCaseHeader): Array<string> {
+  convertCountriesList(testcaseheader: TestCaseHeader): Array<string> {
     const countriesList = new Array<string>();
     for (const index in testcaseheader.countryList) {
       if (index) {
@@ -398,12 +417,12 @@ export class TestService {
     return countriesList;
   }
 
-  isCountryDefinedForTestCase(testcaseheader: ITestCaseHeader, country: string): boolean {
+  isCountryDefinedForTestCase(testcaseheader: TestCaseHeader, country: string): boolean {
     return this.testcaseheader_countriesList_format.includes(country);
   }
 
-  saveTestCaseHeader(testcaseheader: ITestCaseHeader, originalTest, originalTestCase) {
-    let data: ITestCaseHeader;
+  saveTestCaseHeader(testcaseheader: TestCaseHeader, originalTest, originalTestCase) {
+    let data: TestCaseHeader;
     data = testcaseheader;
     // add the original test and testcase to the data to send
     data.originalTest = originalTest;

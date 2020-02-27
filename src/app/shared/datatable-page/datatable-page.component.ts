@@ -5,7 +5,6 @@ import { InvariantsService } from 'src/app/core/services/crud/invariants.service
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { FiltersComponent } from './filters/filters.component';
-import { SystemService } from 'src/app/core/services/crud/system.service';
 import { IInvariant } from '../model/invariants.model';
 
 @Component({
@@ -62,6 +61,11 @@ export class DatatablePageComponent implements OnInit {
     if (this.refreshResults) {
       this.refreshResults.subscribe(() => this.applyFilters());
     }
+  }
+
+  /** return the first row of the displayed result in the datatable */
+  getFirstRow(): any {
+    return this.rows[0];
   }
 
   // open the filters modal (in the child component)

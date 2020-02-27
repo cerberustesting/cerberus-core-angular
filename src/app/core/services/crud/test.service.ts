@@ -43,6 +43,8 @@ export class TestService {
   // should only be one object
   testcaseheader: ITestCaseHeader = null;
 
+  libraryStepList: Array<Step> = new Array<Step>();
+
 
   testcase_labels: Array<ILabel> = new Array<ILabel>();
   testcase_properties: Array<PropertyValue>;
@@ -62,6 +64,7 @@ export class TestService {
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
   observableTestCaseProperties = new BehaviorSubject<PropertyValue[]>(this.testcase_properties);
   observableTestCaseHeader = new BehaviorSubject<ITestCaseHeader>(this.testcaseheader);
+  observableLibraryStepList = new BehaviorSubject<Step[]>(this.libraryStepList);
   // boolean
   refreshTC: boolean;
 
@@ -100,6 +103,26 @@ export class TestService {
             this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
             this.testcasesList = null;
             this.observableTestCasesList.next(this.testcasesList);
+          }
+        }
+      });
+  }
+
+  // A TERMINER : response
+  getLibraryStepList(system: string) {
+    this.http.get<Step[]>(environment.cerberus_api_url + '/GetStepInLibrary?system=' + system)
+      .subscribe((response) => {
+        console.log(response);
+        // @ts-ignore
+        if (response.testCaseStepList.length > 0) {
+          // @ts-ignore
+          this.libraryStepList = response.testCaseStepList;
+          this.observableLibraryStepList.next(this.libraryStepList);
+        } else {
+          if (system != null) {
+            this.notificationService.createANotification('There are no Library steps for the system : ' + system, NotificationStyle.Warning);
+            this.libraryStepList = null;
+            this.observableLibraryStepList.next(this.libraryStepList);
           }
         }
       });

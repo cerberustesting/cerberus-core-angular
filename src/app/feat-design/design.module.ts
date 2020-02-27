@@ -15,6 +15,7 @@ import { TcSelectorComponent } from './testcasescript/tc-selector/tc-selector.co
 import { TcHeaderComponent } from './testcasescript/tc-header/tc-header.component';
 import { TcScriptComponent } from './testcasescript/tc-script/tc-script.component';
 import { StepComponent } from './testcasescript/tc-script/step/step.component';
+import { LibraryStepsModalComponent } from './testcasescript/tc-script/librarystepsmodal/librarystepsmodal.component';
 import { ActionComponent } from './testcasescript/tc-script/action/action.component';
 import { ControlComponent } from './testcasescript/tc-script/control/control.component';
 import { PropertyvalueComponent } from './testcasescript/tc-script/properties/propertyvalue/propertyvalue.component';
@@ -50,6 +51,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     TcHeaderComponent,
     TcScriptComponent,
     StepComponent,
+    LibraryStepsModalComponent,
     ActionComponent,
     ControlComponent,
     PropertyvalueComponent,
@@ -64,7 +66,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     LabelsTabComponent,
     LabelNodeComponent,
     PropertiesComponent,
-    PropertygroupComponent
+    PropertygroupComponent,
   ],
   imports: [
     CommonModule,
@@ -82,7 +84,8 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
   entryComponents: [
     DatalibInteractionComponent,
     DatalibTclistComponent,
-    TestcaseInteractionComponent
+    TestcaseInteractionComponent,
+    LibraryStepsModalComponent
   ],
   exports: [SharedModule]
 })

@@ -12,7 +12,6 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
-import { TestService } from 'src/app/core/services/api/test/test.service';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -67,6 +66,8 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // others cerberus entity
   private applicationsList: Array<IApplication>;
+
+  /** tests folder list */
   private testsList: Array<TestFolder>;
 
   // cross references array to display the correct input fields according to the selected condition
@@ -139,17 +140,16 @@ export class TestcaseInteractionComponent implements OnInit {
     private crossReferenceService: CrossreferenceService,
     private formBuilder: FormBuilder,
     private testcaseService: TestcaseService,
-    private testService: TestService,
     private notificationService: NotificationService,
     private sidecontentService: SidecontentService) {
     this.selectedTab = null;
     // list of tabs
     this.tabs = ['Definition', 'Settings', 'Labels', 'Bugs', 'Dependencies', 'Audit'];
+    this.testcaseheader = undefined;
+    this.testcaseHeaderForm = null;
   }
 
   ngOnInit() {
-    // set the correct title for the save button (depending on the mode)
-    this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
 
     // subscribe to invariants and others lists
     this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
@@ -161,91 +161,49 @@ export class TestcaseInteractionComponent implements OnInit {
     this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
     this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
     this.systemService.observableRevs.subscribe(rep => this.revsList = [{ versionName: '' }].concat(rep));
-    this.testService.observableTestsList.subscribe(rep => this.testsList = rep);
+    this.testcaseService.observableTestsList.subscribe(rep => this.testsList = rep);
 
-    // init the form (values will be set later)
-    this.testcaseHeaderForm = null;
+    // set the correct title for the save button (depending on the mode)
+    this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
 
     // if we haven't received any selected tab, set it to its default value
     if (this.selectedTab === null) {
       this.selectedTab = this.tabs[0];
     }
 
-    // behave differently according to the mode
-    if (this.mode === INTERACTION_MODE.CREATE) {
-      // if the mode is CREATE
-      // need the test & testcase from testcaselist component
-      // create a new testcaseheader object
+    this.refreshOthers();
 
-      // TODO: call the API to fetch the latest incremental ID and pass it
-      // waiting for https://github.com/cerberustesting/cerberus-source/issues/2100 to address the topic completely
+    // check in parameters
 
-      this.testcaseheader = new TestCaseHeader(
-        this.test,
-        this.testcase,
-        this.application,
-        this.typesList[0].value,
-        Number(this.priorityList[0].value),
-        this.statusList[0].value,
-        this.countriesList
-      );
-
-      // set the form
-      this.setFormValues();
-
-      // set the correct value for the max test case
-      this.refreshNewTestCase();
-
-    } else {
-
-      // force the refresh to get latest testcase header information
-      if (this.testcaseheader === null) {
-        // if no testcaseheader object has been passed from addComponentToSideBlock()
-        // use the test & testcase id passed
-        // DIRTY : need API rework
-        this.testcaseService.getTestCaseHeader(this.test, this.testcase);
-      } else {
-        // use the ones from the testcase header instead
-        this.testcaseService.getTestCaseHeader(this.testcaseheader.test, this.testcaseheader.testCase);
-      }
-
-      // subscribe to the test case observable
-      this.testcaseService.observableTestCaseHeader.subscribe(r => {
-        if (r) {
-          // if no testcaseheader object has been passed from addComponentToSideBlock()
-          // the testcaseheader variable is still null
-          // DIRTY : need API rework
-          if (this.testcaseheader === null) {
-            this.refreshOthersDatas();
-          } else {
-            this.refreshOthersDatas(true);
-          }
-
-          this.testcaseheader = r;
-
-          // set the form
+    // if the test and testcase values are passed : we refresh
+    if (this.test && this.testcase) {
+      // refresh the test case object
+      this.testcaseService.getTestCaseHeader(this.test, this.testcase);
+      // subscribe to the value change
+      this.testcaseService.observableTestCaseHeader.subscribe(rep => {
+        if (rep) {
+          this.testcaseheader = rep;
+          this.refreshData(this.testcaseheader);
           this.setFormValues();
-
-          // set the new testcase ID if it's create/duplicate mode
           if (this.mode !== INTERACTION_MODE.EDIT) {
             this.refreshNewTestCase();
           }
-
-          // format the countries list
-          // DIRTY : waiting for dev
-          // https://github.com/cerberustesting/cerberus-source/issues/2015
           this.testcaseheader_countryList_custom = this.feedCustomCountryList();
-
-          // feed the dependencies list
           this.dependencyTestCaseList = this.testcaseheader.dependencyList;
-
         }
       });
-
+      // if the full testcaseheader object is passed : we don't refresh
+    } else if (this.testcaseheader) {
+      this.setFormValues();
+      if (this.mode !== INTERACTION_MODE.EDIT) {
+        this.refreshNewTestCase();
+      }
+      this.testcaseheader_countryList_custom = this.feedCustomCountryList();
+      this.dependencyTestCaseList = this.testcaseheader.dependencyList;
+      // if neither of it is passed, there's a problem
+    } else {
+      console.error('mandatory parameters not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
     }
-
-    /** this component needs a code refacto to make it cleaner but IT NEEDS the testcase endpoint rework  */
-
   }
 
   setFormValues() {
@@ -304,28 +262,18 @@ export class TestcaseInteractionComponent implements OnInit {
     }
   }
 
-  // refresh datas essential for test case header interaction (tests, applications list...)
-  refreshOthersDatas(flag?: boolean) {
-    if (flag === undefined) {
-      this.testService.getTestFoldersList();
-    }
-    this.systemService.getApplicationList();
-    this.systemService.getLabelsHierarchyFromSystem(this.testcaseheader.system, this.testcaseheader.test, this.testcaseheader.testCase);
-    this.systemService.getSprintsFromSystem(this.testcaseheader.system);
-    this.systemService.getRevFromSystem(this.testcaseheader.system);
+  /** refresh data that depends on a testcaseheader  */
+  refreshData(testcaseheader: TestCaseHeader) {
+    this.systemService.getSprintsFromSystem(testcaseheader.test);
+    this.systemService.getRevFromSystem(testcaseheader.testCase);
+    this.systemService.getLabelsHierarchyFromSystem(testcaseheader.system, testcaseheader.test, testcaseheader.testCase);
   }
 
-  // TODO : clean it
-  /*
-  getTCInformationFromSystem(): void {
-    if (this.testcaseHeaderForm.value.application) {
-      this.testcaseheader.system = this.testcaseHeaderForm.value.application;
-      this.systemService.getLabelsHierarchyFromSystem(this.testcaseheader.system, this.testcaseheader.test, this.testcaseheader.testCase);
-      this.systemService.getSprintsFromSystem(this.testcaseheader.system);
-      this.systemService.getRevFromSystem(this.testcaseheader.system);
-    }
+  /** refresh data */
+  refreshOthers() {
+    this.systemService.getApplicationList();
+    this.testcaseService.getTestFoldersList();
   }
-  */
 
   // fired when the selected test folder (for dependencies) changes
   onTestChange(): void {

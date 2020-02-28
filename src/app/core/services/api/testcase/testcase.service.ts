@@ -80,7 +80,8 @@ export class TestcaseService {
     this.refreshTC = false;
   }
 
-  getTestsList() {
+  /** refresh the test folder list (this one should be used with this test case, not globally) */
+  getTestFoldersList() {
     this.http.get<TestFolder[]>(environment.cerberus_api_url + '/ReadTest')
       .subscribe(response => {
         // @ts-ignore

@@ -70,8 +70,17 @@ export class TestService {
    * remove a test folder
    * @param testfoldername the name of the test folder to remove
    */
-  deleteTestFolder(testfoldername: string) {
+  deleteTestFolder(testfoldername: string): void {
     // TODO
+  }
+
+  /**
+   * return true if the test is found in the test folders list
+   * @param test test folder name to search for
+   */
+  testExists(test: string): boolean {
+    const search = this.testsList.find(t => t.test === test);
+    if (search) { return true; } else { return false; }
   }
 
 }

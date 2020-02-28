@@ -43,13 +43,17 @@ export class HeaderbarComponent implements OnInit {
   ngOnInit() {
 
     // fetch data from User (could be done at an higher level)
-    this.userService.observableUser.subscribe(r => { if (r) { this.user = r; this.selectedSystemsList = this.user.defaultSystem; } });
+    this.userService.observableUser.subscribe(r => {
+      if (r) {
+        this.user = r;
+        this.selectedSystemsList = this.user.defaultSystem;
+        // set the selected systems list at a global level
+        this.invariantsService.updateSelectedSystemList(this.selectedSystemsList);
+      }
+    });
 
     // get user full name
     this.userFullName = this.keycloakService.getFullName();
-
-    // subscribe to selected system(s) list
-    this.invariantsService.observableSystemsSelected.subscribe(r => { });
 
     // subscrie to the title value and id
     this.hearderTitleService.observableTitle.subscribe(r => { if (r) { this.title = r.titleValue; this.id = r.id; } });

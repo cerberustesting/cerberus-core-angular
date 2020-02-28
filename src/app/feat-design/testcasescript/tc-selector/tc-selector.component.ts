@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { ITestCase, TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
+import { TestService } from 'src/app/core/services/api/test/test.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SettingsService } from '../tc-script/settings/settings.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
@@ -36,7 +37,8 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   tabs: any;
 
   constructor(
-    private testService: TestcaseService,
+    private testService: TestService,
+    private testcaseService: TestcaseService,
     private settingsService: SettingsService,
     private notificationService: NotificationService,
     private sideContentService: SidecontentService,
@@ -45,7 +47,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.testcase = null;
-    this.testService.observableTestCase.next(this.testcase);
+    this.testcaseService.observableTestCase.next(this.testcase);
     this.selectedTest = null;
     this.selectedTestCase = null;
   }
@@ -59,14 +61,14 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
           this.testsList = response;
           if (this.selectedTest != null) {
             // secure the parsed test from URL
-            if (!this.testService.seletectedTestExist(this.selectedTest)) {
+            if (!this.testService.testExists(this.selectedTest)) {
               console.error('the selected test doesn\'t exist');
               this.notificationService.createANotification('The selected test doesn\'t exist', NotificationStyle.Error, true, 5000);
               // this.AlertService.displayMessage(Alert_selectedTestDoesNotExist);
               this.selectedTest = null;
             } else {
               this.SelectedTestChange.emit(this.selectedTest);
-              this.testService.getTestCasesList(this.selectedTest);
+              this.testcaseService.getTestCasesList(this.selectedTest);
             }
           }
         }
@@ -76,16 +78,15 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     });
 
     // subscription to test case id list changes
-    this.testService.observableTestCasesList.subscribe(response => {
+    this.testcaseService.observableTestCasesList.subscribe(response => {
       if (response) {
         if (response.length > 0) {
           this.testcasesList = response;
           // secure the parsed test case from URL
           if (this.selectedTestCase != null && this.selectedTest != null) {
-            if (!this.testService.selectedTestCaseExist(this.selectedTestCase)) {
+            if (!this.testcaseService.selectedTestCaseExist(this.selectedTestCase)) {
               console.error('the selected test case doesn\'t exist');
               this.notificationService.createANotification('The selected test case doesn\t exist', NotificationStyle.Error, true, 5000);
-              // this.AlertService.displayMessage(Alert_selectedTestCaseDoesNotExist);
               this.selectedTestCase = null;
             } else {
               // this.SelectedTestChange.emit(this.selectedTest);
@@ -96,7 +97,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
       } else {
         this.testcasesList = null;
         if (this.selectedTest != null) {
-          if (this.testService.seletectedTestExist(this.selectedTest)) {
+          if (this.testcaseService.seletectedTestExist(this.selectedTest)) {
             console.warn('there is no corresponding test case for this test');
           }
           this.notificationService.createANotification('There is no corresponding test case for this test', NotificationStyle.Warning, true, 5000);
@@ -106,7 +107,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     });
 
     // subscribe to testcase object (updated when combination of test folder & id changes)
-    this.testService.observableTestCase.subscribe(response => { this.testcase = response; });
+    this.testcaseService.observableTestCase.subscribe(response => { this.testcase = response; });
 
   }
 
@@ -120,27 +121,27 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   selectedTestChange() {
     this.clearSelectedTestCase();
     this.SelectedTestChange.emit(this.selectedTest);
-    this.testService.getTestCasesList(this.selectedTest);
-    this.testService.clearTestCase();
+    this.testcaseService.getTestCasesList(this.selectedTest);
+    this.testcaseService.clearTestCase();
   }
 
   // fired when the selected test case id changes
   selectedTestCaseChange() {
     this.SelectedTestCaseChange.emit(this.selectedTestCase);
     this.refreshTestCase();
-    this.testService.getTestCase(this.selectedTest, this.selectedTestCase);
+    this.testcaseService.getTestCase(this.selectedTest, this.selectedTestCase);
     this.settingsService.clearFocus();
   }
 
   // get the corresponding test case according to the selection
   refreshTestCase() {
-    if (this.selectedTest != null && this.testService.seletectedTestExist(this.selectedTest)) {
-      if (this.selectedTestCase != null && this.testService.selectedTestCaseExist(this.selectedTestCase)) {
-        this.testService.getTestCase(this.selectedTest, this.selectedTestCase);
+    if (this.selectedTest != null && this.testService.testExists(this.selectedTest)) {
+      if (this.selectedTestCase != null && this.testcaseService.selectedTestCaseExist(this.selectedTestCase)) {
+        this.testcaseService.getTestCase(this.selectedTest, this.selectedTestCase);
       }
     } else {
       this.testcase = null;
-      this.testService.observableTestCase.next(this.testcase);
+      this.testcaseService.observableTestCase.next(this.testcase);
     }
   }
 
@@ -216,7 +217,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.title = 'Delete Test Case';
     modalRef.componentInstance.text = 'Do you want to delete Test Case ' + test + '" - "' + testcase + '" ?';
     modalRef.componentInstance.fct = () => {
-      this.testService.deleteTestCase(
+      this.testcaseService.deleteTestCase(
         test,
         testcase,
         () => {

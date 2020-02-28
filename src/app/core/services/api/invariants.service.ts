@@ -28,8 +28,8 @@ export class InvariantsService {
   systemsList: Array<any>;
   environmentsList: Array<IInvariant>;
   appService: Array<any>;
+
   // system management
-  // DEFAULT SELECTION
   selectedSystemsList: Array<string> = [];
 
   // observables

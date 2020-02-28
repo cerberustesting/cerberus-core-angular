@@ -85,13 +85,13 @@ export class SystemService {
 
   getApplicationList() {
     this.applicationsList = [];
+    // for each selected system, gather the application list
     for (const system of this.invariantsService.selectedSystemsList) {
       this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication?system=' + system)
         .subscribe(response => {
           // @ts-ignore
           this.applicationsList = this.applicationsList.concat(response.contentTable);
           // @ts-ignore
-          // this.applicationsList = this.applicationsList.contentTable;
           this.observableApplicationList.next(this.applicationsList);
         });
     }

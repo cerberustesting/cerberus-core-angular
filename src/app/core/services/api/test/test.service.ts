@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
-import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';;
+import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../../utils/notification.service';
 

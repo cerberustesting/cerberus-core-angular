@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
-import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
+import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { IApplication } from 'src/app/shared/model/application.model';
-import { SystemService } from 'src/app/core/services/crud/system.service';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { SystemService } from 'src/app/core/services/api/system.service';
+import { TestService } from 'src/app/core/services/api/test.service';
 import { ITest } from 'src/app/shared/model/test.model';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
-import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
 

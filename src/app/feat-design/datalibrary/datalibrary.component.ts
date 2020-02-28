@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Column } from 'src/app/shared/model/column.model';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { TestService } from 'src/app/core/services/api/test.service';
 import { DataLibColumnsData } from './datalibrary.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { DatalibInteractionComponent } from './datalib-interaction/datalib-interaction.component';
-import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
 import { DatalibTclistComponent } from './datalib-interaction/datalib-tclist/datalib-tclist.component';

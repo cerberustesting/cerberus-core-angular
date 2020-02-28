@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { ITestCase, TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { ITest } from 'src/app/shared/model/test.model';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { TestService } from 'src/app/core/services/api/test.service';
 import { SettingsService } from '../tc-script/settings/settings.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
-import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import { TestcaseInteractionComponent } from 'src/app/feat-design/testcaselist/testcase-interaction/testcase-interaction.component';
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

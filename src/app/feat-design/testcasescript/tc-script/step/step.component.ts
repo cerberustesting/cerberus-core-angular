@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Step, Action } from 'src/app/shared/model/testcase.model';
 import { SettingsService } from '../settings/settings.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { TestService } from 'src/app/core/services/api/test.service';
 
 @Component({
   selector: 'app-step',

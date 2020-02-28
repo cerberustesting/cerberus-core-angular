@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IInvariant } from '../model/invariants.model';
-import { InvariantsService } from '../../core/services/crud/invariants.service';
+import { InvariantsService } from '../../core/services/api/invariants.service';
 import { RunParameters } from './run.parameters';
-import { RunService } from '../../core/services/crud/run.service';
+import { RunService } from '../../core/services/api/run.service';
 
 @Component({
   selector: 'app-run',

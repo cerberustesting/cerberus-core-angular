@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ReportingService } from 'src/app/core/services/crud/reporting.service';
+import { ReportingService } from 'src/app/core/services/api/reporting.service';
 
 @Component({
   selector: 'app-label-progress',

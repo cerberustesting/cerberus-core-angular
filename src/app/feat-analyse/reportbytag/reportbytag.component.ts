@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ReportingService } from 'src/app/core/services/crud/reporting.service';
+import { ReportingService } from 'src/app/core/services/api/reporting.service';
 import { HttpClient } from '@angular/common/http';
 import { ITag } from 'src/app/shared/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
+import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 declare function initChartJS();

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
-import { TestService } from 'src/app/core/services/crud/test.service';
-import { SystemService } from 'src/app/core/services/crud/system.service';
-import { FilterService } from 'src/app/core/services/crud/filter.service';
+import { TestService } from 'src/app/core/services/api/test.service';
+import { SystemService } from 'src/app/core/services/api/system.service';
+import { FilterService } from 'src/app/core/services/api/filter.service';
 
 @Component({
   selector: 'app-filter',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserPreferencesService } from '../services/utils/userpreferences.service';
 import { IUser } from 'src/app/shared/model/user.model';
-import { UserService } from '../services/crud/user.service';
+import { UserService } from '../services/api/user.service';
 import { MenuItem } from 'src/app/shared/model/front/menu.model';
 import { Router } from '@angular/router';
 

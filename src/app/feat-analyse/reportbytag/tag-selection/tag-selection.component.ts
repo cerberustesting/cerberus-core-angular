@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ReportingService } from 'src/app/core/services/crud/reporting.service';
+import { ReportingService } from 'src/app/core/services/api/reporting.service';
 import { ITag } from 'src/app/shared/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
+import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 
 @Component({

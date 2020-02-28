@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ITestCase, Step } from 'src/app/shared/model/testcase.model';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { TestService } from 'src/app/core/services/api/test.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { LibraryStepsModalComponent } from '../librarystepsmodal/librarystepsmodal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { InvariantsService } from 'src/app/core/services/api/invariants.service';
+import { TestService } from 'src/app/core/services/api/test.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/crud/sidecontent.service';
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { TestService } from 'src/app/core/services/api/test.service';
 import { PropertyValue, ProperyGroup } from 'src/app/shared/model/property.model';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
 

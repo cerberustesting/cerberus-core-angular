@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
+import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
-import { UserService } from '../services/crud/user.service';
+import { UserService } from '../services/api/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
-import { SidecontentService } from '../services/crud/sidecontent.service';
+import { SidecontentService } from '../services/api/sidecontent.service';
 import { NotificationService } from '../services/utils/notification.service';
 import { HeaderTitleService } from '../services/utils/header-title.service';
 

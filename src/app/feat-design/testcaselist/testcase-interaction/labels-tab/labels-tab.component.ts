@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SystemService } from 'src/app/core/services/crud/system.service';
+import { SystemService } from 'src/app/core/services/api/system.service';
 import { LabelNode } from './label-node/label-node.component';
 
 export class LabelHierarchy {

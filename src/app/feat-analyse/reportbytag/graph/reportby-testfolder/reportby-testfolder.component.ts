@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { ReportingService } from 'src/app/core/services/crud/reporting.service';
+import { ReportingService } from 'src/app/core/services/api/reporting.service';
 
 @Component({
   selector: 'app-reportby-testfolder',

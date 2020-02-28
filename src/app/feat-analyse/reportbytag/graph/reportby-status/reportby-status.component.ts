@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Label } from 'ng2-charts';
 import { ChartType, ChartOptions } from 'chart.js';
 import { ITag } from 'src/app/shared/model/reporting.model';
-import { ReportingService } from 'src/app/core/services/crud/reporting.service';
+import { ReportingService } from 'src/app/core/services/api/reporting.service';
 declare var jQuery: any;
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReportingService } from 'src/app/core/services/crud/reporting.service';
+import { ReportingService } from 'src/app/core/services/api/reporting.service';
 
 @Component({
   selector: 'app-reportby-label',

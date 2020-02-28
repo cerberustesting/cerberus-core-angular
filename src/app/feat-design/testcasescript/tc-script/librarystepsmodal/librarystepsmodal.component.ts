@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { TestService } from 'src/app/core/services/api/test.service';
 import { Step } from 'src/app/shared/model/testcase.model';
-import { UserService } from 'src/app/core/services/crud/user.service';
+import { UserService } from 'src/app/core/services/api/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
 
 @Component({

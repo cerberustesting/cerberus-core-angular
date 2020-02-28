@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, HostBinding } from '@angular/core';
-import { SidecontentService } from '../services/crud/sidecontent.service';
+import { SidecontentService } from '../services/api/sidecontent.service';
 
 @Component({
   selector: 'app-sideblock',

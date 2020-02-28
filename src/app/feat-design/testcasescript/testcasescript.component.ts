@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
-import { TestService } from 'src/app/core/services/crud/test.service';
-import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
-import { SystemService } from 'src/app/core/services/crud/system.service';
+import { TestService } from 'src/app/core/services/api/test.service';
+import { InvariantsService } from 'src/app/core/services/api/invariants.service';
+import { SystemService } from 'src/app/core/services/api/system.service';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { Subject } from 'rxjs';
 

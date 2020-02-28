@@ -1,10 +1,10 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { SidecontentService, INTERACTION_MODE } from '../../../core/services/crud/sidecontent.service';
+import { SidecontentService, INTERACTION_MODE } from '../../../core/services/api/sidecontent.service';
 import { TestcaseInteractionComponent } from '../testcase-interaction/testcase-interaction.component';
 import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
-import { TestService } from 'src/app/core/services/crud/test.service';
+import { TestService } from 'src/app/core/services/api/test.service';
 
 @Component({
   selector: 'app-actions',

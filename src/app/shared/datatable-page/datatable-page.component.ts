@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, TemplateRef, ContentChild, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { Column } from '../model/column.model';
-import { FilterService } from 'src/app/core/services/crud/filter.service';
-import { InvariantsService } from 'src/app/core/services/crud/invariants.service';
+import { FilterService } from 'src/app/core/services/api/filter.service';
+import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { FiltersComponent } from './filters/filters.component';

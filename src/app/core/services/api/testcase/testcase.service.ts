@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ITest } from 'src/app/shared/model/test.model';
+import { TestFolder } from 'src/app/shared/model/back/test.model';
 import { TestCaseHeader, ITestCase, Step, Action, Control } from 'src/app/shared/model/testcase.model';
 import { ILabel, ITestCaseLabel } from 'src/app/shared/model/label.model';
 import { IProject } from 'src/app/shared/model/project.model';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
 import { PropertyValue } from 'src/app/shared/model/property.model';
 import { environment } from 'src/environments/environment';
-import { NotificationService } from '../utils/notification.service';
+import { NotificationService } from '../../utils/notification.service';
 import { tap } from 'rxjs/operators';
-import { NotificationStyle } from '../utils/notification.model';
+import { NotificationStyle } from '../../utils/notification.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,9 +23,9 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class TestService {
+export class TestcaseService {
   // list of test folders
-  testsList: Array<ITest> = new Array<ITest>();
+  testsList: Array<TestFolder> = new Array<TestFolder>();
 
   // list of testcase id corresponding to the previous test folders list
   testcasesList: Array<TestCaseHeader> = new Array<TestCaseHeader>();
@@ -56,7 +56,7 @@ export class TestService {
   // project
   projectsList: Array<IProject> = new Array<IProject>();
   // observables
-  observableTestsList = new BehaviorSubject<ITest[]>(this.testsList);
+  observableTestsList = new BehaviorSubject<TestFolder[]>(this.testsList);
   observableTestCasesList = new BehaviorSubject<TestCaseHeader[]>(this.testcasesList);
   observableTestCasesListLength = new BehaviorSubject<number>(this.testcasesListLength);
   observableTestDataLib = new BehaviorSubject<any[]>(this.testcasesList);
@@ -81,7 +81,7 @@ export class TestService {
   }
 
   getTestsList() {
-    this.http.get<ITest[]>(environment.cerberus_api_url + '/ReadTest')
+    this.http.get<TestFolder[]>(environment.cerberus_api_url + '/ReadTest')
       .subscribe(response => {
         // @ts-ignore
         if (response.iTotalRecords > 0) {

@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { Subject } from 'rxjs';
+import { TestService } from 'src/app/core/services/api/test/test.service';
 
 @Component({
   selector: 'app-testcasescript',
@@ -24,6 +25,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private testcaseService: TestcaseService,
     private testService: TestService,
     private InvariantService: InvariantsService,
     private systemService: SystemService,
@@ -34,7 +36,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.testcase = null;
-    this.testService.observableTestCase.next(this.testcase);
+    this.testcaseService.observableTestCase.next(this.testcase);
     this.selectedTest = null;
     this.selectedTestCase = null;
   }
@@ -49,10 +51,10 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
         this.selectedTestCase = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('testcase'));
       }
     }
-    this.testService.getTestsList();
-    this.testService.getProjectsList();
+    this.testService.getTestFoldersList();
+    this.testcaseService.getProjectsList();
     this.systemService.getApplicationList();
-    this.testService.observableTestCase.subscribe(response => {
+    this.testcaseService.observableTestCase.subscribe(response => {
       if (response) {
         this.testcase = response;
         this.systemService.getLabelsFromSystem(this.testcase.info.system);

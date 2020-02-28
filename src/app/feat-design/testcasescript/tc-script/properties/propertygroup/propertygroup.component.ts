@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { ProperyGroup, PropertyValue } from 'src/app/shared/model/property.model';
 
 @Component({
@@ -27,7 +27,7 @@ export class PropertygroupComponent implements OnInit {
   @Input('propertyGroups') propertyGroups: Array<ProperyGroup>; // list of all property groups
   @Input('inherited') inherited: boolean; // true if the property is in read-only
 
-  constructor(private testService: TestService) { }
+  constructor(private testService: TestcaseService) { }
 
   ngOnInit() {
     // hide the property values by default

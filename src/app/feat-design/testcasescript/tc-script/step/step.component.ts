@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Step, Action } from 'src/app/shared/model/testcase.model';
 import { SettingsService } from '../settings/settings.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 
 @Component({
   selector: 'app-step',
@@ -21,7 +21,7 @@ export class StepComponent implements OnInit {
 
   constructor(
     private settingsService: SettingsService,
-    private testService: TestService
+    private testService: TestcaseService
   ) { }
 
   ngOnInit() {

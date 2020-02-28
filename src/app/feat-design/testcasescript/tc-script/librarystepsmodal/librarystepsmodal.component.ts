@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { Step } from 'src/app/shared/model/testcase.model';
 import { UserService } from 'src/app/core/services/api/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
@@ -20,7 +20,7 @@ export class LibraryStepsModalComponent implements OnInit {
   constructor(
     config: NgbModalConfig,
     public activeModal: NgbActiveModal,
-    private testService: TestService,
+    private testService: TestcaseService,
     private userService: UserService) {
 
     config.backdrop = 'static';

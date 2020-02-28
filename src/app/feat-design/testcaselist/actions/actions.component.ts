@@ -4,7 +4,7 @@ import { TestcaseInteractionComponent } from '../testcase-interaction/testcase-i
 import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 
 @Component({
   selector: 'app-actions',
@@ -24,7 +24,7 @@ export class ActionsComponent {
   constructor(
     private sideContentService: SidecontentService,
     private notificationService: NotificationService,
-    private testService: TestService
+    private testService: TestcaseService
   ) { }
 
   // return the selected rows to the view

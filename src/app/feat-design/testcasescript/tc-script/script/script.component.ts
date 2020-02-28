@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ITestCase, Step } from 'src/app/shared/model/testcase.model';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { LibraryStepsModalComponent } from '../librarystepsmodal/librarystepsmodal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,7 +14,7 @@ export class ScriptComponent implements OnInit {
 
   @Input('testcase') testcase: ITestCase;
 
-  constructor(private testService: TestService, private modalService: NgbModal) {
+  constructor(private testService: TestcaseService, private modalService: NgbModal) {
   }
 
   ngOnInit() { }

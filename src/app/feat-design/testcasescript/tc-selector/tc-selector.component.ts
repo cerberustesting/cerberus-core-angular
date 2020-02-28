@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { ITestCase, TestCaseHeader } from 'src/app/shared/model/testcase.model';
-import { ITest } from 'src/app/shared/model/test.model';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestFolder } from 'src/app/shared/model/back/test.model';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SettingsService } from '../tc-script/settings/settings.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
@@ -26,7 +26,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   @Output() SaveScriptEvent = new EventEmitter<void>();
 
   // list of test folders
-  public testsList: Array<ITest>;
+  public testsList: Array<TestFolder>;
   // list of testcase id corresponding to the selected test folder
   public testcasesList: Array<TestCaseHeader>;
   // testcase object according to test folder and testcase id
@@ -36,7 +36,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   tabs: any;
 
   constructor(
-    private testService: TestService,
+    private testService: TestcaseService,
     private settingsService: SettingsService,
     private notificationService: NotificationService,
     private sideContentService: SidecontentService,

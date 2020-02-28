@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Column } from 'src/app/shared/model/column.model';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { DataLibColumnsData } from './datalibrary.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { DatalibInteractionComponent } from './datalib-interaction/datalib-interaction.component';
@@ -35,7 +35,7 @@ export class DatalibraryComponent implements OnInit {
     private headerTitleService: HeaderTitleService,
     private sideContentService: SidecontentService,
     private modalService: NgbModal,
-    private testService: TestService,
+    private testService: TestcaseService,
     private notificationService: NotificationService
   ) {
     headerTitleService.setTitle('Data Library');

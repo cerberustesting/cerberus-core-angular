@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { FilterService } from 'src/app/core/services/api/filter.service';
 
@@ -16,7 +16,7 @@ export class FilterComponent implements OnInit {
   public dataList: any; // list of options list for dropdown typed field
 
   constructor(
-    private testService: TestService,
+    private testService: TestcaseService,
     private systemService: SystemService,
     private filterService: FilterService
   ) { }

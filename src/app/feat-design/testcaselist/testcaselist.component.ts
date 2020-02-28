@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TestService } from '../../core/services/api/test.service';
+import { TestcaseService } from '../../core/services/api/testcase/testcase.service';
 import { Column } from 'src/app/shared/model/column.model';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
@@ -35,7 +35,7 @@ export class TestcaselistComponent implements OnInit {
     private headerTitleService: HeaderTitleService,
     private sideContentService: SidecontentService,
     private modalService: NgbModal,
-    private testService: TestService,
+    private testService: TestcaseService,
     private notificationService: NotificationService,
     private router: Router) {
   }

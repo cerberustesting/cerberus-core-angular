@@ -4,14 +4,15 @@ import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { IApplication } from 'src/app/shared/model/application.model';
 import { SystemService } from 'src/app/core/services/api/system.service';
-import { TestService } from 'src/app/core/services/api/test.service';
-import { ITest } from 'src/app/shared/model/test.model';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
+import { TestFolder } from 'src/app/shared/model/back/test.model';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
+import { TestService } from 'src/app/core/services/api/test/test.service';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -66,7 +67,7 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // others cerberus entity
   private applicationsList: Array<IApplication>;
-  private testsList: Array<ITest>;
+  private testsList: Array<TestFolder>;
 
   // cross references array to display the correct input fields according to the selected condition
   private crossReference_ConditionValue: Array<ICrossReference> = this.crossReferenceService.crossReference_ConditionValue;
@@ -137,6 +138,7 @@ export class TestcaseInteractionComponent implements OnInit {
     private systemService: SystemService,
     private crossReferenceService: CrossreferenceService,
     private formBuilder: FormBuilder,
+    private testcaseService: TestcaseService,
     private testService: TestService,
     private notificationService: NotificationService,
     private sidecontentService: SidecontentService) {
@@ -201,14 +203,14 @@ export class TestcaseInteractionComponent implements OnInit {
         // if no testcaseheader object has been passed from addComponentToSideBlock()
         // use the test & testcase id passed
         // DIRTY : need API rework
-        this.testService.getTestCaseHeader(this.test, this.testcase);
+        this.testcaseService.getTestCaseHeader(this.test, this.testcase);
       } else {
         // use the ones from the testcase header instead
-        this.testService.getTestCaseHeader(this.testcaseheader.test, this.testcaseheader.testCase);
+        this.testcaseService.getTestCaseHeader(this.testcaseheader.test, this.testcaseheader.testCase);
       }
 
       // subscribe to the test case observable
-      this.testService.observableTestCaseHeader.subscribe(r => {
+      this.testcaseService.observableTestCaseHeader.subscribe(r => {
         if (r) {
           // if no testcaseheader object has been passed from addComponentToSideBlock()
           // the testcaseheader variable is still null
@@ -284,10 +286,10 @@ export class TestcaseInteractionComponent implements OnInit {
   refreshNewTestCase(): void {
     const newTest = this.testcaseHeaderForm.get('test').value;
     // fetch the test cases list for that test folder
-    this.testService.getTestCasesList_withCallback(newTest, (tcList: Array<TestCaseHeader>) => {
+    this.testcaseService.getTestCasesList_withCallback(newTest, (tcList: Array<TestCaseHeader>) => {
       this.testcasesList = tcList;
       // find the last unused test case id
-      this.newTestCase = this.testService.getLatestTestCaseId(this.testcasesList, newTest);
+      this.newTestCase = this.testcaseService.getLatestTestCaseId(this.testcasesList, newTest);
       // edit the test case form value
       this.testcaseHeaderForm.controls['testCase'].setValue(this.newTestCase);
     });
@@ -305,7 +307,7 @@ export class TestcaseInteractionComponent implements OnInit {
   // refresh datas essential for test case header interaction (tests, applications list...)
   refreshOthersDatas(flag?: boolean) {
     if (flag === undefined) {
-      this.testService.getTestsList();
+      this.testService.getTestFoldersList();
     }
     this.systemService.getApplicationList();
     this.systemService.getLabelsHierarchyFromSystem(this.testcaseheader.system, this.testcaseheader.test, this.testcaseheader.testCase);
@@ -330,8 +332,8 @@ export class TestcaseInteractionComponent implements OnInit {
     // reset the selected test case value
     this.dependencySelectedTestCase = null;
     if (this.dependencySelectedTest !== null) {
-      this.testService.getTestCasesList(this.dependencySelectedTest);
-      this.testService.observableTestCasesList
+      this.testcaseService.getTestCasesList(this.dependencySelectedTest);
+      this.testcaseService.observableTestCasesList
         .subscribe(testcaseList => {
           if (testcaseList) {
             this.testcaseList = testcaseList;
@@ -461,9 +463,9 @@ export class TestcaseInteractionComponent implements OnInit {
 
     // trigger the correct API endpoint
     if (this.mode === INTERACTION_MODE.CREATE) {
-      this.testService.createTestCase(queryString).subscribe(rep => this.refreshTable());
+      this.testcaseService.createTestCase(queryString).subscribe(rep => this.refreshTable());
     } else {
-      this.testService.updateTestCase(queryString).subscribe(rep => this.refreshTable());
+      this.testcaseService.updateTestCase(queryString).subscribe(rep => this.refreshTable());
     }
   }
 

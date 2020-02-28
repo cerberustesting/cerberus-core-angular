@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 
 @Component({
   selector: 'app-datalib-tclist',
@@ -16,7 +16,7 @@ export class DatalibTclistComponent implements OnInit {
   // the informations to display
   requestResponseTable: any;
 
-  constructor(private testService: TestService) { }
+  constructor(private testService: TestcaseService) { }
 
   ngOnInit() {
     this.testService.getTestDataLib(this.id, this.name, this.country, response => {

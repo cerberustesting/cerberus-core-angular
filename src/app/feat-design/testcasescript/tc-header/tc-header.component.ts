@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
-import { ITest } from 'src/app/shared/model/test.model';
+import { TestFolder } from 'src/app/shared/model/back/test.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { ILabel } from 'src/app/shared/model/label.model';
@@ -9,6 +9,7 @@ import { SystemService } from 'src/app/core/services/api/system.service';
 import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
 import { IApplication } from 'src/app/shared/model/application.model';
 import { IProject } from 'src/app/shared/model/project.model';
+import { TestService } from 'src/app/core/services/api/test/test.service';
 // JS Functions
 declare function blockAPI(mode, id): void;
 
@@ -31,7 +32,7 @@ export class TcHeaderComponent implements OnInit, OnChanges {
 
   public block_id: string;
 
-  public testsList: Array<ITest> = new Array<ITest>();
+  public testsList: Array<TestFolder> = new Array<TestFolder>();
   private testcasesList: Array<TestCaseHeader> = new Array<TestCaseHeader>();
 
   public tabs: string[] = ['Definition', 'Execution', 'Label', 'Origin', 'Bug Report', 'Tracability'];
@@ -65,6 +66,7 @@ export class TcHeaderComponent implements OnInit, OnChanges {
   private inv_condition_oper: Array<IInvariant>;
 
   constructor(
+    private testcaseService: TestcaseService,
     private testService: TestService,
     private InvariantService: InvariantsService,
     private systemService: SystemService
@@ -86,10 +88,10 @@ export class TcHeaderComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.block_id = 'testcaseheader_block';
-    if (this.testService.refreshTC) {
+    if (this.testcaseService.refreshTC) {
       blockAPI('state_loading', this.block_id);
       const loadingAnimationTime = setInterval(() => {
-        this.testService.refreshTC = false;
+        this.testcaseService.refreshTC = false;
         blockAPI('state_normal', this.block_id);
         clearInterval(loadingAnimationTime);
       }, 1000);
@@ -97,9 +99,9 @@ export class TcHeaderComponent implements OnInit, OnChanges {
       blockAPI('content_hide', this.block_id);
     }
     this.testService.observableTestsList.subscribe(response => { this.testsList = response; });
-    this.testService.observableTestCasesList.subscribe(response => { this.testcasesList = response; });
-    this.testService.observableTestCaseLabels.subscribe(response => { this.testcaseheader_labelsList = response; });
-    this.testService.observableProjectsList.subscribe(response => { this.projectsList = response; });
+    this.testcaseService.observableTestCasesList.subscribe(response => { this.testcasesList = response; });
+    this.testcaseService.observableTestCaseLabels.subscribe(response => { this.testcaseheader_labelsList = response; });
+    this.testcaseService.observableProjectsList.subscribe(response => { this.projectsList = response; });
     this.InvariantService.observableCountriesList.subscribe(response => { this.inv_countries = response; });
     this.InvariantService.observableTcStatus.subscribe(response => { this.inv_tcstatus = response; });
     this.InvariantService.observableGroupsList.subscribe(response => { this.inv_group = response; });
@@ -142,13 +144,13 @@ export class TcHeaderComponent implements OnInit, OnChanges {
   }
 
   refreshTestCase() {
-    this.testService.getTestsList();
-    this.testService.getTestCase(this.selectedTest, this.selectedTestCase);
+    this.testService.getTestFoldersList();
+    this.testcaseService.getTestCase(this.selectedTest, this.selectedTestCase);
     this.systemService.getLabelsFromSystem(this.testcaseheader.system);
     this.systemService.getRevFromSystem(this.testcaseheader.system);
     this.systemService.getSprintsFromSystem(this.testcaseheader.system);
     this.systemService.getApplication(this.testcaseheader.application);
-    this.testService.getProjectsList();
+    this.testcaseService.getProjectsList();
     this.InvariantService.getCountriesList();
     this.InvariantService.getTcStatus();
     this.InvariantService.getOriginsList();
@@ -157,7 +159,7 @@ export class TcHeaderComponent implements OnInit, OnChanges {
     this.InvariantService.getOriginsList();
     this.InvariantService.getStepConditionOperList();
     this.systemService.getApplicationList();
-    this.testService.refreshTC = true;
+    this.testcaseService.refreshTC = true;
   }
 
   // DIRTY : the model should be an array of string, not a JSON object with {"FR": FR}
@@ -203,7 +205,7 @@ export class TcHeaderComponent implements OnInit, OnChanges {
       }
     }
     this.testcaseheader.countryList = this.testcaseheader_countryList;
-    this.testService.saveTestCaseHeader(this.testcaseheader, this.originalTest, this.originalTestCase);
+    this.testcaseService.saveTestCaseHeader(this.testcaseheader, this.originalTest, this.originalTestCase);
   }
 
   debug() { }

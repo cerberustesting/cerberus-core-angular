@@ -3,7 +3,7 @@ import { InvariantsService } from 'src/app/core/services/api/invariants.service'
 import { Action, ITestCase, Control } from 'src/app/shared/model/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SettingsService } from '../settings/settings.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DraganddropService } from '../draganddrop.service';
@@ -41,7 +41,7 @@ export class ActionComponent implements OnInit {
   constructor(
     private InvariantService: InvariantsService,
     private CrossReferenceService: CrossreferenceService,
-    private testService: TestService,
+    private testService: TestcaseService,
     private settingsService: SettingsService,
     private DragAndDropService: DraganddropService
   ) { }

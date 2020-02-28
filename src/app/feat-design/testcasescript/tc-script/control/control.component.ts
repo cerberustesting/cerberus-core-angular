@@ -3,7 +3,7 @@ import { Control, ITestCase } from 'src/app/shared/model/testcase.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SettingsService } from '../settings/settings.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class ControlComponent implements OnInit {
   constructor(
     private InvariantService: InvariantsService,
     private CrossReferenceService: CrossreferenceService,
-    private testService: TestService,
+    private testService: TestcaseService,
     private settingsService: SettingsService
   ) { }
 

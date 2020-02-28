@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 
@@ -58,7 +58,7 @@ export class DatalibInteractionComponent implements OnInit {
 
   constructor(
     private invariantService: InvariantsService,
-    private testService: TestService,
+    private testService: TestcaseService,
     private formBuilder: FormBuilder,
     private sidecontentService: SidecontentService) { }
 

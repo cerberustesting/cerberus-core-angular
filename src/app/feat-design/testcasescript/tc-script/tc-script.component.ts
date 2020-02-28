@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { Observable, Subscription } from 'rxjs';
@@ -29,7 +29,7 @@ export class TcScriptComponent implements OnInit {
   private oldVersion = false; // TODO : to remove and keep a version
 
   constructor(
-    private testService: TestService,
+    private testService: TestcaseService,
     private invariantsService: InvariantsService
   ) { }
 

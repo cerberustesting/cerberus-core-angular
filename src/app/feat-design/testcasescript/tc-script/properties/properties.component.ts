@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestService } from 'src/app/core/services/api/test.service';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { PropertyValue, ProperyGroup } from 'src/app/shared/model/property.model';
 import { ITestCase } from 'src/app/shared/model/testcase.model';
 
@@ -26,7 +26,7 @@ export class PropertiesComponent implements OnInit {
   // property groups : properties grouped by name
   public propertyGroups: Array<ProperyGroup>;
 
-  constructor(private testService: TestService) { }
+  constructor(private testService: TestcaseService) { }
 
   ngOnInit() {
     // ensure the test & testcase are defined

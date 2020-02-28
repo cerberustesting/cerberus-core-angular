@@ -31,9 +31,8 @@ export class SystemService {
   getSprintsFromSystem(system: string) {
     this.http.get<IBuildRevisionInvariant[]>(environment.cerberus_api_url + '/ReadBuildRevisionInvariant?system=' + system + '&level=1')
       .subscribe(response => {
-        this.sprints = response;
         // @ts-ignore
-        this.sprints = this.sprints.contentTable;
+        this.sprints = response.contentTable;
         this.observableSprints.next(this.sprints);
       });
   }

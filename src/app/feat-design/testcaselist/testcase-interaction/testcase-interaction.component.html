@@ -177,8 +177,7 @@
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" class="custom-control-input" id="globalActivation"
                                                 name="globalActivation" formControlName="active"
-                                                [(ngModel)]="Globalselected"
-                                                [ngClass]="Globalselected ? 'selected' : 'notselected'">
+                                                [ngClass]="testcaseHeaderForm.get('active').value ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="globalActivation">
                                                 Global
                                                 <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
@@ -190,7 +189,7 @@
                                         </div>
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" id="activeQA" class="custom-control-input"
-                                                name="activeQA" formControlName="activeQA" [(ngModel)]="QAselected"
+                                                name="activeQA" formControlName="activeQA"
                                                 [ngClass]="QAselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="activeQA">
                                                 QA
@@ -202,7 +201,7 @@
                                         </div>
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" id="activeUAT" class="custom-control-input"
-                                                name="activeUAT" formControlName="activeUAT" [(ngModel)]="UATselected"
+                                                name="activeUAT" formControlName="activeUAT"
                                                 [ngClass]="UATselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="activeUAT">
                                                 UAT
@@ -215,7 +214,6 @@
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" id="activePROD" class="custom-control-input"
                                                 name="activePROD" formControlName="activePROD"
-                                                [(ngModel)]="PRODselected"
                                                 [ngClass]="PRODselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="activePROD">
                                                 PROD
@@ -249,16 +247,21 @@
                                     <!-- VERSION ACTIVATION -->
                                     <div class="form-group mb-0">
                                         <label class="d-block">Version Activation</label>
+                                        <div *ngIf="!sprintsAndRevAreDefined()">
+                                            <p><i class="fa fa-fw fa-times mr-1"></i>
+                                                No sprint or revisions found for the system {{testcaseheader.system}}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="row">
-
+                                    <div *ngIf="sprintsAndRevAreDefined()" class="row">
                                         <div class="col-4">
 
                                             <!-- FROM SPRINT -->
                                             <div class="form-group custom-form-group-sm">
                                                 <label for="fromSprint" class="fw-400">From Sprint</label>
-                                                <select class="form-control form-control-sm"
-                                                    formControlName="fromSprint" name="fromSprint">
+                                                <select *ngIf="sprintsList.length > 0"
+                                                    class="form-control form-control-sm" formControlName="fromSprint"
+                                                    name="fromSprint">
                                                     <option *ngFor="let sprint of sprintsList"
                                                         [value]="sprint.versionName" [id]="sprint.versionName">
                                                         {{ sprint.versionName }}

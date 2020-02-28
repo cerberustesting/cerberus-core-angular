@@ -30,7 +30,7 @@ export class TestcaseInteractionComponent implements OnInit {
   // tabs currently active (used to set the active tab)
   private selectedTab: string;
 
-  // testcase header object refreshed by test and test folder variables
+  // testcase header object (can be refreshed by test and test folder variables)
   private testcaseheader: TestCaseHeader = null;
   // DIRTY : waiting for dev
   // https://github.com/cerberustesting/cerberus-source/issues/2015
@@ -159,8 +159,8 @@ export class TestcaseInteractionComponent implements OnInit {
     this.invariantsService.observableCountriesList.subscribe(rep => this.countriesList = rep);
     this.invariantsService.observablePriorities.subscribe(rep => this.priorityList = rep);
     this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
-    this.systemService.observableSprints.subscribe(rep => this.sprintsList = [{ versionName: '' }].concat(rep));
-    this.systemService.observableRevs.subscribe(rep => this.revsList = [{ versionName: '' }].concat(rep));
+    this.systemService.observableSprints.subscribe(rep => { this.sprintsList = rep; });
+    this.systemService.observableRevs.subscribe(rep => this.revsList = rep);
     this.testcaseService.observableTestsList.subscribe(rep => this.testsList = rep);
 
     // set the correct title for the save button (depending on the mode)
@@ -205,17 +205,33 @@ export class TestcaseInteractionComponent implements OnInit {
       console.error('mandatory parameters not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
     }
   }
+  /** transform 'Y' or 'N' string to boolean */
+  toBoolean(raw: string): boolean {
+    if (raw === 'Y') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
+  /** return true if sprints and revs are defined (false instead) */
+  sprintsAndRevAreDefined(): boolean {
+    return this.sprintsList.length > 0 && this.revsList.length > 0;
+  }
+
+  /** set the form values with the testcaseheader one
+   * we're converting 'Y' and 'N' field to boolean since it is mandatory for fromControlName
+  */
   setFormValues() {
     this.testcaseHeaderForm = this.formBuilder.group({
       test: this.testcaseheader.test || '',
       testCase: this.testcaseheader.testCase,
       originalTest: this.testcaseheader.test,
       originalTestCase: this.testcaseheader.testCase,
-      active: this.testcaseheader.tcActive,
-      activePROD: this.testcaseheader.activePROD,
-      activeQA: this.testcaseheader.activeQA,
-      activeUAT: this.testcaseheader.activeUAT,
+      active: this.toBoolean(this.testcaseheader.tcActive),
+      activePROD: this.toBoolean(this.testcaseheader.activePROD),
+      activeQA: this.toBoolean(this.testcaseheader.activeQA),
+      activeUAT: this.toBoolean(this.testcaseheader.activeUAT),
       application: this.testcaseheader.application,
       behaviorOrValueExpected: this.testcaseheader.behaviorOrValueExpected,
       bugId: this.testcaseheader.bugID,
@@ -264,8 +280,8 @@ export class TestcaseInteractionComponent implements OnInit {
 
   /** refresh data that depends on a testcaseheader  */
   refreshData(testcaseheader: TestCaseHeader) {
-    this.systemService.getSprintsFromSystem(testcaseheader.test);
-    this.systemService.getRevFromSystem(testcaseheader.testCase);
+    this.systemService.getSprintsFromSystem(testcaseheader.system);
+    this.systemService.getRevFromSystem(testcaseheader.system);
     this.systemService.getLabelsHierarchyFromSystem(testcaseheader.system, testcaseheader.test, testcaseheader.testCase);
   }
 

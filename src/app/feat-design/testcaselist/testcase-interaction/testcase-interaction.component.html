@@ -4,15 +4,16 @@
 
             <!-- SIDE CONTENT TITLE -->
             <h3 class="block-title" [ngSwitch]="mode">
-                <span *ngSwitchCase="'CREATE'">Create Test Case</span>
-                <span *ngSwitchCase="'EDIT'">Edit Test Case Header</span>
-                <span *ngSwitchCase="'DUPLICATE'">Duplicate Test Case</span>
+                <span id="createTestCaseTitle" *ngSwitchCase="'CREATE'">Create Test Case</span>
+                <span id="editTestCaseTitle" *ngSwitchCase="'EDIT'">Edit Test Case Header</span>
+                <span id="duplicateTestCaseTitle" *ngSwitchCase="'DUPLICATE'">Duplicate Test Case</span>
             </h3>
             <!-- END SIDE CONTENT TITLE -->
 
             <!-- SAVE / CLOSE BUTTON -->
             <div class="block-options">
-                <button type="button" class="btn btn-sm btn-primary mr-1" type="submit">{{saveButtonTitle}}</button>
+                <button type="submit" id="submitInteraction"
+                    class="btn btn-sm btn-primary mr-1">{{saveButtonTitle}}</button>
                 <button type="button" class="btn btn-sm btn-secondary" (click)="closeSideContent()">Close</button>
             </div>
             <!-- END SAVE / CLOSE BUTTON -->
@@ -79,7 +80,8 @@
                     <div class="block-content tab-content">
 
                         <!-- DEFINITION TAB -->
-                        <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="definitionTab" role="tabpanel">
+                        <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="definitionTab"
+                            role="tabpanel">
                             <!-- SCRIPT CONTENT -->
                             <div class="row">
 
@@ -98,8 +100,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="ShortDescription">Application</label>
-                                        <ng-select name="Application" class="custom-sm" id="application" [items]="applicationsList"
-                                            bindLabel="application" bindValue="application"
+                                        <ng-select name="Application" class="custom-sm" id="application"
+                                            [items]="applicationsList" bindLabel="application" bindValue="application"
                                             formControlName="application" (change)="getFromSystem()"
                                             placeholder="You must define an application">
                                         </ng-select>
@@ -111,7 +113,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="Status">Status</label>
-                                        <select class="form-control form-control-sm" id="status" formControlName="status">
+                                        <select class="form-control form-control-sm" id="status"
+                                            formControlName="status">
                                             <option *ngFor="let status of statusList" [value]="status.value">
                                                 {{ status.value }}
                                             </option>
@@ -137,7 +140,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="Priority">Priority</label>
-                                        <select class="form-control form-control-sm" id="priority" formControlName="priority">
+                                        <select class="form-control form-control-sm" id="priority"
+                                            formControlName="priority">
                                             <option *ngFor="let priority of priorityList" [value]="priority.value">
                                                 {{ priority.value }}
                                             </option>
@@ -163,15 +167,18 @@
                         <!-- END TAB -->
 
                         <!-- SETTINGS TAB -->
-                        <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="settingsTab" role="tabpanel">
+                        <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="settingsTab"
+                            role="tabpanel">
                             <div class="row">
                                 <div class="col-md-12">
                                     <!-- ENVIRONMENT GROUP ACTIVATION -->
                                     <div id="sideContent_globalActivation" class="form-group">
                                         <label class="d-block">Environment Activation</label>
                                         <div class="custom-control custom-switch custom-control-inline">
-                                            <input type="checkbox" class="custom-control-input" id="globalActivation" 
-                                                name="globalActivation" formControlName="active" [(ngModel)]="Globalselected" [ngClass]="Globalselected ? 'selected' : 'notselected'">
+                                            <input type="checkbox" class="custom-control-input" id="globalActivation"
+                                                name="globalActivation" formControlName="active"
+                                                [(ngModel)]="Globalselected"
+                                                [ngClass]="Globalselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="globalActivation">
                                                 Global
                                                 <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
@@ -183,7 +190,8 @@
                                         </div>
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" id="activeQA" class="custom-control-input"
-                                                name="activeQA" formControlName="activeQA" [(ngModel)]="QAselected" [ngClass]="QAselected ? 'selected' : 'notselected'">
+                                                name="activeQA" formControlName="activeQA" [(ngModel)]="QAselected"
+                                                [ngClass]="QAselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="activeQA">
                                                 QA
                                                 <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
@@ -194,7 +202,8 @@
                                         </div>
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" id="activeUAT" class="custom-control-input"
-                                                name="activeUAT" formControlName="activeUAT" [(ngModel)]="UATselected" [ngClass]="UATselected ? 'selected' : 'notselected'">
+                                                name="activeUAT" formControlName="activeUAT" [(ngModel)]="UATselected"
+                                                [ngClass]="UATselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="activeUAT">
                                                 UAT
                                                 <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
@@ -205,7 +214,9 @@
                                         </div>
                                         <div class="custom-control custom-switch custom-control-inline">
                                             <input type="checkbox" id="activePROD" class="custom-control-input"
-                                                name="activePROD" formControlName="activePROD" [(ngModel)]="PRODselected" [ngClass]="PRODselected ? 'selected' : 'notselected'">
+                                                name="activePROD" formControlName="activePROD"
+                                                [(ngModel)]="PRODselected"
+                                                [ngClass]="PRODselected ? 'selected' : 'notselected'">
                                             <label class="custom-control-label" for="activePROD">
                                                 PROD
                                                 <i class="fa fa-info-circle ml-0 info popover-custom-width-1"
@@ -466,7 +477,8 @@
                         <!-- END TAB -->
 
                         <!-- DEPENDENCY TAB -->
-                        <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="dependencyTab" role="tabpanel">
+                        <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="dependencyTab"
+                            role="tabpanel">
                             <div class="row">
                                 <!-- TEST -->
                                 <div class="col-md-6">

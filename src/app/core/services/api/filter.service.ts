@@ -5,7 +5,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -47,8 +46,7 @@ export class FilterService {
   }
 
   /**
-  * getContentForTable function
-  * returns all filters in a url-encoded string
+  * returns all datatable filters in a url-encoded string (to send to API)
   * @params columnList : list of columns and their values
   * @params pageInformation : information on the current page
   * @params globalSearch : quick search keyword

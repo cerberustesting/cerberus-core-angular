@@ -26,9 +26,14 @@ export class SelectedLabel {
 })
 export class LabelsTabComponent implements OnInit {
 
-  // test and testcase
+  // test and testcase used to get the available labels list
   @Input('test') test: string;
   @Input('testcase') testcase: string;
+
+  // selected labels list
+  @Input('labelslist') selectedLabelsList: Array<any>;
+
+  // system of the test case
   @Input('system') system: string;
 
   // label hierarchy (selected & available to selection)
@@ -37,6 +42,7 @@ export class LabelsTabComponent implements OnInit {
 
   constructor(
     private systemService: SystemService) {
+    this.labelsList = undefined;
   }
 
   ngOnInit() {

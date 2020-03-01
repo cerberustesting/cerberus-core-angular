@@ -441,7 +441,8 @@
 
                         <!-- LABELS TAB -->
                         <div *ngIf="selectedTab == tabs[2]" class="tab-pane active show" id="labelsTab" role="tabpanel">
-                            <app-labels-tab [test]="test" [testcase]="testcase" [system]="testcaseheader.system">
+                            <app-labels-tab [test]="test" [testcase]="testcase" [system]="testcaseheader.system"
+                                [labelslist]="testcaseheader.labelList">
                             </app-labels-tab>
 
                         </div>

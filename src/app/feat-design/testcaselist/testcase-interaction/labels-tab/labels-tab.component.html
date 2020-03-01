@@ -19,10 +19,13 @@
     </div>
 </div>
 
-<div class="scrollable">
+<div *ngIf="labelsList" class="scrollable">
+
     <div *ngIf="labelType == 'stickers'">
-        <div *ngFor="let labelNode of labelsList.stickers">
-            <app-label-node [node]="labelNode"></app-label-node>
+        <div>
+            <app-label-node *ngFor="let labelNode of labelsList.stickers" [node]="labelNode"
+                [labelslist]="selectedLabelsList">
+            </app-label-node>
         </div>
     </div>
 
@@ -37,4 +40,5 @@
             <app-label-node [node]="labelNode"></app-label-node>
         </div>
     </div>
+
 </div>

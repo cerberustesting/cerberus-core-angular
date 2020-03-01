@@ -19,6 +19,7 @@ export class LabelNode {
 export class LabelNodeComponent implements OnInit {
 
   @Input('node') node: LabelNode;
+  @Input('labelslist') selectedLabelsList: Array<any>;
 
   public showChildren: boolean;
 
@@ -32,6 +33,14 @@ export class LabelNodeComponent implements OnInit {
     if (this.node.nodes) {
       this.showChildren = !this.showChildren;
     }
+  }
+
+  isTheNodeSelected(labelname: string) {
+    return this.selectedLabelsList.find(label => label.label.label === labelname);
+  }
+
+  toggleLabel(labelname: string) {
+    this.selectedLabelsList.push(labelname);
   }
 
 }

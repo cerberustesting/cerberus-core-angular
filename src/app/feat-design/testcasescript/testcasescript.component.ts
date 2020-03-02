@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ITestCase } from 'src/app/shared/model/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
@@ -17,7 +17,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
 
   selectedTest: string;
   selectedTestCase: string;
-  testcase: ITestCase;
+  testcase: TestCase;
 
   // event to be fired when the 'save script' button is pressed
   saveScriptEvent: Subject<void> = new Subject<void>();

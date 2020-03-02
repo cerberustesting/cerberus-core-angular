@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
-import { TestCaseHeader, ITestCase, Step, Action, Control } from 'src/app/shared/model/testcase.model';
-import { ILabel, ITestCaseLabel } from 'src/app/shared/model/label.model';
+import { TestCaseHeader, TestCase, Step, Action, Control } from 'src/app/shared/model/back/testcase.model';
+import { Label, ITestCaseLabel } from 'src/app/shared/model/back/label.model';
 import { IProject } from 'src/app/shared/model/project.model';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
 import { PropertyValue } from 'src/app/shared/model/property.model';
@@ -37,7 +37,7 @@ export class TestcaseService {
   testdatalib: Array<any> = new Array<TestCaseHeader>();
 
   // full testcase object
-  testcase: ITestCase = null;
+  testcase: TestCase = null;
 
   // max id that can be used for a test folder
   maxTestCase: number = null;
@@ -49,7 +49,7 @@ export class TestcaseService {
   libraryStepList: Array<Step> = new Array<Step>();
 
 
-  testcase_labels: Array<ILabel> = new Array<ILabel>();
+  testcase_labels: Array<Label> = new Array<Label>();
   testcase_properties: Array<PropertyValue>;
 
   private testcaseheader_countriesList_format = new Array<string>();
@@ -61,9 +61,9 @@ export class TestcaseService {
   observableTestCasesListLength = new BehaviorSubject<number>(this.testcasesListLength);
   observableTestDataLib = new BehaviorSubject<any[]>(this.testcasesList);
   observableTestDataLibLength = new BehaviorSubject<number>(this.testcasesListLength);
-  observableTestCaseLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
-  observableTestCase = new BehaviorSubject<ITestCase>(this.testcase);
-  observableLabels = new BehaviorSubject<ILabel[]>(this.testcase_labels);
+  observableTestCaseLabels = new BehaviorSubject<Label[]>(this.testcase_labels);
+  observableTestCase = new BehaviorSubject<TestCase>(this.testcase);
+  observableLabels = new BehaviorSubject<Label[]>(this.testcase_labels);
   observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
   observableTestCaseProperties = new BehaviorSubject<PropertyValue[]>(this.testcase_properties);
   observableTestCaseHeader = new BehaviorSubject<TestCaseHeader>(this.testcaseheader);
@@ -99,8 +99,12 @@ export class TestcaseService {
   getTestCasesList(test: string) {
     this.http.get<TestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
       .subscribe((response) => {
+        // @ts-ignore
         if (response.iTotalRecords > 0) {
+          // @ts-ignore
           this.testcasesList = response.contentTable;
+          // @ts-ignore
+          // TODO : why?
           this.testcasesListLength = response.iTotalRecords;
           this.observableTestCasesList.next(this.testcasesList);
         } else {
@@ -150,7 +154,9 @@ export class TestcaseService {
   getTestCasesList_withCallback(test: string, callback) {
     this.http.get<TestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
       .subscribe((response) => {
+        // @ts-ignore
         if (response.iTotalRecords > 0) {
+          // @ts-ignore
           callback(response.contentTable);
         } else {
           if (test != null) {
@@ -212,7 +218,9 @@ export class TestcaseService {
     this.http.post<TestCaseHeader>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
       .subscribe((response) => {
         if (response) {
+          // @ts-ignore
           if (response.iTotalRecords > 0) {
+            // @ts-ignore
             callback(response.contentTable, response.iTotalRecords);
           } else {
             this.testcasesList = null;
@@ -312,12 +320,13 @@ export class TestcaseService {
     if (test == null || testcase == null) {
       this.testcase = null;
     } else {
-      this.http.get<ITestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withStep=true')
+      this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withStep=true')
         .subscribe((response) => {
           this.testcase = response;
           this.observableTestCase.next(this.testcase);
           // format the countries List to an string array
           this.testcaseheader_countriesList_format = new Array<string>();
+          // @ts-ignore
           this.testcaseheader_countriesList_format = this.convertCountriesList(this.testcase.info);
           this.getLabelsfromTestCase(test, testcase);
         });
@@ -335,10 +344,12 @@ export class TestcaseService {
     if (test == null || testcase == null) {
       this.testcaseheader = null;
     } else {
-      this.http.get<ITestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase)
+      this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCaseV2?test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testcase))
         .subscribe((response) => {
+          console.log(response);
           // @ts-ignore
-          this.testcaseheader = response.contentTable;
+          this.testcaseheader = response.contentTable[0].header;
+          // this.testcaseheader = response.contentTable[0].header
           this.observableTestCaseHeader.next(this.testcaseheader);
         });
     }
@@ -347,7 +358,7 @@ export class TestcaseService {
   // TO DELETE : wrong name
   getTestCaseInformations(test: string, testcase: string, callback: (n: TestCaseHeader) => any) {
     if (test && testcase) {
-      this.http.get<any>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase)
+      this.http.get<any>(environment.cerberus_api_url + '/ReadTestCase?test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testcase))
         .subscribe((response) => callback(response.contentTable));
     }
   }
@@ -406,8 +417,10 @@ export class TestcaseService {
   // DIRTY : correct the model mistake
   convertCountriesList(testcaseheader: TestCaseHeader): Array<string> {
     const countriesList = new Array<string>();
+    // @ts-ignore
     for (const index in testcaseheader.countryList) {
       if (index) {
+        // @ts-ignore
         countriesList.push(testcaseheader.countryList[index]);
       }
     }
@@ -422,9 +435,10 @@ export class TestcaseService {
     let data: TestCaseHeader;
     data = testcaseheader;
     // add the original test and testcase to the data to send
+    // @ts-ignore
     data.originalTest = originalTest;
+    // @ts-ignore
     data.originalTestCase = originalTestCase;
-    console.log(data);
     /*
     // use of URLSearchParams() and body.toString to match the old school API
     let body = new URLSearchParams();
@@ -461,10 +475,10 @@ export class TestcaseService {
     });
   }
 
-  saveTestCase(testcase: ITestCase) {
+  saveTestCase(testcase: TestCase) {
     // this.refreshStepSortSequence(testcase.stepList);
     console.log('TestCase Object to be saved');
-    console.log(testcase.stepList);
+    console.log(testcase.steps);
   }
 
   clearTestCase() {

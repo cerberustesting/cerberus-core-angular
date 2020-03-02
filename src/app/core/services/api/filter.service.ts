@@ -4,7 +4,7 @@ import { InvariantsService } from './invariants.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
 
 const httpOptions = {
   headers: new HttpHeaders({

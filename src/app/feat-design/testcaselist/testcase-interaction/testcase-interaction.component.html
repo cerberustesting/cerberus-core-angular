@@ -234,7 +234,7 @@
                                             class="custom-control block custom-block custom-control-info custom-sm custom-control-inline">
                                             <input type="checkbox" class="custom-control-input" [id]="country.value"
                                                 [name]="country.value" [checked]="isTheCountrySelected(country.value)"
-                                                (click)="toggleCountry(country.value)">
+                                                (click)="toggleCountry(country)">
                                             <label class="custom-control-label" [for]="country.value">
                                                 <span class="d-block text-center">
                                                     {{ country.value }}
@@ -442,7 +442,7 @@
                         <!-- LABELS TAB -->
                         <div *ngIf="selectedTab == tabs[2]" class="tab-pane active show" id="labelsTab" role="tabpanel">
                             <app-labels-tab [test]="test" [testcase]="testcase" [system]="testcaseheader.system"
-                                [labelslist]="testcaseheader.labelList">
+                                [selectedlabels]="testcaseheader.labels">
                             </app-labels-tab>
 
                         </div>

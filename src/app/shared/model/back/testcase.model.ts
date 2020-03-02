@@ -1,8 +1,19 @@
-import { PropertyValue } from './property.model';
+import { PropertyValue } from '../property.model';
+import { Label } from './label.model';
+import { IInvariant } from '../invariants.model';
 
+/**
+ * @class TestCase
+ * @classdesc test case object
+ * */
 export class TestCaseHeader {
+
+    /** @description name of the test folder */
     test: string;
+
+    /** @description id of the test case */
     testCase: string;
+
     description: string;
     application: string;
     status: string;
@@ -13,7 +24,7 @@ export class TestCaseHeader {
     activeQA: string;
     activeUAT: string;
     activePROD: string;
-    countryList: Array<any>;
+    countries: Array<IInvariant>;
     fromBuild: string;
     toBuild: string;
     fromRev: string;
@@ -26,10 +37,10 @@ export class TestCaseHeader {
     conditionVal3: string;
     userAgent: string;
     screenSize: string;
-    labelList: Array<any>;
+    labels: Array<Label>;
     bugID: any;
     comment: string;
-    dependencyList: Array<ITestCaseDependency>;
+    dependencies: Array<TestCaseDependency>;
     implementer: string;
     executor: string;
     testCaseVersion: number;
@@ -38,6 +49,9 @@ export class TestCaseHeader {
     usrModif: string;
     dateModif: string;
     system: string;
+
+    // DIRTY : allow any fields
+    // waiting for API rework
     [key: string]: any;
 
     constructor(
@@ -61,7 +75,7 @@ export class TestCaseHeader {
         this.activeQA = 'Y';
         this.activeUAT = 'Y';
         this.activePROD = 'N';
-        this.countryList = countryList;
+        this.countries = countryList;
         this.fromBuild = '';
         this.fromRev = '';
         this.toBuild = '';
@@ -74,10 +88,10 @@ export class TestCaseHeader {
         this.conditionVal3 = '';
         this.userAgent = '';
         this.screenSize = '';
-        this.labelList = [];
+        this.labels = [];
         this.bugID = [];
         this.comment = '';
-        this.dependencyList = [];
+        this.dependencies = [];
         this.implementer = '';
         this.executor = '';
         this.testCaseVersion = 0;
@@ -88,29 +102,33 @@ export class TestCaseHeader {
     }
 }
 
-export interface ITestCaseDependency {
-    active: boolean;
-    depDescription: string;
-    depEvent: string;
-    depTest: string;
-    depTestCase: string;
-    description: string;
+export class TestCaseDependency {
     id: number;
     test: string;
     testCase: string;
+    active: string;
+    depDescription: string;
+    depEvent: string;
     type: string;
+
+    constructor(test: string, testcase: string) {
+        this.depDescription = '';
+        this.active = 'Y';
+        this.type = 'TCEXEEND';
+        this.depEvent = '';
+    }
 }
 
-export interface ITestCase {
-    info: TestCaseHeader;
-    inheritedProp: Array<PropertyValue>;
-    hasPermissionsUpdate: boolean;
-    messageType: string;
-    hasPermissionsStepLibrary: boolean;
-    stepList: Array<Step>;
-    message: string;
-    hasPermissionsDelete: boolean;
-    sEcho: number;
+export interface TestCase {
+    header: TestCaseHeader;
+    steps: Array<Step>;
+    properties: {
+        inheritedproperties: Array<PropertyValue>;
+        testcaseproperties: Array<PropertyValue>;
+    };
+    // DIRTY : allow any fields
+    // waiting for API rework
+    [key: string]: any;
 }
 
 export class Step {

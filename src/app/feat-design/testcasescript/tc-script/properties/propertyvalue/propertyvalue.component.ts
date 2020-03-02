@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PropertyValue, ProperyGroup } from 'src/app/shared/model/property.model';
-import { ITestCase } from 'src/app/shared/model/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
@@ -20,7 +20,7 @@ export class PropertyvalueComponent implements OnInit {
 
   @Input('propertyvalue') propertyvalue: PropertyValue; // property value
   @Input('propertyvalueIndex') index: number; // index to build ids
-  @Input('testcase') testcase: ITestCase; // full testcase object
+  @Input('testcase') testcase: TestCase; // full testcase object
   @Input('propertygroup') propertygroup: ProperyGroup; // property group object will all values from others properties values
   @Input('inherited') inherited: boolean; // true if the property is in read-only mode
 

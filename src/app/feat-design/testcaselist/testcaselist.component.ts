@@ -11,7 +11,7 @@ import { TestcaseInteractionComponent } from './testcase-interaction/testcase-in
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
 import { DatatablePageComponent } from 'src/app/shared/datatable-page/datatable-page.component';
 
 @Component({

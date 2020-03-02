@@ -3,6 +3,7 @@
  * @classdesc test folder (previously 'test')
  */
 export class TestFolder {
+
         /** @description name of the test folder */
         test: string;
 

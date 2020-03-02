@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader, TestCaseDependency } from 'src/app/shared/model/back/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { IApplication } from 'src/app/shared/model/application.model';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
@@ -32,9 +32,6 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // testcase header object (can be refreshed by test and test folder variables)
   private testcaseheader: TestCaseHeader = null;
-  // DIRTY : waiting for dev
-  // https://github.com/cerberustesting/cerberus-source/issues/2015
-  private testcaseheader_countryList_custom: Array<string> = new Array<string>();
 
   // list of tabs
   private tabs: Array<string>;
@@ -44,14 +41,18 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // form that is submitted to to the API
   public testcaseHeaderForm: FormGroup;
+
   // detailled description value Editor object
   public Editor = ClassicEditor;
 
   // title for save button (different according to the mode)
   private saveButtonTitle: string;
 
-  // testcaseList used for Test & Test case folder section
+  // test case list used for Test & Test case folder section
   private testcasesList: Array<TestCaseHeader> = [];
+
+  // tests folder list used for Test & Test case folder section
+  private testsList: Array<TestFolder>;
 
   // public invariants
   private statusList: Array<IInvariant>;
@@ -67,48 +68,35 @@ export class TestcaseInteractionComponent implements OnInit {
   // others cerberus entity
   private applicationsList: Array<IApplication>;
 
-  /** tests folder list */
-  private testsList: Array<TestFolder>;
-
   // cross references array to display the correct input fields according to the selected condition
   private crossReference_ConditionValue: Array<ICrossReference> = this.crossReferenceService.crossReference_ConditionValue;
 
-  // instantiate labelsList objects
-  labelList = {
+  // labels available for selection (labels hierarchy)
+  private labelList = {
     batteries: [],
     requirements: [],
     stickers: []
   };
 
   /* dependencies management */
+
   // selected test
   dependencySelectedTest: string;
   // selected testcase id
   dependencySelectedTestCase: TestCaseHeader;
   // testcaseList used for dependencies
-  private testcaseList: Array<TestCaseHeader> = [];
+  private testcaseList: Array<TestCaseHeader> = []; // TODO : rename it
 
-  // DIRTY : input format
-  dependencyTestCaseList: Array<any> = [];
   // DIRTY : output format
   dependencyTestCaseListOutput: Array<any> = [];
 
   // ???
   exit: (n: void) => void;
 
-  // convert the malformed contries list to array of string (remove test and test case attributes)
-  feedCustomCountryList(): Array<string> {
-    const resArray = new Array<string>();
-    this.testcaseheader.countryList.forEach(element => {
-      resArray.push(element.country);
-    });
-    return resArray;
-  }
-
   // return true if a country name (string) is selected fot the test case
   isTheCountrySelected(country: string): boolean {
-    const res = this.testcaseheader_countryList_custom.indexOf(country);
-    if (res === -1) {
+    const res = this.testcaseheader.countries.find(invariant => invariant.value === country);
+    if (res === undefined) {
       return false;
     } else {
       return true;
@@ -116,12 +104,12 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   // select or unselect a country when its clicked
-  toggleCountry(country: string) {
-    if (this.isTheCountrySelected(country) === true) {
-      const index = this.testcaseheader_countryList_custom.indexOf(country);
-      this.testcaseheader_countryList_custom.splice(index, 1);
+  toggleCountry(country: IInvariant) {
+    if (this.isTheCountrySelected(country.value) === true) {
+      const index = this.testcaseheader.countries.findIndex(invariant => invariant.value === country.value);
+      this.testcaseheader.countries.splice(index, 1);
     } else {
-      this.testcaseheader_countryList_custom.push(country);
+      this.testcaseheader.countries.push(country);
     }
   }
 
@@ -183,13 +171,12 @@ export class TestcaseInteractionComponent implements OnInit {
       this.testcaseService.observableTestCaseHeader.subscribe(rep => {
         if (rep) {
           this.testcaseheader = rep;
+          console.log(this.testcaseheader);
           this.refreshData(this.testcaseheader);
           this.setFormValues();
           if (this.mode !== INTERACTION_MODE.EDIT) {
             this.refreshNewTestCase();
           }
-          this.testcaseheader_countryList_custom = this.feedCustomCountryList();
-          this.dependencyTestCaseList = this.testcaseheader.dependencyList;
         }
       });
       // if the full testcaseheader object is passed : we don't refresh
@@ -198,8 +185,6 @@ export class TestcaseInteractionComponent implements OnInit {
       if (this.mode !== INTERACTION_MODE.EDIT) {
         this.refreshNewTestCase();
       }
-      this.testcaseheader_countryList_custom = this.feedCustomCountryList();
-      this.dependencyTestCaseList = this.testcaseheader.dependencyList;
       // if neither of it is passed, there's a problem
     } else {
       console.error('mandatory parameters not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
@@ -325,20 +310,14 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   // add a testcase id to the tc dependencies
-  addToDependencyTable(testcase: TestCaseHeader): void {
-    const dependency = {
-      // id: this.dependencyTestCaseList.sort((a, b) => (a.id < b.id) ? 1 : -1)[0].id + 1,
-      id: this.dependencyTestCaseList.length + 1,
-      depTest: testcase.test,
-      depTestCase: testcase.testCase,
-      description: '',
-      active: true
-    };
+  addToDependencyTable(testcaseheader: TestCaseHeader): void {
+    const dependency = new TestCaseDependency(testcaseheader.test, testcaseheader.testCase);
+    dependency.id = this.testcaseheader.dependencies.length + 1;
     // check that the dependency (with the same test & testcase) isn't selected yet
-    if ((this.dependencyTestCaseList.find(d => d.test === dependency.depTest)) && (this.dependencyTestCaseList.find(d => d.testcase === dependency.depTestCase))) {
+    if ((this.testcaseheader.dependencies.find(d => d.test === dependency.test)) && (this.testcaseheader.dependencies.find(d => d.testCase === dependency.testCase))) {
       this.notificationService.createANotification('This TestCase is already selected !', NotificationStyle.Error);
     } else {
-      this.dependencyTestCaseList.push(dependency);
+      this.testcaseheader.dependencies.push(dependency);
     }
   }
 
@@ -361,7 +340,7 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // remove a dependency
   removeDependency(dependencyIndex): void {
-    this.dependencyTestCaseList.splice(dependencyIndex, 1);
+    this.testcaseheader.dependencies.splice(dependencyIndex, 1);
   }
 
   // submit the new tc object to the API
@@ -399,13 +378,6 @@ export class TestcaseInteractionComponent implements OnInit {
       }
     }
 
-    // fill countryList with all countries selected
-    for (const country of this.countriesList) {
-      countryList.push(
-        { country: country.value, toDelete: !this.testcaseheader_countryList_custom.includes(country.value) }
-      );
-    }
-
     // fill labelList with all labels selected
     for (const type in this.labelList) {
       if (type) {
@@ -418,7 +390,7 @@ export class TestcaseInteractionComponent implements OnInit {
     }
 
     // add the dependencies
-    this.dependencyTestCaseListOutput = this.formatDependency(this.dependencyTestCaseList);
+    this.dependencyTestCaseListOutput = this.formatDependency(this.testcaseheader.dependencies);
 
     // add all list to the queryString
     queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(this.dependencyTestCaseListOutput)) + '&';

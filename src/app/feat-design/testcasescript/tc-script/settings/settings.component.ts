@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Step, Action, Control } from 'src/app/shared/model/testcase.model';
+import { Step, Action, Control } from 'src/app/shared/model/back/testcase.model';
 import { SettingsService } from './settings.service';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';

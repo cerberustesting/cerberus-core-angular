@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { ITestCase, TestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCase, TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
 import { TestService } from 'src/app/core/services/api/test/test.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
@@ -31,7 +31,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   // list of testcase id corresponding to the selected test folder
   public testcasesList: Array<TestCaseHeader>;
   // testcase object according to test folder and testcase id
-  public testcase: ITestCase;
+  public testcase: TestCase;
 
   // TODO: add a comment
   tabs: any;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { Step } from 'src/app/shared/model/testcase.model';
+import { Step } from 'src/app/shared/model/back/testcase.model';
 import { UserService } from 'src/app/core/services/api/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
 

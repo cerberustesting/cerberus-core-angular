@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { Action, ITestCase, Control } from 'src/app/shared/model/testcase.model';
+import { Action, TestCase, Control } from 'src/app/shared/model/back/testcase.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
@@ -28,7 +28,7 @@ export class ActionComponent implements OnInit {
   private isDragging: boolean;
   private showActionAddButtons: boolean;
   private isFocused: boolean;
-  private testcase: ITestCase;
+  private testcase: TestCase;
   DragAndAdropAreaId: string;
   DragAndDropControlIDList: Array<string>;
   // Cross Reference array to display the correct input fields according to the selected condition

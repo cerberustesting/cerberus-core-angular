@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { PropertyValue, ProperyGroup } from 'src/app/shared/model/property.model';
-import { ITestCase } from 'src/app/shared/model/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase.model';
 
 @Component({
   selector: 'app-properties',
@@ -19,7 +19,7 @@ export class PropertiesComponent implements OnInit {
   @Input('inherited') inherited: boolean;
 
   // full testcase object
-  @Input('testcase') testcase: ITestCase;
+  @Input('testcase') testcase: TestCase;
 
   // raw list of properties (used only to store the API result)
   private propertiesList: Array<PropertyValue>;

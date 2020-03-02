@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { TestCaseHeader } from 'src/app/shared/model/testcase.model';
+import { TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { ILabel } from 'src/app/shared/model/label.model';
+import { Label } from 'src/app/shared/model/back/label.model';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
 import { IApplication } from 'src/app/shared/model/application.model';
@@ -26,7 +26,7 @@ export class TcHeaderComponent implements OnInit, OnChanges {
   @Input('testcaseheader') testcaseheader: TestCaseHeader;
   private testcaseheader_countryList: any;
   private testcaseheader_countryList_custom: Array<string> = new Array<string>();
-  private testcaseheader_labelsList: Array<ILabel>;
+  private testcaseheader_labelsList: Array<Label>;
   private originalTest: string;
   private originalTestCase: string;
 
@@ -42,10 +42,10 @@ export class TcHeaderComponent implements OnInit, OnChanges {
   private selectedLabelsTab: string;
 
   // labels
-  private labelsList: Array<ILabel>;
-  private stickersList: Array<ILabel>;
-  private requirementsList: Array<ILabel>;
-  private batteriesList: Array<ILabel>;
+  private labelsList: Array<Label>;
+  private stickersList: Array<Label>;
+  private requirementsList: Array<Label>;
+  private batteriesList: Array<Label>;
   // projects
   private projectsList: Array<IProject>;
   // applications List
@@ -174,7 +174,7 @@ export class TcHeaderComponent implements OnInit, OnChanges {
     }
   }
 
-  addLabelToTestCase(label: ILabel) {
+  addLabelToTestCase(label: Label) {
     if (!this.isLabelPresentinTestCase(label.id)) {
       this.testcaseheader_labelsList.push(label);
     }

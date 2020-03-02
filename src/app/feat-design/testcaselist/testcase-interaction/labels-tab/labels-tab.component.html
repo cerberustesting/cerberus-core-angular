@@ -22,22 +22,20 @@
 <div *ngIf="labelsList" class="scrollable">
 
     <div *ngIf="labelType == 'stickers'">
-        <div>
-            <app-label-node *ngFor="let labelNode of labelsList.stickers" [node]="labelNode"
-                [labelslist]="selectedLabelsList">
-            </app-label-node>
+        <div *ngFor="let labelNode of labelsList.stickers">
+            <app-label-node [node]="labelNode" [labelslist]="selectedLabelsList"></app-label-node>
         </div>
     </div>
 
     <div *ngIf="labelType == 'requirements'">
         <div *ngFor="let labelNode of labelsList.requirements">
-            <app-label-node [node]="labelNode"></app-label-node>
+            <app-label-node [node]="labelNode" [labelslist]="selectedLabelsList"></app-label-node>
         </div>
     </div>
 
     <div *ngIf="labelType == 'batteries'">
         <div *ngFor="let labelNode of labelsList.batteries">
-            <app-label-node [node]="labelNode"></app-label-node>
+            <app-label-node [node]="labelNode" [labelslist]="selectedLabelsList"></app-label-node>
         </div>
     </div>
 

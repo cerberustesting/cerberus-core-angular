@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ILabel } from '../model/label.model';
+import { Label } from '../model/back/label.model';
 
 @Pipe({
   name: 'labelfiltering',
@@ -7,7 +7,7 @@ import { ILabel } from '../model/label.model';
 })
 export class LabelfilteringPipe implements PipeTransform {
 
-  transform(items: ILabel[], labelid: string): any {
+  transform(items: Label[], labelid: string): any {
     if (!items || !labelid) {
       return items;
     } else {

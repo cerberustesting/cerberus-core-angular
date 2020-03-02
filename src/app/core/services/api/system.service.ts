@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
-import { ILabel } from 'src/app/shared/model/label.model';
+import { Label } from 'src/app/shared/model/back/label.model';
 import { IApplication } from 'src/app/shared/model/application.model';
 import { environment } from 'src/environments/environment';
 import { InvariantsService } from './invariants.service';
@@ -14,14 +14,14 @@ export class SystemService {
 
   private sprints: Array<IBuildRevisionInvariant> = new Array<IBuildRevisionInvariant>();
   private revs: Array<IBuildRevisionInvariant> = new Array<IBuildRevisionInvariant>();
-  private labels: Array<ILabel> = new Array<ILabel>();
+  private labels: Array<Label> = new Array<Label>();
   private labelsHierarchy: Array<any>;
   private applicationsList: Array<IApplication> = new Array<IApplication>();
   private application: IApplication;
 
   observableSprints = new BehaviorSubject<IBuildRevisionInvariant[]>(this.sprints);
   observableRevs = new BehaviorSubject<IBuildRevisionInvariant[]>(this.revs);
-  observableLabelsList = new BehaviorSubject<ILabel[]>(this.labels);
+  observableLabelsList = new BehaviorSubject<Label[]>(this.labels);
   observableApplicationList = new BehaviorSubject<IApplication[]>(this.applicationsList);
   observableApplication = new BehaviorSubject<IApplication>(this.application);
   observableLabelsHierarchyList = new BehaviorSubject<any>(this.labelsHierarchy);
@@ -48,7 +48,7 @@ export class SystemService {
   }
 
   getLabelsFromSystem(system: string) {
-    this.http.get<ILabel[]>(environment.cerberus_api_url + '/ReadLabel?system=' + system)
+    this.http.get<Label[]>(environment.cerberus_api_url + '/ReadLabel?system=' + system)
       .subscribe(response => {
         this.labels = response;
         // @ts-ignore
@@ -78,7 +78,7 @@ export class SystemService {
     return this.labels.find(x => x.id === labelid);
   }
 
-  filterLabels(labellist: ILabel[], type: string) {
+  filterLabels(labellist: Label[], type: string) {
     return labellist.filter(label => label.type === type);
   }
 

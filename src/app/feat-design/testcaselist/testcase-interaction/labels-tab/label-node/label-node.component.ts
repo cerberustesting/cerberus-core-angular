@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ILabel } from 'src/app/shared/model/label.model';
+import { Label } from 'src/app/shared/model/back/label.model';
 
 export class LabelNode {
   nodes: Array<LabelNode>;
   selectable: boolean;
   id: number;
-  label: ILabel;
+  label: Label;
   state: {
     selected: boolean;
   };
@@ -18,9 +18,12 @@ export class LabelNode {
 })
 export class LabelNodeComponent implements OnInit {
 
+  /** label node from the test case hierarchy */
   @Input('node') node: LabelNode;
+  /** list of currently selected labels for the test case */
   @Input('labelslist') selectedLabelsList: Array<any>;
 
+  /** boolean that handle the display of the children nodes */
   public showChildren: boolean;
 
   constructor() { }
@@ -29,18 +32,26 @@ export class LabelNodeComponent implements OnInit {
     this.showChildren = true;
   }
 
-  toggleChildren() {
+  /** hide/show the children labels */
+  toggleChildren(): void {
     if (this.node.nodes) {
       this.showChildren = !this.showChildren;
     }
   }
 
-  isTheNodeSelected(labelname: string) {
-    return this.selectedLabelsList.find(label => label.label.label === labelname);
+  /** return true if the label is selected for the testcase */
+  isTheNodeSelected(labelname: string): boolean {
+    const res = this.selectedLabelsList.find(label => label.label === labelname);
+    if (res !== undefined) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  toggleLabel(labelname: string) {
-    this.selectedLabelsList.push(labelname);
+  /** add the label to the testcase selection */
+  toggleLabel(label: Label): void {
+    this.selectedLabelsList.push(label);
   }
 
 }

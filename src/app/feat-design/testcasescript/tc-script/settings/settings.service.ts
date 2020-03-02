@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Step, Action, Control } from 'src/app/shared/model/testcase.model';
+import { Step, Action, Control } from 'src/app/shared/model/back/testcase.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

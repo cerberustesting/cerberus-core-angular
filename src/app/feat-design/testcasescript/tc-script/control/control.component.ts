@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Control, ITestCase } from 'src/app/shared/model/testcase.model';
+import { Control, TestCase } from 'src/app/shared/model/back/testcase.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
@@ -26,7 +26,7 @@ export class ControlComponent implements OnInit {
 
   private showControlAddButtons: boolean;
   private isFocused: boolean;
-  private testcase: ITestCase;
+  private testcase: TestCase;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ActionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ActionValue;
   private crossReference_ConditionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ConditionValue;

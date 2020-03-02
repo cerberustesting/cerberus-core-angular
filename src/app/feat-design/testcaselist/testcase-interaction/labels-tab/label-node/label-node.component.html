@@ -8,7 +8,7 @@
     <div class="custom-control custom-checkbox custom-control-inline custom-control-primary mb-1">
         <input type="checkbox" class="custom-control-input" [id]="'select_'+node.label.label"
             [name]="'select_'+node.label.label" [checked]="isTheNodeSelected(node.label.label)"
-            (change)="toggleLabel(node.label.label)">
+            (change)="toggleLabel(node.label)">
         <label class="custom-control-label" [for]="'select_'+node.label.label">
             <span class="badge badge-primary" [ngStyle]="{'background-color': node.label.color}">
                 {{node.label.label}}

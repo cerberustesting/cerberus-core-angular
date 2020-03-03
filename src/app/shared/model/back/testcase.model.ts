@@ -38,7 +38,7 @@ export class TestCaseHeader {
     userAgent: string;
     screenSize: string;
     labels: Array<Label>;
-    bugID: any;
+    bugs: Array<Bug>;
     comment: string;
     dependencies: Array<TestCaseDependency>;
     implementer: string;
@@ -89,7 +89,7 @@ export class TestCaseHeader {
         this.userAgent = '';
         this.screenSize = '';
         this.labels = [];
-        this.bugID = [];
+        this.bugs = [];
         this.comment = '';
         this.dependencies = [];
         this.implementer = '';
@@ -117,6 +117,37 @@ export class TestCaseDependency {
         this.type = 'TCEXEEND';
         this.depEvent = '';
     }
+}
+
+/**
+ * @class Bug
+ * @classdesc bug entry for a test case
+ */
+export class Bug {
+
+    /** @description is the bug active */
+    act: boolean;
+
+    /** @description description of the bug entry */
+    desc: string;
+
+    /** @description id of the bug (used to generate the bug link) */
+    id: string;
+
+    /** @description audit field: creation date of the bug entry */
+    dateCreated: string;
+
+    /** @description audit field: latest closure of the bug entry */
+    dateClosed: string;
+
+    constructor() {
+        this.id = '';
+        this.act = true;
+        this.desc = '';
+        this.dateCreated = '';
+        this.dateClosed = '';
+    }
+
 }
 
 export interface TestCase {

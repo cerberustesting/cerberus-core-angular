@@ -12,7 +12,6 @@ import { TestcaselistComponent } from './testcaselist/testcaselist.component';
 import { LabelsComponent } from './labels/labels.component';
 import { TestcasescriptComponent } from './testcasescript/testcasescript.component';
 import { TcSelectorComponent } from './testcasescript/tc-selector/tc-selector.component';
-import { TcHeaderComponent } from './testcasescript/tc-header/tc-header.component';
 import { TcScriptComponent } from './testcasescript/tc-script/tc-script.component';
 import { StepComponent } from './testcasescript/tc-script/step/step.component';
 import { LibraryStepsModalComponent } from './testcasescript/tc-script/librarystepsmodal/librarystepsmodal.component';
@@ -41,6 +40,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PropertygroupComponent } from './testcasescript/tc-script/properties/propertygroup/propertygroup.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { BugsReportTabComponent } from './testcaselist/testcase-interaction/bugs-report-tab/bugs-report-tab.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,6 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     LabelsComponent,
     TestcasescriptComponent,
     TcSelectorComponent,
-    TcHeaderComponent,
     TcScriptComponent,
     StepComponent,
     LibraryStepsModalComponent,
@@ -67,6 +66,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     LabelNodeComponent,
     PropertiesComponent,
     PropertygroupComponent,
+    BugsReportTabComponent,
   ],
   imports: [
     CommonModule,

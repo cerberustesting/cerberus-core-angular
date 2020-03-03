@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TcHeaderComponent } from './tc-header.component';
+import { BugsReportTabComponent } from './bugs-report-tab.component';
 
-describe('TcHeaderComponent', () => {
-  let component: TcHeaderComponent;
-  let fixture: ComponentFixture<TcHeaderComponent>;
+describe('BugsReportTabComponent', () => {
+  let component: BugsReportTabComponent;
+  let fixture: ComponentFixture<BugsReportTabComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TcHeaderComponent ]
+      declarations: [ BugsReportTabComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TcHeaderComponent);
+    fixture = TestBed.createComponent(BugsReportTabComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

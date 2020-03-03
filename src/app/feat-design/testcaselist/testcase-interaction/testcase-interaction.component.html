@@ -450,37 +450,14 @@
 
                         <!-- BUGS TAB -->
                         <div *ngIf="selectedTab == tabs[3]" class="tab-pane active show" id="bugsTab" role="tabpanel">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="bugID">Bug ID</label>
-                                        <div class="input-group">
-                                            <input class="form-control form-control-sm" formControlName="bugId"
-                                                id="sideContent_bugID" name="bugId" placeholder="Bug ID" type="text">
-                                            <div class="input-group-append">
-                                                <button type="button" class="btn btn-sm btn-dark"
-                                                    [disabled]="testcaseHeaderForm.get('bugId').value ? '' : 'true'">Go
-                                                    to Bug
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="bugID">Comment</label>
-                                        <div class="input-group">
-                                            <input class="form-control form-control-sm" formControlName="comment"
-                                                id="sideContent_comment" name="comment" placeholder="Comment"
-                                                type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <app-bugs-report-tab [bugs]="testcaseheader.bugs">
+                            </app-bugs-report-tab>
                         </div>
                         <!-- END TAB -->
 
                         <!-- DEPENDENCY TAB -->
+
+                        <!-- TODO : create a new component -->
                         <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="dependencyTab"
                             role="tabpanel">
                             <div class="row">
@@ -502,7 +479,7 @@
                                     <div class="form-group">
                                         <label for="test">Test Case</label>
                                         <ng-select name="testcase" class="custom-sm" [items]="testcaseList"
-                                            bindLabel="testCase" placeholder="Select a Test Case"
+                                            bindLabel="testcase" placeholder="Select a Test Case"
                                             [(ngModel)]="dependencySelectedTestCase"
                                             [ngModelOptions]="{standalone: true}">
                                             <ng-template ng-option-tmp let-item="item">
@@ -528,12 +505,12 @@
 
                                 <div class="col-md-12">
 
-                                    <div *ngIf="dependencyTestCaseList.length == 0"
+                                    <div *ngIf="testcaseheader.dependencies.length == 0"
                                         class="block-content block-content-full block-content-sm bg-body-light text-center">
                                         <div class="font-w600">No dependency selected</div>
                                     </div>
 
-                                    <table *ngIf="dependencyTestCaseList.length > 0"
+                                    <table *ngIf="testcaseheader.dependencies.length > 0"
                                         class="table table-sm table-vcenter">
                                         <thead class="thead-light">
                                             <tr>
@@ -584,7 +561,7 @@
                             <div class="row">
 
                                 <!-- IMPLEMENTER -->
-                                <div class="col-md-10">
+                                <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="implementer">Implementer</label>
                                         <div class="input-group">
@@ -595,6 +572,19 @@
                                     </div>
                                 </div>
                                 <!-- END IMPLEMENTER -->
+
+                                <!-- EXECUTOR -->
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="implementer">Executor</label>
+                                        <div class="input-group">
+                                            <input class="form-control form-control-sm" formControlName="executor"
+                                                id="sideContent_executor" name="excutor" placeholder="Executor"
+                                                type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END EXECUTOR -->
 
                                 <!-- TEST CASE VERSION -->
                                 <div class="col-md-2">

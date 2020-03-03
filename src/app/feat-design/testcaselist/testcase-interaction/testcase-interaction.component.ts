@@ -225,6 +225,7 @@ export class TestcaseInteractionComponent implements OnInit {
       fromSprint: this.testcaseheader.fromBuild,
       group: this.testcaseheader.group,
       implementer: this.testcaseheader.implementer,
+      executor: this.testcaseheader.executor,
       priority: this.testcaseheader.priority,
       shortDesc: this.testcaseheader.description,
       status: this.testcaseheader.status,
@@ -252,15 +253,6 @@ export class TestcaseInteractionComponent implements OnInit {
       // edit the test case form value
       this.testcaseHeaderForm.controls['testCase'].setValue(this.newTestCase);
     });
-  }
-
-  // return true if the form has a value for bug ID
-  checkBugID() {
-    if (this.testcaseHeaderForm.get('bugID').value) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   /** refresh data that depends on a testcaseheader  */

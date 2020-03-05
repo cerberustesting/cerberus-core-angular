@@ -17,13 +17,13 @@ export class DependenciesTabComponent implements OnInit {
   @Input('dependencies') dependencies: TestCaseHeader;
 
   /** list of available test folders to select */
-  private testsList: Array<TestFolder>;
+  public testsList: Array<TestFolder>;
 
   /** list of test case id corresponding to the selected test folder */
   private testCasesList: Array<TestCaseHeader>;
 
   /** selected test folder */
-  private selectedTestFolderName: string;
+  public selectedTestFolderName: string;
 
   /** selected test case id */
   private selectedTestCase: TestCaseHeader;
@@ -90,7 +90,4 @@ export class DependenciesTabComponent implements OnInit {
     this.dependencies.splice(index, 1);
   }
 
-  debug() {
-    console.log(this.selectedTestCase);
-  }
 }

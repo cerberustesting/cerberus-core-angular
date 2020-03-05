@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -47,6 +48,9 @@ export class TestcaseInteractionComponent implements OnInit {
   // tests folder list used for Test & Test case folder section
   private testsList: Array<TestFolder>;
 
+  /** list of available countries to select */
+  public countries: Array<IInvariant>;
+
   // labels available for selection (labels hierarchy)
   // private labelList = {
   //   batteries: [],
@@ -72,6 +76,7 @@ export class TestcaseInteractionComponent implements OnInit {
 
   ngOnInit() {
     this.testcaseService.observableTestsList.subscribe(rep => this.testsList = rep);
+    this.invariantsService.observableCountriesList.subscribe(rep => this.countries = rep);
 
     // set the correct title for the save button (depending on the mode)
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
@@ -93,7 +98,6 @@ export class TestcaseInteractionComponent implements OnInit {
       this.testcaseService.observableTestCaseHeader.subscribe(rep => {
         if (rep) {
           this.testcaseheader = rep;
-          console.log(this.testcaseheader);
           this.refreshData(this.testcaseheader);
           this.setFormValues();
           if (this.mode !== INTERACTION_MODE.EDIT) {
@@ -119,6 +123,15 @@ export class TestcaseInteractionComponent implements OnInit {
       return true;
     } else {
       return false;
+    }
+  }
+
+  /** transform boolean to 'Y' or 'N' string  */
+  toCerberusString(raw: boolean): string {
+    if (raw === true) {
+      return 'Y';
+    } else {
+      return 'N';
     }
   }
 
@@ -167,7 +180,6 @@ export class TestcaseInteractionComponent implements OnInit {
         executor: new FormControl(this.testcaseheader.executor)
       })
     });
-    console.log(this.testcaseHeaderForm);
   }
 
   /** used if the user change the test folder selection */
@@ -198,10 +210,11 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // submit the new tc object to the API
   onSubmit(values: any): void {
+
     // "values" variables corresponds to the form values
 
     // if no application is set
-    if (!values.application) {
+    if (!values.definition.application) {
       this.notificationService.createANotification('Please specify the name of the application', NotificationStyle.Warning);
       return;
     }
@@ -221,30 +234,82 @@ export class TestcaseInteractionComponent implements OnInit {
     // query string that will contains all the values
     let queryString = '';
 
-    // instantiate arrays
-    const countries = [];
-    const labels = [];
-    const dependencies = [];
-
     // add (& encode) all the items from the form group (one to one relationship)
-    for (const item in values) {
-      if (item) {
-        queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item] || '') + '&';
-      }
+    // list of values to consider as a sub form
+    const formGroupsList = ['definition', 'settings', 'bugsReport', 'audit'];
+    const CerberusStringList = ['active', 'activeQA', 'activeUAT', 'activePROD'];
+    for (const key in values) {
+      // if the current node is a form group
+      if (formGroupsList.includes(key)) {
+        // loop in it
+        for (const key2 in values[key]) {
+          if (key2) {
+            if (CerberusStringList.includes(key2)) {
+              // convert the correct key in Y or N string (from boolean)
+              queryString += encodeURIComponent(key2) + '=' + encodeURIComponent(this.toCerberusString(values[key][key2]) || '') + '&';
+            } else {
+              queryString += encodeURIComponent(key2) + '=' + encodeURIComponent(values[key][key2] || '') + '&';
+            }
+
+          }
+        }
+      } else { queryString += encodeURIComponent(key) + '=' + encodeURIComponent(values[key] || '') + '&'; }
     }
 
     // add all the countries
     // format is [{"country":"FR","toDelete":false},{"country":"BE","toDelete":false}...]
-    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countries)) + '&';
+    const countriesQS = new Array<any>();
+    this.countries.forEach(country => {
+      const formattedCountry = {
+        country: country.value,
+        toDelete: this.testcaseService.isCountryDefinedForTestCase(this.testcaseheader.countries, country.value)
+      };
+      countriesQS.push(formattedCountry);
+    });
+    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countriesQS)) + '&';
 
-    // fill labelList with all labels selected
+    // add all the labels
+    // format is [{"labedId":"2","toDelete":false},{"labedId":"PT","toDelete":false}...]
+    // it seems to be always false
+    const labelsQS = new Array<any>();
+    this.testcaseheader.labels.forEach(label => {
+      const formattedLabel = {
+        labelId: label.id,
+        toDelete: false
+      };
+      labelsQS.push(formattedLabel);
+    });
+    queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelsQS)) + '&';
 
-    // add the dependencies
+    // add all the dependencies
+    // format is [{"id":"15","test":"benoit","testcase":"0001A","description":"","active":true}]
+    const dependenciesQS = new Array<any>();
+    this.testcaseheader.dependencies.forEach(dependency => {
+      const formattedDependency = {
+        id: dependency.id,
+        test: dependency.test,
+        testcase: dependency.testCase,
+        description: dependency.description,
+        active: dependency.active
+      };
+      dependenciesQS.push(formattedDependency);
+    });
+    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(dependenciesQS)) + '&';
 
-    // add all list to the queryString
-    // queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(this.dependencyTestCaseListOutput)) + '&';
-    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countries)) + '&';
-    queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labels));
+    // add all the bugs
+    // format is [{"id":"BUGID1","desc":"klnkjn","act":true,"dateCreated":"2020-03-05T20:56:09.036Z","dateClosed":"1970-01-01T00:00:00.000Z"},
+    // {"id":"BUGID2","desc":"jjj","act":true,"dateCreated":"2020-03-05T20:56:14.323Z","dateClosed":"1970-01-01T00:00:00.000Z"}]
+    const bugsQS = new Array<any>();
+    this.testcaseheader.bugs.forEach(bug => {
+      const formattedBug = {
+        id: bug.id,
+        desc: bug.desc,
+        act: bug.act
+        // TODO: add the dates
+      };
+      bugsQS.push(formattedBug);
+    });
+    queryString += 'bugId=' + encodeURIComponent(JSON.stringify(bugsQS)) + '&';
 
     // trigger the correct API endpoint
     if (this.mode === INTERACTION_MODE.CREATE) {

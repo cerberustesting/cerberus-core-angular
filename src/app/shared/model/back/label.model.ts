@@ -19,6 +19,7 @@ export class Label {
 
     /** @description label name */
     label: string;
+
     /** @description label type (sticker, battery or requirement) */
     type: LabelType;
 

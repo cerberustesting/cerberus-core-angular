@@ -214,14 +214,14 @@ reduce the padding and the margin bottom
 for .custom-control-inline, add padding left & right 
 */
 .custom-block.custom-sm .custom-control-label {
-  padding: 0.25rem;
+  padding: 0.1rem;
 }
 .custom-block.custom-sm {
   margin-bottom: 0.75rem;
 }
 .custom-block.custom-sm.custom-control-inline .custom-control-label {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 /*

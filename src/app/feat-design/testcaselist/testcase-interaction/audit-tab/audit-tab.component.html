@@ -1,0 +1,114 @@
+<div class="row" [formGroup]="audit">
+
+    <!-- IMPLEMENTER -->
+    <div class="col-md-5">
+        <div class="form-group">
+            <label for="implementer">Implementer</label>
+            <div class="input-group">
+                <input class="form-control form-control-sm" formControlName="implementer" id="implementer"
+                    name="implementer" placeholder="Implementer" type="text">
+            </div>
+        </div>
+    </div>
+    <!-- END IMPLEMENTER -->
+
+    <!-- EXECUTOR -->
+    <div class="col-md-5">
+        <div class="form-group">
+            <label for="implementer">Executor</label>
+            <div class="input-group">
+                <input class="form-control form-control-sm" formControlName="executor" id="executor" name="excutor"
+                    placeholder="Executor" type="text">
+            </div>
+        </div>
+    </div>
+    <!-- END EXECUTOR -->
+
+    <!-- TEST CASE VERSION -->
+    <div class="col-md-2">
+        <div class="form-group">
+            <label for="implementer">Version</label>
+            <div class="input-group custom-sm">
+                <span class="form-control text-center form-control-sm" id="testCaseVersion" type="text">
+                    <i class="fa fa-code-branch mr-1"></i>
+                    {{testcaseheader.testCaseVersion}}
+                </span>
+            </div>
+        </div>
+
+    </div>
+    <!-- END TEST CASE VERSION -->
+
+    <!-- CREATION SECTION -->
+    <div class="col-md-12">
+        <div id="sideContent_creation" class="form-group mb-0">
+            <label class="d-block">Creation</label>
+        </div>
+    </div>
+    <!-- END CREATION SECTION -->
+
+    <!-- DATE CREATED -->
+    <div class="form-group col-md-6">
+        <div class="input-group custom-sm">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Date</span>
+            </div>
+            <span class="form-control text-center form-control-sm" id="createdDate" type="text">
+                <i class="fa fa-calendar-day mr-1"></i>
+                {{testcaseheader.dateCreated}}
+            </span>
+        </div>
+    </div>
+    <!-- END DATE CREATED-->
+
+    <!-- USER CREATED -->
+    <div class="form-group col-md-6">
+        <div class="input-group custom-sm">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Issuer</span>
+            </div>
+            <span class="form-control text-center form-control-sm" id="createdUsr" type="text">
+                <i class="fa fa-user-edit mr-1"></i>
+                {{testcaseheader.usrCreated}}
+            </span>
+        </div>
+    </div>
+    <!-- END USER CREATED -->
+
+    <!-- LAST UPDATE SECTION -->
+    <div class="col-md-12">
+        <div id="sideContent_creation" class="form-group mb-0">
+            <label class="d-block">Last Update</label>
+        </div>
+    </div>
+    <!-- END LAST UPDATE SECTION -->
+
+    <!-- LAST UPDATE DATE -->
+    <div class="form-group col-md-6">
+        <div class="input-group custom-sm">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Date</span>
+            </div>
+            <span class="form-control text-center form-control-sm" id="dateModif" type="text">
+                <i class="fa fa-calendar-day mr-1"></i>
+                {{testcaseheader.dateModif}}
+            </span>
+        </div>
+    </div>
+    <!-- END LAST UPDATE DATE -->
+
+    <!-- LAST UPDATE USER -->
+    <div class="form-group col-md-6">
+        <div class="input-group custom-sm">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Issuer</span>
+            </div>
+            <span class="form-control text-center form-control-sm" id="usrModif" type="text">
+                <i class="fa fa-user-edit mr-1"></i>
+                {{testcaseheader.usrModif}}
+            </span>
+        </div>
+    </div>
+    <!-- END LAST UPDATE USER -->
+
+</div>

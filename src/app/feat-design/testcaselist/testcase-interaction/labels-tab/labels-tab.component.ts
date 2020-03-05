@@ -55,4 +55,6 @@ export class LabelsTabComponent implements OnInit {
     this.labelType = 'stickers';
   }
 
+  // TODO : maybe refresh the labels hierarchy at every component
+
 }

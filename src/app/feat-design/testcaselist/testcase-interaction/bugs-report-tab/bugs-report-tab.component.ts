@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Bug } from 'src/app/shared/model/back/testcase.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-bugs-report-tab',
@@ -10,6 +11,9 @@ export class BugsReportTabComponent implements OnInit {
 
   /** list of selected bugs for this test case */
   @Input('bugs') bugs: Array<Bug>;
+
+  /** form section for bug report tab fields */
+  @Input('bugsReport') bugsReport: FormGroup;
 
   constructor() { }
 
@@ -37,6 +41,5 @@ export class BugsReportTabComponent implements OnInit {
   }
 
   // TODO : check any bug.id change to block duplicate bug id
-  // TODO : maybe refresh the labels hierarchy at every component
 
 }

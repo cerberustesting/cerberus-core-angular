@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { NotificationService } from '../../utils/notification.service';
 import { tap } from 'rxjs/operators';
 import { NotificationStyle } from '../../utils/notification.model';
+import { IInvariant } from 'src/app/shared/model/invariants.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -370,7 +371,6 @@ export class TestcaseService {
     } else {
       this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCaseV2?test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testcase))
         .subscribe((response) => {
-          console.log(response);
           // @ts-ignore
           this.testcaseheader = response.contentTable[0].header;
           // this.testcaseheader = response.contentTable[0].header
@@ -451,8 +451,10 @@ export class TestcaseService {
     return countriesList;
   }
 
-  isCountryDefinedForTestCase(testcaseheader: TestCaseHeader, country: string): boolean {
-    return this.testcaseheader_countriesList_format.includes(country);
+  /** return true if the country is selected for the test case */
+  isCountryDefinedForTestCase(countries: Array<IInvariant>, country: string): boolean {
+    const res = countries.find(invariant => invariant.value === country);
+    if (res) { return true; } else { return false; }
   }
 
   saveTestCaseHeader(testcaseheader: TestCaseHeader, originalTest, originalTestCase) {

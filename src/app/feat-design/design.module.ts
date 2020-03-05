@@ -42,6 +42,9 @@ import { PropertygroupComponent } from './testcasescript/tc-script/properties/pr
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { BugsReportTabComponent } from './testcaselist/testcase-interaction/bugs-report-tab/bugs-report-tab.component';
 import { DependenciesTabComponent } from './testcaselist/testcase-interaction/dependencies-tab/dependencies-tab.component';
+import { ExecutionSettingsTabComponent } from './testcaselist/testcase-interaction/execution-settings-tab/execution-settings-tab.component';
+import { DefinitionTabComponent } from './testcaselist/testcase-interaction/definition-tab/definition-tab.component';
+import { AuditTabComponent } from './testcaselist/testcase-interaction/audit-tab/audit-tab.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,9 @@ import { DependenciesTabComponent } from './testcaselist/testcase-interaction/de
     PropertygroupComponent,
     BugsReportTabComponent,
     DependenciesTabComponent,
+    ExecutionSettingsTabComponent,
+    DefinitionTabComponent,
+    AuditTabComponent,
   ],
   imports: [
     CommonModule,

@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TestCaseHeader, TestCaseDependency } from 'src/app/shared/model/back/testcase.model';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { IApplication } from 'src/app/shared/model/application.model';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { ICrossReference, CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -42,9 +38,6 @@ export class TestcaseInteractionComponent implements OnInit {
   // form that is submitted to to the API
   public testcaseHeaderForm: FormGroup;
 
-  // detailled description value Editor object
-  public Editor = ClassicEditor;
-
   // title for save button (different according to the mode)
   private saveButtonTitle: string;
 
@@ -54,78 +47,19 @@ export class TestcaseInteractionComponent implements OnInit {
   // tests folder list used for Test & Test case folder section
   private testsList: Array<TestFolder>;
 
-  // public invariants
-  private statusList: Array<IInvariant>;
-  private priorityList: Array<IInvariant>;
-  private sprintsList: Array<any>; // TODO: add type
-  private revsList: Array<any>; // TODO: add type
-  private countriesList: Array<IInvariant>;
-
-  // private invariants
-  private typesList: Array<IInvariant>;
-  private conditionOperList: Array<IInvariant>;
-
-  // others cerberus entity
-  private applicationsList: Array<IApplication>;
-
-  // cross references array to display the correct input fields according to the selected condition
-  private crossReference_ConditionValue: Array<ICrossReference> = this.crossReferenceService.crossReference_ConditionValue;
-
   // labels available for selection (labels hierarchy)
-  private labelList = {
-    batteries: [],
-    requirements: [],
-    stickers: []
-  };
-
-  /* dependencies management */
-
-  // selected test
-  dependencySelectedTest: string;
-  // selected testcase id
-  dependencySelectedTestCase: TestCaseHeader;
-  // testcaseList used for dependencies
-  private testcaseList: Array<TestCaseHeader> = []; // TODO : rename it
-
-  // DIRTY : output format
-  dependencyTestCaseListOutput: Array<any> = [];
+  // private labelList = {
+  //   batteries: [],
+  //   requirements: [],
+  //   stickers: []
+  // };
 
   // ???
   exit: (n: void) => void;
 
-  // return true if a country name (string) is selected fot the test case
-  isTheCountrySelected(country: string): boolean {
-    const res = this.testcaseheader.countries.find(invariant => invariant.value === country);
-    if (res === undefined) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  // select or unselect a country when its clicked
-  toggleCountry(country: IInvariant) {
-    if (this.isTheCountrySelected(country.value) === true) {
-      const index = this.testcaseheader.countries.findIndex(invariant => invariant.value === country.value);
-      this.testcaseheader.countries.splice(index, 1);
-    } else {
-      this.testcaseheader.countries.push(country);
-    }
-  }
-
-  // return true if a condition oper has a cross reference
-  hasConditionCrossReference(condition: string): boolean {
-    return this.crossReferenceService.hasCrossReference(condition, this.crossReferenceService.crossReference_ConditionValue);
-  }
-  // return the actual cross reference value
-  findConditionCrossReference(condition: string): ICrossReference {
-    return this.crossReferenceService.findCrossReference(condition, this.crossReferenceService.crossReference_ConditionValue);
-  }
-
   constructor(
     private invariantsService: InvariantsService,
     private systemService: SystemService,
-    private crossReferenceService: CrossreferenceService,
     private formBuilder: FormBuilder,
     private testcaseService: TestcaseService,
     private notificationService: NotificationService,
@@ -134,21 +68,9 @@ export class TestcaseInteractionComponent implements OnInit {
     // list of tabs
     this.tabs = ['Definition', 'Settings', 'Labels', 'Bugs', 'Dependencies', 'Audit'];
     this.testcaseheader = undefined;
-    this.testcaseHeaderForm = null;
   }
 
   ngOnInit() {
-
-    // subscribe to invariants and others lists
-    this.systemService.observableLabelsHierarchyList.subscribe(rep => this.labelList = rep);
-    this.systemService.observableApplicationList.subscribe(rep => this.applicationsList = rep);
-    this.invariantsService.observableTcStatus.subscribe(rep => this.statusList = rep);
-    this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionOperList = rep);
-    this.invariantsService.observableCountriesList.subscribe(rep => this.countriesList = rep);
-    this.invariantsService.observablePriorities.subscribe(rep => this.priorityList = rep);
-    this.invariantsService.observableGroupsList.subscribe(rep => this.typesList = rep);
-    this.systemService.observableSprints.subscribe(rep => { this.sprintsList = rep; });
-    this.systemService.observableRevs.subscribe(rep => this.revsList = rep);
     this.testcaseService.observableTestsList.subscribe(rep => this.testsList = rep);
 
     // set the correct title for the save button (depending on the mode)
@@ -190,6 +112,7 @@ export class TestcaseInteractionComponent implements OnInit {
       console.error('mandatory parameters not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
     }
   }
+
   /** transform 'Y' or 'N' string to boolean */
   toBoolean(raw: string): boolean {
     if (raw === 'Y') {
@@ -199,50 +122,55 @@ export class TestcaseInteractionComponent implements OnInit {
     }
   }
 
-  /** return true if sprints and revs are defined (false instead) */
-  sprintsAndRevAreDefined(): boolean {
-    return this.sprintsList.length > 0 && this.revsList.length > 0;
-  }
-
   /** set the form values with the testcaseheader one
    * we're converting 'Y' and 'N' field to boolean since it is mandatory for fromControlName
   */
   setFormValues() {
+
+    // countries, labels, bugs and dependencies are handled appart from the form
     this.testcaseHeaderForm = this.formBuilder.group({
-      test: this.testcaseheader.test || '',
-      testCase: this.testcaseheader.testCase,
       originalTest: this.testcaseheader.test,
       originalTestCase: this.testcaseheader.testCase,
-      active: this.toBoolean(this.testcaseheader.tcActive),
-      activePROD: this.toBoolean(this.testcaseheader.activePROD),
-      activeQA: this.toBoolean(this.testcaseheader.activeQA),
-      activeUAT: this.toBoolean(this.testcaseheader.activeUAT),
-      application: this.testcaseheader.application,
-      behaviorOrValueExpected: this.testcaseheader.behaviorOrValueExpected,
-      bugId: this.testcaseheader.bugID,
-      comment: this.testcaseheader.comment,
-      fromRev: this.testcaseheader.fromRev,
-      fromSprint: this.testcaseheader.fromBuild,
-      group: this.testcaseheader.group,
-      implementer: this.testcaseheader.implementer,
-      executor: this.testcaseheader.executor,
-      priority: this.testcaseheader.priority,
-      shortDesc: this.testcaseheader.description,
-      status: this.testcaseheader.status,
-      targetRev: this.testcaseheader.targetRev,
-      targetSprint: this.testcaseheader.targetBuild,
-      conditionOper: this.testcaseheader.conditionOper,
-      conditionVal1: this.testcaseheader.conditionVal1,
-      conditionVal2: this.testcaseheader.conditionVal2,
-      toRev: this.testcaseheader.toRev,
-      toSprint: this.testcaseheader.toBuild,
-      userAgent: this.testcaseheader.userAgent,
-      screenSize: this.testcaseheader.screenSize
-      // labels list is added later (onSubmit)
+      test: new FormControl(this.testcaseheader.test),
+      testCase: new FormControl(this.testcaseheader.testCase),
+      definition: this.formBuilder.group({
+        description: new FormControl(this.testcaseheader.description),
+        application: new FormControl(this.testcaseheader.application),
+        status: new FormControl(this.testcaseheader.status),
+        type: new FormControl(this.testcaseheader.group),
+        priority: new FormControl(this.testcaseheader.priority),
+        behaviorOrValueExpected: new FormControl(this.testcaseheader.behaviorOrValueExpected)
+      }),
+      settings: this.formBuilder.group({
+        active: new FormControl(this.toBoolean(this.testcaseheader.tcActive)),
+        activePROD: new FormControl(this.toBoolean(this.testcaseheader.activePROD)),
+        activeUAT: new FormControl(this.toBoolean(this.testcaseheader.activeUAT)),
+        activeQA: new FormControl(this.toBoolean(this.testcaseheader.activeQA)),
+        fromRev: new FormControl(this.testcaseheader.fromRev),
+        fromSprint: new FormControl(this.testcaseheader.fromBuild),
+        toRev: new FormControl(this.testcaseheader.toRev),
+        toSprint: new FormControl(this.testcaseheader.toBuild),
+        targetRev: new FormControl(this.testcaseheader.targetRev),
+        targetSprint: new FormControl(this.testcaseheader.targetBuild),
+        conditionOper: new FormControl(this.testcaseheader.conditionOper),
+        conditionVal1: new FormControl(this.testcaseheader.conditionVal1),
+        conditionVal2: new FormControl(this.testcaseheader.conditionVal2),
+        conditionVal3: new FormControl(this.testcaseheader.conditionVal3),
+        userAgent: new FormControl(this.testcaseheader.userAgent),
+        screenSize: new FormControl(this.testcaseheader.screenSize)
+      }),
+      bugsReport: this.formBuilder.group({
+        comment: new FormControl(this.testcaseheader.comment)
+      }),
+      audit: this.formBuilder.group({
+        implementer: new FormControl(this.testcaseheader.implementer),
+        executor: new FormControl(this.testcaseheader.executor)
+      })
     });
+    console.log(this.testcaseHeaderForm);
   }
 
-  // used if the user change the test folder selection
+  /** used if the user change the test folder selection */
   refreshNewTestCase(): void {
     const newTest = this.testcaseHeaderForm.get('test').value;
     // fetch the test cases list for that test folder
@@ -268,75 +196,9 @@ export class TestcaseInteractionComponent implements OnInit {
     this.testcaseService.getTestFoldersList();
   }
 
-  // fired when the selected test folder (for dependencies) changes
-  onTestChange(): void {
-    // reset the selected test case value
-    this.dependencySelectedTestCase = null;
-    if (this.dependencySelectedTest !== null) {
-      this.testcaseService.getTestCasesList(this.dependencySelectedTest);
-      this.testcaseService.observableTestCasesList
-        .subscribe(testcaseList => {
-          if (testcaseList) {
-            this.testcaseList = testcaseList;
-          } else {
-            this.testcaseList = [];
-          }
-        });
-    } else {
-      this.testcaseList = [];
-    }
-  }
-
-  // fired when the selected test case id (for dependencies) changes
-  onTestCaseChange(testcase: TestCaseHeader): void {
-    this.dependencySelectedTestCase = testcase;
-  }
-
-  // return true if the add dependncy button should be enabled
-  enableAddToDependencyButton(): boolean {
-    if (this.dependencySelectedTestCase !== null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  // add a testcase id to the tc dependencies
-  addToDependencyTable(testcaseheader: TestCaseHeader): void {
-    const dependency = new TestCaseDependency(testcaseheader.test, testcaseheader.testCase);
-    dependency.id = this.testcaseheader.dependencies.length + 1;
-    // check that the dependency (with the same test & testcase) isn't selected yet
-    if ((this.testcaseheader.dependencies.find(d => d.test === dependency.test)) && (this.testcaseheader.dependencies.find(d => d.testCase === dependency.testCase))) {
-      this.notificationService.createANotification('This TestCase is already selected !', NotificationStyle.Error);
-    } else {
-      this.testcaseheader.dependencies.push(dependency);
-    }
-  }
-
-  // format the dependencies list to be sent to the API
-  formatDependency(depList: any[]): Array<any> {
-    const res = new Array<any>();
-    // format to be sent to /UpdateTestCase
-    depList.forEach(dep => {
-      const dependency = {
-        id: dep.id,
-        test: dep.depTest,
-        testcase: dep.depTestCase,
-        description: dep.description,
-        active: dep.active
-      };
-      res.push(dependency);
-    });
-    return res;
-  }
-
-  // remove a dependency
-  removeDependency(dependencyIndex): void {
-    this.testcaseheader.dependencies.splice(dependencyIndex, 1);
-  }
-
   // submit the new tc object to the API
   onSubmit(values: any): void {
+    // "values" variables corresponds to the form values
 
     // if no application is set
     if (!values.application) {
@@ -360,34 +222,29 @@ export class TestcaseInteractionComponent implements OnInit {
     let queryString = '';
 
     // instantiate arrays
-    const countryList = []; // the format countrylist
-    const labelList = []; // the format labelList
+    const countries = [];
+    const labels = [];
+    const dependencies = [];
 
-    // encode all the items from the form group
+    // add (& encode) all the items from the form group (one to one relationship)
     for (const item in values) {
       if (item) {
         queryString += encodeURIComponent(item) + '=' + encodeURIComponent(values[item] || '') + '&';
       }
     }
 
+    // add all the countries
+    // format is [{"country":"FR","toDelete":false},{"country":"BE","toDelete":false}...]
+    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countries)) + '&';
+
     // fill labelList with all labels selected
-    for (const type in this.labelList) {
-      if (type) {
-        for (const label of this.labelList[type]) {
-          if (label.state.selected) {
-            labelList.push({ labelId: label.id, toDelete: false });
-          }
-        }
-      }
-    }
 
     // add the dependencies
-    this.dependencyTestCaseListOutput = this.formatDependency(this.testcaseheader.dependencies);
 
     // add all list to the queryString
-    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(this.dependencyTestCaseListOutput)) + '&';
-    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countryList)) + '&';
-    queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelList));
+    // queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(this.dependencyTestCaseListOutput)) + '&';
+    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countries)) + '&';
+    queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labels));
 
     // trigger the correct API endpoint
     if (this.mode === INTERACTION_MODE.CREATE) {

@@ -1,0 +1,107 @@
+<div class="row">
+
+    <!-- TEST -->
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="test">Test</label>
+            <ng-select name="test" class="custom-sm" [items]="testsList" bindLabel="test" bindValue="test"
+                placeholder="Select a Test" [(ngModel)]="selectedTestFolderName" (change)="onSelectedTestChange()"
+                [ngModelOptions]="{standalone: true}">
+            </ng-select>
+        </div>
+    </div>
+    <!-- END TEST -->
+
+    <!-- TEST CASE -->
+    <div *ngIf="selectedTestFolderName !== null" class="col-md-6">
+        <div class="form-group">
+            <label for="test">Test Case</label>
+            <ng-select name="testcase" class="custom-sm" [items]="testCasesList" bindLabel="header.testCase"
+                placeholder="Select a Test Case" [(ngModel)]="selectedTestCase" [ngModelOptions]="{standalone: true}"
+                (change)="debug()">
+                <ng-template ng-option-tmp let-item="item">
+                    {{item.header.testCase}} : {{item.header.description}}
+                </ng-template>
+            </ng-select>
+        </div>
+    </div>
+    <!-- END TEST CASE -->
+
+    <!-- ADD DEPENDENCY BUTTON -->
+    <div class="col-md-12 push">
+        <button type="button" class="btn btn-sm btn-primary mr-1" [disabled]="isATestCaseSelected() ? '' : 'true'"
+            (click)="addADependency()">
+            Add Dependency
+        </button>
+    </div>
+    <!-- END ADD DEPENDENCY BUTTON -->
+
+    <!-- SELECTED DEPENDENCIES LIST -->
+    <div id="selectedDependencies" class="col-md-12">
+
+        <table *ngIf="dependencies.length > 0" class="table table-hover table-borderless table-vcenter font-size-sm"
+            id="selectedDependencies">
+
+            <!-- TABLE HEADER-->
+            <thead>
+                <tr class="text-uppercase">
+                    <th class="font-w700">Test Case</th>
+                    <th class="font-w700 text-center">Active</th>
+                    <th class="d-none d-sm-table-cell font-w700 text-left">Description</th>
+                    <th class="font-w700 text-center" style="width: 120px;"></th>
+                </tr>
+            </thead>
+            <!-- END TABLE HEADER-->
+
+            <!-- DEPENDENCIES ENTRY-->
+            <tbody>
+
+                <tr *ngFor="let dependency of dependencies; let index = index;">
+
+                    <!-- DEPENDENCY TEST CASE -->
+                    <td>
+                        <span name="dependencyTestCase" class="font-w600">{{dependency.test}}
+                            ({{dependency.testCase}})</span>
+                    </td>
+                    <!-- END DEPENDENCY TEST CASE -->
+
+                    <!-- DEPENDENCY ACTIVATION -->
+                    <td>
+                        <div class="custom-control custom-switch custom-control-primary text-center">
+                            <input type="checkbox" class="custom-control-input" [id]="'dependency_'+index"
+                                [name]="'dependency_'+index" [(ngModel)]="dependency.active">
+                            <label class="custom-control-label" [for]="'dependency_'+index"></label>
+                        </div>
+                    </td>
+                    <!-- END DEPENDENCY ACTIVATION -->
+
+                    <!-- DEPENDENCY DESCRIPTION -->
+                    <td>
+                        <input type="text" [(ngModel)]="dependency.description"
+                            class="form-control form-control-sm font-w600" placeholder="no description">
+                    </td>
+                    <!-- END DEPENDENCY DESCRIPTION -->
+
+                    <!-- ACTION BUTTON -->
+                    <td class="text-center">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Small Horizontal Primary">
+                            <button type="button" class="btn btn-alt-light" ngbPopover="Remove"
+                                triggers="mouseenter:mouseleave" placement="left"
+                                (click)="removeDependency(dependency)">
+                                <i class="fa fa-fw fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <!-- END ACTION BUTTON -->
+
+                </tr>
+
+            </tbody>
+            <!-- END DEPENDENCIES ENTRY-->
+
+        </table>
+
+    </div>
+    <!-- END SELECTED DEPENDENCIES LIST -->
+
+</div>

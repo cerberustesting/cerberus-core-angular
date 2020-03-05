@@ -30,6 +30,9 @@ export class TestcaseService {
   // list of testcase id corresponding to the previous test folders list
   testcasesList: Array<TestCaseHeader> = new Array<TestCaseHeader>();
 
+  // list of testcase id corresponding to a test folder used for dependencies management
+  testCasesList4Dependencies: Array<TestCaseHeader> = new Array<TestCaseHeader>();
+
   // TODO: clean this?
   testcasesListLength: number;
 
@@ -69,6 +72,7 @@ export class TestcaseService {
   observableTestCaseHeader = new BehaviorSubject<TestCaseHeader>(this.testcaseheader);
   observableMaxTestCaseID = new BehaviorSubject<number>(this.maxTestCase);
   observableLibraryStepList = new BehaviorSubject<Step[]>(this.libraryStepList);
+  observableTestCasesList4Dependencies = new BehaviorSubject<TestCaseHeader[]>(this.testCasesList4Dependencies);
   // boolean
   refreshTC: boolean;
 
@@ -112,6 +116,26 @@ export class TestcaseService {
             this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
             this.testcasesList = null;
             this.observableTestCasesList.next(this.testcasesList);
+          }
+        }
+      });
+  }
+
+  /** refresh the test case id list that is used for dependencies management */
+  getTestCasesList4Dependencies(test: string) {
+    this.http.get<Array<TestCaseHeader>>(environment.cerberus_api_url + '/ReadTestCaseV2?test=' + test)
+      .subscribe(response => {
+        // @ts-ignore
+        if (response.iTotalRecords > 0) {
+          // @ts-ignore
+          this.testCasesList4Dependencies = response.contentTable;
+          // @ts-ignore
+          this.observableTestCasesList4Dependencies.next(this.testCasesList4Dependencies);
+        } else {
+          if (test != null) {
+            this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
+            this.testCasesList4Dependencies = null;
+            this.observableTestCasesList4Dependencies.next(this.testCasesList4Dependencies);
           }
         }
       });

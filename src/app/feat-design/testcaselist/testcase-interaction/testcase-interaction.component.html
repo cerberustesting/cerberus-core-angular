@@ -456,105 +456,12 @@
                         <!-- END TAB -->
 
                         <!-- DEPENDENCY TAB -->
-
-                        <!-- TODO : create a new component -->
                         <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="dependencyTab"
                             role="tabpanel">
-                            <div class="row">
-                                <!-- TEST -->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="test">Test</label>
-                                        <ng-select name="test" class="custom-sm" [items]="testsList" bindLabel="test"
-                                            bindValue="test" placeholder="Select a Test"
-                                            [(ngModel)]="dependencySelectedTest" (change)="onTestChange()"
-                                            [ngModelOptions]="{standalone: true}">
-                                        </ng-select>
-                                    </div>
-                                </div>
-                                <!-- END TEST -->
-
-                                <!-- TEST CASE -->
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="test">Test Case</label>
-                                        <ng-select name="testcase" class="custom-sm" [items]="testcaseList"
-                                            bindLabel="testcase" placeholder="Select a Test Case"
-                                            [(ngModel)]="dependencySelectedTestCase"
-                                            [ngModelOptions]="{standalone: true}">
-                                            <ng-template ng-option-tmp let-item="item">
-                                                {{item.testCase}} : {{item.description}}
-                                            </ng-template>
-                                        </ng-select>
-                                    </div>
-                                </div>
-                                <!-- END TEST CASE -->
-
-                                <!-- ADD DEPENDENCY BUTTON -->
-                                <div class="col-md-4 push">
-                                    <!-- <button type="button" class="btn btn-info col-md-12">
-                                            Add TC
-                                        </button> -->
-                                    <button type="button" class="btn btn-sm btn-primary mr-1"
-                                        [disabled]="dependencySelectedTestCase ? '' : 'true'"
-                                        (click)="addToDependencyTable(dependencySelectedTestCase)">
-                                        Add Dependency
-                                    </button>
-                                </div>
-                                <!-- END ADD DEPENDENCY BUTTON -->
-
-                                <div class="col-md-12">
-
-                                    <div *ngIf="testcaseheader.dependencies.length == 0"
-                                        class="block-content block-content-full block-content-sm bg-body-light text-center">
-                                        <div class="font-w600">No dependency selected</div>
-                                    </div>
-
-                                    <table *ngIf="testcaseheader.dependencies.length > 0"
-                                        class="table table-sm table-vcenter">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th class="pl-2">Test Case</th>
-                                                <th class="pl-2">Description</th>
-                                                <th class="text-center pl-2" style="width: 100px;">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <tr *ngFor="let dep of dependencyTestCaseList">
-                                                <td class="font-w600">
-                                                    {{dep.depTest}} - {{dep.depTestCase}}
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        name="example-text-input" placeholder="Description"
-                                                        [(ngModel)]="dep.description"
-                                                        [ngModelOptions]="{standalone: true}">
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-sm"
-                                                            [ngClass]="dep.active ? 'btn-success' : 'btn-secondary'"
-                                                            (click)="dep.active = !dep.active">
-                                                            <i class="fa"
-                                                                [ngClass]="dep.active ? 'fa-check' : 'fa-times'"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-sm btn-primary"
-                                                            (click)="removeDependency(dep)">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-
+                            <app-dependencies-tab [dependencies]="testcaseheader.dependencies">
+                            </app-dependencies-tab>
                         </div>
-                        <!-- DEPENDENCY TAB -->
+                        <!-- END DEPENDENCY TAB -->
 
                         <!-- AUDIT TAB -->
                         <div *ngIf="selectedTab == tabs[5]" class="tab-pane active show" id="auditTab" role="tabpanel">

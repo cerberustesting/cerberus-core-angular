@@ -41,6 +41,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PropertygroupComponent } from './testcasescript/tc-script/properties/propertygroup/propertygroup.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { BugsReportTabComponent } from './testcaselist/testcase-interaction/bugs-report-tab/bugs-report-tab.component';
+import { DependenciesTabComponent } from './testcaselist/testcase-interaction/dependencies-tab/dependencies-tab.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { BugsReportTabComponent } from './testcaselist/testcase-interaction/bugs
     PropertiesComponent,
     PropertygroupComponent,
     BugsReportTabComponent,
+    DependenciesTabComponent,
   ],
   imports: [
     CommonModule,

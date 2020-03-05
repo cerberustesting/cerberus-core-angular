@@ -111,7 +111,9 @@ export class TestCaseDependency {
     depEvent: string;
     type: string;
 
-    constructor(test: string, testcase: string) {
+    constructor(test: string, testCase: string) {
+        this.test = test;
+        this.testCase = testCase;
         this.depDescription = '';
         this.active = 'Y';
         this.type = 'TCEXEEND';

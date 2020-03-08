@@ -2,17 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
-import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
 import { environment } from 'src/environments/environment';
-import { NotificationService } from '../../utils/notification.service';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    // 'X-Requested-With': 'XMLHttpRequest',
-    // 'Cookie:': 'JSESSIONID=2e0cb26156d548803026c75c051b'
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +16,7 @@ export class TestService {
   public observableTestsList = new BehaviorSubject<TestFolder[]>(this.testsList);
 
   constructor(
-    private http: HttpClient,
-    private trueindexPipe: TrueindexPipe,
-    private notificationService: NotificationService
+    private http: HttpClient
   ) {
   }
 
@@ -76,10 +64,11 @@ export class TestService {
 
   /**
    * return true if the test is found in the test folders list
-   * @param test test folder name to search for
+   * @param testfoldername test folder name to search for
+   * @param testfolderslist list of test folders to search in
    */
-  testExists(test: string): boolean {
-    const search = this.testsList.find(t => t.test === test);
+  testExists(testfoldername: string, testfolderslist: Array<TestFolder>): boolean {
+    const search = testfolderslist.find(t => t.test === testfoldername);
     if (search) { return true; } else { return false; }
   }
 

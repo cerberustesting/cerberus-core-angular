@@ -61,7 +61,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
           this.testsList = response;
           if (this.selectedTest != null) {
             // secure the parsed test from URL
-            if (!this.testService.testExists(this.selectedTest)) {
+            if (!this.testService.testExists(this.selectedTest, this.testsList)) {
               console.error('the selected test doesn\'t exist');
               this.notificationService.createANotification('The selected test doesn\'t exist', NotificationStyle.Error, true, 5000);
               // this.AlertService.displayMessage(Alert_selectedTestDoesNotExist);
@@ -135,7 +135,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
 
   // get the corresponding test case according to the selection
   refreshTestCase() {
-    if (this.selectedTest != null && this.testService.testExists(this.selectedTest)) {
+    if (this.selectedTest != null && this.testService.testExists(this.selectedTest, this.testsList)) {
       if (this.selectedTestCase != null && this.testcaseService.selectedTestCaseExist(this.selectedTestCase)) {
         this.testcaseService.getTestCase(this.selectedTest, this.selectedTestCase);
       }

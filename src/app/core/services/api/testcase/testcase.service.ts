@@ -12,6 +12,7 @@ import { NotificationService } from '../../utils/notification.service';
 import { tap } from 'rxjs/operators';
 import { NotificationStyle } from '../../utils/notification.model';
 import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { TestService } from '../test/test.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -80,7 +81,8 @@ export class TestcaseService {
   constructor(
     private http: HttpClient,
     private trueindexPipe: TrueindexPipe,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private testService: TestService
   ) {
     this.refreshTC = false;
   }
@@ -113,11 +115,9 @@ export class TestcaseService {
           this.testcasesListLength = response.iTotalRecords;
           this.observableTestCasesList.next(this.testcasesList);
         } else {
-          if (test != null) {
-            this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
-            this.testcasesList = null;
-            this.observableTestCasesList.next(this.testcasesList);
-          }
+          this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
+          this.testcasesList = null;
+          this.observableTestCasesList.next(this.testcasesList);
         }
       });
   }
@@ -185,7 +185,6 @@ export class TestcaseService {
           callback(response.contentTable);
         } else {
           if (test != null) {
-            this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
             this.testcasesList = null;
             this.observableTestCasesList.next(this.testcasesList);
           }

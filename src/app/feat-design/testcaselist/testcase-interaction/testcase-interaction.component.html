@@ -34,7 +34,7 @@
                                 triggers="mouseenter:mouseleave"></i>
                         </label>
                         <ng-select name="TestFolder" class="custom-sm" [items]="testsList" bindLabel="test"
-                            bindValue="test" formControlName="test" placeholder="Select a Test"
+                            bindValue="test" formControlName="test" placeholder="Select a Test" [addTag]="true"
                             (change)="refreshNewTestCase()">
                             <ng-template ng-label-tmp let-item="item">
                                 {{item.test}} : {{item.description}}
@@ -124,7 +124,8 @@
                         <!-- AUDIT TAB -->
                         <div *ngIf="selectedTab == tabs[5]" class="tab-pane active show" id="auditTab" role="tabpanel">
 
-                            <app-audit-tab [audit]="testcaseHeaderForm.get('audit')" [testcaseheader]="testcaseheader"></app-audit-tab>
+                            <app-audit-tab [audit]="testcaseHeaderForm.get('audit')" [testcaseheader]="testcaseheader">
+                            </app-audit-tab>
 
                         </div>
                         <!-- END AUDIT TAB -->

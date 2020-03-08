@@ -237,6 +237,7 @@ export class TestcaseInteractionComponent implements OnInit {
     // add (& encode) all the items from the form group (one to one relationship)
     // list of values to consider as a sub form
     const formGroupsList = ['definition', 'settings', 'bugsReport', 'audit'];
+    // list of key to convert from boolean to string
     const CerberusStringList = ['active', 'activeQA', 'activeUAT', 'activePROD'];
     for (const key in values) {
       // if the current node is a form group

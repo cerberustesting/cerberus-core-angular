@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TestcaseService } from '../../core/services/api/testcase/testcase.service';
 import { Column } from 'src/app/shared/model/column.model';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
@@ -8,10 +7,8 @@ import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { TestcaseInteractionComponent } from './testcase-interaction/testcase-interaction.component';
-import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { DatatablePageComponent } from 'src/app/shared/datatable-page/datatable-page.component';
 
 @Component({
@@ -21,12 +18,20 @@ import { DatatablePageComponent } from 'src/app/shared/datatable-page/datatable-
 })
 export class TestcaselistComponent implements OnInit {
 
+  /** list of columns (defined on a another file: `testcaselist.columnsdata.ts`) */
+  private columns: Array<Column> = TestCasesColumnsData;
 
-  columns: Array<Column> = TestCasesColumnsData; // column list from `testcaselist.columnsdata.ts`
-  defaultPageSort = [{ dir: 'asc', prop: 'testCase' }];
-  selectedRows: Array<any> = []; // the selected rows in the table
-  servlet: string;  // const : the api to call to refresh datatable results
-  refreshResultsEvent: Subject<void> = new Subject<void>(); // the observable to refresh the table
+  /** default sort direction and property */
+  private defaultPageSort = [{ dir: 'asc', prop: 'testCase' }];
+
+  /** the selected rows in the table */
+  private selectedRows: Array<TestCase> = [];
+
+  /** API endpoint to fetch the table information */
+  private servlet: string;
+
+  /** the observable to refresh the table */
+  private refreshResultsEvent: Subject<void> = new Subject<void>();
 
   /** child datatable component */
   @ViewChild(DatatablePageComponent, { static: false }) private datatablepageComponent: DatatablePageComponent;
@@ -34,33 +39,49 @@ export class TestcaselistComponent implements OnInit {
   constructor(
     private headerTitleService: HeaderTitleService,
     private sideContentService: SidecontentService,
-    private modalService: NgbModal,
-    private testService: TestcaseService,
     private notificationService: NotificationService,
     private router: Router) {
   }
 
   ngOnInit() {
-    this.servlet = '/ReadTestCase';
+    this.servlet = '/ReadTestCaseV2';
     this.headerTitleService.setTitle('Testcase List', 'tcList');
   }
 
-  /** refreshResults
-   * * refresh datatable results
+  /**
+   * refresh datatable results
    */
   refreshResults(): void {
     this.refreshResultsEvent.next();
   }
 
-  /** editTestCaseHeader
-   * * Open side content in edition mode for the selected testcase (must be one)
-   * * sends only the test folder and test case id to the component
-   * @param testcase the testcase to edit, information from table row
+  /**
+   * open the side content in creation mode,
+   * get the first row in the table to use as a template for the new test case
    */
-  editTestCaseHeader(testcase: any): void {
+  createTestCaseHeader(): void {
+    // get the first row from the table content
+    const firstRowInTable = this.datatablepageComponent.getFirstRow();
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: testcase.test,
-      testcase: testcase.testCase,
+      testcaseheader: firstRowInTable.header,
+      mode: INTERACTION_MODE.CREATE,
+      exit: () => {
+        this.refreshResults();
+      }
+    });
+    this.sideContentService.openSideBlock();
+  }
+
+  /**
+   * open side content in edition mode for the selected testcase,
+   * sends only the test folder and test case id to the component,
+   * fetch the latest information for the test case
+   * @param testcase object from the table row
+   */
+  editTestCaseHeader(testcase: TestCase): void {
+    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
+      test: testcase.header.test,
+      testcase: testcase.header.testCase,
       mode: INTERACTION_MODE.EDIT,
       exit: () => {
         this.refreshResults();
@@ -70,13 +91,15 @@ export class TestcaselistComponent implements OnInit {
   }
 
   /** duplicateTestCaseHeader
-   * * Open side content in duplicate mode for the selected testcase (must be one)
-   * @param testcase the testcase to duplicate, information from table row
+   * open side content in duplication mode for the selected testcase
+   * sends only the test folder and test case id to the component,
+   * fetch the latest information for the test case
+   * @param testcase object from the table row
    */
-  duplicateTestCaseHeader(testcase: any): void {
+  duplicateTestCaseHeader(testcase: TestCase): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: testcase.test,
-      testcase: testcase.testCase,
+      test: testcase.header.test,
+      testcase: testcase.header.testCase,
       mode: INTERACTION_MODE.DUPLICATE,
       exit: () => {
         this.refreshResults();
@@ -85,51 +108,17 @@ export class TestcaselistComponent implements OnInit {
     this.sideContentService.openSideBlock();
   }
 
-  /** createTestCaseHeader
-   * * Open sde content in create mode for the selected testcase
-   * @param testcase the test to create
-   */
-  createTestCaseHeader(): void {
-    const firstRowInTable = this.datatablepageComponent.getFirstRow();
-    this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: firstRowInTable.test,
-      testcase: firstRowInTable.testCase,
-      application: firstRowInTable.application,
-      mode: INTERACTION_MODE.CREATE,
-      exit: () => {
-        this.refreshResults();
-      }
-    });
-    this.sideContentService.openSideBlock();
+  /**
+   * redirect to the corresponding script page
+   * @param testcase object from the table row
+  */
+  redirectToTestCaseScript(testcase: TestCase) {
+    const test = encodeURIComponent(testcase.header.test);
+    const testcaseid = encodeURIComponent(testcase.header.testCase);
+    this.router.navigate(['/design/testcasescript/' + test + '/' + testcaseid]);
   }
 
-  /** deleteTestCase
-   * * Open custom modal to delete testCase
-   * @param testcase the TestCase to delete
-   */
-  deleteTestCase(testcase: any): void {
-    const modalRef = this.modalService.open(CustomModalComponent);
-    modalRef.componentInstance.title = 'Delete Test Case';
-    modalRef.componentInstance.text = 'Do you want to delete Test Case ' + testcase.test + '" - "' + testcase.testCase + '" ?';
-    modalRef.componentInstance.fct = () => {
-      this.testService.deleteTestCase(
-        testcase.test,
-        testcase.testCase,
-        () => {
-          this.refreshResults();
-          this.notificationService.createANotification('The testCase ' + testcase.test + ' - ' + testcase.testCase + ' has been successfully deleted', NotificationStyle.Success);
-        }
-      );
-    };
-  }
-
-  // redirect to the corresponding script page
-  redirectToTestCaseScript(row: TestCaseHeader) {
-    const test = encodeURIComponent(row.test);
-    const testcase = encodeURIComponent(row.testCase);
-    this.router.navigate(['/design/testcasescript/' + test + '/' + testcase]);
-  }
-
+  // TODO
   runSingleTestCase(): void {
     this.notificationService.createANotification('This feature hasn\'t been implemented', NotificationStyle.Info, true);
   }

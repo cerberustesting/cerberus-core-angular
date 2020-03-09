@@ -15,7 +15,7 @@ export class UserService {
   private user: IUser;
 
   // observable for the user
-  observableUser = new BehaviorSubject<IUser>(this.user);
+  public observableUser = new BehaviorSubject<IUser>(this.user);
 
   /**
    * fetch the user information in Cerberus DB.

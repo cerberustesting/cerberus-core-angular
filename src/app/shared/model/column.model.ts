@@ -26,7 +26,8 @@ export enum COLUMN_TYPE {
     BOOLEAN = 'boolean',
     LABEL = 'label',
     LONGTEXT = 'longtext',
-    LIST = 'list'
+    LIST = 'list',
+    COUNTRIES = 'countries'
 }
 
 // filter type

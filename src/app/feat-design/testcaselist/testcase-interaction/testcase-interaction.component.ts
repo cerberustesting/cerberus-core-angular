@@ -51,13 +51,6 @@ export class TestcaseInteractionComponent implements OnInit {
   /** list of available countries to select */
   public countries: Array<IInvariant>;
 
-  // labels available for selection (labels hierarchy)
-  // private labelList = {
-  //   batteries: [],
-  //   requirements: [],
-  //   stickers: []
-  // };
-
   // ???
   exit: (n: void) => void;
 
@@ -88,32 +81,58 @@ export class TestcaseInteractionComponent implements OnInit {
 
     this.refreshOthers();
 
-    // check in parameters
-
-    // if the test and testcase values are passed : we refresh
-    if (this.test && this.testcase) {
-      // refresh the test case object
-      this.testcaseService.getTestCaseHeader(this.test, this.testcase);
-      // subscribe to the value change
-      this.testcaseService.observableTestCaseHeader.subscribe(rep => {
-        if (rep) {
-          this.testcaseheader = rep;
-          this.refreshData(this.testcaseheader);
-          this.setFormValues();
-          if (this.mode !== INTERACTION_MODE.EDIT) {
-            this.refreshNewTestCase();
-          }
-        }
-      });
-      // if the full testcaseheader object is passed : we don't refresh
-    } else if (this.testcaseheader) {
-      this.setFormValues();
-      if (this.mode !== INTERACTION_MODE.EDIT) {
+    // creation mode
+    if (this.mode === INTERACTION_MODE.CREATE) {
+      // the test case header object is expected
+      if (this.testcaseheader) {
+        // create a new test case header object
+        const newTestCaseHeader = new TestCaseHeader(
+          this.testcaseheader.test,
+          this.testcaseheader.testCase,
+          this.testcaseheader.application,
+          this.testcaseheader.group,
+          this.testcaseheader.priority,
+          this.testcaseheader.status,
+          this.testcaseheader.countries,
+          this.testcaseheader.system
+        );
+        this.testcaseheader = newTestCaseHeader;
+        // refresh the datas that couldn't be refresh without the test case header information
+        this.refreshData(this.testcaseheader);
+        // instantiate the form with the correct value
+        this.setFormValues();
+        // set the correct test case id
         this.refreshNewTestCase();
+      } else {
+        // throw an error if the test case header variable is not defined
+        console.error('test case header object not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
       }
-      // if neither of it is passed, there's a problem
     } else {
-      console.error('mandatory parameters not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
+      // edit, delete or duplicate mode
+      // test folder name and test case id are expected
+      if (this.test && this.testcase) {
+        // refresh the test case object
+        this.testcaseService.getTestCaseHeader(this.test, this.testcase);
+        console.log("this.testcaseService.getTestCaseHeader(" + this.test + ", " + this.testcase + ");")
+        // subscribe to the value change
+        this.testcaseService.observableTestCaseHeader.subscribe(rep => {
+          if (rep) {
+            // assign the value to our tc header variable
+            this.testcaseheader = rep;
+            // refresh the datas that couldn't be refresh without the test case header information
+            this.refreshData(this.testcaseheader);
+            // instantiate the form with the correct value
+            this.setFormValues();
+            // if test case is in duplicate mode
+            if (this.mode === INTERACTION_MODE.DUPLICATE) {
+              // we set the correct test case id
+              this.refreshNewTestCase();
+            }
+          }
+        });
+      } else {
+        console.error('test folder and test case not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
+      }
     }
   }
 

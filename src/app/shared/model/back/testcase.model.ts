@@ -61,12 +61,14 @@ export class TestCaseHeader {
         group: string,
         priority: number,
         status: string,
-        countryList: Array<any>
+        countries: Array<any>,
+        system: string
     ) {
         this.test = test;
         this.testCase = testcase;
         this.description = '';
         this.application = application;
+        this.system = system;
         this.group = group;
         this.priority = priority;
         this.status = status;
@@ -75,7 +77,7 @@ export class TestCaseHeader {
         this.activeQA = 'Y';
         this.activeUAT = 'Y';
         this.activePROD = 'N';
-        this.countries = countryList;
+        this.countries = countries;
         this.fromBuild = '';
         this.fromRev = '';
         this.toBuild = '';

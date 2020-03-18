@@ -44,7 +44,7 @@ export class TestcaselistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.servlet = '/ReadTestCaseV2';
+    this.servlet = '/ReadTestCase';
     this.headerTitleService.setTitle('Testcase List', 'tcList');
   }
 

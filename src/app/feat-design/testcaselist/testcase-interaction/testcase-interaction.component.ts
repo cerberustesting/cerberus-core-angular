@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/core/services/utils/notification.se
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import { Invariant } from 'src/app/shared/model/invariants.model';
+import { TestService } from 'src/app/core/services/api/test/test.service';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -42,9 +43,6 @@ export class TestcaseInteractionComponent implements OnInit {
   // title for save button (different according to the mode)
   private saveButtonTitle: string;
 
-  // test case list used for Test & Test case folder section
-  private testcasesList: Array<TestCase> = [];
-
   // tests folder list used for Test & Test case folder section
   private testsList: Array<TestFolder>;
 
@@ -59,6 +57,7 @@ export class TestcaseInteractionComponent implements OnInit {
     private systemService: SystemService,
     private formBuilder: FormBuilder,
     private testcaseService: TestcaseService,
+    private testService: TestService,
     private notificationService: NotificationService,
     private sidecontentService: SidecontentService) {
     this.selectedTab = null;
@@ -68,7 +67,10 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.testcaseService.observableTestsList.subscribe(rep => this.testsList = rep);
+
+    // refresh the test folders list (done only once)
+    this.testService.getTestFolders((testfolders: TestFolder[]) => { this.testsList = testfolders; });
+
     this.invariantsService.observableCountriesList.subscribe(rep => this.countries = rep);
 
     // set the correct title for the save button (depending on the mode)
@@ -195,17 +197,19 @@ export class TestcaseInteractionComponent implements OnInit {
     });
   }
 
-  /** used if the user change the test folder selection */
-  refreshNewTestCase(): void {
+  /**
+   * used if the user change the test folder selection to refresh the test case id
+  */
+  refreshNewTestCase(): any {
+    // get the new selected test folder (from the form)
     const newTest = this.testcaseHeaderForm.get('test').value;
     // fetch the test cases list for that test folder
-    this.testcaseService.getTestCasesList_withCallback(newTest, (tcList: Array<TestCase>) => {
-      this.testcasesList = tcList;
+    this.testcaseService.getTestCasesForATestFolder((tcList: TestCase[]) => {
       // find the last unused test case id
-      this.newTestCase = this.testcaseService.getLatestTestCaseId(this.testcasesList, newTest);
+      this.newTestCase = this.testcaseService.getLatestTestCaseId(tcList, newTest);
       // edit the test case form value
       this.testcaseHeaderForm.controls['testCase'].setValue(this.newTestCase);
-    });
+    }, newTest);
   }
 
   /** refresh data that depends on a testcaseheader  */
@@ -218,7 +222,6 @@ export class TestcaseInteractionComponent implements OnInit {
   /** refresh data */
   refreshOthers() {
     this.systemService.getApplicationList();
-    this.testcaseService.getTestFoldersList();
   }
 
   // submit the new tc object to the API

@@ -31,8 +31,9 @@ export class DependenciesTabComponent implements OnInit {
   constructor(private testService: TestService, private testCaseService: TestcaseService, private notificationService: NotificationService) { }
 
   ngOnInit() {
+    // TODO : Use promises
     // refresh the test folder list
-    this.testCaseService.getTestFoldersList();
+    this.testCaseService.refreshTestFolders();
 
     // subscribe to the test folder list
     this.testCaseService.observableTestsList.subscribe(response => { this.testsList = response; });

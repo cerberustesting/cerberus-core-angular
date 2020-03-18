@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './bugs-report-tab.component.html',
   styleUrls: ['./bugs-report-tab.component.scss']
 })
-export class BugsReportTabComponent implements OnInit {
+export class BugsReportTabComponent {
 
   /** list of selected bugs for this test case */
   @Input('bugs') bugs: Array<Bug>;
@@ -16,9 +16,6 @@ export class BugsReportTabComponent implements OnInit {
   @Input('bugsReport') bugsReport: FormGroup;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   /** return true if the bug has a value for bug ID */
   isBugIdEmpty(bug: Bug): boolean {

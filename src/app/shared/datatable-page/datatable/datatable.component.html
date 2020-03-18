@@ -57,21 +57,21 @@ The field type depends on the column.type attribute (refer to column model 4 mor
 
                     <!-- LABEL COLUMN TYPE -->
                     <div *ngIf="column.type=='label'">
-                        <div *ngIf="row.header[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
+                        <div *ngIf="row[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
 
-                            <span class="label" *ngFor="let item of row.header[column.contentName].slice(0,3)"
+                            <span class="label" *ngFor="let item of row[column.contentName].slice(0,3)"
                                 [style.background-color]="item.color">
                                 {{ item?.label }}
                             </span>
 
-                            <div class="badge badge-info" *ngIf="row.header[column.contentName].length>3"
+                            <div class="badge badge-info" *ngIf="row[column.contentName].length>3"
                                 style="cursor: pointer;" placement="right" [ngbPopover]="labelPopoverTemplate"
                                 triggers="mouseenter:mouseleave" container="body">More :
-                                {{row.header[column.contentName].length-3}}
+                                {{row[column.contentName].length-3}}
                             </div>
 
                             <ng-template #labelPopoverTemplate>
-                                <div class="label" *ngFor="let item of row.header[column.contentName].slice(3)"
+                                <div class="label" *ngFor="let item of row[column.contentName].slice(3)"
                                     [style.background-color]="item.color">{{ item?.label }}
                                 </div>
                             </ng-template>
@@ -82,20 +82,20 @@ The field type depends on the column.type attribute (refer to column model 4 mor
 
                     <!-- COUNTRIES COLUMN TYPE -->
                     <div *ngIf="column.type=='countries'">
-                        <div *ngIf="row.header[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
+                        <div *ngIf="row[column.contentName]" class="cell-label" [style.maxWidth]="column.width">
 
-                            <span class="label" *ngFor="let item of row.header[column.contentName].slice(0,3)">
+                            <span class="label" *ngFor="let item of row[column.contentName].slice(0,3)">
                                 {{ item?.value }}
                             </span>
 
-                            <div class="badge badge-info" *ngIf="row.header[column.contentName].length > 3"
+                            <div class="badge badge-info" *ngIf="row[column.contentName].length > 3"
                                 style="cursor: pointer;" placement="right" [ngbPopover]="labelPopoverTemplate"
                                 triggers="mouseenter:mouseleave" container="body">
-                                More : {{row.header[column.contentName].length-3}}
+                                More : {{row[column.contentName].length-3}}
                             </div>
 
                             <ng-template #labelPopoverTemplate>
-                                <div class="label" *ngFor="let item of row.header[column.contentName].slice(3)">
+                                <div class="label" *ngFor="let item of row[column.contentName].slice(3)">
                                     {{ item?.value }}
                                 </div>
                             </ng-template>

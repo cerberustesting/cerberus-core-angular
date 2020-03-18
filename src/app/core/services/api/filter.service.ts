@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { UserService } from './user.service';
+import tcs from 'src/assets/data/mock/readTCs.json';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -137,7 +138,8 @@ export class FilterService {
       .subscribe((response) => {
         if (response) {
           if (response.iTotalRecords > 0) {
-            callback(response.contentTable, response.iTotalRecords);
+            // sends the mocked values
+            callback(tcs.contentTable, 3);
           }
         }
       });

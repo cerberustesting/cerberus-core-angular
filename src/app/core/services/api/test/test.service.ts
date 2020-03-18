@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
 import { environment } from 'src/environments/environment';
+import { GlobalService } from '../../utils/global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,15 @@ export class TestService {
   public observableTestsList = new BehaviorSubject<TestFolder[]>(this.testsList);
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private globalService: GlobalService
   ) { }
 
   /**
    * refresh the test folders list
    * @param system (optional) name of a system to filter on
    */
-  getTestFoldersList(system?: string): void {
+  refreshTestFolders(system?: string): void {
     let url = environment.cerberus_api_url + '/ReadTest';
     // if a system is passed, use it 4 filtering
     if (system) { url += '?system=' + system; }
@@ -34,6 +36,19 @@ export class TestService {
           this.testsList = response.contentTable;
           this.observableTestsList.next(this.testsList);
         }
+      });
+  }
+
+  /**
+   * get the list of test folders from the API
+   * @param callback function to use to process the result
+  */
+  getTestFolders(callback: (testfolders: TestFolder[]) => void): void {
+    const url = environment.cerberus_api_url + '/ReadTest';
+    this.http.get<Array<TestFolder>>(url)
+      .toPromise()
+      .then((result: any) => {
+        callback(result.contentTable);
       });
   }
 

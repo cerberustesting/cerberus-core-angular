@@ -1,4 +1,18 @@
+<div [formGroup]="bugsReport">
+
+    <!-- COMMENT -->
+    <div class="form-group">
+        <label for="description">Comment</label>
+        <input type="text" class="form-control form-control-sm" id="comment" name="comment"
+            placeholder="Test Case Short Description" formControlName="comment">
+    </div>
+    <!-- END COMMENT -->
+
+</div>
+
 <table *ngIf="bugs.length > 0" class="table table-hover table-borderless table-vcenter font-size-sm">
+
+    <!-- BUGS TABLE HEADER -->
     <thead>
         <tr class="text-uppercase">
             <th class="font-w700">Bug ID</th>
@@ -7,6 +21,8 @@
             <th class="font-w700 text-center" style="width: 120px;"></th>
         </tr>
     </thead>
+    <!-- END BUGS TABLE HEADER -->
+
     <tbody>
 
         <!-- BUGS ENTRY LIST-->

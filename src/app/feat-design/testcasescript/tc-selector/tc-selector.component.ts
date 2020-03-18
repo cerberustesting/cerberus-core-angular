@@ -50,7 +50,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     // refresh the test folders list
-    this.testService.getTestFoldersList();
+    this.testService.refreshTestFolders();
 
     // subscription to test folder list
     this.testService.observableTestsList.subscribe(response => {
@@ -64,7 +64,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
             this.selectedTest = null;
           } else {
             // refresh the test case id list to choose from
-            this.testcaseService.getTestCasesForATestFolder(this.selectedTest);
+            this.testcaseService.refreshTestCasesForATestFolder(this.selectedTest);
           }
         }
       }
@@ -106,7 +106,7 @@ export class TcSelectorComponent implements OnInit, OnDestroy {
   selectedTestChange() {
     this.clearSelectedTestCase();
     this.SelectedTestChange.emit(this.selectedTest);
-    this.testcaseService.getTestCasesForATestFolder(this.selectedTest);
+    this.testcaseService.refreshTestCasesForATestFolder(this.selectedTest);
   }
 
   // fired when the selected test case id changes

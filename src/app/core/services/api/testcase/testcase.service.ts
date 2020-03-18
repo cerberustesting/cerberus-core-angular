@@ -31,7 +31,7 @@ export class TestcaseService {
   // list of test folders
   testsList: Array<TestFolder>;
 
-  // list of testcase id corresponding to the previous test folders list
+  // list of testcase object corresponding to the previous test folders list
   testcasesList: Array<TestCase>;
 
   // list of testcase id corresponding to a test folder used for dependencies management
@@ -71,7 +71,7 @@ export class TestcaseService {
   }
 
   /** refresh the test folder list (this one should be used with this test case, not globally) */
-  getTestFoldersList() {
+  refreshTestFolders() {
     this.http.get<TestFolder[]>(environment.cerberus_api_url + '/ReadTest')
       .subscribe(response => {
         // @ts-ignore
@@ -87,7 +87,7 @@ export class TestcaseService {
   }
 
   /** return the test cases list for a test folder */
-  getTestCasesForATestFolder(test: string) {
+  refreshTestCasesForATestFolder(test: string) {
     this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
       .subscribe(response => {
         if (response) {
@@ -95,6 +95,24 @@ export class TestcaseService {
           this.testcasesList = response.contentTable;
           this.observableTestCasesList.next(this.testcasesList);
         }
+      });
+  }
+
+  /**
+  * get the list of test cases from the API
+  * @param callback function to use to process the result
+  */
+  getTestCasesForATestFolder(callback: (testcases: TestCase[]) => void, test?: string): void {
+    let url = environment.cerberus_api_url + '/ReadTestCase';
+    // if the optional parameter test is defined
+    if (!this.globalService.isNullOrEmpty(test)) {
+      // add the test query string
+      url += '?test=' + test;
+    }
+    this.http.get<TestCase[]>(url)
+      .toPromise()
+      .then((result: any) => {
+        callback(result.contentTable);
       });
   }
 
@@ -133,23 +151,6 @@ export class TestcaseService {
             this.notificationService.createANotification('There are no Library steps for the system : ' + system, NotificationStyle.Warning);
             this.libraryStepList = null;
             this.observableLibraryStepList.next(this.libraryStepList);
-          }
-        }
-      });
-  }
-
-  // TODO: merge the two getTestCaseList function (with the callback)
-  getTestCasesList_withCallback(test: string, callback) {
-    this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
-      .subscribe((response) => {
-        // @ts-ignore
-        if (response.iTotalRecords > 0) {
-          // @ts-ignore
-          callback(response.contentTable);
-        } else {
-          if (test != null) {
-            this.testcasesList = null;
-            this.observableTestCasesList.next(this.testcasesList);
           }
         }
       });
@@ -240,13 +241,6 @@ export class TestcaseService {
   */
   getTestCase(test: string, testcase: string, callback): Promise<TestCase> {
     if (!this.globalService.isNullOrEmpty(test) || !this.globalService.isNullOrEmpty(testcase)) {
-      // this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCaseV2?test=' + test + '&testCase=' + testcase + '&withStep=true')
-      //   .subscribe((response) => {
-      //     this.testcase = response;
-      //     this.observableTestCase.next(this.testcase);
-      //     // refresh the lables hierarchy for this test case
-      //     this.labelService.getLabelsfromTestCase(test, testcase);
-      //   });
       const promise = new Promise<TestCase>((resolve, reject) => {
         this.http
           .get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withSteps=true')

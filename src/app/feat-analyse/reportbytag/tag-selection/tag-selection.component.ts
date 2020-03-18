@@ -3,7 +3,7 @@ import { ReportingService } from 'src/app/core/services/api/reporting.service';
 import { ITag } from 'src/app/shared/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 
 @Component({
   selector: 'app-tag-selection',
@@ -16,13 +16,13 @@ export class TagSelectionComponent implements OnInit {
   private tagsBuffer: Array<ITag> = new Array();
   private bufferSize = 50;
   private selectedTag: ITag = null;
-  private countriesList: Array<IInvariant> = new Array();
+  private countriesList: Array<Invariant> = new Array();
 
   private filtersShowed: boolean;
   private showCountriesFilterOptions: boolean;
   private showTceStatusFilterOptions: boolean;
   private selected_countriesList: Array<string> = new Array();
-  private tceStatusList: Array<IInvariant> = new Array();
+  private tceStatusList: Array<Invariant> = new Array();
   private selected_tceStatusList: Array<string> = new Array();
   private numberOfItemsFromEndBeforeFetchingMore = 10;
   private loading = false;

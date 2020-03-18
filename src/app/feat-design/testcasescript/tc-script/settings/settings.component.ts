@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Step, Action, Control } from 'src/app/shared/model/back/testcase.model';
 import { SettingsService } from './settings.service';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 
 @Component({
@@ -19,10 +19,10 @@ export class SettingsComponent implements OnInit {
   private parentStepIndex: number;
   private parentActionIndex: number;
   // private invariants
-  private inv_condition_oper: Array<IInvariant>;
-  private inv_step_loop: Array<IInvariant>;
-  private inv_control: Array<IInvariant>;
-  private inv_action: Array<IInvariant>;
+  private inv_condition_oper: Array<Invariant>;
+  private inv_step_loop: Array<Invariant>;
+  private inv_control: Array<Invariant>;
+  private inv_action: Array<Invariant>;
   // Cross Reference array to display the correct input fields according to the selected condition
   private crossReference_ConditionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
   private crossReference_ActionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ActionValue;

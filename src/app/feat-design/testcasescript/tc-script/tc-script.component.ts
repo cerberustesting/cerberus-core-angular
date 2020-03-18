@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { Observable, Subscription } from 'rxjs';
 
@@ -16,9 +16,10 @@ export class TcScriptComponent implements OnInit {
   @Input('testcase') testcase: TestCase;
 
   // list of countries
-  private inv_countriesList: Array<IInvariant>;
+  private inv_countriesList: Array<Invariant>;
 
   // event received from parent to trigger the saveScript function
+  // TODO : remove
   @Input() saveScriptEvent: Observable<void>;
 
   // list of tabs
@@ -35,7 +36,6 @@ export class TcScriptComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTab = this.tabs[0];
-    this.saveScriptEvent.subscribe(() => this.saveTestCase());
   }
 
   // send the new script to the API for saving

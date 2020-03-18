@@ -6,6 +6,7 @@ import { Label } from 'src/app/shared/model/back/label.model';
 import { IApplication } from 'src/app/shared/model/application.model';
 import { environment } from 'src/environments/environment';
 import { InvariantsService } from './invariants.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class SystemService {
   observableApplication = new BehaviorSubject<IApplication>(this.application);
   observableLabelsHierarchyList = new BehaviorSubject<any>(this.labelsHierarchy);
 
-  constructor(private http: HttpClient, private invariantsService: InvariantsService) { }
+  constructor(private http: HttpClient, private invariantsService: InvariantsService, private userService: UserService) { }
 
   getSprintsFromSystem(system: string) {
     this.http.get<IBuildRevisionInvariant[]>(environment.cerberus_api_url + '/ReadBuildRevisionInvariant?system=' + system + '&level=1')
@@ -82,10 +83,14 @@ export class SystemService {
     return labellist.filter(label => label.type === type);
   }
 
+  /**
+   * refresh the list of application
+   * WARNING : need the user variable to be defined to access his allowed systems
+   */
   getApplicationList() {
     this.applicationsList = [];
     // for each selected system, gather the application list
-    for (const system of this.invariantsService.selectedSystemsList) {
+    for (const system of this.userService.user.defaultSystem) {
       this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication?system=' + system)
         .subscribe(response => {
           // @ts-ignore

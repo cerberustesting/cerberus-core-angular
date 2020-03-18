@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { ProperyGroup, PropertyValue } from 'src/app/shared/model/property.model';
+import { ProperyGroup, PropertyValue } from 'src/app/shared/model/back/property.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 
 @Component({
   selector: 'app-propertygroup',
@@ -10,46 +11,62 @@ import { ProperyGroup, PropertyValue } from 'src/app/shared/model/property.model
 })
 export class PropertygroupComponent implements OnInit {
 
-  // boolean to handle the display of the property values list
+  /** boolean to handle the display of the property values list */
   public propertyValuesDisplayed: boolean;
 
-  // boolean to handle the validation of the property group name
+  /** boolean to handle the validation of the property group name */
   public propertyNameIsAlreadyUsed: boolean;
 
-  // boolean to detect if the the property name is present in the inherited prop list
+  /** boolean to detect if the the property name is present in the inherited prop list */
   public propertyNameIsInherited: boolean;
 
-  // boolean to handle hoover fields
+  /** boolean to handle hoover fields */
   public showActions: boolean;
 
-  @Input('propertygroup') propertygroup: ProperyGroup; // property grouped by name
-  @Input('testcase') testcase: TestCase; // full testcase object
-  @Input('propertyGroups') propertyGroups: Array<ProperyGroup>; // list of all property groups
-  @Input('inherited') inherited: boolean; // true if the property is in read-only
+  /** property values grouped by name */
+  @Input('propertygroup') propertygroup: ProperyGroup;
+
+  /** full test case object */
+  @Input('testcase') testcase: TestCase;
+
+  /** list of all property groups */
+  @Input('propertyGroups') propertyGroups: Array<ProperyGroup>;
+
+  /** true if the property is in read-only */
+  @Input('inherited') inherited: boolean;
 
   constructor(private testService: TestcaseService) { }
 
   ngOnInit() {
+
     // hide the property values by default
     this.propertyValuesDisplayed = false;
+
     // by default, all names are unique
     this.propertyNameIsAlreadyUsed = false;
+
     // by default, hide actions
     this.showActions = false;
+
     // check if the property name is present in the inherited prop
     this.refreshInheritedStatus(this.propertygroup.property);
   }
 
-  // check in all the property values if the country is selected
-  // returns true if the country is fetched
-  // return false if not
-  isACountrySelected(country: string): boolean {
-    const countryPresent = (propvalue) => propvalue.country.includes(country);
-    return this.propertygroup.values.some(countryPresent);
+  /**
+   * return true if the country is selected in the property group
+   * @param countryName country invariant value to check
+  */
+  isACountrySelected(countryName: string): boolean {
+    const isACountryFoundInAListOfCountries = (invariant: Invariant) => invariant.value === countryName;
+    const isACountryFoundInAPropertyValue = (propvalue: PropertyValue) => propvalue.countries.some(isACountryFoundInAListOfCountries);
+    return this.propertygroup.values.some(isACountryFoundInAPropertyValue);
   }
 
-  // update the boolean to handle the validation of the property group name
-  onPropertyNameChange(event: any) {
+  /**
+   * update the boolean to handle the validation of the property group name
+   * @param event event that contains the new value typed
+  */
+  onPropertyNameChange(event: any): void {
     // store the values (new and old) as soon as a key is pressed
     const newValue = event.target.value;
     const oldValue = this.propertygroup.property;
@@ -69,15 +86,19 @@ export class PropertygroupComponent implements OnInit {
     }
   }
 
-  // rename all the property values
+  /** rename all the property values */
   renameAllPropertyValues(name: string) {
     this.propertygroup.values.forEach(propvalue => {
       propvalue.property = name;
     });
   }
 
-  // return true if the property name is already set for another group
-  isAPropertyNameIsAlreadyUsed(propnameToCheck: string, propnameBeingModified): boolean {
+  /**
+   * return true if the property name is already set for another group
+   * @param propnameToCheck property name to check (that we are trying to set)
+   * @param propnameBeingModified current property name
+  */
+  isAPropertyNameIsAlreadyUsed(propnameToCheck: string, propnameBeingModified: string): boolean {
     // exclude the property group name that it asked from
     const reducedPropertiesList = this.propertyGroups.filter(propertygroup => propertygroup.property !== propnameBeingModified);
     if (propnameToCheck === propnameBeingModified) {
@@ -92,9 +113,12 @@ export class PropertygroupComponent implements OnInit {
     }
   }
 
-  // return true if the property name is present in the inherited properties of the test case
+  /**
+   * return true if the property name is present in the inherited properties of the test case
+   * @param propname name of the property to check
+  */
   isAPropertyNameIsInherited(propname: string): boolean {
-    const listOfInheritedProp = this.testcase.inheritedProp;
+    const listOfInheritedProp = this.testcase.properties.inheritedProperties;
     const listOfInheritedPropNames = new Array<string>();
     // create an array with all unique properties names
     listOfInheritedProp.forEach(propvalue => {
@@ -107,7 +131,7 @@ export class PropertygroupComponent implements OnInit {
 
   // process the property group name and update
   // the propertyNameIsInherited boolean
-  refreshInheritedStatus(propname: string) {
+  refreshInheritedStatus(propname: string): void {
     // perform the actions only if the component isn't in inherited mode
     if (this.inherited === false) {
       if (this.isAPropertyNameIsInherited(propname) === true) {

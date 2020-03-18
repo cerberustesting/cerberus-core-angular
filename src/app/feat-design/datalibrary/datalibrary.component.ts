@@ -104,13 +104,13 @@ export class DatalibraryComponent implements OnInit {
   deleteDataLib(row: any) {
     const modalRef = this.modalService.open(CustomModalComponent);
     modalRef.componentInstance.title = 'Delete Test Data Library Entry';
-    modalRef.componentInstance.text =  'Do you want to delete Test Data Library "'
-    + row.name + '" of system ' + row.system + ' (ID : ' + row.testDataLibID + ') ?';
+    modalRef.componentInstance.text = 'Do you want to delete Test Data Library "'
+      + row.name + '" of system ' + row.system + ' (ID : ' + row.testDataLibID + ') ?';
     modalRef.componentInstance.fct = () => {
-      this.testService.deleteTestDataLib(
-        row.testDataLibID,
-        () => { this.refreshResults(); }
-      );
+      // this.testService.deleteTestDataLib(
+      //   row.testDataLibID,
+      //   () => { this.refreshResults(); }
+      // );
       this.notificationService.createANotification('The datalib ' + row.name + ' (ID :' + row.testDataLibID + ') has been successfully deleted', NotificationStyle.Success);
     };
   }

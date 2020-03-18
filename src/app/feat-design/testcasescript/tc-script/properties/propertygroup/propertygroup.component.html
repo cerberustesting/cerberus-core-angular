@@ -1,5 +1,5 @@
-<div class="block-header block-header-sm" style="border: 1px solid #e7eaf2; background-color: white;" (mouseenter)="showActions=true"
-    (mouseleave)="showActions=false">
+<div class="block-header block-header-sm" style="border: 1px solid #e7eaf2; background-color: white;"
+    (mouseenter)="showActions=true" (mouseleave)="showActions=false">
     <div class="row full-width">
         <div class="col-3">
             <div class="input-group">
@@ -60,8 +60,8 @@
 
         <!-- COUNTRY LIST -->
         <div class="col-4 offset-5">
-            <span *ngFor="let country of testcase.info.countryList" class="badge link-default mr-1"
-                [ngClass]="isACountrySelected(country.country) ? 'badge-primary' : 'badge-secondary'">{{country.country}}</span>
+            <span *ngFor="let country of testcase.countries" class="badge link-default mr-1"
+                [ngClass]="isACountrySelected(country.value) ? 'badge-primary' : 'badge-secondary'">{{country.value}}</span>
         </div>
         <!-- END COUNTRY LIST -->
     </div>

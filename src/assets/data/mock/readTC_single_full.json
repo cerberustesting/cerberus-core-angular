@@ -1,0 +1,657 @@
+{
+    "hasPermissionsUpdate": true,
+    "messageType": "OK",
+    "contentTable": [
+        {
+            "conditionOper": "always",
+            "howTo": "",
+            "description": "",
+            "fromRev": "",
+            "implementer": "",
+            "activePROD": "N",
+            "bugs": [
+                {
+                    "act": true,
+                    "dateCreated": "2020-03-17T21:32:03.988Z",
+                    "id": "BUGID1",
+                    "dateClosed": "1970-01-01T00:00:00.000Z",
+                    "desc": ""
+                },
+                {
+                    "act": true,
+                    "dateCreated": "2020-03-17T21:32:05.683Z",
+                    "id": "BUGID2",
+                    "dateClosed": "1970-01-01T00:00:00.000Z",
+                    "desc": ""
+                }
+            ],
+            "fromBuild": "",
+            "screenSize": "",
+            "dateCreated": "2020-02-10 21:45:22.0",
+            "refOrigine": "",
+            "executor": "",
+            "function": "",
+            "activeQA": "Y",
+            "group": "AUTOMATED",
+            "test": "benoit",
+            "usrModif": "nouxx",
+            "toBuild": "",
+            "conditionValue2": "",
+            "conditionValue3": "",
+            "origine": "",
+            "countries": [
+                {
+                    "description": "",
+                    "grp1": "",
+                    "value": "atale",
+                    "grp2": "",
+                    "grp3": ""
+                },
+                {
+                    "description": "Belgium",
+                    "grp1": "800",
+                    "value": "BE",
+                    "grp2": "fr-be",
+                    "grp3": ""
+                },
+                {
+                    "description": "Switzerland",
+                    "grp1": "500",
+                    "value": "CH",
+                    "grp2": "fr-ch",
+                    "grp3": ""
+                },
+                {
+                    "description": "Spain",
+                    "grp1": "900",
+                    "value": "ES",
+                    "grp2": "es",
+                    "grp3": ""
+                },
+                {
+                    "description": "France",
+                    "grp1": "350",
+                    "value": "FR",
+                    "grp2": "fr",
+                    "grp3": ""
+                },
+                {
+                    "description": "Portugal",
+                    "grp1": "200",
+                    "value": "PT",
+                    "grp2": "pt-pt",
+                    "grp3": ""
+                },
+                {
+                    "description": "Transversal Country used for Transversal Applications.",
+                    "grp1": "RBX",
+                    "value": "RX",
+                    "grp2": "en-gb",
+                    "grp3": ""
+                },
+                {
+                    "description": "",
+                    "grp1": "",
+                    "value": "tf1",
+                    "grp2": "",
+                    "grp3": ""
+                },
+                {
+                    "description": "Great Britan",
+                    "grp1": "300",
+                    "value": "UK",
+                    "grp2": "en-gb",
+                    "grp3": ""
+                }
+            ],
+            "priority": 5,
+            "conditionValue1": "",
+            "testCaseVersion": 1,
+            "usrCreated": "vertigo17",
+            "dependencies": [
+                {
+                    "test": "Decathlon",
+                    "active": true,
+                    "description": "Try switchToWindow",
+                    "id": 15,
+                    "type": "TCEXEEND",
+                    "event": "",
+                    "testCase": "0001A"
+                }
+            ],
+            "labels": [
+                {
+                    "color": "#CCCCCC",
+                    "usrModif": "",
+                    "counter1": 0,
+                    "description": "",
+                    "label": "Cerberus_ENGINE",
+                    "type": "BATTERY",
+                    "usrCreated": "DatabaseVersioningV1264",
+                    "parentLabelID": 0,
+                    "system": "",
+                    "reqStatus": "",
+                    "dateCreated": "2017-12-25 17:25:35.0",
+                    "reqType": "",
+                    "reqCriticity": "",
+                    "id": 41,
+                    "longDesc": ""
+                },
+                {
+                    "color": "#d4751e",
+                    "usrModif": "bdumont",
+                    "counter1": 0,
+                    "description": "Engine using Servlet",
+                    "label": "Engine",
+                    "type": "STICKER",
+                    "usrCreated": "admin",
+                    "parentLabelID": 0,
+                    "system": "CERBERUS",
+                    "reqStatus": "",
+                    "dateCreated": "2017-03-10 13:15:37.0",
+                    "reqType": "",
+                    "reqCriticity": "",
+                    "id": 19,
+                    "longDesc": "<p>Those Test execute 0000A testcase using servlet RunTestCase that execute on QA side 0000B testcases.</p>"
+                },
+                {
+                    "color": "#7d6161",
+                    "usrModif": "bdumont",
+                    "counter1": 0,
+                    "description": "",
+                    "label": "NATURE",
+                    "type": "STICKER",
+                    "usrCreated": "bdumont",
+                    "parentLabelID": 19,
+                    "system": "CERBERUS",
+                    "reqStatus": "",
+                    "dateCreated": "2018-07-29 17:28:03.0",
+                    "reqType": "",
+                    "reqCriticity": "",
+                    "id": 72,
+                    "longDesc": ""
+                },
+                {
+                    "color": "#000000",
+                    "usrModif": "cvannouque",
+                    "counter1": 0,
+                    "description": "",
+                    "label": "Requirement1",
+                    "type": "REQUIREMENT",
+                    "usrCreated": "cvannouque",
+                    "parentLabelID": 0,
+                    "system": "CERBERUS",
+                    "reqStatus": "",
+                    "dateCreated": "2018-07-24 17:25:21.0",
+                    "reqType": "",
+                    "reqCriticity": "",
+                    "id": 66,
+                    "longDesc": ""
+                }
+            ],
+            "behaviourOrValueExpected": "",
+            "tcActive": "Y",
+            "targetRev": "",
+            "activeUAT": "Y",
+            "system": "CERBERUS",
+            "usrAgent": "",
+            "application": "Cerberus",
+            "comment": "",
+            "targetBuild": "",
+            "dateModif": "2020-03-17 22:34:21.0",
+            "toRev": "",
+            "testCase": "0002A",
+            "status": "TEST215460",
+            "steps": [
+                {
+                    "conditionVal3": "",
+                    "isStepInUseByOtherTestCase": false,
+                    "conditionVal2": "",
+                    "useStepTestCase": "",
+                    "test": "benoit",
+                    "conditionOper": "always",
+                    "conditionVal1": "",
+                    "usrModif": "",
+                    "inLibrary": "N",
+                    "useStepTest": "",
+                    "description": "S1",
+                    "sort": 1,
+                    "usrCreated": "",
+                    "forceExe": "N",
+                    "dateCreated": "",
+                    "initialStep": 0,
+                    "loop": "onceIfConditionTrue",
+                    "step": 1,
+                    "dateModif": "Jan 1, 1970 1:01:01 AM",
+                    "useStepStep": 0,
+                    "objType": "step",
+                    "actions": [],
+                    "useStep": "N",
+                    "testCase": "0002A"
+                },
+                {
+                    "useStepTestCase": "0017B",
+                    "conditionOper": "always",
+                    "description": "Execute action keypress",
+                    "forceExe": "N",
+                    "dateCreated": "",
+                    "loop": "onceIfConditionTrue",
+                    "useStepStep": 2,
+                    "objType": "step",
+                    "useStep": "Y",
+                    "conditionVal3": "",
+                    "isStepInUseByOtherTestCase": false,
+                    "conditionVal2": "",
+                    "useStepStepSort": 2,
+                    "test": "benoit",
+                    "conditionVal1": "",
+                    "usrModif": "",
+                    "inLibrary": "N",
+                    "useStepTest": "ENGINE : Action",
+                    "sort": 2,
+                    "usrCreated": "",
+                    "initialStep": 0,
+                    "step": 2,
+                    "dateModif": "Jan 1, 1970 1:01:01 AM",
+                    "actions": [
+                        {
+                            "conditionVal3": "",
+                            "forceExeStatus": "",
+                            "conditionVal2": "",
+                            "controls": [],
+                            "test": "ENGINE : Action",
+                            "conditionOper": "always",
+                            "conditionVal1": "",
+                            "value2": "",
+                            "value1": "id=com.ocito.laredoute:id/iv_search_glass",
+                            "screenshotFilename": "",
+                            "value3": "",
+                            "description": "click search icon",
+                            "sort": 1,
+                            "sequence": 4,
+                            "action": "click",
+                            "step": 2,
+                            "objType": "action",
+                            "testCase": "0017B"
+                        },
+                        {
+                            "conditionVal3": "",
+                            "forceExeStatus": "",
+                            "conditionVal2": "",
+                            "controls": [],
+                            "test": "ENGINE : Action",
+                            "conditionOper": "always",
+                            "conditionVal1": "",
+                            "value2": "",
+                            "value1": "id=com.ocito.laredoute:id/et_search_field",
+                            "screenshotFilename": "",
+                            "value3": "",
+                            "description": "click on search field",
+                            "sort": 2,
+                            "sequence": 5,
+                            "action": "click",
+                            "step": 2,
+                            "objType": "action",
+                            "testCase": "0017B"
+                        },
+                        {
+                            "conditionVal3": "",
+                            "forceExeStatus": "",
+                            "conditionVal2": "",
+                            "controls": [],
+                            "test": "ENGINE : Action",
+                            "conditionOper": "always",
+                            "conditionVal1": "",
+                            "value2": "",
+                            "value1": "id=com.ocito.laredoute:id/et_search_field",
+                            "screenshotFilename": "",
+                            "value3": "",
+                            "description": "",
+                            "sort": 3,
+                            "sequence": 12,
+                            "action": "click",
+                            "step": 2,
+                            "objType": "action",
+                            "testCase": "0017B"
+                        },
+                        {
+                            "conditionVal3": "",
+                            "forceExeStatus": "",
+                            "conditionVal2": "",
+                            "controls": [],
+                            "test": "ENGINE : Action",
+                            "conditionOper": "always",
+                            "conditionVal1": "",
+                            "value2": "robe",
+                            "value1": "id=com.ocito.laredoute:id/et_search_field",
+                            "screenshotFilename": "",
+                            "value3": "",
+                            "description": "type robe on search bar",
+                            "sort": 4,
+                            "sequence": 1,
+                            "action": "type",
+                            "step": 2,
+                            "objType": "action",
+                            "testCase": "0017B"
+                        },
+                        {
+                            "conditionVal3": "",
+                            "forceExeStatus": "",
+                            "conditionVal2": "",
+                            "controls": [],
+                            "test": "ENGINE : Action",
+                            "conditionOper": "always",
+                            "conditionVal1": "",
+                            "value2": "ENTER",
+                            "value1": "",
+                            "screenshotFilename": "",
+                            "value3": "",
+                            "description": "",
+                            "sort": 5,
+                            "sequence": 13,
+                            "action": "keypress",
+                            "step": 2,
+                            "objType": "action",
+                            "testCase": "0017B"
+                        },
+                        {
+                            "conditionVal3": "",
+                            "forceExeStatus": "",
+                            "conditionVal2": "",
+                            "controls": [],
+                            "test": "ENGINE : Action",
+                            "conditionOper": "always",
+                            "conditionVal1": "",
+                            "value2": "",
+                            "value1": "1000",
+                            "screenshotFilename": "",
+                            "value3": "",
+                            "description": "wait",
+                            "sort": 7,
+                            "sequence": 10,
+                            "action": "wait",
+                            "step": 2,
+                            "objType": "action",
+                            "testCase": "0017B"
+                        },
+                        {
+                            "conditionVal3": "",
+                            "forceExeStatus": "",
+                            "conditionVal2": "",
+                            "controls": [
+                                {
+                                    "conditionVal3": "",
+                                    "conditionVal2": "",
+                                    "test": "ENGINE : Action",
+                                    "conditionOper": "always",
+                                    "conditionVal1": "",
+                                    "value2": "val2",
+                                    "value1": "id=com.ocito.laredoute:id/tv_filter_button",
+                                    "screenshotFilename": "",
+                                    "value3": "",
+                                    "description": "verify we are on PLP",
+                                    "control": "verifyElementPresent",
+                                    "sort": 1,
+                                    "fatal": "Y",
+                                    "sequence": 11,
+                                    "controlSequence": 1,
+                                    "step": 2,
+                                    "objType": "control",
+                                    "testCase": "0017B"
+                                }
+                            ],
+                            "test": "ENGINE : Action",
+                            "conditionOper": "always",
+                            "conditionVal1": "",
+                            "value2": "",
+                            "value1": "",
+                            "screenshotFilename": "",
+                            "value3": "",
+                            "description": "",
+                            "sort": 8,
+                            "sequence": 11,
+                            "action": "doNothing",
+                            "step": 2,
+                            "objType": "action",
+                            "testCase": "0017B"
+                        }
+                    ],
+                    "testCase": "0002A"
+                }
+            ],
+            "properties": {
+                "inheritedProperties": [
+                    {
+                        "value2": "",
+                        "value1": "executeScript(\"mobile: performEditorAction\", {'action': 'search'});",
+                        "nature": "STATIC",
+                        "length": "0",
+                        "description": "",
+                        "rowLimit": 0,
+                        "countries": [
+                            {
+                                "description": "Belgium",
+                                "grp1": "800",
+                                "value": "BE",
+                                "grp2": "fr-be",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Switzerland",
+                                "grp1": "500",
+                                "value": "CH",
+                                "grp2": "fr-ch",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Spain",
+                                "grp1": "900",
+                                "value": "ES",
+                                "grp2": "es",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "France",
+                                "grp1": "350",
+                                "value": "FR",
+                                "grp2": "fr",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Portugal",
+                                "grp1": "200",
+                                "value": "PT",
+                                "grp2": "pt-pt",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Transversal Country used for Transversal Applications.",
+                                "grp1": "RBX",
+                                "value": "RX",
+                                "grp2": "en-gb",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Great Britan",
+                                "grp1": "300",
+                                "value": "UK",
+                                "grp2": "en-gb",
+                                "grp3": ""
+                            }
+                        ],
+                        "type": "getFromGroovy",
+                        "database": "",
+                        "fromTest": "ENGINE : Action",
+                        "property": "TEMP",
+                        "rank": 1,
+                        "fromTestCase": "0017B"
+                    }
+                ],
+                "testCaseProperties": [
+                    {
+                        "value2": "",
+                        "value1": "",
+                        "nature": "STATIC",
+                        "length": "0",
+                        "description": "",
+                        "rowLimit": 0,
+                        "countries": [
+                            {
+                                "description": "",
+                                "grp1": "",
+                                "value": "atale",
+                                "grp2": "",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Belgium",
+                                "grp1": "800",
+                                "value": "BE",
+                                "grp2": "fr-be",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Switzerland",
+                                "grp1": "500",
+                                "value": "CH",
+                                "grp2": "fr-ch",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Spain",
+                                "grp1": "900",
+                                "value": "ES",
+                                "grp2": "es",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "France",
+                                "grp1": "350",
+                                "value": "FR",
+                                "grp2": "fr",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Portugal",
+                                "grp1": "200",
+                                "value": "PT",
+                                "grp2": "pt-pt",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Transversal Country used for Transversal Applications.",
+                                "grp1": "RBX",
+                                "value": "RX",
+                                "grp2": "en-gb",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "",
+                                "grp1": "",
+                                "value": "tf1",
+                                "grp2": "",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Great Britan",
+                                "grp1": "300",
+                                "value": "UK",
+                                "grp2": "en-gb",
+                                "grp3": ""
+                            }
+                        ],
+                        "type": "text",
+                        "database": "",
+                        "fromTest": "benoit",
+                        "property": "prop1",
+                        "rank": 1,
+                        "fromTestCase": "0002A"
+                    },
+                    {
+                        "value2": "",
+                        "value1": "",
+                        "nature": "STATIC",
+                        "length": "0",
+                        "description": "",
+                        "rowLimit": 0,
+                        "countries": [
+                            {
+                                "description": "",
+                                "grp1": "",
+                                "value": "atale",
+                                "grp2": "",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Belgium",
+                                "grp1": "800",
+                                "value": "BE",
+                                "grp2": "fr-be",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Switzerland",
+                                "grp1": "500",
+                                "value": "CH",
+                                "grp2": "fr-ch",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Spain",
+                                "grp1": "900",
+                                "value": "ES",
+                                "grp2": "es",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "France",
+                                "grp1": "350",
+                                "value": "FR",
+                                "grp2": "fr",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Portugal",
+                                "grp1": "200",
+                                "value": "PT",
+                                "grp2": "pt-pt",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Transversal Country used for Transversal Applications.",
+                                "grp1": "RBX",
+                                "value": "RX",
+                                "grp2": "en-gb",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "",
+                                "grp1": "",
+                                "value": "tf1",
+                                "grp2": "",
+                                "grp3": ""
+                            },
+                            {
+                                "description": "Great Britan",
+                                "grp1": "300",
+                                "value": "UK",
+                                "grp2": "en-gb",
+                                "grp3": ""
+                            }
+                        ],
+                        "type": "text",
+                        "database": "",
+                        "fromTest": "benoit",
+                        "property": "prop2",
+                        "rank": 1,
+                        "fromTestCase": "0002A"
+                    }
+                ]
+            }
+        }
+    ],
+    "hasPermissionsStepLibrary": true,
+    "message": "TestCase - SELECT was finished with success!",
+    "hasPermissionsDelete": true,
+    "sEcho": 0
+}

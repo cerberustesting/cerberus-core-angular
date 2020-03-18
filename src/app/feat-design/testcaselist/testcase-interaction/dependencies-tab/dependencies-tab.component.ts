@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
 import { TestService } from 'src/app/core/services/api/test/test.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { TestCaseHeader, TestCaseDependency } from 'src/app/shared/model/back/testcase.model';
+import { TestCase, TestCaseDependency } from 'src/app/shared/model/back/testcase.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 
@@ -14,19 +14,19 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 export class DependenciesTabComponent implements OnInit {
 
   /** testcase header object */
-  @Input('dependencies') dependencies: TestCaseHeader;
+  @Input('dependencies') dependencies: Array<TestCaseDependency>;
 
   /** list of available test folders to select */
   public testsList: Array<TestFolder>;
 
   /** list of test case id corresponding to the selected test folder */
-  private testCasesList: Array<TestCaseHeader>;
+  private testCasesList: Array<TestCase>;
 
   /** selected test folder */
   public selectedTestFolderName: string;
 
   /** selected test case id */
-  private selectedTestCase: TestCaseHeader;
+  private selectedTestCase: TestCase;
 
   constructor(private testService: TestService, private testCaseService: TestcaseService, private notificationService: NotificationService) { }
 
@@ -66,8 +66,8 @@ export class DependenciesTabComponent implements OnInit {
 
   /** add a dependency to the test case (if it's not already present) */
   addADependency(): void {
-    if (!this.isADependencySelected(this.selectedTestFolderName, this.selectedTestCase.header.testCase)) {
-      const newDependency = new TestCaseDependency(this.selectedTestFolderName, this.selectedTestCase.header.testCase);
+    if (!this.isADependencySelected(this.selectedTestFolderName, this.selectedTestCase.testCase)) {
+      const newDependency = new TestCaseDependency(this.selectedTestFolderName, this.selectedTestCase.testCase);
       this.dependencies.push(newDependency);
     } else {
       this.notificationService.createANotification('This dependency is already selected', NotificationStyle.Error);

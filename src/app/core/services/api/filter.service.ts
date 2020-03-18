@@ -4,7 +4,8 @@ import { InvariantsService } from './invariants.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase.model';
+import { UserService } from './user.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -40,8 +41,10 @@ export class FilterService {
 
   observableActiveFiltersList = new BehaviorSubject<ActiveFilter[]>(this.activeFiltersList);
 
-  constructor(private invariantService: InvariantsService,
-    private http: HttpClient) {
+  constructor(
+    private invariantService: InvariantsService,
+    private http: HttpClient,
+    private userService: UserService) {
     this.activeFiltersList = new Array<ActiveFilter>();
   }
 
@@ -76,21 +79,20 @@ export class FilterService {
       formData['sSortDir_0'] = pageInformation.sort[0].dir; // sort direction
     }
     if (globalSearch !== '') { formData['sSearch'] = globalSearch; } // value in global search field
-
-
     if (columnListWithActiveFilter.length > 0) {
       formData['sColumns'] = columnListWithActiveFilter.map(column => column.apiName).join(','); // list of columns to filter&sort
       // ? 'iColumns'
       for (const column in columnListWithActiveFilter) {
+
         if (columnListWithActiveFilter[column].type === 'label') {
           formData['sSearch_' + column] = (columnListWithActiveFilter[column].sSearch) ? columnListWithActiveFilter[column].sSearch.map(a => a.label).join(',') : ''; // value(s) to filter (only label)
         } else if (columnListWithActiveFilter[column].contentName === 'system') {
           const systemByFilter = ((columnListWithActiveFilter[column].sSearch.length !== 0) ? columnListWithActiveFilter[column].sSearch.join(',') : '');
           let systemByService;
-          if (this.invariantService.selectedSystemsList) {
+          if (this.userService.user.defaultSystem) {
             const systemByFilterRaw = new Array<String>();
-            if (this.invariantService.selectedSystemsList.length !== 0) {
-              this.invariantService.selectedSystemsList.forEach(system => {
+            if (this.userService.user.defaultSystem.length !== 0) {
+              this.userService.user.defaultSystem.forEach(system => {
                 systemByFilterRaw.push(system);
               });
               systemByService = ',' + systemByFilterRaw.join(',');
@@ -145,7 +147,7 @@ export class FilterService {
   // that is filtered by a dropdown typed filter
   getOptionsListForColumnsFiltering(servlet: string, columnName: string) {
     const query = environment.cerberus_api_url + servlet + '?columnName=' + columnName;
-    return this.http.get<TestCaseHeader>(query);
+    return this.http.get<TestCase>(query);
   }
 
   // add a new filter or new values for an existing values to the list

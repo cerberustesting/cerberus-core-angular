@@ -38,13 +38,11 @@
     <div *ngIf="selectedTab == tabs[1]" class="tab-pane active show" id="propertiesTab" role="tabpanel">
 
       <!-- PROPERTIES -->
-      <app-properties [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase"
-        [inherited]="false">
+      <app-properties [properties]="testcase.properties.testCaseProperties" [inherited]="false" [testcase]="testcase">
       </app-properties>
 
       <!-- INHERITED PROPERTIES -->
-      <app-properties [testfolder]="testcase.info.test" [testcaseid]="testcase.info.testCase" [testcase]="testcase"
-        [inherited]="true">
+      <app-properties [properties]="testcase.properties.inheritedProperties" [inherited]="true" [testcase]="testcase">
       </app-properties>
 
     </div>

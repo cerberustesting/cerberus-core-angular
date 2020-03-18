@@ -13,10 +13,10 @@ import { LabelsComponent } from './labels/labels.component';
 import { TestcasescriptComponent } from './testcasescript/testcasescript.component';
 import { TcSelectorComponent } from './testcasescript/tc-selector/tc-selector.component';
 import { TcScriptComponent } from './testcasescript/tc-script/tc-script.component';
-import { StepComponent } from './testcasescript/tc-script/step/step.component';
+import { StepComponent } from './testcasescript/tc-script/script/step/step.component';
 import { LibraryStepsModalComponent } from './testcasescript/tc-script/librarystepsmodal/librarystepsmodal.component';
-import { ActionComponent } from './testcasescript/tc-script/action/action.component';
-import { ControlComponent } from './testcasescript/tc-script/control/control.component';
+import { ActionComponent } from './testcasescript/tc-script/script/step/action/action.component';
+import { ControlComponent } from './testcasescript/tc-script/script/step/action/control/control.component';
 import { PropertyvalueComponent } from './testcasescript/tc-script/properties/propertyvalue/propertyvalue.component';
 import { SettingsComponent } from './testcasescript/tc-script/settings/settings.component';
 import { DatalibraryComponent } from './datalibrary/datalibrary.component';
@@ -45,6 +45,7 @@ import { DependenciesTabComponent } from './testcaselist/testcase-interaction/de
 import { ExecutionSettingsTabComponent } from './testcaselist/testcase-interaction/execution-settings-tab/execution-settings-tab.component';
 import { DefinitionTabComponent } from './testcaselist/testcase-interaction/definition-tab/definition-tab.component';
 import { AuditTabComponent } from './testcaselist/testcase-interaction/audit-tab/audit-tab.component';
+import { ShortcutsComponent } from './testcasescript/shortcuts/shortcuts.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { AuditTabComponent } from './testcaselist/testcase-interaction/audit-tab
     ExecutionSettingsTabComponent,
     DefinitionTabComponent,
     AuditTabComponent,
+    ShortcutsComponent,
   ],
   imports: [
     CommonModule,

@@ -16,10 +16,10 @@
     <div *ngIf="selectedTestFolderName !== null" class="col-md-6">
         <div class="form-group">
             <label for="test">Test Case</label>
-            <ng-select name="testcase" class="custom-sm" [items]="testCasesList" bindLabel="header.testCase"
+            <ng-select name="testcase" class="custom-sm" [items]="testCasesList" bindLabel="testCase"
                 placeholder="Select a Test Case" [(ngModel)]="selectedTestCase" [ngModelOptions]="{standalone: true}">
                 <ng-template ng-option-tmp let-item="item">
-                    {{item.header.testCase}} : {{item.header.description}}
+                    {{item.testCase}} : {{item.description}}
                 </ng-template>
             </ng-select>
         </div>

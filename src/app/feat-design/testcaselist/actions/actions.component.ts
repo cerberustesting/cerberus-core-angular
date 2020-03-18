@@ -1,7 +1,7 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { SidecontentService, INTERACTION_MODE } from '../../../core/services/api/sidecontent.service';
 import { TestcaseInteractionComponent } from '../testcase-interaction/testcase-interaction.component';
-import { TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
@@ -19,7 +19,7 @@ export class ActionsComponent {
 
   // event that will be triggered when go to script button is clicked
   // sends the correct row to the parent component to use its function
-  @Output() redirectToScriptButtonClicked = new EventEmitter<TestCaseHeader>();
+  @Output() redirectToScriptButtonClicked = new EventEmitter<TestCase>();
 
   constructor(
     private sideContentService: SidecontentService,
@@ -76,7 +76,7 @@ export class ActionsComponent {
   }
 
   // delete the test case (mass deletion isn't possible)
-  deleteTestCase(testcaseheader: TestCaseHeader) {
+  deleteTestCase(testcaseheader: TestCase) {
     let notifStyle = NotificationStyle.Info;
     this.testService.deleteTestCase(testcaseheader.test, testcaseheader.testCase, (message, status) => {
       switch (status) {
@@ -91,7 +91,7 @@ export class ActionsComponent {
 
   // send the row to the testcaselist component
   // to use its redirect function
-  redirectToScript(row: TestCaseHeader) {
+  redirectToScript(row: TestCase) {
     this.redirectToScriptButtonClicked.emit(row);
   }
 

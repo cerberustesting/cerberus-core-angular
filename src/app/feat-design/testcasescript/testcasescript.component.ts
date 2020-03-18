@@ -7,6 +7,7 @@ import { SystemService } from 'src/app/core/services/api/system.service';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { Subject } from 'rxjs';
 import { TestService } from 'src/app/core/services/api/test/test.service';
+import { UserService } from 'src/app/core/services/api/user.service';
 
 @Component({
   selector: 'app-testcasescript',
@@ -15,11 +16,16 @@ import { TestService } from 'src/app/core/services/api/test/test.service';
 })
 export class TestcasescriptComponent implements OnInit, OnDestroy {
 
-  selectedTest: string;
-  selectedTestCase: string;
-  testcase: TestCase;
+  /** currently selected test folder */
+  public selectedTest: string;
 
-  // event to be fired when the 'save script' button is pressed
+  /** currently selected test case id */
+  public selectedTestCase: string;
+
+  /** corresponding selected test case object */
+  public testcase: TestCase;
+
+  /** event to be fired when the 'save script' button is pressed */
   saveScriptEvent: Subject<void> = new Subject<void>();
 
   constructor(
@@ -29,10 +35,9 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     private testService: TestService,
     private InvariantService: InvariantsService,
     private systemService: SystemService,
-    private headerTitleService: HeaderTitleService
-  ) {
-    headerTitleService.setTitle('Testcase Edition');
-  }
+    private headerTitleService: HeaderTitleService,
+    private userService: UserService
+  ) { }
 
   ngOnDestroy() {
     this.testcase = null;
@@ -42,29 +47,35 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.selectedTest = null;
-    this.selectedTestCase = null;
+    // set the page title
+    this.headerTitleService.setTitle('Testcase Edition');
 
+    // set the testcase object to its inital state (null)
+    this.testcase = undefined;
+
+    // update the applications list as soon as the user is defined (need its current system)
+    // TODO : move this function up in the comp tree
+    this.userService.observableUser.subscribe(rep => {
+      if (rep) { this.systemService.getApplicationList(); }
+    });
+
+    // check the URL and decode the potential test folder and test case id
     if (this.activatedRoute.snapshot.paramMap.has('test')) {
       this.selectedTest = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('test'));
       if (this.activatedRoute.snapshot.paramMap.has('testcase')) {
         this.selectedTestCase = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('testcase'));
+        // if a test folder and a test case id are defined in the URL, get the corresponding test case object
+        this.refreshTestCase();
+      } else {
+        this.selectedTestCase = null;
       }
+    } else {
+      // no test folder defined in the URL
+      this.selectedTest = null;
+      this.selectedTestCase = null;
     }
-    this.testService.getTestFoldersList();
-    this.testcaseService.getProjectsList();
-    this.systemService.getApplicationList();
-    this.testcaseService.observableTestCase.subscribe(response => {
-      if (response) {
-        this.testcase = response;
-        this.systemService.getLabelsFromSystem(this.testcase.info.system);
-        this.systemService.getRevFromSystem(this.testcase.info.system);
-        this.systemService.getSprintsFromSystem(this.testcase.info.system);
-        this.systemService.getApplication(this.testcase.info.application);
-      }
-    });
 
-    // public invariants
+    // refresh the public invariants
     this.InvariantService.getCountriesList();
     this.InvariantService.getTcStatus();
     this.InvariantService.getOriginsList();
@@ -72,7 +83,9 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.InvariantService.getGroupList();
     this.InvariantService.getOriginsList();
     this.InvariantService.getPropertyDatabaseList();
-    // private invariants : loaded once (exluded from any refresh)
+
+    // refresh the private invariants : loaded once (excluded from any refresh)
+    // TODO : use promise instead of observables
     this.InvariantService.getStepConditionOperList();
     this.InvariantService.getStepLoopList();
     this.InvariantService.getActionList();
@@ -81,7 +94,12 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.InvariantService.getPropertyNatureList();
   }
 
+  /** receive the selected test from the child component to update the route (URL)
+   * fired when the selected test folder change (in the child comp)
+   * and when the ng-select is instantiated
+  */
   receiveTest($event) {
+    // update the selected test folder
     this.selectedTest = $event;
     this.testcase = null;
     if (this.selectedTest) {
@@ -93,14 +111,31 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     }
   }
 
+  /** receive the selected test case id the child component to update the route (URL)
+    * fired when the selected test case id change (in the child comp)
+  */
   receiveTestCase($event) {
     this.selectedTestCase = $event;
-    this.router.navigate(['/design/testcasescript', this.selectedTest, this.selectedTestCase]);
+    // if the selected case id is null, don't update the route (it will be done by receiveTest method)
+    if (this.selectedTestCase !== null) {
+      this.router.navigate(['/design/testcasescript', this.selectedTest, this.selectedTestCase]);
+      this.refreshTestCase();
+    }
   }
 
-  // send the save script event to the child component
-  sendSaveScriptEvent() {
-    this.saveScriptEvent.next();
+  /** send a new GET query to the API, resolve the promise by getting the test case object */
+  refreshTestCase(): void {
+    this.testcaseService.getTestCase(this.selectedTest, this.selectedTestCase, (testcase: TestCase) => {
+      this.testcase = testcase;
+      // refresh the labels list for the testcase system
+      this.systemService.getLabelsFromSystem(this.testcase.system);
+      // refresh the applications list for the testcase system
+      this.systemService.getApplication(this.testcase.application);
+      // refresh the revision list for the testcase system
+      this.systemService.getRevFromSystem(this.testcase.system);
+      // refresh the sprints list for the testcase system
+      this.systemService.getSprintsFromSystem(this.testcase.system);
+    });
   }
 
 }

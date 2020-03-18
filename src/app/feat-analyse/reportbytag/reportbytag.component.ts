@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ITag } from 'src/app/shared/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 declare function initChartJS();
 
@@ -24,9 +24,9 @@ export class ReportbytagComponent implements OnInit {
   private selectedTagData = null;
 
   // variables
-  private countriesList: Array<IInvariant> = new Array();
+  private countriesList: Array<Invariant> = new Array();
   private selected_countriesList: Array<string> = new Array();
-  private tceStatusList: Array<IInvariant> = new Array();
+  private tceStatusList: Array<Invariant> = new Array();
   private selected_tceStatusList: Array<string> = new Array();
   private filtersShowed: boolean;
   private showCountriesFilterOptions: boolean;

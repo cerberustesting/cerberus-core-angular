@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -28,7 +28,7 @@ export class TestcaseInteractionComponent implements OnInit {
   private selectedTab: string;
 
   // testcase header object (can be refreshed by test and test folder variables)
-  private testcaseheader: TestCaseHeader = null;
+  private testcaseheader: TestCase;
 
   // list of tabs
   private tabs: Array<string>;
@@ -43,13 +43,13 @@ export class TestcaseInteractionComponent implements OnInit {
   private saveButtonTitle: string;
 
   // test case list used for Test & Test case folder section
-  private testcasesList: Array<TestCaseHeader> = [];
+  private testcasesList: Array<TestCase> = [];
 
   // tests folder list used for Test & Test case folder section
   private testsList: Array<TestFolder>;
 
   /** list of available countries to select */
-  public countries: Array<IInvariant>;
+  public countries: Array<Invariant>;
 
   // ???
   exit: (n: void) => void;
@@ -86,7 +86,7 @@ export class TestcaseInteractionComponent implements OnInit {
       // the test case header object is expected
       if (this.testcaseheader) {
         // create a new test case header object
-        const newTestCaseHeader = new TestCaseHeader(
+        const newTestCaseHeader = new TestCase(
           this.testcaseheader.test,
           this.testcaseheader.testCase,
           this.testcaseheader.application,
@@ -111,25 +111,19 @@ export class TestcaseInteractionComponent implements OnInit {
       // edit, delete or duplicate mode
       // test folder name and test case id are expected
       if (this.test && this.testcase) {
-        // refresh the test case object
-        this.testcaseService.getTestCaseHeader(this.test, this.testcase);
-        console.log("this.testcaseService.getTestCaseHeader(" + this.test + ", " + this.testcase + ");")
-        // subscribe to the value change
-        this.testcaseService.observableTestCaseHeader.subscribe(rep => {
-          if (rep) {
-            // assign the value to our tc header variable
-            this.testcaseheader = rep;
-            // refresh the datas that couldn't be refresh without the test case header information
-            this.refreshData(this.testcaseheader);
-            // instantiate the form with the correct value
-            this.setFormValues();
-            // if test case is in duplicate mode
-            if (this.mode === INTERACTION_MODE.DUPLICATE) {
-              // we set the correct test case id
-              this.refreshNewTestCase();
-            }
+        // get the test case object from API
+        this.testcaseService.getTestCaseHeader(this.test, this.testcase, (testcase => {
+          this.testcaseheader = testcase;
+          // refresh the datas that couldn't be refresh without the test case header information
+          this.refreshData(this.testcaseheader);
+          // instantiate the form with the correct value
+          this.setFormValues();
+          // if test case is in duplicate mode
+          if (this.mode === INTERACTION_MODE.DUPLICATE) {
+            // we set the correct test case id
+            this.refreshNewTestCase();
           }
-        });
+        }));
       } else {
         console.error('test folder and test case not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
       }
@@ -205,7 +199,7 @@ export class TestcaseInteractionComponent implements OnInit {
   refreshNewTestCase(): void {
     const newTest = this.testcaseHeaderForm.get('test').value;
     // fetch the test cases list for that test folder
-    this.testcaseService.getTestCasesList_withCallback(newTest, (tcList: Array<TestCaseHeader>) => {
+    this.testcaseService.getTestCasesList_withCallback(newTest, (tcList: Array<TestCase>) => {
       this.testcasesList = tcList;
       // find the last unused test case id
       this.newTestCase = this.testcaseService.getLatestTestCaseId(this.testcasesList, newTest);
@@ -215,7 +209,7 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   /** refresh data that depends on a testcaseheader  */
-  refreshData(testcaseheader: TestCaseHeader) {
+  refreshData(testcaseheader: TestCase) {
     this.systemService.getSprintsFromSystem(testcaseheader.system);
     this.systemService.getRevFromSystem(testcaseheader.system);
     this.systemService.getLabelsHierarchyFromSystem(testcaseheader.system, testcaseheader.test, testcaseheader.testCase);

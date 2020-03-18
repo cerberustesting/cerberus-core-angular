@@ -44,6 +44,7 @@ export class FilterComponent implements OnInit {
     } else {
       this.filterService.getOptionsListForColumnsFiltering(this.servlet, this.column.apiName).subscribe(response => {
         if (response) {
+          // @ts-ignore
           if (response.distinctValues.length > 0) { this.dataList = response.distinctValues; }
         } else {
           this.dataList = null;

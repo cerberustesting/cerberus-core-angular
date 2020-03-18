@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 import { UserService } from '../services/api/user.service';
 import { IUser } from 'src/app/shared/model/user.model';
@@ -42,20 +42,18 @@ export class HeaderbarComponent implements OnInit {
 
   ngOnInit() {
 
-    // fetch data from User (could be done at an higher level)
+    // fetch data for the user
     this.userService.observableUser.subscribe(r => {
       if (r) {
         this.user = r;
         this.selectedSystemsList = this.user.defaultSystem;
-        // set the selected systems list at a global level
-        this.invariantsService.updateSelectedSystemList(this.selectedSystemsList);
       }
     });
 
-    // get user full name
+    // get user full name (keycloak)
     this.userFullName = this.keycloakService.getFullName();
 
-    // subscrie to the title value and id
+    // subscribe to the title value and id
     this.hearderTitleService.observableTitle.subscribe(r => { if (r) { this.title = r.titleValue; this.id = r.id; } });
   }
 
@@ -64,46 +62,43 @@ export class HeaderbarComponent implements OnInit {
    * send the new list to the user API (to save it) and to another service for data filtering.
    */
   systemsList_OnChange(): void {
-    // send the new list of selected system(s) to the invariants service (for datatable filtering)
-    this.invariantsService.updateSelectedSystemList(this.selectedSystemsList);
     // send the new systems list to the API call
     this.userService.updateUserSystemList(this.selectedSystemsList);
   }
 
   /**
    * method triggered on every clean of the system select
-   * properly empty the select systems list variable
+   * properly empty the select systems list variable only
+   * don't refresh the user since it can't have no default system
    */
   systemsList_OnClear(): void {
     // empty the selected system(s) array
     this.selectedSystemsList = new Array<string>();
-    this.invariantsService.updateSelectedSystemList(this.selectedSystemsList);
+    this.userService.updateUserSystemList(this.selectedSystemsList);
   }
 
   /**
    * select all the available systems from the list
   */
   selectAllSystems(): void {
-    this.invariantsService.selectAllSystems();
+    this.user.system.forEach(systemname => {
+      if (!this.isASystemSelected(systemname)) {
+        this.selectedSystemsList.push(systemname);
+      }
+    });
+    this.userService.updateUserSystemList(this.selectedSystemsList);
   }
 
   /**
-   * clear the user systems list variable
-   */
-  clearAllSystems(): void {
-    this.systemsList_OnClear();
-  }
-
-  /**
-   * @param systemName the name of the system to check
    * return true if the system is selected by the user, false instead
+   * @param systemName the name of the system to check
    */
   isASystemSelected(systemName: string): boolean {
     // we check that the selectedSystems array is defined
     // since ng-select component override declaration
     // which means undefined = empty in this case
     if (this.selectedSystemsList) {
-      return this.selectedSystemsList.filter(s => s === systemName).length > 0;
+      return this.selectedSystemsList.includes(systemName);
     } else {
       return false;
     }
@@ -136,9 +131,9 @@ export class HeaderbarComponent implements OnInit {
    * @param term keyword to filter on
    * @param item ?
    */
-  customSearchSystem(term: string, item: IInvariant): boolean {
+  customSearchSystem(term: string, item: string): boolean {
     term = term.toLowerCase();
-    return item.value.toLowerCase().indexOf(term) > -1 || item.value.toLowerCase() === term;
+    return item.toLowerCase().indexOf(term) > -1 || item.toLowerCase() === term;
   }
 
   /**

@@ -76,11 +76,11 @@ export class DatalibInteractionComponent implements OnInit {
     this.invariantService.observablePropertyDatabaseList
       .subscribe(rep => { if (rep) { this.databasesList = [{ value: '' }].concat(rep); } });
 
-    if (this.datalib.testDataLibID) {
-      this.testService.getDataLibData(this.datalib.testDataLibID, data => {
-        this.data = data.contentTable;
-      });
-    }
+    // if (this.datalib.testDataLibID) {
+    //   this.testService.getDataLibData(this.datalib.testDataLibID, data => {
+    //     this.data = data.contentTable;
+    //   });
+    // }
 
     this.datalibForm = this.formBuilder.group({
       testdatalibid: (this.mode === INTERACTION_MODE.DUPLICATE) ? '' : this.datalib.testDataLibID,
@@ -149,11 +149,11 @@ export class DatalibInteractionComponent implements OnInit {
         formData.append(key, values[key] || '');
       }
     }
-    if (this.mode === INTERACTION_MODE.EDIT) {
-      this.testService.updateTestDataLib(formData).subscribe(() => this.refreshTable());
-    } else {
-      this.testService.createTestDataLib(formData).subscribe(() => this.refreshTable());
-    }
+    // if (this.mode === INTERACTION_MODE.EDIT) {
+    //   this.testService.updateTestDataLib(formData).subscribe(() => this.refreshTable());
+    // } else {
+    //   this.testService.createTestDataLib(formData).subscribe(() => this.refreshTable());
+    // }
   }
 
   /** refreshTable

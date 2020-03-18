@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
-import { TestCaseHeader, TestCase, Step, Action, Control } from 'src/app/shared/model/back/testcase.model';
-import { Label, ITestCaseLabel } from 'src/app/shared/model/back/label.model';
-import { IProject } from 'src/app/shared/model/project.model';
+import { TestCase, Step, Action, Control } from 'src/app/shared/model/back/testcase.model';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
-import { PropertyValue } from 'src/app/shared/model/property.model';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../../utils/notification.service';
 import { tap } from 'rxjs/operators';
 import { NotificationStyle } from '../../utils/notification.model';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 import { TestService } from '../test/test.service';
+import { GlobalService } from '../../utils/global.service';
+import { LabelService } from '../label/label.service';
+import single_testcase_full_mock from 'src/assets/data/mock/readTC_single_full.json';
+import single_testcase_mock from 'src/assets/data/mock/readTC_single.json';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,20 +27,15 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TestcaseService {
+
   // list of test folders
-  testsList: Array<TestFolder> = new Array<TestFolder>();
+  testsList: Array<TestFolder>;
 
   // list of testcase id corresponding to the previous test folders list
-  testcasesList: Array<TestCaseHeader> = new Array<TestCaseHeader>();
+  testcasesList: Array<TestCase>;
 
   // list of testcase id corresponding to a test folder used for dependencies management
-  testCasesList4Dependencies: Array<TestCaseHeader> = new Array<TestCaseHeader>();
-
-  // TODO: clean this?
-  testcasesListLength: number;
-
-  // list of data library
-  testdatalib: Array<any> = new Array<TestCaseHeader>();
+  testCasesList4Dependencies: Array<TestCase>;
 
   // full testcase object
   testcase: TestCase = null;
@@ -47,42 +43,29 @@ export class TestcaseService {
   // max id that can be used for a test folder
   maxTestCase: number = null;
 
-  // DIRTY : waiting for #2016 ReadTestCase servlet : dependencies
-  // should only be one object
-  testcaseheader: TestCaseHeader = null;
-
+  // list of library steps
   libraryStepList: Array<Step> = new Array<Step>();
 
-
-  testcase_labels: Array<Label> = new Array<Label>();
-  testcase_properties: Array<PropertyValue>;
-
-  private testcaseheader_countriesList_format = new Array<string>();
-  // project
-  projectsList: Array<IProject> = new Array<IProject>();
   // observables
   observableTestsList = new BehaviorSubject<TestFolder[]>(this.testsList);
-  observableTestCasesList = new BehaviorSubject<TestCaseHeader[]>(this.testcasesList);
-  observableTestCasesListLength = new BehaviorSubject<number>(this.testcasesListLength);
+  observableTestCasesList = new BehaviorSubject<TestCase[]>(this.testcasesList);
   observableTestDataLib = new BehaviorSubject<any[]>(this.testcasesList);
-  observableTestDataLibLength = new BehaviorSubject<number>(this.testcasesListLength);
-  observableTestCaseLabels = new BehaviorSubject<Label[]>(this.testcase_labels);
   observableTestCase = new BehaviorSubject<TestCase>(this.testcase);
-  observableLabels = new BehaviorSubject<Label[]>(this.testcase_labels);
-  observableProjectsList = new BehaviorSubject<IProject[]>(this.projectsList);
-  observableTestCaseProperties = new BehaviorSubject<PropertyValue[]>(this.testcase_properties);
-  observableTestCaseHeader = new BehaviorSubject<TestCaseHeader>(this.testcaseheader);
   observableMaxTestCaseID = new BehaviorSubject<number>(this.maxTestCase);
   observableLibraryStepList = new BehaviorSubject<Step[]>(this.libraryStepList);
-  observableTestCasesList4Dependencies = new BehaviorSubject<TestCaseHeader[]>(this.testCasesList4Dependencies);
+  observableTestCasesList4Dependencies = new BehaviorSubject<TestCase[]>(this.testCasesList4Dependencies);
+
   // boolean
+  // TODO: delete?
   refreshTC: boolean;
 
   constructor(
     private http: HttpClient,
     private trueindexPipe: TrueindexPipe,
     private notificationService: NotificationService,
-    private testService: TestService
+    private testService: TestService,
+    private globalService: GlobalService,
+    private labelService: LabelService
   ) {
     this.refreshTC = false;
   }
@@ -103,20 +86,13 @@ export class TestcaseService {
       });
   }
 
-  getTestCasesList(test: string) {
-    this.http.get<TestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
-      .subscribe((response) => {
-        // @ts-ignore
-        if (response.iTotalRecords > 0) {
+  /** return the test cases list for a test folder */
+  getTestCasesForATestFolder(test: string) {
+    this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
+      .subscribe(response => {
+        if (response) {
           // @ts-ignore
           this.testcasesList = response.contentTable;
-          // @ts-ignore
-          // TODO : why?
-          this.testcasesListLength = response.iTotalRecords;
-          this.observableTestCasesList.next(this.testcasesList);
-        } else {
-          this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
-          this.testcasesList = null;
           this.observableTestCasesList.next(this.testcasesList);
         }
       });
@@ -124,7 +100,7 @@ export class TestcaseService {
 
   /** refresh the test case id list that is used for dependencies management */
   getTestCasesList4Dependencies(test: string) {
-    this.http.get<Array<TestCaseHeader>>(environment.cerberus_api_url + '/ReadTestCaseV2?test=' + test)
+    this.http.get<Array<TestCase>>(environment.cerberus_api_url + '/ReadTestCaseV2?test=' + test)
       .subscribe(response => {
         // @ts-ignore
         if (response.iTotalRecords > 0) {
@@ -162,22 +138,9 @@ export class TestcaseService {
       });
   }
 
-  // DIRTY: convert {FR: FR} style object
-  // to Array of string, an iterable
-  // waiting for https://github.com/cerberustesting/cerberus-source/issues/2015
-  formatCountryList(rawList: any): Array<string> {
-    const newArray: string[] = [];
-    for (const key in rawList) {
-      if (rawList.hasOwnProperty(key)) {
-        newArray.push(rawList[key]);
-      }
-    }
-    return newArray;
-  }
-
   // TODO: merge the two getTestCaseList function (with the callback)
   getTestCasesList_withCallback(test: string, callback) {
-    this.http.get<TestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
+    this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
       .subscribe((response) => {
         // @ts-ignore
         if (response.iTotalRecords > 0) {
@@ -192,9 +155,8 @@ export class TestcaseService {
       });
   }
 
-  // return the "highest" test case ID for a test
-  // used for the duplication action
-  getLatestTestCaseId(testcaselist: Array<TestCaseHeader>, test: string): string {
+  // return the "highest" test case ID for a test used for the interaction
+  getLatestTestCaseId(testcaselist: Array<TestCase>, test: string): string {
     // create an array with only the testCase ID
     const testCasesList = new Array<string>();
     // @ts-ignore
@@ -237,29 +199,6 @@ export class TestcaseService {
     }
   }
 
-  getFromRequest(servlet: string, queryParameters: string, callback) {
-    // get data for datatable
-    this.http.post<TestCaseHeader>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
-      .subscribe((response) => {
-        if (response) {
-          // @ts-ignore
-          if (response.iTotalRecords > 0) {
-            // @ts-ignore
-            callback(response.contentTable, response.iTotalRecords);
-          } else {
-            this.testcasesList = null;
-            this.observableTestDataLib.next(this.testcasesList);
-          }
-        }
-      });
-  }
-
-  getColumnData(servlet: string, columnName: string) {
-    // get all data from one column
-    const query = environment.cerberus_api_url + servlet + '?columnName=' + columnName;
-    return this.http.get<TestCaseHeader>(query);
-  }
-
   updateTestCase(queryString) {
     return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, httpOptions)
       .pipe(tap(
@@ -288,120 +227,71 @@ export class TestcaseService {
       ));
   }
 
-  getTestDataLib(testdatalibid: string, name: string, country: string, callback: (TestDataLib: any) => any) {
-    // get data for datatable
-    this.http.get<any>(environment.cerberus_api_url + '/ReadTestDataLib?testdatalibid=' + testdatalibid + '&name=' + name + '&country=' + country)
-      .subscribe((response) => {
-        if (response) {
-          callback(response);
-        }
-      });
-  }
-
-  getDataLibData(testdatalibId: string, callback: (data: any) => any) {
-    this.http.get<any>(environment.cerberus_api_url + '/ReadTestDataLibData?testdatalibid=' + testdatalibId)
-      .subscribe((response) => {
-        if (response) {
-          callback(response);
-        }
-      });
-  }
-
-  updateTestDataLib(formData: FormData) {
-    return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestDataLib', formData);
-  }
-
-  createTestDataLib(formData: FormData) {
-    return this.http.post<any>(environment.cerberus_api_url + '/CreateTestDataLib', formData);
-  }
-
-  deleteTestDataLib(id: string, callback: (n: void) => void) {
-    this.http.post<any>(environment.cerberus_api_url + '/DeleteTestDataLib', 'testdatalibid=' + id, httpOptions)
-      .subscribe((rep) => callback());
-  }
-
   deleteTestCase(test: string, testCase: string, callback: (msg: string, status: string) => void) {
     this.http.post<any>(environment.cerberus_api_url + '/DeleteTestCase', 'test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testCase), httpOptions)
       .subscribe((rep) => callback(rep.message, rep.messageType));
   }
 
-  filtreTestCase(filterTable): Observable<TestCaseHeader> {
-    return this.http.post<TestCaseHeader>(environment.cerberus_api_url + '/ReadTestCase', filterTable, httpOptions);
-  }
-
-  postTestCasesList(formData): Observable<any> {
-    return this.http.post(environment.cerberus_api_url + '/ReadTestCase', '');
-  }
-
   /**
   * Gets test case full content
-  * /!\ do not provide test case dependencies !
   * @param test
   * @param testcase
   * @returns test case object
   */
-  getTestCase(test: string, testcase: string) {
-    if (test == null || testcase == null) {
-      this.testcase = null;
-    } else {
-      this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withStep=true')
-        .subscribe((response) => {
-          this.testcase = response;
-          this.observableTestCase.next(this.testcase);
-          // format the countries List to an string array
-          this.testcaseheader_countriesList_format = new Array<string>();
-          // @ts-ignore
-          this.testcaseheader_countriesList_format = this.convertCountriesList(this.testcase.info);
-          this.getLabelsfromTestCase(test, testcase);
-        });
+  getTestCase(test: string, testcase: string, callback): Promise<TestCase> {
+    if (!this.globalService.isNullOrEmpty(test) || !this.globalService.isNullOrEmpty(testcase)) {
+      // this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCaseV2?test=' + test + '&testCase=' + testcase + '&withStep=true')
+      //   .subscribe((response) => {
+      //     this.testcase = response;
+      //     this.observableTestCase.next(this.testcase);
+      //     // refresh the lables hierarchy for this test case
+      //     this.labelService.getLabelsfromTestCase(test, testcase);
+      //   });
+      const promise = new Promise<TestCase>((resolve, reject) => {
+        this.http
+          .get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withSteps=true')
+          .toPromise()
+          .then((result: any) => {
+            // Success
+            // callback(result.contentTable);
+            callback(single_testcase_full_mock.contentTable[0]);
+            resolve();
+          },
+            err => {
+              // Error
+              reject(err);
+            }
+          );
+      });
+      return promise;
     }
   }
 
   /**
   * Gets only test case header information
-  * /!\ do not provide steps/actions/controls
+  * /!\ do not provide script and properties
   * @param test
   * @param testcase
   * @returns test case header object
   */
-  getTestCaseHeader(test: string, testcase: string) {
-    if (test == null || testcase == null) {
-      this.testcaseheader = null;
-    } else {
-      this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCaseV2?test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testcase))
-        .subscribe((response) => {
-          // @ts-ignore
-          this.testcaseheader = response.contentTable[0].header;
-          // this.testcaseheader = response.contentTable[0].header
-          this.observableTestCaseHeader.next(this.testcaseheader);
-        });
-    }
-  }
-
-  // TO DELETE : wrong name
-  getTestCaseInformations(test: string, testcase: string, callback: (n: TestCaseHeader) => any) {
-    if (test && testcase) {
-      this.http.get<any>(environment.cerberus_api_url + '/ReadTestCase?test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testcase))
-        .subscribe((response) => callback(response.contentTable));
-    }
-  }
-
-  getLabelsfromTestCase(test: string, testcase: string) {
-    const url = environment.cerberus_api_url + '/ReadTestCaseLabel?test=' + test + '&testcase=' + testcase;
-    this.http.get<ITestCaseLabel[]>(url)
-      .subscribe((response) => {
-        // @ts-ignore
-        const content_table = response.contentTable;
-        this.testcase_labels = [];
-        // DIRTY : convert the ITestCaseLabel to Label : easier to manipulate
-        for (const tclabel in content_table) {
-          if (tclabel) {
-            const label = content_table[tclabel].label;
-            this.testcase_labels.push(label);
+  getTestCaseHeader(test: string, testcase: string, callback): Promise<TestCase> {
+    const promise = new Promise<TestCase>((resolve, reject) => {
+      this.http
+        .get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase)
+        .toPromise()
+        .then((result: any) => {
+          // Success
+          // callback(result.contentTable);
+          callback(single_testcase_mock.contentTable[0]);
+          resolve();
+        },
+          err => {
+            // Error
+            reject(err);
           }
-        }
-        this.observableTestCaseLabels.next(this.testcase_labels);
-      });
+        );
+    });
+    return promise;
   }
 
   /** get the latest incremental ID for a test folder */
@@ -423,22 +313,12 @@ export class TestcaseService {
     }
   }
 
-  selectedTestCaseExist(testcase: string): boolean {
-    return this.testcasesList.filter(tc => tc.testCase === testcase).length > 0;
-  }
-
-  getProperties(test: string, testcase: string) {
-    const url = environment.cerberus_api_url + '/GetPropertiesForTestCase?test=' + test + '&testcase=' + testcase;
-    this.http.get<PropertyValue[]>(url)
-      .subscribe((response) => {
-        // this.testcase_properties = this.sanitizePropertiesList(response);
-        this.testcase_properties = response;
-        this.observableTestCaseProperties.next(this.testcase_properties);
-      });
+  selectedTestCaseExist(testcaseid: string, testcases: Array<TestCase>): boolean {
+    return testcases.filter(tc => tc.testCase === testcaseid).length > 0;
   }
 
   // DIRTY : correct the model mistake
-  convertCountriesList(testcaseheader: TestCaseHeader): Array<string> {
+  convertCountriesList(testcaseheader: TestCase): Array<string> {
     const countriesList = new Array<string>();
     // @ts-ignore
     for (const index in testcaseheader.countryList) {
@@ -451,13 +331,13 @@ export class TestcaseService {
   }
 
   /** return true if the country is selected for the test case */
-  isCountryDefinedForTestCase(countries: Array<IInvariant>, country: string): boolean {
+  isCountryDefinedForTestCase(countries: Array<Invariant>, country: string): boolean {
     const res = countries.find(invariant => invariant.value === country);
     if (res) { return true; } else { return false; }
   }
 
-  saveTestCaseHeader(testcaseheader: TestCaseHeader, originalTest, originalTestCase) {
-    let data: TestCaseHeader;
+  saveTestCaseHeader(testcaseheader: TestCase, originalTest, originalTestCase) {
+    let data: TestCase;
     data = testcaseheader;
     // add the original test and testcase to the data to send
     // @ts-ignore
@@ -484,12 +364,15 @@ export class TestcaseService {
     });
   }
 
-  refreshActionSort(actionList: Array<Action>): void {
-    actionList.forEach((action, index) => {
+  /** refresh the sort attribute of each actions (usefull for drag and drop)
+   * @param actions list of actions to reorder
+   */
+  refreshActionsSort(actions: Array<Action>): void {
+    actions.forEach((action, index) => {
       const newIndex = this.trueindexPipe.transform(index);
-      // console.log("action #"+newIndex+' descripton: '+action.description);
       action.sort = newIndex;
     });
+    console.log(actions);
   }
 
   refreshControlSort(controlList: Array<Control>): void {
@@ -501,9 +384,7 @@ export class TestcaseService {
   }
 
   saveTestCase(testcase: TestCase) {
-    // this.refreshStepSortSequence(testcase.stepList);
-    console.log('TestCase Object to be saved');
-    console.log(testcase.steps);
+    // TODO
   }
 
   clearTestCase() {
@@ -511,13 +392,17 @@ export class TestcaseService {
     this.observableTestCase.next(this.testcase);
   }
 
-  getProjectsList() {
-    this.http.get<IProject[]>(environment.cerberus_api_url + '/ReadProject')
-      .subscribe(response => {
-        // @ts-ignore
-        this.projectsList = response.contentTable;
-        this.observableProjectsList.next(this.projectsList);
-      });
+  // DIRTY: convert {FR: FR} style object
+  // to Array of string, an iterable
+  // waiting for https://github.com/cerberustesting/cerberus-source/issues/2015
+  formatCountryList(rawList: any): Array<string> {
+    const newArray: string[] = [];
+    for (const key in rawList) {
+      if (rawList.hasOwnProperty(key)) {
+        newArray.push(rawList[key]);
+      }
+    }
+    return newArray;
   }
 
 }

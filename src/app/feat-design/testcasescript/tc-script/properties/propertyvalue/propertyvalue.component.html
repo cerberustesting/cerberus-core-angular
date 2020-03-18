@@ -61,9 +61,9 @@
 
             <!-- SELECTED COUNTRIES LIST -->
             <div class="col-4">
-                <span *ngFor="let country of testcase.info.countryList"
-                    [ngClass]="isACountrySelected(country.country) ? 'badge-primary' : 'badge-secondary'"
-                    class="badge link-cursor mr-1" (click)="toggleCountry(country.country)">{{country.country}}</span>
+                <span *ngFor="let country of testcase.countries"
+                    [ngClass]="isACountrySelected(country.value) ? 'badge-primary' : 'badge-secondary'"
+                    class="badge link-cursor mr-1" (click)="toggleCountry(country)">{{country.value}}</span>
             </div>
             <!-- SELECTED COUNTRIES LIST -->
 

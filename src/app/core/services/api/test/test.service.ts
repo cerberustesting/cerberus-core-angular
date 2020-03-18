@@ -10,15 +10,14 @@ import { environment } from 'src/environments/environment';
 export class TestService {
 
   /** list of test folders */
-  public testsList: Array<TestFolder> = new Array<TestFolder>();
+  public testsList: Array<TestFolder>;
 
   /** observable for the test folders list */
   public observableTestsList = new BehaviorSubject<TestFolder[]>(this.testsList);
 
   constructor(
     private http: HttpClient
-  ) {
-  }
+  ) { }
 
   /**
    * refresh the test folders list
@@ -27,19 +26,12 @@ export class TestService {
   getTestFoldersList(system?: string): void {
     let url = environment.cerberus_api_url + '/ReadTest';
     // if a system is passed, use it 4 filtering
-    if (system) {
-      url += '?system=' + system;
-    }
+    if (system) { url += '?system=' + system; }
     this.http.get<TestFolder[]>(url)
       .subscribe(response => {
-        // @ts-ignore
-        if (response.iTotalRecords > 0) {
+        if (response) {
           // @ts-ignore
           this.testsList = response.contentTable;
-          this.observableTestsList.next(this.testsList);
-        } else {
-          // empty the array
-          this.testsList = new Array<TestFolder>();
           this.observableTestsList.next(this.testsList);
         }
       });

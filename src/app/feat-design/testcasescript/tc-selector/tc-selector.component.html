@@ -1,110 +1,49 @@
-<div class="bg-body-light">
-  <div class="content content-full full-width pb-3 m-0 pt-3">
-    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+<div class="flex-sm-fill font-w400 form-inline mb-0">
+  <div class="form-check-inline mr-4">
 
-      <!-- LEFT SECTION -->
-      <div class="flex-sm-fill font-w400 form-inline mb-0">
-        <div class="form-check-inline mr-4">
-
-          <!-- TEST FOLDER SELECTION -->
-          <div *ngIf="testsList" id="TestFolder" class="input-group custom-sm mr-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text input-group-text-alt custom-sm-font">
-                Test Folder
-              </span>
-            </div>
-            <ng-select [items]="testsList" class="custom-sm custom-width-1" (change)="selectedTestChange()" bindLabel="test"
-              bindValue="test" placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
-              <ng-template ng-label-tmp let-item="item">
-                {{item.test}} : {{item.description}}
-              </ng-template>
-              <ng-template ng-option-tmp let-item="item">
-                {{item.test}} : {{item.description}}
-              </ng-template>
-            </ng-select>
-          </div>
-          <!-- END TEST FOLDER SELECTION -->
-
-          <!-- TEST CASE ID SELECTION -->
-          <div *ngIf="selectedTest" id="TestID" class="input-group custom-sm">
-            <div class="input-group-prepend">
-              <span class="input-group-text input-group-text-alt custom-sm-font">
-                Test Case ID
-              </span>
-            </div>
-            <ng-select [items]="testcasesList" class="custom-sm custom-width-1" (change)="selectedTestCaseChange()"
-              bindLabel="testCase" bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase'
-              [clearable]="false" [searchFn]="customSearchFn">
-              <ng-template ng-label-tmp let-item="item">
-                {{item.testCase}} : {{item.description}}
-              </ng-template>
-              <ng-template ng-option-tmp let-item="item">
-                <div>{{item.testCase}} :<span> {{item.description}}</span></div>
-                <small><b>Priority: </b>{{item.priority}} | <b>Status:</b> {{item.status}}</small>
-              </ng-template>
-            </ng-select>
-          </div>
-          <!-- END TEST CASE ID SELECTION -->
-
-        </div>
-
+    <!-- TEST FOLDER SELECTION -->
+    <div *ngIf="testsList" id="TestFolder" class="input-group custom-sm mr-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text input-group-text-alt custom-sm-font">
+          Test Folder
+        </span>
       </div>
-      <!-- END LEFT SECTION -->
-
-      <!-- RIGHT SECTION -->
-      <div *ngIf="selectedTestCase" class="btn-group btn-group-sm" role="group" aria-label="testCaseShortcuts">
-
-        <!-- GO TO BUG REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" id="bug-button"
-          (click)="bugTestCaseHeader(selectedTest, selectedTestCase)" ngbPopover="Go to Bug Report" placement="bottom"
-          triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa-bug"></i>
-        </button>
-        <!-- END GO TO BUG REPORT BUTTON -->
-
-        <!-- GO TO LABELS BUTTON -->
-        <button type="button" class="btn btn-primary" id="labels-button"
-          (click)="tagTestCaseHeader(selectedTest,selectedTestCase)" ngbPopover="Go to Labels" placement="bottom"
-          triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa-tag"></i>
-        </button>
-        <!-- END GO TO LABELS BUTTON -->
-
-        <!-- GO TO SETTINGS BUTTON -->
-        <button type="button" class="btn btn-primary" id="settings-button"
-          (click)="settingTestCaseHeader(selectedTest,selectedTestCase)" ngbPopover="Go to Settings" placement="bottom"
-          triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa-cog"></i>
-        </button>
-        <!-- END GO TO SETTINGS BUTTON -->
-
-        <!-- SAVE SCRIPT BUTTON -->
-        <button type="button" class="btn btn-primary" id="saveButton" 
-        (click)="sendSaveScriptEvent()" ngbPopover="Save the script" placement="bottom"
-        triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa-save"></i>
-        </button>
-        <!-- SAVE SCRIPT BUTTON -->
-
-        <!-- GO TO DUPLICATE REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" id="duplicate-button"
-          (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)" ngbPopover="Duplicate Test Case" placement="bottom" 
-          triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa-copy"></i>
-        </button>
-        <!-- GO TO DUPLICATE REPORT BUTTON -->
-
-        <!-- GO TO DELETE REPORT BUTTON -->
-        <button type="button" class="btn btn-primary" id="delete-button"
-          (click)="deleteTestCase(selectedTest, selectedTestCase)" ngbPopover="Delete the Test Case" placement="left"
-          triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa-trash"></i>
-        </button>
-        <!-- GO TO DELETE REPORT BUTTON -->
-
-      </div>
-      <!-- END RIGHT SECTION -->
-
+      <ng-select [items]="testsList" class="custom-sm custom-width-1" (change)="selectedTestChange()" bindLabel="test"
+        bindValue="test" placeholder="Select a Test" [(ngModel)]='selectedTest' [clearable]="false">
+        <ng-template ng-label-tmp let-item="item">
+          {{item.test}} : {{item.description}}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          {{item.test}} : {{item.description}}
+        </ng-template>
+      </ng-select>
     </div>
+    <!-- END TEST FOLDER SELECTION -->
+
+    <!-- TEST CASE ID SELECTION -->
+    <div *ngIf="selectedTest" id="TestID" class="input-group custom-sm">
+      <div class="input-group-prepend">
+        <span class="input-group-text input-group-text-alt custom-sm-font">
+          Test Case ID
+        </span>
+      </div>
+      <ng-select [items]="testcasesList" class="custom-sm custom-width-1" (change)="selectedTestCaseChange()"
+        bindLabel="testCase" bindValue="testCase" placeholder="Select a Test Case" [(ngModel)]='selectedTestCase'
+        [clearable]="false" [searchFn]="customSearchFn">
+        <ng-template ng-label-tmp let-item="item">
+          {{item.testCase}} : {{item.description}}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          <div>{{item.testCase}} :<span> {{item.description}}</span></div>
+          <small><b>Priority: </b>{{item.priority}} | <b>Status:</b> {{item.status}}</small>
+        </ng-template>
+      </ng-select>
+    </div>
+    <!-- END TEST CASE ID SELECTION -->
+
+    <div *ngIf="testcasesList">
+      <p *ngIf="testcasesList.length === 0">no testcase found bro</p>
+    </div>
+
   </div>
 </div>

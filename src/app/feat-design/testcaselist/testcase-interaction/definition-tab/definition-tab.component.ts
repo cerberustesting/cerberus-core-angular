@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IApplication } from 'src/app/shared/model/application.model';
 import { SystemService } from 'src/app/core/services/api/system.service';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -20,11 +20,11 @@ export class DefinitionTabComponent implements OnInit {
   public applications: Array<IApplication>;
 
   // public invariants
-  public statusList: Array<IInvariant>;
-  public priorities: Array<IInvariant>;
+  public statusList: Array<Invariant>;
+  public priorities: Array<Invariant>;
 
   // private invariants
-  public types: Array<IInvariant>;
+  public types: Array<Invariant>;
 
   /** detailled description value Editor object */
   public Editor = ClassicEditor;

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PropertyValue, ProperyGroup } from 'src/app/shared/model/property.model';
+import { PropertyValue, ProperyGroup } from 'src/app/shared/model/back/property.model';
 import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
 
@@ -34,7 +34,7 @@ export class PropertyvalueComponent implements OnInit {
   public showActions: boolean;
 
   // private invariants
-  private propertyTypesList: Array<IInvariant>;
+  private propertyTypesList: Array<Invariant>;
 
   constructor(
     private testService: TestcaseService,
@@ -54,36 +54,54 @@ export class PropertyvalueComponent implements OnInit {
     this.editorOptions = { theme: 'vs', language: 'plaintext', readOnly: this.inherited };
   }
 
-  // return true if the country is selected in the property value
-  isACountrySelected(country: string): boolean {
-    return this.propertyvalue.country.includes(country);
+  /** return true if the country is selected in the property value
+   * @param countryName value of the invariant (country) to check
+  */
+  isACountrySelected(countryName: string): boolean {
+    if (this.propertyvalue.countries.find(invariant => invariant.value === countryName)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  // return true if the country is selected in the property group
-  isACountrySelectedInPropertyGroup(country: string): boolean {
-    const countryPresent = (propvalue) => propvalue.country.includes(country);
+  /**
+   * return true if the country is selected in the property group
+   * @param countryName value of the invariant (country) to check
+   */
+  isACountrySelectedInPropertyGroup(countryName: string): boolean {
+    // create the condition
+    const countryPresent = (propvalue: PropertyValue) => propvalue.countries.find(invariant => invariant.value === countryName);
+    // apply to all the elements of the property groups
     return this.propertygroup.values.some(countryPresent);
   }
 
-  // push a new country (string) to the property value
-  addCountryToSelection(country) {
-    this.propertyvalue.country.push(country);
+  /**
+   * push a new country  to the property value
+   * @param country country invariant to add
+   */
+  addCountryToSelection(country: Invariant): void {
+    this.propertyvalue.countries.push(country);
   }
 
-  // remove an existing country (string) in the property value
-  removeCountryFromSelection(country) {
-    const index = this.propertyvalue.country.indexOf(country);
-    this.propertyvalue.country.splice(index, 1);
+  /**
+   * remove an existing country in the property value
+   * @param country country invariant to remove
+  */
+  removeCountryFromSelection(country: Invariant): void {
+    const index = this.propertyvalue.countries.findIndex(invariant => invariant.value === country.value);
+    console.log(index);
+    this.propertyvalue.countries.splice(index, 1);
   }
 
   // fired when a country badge is clicked
   // add the country, removes it or do nothing accordingly
-  toggleCountry(country: string): void {
+  toggleCountry(country: Invariant): void {
     if (this.inherited === false) {
-      if (this.isACountrySelectedInPropertyGroup(country)) {
+      if (this.isACountrySelectedInPropertyGroup(country.value)) {
         // if the country is already selected for another property value
         // if we are trying to select it, we do nothing
-        if (!this.isACountrySelected(country)) {
+        if (!this.isACountrySelected(country.value)) {
           this.notificationService.createANotification('This country is already in use in another property. You must unselect it first for that property.', NotificationStyle.Info);
         } else {
           // if we are trying to unselect it, we removes it

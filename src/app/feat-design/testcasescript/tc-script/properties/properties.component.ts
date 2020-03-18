@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { PropertyValue, ProperyGroup } from 'src/app/shared/model/property.model';
+import { PropertyValue, ProperyGroup } from 'src/app/shared/model/back/property.model';
 import { TestCase } from 'src/app/shared/model/back/testcase.model';
 
 @Component({
@@ -10,49 +9,23 @@ import { TestCase } from 'src/app/shared/model/back/testcase.model';
 })
 export class PropertiesComponent implements OnInit {
 
-  // unique couple (folder, id) used for querying the API
-  // to refresh the properties list
-  @Input('testfolder') testfolder: string;
-  @Input('testcaseid') testcaseid: string;
+  // raw properties list
+  @Input('properties') properties: Array<PropertyValue>;
 
   // inherited properties mode
   @Input('inherited') inherited: boolean;
 
-  // full testcase object
+  // full test case object
   @Input('testcase') testcase: TestCase;
 
-  // raw list of properties (used only to store the API result)
-  private propertiesList: Array<PropertyValue>;
-  // property groups : properties grouped by name
+  /** property groups : properties grouped by name */
   public propertyGroups: Array<ProperyGroup>;
 
-  constructor(private testService: TestcaseService) { }
+  constructor() { }
 
   ngOnInit() {
-    // ensure the test & testcase are defined
-    if (!this.testfolder) {
-      console.error('ERROR: test is not defined, please open an issue on github');
-    } else if (!this.testcaseid) {
-      console.error('ERROR: testcase is not defined, please open an issue on github');
-    } else {
-      // refresh the properties list
-      this.testService.getProperties(this.testfolder, this.testcaseid);
-    }
-
-    // depending on the mode, use a different properties list
-    if (this.inherited === true) {
-      this.propertiesList = this.testcase.inheritedProp;
-      this.groupPropertiesByName();
-    } else {
-      // subscribe to any propertiesList change
-      this.testService.observableTestCaseProperties.subscribe(r => {
-        if (r) {
-          this.propertiesList = r;
-          this.groupPropertiesByName();
-        }
-      });
-    }
-
+    //  create the property group (for display reason)
+    this.groupPropertiesByName();
   }
 
   // refresh the property groups
@@ -62,7 +35,7 @@ export class PropertiesComponent implements OnInit {
     // final object that is build along the function
     const propertiesValuesByName = new Array<ProperyGroup>();
     // fill the array with unique names
-    this.propertiesList.forEach(propvalue => {
+    this.properties.forEach(propvalue => {
       if (!propertiesNameList.includes(propvalue.property)) {
         propertiesNameList.push(propvalue.property);
       }
@@ -70,7 +43,7 @@ export class PropertiesComponent implements OnInit {
     // build the final object for each prop name
     propertiesNameList.forEach(propname => {
       const propValueByName = new ProperyGroup(propname);
-      propValueByName.values = this.propertiesList.filter(propvvalue => propvvalue.property === propname);
+      propValueByName.values = this.properties.filter(propvvalue => propvvalue.property === propname);
       propertiesValuesByName.push(propValueByName);
     });
     // save the new value

@@ -1,8 +1,8 @@
-<div [id]="DragAndAdropAreaId" class="controlList" cdkDropList [cdkDropListData]="action.controlList"
+<div [id]="DragAndAdropAreaId" class="controlList" cdkDropList [cdkDropListData]="action.controls"
   [cdkDropListConnectedTo]="DragAndDropControlIDList" (cdkDropListDropped)="dropControl($event)"
   (cdkDropListEntered)="controlEntered()" (cdkDropListExited)="controlExited()">
 
-  <div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+parentStepIndex+'action'+actionIndex">
+  <div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+parentStepIndex+'action'+action.sort">
 
     <!-- HEADER -->
     <div class="block-header" (mouseenter)="showActionAddButtons = true" (mouseleave)="showActionAddButtons = false"
@@ -11,7 +11,7 @@
       <!-- HIDE SHOW CONTROLS LIST -->
       <div class="block-options">
         <button name="showControlList" type="button" class="btn-block-option"
-          (click)="showControlList = !showControlList" [disabled]="!action.controlList.length > 0">
+          (click)="showControlList = !showControlList" [disabled]="!action.controls.length > 0">
           <i class="si" [ngClass]="showControlList ? 'si-arrow-down' : 'si-arrow-right'"></i>
         </button>
       </div>
@@ -22,7 +22,7 @@
         <!-- ACTION INDEX -->
         <div class="input-group-prepend">
           <span name="actionIndex" class="input-group-text custom">
-            {{actionIndex}}
+            {{action.sort}}
           </span>
         </div>
         <!-- END ACTION INDEX -->
@@ -38,7 +38,7 @@
 
         <!-- ACTION DESCRIPTION -->
         <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0"
-          [id]="'step'+parentStepIndex+'action'+actionIndex+'description'" placeholder="Action Description"
+          [id]="'step'+parentStepIndex+'action'+action.sort+'description'" placeholder="Action Description"
           [readonly]="readonly">
         <!-- END ACTION DESCRIPTION -->
 
@@ -48,11 +48,11 @@
       <div *ngIf="showActionAddButtons && !readonly" class="block-options">
 
         <button type="button" name="addActionFromAction" class="btn btn-sm btn-outline-primary mr-1"
-          (click)="addAction(actionIndex)"> <i class="fa fa-fw fa-plus"></i>
+          (click)="addAction(action.sort)"> <i class="fa fa-fw fa-plus"></i>
         </button>
 
         <button type="button" name="addControlFromAction" class="btn btn-sm btn-outline-success mr-1"
-          (click)="addControl(action.controlList.length+1)"> <i class="fa fa-fw fa-plus"></i>
+          (click)="addControl(action.controls.length+1)"> <i class="fa fa-fw fa-plus"></i>
         </button>
 
       </div>
@@ -99,9 +99,9 @@
 
   <!-- CONTROL LIST -->
   <div *ngIf="showControlList">
-    <div *ngFor="let control of action.controlList; let index = index" class="controlDrag" cdkDrag cdkDragLockAxis="y">
+    <div *ngFor="let control of action.controls" class="controlDrag" cdkDrag cdkDragLockAxis="y">
       <app-control [control]="control" [readonly]="readonly" [parentStepIndex]="parentStepIndex"
-        [parentActionIndex]="actionIndex" [controlIndex]="index | trueindex" (controlAdded)="addControl($event)"
+        [parentActionIndex]="action.sort" (controlAdded)="addControl($event)"
         (actionAddedFromControl)="addAction($event)">
         <button *ngIf="!readonly" type="button" name="dragControl" class="btn-block-option" slot="drag-control"
           cdkDragHandle>

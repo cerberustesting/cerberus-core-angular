@@ -12,7 +12,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   // user object
-  private user: IUser;
+  public user: IUser;
 
   // observable for the user
   public observableUser = new BehaviorSubject<IUser>(this.user);
@@ -34,20 +34,27 @@ export class UserService {
 
   /**
    * update the user default systems list
-   * @param newSystemsList
+   * * sends the new list to the API
+   * * update the observable for all the consumers
+   * @param newSystemsList list of system name to add
    */
   updateUserSystemList(newSystemsList: Array<string>) {
-    // store the userId (login from KC standpoint)
-    const userId = this.user.login;
-    // build the query parameters
-    let queryParameters = 'id=' + userId + '&';
-    newSystemsList.forEach(system => { queryParameters += 'MySystem=' + encodeURIComponent(system) + '&'; });
-    // remove the last '&'
-    queryParameters = queryParameters.slice(0, queryParameters.length - 1);
-    // perform the call WITHOUT refreshing any observable
-    this.http.get<Array<string>>(environment.cerberus_api_url + '/UpdateMyUserSystem?' + queryParameters)
-      .subscribe(res => { });
-    // TODO: catch HTTP errors
+    // persist the new systems only if the list not empy
+    if (newSystemsList.length !== 0) {
+      // store the userId (login from KC standpoint)
+      const userId = this.user.login;
+      // build the query parameters
+      let queryParameters = 'id=' + userId + '&';
+      newSystemsList.forEach(system => { queryParameters += 'MySystem=' + encodeURIComponent(system) + '&'; });
+      // remove the last '&'
+      queryParameters = queryParameters.slice(0, queryParameters.length - 1);
+      // perform the call WITHOUT refreshing any observable
+      this.http.get<Array<string>>(environment.cerberus_api_url + '/UpdateMyUserSystem?' + queryParameters)
+        .subscribe(res => { });
+      // TODO: catch HTTP errors
+      this.user.defaultSystem = newSystemsList;
+      this.observableUser.next(this.user);
+    }
   }
 
   /**

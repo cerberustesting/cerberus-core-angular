@@ -19,19 +19,19 @@ import { DatatablePageComponent } from 'src/app/shared/datatable-page/datatable-
 export class TestcaselistComponent implements OnInit {
 
   /** list of columns (defined on a another file: `testcaselist.columnsdata.ts`) */
-  private columns: Array<Column> = TestCasesColumnsData;
+  public columns: Array<Column> = TestCasesColumnsData;
 
   /** default sort direction and property */
-  private defaultPageSort = [{ dir: 'asc', prop: 'testCase' }];
+  public defaultPageSort = [{ dir: 'asc', prop: 'testCase' }];
 
   /** the selected rows in the table */
-  private selectedRows: Array<TestCase> = [];
+  public selectedRows: Array<TestCase> = [];
 
   /** API endpoint to fetch the table information */
-  private servlet: string;
+  public servlet: string;
 
   /** the observable to refresh the table */
-  private refreshResultsEvent: Subject<void> = new Subject<void>();
+  public refreshResultsEvent: Subject<void> = new Subject<void>();
 
   /** child datatable component */
   @ViewChild(DatatablePageComponent, { static: false }) private datatablepageComponent: DatatablePageComponent;
@@ -80,8 +80,8 @@ export class TestcaselistComponent implements OnInit {
    */
   editTestCaseHeader(testcase: TestCase): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: testcase.header.test,
-      testcase: testcase.header.testCase,
+      test: testcase.test,
+      testcase: testcase.testCase,
       mode: INTERACTION_MODE.EDIT,
       exit: () => {
         this.refreshResults();
@@ -98,8 +98,8 @@ export class TestcaselistComponent implements OnInit {
    */
   duplicateTestCaseHeader(testcase: TestCase): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      test: testcase.header.test,
-      testcase: testcase.header.testCase,
+      test: testcase.test,
+      testcase: testcase.testCase,
       mode: INTERACTION_MODE.DUPLICATE,
       exit: () => {
         this.refreshResults();
@@ -113,8 +113,8 @@ export class TestcaselistComponent implements OnInit {
    * @param testcase object from the table row
   */
   redirectToTestCaseScript(testcase: TestCase) {
-    const test = encodeURIComponent(testcase.header.test);
-    const testcaseid = encodeURIComponent(testcase.header.testCase);
+    const test = encodeURIComponent(testcase.test);
+    const testcaseid = encodeURIComponent(testcase.testCase);
     this.router.navigate(['/design/testcasescript/' + test + '/' + testcaseid]);
   }
 

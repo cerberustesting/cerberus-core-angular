@@ -1,12 +1,30 @@
-import { PropertyValue } from '../property.model';
+import { PropertyValue } from './property.model';
 import { Label } from './label.model';
-import { IInvariant } from '../invariants.model';
+import { Invariant } from '../invariants.model';
+
+/**
+ * @class Test Case Properties
+ * @classdesc list of properties of a test case
+ */
+export class TestCaseProperties {
+
+    /** @description inherited properties of the test case */
+    inheritedProperties: Array<PropertyValue>;
+
+    /** @description properties specified for the test case */
+    testcaseProperties: Array<PropertyValue>;
+
+    constructor() {
+        this.inheritedProperties = [];
+        this.testcaseProperties = [];
+    }
+}
 
 /**
  * @class TestCase
  * @classdesc test case object
  * */
-export class TestCaseHeader {
+export class TestCase {
 
     /** @description name of the test folder */
     test: string;
@@ -14,45 +32,120 @@ export class TestCaseHeader {
     /** @description id of the test case */
     testCase: string;
 
+    /** @description brief description of the test case */
     description: string;
+
+    /** @description application name of this test case (unique) */
     application: string;
+
+    /** @description status name of the test case (public invariant) */
     status: string;
+
+    /** @description type name of the test case (private invariant) */
     group: string;
+
+    /** @description criticity of the test case (used for CI score calculation) */
     priority: number;
+
+    /** @description detailed description of the test case */
     behaviorOrValueExpected: string;
+
+    /** @description global activation of the test case */
     tcActive: string;
+
+    /** @description QA activation of the test case */
     activeQA: string;
+
+    /** @description UAT activation of the test case */
     activeUAT: string;
+
+    /** @description PROD activation of the test case */
     activePROD: string;
-    countries: Array<IInvariant>;
+
+    /** @description list of selected countries for this test case */
+    countries: Array<Invariant>;
+
+    /** @description earliest build (major version) that defines the activation of the test case */
     fromBuild: string;
+
+    /** @description latest build (major version) that defines the activation of the test case */
     toBuild: string;
+
+    /** @description earliest (minor revision) revision that defines the activation of the test case */
     fromRev: string;
+
+    /** @description latest (minor revision) revision that defines the activation of the test case */
     toRev: string;
+
+    /** @description target (minor revision) revision that defines the activation of the test case */
     targetBuild: string;
+
+    /** @description target (minor revision) revision that defines the activation of the test case */
     targetRev: string;
+
+    /** @description test case activation condition */
     conditionOper: string;
+
+    /** @description test case activation condition first value */
     conditionVal1: string;
+
+    /** @description test case activation condition second value */
     conditionVal2: string;
+
+    /** @description test case activation condition third value */
     conditionVal3: string;
+
+    /** @description specific user-agent for the test case */
     userAgent: string;
+
+    /** @description screen size that the test case should be executed with */
     screenSize: string;
+
+    /** @description list of selected labels for this test case */
     labels: Array<Label>;
+
+    /** @description list of assigned bugs for this test case */
     bugs: Array<Bug>;
+
+    /** @description global comment for the test case */
     comment: string;
+
+    /** @description list of assigned dependencies for this test case */
     dependencies: Array<TestCaseDependency>;
+
+    /** @description user name responsible for the implementation */
     implementer: string;
+
+    /** @description user name responsible for the manual execution */
     executor: string;
+
+    /** @description version of the test case (increase at every test case header save) */
     testCaseVersion: number;
+
+    /** @description audit field: user who created the test case */
     usrCreated: string;
+
+    /** @description audit field: test case creation date */
     dateCreated: string;
+
+    /** @description audit field: user who last modified the test case */
     usrModif: string;
+
+    /** @description audit field: latest modification date of the user */
     dateModif: string;
+
+    /** @description system of the selected application (not editable in GUI) */
     system: string;
+
+    /** @description script content of the test case */
+    steps: Array<Step>;
+
+    /** @description properties of the test case */
+    properties: TestCaseProperties;
 
     // DIRTY : allow any fields
     // waiting for API rework
-    [key: string]: any;
+    // [key: string]: any;
 
     constructor(
         test: string,
@@ -101,6 +194,8 @@ export class TestCaseHeader {
         this.usrCreated = '';
         this.dateModif = '';
         this.usrModif = '';
+        this.steps = [];
+        this.properties = new TestCaseProperties();
     }
 }
 
@@ -172,42 +267,85 @@ export class Bug {
 
 }
 
-export interface TestCase {
-    header: TestCaseHeader;
-    steps: Array<Step>;
-    properties: {
-        inheritedproperties: Array<PropertyValue>;
-        testcaseproperties: Array<PropertyValue>;
-    };
-    // DIRTY : allow any fields
-    // waiting for API rework
-    [key: string]: any;
-}
-
+/**
+ * @class Step
+ * @classdesc step of a test case script
+ */
 export class Step {
+
+    /** @description ? */
     objType: string;
+
+    /** @description test folder of this step */
     test: string;
+
+    /** @description test case id of this step */
     testCase: string;
+
+    /** @description condition operator */
     conditionOper: string;
+
+    /** @description condition value 1 */
     conditionVal1: string;
+
+    /** @description condition value 2 */
     conditionVal2: string;
+
+    /** @description condition value 3 */
+    conditionVal3: string;
+
+    /** @description boolean to force the execution of the step */
     forceExe: string;
+
+    /** @description loop operator */
     loop: string;
+
+    /** @description is the step a use step? (boolean) */
     useStep: string;
+
+    /** @description is the step used in another test case? (boolean) */
     isStepInUseByOtherTestCase: boolean;
+
+    /** @description test folder of the use step */
     useStepTest: string;
+
+    /** @description test case id of the use step */
     useStepTestCase: string;
+
+    /** @description is the step in library? */
     inLibrary: string;
+
+    /** @description ? */
     initialStep: number;
+
+    /** @description ? */
     useStepStep: number;
+
+    /** @description step description */
     description: string;
-    actionList: Array<Action>;
+
+    /** @description list of actions */
+    actions: Array<Action>;
+
+    /** @description ? */
     sort: number;
+
+    /** @description ? */
     step: number;
+
+    /** @description should the step be deleted? */
     toDelete: boolean;
+
+    /** @description audit field: user who last modified the step*/
     usrModif: string;
+
+    /** @description audit field: user who created the step */
     usrCreated: string;
+
+    /** @description audit field: date of the step creation */
     dateCreated: string;
+
+    /** @description audit field: date of the step last modification */
     dateModif: string;
 
     constructor(test: string, testCase: string, sort: number) {
@@ -228,7 +366,7 @@ export class Step {
         this.useStepStep = 0;
         this.toDelete = false;
         this.description = '';
-        this.actionList = new Array<Action>();
+        this.actions = new Array<Action>();
         this.sort = sort;
         this.step = null;
         this.dateCreated = '';
@@ -238,23 +376,62 @@ export class Step {
     }
 }
 
+/**
+ * @class Action
+ * @classdesc action of a test case step
+ */
 export class Action {
+
+    /** @description ? */
     objType: string;
+
+    /** @description test of the action */
     test: string;
+
+    /** @description test of the action */
     testCase: string;
+
+    /** @description action condition operator */
     conditionOper: string;
+
+    /** @description action condition value 1 */
     conditionVal1: string;
+
+    /** @description action condition value 2 */
     conditionVal2: string;
+
+    /** @description action condition value 3 */
+    conditionVal3: string;
+
+    /** @description action type */
     action: string;
+
+    /** @description action value 1 */
     value1: string;
+
+    /** @description action value 1 */
     value2: string;
+
+    /** @description action description */
     description: string;
+
+    /** @description chronological position of the action */
     sort: number;
+
+    /** @description ? */
     sequence: number;
+
+    /** @description index of the step for this action */
     step: number;
+
+    /** @description boolean to force the execution of the step */
     forceExeStatus: string;
+
+    /** @description location of the screenshot (only relevant in execution) */
     screenshotFilename: string;
-    controlList: Array<Control>;
+
+    /** @description list of controls */
+    controls: Array<Control>;
 
     constructor(test: string, testcase: string, sort: number) {
         this.objType = 'action';
@@ -273,10 +450,14 @@ export class Action {
         this.step = null;
         this.forceExeStatus = '';
         this.screenshotFilename = '';
-        this.controlList = new Array<Control>();
+        this.controls = new Array<Control>();
     }
 }
 
+/**
+ * @class Control
+ * @classdesc control of a test case action
+ */
 export class Control {
     objType: string;
     test: string;

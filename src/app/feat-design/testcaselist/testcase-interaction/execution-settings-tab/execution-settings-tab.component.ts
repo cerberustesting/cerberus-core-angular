@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IInvariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
@@ -17,20 +17,20 @@ export class ExecutionSettingsTabComponent implements OnInit {
   @Input('settings') settings: FormGroup;
 
   /** selected countries for the test case */
-  @Input('countries') selectedCountries: Array<IInvariant>;
+  @Input('countries') selectedCountries: Array<Invariant>;
 
   /** system of the test case */
   @Input('system') system: string;
 
   /** list of available countries to select */
-  public countries: Array<IInvariant>;
+  public countries: Array<Invariant>;
 
   // available sprints and revs list
   private sprints: Array<any>; // TODO: add type
   private revs: Array<any>; // TODO: add type
 
   /** conditions list (private invariant) */
-  public conditionOpers: Array<IInvariant>;
+  public conditionOpers: Array<Invariant>;
 
   /** cross references array to display the correct input fields according to the selected condition */
   private crossReference_ConditionValue: Array<ICrossReference> = this.crossReferenceService.crossReference_ConditionValue;
@@ -56,7 +56,7 @@ export class ExecutionSettingsTabComponent implements OnInit {
   }
 
   /** select or unselect a country when its clicked */
-  toggleCountry(country: IInvariant): void {
+  toggleCountry(country: Invariant): void {
     if (this.isCountryDefinedForTestCase(country.value) === true) {
       const index = this.selectedCountries.findIndex(invariant => invariant.value === country.value);
       this.selectedCountries.splice(index, 1);

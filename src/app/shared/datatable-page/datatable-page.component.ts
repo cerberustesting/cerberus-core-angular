@@ -5,7 +5,9 @@ import { InvariantsService } from 'src/app/core/services/api/invariants.service'
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { FiltersComponent } from './filters/filters.component';
-import { IInvariant } from '../model/invariants.model';
+import { Invariant } from '../model/invariants.model';
+import { UserService } from 'src/app/core/services/api/user.service';
+import { IUser } from '../model/user.model';
 
 @Component({
   selector: 'app-datatable-page',
@@ -38,21 +40,27 @@ export class DatatablePageComponent implements OnInit {
     totalCount: number // total of element in the database
   };
 
-  private selectedSystemsList: Array<IInvariant>;
+  /** user object */
+  public user: IUser;
 
   constructor(
     private filterService: FilterService,
-    private invariantsService: InvariantsService) { }
+    private invariantsService: InvariantsService,
+    private userService: UserService) {
+    this.user = null;
+  }
 
   ngOnInit() {
+
     this.page = {
       number: 1,
       size: 0,
       sort: this.pageSort,
       totalCount: 0
     };
-    this.invariantsService.observableSystemsSelected.subscribe(rep => {
-      this.selectedSystemsList = rep;
+
+    this.userService.observableUser.subscribe(rep => {
+      this.user = rep;
       this.cache = {};
       this.rows = [];
       this.page.number = 0;
@@ -80,10 +88,7 @@ export class DatatablePageComponent implements OnInit {
    */
   search(globalSearch?: string): void {
     this.globalSearch = (globalSearch) ? globalSearch : '';
-
     if (this.servlet && !this.cache[this.page.number] && this.page.size > 0) {
-      // console.log("Search : \n page number : " + this.page.number + '\n page size : ' + this.page.size);
-      // console.log("cache :", this.cache);
       this.cache[this.page.number] = true;
       this.filterService.getContentForTable(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch),
         (list: Array<any>, length: number) => {

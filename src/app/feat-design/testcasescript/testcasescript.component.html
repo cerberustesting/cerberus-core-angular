@@ -1,9 +1,23 @@
-<!-- TEST CASE SELECTOR COMPONENT -->
-<app-tc-selector [test]='selectedTest' (SelectedTestChange)='receiveTest($event)' [testcase]='selectedTestCase'
-  (SelectedTestCaseChange)='receiveTestCase($event)' (SaveScriptEvent)="sendSaveScriptEvent()">
-</app-tc-selector>
-<!-- END TEST CASE SELECTOR COMPONENT -->
+<div class="bg-body-light">
+  <div class="content content-full full-width pb-3 m-0 pt-3">
+    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+
+      <!-- TEST CASE SELECTOR COMPONENT -->
+      <app-tc-selector [selectedTest]='selectedTest' [selectedTestCase]='selectedTestCase'
+        (SelectedTestChange)='receiveTest($event)' (SelectedTestCaseChange)='receiveTestCase($event)'
+        [testcase]="testcase">
+      </app-tc-selector>
+      <!-- END TEST CASE SELECTOR COMPONENT -->
+
+      <!-- SHORTCUTS BUTTON -->
+      <app-shortcuts [selectedTest]='selectedTest' [selectedTestCase]='selectedTestCase'></app-shortcuts>
+      <!-- END SHORTCUTS BUTTON -->
+
+    </div>
+  </div>
+</div>
 
 <!-- SCRIPT PAGE CONTENT -->
-<app-tc-script *ngIf='testcase' [testcase]="testcase" [saveScriptEvent]="saveScriptEvent.asObservable()"></app-tc-script>
+<app-tc-script *ngIf='testcase' [testcase]="testcase">
+</app-tc-script>
 <!-- END SCRIPT PAGE CONTENT -->

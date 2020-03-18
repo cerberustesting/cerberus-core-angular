@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { TestCaseHeader } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase.model';
 
 @Component({
   selector: 'app-audit-tab',
@@ -13,7 +13,7 @@ export class AuditTabComponent implements OnInit {
   @Input('audit') audit: FormGroup;
 
   /** test case header object */
-  @Input('testcaseheader') testcaseheader: TestCaseHeader;
+  @Input('testcaseheader') testcaseheader: TestCase;
 
   constructor() { }
 

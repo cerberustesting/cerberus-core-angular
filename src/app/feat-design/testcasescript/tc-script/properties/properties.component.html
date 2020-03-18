@@ -1,4 +1,5 @@
-<div class="push">
+<div *ngIf="propertyGroups" class="push">
+
     <div class="form-group">
 
         <!-- TITLE -->
@@ -17,34 +18,47 @@
         <!-- END ADD PROPERTY BUTTON -->
 
     </div>
-    <div class="block block-bordered mb-0">
 
-        <!-- TABLE HEADER -->
-        <div class="block-header block-header-default pt-2 pb-2" style="background-color:#e7eaf2;">
-            <div class="row full-width">
-                <div class="col-3">
-                    <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">property name
-                    </h3>
-                </div>
-                <div class="col-2">
-                    <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">type</h3>
-                </div>
-                <div class="col-3">
-                    <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">value</h3>
-                </div>
-                <div class="col-4">
-                    <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">countries</h3>
+    <div *ngIf="propertyGroups.length !== 0">
+
+        <div class="block block-bordered mb-0">
+
+            <!-- TABLE HEADER -->
+            <div class="block-header block-header-default pt-2 pb-2" style="background-color:#e7eaf2;">
+                <div class="row full-width">
+                    <div class="col-3">
+                        <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">property name
+                        </h3>
+                    </div>
+                    <div class="col-2">
+                        <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">type</h3>
+                    </div>
+                    <div class="col-3">
+                        <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">value</h3>
+                    </div>
+                    <div class="col-4">
+                        <h3 class="block-title" style="color: #495057; font-weight: 600; font-size: 1rem;">countries
+                        </h3>
+                    </div>
                 </div>
             </div>
+            <!-- END TABLE HEADER -->
+
         </div>
-        <!-- END TABLE HEADER -->
-        
+
+        <!-- LIST OF PROPERTY GROUP -->
+        <app-propertygroup *ngFor="let propertygroup of propertyGroups" [propertygroup]="propertygroup"
+            [testcase]="testcase" [propertyGroups]="propertyGroups" [inherited]="inherited">
+        </app-propertygroup>
+        <!-- END LIST OF PROPERTY GROUP -->
+
     </div>
 
-    <!-- LIST OF PROPERTY GROUP -->
-    <app-propertygroup *ngFor="let propertygroup of propertyGroups" [propertygroup]="propertygroup"
-        [testcase]="testcase" [propertyGroups]="propertyGroups" [inherited]="inherited">
-    </app-propertygroup>
-    <!-- END LIST OF PROPERTY GROUP -->
+    <div *ngIf="propertyGroups.length === 0">
+        <p class="font-w600">
+            No property defined
+            <i class="far fa-frown"></i>
+        </p>
+    </div>
 
 </div>

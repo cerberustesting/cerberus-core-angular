@@ -59,7 +59,7 @@ export class TestcaseService {
   ) { }
 
   /**
-   * refresh the test folder list, used in tc-selector component
+   * refresh the test folder list, used in testcaseselector component
   */
   refreshTestFolders() {
     this.http.get<TestFolder[]>(environment.cerberus_api_url + '/ReadTest')
@@ -77,7 +77,7 @@ export class TestcaseService {
   }
 
   /**
-   * return the test cases list for a test folder, used in tc-selector component
+   * return the test cases list for a test folder, used in testcaseselector component
    * @param test test folder name to filter on
   */
   refreshTestCasesForATestFolder(test: string) {

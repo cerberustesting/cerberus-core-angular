@@ -11,16 +11,16 @@ import { SharedModule } from '../shared/shared.module';
 import { TestcaselistComponent } from './testcaselist/testcaselist.component';
 import { LabelsComponent } from './labels/labels.component';
 import { TestcasescriptComponent } from './testcasescript/testcasescript.component';
-import { TcSelectorComponent } from './testcasescript/tc-selector/tc-selector.component';
-import { TcScriptComponent } from './testcasescript/tc-script/tc-script.component';
-import { StepComponent } from './testcasescript/tc-script/script/step/step.component';
-import { LibraryStepsModalComponent } from './testcasescript/tc-script/librarystepsmodal/librarystepsmodal.component';
-import { ActionComponent } from './testcasescript/tc-script/script/step/action/action.component';
-import { ControlComponent } from './testcasescript/tc-script/script/step/action/control/control.component';
-import { PropertyvalueComponent } from './testcasescript/tc-script/properties/propertyvalue/propertyvalue.component';
-import { SettingsComponent } from './testcasescript/tc-script/settings/settings.component';
+import { TestCaseSelectorComponent } from './testcasescript/testcaseselector/testcaseselector.component';
+import { TcScriptComponent } from './testcasescript/testcasecontent/testcasecontent.component';
+import { StepComponent } from './testcasescript/testcasecontent/script/step/step.component';
+import { LibraryStepsModalComponent } from './testcasescript/testcasecontent/librarystepsmodal/librarystepsmodal.component';
+import { ActionComponent } from './testcasescript/testcasecontent/script/step/action/action.component';
+import { ControlComponent } from './testcasescript/testcasecontent/script/step/action/control/control.component';
+import { PropertyvalueComponent } from './testcasescript/testcasecontent/properties/propertyvalue/propertyvalue.component';
+import { SettingsComponent } from './testcasescript/testcasecontent/settings/settings.component';
 import { DatalibraryComponent } from './datalibrary/datalibrary.component';
-import { ScriptComponent } from './testcasescript/tc-script/script/script.component';
+import { ScriptComponent } from './testcasescript/testcasecontent/script/script.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { ActionsComponent } from './testcaselist/actions/actions.component';
 import { DatalibInteractionComponent } from './datalibrary/datalib-interaction/datalib-interaction.component';
@@ -28,7 +28,7 @@ import { DatalibTclistComponent } from './datalibrary/datalib-interaction/datali
 import { TestcaseInteractionComponent } from './testcaselist/testcase-interaction/testcase-interaction.component';
 import { LabelsTabComponent } from './testcaselist/testcase-interaction/labels-tab/labels-tab.component';
 import { LabelNodeComponent } from './testcaselist/testcase-interaction/labels-tab/label-node/label-node.component';
-import { PropertiesComponent } from './testcasescript/tc-script/properties/properties.component';
+import { PropertiesComponent } from './testcasescript/testcasecontent/properties/properties.component';
 
 // Pipes
 import { FilterPipeModule } from 'ngx-filter-pipe';
@@ -38,7 +38,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { PropertygroupComponent } from './testcasescript/tc-script/properties/propertygroup/propertygroup.component';
+import { PropertygroupComponent } from './testcasescript/testcasecontent/properties/propertygroup/propertygroup.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { BugsReportTabComponent } from './testcaselist/testcase-interaction/bugs-report-tab/bugs-report-tab.component';
 import { DependenciesTabComponent } from './testcaselist/testcase-interaction/dependencies-tab/dependencies-tab.component';
@@ -52,7 +52,7 @@ import { ShortcutsComponent } from './testcasescript/shortcuts/shortcuts.compone
     TestcaselistComponent,
     LabelsComponent,
     TestcasescriptComponent,
-    TcSelectorComponent,
+    TestCaseSelectorComponent,
     TcScriptComponent,
     StepComponent,
     LibraryStepsModalComponent,

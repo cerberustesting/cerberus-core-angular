@@ -3,16 +3,16 @@ import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { TestFolder } from 'src/app/shared/model/back/test.model';
 import { TestService } from 'src/app/core/services/api/test/test.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { SettingsService } from '../tc-script/settings/settings.service';
+import { SettingsService } from '../testcasecontent/settings/settings.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 
 @Component({
-  selector: 'app-tc-selector',
-  templateUrl: './tc-selector.component.html',
-  styleUrls: ['./tc-selector.component.scss']
+  selector: 'app-testcaseselector',
+  templateUrl: './testcaseselector.component.html',
+  styleUrls: ['./testcaseselector.component.scss']
 })
-export class TcSelectorComponent implements OnInit, OnDestroy {
+export class TestCaseSelectorComponent implements OnInit, OnDestroy {
 
   /** currently selected test folder */
   @Input('selectedTest') selectedTest: string;

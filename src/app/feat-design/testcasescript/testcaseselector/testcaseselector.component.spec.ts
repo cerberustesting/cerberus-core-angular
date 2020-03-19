@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TcSelectorComponent } from './tc-selector.component';
+import { TestCaseSelectorComponent } from './testcaseselector.component';
 
 describe('TcSelectorComponent', () => {
-  let component: TcSelectorComponent;
-  let fixture: ComponentFixture<TcSelectorComponent>;
+  let component: TestCaseSelectorComponent;
+  let fixture: ComponentFixture<TestCaseSelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TcSelectorComponent ]
+      declarations: [ TestCaseSelectorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TcSelectorComponent);
+    fixture = TestBed.createComponent(TestCaseSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,9 +6,9 @@ import { InvariantsService } from 'src/app/core/services/api/invariants.service'
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-tc-script',
-  templateUrl: './tc-script.component.html',
-  styleUrls: ['./tc-script.component.scss']
+  selector: 'app-testcasecontent',
+  templateUrl: './testcasecontent.component.html',
+  styleUrls: ['./testcasecontent.component.scss']
 })
 export class TcScriptComponent implements OnInit {
 

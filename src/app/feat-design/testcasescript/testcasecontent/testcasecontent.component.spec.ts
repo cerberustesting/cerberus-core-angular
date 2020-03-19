@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TcScriptComponent } from './tc-script.component';
+import { TcScriptComponent } from './testcasecontent.component';
 
 describe('TcScriptComponent', () => {
   let component: TcScriptComponent;
@@ -8,9 +8,9 @@ describe('TcScriptComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TcScriptComponent ]
+      declarations: [TcScriptComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

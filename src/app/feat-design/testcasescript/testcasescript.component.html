@@ -3,10 +3,10 @@
     <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
 
       <!-- TEST CASE SELECTOR COMPONENT -->
-      <app-tc-selector [selectedTest]='selectedTest' [selectedTestCase]='selectedTestCase'
+      <app-testcaseselector [selectedTest]='selectedTest' [selectedTestCase]='selectedTestCase'
         (SelectedTestChange)='receiveTest($event)' (SelectedTestCaseChange)='receiveTestCase($event)'
         [testcase]="testcase">
-      </app-tc-selector>
+      </app-testcaseselector>
       <!-- END TEST CASE SELECTOR COMPONENT -->
 
       <!-- SHORTCUTS BUTTON -->
@@ -18,6 +18,6 @@
 </div>
 
 <!-- SCRIPT PAGE CONTENT -->
-<app-tc-script *ngIf='testcase' [testcase]="testcase">
-</app-tc-script>
+<app-testcasecontent *ngIf='testcase' [testcase]="testcase">
+</app-testcasecontent>
 <!-- END SCRIPT PAGE CONTENT -->

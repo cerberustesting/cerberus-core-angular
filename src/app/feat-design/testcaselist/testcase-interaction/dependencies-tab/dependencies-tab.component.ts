@@ -17,7 +17,7 @@ export class DependenciesTabComponent implements OnInit {
   @Input('dependencies') dependencies: Array<TestCaseDependency>;
 
   /** list of available test folders to select */
-  public testsList: Array<TestFolder>;
+  @Input('testfolders') testsList: Array<TestFolder>;
 
   /** list of test case id corresponding to the selected test folder */
   private testCasesList: Array<TestCase>;
@@ -28,18 +28,16 @@ export class DependenciesTabComponent implements OnInit {
   /** selected test case id */
   private selectedTestCase: TestCase;
 
-  constructor(private testService: TestService, private testCaseService: TestcaseService, private notificationService: NotificationService) { }
+  constructor(
+    private testCaseService: TestcaseService,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
-    // TODO : Use promises
-    // refresh the test folder list
-    this.testCaseService.refreshTestFolders();
 
-    // subscribe to the test folder list
-    this.testCaseService.observableTestsList.subscribe(response => { this.testsList = response; });
-
-    // subscribe to the test case id list
-    this.testCaseService.observableTestCasesList4Dependencies.subscribe(response => { this.testCasesList = response; console.log(this.testCasesList); });
+    // subscribe to the test case id list changes
+    this.testCaseService.observableTestCasesList4Dependencies.subscribe(response => {
+      this.testCasesList = response;
+    });
   }
 
   /** fired when selected test folder changes */
@@ -49,7 +47,7 @@ export class DependenciesTabComponent implements OnInit {
     // if the new selected test isn't empty
     if (this.selectedTestFolderName !== null || this.selectedTestFolderName !== undefined) {
       // refresh the test cases id list
-      this.testCaseService.getTestCasesList4Dependencies(this.selectedTestFolderName);
+      this.testCaseService.refreshTestCasesList4Dependencies(this.selectedTestFolderName);
     } else {
       // if the new selected test folder is not usable
       this.testCasesList = null;

@@ -44,7 +44,7 @@ export class TestcaseInteractionComponent implements OnInit {
   private saveButtonTitle: string;
 
   // tests folder list used for Test & Test case folder section
-  private testsList: Array<TestFolder>;
+  private testfolders: Array<TestFolder>;
 
   /** list of available countries to select */
   public countries: Array<Invariant>;
@@ -69,7 +69,7 @@ export class TestcaseInteractionComponent implements OnInit {
   ngOnInit() {
 
     // refresh the test folders list (done only once)
-    this.testService.getTestFolders((testfolders: TestFolder[]) => { this.testsList = testfolders; });
+    this.testService.getTestFolders((testfolders: TestFolder[]) => { this.testfolders = testfolders; });
 
     this.invariantsService.observableCountriesList.subscribe(rep => this.countries = rep);
 
@@ -204,7 +204,7 @@ export class TestcaseInteractionComponent implements OnInit {
     // get the new selected test folder (from the form)
     const newTest = this.testcaseHeaderForm.get('test').value;
     // fetch the test cases list for that test folder
-    this.testcaseService.getTestCasesForATestFolder((tcList: TestCase[]) => {
+    this.testcaseService.getTestCases((tcList: TestCase[]) => {
       // find the last unused test case id
       this.newTestCase = this.testcaseService.getLatestTestCaseId(tcList, newTest);
       // edit the test case form value

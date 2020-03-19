@@ -33,7 +33,7 @@
                                 ngbPopover="A test is a transversal grouping of Test Cases." popoverTitle="Test Folder"
                                 triggers="mouseenter:mouseleave"></i>
                         </label>
-                        <ng-select name="TestFolder" class="custom-sm" [items]="testsList" bindLabel="test"
+                        <ng-select name="TestFolder" class="custom-sm" [items]="testfolders" bindLabel="test"
                             bindValue="test" formControlName="test" placeholder="Select a Test" [addTag]="true"
                             (change)="refreshNewTestCase()">
                             <ng-template ng-label-tmp let-item="item">
@@ -116,7 +116,8 @@
                         <!-- DEPENDENCY TAB -->
                         <div *ngIf="selectedTab == tabs[4]" class="tab-pane active show" id="dependencyTab"
                             role="tabpanel">
-                            <app-dependencies-tab [dependencies]="testcaseheader.dependencies">
+                            <app-dependencies-tab [dependencies]="testcaseheader.dependencies"
+                                [testfolders]="testfolders">
                             </app-dependencies-tab>
                         </div>
                         <!-- END DEPENDENCY TAB -->

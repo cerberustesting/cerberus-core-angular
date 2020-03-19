@@ -12,16 +12,10 @@ import { Invariant } from 'src/app/shared/model/invariants.model';
 import { TestService } from '../test/test.service';
 import { GlobalService } from '../../utils/global.service';
 import { LabelService } from '../label/label.service';
+
+// mocks
 import single_testcase_full_mock from 'src/assets/data/mock/readTC_single_full.json';
 import single_testcase_mock from 'src/assets/data/mock/readTC_single.json';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    // 'X-Requested-With': 'XMLHttpRequest',
-    // 'Cookie:': 'JSESSIONID=2e0cb26156d548803026c75c051b'
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -55,10 +49,6 @@ export class TestcaseService {
   observableLibraryStepList = new BehaviorSubject<Step[]>(this.libraryStepList);
   observableTestCasesList4Dependencies = new BehaviorSubject<TestCase[]>(this.testCasesList4Dependencies);
 
-  // boolean
-  // TODO: delete?
-  refreshTC: boolean;
-
   constructor(
     private http: HttpClient,
     private trueindexPipe: TrueindexPipe,
@@ -66,11 +56,11 @@ export class TestcaseService {
     private testService: TestService,
     private globalService: GlobalService,
     private labelService: LabelService
-  ) {
-    this.refreshTC = false;
-  }
+  ) { }
 
-  /** refresh the test folder list (this one should be used with this test case, not globally) */
+  /**
+   * refresh the test folder list, used in tc-selector component
+  */
   refreshTestFolders() {
     this.http.get<TestFolder[]>(environment.cerberus_api_url + '/ReadTest')
       .subscribe(response => {
@@ -86,7 +76,10 @@ export class TestcaseService {
       });
   }
 
-  /** return the test cases list for a test folder */
+  /**
+   * return the test cases list for a test folder, used in tc-selector component
+   * @param test test folder name to filter on
+  */
   refreshTestCasesForATestFolder(test: string) {
     this.http.get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
       .subscribe(response => {
@@ -101,8 +94,9 @@ export class TestcaseService {
   /**
   * get the list of test cases from the API
   * @param callback function to use to process the result
+  * @param test test folder name to filter on (optional)
   */
-  getTestCasesForATestFolder(callback: (testcases: TestCase[]) => void, test?: string): void {
+  getTestCases(callback: (testcases: TestCase[]) => void, test?: string): void {
     let url = environment.cerberus_api_url + '/ReadTestCase';
     // if the optional parameter test is defined
     if (!this.globalService.isNullOrEmpty(test)) {
@@ -116,22 +110,18 @@ export class TestcaseService {
       });
   }
 
-  /** refresh the test case id list that is used for dependencies management */
-  getTestCasesList4Dependencies(test: string) {
-    this.http.get<Array<TestCase>>(environment.cerberus_api_url + '/ReadTestCaseV2?test=' + test)
+  /**
+   * refresh the test cases list that is used for dependencies management
+   * @param test test folder name to filter on
+  */
+  // TODO : use the refreshTestCases method instead, and remove this one
+  refreshTestCasesList4Dependencies(test: string) {
+    this.http.get<Array<TestCase>>(environment.cerberus_api_url + '/ReadTestCase?test=' + test)
       .subscribe(response => {
-        // @ts-ignore
-        if (response.iTotalRecords > 0) {
+        if (response) {
           // @ts-ignore
           this.testCasesList4Dependencies = response.contentTable;
-          // @ts-ignore
           this.observableTestCasesList4Dependencies.next(this.testCasesList4Dependencies);
-        } else {
-          if (test != null) {
-            this.notificationService.createANotification('There are no TestCase for the Test : ' + test, NotificationStyle.Warning);
-            this.testCasesList4Dependencies = null;
-            this.observableTestCasesList4Dependencies.next(this.testCasesList4Dependencies);
-          }
         }
       });
   }
@@ -201,7 +191,7 @@ export class TestcaseService {
   }
 
   updateTestCase(queryString) {
-    return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, httpOptions)
+    return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, environment.httpOptions)
       .pipe(tap(
         data => {
           if (data.messageType === 'OK') {
@@ -215,7 +205,7 @@ export class TestcaseService {
   }
 
   createTestCase(queryString) {
-    return this.http.post<any>(environment.cerberus_api_url + '/CreateTestCase', queryString, httpOptions)
+    return this.http.post<any>(environment.cerberus_api_url + '/CreateTestCase', queryString, environment.httpOptions)
       .pipe(tap(
         data => {
           if (data.messageType === 'OK') {
@@ -229,7 +219,7 @@ export class TestcaseService {
   }
 
   deleteTestCase(test: string, testCase: string, callback: (msg: string, status: string) => void) {
-    this.http.post<any>(environment.cerberus_api_url + '/DeleteTestCase', 'test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testCase), httpOptions)
+    this.http.post<any>(environment.cerberus_api_url + '/DeleteTestCase', 'test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testCase), environment.httpOptions)
       .subscribe((rep) => callback(rep.message, rep.messageType));
   }
 
@@ -288,7 +278,10 @@ export class TestcaseService {
     return promise;
   }
 
-  /** get the latest incremental ID for a test folder */
+  /**
+   * get the latest incremental ID for a test folder
+   * @param test test folder name
+  */
   getMaxTestCase(test: string): void {
     const url = environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&getMaxTC=true';
     this.http.get<any[]>(url)
@@ -299,38 +292,32 @@ export class TestcaseService {
       });
   }
 
-  seletectedTestExist(test: string): boolean {
-    if (test != null) {
-      return this.testsList.filter(t => t.test === test).length > 0;
-    } else {
-      return false;
-    }
-  }
-
+  /**
+   * return true if a test case is present in a list
+   * @param testcaseid test case id to check
+   * @param testcases list of test cases to use
+   */
   selectedTestCaseExist(testcaseid: string, testcases: Array<TestCase>): boolean {
     return testcases.filter(tc => tc.testCase === testcaseid).length > 0;
   }
 
-  // DIRTY : correct the model mistake
-  convertCountriesList(testcaseheader: TestCase): Array<string> {
-    const countriesList = new Array<string>();
-    // @ts-ignore
-    for (const index in testcaseheader.countryList) {
-      if (index) {
-        // @ts-ignore
-        countriesList.push(testcaseheader.countryList[index]);
-      }
-    }
-    return countriesList;
-  }
-
-  /** return true if the country is selected for the test case */
-  isCountryDefinedForTestCase(countries: Array<Invariant>, country: string): boolean {
+  /**
+   * return true if the country is selected for the test case
+   * @param countries list of countries to search into
+   * @param country country value of the country to check
+  */
+  isCountryDefinedForTestCase(countries: Invariant[], country: string): boolean {
     const res = countries.find(invariant => invariant.value === country);
     if (res) { return true; } else { return false; }
   }
 
-  saveTestCaseHeader(testcaseheader: TestCase, originalTest, originalTestCase) {
+  /**
+   * send test case object to the API
+   * @param testcaseheader test case object
+   * @param originalTest initial value of test folder
+   * @param originalTestCase initial value of test case id
+   */
+  saveTestCaseHeader(testcaseheader: TestCase, originalTest: string, originalTestCase: string): void {
     let data: TestCase;
     data = testcaseheader;
     // add the original test and testcase to the data to send
@@ -350,10 +337,12 @@ export class TestcaseService {
     */
   }
 
-  refreshStepSort(stepList: Array<Step>): void {
-    stepList.forEach((step, index) => {
+  /** refresh the sort attribute of each steps (usefull for drag and drop)
+  * @param steps list of step to reorder
+  */
+  refreshStepSort(steps: Array<Step>): void {
+    steps.forEach((step, index) => {
       const newIndex = this.trueindexPipe.transform(index);
-      // console.log("step #"+newIndex+' descripton: '+step.description);
       step.sort = newIndex;
     });
   }
@@ -369,8 +358,11 @@ export class TestcaseService {
     console.log(actions);
   }
 
-  refreshControlSort(controlList: Array<Control>): void {
-    controlList.forEach((control, index) => {
+  /** refresh the sort attribute of each control (usefull for drag and drop)
+  * @param controls list of control to reorder
+  */
+  refreshControlSort(controls: Array<Control>): void {
+    controls.forEach((control, index) => {
       const newIndex = this.trueindexPipe.transform(index);
       // console.log("control #"+newIndex+' descripton: '+control.description);
       control.sort = newIndex;
@@ -384,19 +376,6 @@ export class TestcaseService {
   clearTestCase() {
     this.testcase = null;
     this.observableTestCase.next(this.testcase);
-  }
-
-  // DIRTY: convert {FR: FR} style object
-  // to Array of string, an iterable
-  // waiting for https://github.com/cerberustesting/cerberus-source/issues/2015
-  formatCountryList(rawList: any): Array<string> {
-    const newArray: string[] = [];
-    for (const key in rawList) {
-      if (rawList.hasOwnProperty(key)) {
-        newArray.push(rawList[key]);
-      }
-    }
-    return newArray;
   }
 
 }

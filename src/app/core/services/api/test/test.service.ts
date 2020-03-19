@@ -43,8 +43,9 @@ export class TestService {
    * get the list of test folders from the API
    * @param callback function to use to process the result
   */
-  getTestFolders(callback: (testfolders: TestFolder[]) => void): void {
-    const url = environment.cerberus_api_url + '/ReadTest';
+  getTestFolders(callback: (testfolders: TestFolder[]) => void, system?: string): void {
+    let url = environment.cerberus_api_url + '/ReadTest';
+    if (system) { url += '?system=' + system; }
     this.http.get<Array<TestFolder>>(url)
       .toPromise()
       .then((result: any) => {

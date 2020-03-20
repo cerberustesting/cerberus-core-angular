@@ -74,51 +74,144 @@
     <!-- PROPERTY VALUE CONTENT -->
     <div *ngIf="propertyValueDetailsDisplay" class="row block-content pl-5">
 
-        <!-- TYPE FIELD -->
-        <div class="col-3">
-            <div class="form-group">
-                <div class="input-group custom-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            type
-                        </span>
-                    </div>
-                    <select class="form-control form-control-sm" name="type" [(ngModel)]="propertyvalue.type"
-                        (change)="onTypeChange($event)" [disabled]="areFieldsEnabled()">
-                        <option *ngFor="let inv of propertyTypesList">{{ inv.value }}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <!-- END TYPE FIELD -->
-
         <!-- DESCRIPTION FIELD -->
-        <div class="col-9">
+        <div class="col-12">
             <div class="form-group">
-                <div class="input-group custom-sm">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            description
-                        </span>
-                    </div>
-                    <input type="text" class="form-control form-control-sm" name="description"
-                        [(ngModel)]="propertyvalue.description" [disabled]="areFieldsEnabled()">
-                </div>
+                <label for="propertyValueDescription">Description</label>
+                <input type="text" class="form-control form-control-sm" name="description"
+                    placeholder="giving a description is never a bad idea" [(ngModel)]="propertyvalue.description"
+                    [disabled]="areFieldsEnabled()">
             </div>
         </div>
         <!-- END DESCRIPTION FIELD -->
 
-        <!-- VALUE EDITOR -->
-        <div class="col-12">
+        <!-- LEFT SECTION -->
+        <div class="col-md-2">
+
+            <!-- TYPE -->
+            <div class="form-group">
+                <label for="propertyValueType">Type</label>
+                <select class="form-control form-control-sm" name="propertyValueType" [(ngModel)]="propertyvalue.type"
+                    (change)="onTypeChange($event)" [disabled]="areFieldsEnabled()">
+                    <option *ngFor="let inv of propertyTypesList">{{ inv.value }}</option>
+                </select>
+            </div>
+            <!-- END TYPE -->
+
+            <!-- DB FIELD -->
+            <div *ngIf="propertyvalue.type=='getFromSql'" class="form-group">
+                <label for="propertyValueDB">Database</label>
+                <select class="form-control form-control-sm" name="propertyValueType"
+                    [(ngModel)]="propertyvalue.database" [disabled]="areFieldsEnabled()">
+                    <option *ngFor="let inv of propertyDatabases">{{ inv.value }}</option>
+                </select>
+            </div>
+            <!-- END DB FIELD -->
+
+            <!-- SHOW ADVANCED BUTTON -->
+            <button type="button" class="btn btn-sm btn-alt-secondary mt-2"
+                (click)="showAdvancedSettings = !showAdvancedSettings">
+                <i class="fa fa-fw opacity-50 mr-1"
+                    [ngClass]="showAdvancedSettings ? 'fa-angle-down' : 'fa-angle-right'"></i> Advanced
+            </button>
+            <!-- END SHOW ADVANCED BUTTON-->
+
+        </div>
+        <!-- END LEFT SECTION -->
+
+        <!-- RIGHT SECTION -->
+        <div class="col-10">
+
+            <!-- VALUE EDITOR -->
             <div class="form-group">
                 <label for="example-textarea-input">Value</label>
                 <ngx-monaco-editor class="form-control" [options]="editorOptions" [(ngModel)]="propertyvalue.value1">
                 </ngx-monaco-editor>
             </div>
+            <!-- END VALUE EDITOR -->
+
         </div>
-        <!-- END VALUE EDITOR -->
+        <!-- END RIGHT SECTION -->
+
+        <!-- ADVANCED SECTION -->
+        <div *ngIf="showAdvancedSettings" class="col-12 row">
+
+            <!-- PROPERTY VALUE 2 FIELD -->
+            <div class="col-8" *ngIf="settingFieldReferenced(propertyvalue.type,'value2')">
+                <div class="form-group">
+                    <label for="propertyValue2">Value 2</label>
+                    <input type="text" class="form-control form-control-sm" name="propertyValue2" placeholder="optional"
+                        [(ngModel)]="propertyvalue.value2" [disabled]="areFieldsEnabled()">
+                </div>
+            </div>
+            <!-- END PROPERTY VALUE 2 FIELD -->
+
+            <!-- LENGTH FIELD -->
+            <div class="col-2" *ngIf="settingFieldReferenced(propertyvalue.type,'length')">
+                <div class="form-group">
+                    <label for="propertyValueLength"><i class="fa fa-ruler-horizontal mr-1"></i>Length</label>
+                    <input type="number" class="form-control form-control-sm" name="length" placeholder="optional"
+                        [(ngModel)]="propertyvalue.length" [disabled]="areFieldsEnabled()">
+                </div>
+            </div>
+            <!-- END LENGTH FIELD -->
+
+            <!-- CACHE EXPIRE FIELD -->
+            <div class="col-2" *ngIf="settingFieldReferenced(propertyvalue.type,'cacheExpire')">
+                <div class="form-group">
+                    <label for="cacheExpire"><i class="fa fa-history mr-1"></i>Cache</label>
+                    <input type="number" class="form-control form-control-sm" name="cacheExpire" placeholder="ms"
+                        [(ngModel)]="propertyvalue.cacheExpire" [disabled]="areFieldsEnabled()">
+                </div>
+            </div>
+            <!-- END CACHE EXPIRE FIELD -->
+
+            <!-- NATURE -->
+            <div class="col-2" *ngIf="settingFieldReferenced(propertyvalue.type,'nature')">
+                <div class="form-group">
+                    <label for="propertyValueNature"><i class="fa fa-tree mr-1"></i>Nature</label>
+                    <select class="form-control form-control-sm" name="propertyValueNature"
+                        [(ngModel)]="propertyvalue.nature" [disabled]="areFieldsEnabled()">
+                        <option *ngFor="let inv of propertyNatures">{{ inv.value }}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- END NATURE -->
+
+            <!-- RETRY NUMBER FIELD -->
+            <div class="col-2" *ngIf="settingFieldReferenced(propertyvalue.type,'retryNb')">
+                <div class="form-group">
+                    <label for="retryNb"><i class="fa fa-redo-alt mr-1"></i>Retry Number</label>
+                    <input type="number" class="form-control form-control-sm" name="retryNb" placeholder="number"
+                        [(ngModel)]="propertyvalue.retryNb" [disabled]="areFieldsEnabled()">
+                </div>
+            </div>
+            <!-- END RETRY NUMBER FIELD -->
+
+            <!-- RETRY PERIOD FIELD -->
+            <div class="col-2" *ngIf="settingFieldReferenced(propertyvalue.type,'retryPeriod')">
+                <div class="form-group">
+                    <label for="retryPeriod"><i class="fa fa-redo-alt mr-1"></i>Retry Period</label>
+                    <input type="number" class="form-control form-control-sm" name="retryPeriod" placeholder="ms"
+                        [(ngModel)]="propertyvalue.retryPeriod" [disabled]="areFieldsEnabled()">
+                </div>
+            </div>
+            <!-- END RETRY PERIOD FIELD -->
+
+            <!-- RANK -->
+            <div class="col-2" *ngIf="settingFieldReferenced(propertyvalue.type,'rank')">
+                <div class="form-group">
+                    <label for="rank"><i class="fa fa-star mr-1"></i>Rank</label>
+                    <input type="number" class="form-control form-control-sm" name="rank" placeholder="number"
+                        [(ngModel)]="propertyvalue.rank" [disabled]="areFieldsEnabled()">
+                </div>
+            </div>
+            <!-- END RANK -->
+
+        </div>
+        <!-- END ADVANCED SECTION -->
 
     </div>
-    <!-- END PROPERTY VALUE CONTENT -->
+
 
 </div>

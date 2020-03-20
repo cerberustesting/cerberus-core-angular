@@ -64,6 +64,16 @@
         ]
     },
     {
+        "reference": "getElementPosition",
+        "value1": "Element Path",
+        "value2": null,
+        "description1": "Get an element pixel position (use id=/xpath=/etc syntax - return 'px;py').",
+        "fields": [
+            "cacheExpire",
+            "rank"
+        ]
+    },
+    {
         "reference": "getFromJS",
         "value1": "JavaScript script",
         "value2": null,
@@ -81,7 +91,8 @@
         "icon_value2": "fa fa-at",
         "fields": [
             "cacheExpire",
-            "rank"
+            "rank",
+            "value2"
         ]
     },
     {
@@ -92,7 +103,8 @@
         "icon_value2": "fa fa-cookie",
         "fields": [
             "cacheExpire",
-            "rank"
+            "rank",
+            "value2"
         ]
     },
     {
@@ -104,7 +116,19 @@
         "icon_value2": "fa fa-code",
         "fields": [
             "cacheExpire",
-            "rank"
+            "rank",
+            "value2"
+        ]
+    },
+    {
+        "reference": "getRawFromXml",
+        "value1": "Element Path",
+        "value2": null,
+        "description1": null,
+        "fields": [
+            "cacheExpire",
+            "rank",
+            "value2"
         ]
     },
     {
@@ -116,7 +140,8 @@
         "icon_value2": "",
         "fields": [
             "cacheExpire",
-            "rank"
+            "rank",
+            "value2"
         ]
     },
     {
@@ -127,7 +152,8 @@
         "icon_value2": "fa fa-code",
         "fields": [
             "cacheExpire",
-            "rank"
+            "rank",
+            "value2"
         ]
     },
     {

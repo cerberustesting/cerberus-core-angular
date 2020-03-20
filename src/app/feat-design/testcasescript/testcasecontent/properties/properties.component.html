@@ -1,22 +1,24 @@
 <div *ngIf="propertyGroups" class="push">
 
-    <div class="form-group">
+    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center push">
 
         <!-- TITLE -->
         <div class="form-check form-check-inline">
-            <label class="d-block">{{ getTitle() }}</label>
+            <label class="d-block">
+                <i class="fa fa-fw mr-1 ml-1" [ngClass]="inherited ? 'fa-lock' : 'fa-lock-open'"></i>
+                {{ getTitle() }}
+            </label>
         </div>
         <!-- END TITLE -->
 
         <!-- ADD PROPERTY BUTTON -->
         <div class="form-check form-check-inline">
-            <button *ngIf="inherited == false" type="button" class="btn btn-sm btn-primary mr-1 mb-3"
+            <button *ngIf="inherited == false" type="button" class="btn btn-sm btn-primary"
                 (click)="addAPropertyGroup()">
                 <i class="fa fa-fw fa-plus mr-1"></i> Property
             </button>
         </div>
         <!-- END ADD PROPERTY BUTTON -->
-
     </div>
 
     <div *ngIf="propertyGroups.length !== 0">

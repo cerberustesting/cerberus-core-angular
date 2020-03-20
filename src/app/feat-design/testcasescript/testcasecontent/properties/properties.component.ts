@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PropertyValue, ProperyGroup } from 'src/app/shared/model/back/property.model';
 import { TestCase } from 'src/app/shared/model/back/testcase.model';
+import { Invariant } from 'src/app/shared/model/invariants.model';
+import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 
 @Component({
   selector: 'app-properties',
@@ -21,11 +23,17 @@ export class PropertiesComponent implements OnInit {
   /** property groups : properties grouped by name */
   public propertyGroups: Array<ProperyGroup>;
 
-  constructor() { }
+  /** public invariants */
+  private countries: Array<Invariant>;
+
+  constructor(private invariantService: InvariantsService) { }
 
   ngOnInit() {
-    //  create the property group (for display reason)
+    // create the property group (for display reason)
     this.groupPropertiesByName();
+
+    // get the countries list
+    this.invariantService.observableCountriesList.subscribe(r => { this.countries = r; });
   }
 
   // refresh the property groups
@@ -50,9 +58,18 @@ export class PropertiesComponent implements OnInit {
     this.propertyGroups = propertiesValuesByName;
   }
 
-  // create a new empty property
+  /**
+   * add a new property group with one property value
+  */
   addAPropertyGroup(): void {
+    // create a new property group
     const newPropertyGroup = new ProperyGroup(this.getLatestNewPropertyName());
+    // create a new property value
+    const newPropertyValue = new PropertyValue(this.getLatestNewPropertyName());
+    // add all the available countries to the first value
+    newPropertyValue.countries = this.countries;
+    // add the property value to the property group, then the property group
+    newPropertyGroup.values.push(newPropertyValue);
     this.propertyGroups.push(newPropertyGroup);
   }
 

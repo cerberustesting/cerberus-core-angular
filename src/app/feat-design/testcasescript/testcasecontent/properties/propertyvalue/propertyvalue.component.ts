@@ -7,6 +7,7 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 import { Invariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
+import crossReference_PropertyTypeValue from 'src/assets/data/cross_references/propertytype_value.json'
 
 @Component({
   selector: 'app-propertyvalue',
@@ -33,8 +34,15 @@ export class PropertyvalueComponent implements OnInit {
   // boolean to handle the display of the actions (duplicate, delete)
   public showActions: boolean;
 
+  // public invariants
+  public propertyDatabases: Array<Invariant>;
+
   // private invariants
   private propertyTypesList: Array<Invariant>;
+  private propertyNatures: Array<Invariant>;
+
+  /** boolean to handle the display of advanced section */
+  private showAdvancedSettings: boolean;
 
   constructor(
     private testService: TestcaseService,
@@ -44,14 +52,27 @@ export class PropertyvalueComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     // hide details by default
     this.propertyValueDetailsDisplay = false;
+
     // hide by default the actions
     this.showActions = false;
+
     // subscribe to property type invariants
     this.invariantService.observablePropertyTypeList.subscribe(r => { if (r) { this.propertyTypesList = r; } });
+
+    // subscribe to property nature invariants
+    this.invariantService.observablePropertyNatureList.subscribe(r => { if (r) { this.propertyNatures = r; } });
+
+    // subscribe to the database values
+    this.invariantService.observablePropertyDatabaseList.subscribe(r => { if (r) { this.propertyDatabases = r; } });
+
     // configure the code editor
     this.editorOptions = { theme: 'vs', language: 'plaintext', readOnly: this.inherited };
+
+    // by default, advanced settings aren't shown
+    this.showAdvancedSettings = false;
   }
 
   /** return true if the country is selected in the property value
@@ -158,6 +179,28 @@ export class PropertyvalueComponent implements OnInit {
   // if the property is displayed as inherited
   areFieldsEnabled(): boolean {
     return this.inherited;
+  }
+
+  hasCrossReference(reference: string) {
+    return this.crossReferenceService.hasCrossReference(reference, crossReference_PropertyTypeValue);
+  }
+
+  findCrossReference(reference: string) {
+    return this.crossReferenceService.findCrossReference(reference, crossReference_PropertyTypeValue);
+  }
+
+  /**
+   * return true if the advanced settings item (nature, retry...) should be displayed with the property type
+   * @param type type of the property value
+   * @param setting field name
+   */
+  settingFieldReferenced(type: string, setting: string): boolean {
+    if (this.hasCrossReference(type)) {
+      return this.findCrossReference(type).fields.includes(setting);
+    } else {
+      console.error('advanced setting field display error, please open an issue on github, type=' + type + ' setting=' + setting);
+      return false;
+    }
   }
 
 }

@@ -370,7 +370,95 @@ export class TestcaseService {
   }
 
   saveTestCase(testcase: TestCase) {
-    // TODO
+    // declare the object to be send to /UpdateTestCaseWithDependencies
+    let requestPayload: any;
+    // instantiate it
+    requestPayload = {};
+    // pass the test and test case information
+    requestPayload.informationInitialTest = encodeURIComponent(testcase.test);
+    requestPayload.informationInitialTestCase = encodeURIComponent(testcase.testCase);
+    requestPayload.informationTest = encodeURIComponent(testcase.test);
+    requestPayload.informationTestCase = encodeURIComponent(testcase.testCase);
+    requestPayload.stepArray = [];
+    // fill the step array
+    testcase.steps.forEach(step => {
+      // create a new step object (because the mapping is different)
+      let newStep: any;
+      newStep = {};
+      newStep.toDelete = step.toDelete || false;
+      newStep.test = step.test;
+      newStep.testcase = step.testCase;
+      newStep.step = step.step;
+      newStep.sort = step.sort;
+      newStep.description = step.description;
+      newStep.useStep = step.useStep;
+      newStep.useStepTest = step.useStepTest;
+      newStep.useStepTestCase = step.useStepTestCase;
+      newStep.useStepStep = step.useStepStep;
+      newStep.inLibrary = step.inLibrary;
+      newStep.loop = step.loop;
+      newStep.conditionOper = step.conditionOper;
+      newStep.conditionVal1 = step.conditionVal1;
+      newStep.conditionVal2 = step.conditionVal2;
+      newStep.conditionVal3 = step.conditionVal3;
+      newStep.forceExe = step.forceExe;
+      newStep.actionArr = [];
+      step.actions.forEach(action => {
+        // create a new action object (because the mapping is different)
+        let newAction: any;
+        newAction = {};
+        newAction.toDelete = action.toDelete || false;
+        newAction.test = action.test;
+        newAction.testcase = action.testCase;
+        newAction.step = action.step;
+        newAction.sequence = action.sequence;
+        newAction.sort = action.sequence;
+        newAction.description = action.description;
+        newAction.action = action.action;
+        // mapping ????
+        newAction.object = action.value1;
+        // mapping ????
+        newAction.property = action.value2;
+        newAction.value3 = action.value3;
+        newAction.forceExeStatus = action.forceExeStatus;
+        newAction.conditionOper = action.conditionOper;
+        newAction.conditionVal1 = action.conditionVal1;
+        newAction.conditionVal2 = action.conditionVal2;
+        newAction.conditionVal3 = action.conditionVal3;
+        newAction.screenshotFileName = action.screenshotFilename;
+        newAction.controlArr = [];
+        action.controls.forEach(control => {
+          // create a new control object (because the mapping is different)
+          let newControl: any;
+          newControl = {};
+          newControl.toDelete = control.toDelete || false;
+          newControl.test = control.test;
+          newControl.testCase = control.testCase;
+          newControl.step = control.step;
+          newControl.sequence = control.sequence;
+          newControl.control = control.control;
+          newControl.sort = control.sort;
+          newControl.description = control.description;
+          newControl.objType = control.objType;
+          // mapping ????
+          newControl.controlSequence = control.controlSequence;
+          newControl.value1 = control.value1;
+          newControl.value2 = control.value2;
+          newControl.value3 = control.value3;
+          newControl.fatal = control.fatal;
+          newControl.conditionOper = control.conditionOper;
+          newControl.conditionVal1 = control.conditionVal1;
+          newControl.conditionVal2 = control.conditionVal2;
+          newControl.conditionVal3 = control.conditionVal3;
+          newControl.screenshotFileName = control.screenshotFilename;
+          newAction.controlArr.push(newControl);
+        });
+        newStep.actionArr.push(newAction);
+      });
+      requestPayload.stepArray.push(newStep);
+    });
+    console.log(requestPayload.stepArray);
+    console.log(testcase.properties);
   }
 
   clearTestCase() {

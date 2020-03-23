@@ -1,16 +1,12 @@
-.custom-control-label {
-  padding: 0.35rem;
-}
 .block-options {
   padding-left: 0.5rem !important;
 }
+
 .info_block_options {
   color: #495057;
   cursor: default;
 }
-.full-width {
-  width: 100%;
-}
+
 .input-group-text.custom {
   border: 0;
   background-color: transparent;
@@ -36,7 +32,6 @@
 
 .focused {
   background-color: #d6d8d9;
-  color: #fff;
 }
 
 .focused_border {
@@ -51,15 +46,6 @@
   border-color: #f2dede !important;
 }
 
-.block-header {
-  padding: 0.1rem;
-}
-
-.input-group-text {
-  border: none;
-  background-color: inherit;
-  color: inherit;
-}
 .input-group-text:focus {
   background-color: #3b5998;
   color: #fff;
@@ -88,4 +74,8 @@ i.fa.fa-ellipsis-v {
 
 .block.block-bordered {
   border-color: #bcc0ce;
+}
+
+.step-color {
+  color: #495057 !important;
 }

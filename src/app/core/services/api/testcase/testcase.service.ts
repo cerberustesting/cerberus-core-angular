@@ -16,6 +16,7 @@ import { LabelService } from '../label/label.service';
 // mocks
 import single_testcase_full_mock from 'src/assets/data/mock/readTC_single_full.json';
 import single_testcase_mock from 'src/assets/data/mock/readTC_single.json';
+import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/property.model';
 
 @Injectable({
   providedIn: 'root'
@@ -347,6 +348,17 @@ export class TestcaseService {
     });
   }
 
+  /**
+   * set all the 'step' attribute with the current index (sort), must be called once when the test case is fetched
+   * @param steps list of steps to process
+   */
+  SaveCurrentStepIndex(steps: Step[]): void {
+    steps.forEach((step) => {
+      // save it in the step attribute
+      step.step = step.sort;
+    });
+  }
+
   /** refresh the sort attribute of each actions (usefull for drag and drop)
    * @param actions list of actions to reorder
    */
@@ -355,7 +367,6 @@ export class TestcaseService {
       const newIndex = this.trueindexPipe.transform(index);
       action.sort = newIndex;
     });
-    console.log(actions);
   }
 
   /** refresh the sort attribute of each control (usefull for drag and drop)
@@ -375,12 +386,12 @@ export class TestcaseService {
     // instantiate it
     requestPayload = {};
     // pass the test and test case information
-    requestPayload.informationInitialTest = encodeURIComponent(testcase.test);
-    requestPayload.informationInitialTestCase = encodeURIComponent(testcase.testCase);
-    requestPayload.informationTest = encodeURIComponent(testcase.test);
-    requestPayload.informationTestCase = encodeURIComponent(testcase.testCase);
-    requestPayload.stepArray = [];
+    requestPayload.informationInitialTest = testcase.test;
+    requestPayload.informationInitialTestCase = testcase.testCase;
+    requestPayload.informationTest = testcase.test;
+    requestPayload.informationTestCase = testcase.testCase;
     // fill the step array
+    requestPayload.stepArray = [];
     testcase.steps.forEach(step => {
       // create a new step object (because the mapping is different)
       let newStep: any;
@@ -457,13 +468,76 @@ export class TestcaseService {
       });
       requestPayload.stepArray.push(newStep);
     });
-    console.log(requestPayload.stepArray);
-    console.log(testcase.properties);
+    // fill the poperties array
+    requestPayload.propArr = [];
+    testcase.propertiesV2.testCaseProperties.forEach(propgroup => {
+      propgroup.values.forEach(propvalue => {
+        let newPropValue: any;
+        newPropValue = {};
+        newPropValue.property = propvalue.property;
+        newPropValue.description = propvalue.description;
+        newPropValue.country = [];
+        // fill the countries array with only its value (string)
+        propvalue.countries.forEach(invariant => {
+          newPropValue.country.push(invariant.value);
+        });
+        newPropValue.type = propvalue.type;
+        newPropValue.database = propvalue.database;
+        newPropValue.value1 = propvalue.value1;
+        newPropValue.value2 = propvalue.value2;
+        newPropValue.length = propvalue.length;
+        newPropValue.rowLimit = propvalue.rowLimit;
+        newPropValue.cacheExpire = propvalue.cacheExpire;
+        newPropValue.nature = propvalue.nature;
+        newPropValue.retryNb = propvalue.retryNb;
+        newPropValue.retryPeriod = propvalue.retryPeriod;
+        newPropValue.rank = propvalue.rank;
+        newPropValue.toDelete = propvalue.toDelete || false;
+        requestPayload.propArr.push(newPropValue);
+      });
+    });
+    console.log(requestPayload.propArr);
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8'
+      })
+    };
+
+    this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCaseWithDependencies', requestPayload, httpOptions)
+      .subscribe(rep => {
+        console.log(rep);
+      });
   }
 
   clearTestCase() {
     this.testcase = null;
     this.observableTestCase.next(this.testcase);
+  }
+
+  /**
+   * format a list of property values to a list of property group (by name)
+   * @param propertyvalues list of property values to format
+  */
+  groupPropertiesByName(propertyvalues: PropertyValue[]): PropertyGroup[] {
+    // list of unique property names
+    const propertiesNameList = new Array<string>();
+    // final object that is build along the function
+    const propertiesValuesByName = new Array<PropertyGroup>();
+    // fill the array with unique names
+    propertyvalues.forEach(propvalue => {
+      if (!propertiesNameList.includes(propvalue.property)) {
+        propertiesNameList.push(propvalue.property);
+      }
+    });
+    // build the final object for each prop name
+    propertiesNameList.forEach(propname => {
+      const propValueByName = new PropertyGroup(propname);
+      propValueByName.values = propertyvalues.filter(propvvalue => propvvalue.property === propname);
+      propertiesValuesByName.push(propValueByName);
+    });
+    // return the property groups
+    return propertiesValuesByName;
   }
 
 }

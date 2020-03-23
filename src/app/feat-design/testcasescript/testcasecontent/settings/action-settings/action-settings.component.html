@@ -1,0 +1,132 @@
+<div id="activeActionSettings" class="row">
+
+    <!-- ACTION DESCRIPTION -->
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="description"><i class="fa fa-info mr-2"></i>Description</label>
+            <input type="text" [(ngModel)]="action.description" class="form-control form-control-sm" name="description"
+                placeholder="Action Description" [disabled]="readonly"
+                [ngClass]="action.description == '' ? 'has-warning':''">
+            <div *ngIf="action.description == ''" class="warning-feedback">
+                You should consider giving a description
+            </div>
+        </div>
+    </div>
+    <!-- END ACTION DESCRIPTION -->
+
+    <!-- ACTION OPERATOR -->
+    <div class="col-md-12" *ngIf="actions">
+        <div class="form-group">
+            <label for="activeAction"><i class="fa fa-bolt mr-2"></i>Action</label>
+            <select class="form-control form-control-sm br-tp-0" id="activeAction" name="activeAction"
+                [(ngModel)]="action.action" [disabled]="readonly">
+                <option *ngFor='let action of actions' [ngValue]='action.value'>{{action.value}}</option>
+            </select>
+        </div>
+    </div>
+    <!-- END ACTION OPERATOR -->
+
+    <!-- VALUE 1 -->
+    <div class="col-md-12" *ngIf="hasActionCrossReference(action.action)">
+        <div *ngIf="findActionCrossReference(action.action).value1">
+            <div class="form-group">
+                <div class="input-group custom-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i *ngIf="findActionCrossReference(action.action).info_title1 && findActionCrossReference(action.action).description1"
+                                class="fa fa-fw fa-question-circle info mr-1"
+                                [ngbPopover]="findActionCrossReference(action.action).description1"
+                                [popoverTitle]="findActionCrossReference(action.action).info_title1" placement="top">
+                            </i>
+                            {{ findActionCrossReference(action.action).value1 }}
+                        </span>
+                    </div>
+                    <input type="text" class="form-control form-control-sm" id="activeActionValue1"
+                        name="activeActionValue1" [(ngModel)]="action.value1" [readonly]="readonly">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END VALUE 1 -->
+
+    <!-- VALUE 2 -->
+    <div class="col-md-12" *ngIf="hasActionCrossReference(action.action)">
+        <div *ngIf="findActionCrossReference(action.action).value2">
+            <div class="form-group">
+                <div class="input-group custom-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ findActionCrossReference(action.action).value2 }}</span>
+                    </div>
+                    <input type="text" class="form-control form-control-sm" id="activeActionValue2"
+                        name="activeActionValue2" [(ngModel)]="action.value2" [readonly]="readonly">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END VALUE 2 -->
+
+    <!-- CONDITION OPERATOR -->
+    <div class="col-md-12" *ngIf="conditionsOperators">
+        <div class="form-group">
+            <label for="activeActionCondition"><i class="fa fa-question mr-2"></i>Condition</label>
+            <select class="form-control form-control-sm br-tp-0" id="activeActionCondition" name="activeActionCondition"
+                [(ngModel)]="action.conditionOper" [disabled]="readonly">
+                <option *ngFor='let condition of conditionsOperators' [ngValue]='condition.value'>
+                    {{condition.value}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <!-- END CONDITION OPERATOR -->
+
+    <!-- CONDITION VALUE 1 -->
+    <div class="col-md-12" *ngIf="findConditionCrossReference(action.conditionOper).value1">
+        <div class="form-group">
+            <div class="input-group custom-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">{{ findConditionCrossReference(action.conditionOper).value1 }}</span>
+                </div>
+                <input type="text" id="activeActionConditionValue1" class="form-control form-control-sm"
+                    name="activeActionConditionValue1" [(ngModel)]="action.conditionVal1" [readonly]="readonly">
+            </div>
+        </div>
+    </div>
+    <!-- END CONDITION VALUE 1 -->
+
+    <!-- CONDITION VALUE 2 -->
+    <div class="col-md-12" *ngIf="findConditionCrossReference(action.conditionOper).value2">
+        <div class="form-group">
+            <div class="input-group custom-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">{{ findConditionCrossReference(action.conditionOper).value2 }}</span>
+                </div>
+                <input type="text" id="activeActionConditionValue2" class="form-control form-control-sm"
+                    name="activeActionConditionValue2" [(ngModel)]="action.conditionVal2" [readonly]="readonly">
+            </div>
+        </div>
+    </div>
+    <!-- END CONDITION VALUE 2 -->
+
+    <!-- FORCE EXECUTION SWITCH -->
+    <div class="col-md-6">
+        <div class="block block-rounded block-bordered">
+            <div class="block-header custom-sm block-header-default">
+                <div class="custom-control custom-switch custom-control-inline ml-1">
+                    <input type="checkbox" class="custom-control-input" id="currentActionforceExeStatus"
+                        name="currentActionforceExeStatus" [checked]="action.forceExeStatus == 'PE'"
+                        (change)="action.forceExeStatus = $event.target.checked ? 'PE' : ''" [disabled]="readonly">
+                    <label class="custom-control-label" for="currentActionforceExeStatus">
+                        Force Execution
+                    </label>
+                </div>
+                <div class="block-options">
+                    <button type="button" class="btn-block-option">
+                        <i class="fa fa-fw fa-arrow-down"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

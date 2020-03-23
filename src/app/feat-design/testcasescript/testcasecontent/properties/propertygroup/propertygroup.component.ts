@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { ProperyGroup, PropertyValue } from 'src/app/shared/model/back/property.model';
+import { PropertyGroup, PropertyValue } from 'src/app/shared/model/back/property.model';
 import { Invariant } from 'src/app/shared/model/invariants.model';
 
 @Component({
@@ -24,13 +24,13 @@ export class PropertygroupComponent implements OnInit {
   public showActions: boolean;
 
   /** property values grouped by name */
-  @Input('propertygroup') propertygroup: ProperyGroup;
+  @Input('propertygroup') propertygroup: PropertyGroup;
 
   /** full test case object */
   @Input('testcase') testcase: TestCase;
 
   /** list of all property groups */
-  @Input('propertyGroups') propertyGroups: Array<ProperyGroup>;
+  @Input('propertyGroups') propertyGroups: Array<PropertyGroup>;
 
   /** true if the property is in read-only */
   @Input('inherited') inherited: boolean;

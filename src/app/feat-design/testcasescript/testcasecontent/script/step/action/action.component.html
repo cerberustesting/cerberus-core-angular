@@ -5,41 +5,45 @@
   <div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+parentStepIndex+'action'+action.sort">
 
     <!-- HEADER -->
-    <div class="block-header" (mouseenter)="showActionAddButtons = true" (mouseleave)="showActionAddButtons = false"
+    <div class="block-header custom-sm" (mouseenter)="showActionAddButtons = true"
+      (mouseleave)="showActionAddButtons = false"
       [ngClass]="[action.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
 
-      <!-- HIDE SHOW CONTROLS LIST -->
-      <div class="block-options">
-        <button name="showControlList" type="button" class="btn-block-option"
-          (click)="showControlList = !showControlList" [disabled]="!action.controls.length > 0">
-          <i class="si" [ngClass]="showControlList ? 'si-arrow-down' : 'si-arrow-right'"></i>
-        </button>
-      </div>
-      <!-- END HIDE SHOW CONTROLS LIST -->
+      <div class="input-group cursor-pointer" (click)="focusOnAction()">
 
-      <div class="input-group" (click)="focusOnAction()">
+        <div name="dragControl" class="input-group-prepend drag-action-area" (mousedown)="showControlList = false">
+          <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
+          <!-- current workaround : move cdkDragHandle out of child component -->
+          <ng-content select="[slot=drag-action]"></ng-content>
+        </div>
+
+        <!-- HIDE SHOW CONTROLS LIST -->
+        <button type="button" name="showControlList" class="btn-block-option"
+          (click)="showControlList = !showControlList" [disabled]="!action.controls.length > 0">
+          <i class="fa fa-fw" [ngClass]="showControlList ? 'fa-angle-down' : 'fa-angle-right'"></i>
+        </button>
+        <!-- END HIDE SHOW CONTROLS LIST -->
 
         <!-- ACTION INDEX -->
         <div class="input-group-prepend">
-          <span name="actionIndex" class="input-group-text custom">
-            {{action.sort}}
-          </span>
+          <span name="actionIndex" class="input-group-text custom"> {{action.sort}} </span>
         </div>
         <!-- END ACTION INDEX -->
 
         <!-- ACTION ICON -->
         <div class="input-group-prepend" *ngIf="findActionCrossReference(action.action).icon"
           [ngbPopover]="action.action" triggers="mouseenter:mouseleave">
-          <span class="input-group-text custom">
+          <span class="input-group-text custom custom-transparent">
             <i [ngClass]="findActionCrossReference(action.action).icon"></i>
           </span>
         </div>
         <!-- END ACTION ICON -->
 
         <!-- ACTION DESCRIPTION -->
-        <input type="text" [(ngModel)]="action.description" class="form-control br-lr-1 bg-transparent b-0"
-          [id]="'step'+parentStepIndex+'action'+action.sort+'description'" placeholder="Action Description"
-          [readonly]="readonly">
+        <h3 [id]="'step'+parentStepIndex+'action'+action.sort+'description'"
+          class="input-group-text custom-transparent">
+          {{action.description}}
+        </h3>
         <!-- END ACTION DESCRIPTION -->
 
       </div>
@@ -47,12 +51,12 @@
       <!-- ADD ACTION OR CONTROLS BUTTONS -->
       <div *ngIf="showActionAddButtons && !readonly" class="block-options">
 
-        <button type="button" name="addActionFromAction" class="btn btn-sm btn-outline-primary mr-1"
-          (click)="addAction(action.sort)"> <i class="fa fa-fw fa-plus"></i>
+        <button type="button" name="addActionFromAction" class="btn btn-sm btn-primary mr-1"
+          (click)="addAction(action.sort)"> A<i class="fa fa-fw fa-plus"></i>
         </button>
 
-        <button type="button" name="addControlFromAction" class="btn btn-sm btn-outline-success mr-1"
-          (click)="addControl(action.controls.length+1)"> <i class="fa fa-fw fa-plus"></i>
+        <button type="button" name="addControlFromAction" class="btn btn-sm btn-success mr-1"
+          (click)="addControl(action.controls.length+1)"> C<i class="fa fa-fw fa-plus"></i>
         </button>
 
       </div>
@@ -85,10 +89,6 @@
         </button>
         <!-- DELETE ACTION -->
 
-        <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
-        <!-- current workaround : move cdkDragHandle out of child component -->
-        <ng-content select="[slot=drag-action]"></ng-content>
-
       </div>
       <!-- END ACTIONS & ICONS -->
     </div>
@@ -103,10 +103,14 @@
       <app-control [control]="control" [readonly]="readonly" [parentStepIndex]="parentStepIndex"
         [parentActionIndex]="action.sort" (controlAdded)="addControl($event)"
         (actionAddedFromControl)="addAction($event)">
-        <button *ngIf="!readonly" type="button" name="dragControl" class="btn-block-option" slot="drag-control"
-          cdkDragHandle>
+
+        <!-- CONTROL DRAG CONTROL -->
+        <button *ngIf="!readonly" type="button" name="dragControl" class="btn-block-option control-color"
+          slot="drag-control" cdkDragHandle>
           <i class="fa fa-ellipsis-v"></i>
         </button>
+        <!-- END CONTROL DRAG CONTROL -->
+
       </app-control>
     </div>
   </div>

@@ -1,17 +1,22 @@
-<div [id]="'step'+ parentStepIndex +'action'+ parentActionIndex +'control' + control.sort"
-  class="block block-bordered control mb-0" *ngIf="control"
+<div *ngIf="control" [id]="'step'+ parentStepIndex +'action'+ parentActionIndex +'control' + control.sort"
+  class="block block-bordered control mb-0"
   [ngClass]="[control.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
 
-  <div class="block-header ml-6" (mouseenter)="showControlAddButtons = true"
+  <!-- HEADER -->
+  <div class="block-header custom-sm ml-6" (mouseenter)="showControlAddButtons = true"
     (mouseleave)="showControlAddButtons = false">
 
-    <div class="input-group" (click)="focusOnControl()">
+    <div class="input-group cursor-pointer" (click)="focusOnControl()">
+
+      <div name="dragControl" class="input-group-prepend drag-control-area">
+        <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
+        <!-- current workaround : move cdkDragHandle out of child component -->
+        <ng-content select="[slot=drag-control]"></ng-content>
+      </div>
 
       <!-- INDEX -->
       <div class="input-group-prepend">
-        <span name="controlIndex" class="input-group-text custom">
-          {{control.sort}}
-        </span>
+        <span name="controlIndex" class="input-group-text custom"> {{control.sort}} </span>
       </div>
       <!-- END INDEX -->
 
@@ -25,10 +30,10 @@
       <!-- END CONTROL ICON -->
 
       <!-- CONTROL DESCRIPTION -->
-      <input type="text"
-        [id]="'step'+ parentStepIndex +'action'+ parentActionIndex +'control' + control.sort + 'description'"
-        [(ngModel)]="control.description" class="form-control br-lr-1 bg-transparent b-0" name="activeStepDescription"
-        placeholder="Control Description" [readonly]="readonly">
+      <h3 [id]="'step'+ parentStepIndex +'action'+ parentActionIndex +'control' + control.sort + 'description'"
+        class="input-group-text custom-transparent">
+        {{control.description}}
+      </h3>
       <!-- END CONTROL DESCRIPTION -->
 
     </div>
@@ -36,12 +41,12 @@
     <!-- ADD ACTION OR CONTROLS BUTTONS -->
     <div *ngIf="showControlAddButtons && !readonly" class="block-options">
 
-      <button type="button" name="addActionFromControl" class="btn btn-sm btn-outline-primary mr-1"
-        (click)="addAction(parentActionIndex+1)"> <i class="fa fa-fw fa-plus"></i>
+      <button type="button" name="addActionFromControl" class="btn btn-sm btn-primary mr-1"
+        (click)="addAction(parentActionIndex+1)"> A<i class="fa fa-fw fa-plus"></i>
       </button>
 
-      <button type="button" name="addControlFromControl" class="btn btn-sm btn-outline-success mr-1"
-        (click)="addControl(control.sort)"> <i class="fa fa-fw fa-plus"></i>
+      <button type="button" name="addControlFromControl" class="btn btn-sm btn-success mr-1"
+        (click)="addControl(control.sort)"> C<i class="fa fa-fw fa-plus"></i>
       </button>
 
     </div>
@@ -72,11 +77,8 @@
       </button>
       <!-- END DELETE CONTROL -->
 
-      <!-- waiting for angular dev : https://github.com/angular/material2/issues/13784 -->
-      <!-- current workaround : move cdkDragHandle out of child component -->
-      <ng-content select="[slot=drag-control]"></ng-content>
-
     </div>
 
   </div>
+  <!-- END HEADER -->
 </div>

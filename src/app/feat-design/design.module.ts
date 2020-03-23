@@ -17,7 +17,7 @@ import { StepComponent } from './testcasescript/testcasecontent/script/step/step
 import { LibraryStepsModalComponent } from './testcasescript/testcasecontent/librarystepsmodal/librarystepsmodal.component';
 import { ActionComponent } from './testcasescript/testcasecontent/script/step/action/action.component';
 import { ControlComponent } from './testcasescript/testcasecontent/script/step/action/control/control.component';
-import { PropertyvalueComponent } from './testcasescript/testcasecontent/properties/propertyvalue/propertyvalue.component';
+import { PropertyvalueComponent } from './testcasescript/testcasecontent/properties/propertygroup/propertyvalue/propertyvalue.component';
 import { SettingsComponent } from './testcasescript/testcasecontent/settings/settings.component';
 import { DatalibraryComponent } from './datalibrary/datalibrary.component';
 import { ScriptComponent } from './testcasescript/testcasecontent/script/script.component';
@@ -46,6 +46,9 @@ import { ExecutionSettingsTabComponent } from './testcaselist/testcase-interacti
 import { DefinitionTabComponent } from './testcaselist/testcase-interaction/definition-tab/definition-tab.component';
 import { AuditTabComponent } from './testcaselist/testcase-interaction/audit-tab/audit-tab.component';
 import { ShortcutsComponent } from './testcasescript/shortcuts/shortcuts.component';
+import { ControlSettingsComponent } from './testcasescript/testcasecontent/settings/control-settings/control-settings.component';
+import { ActionSettingsComponent } from './testcasescript/testcasecontent/settings/action-settings/action-settings.component';
+import { StepSettingsComponent } from './testcasescript/testcasecontent/settings/step-settings/step-settings.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +80,9 @@ import { ShortcutsComponent } from './testcasescript/shortcuts/shortcuts.compone
     DefinitionTabComponent,
     AuditTabComponent,
     ShortcutsComponent,
+    ControlSettingsComponent,
+    ActionSettingsComponent,
+    StepSettingsComponent,
   ],
   imports: [
     CommonModule,

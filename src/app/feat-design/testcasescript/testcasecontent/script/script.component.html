@@ -3,10 +3,14 @@
   cdkDropList [cdkDropListData]="testcase.steps" (cdkDropListDropped)="dropStep($event)">
   <div *ngFor="let step of testcase.steps; let index = index" class="stepDrag" cdkDrag cdkDragLockAxis="y">
     <app-step [step]="step" [stepIndex]="index | trueindex" [testcase]="testcase">
+
+      <!-- STEP DRAG CONTROL -->
       <button slot="drag-step" type="button" id="step{{ index | trueindex }}drag"
-        class="btn btn-sm btn-light drag-cursor btn-drag-step" cdkDragHandle>
+        class="btn-block-option ml-1 drag-cursor btn-drag-step step-color" cdkDragHandle>
         <i class="fa fa-ellipsis-v"></i>
       </button>
+      <!-- END STEP DRAG CONTROL -->
+
     </app-step>
   </div>
 </div>
@@ -16,6 +20,7 @@
   <p>The test case is empty <i class="far fa-frown-open"></i></p>
 </div>
 
+<!-- ADD STEP BUTTONS -->
 <div class="push">
   <div>
     <button type="button" class="btn btn-primary btn-sm mr-3" (click)="addAStep()">
@@ -26,3 +31,4 @@
     </button>
   </div>
 </div>
+<!-- END ADD STEP BUTTONS -->

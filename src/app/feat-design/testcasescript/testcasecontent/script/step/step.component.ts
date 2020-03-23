@@ -79,7 +79,7 @@ export class StepComponent implements OnInit {
     // send the step to the settings service and thus, to the settings component
     this.settingsService.editStepSettings(this.step, this.stepIsReadOnly);
     // TODO : handle this differently
-    this.showActionList = !this.showActionList;
+    //    this.showActionList = !this.showActionList;
   }
 
   /** return a state used by the view to display an icon depedending on the combination of useStep and inLibrary */

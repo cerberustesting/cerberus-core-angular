@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PropertyValue, ProperyGroup } from 'src/app/shared/model/back/property.model';
+import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/property.model';
 import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
@@ -7,7 +7,7 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 import { Invariant } from 'src/app/shared/model/invariants.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
-import crossReference_PropertyTypeValue from 'src/assets/data/cross_references/propertytype_value.json'
+import crossReference_PropertyTypeValue from 'src/assets/data/cross_references/propertytype_value.json';
 
 @Component({
   selector: 'app-propertyvalue',
@@ -22,7 +22,7 @@ export class PropertyvalueComponent implements OnInit {
   @Input('propertyvalue') propertyvalue: PropertyValue; // property value
   @Input('propertyvalueIndex') index: number; // index to build ids
   @Input('testcase') testcase: TestCase; // full testcase object
-  @Input('propertygroup') propertygroup: ProperyGroup; // property group object will all values from others properties values
+  @Input('propertygroup') propertygroup: PropertyGroup; // property group object will all values from others properties values
   @Input('inherited') inherited: boolean; // true if the property is in read-only mode
 
   // event to send to parent component with the name of the property to be duplicated

@@ -484,7 +484,10 @@
                         "fromTest": "ENGINE : Action",
                         "property": "TEMP",
                         "rank": 1,
-                        "fromTestCase": "0017B"
+                        "fromTestCase": "0017B",
+                        "cacheExpire": 0,
+                        "retryNb": 0,
+                        "retryPeriod": 0
                     }
                 ],
                 "testCaseProperties": [
@@ -565,7 +568,10 @@
                         "fromTest": "benoit",
                         "property": "prop1",
                         "rank": 1,
-                        "fromTestCase": "0002A"
+                        "fromTestCase": "0002A",
+                        "cacheExpire": 0,
+                        "retryNb": 0,
+                        "retryPeriod": 0
                     },
                     {
                         "value2": "",
@@ -644,7 +650,10 @@
                         "fromTest": "benoit",
                         "property": "prop2",
                         "rank": 1,
-                        "fromTestCase": "0002A"
+                        "fromTestCase": "0002A",
+                        "cacheExpire": 0,
+                        "retryNb": 0,
+                        "retryPeriod": 0
                     }
                 ]
             }

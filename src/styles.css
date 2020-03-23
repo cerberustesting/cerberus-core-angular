@@ -130,6 +130,10 @@ div.input-group.custom-sm .input-group-textackground {
   height: 31px !important;
 }
 
+div.input-group.custom-sm .input-group-text {
+  font-size: 0.875rem;
+}
+
 /*
 "custom-sm" class for any *.badge elements
 
@@ -208,7 +212,7 @@ use one of these class to choose the width of your popover
   width: 55vh !important;
 }
 /*
-"custom-sm" class for for element with .custom-block
+"custom-sm" class for element with .custom-block
 
 reduce the padding and the margin bottom
 for .custom-control-inline, add padding left & right 
@@ -222,6 +226,19 @@ for .custom-control-inline, add padding left & right
 .custom-block.custom-sm.custom-control-inline .custom-control-label {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+/*
+"custom-sm" class for div with class "block-header"
+
+reduce the padding 
+*/
+div.block-header.custom-sm {
+  padding: 0.1rem;
+}
+
+div.block.custom-sm {
+  padding: 0.1rem;
 }
 
 /*
@@ -307,6 +324,42 @@ set the cursor back to default shape
 */
 .link-default {
   cursor: default !important;
+}
+
+/* 
+"drag-cursor" class for any element
+
+set the move cursor for an element on hover
+*/
+.drag-cursor {
+  cursor: move !important;
+}
+
+.input-group-text.custom-transparent {
+  border: none !important;
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+/*
+"has-warning" class for <input> element
+
+set the color border for 
+*/
+input.has-warning {
+  border-color: #fbc531 !important;
+}
+
+/*
+"warning-feedback" class for <div> element
+
+set the style for the sub text under an input
+*/
+div.warning-feedback {
+  width: 100% !important;
+  margin-top: 0.5rem !important;
+  font-size: 0.875rem !important;
+  color: #fbc531 !important;
 }
 
 /*

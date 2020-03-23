@@ -2,7 +2,7 @@
   [ngClass]="[step.toDelete ? 'toDelete_border' : '',  isFocused ? 'focused_border' : '']">
 
   <!-- HEADER -->
-  <div class="block-header block-header-default" role="tab"
+  <div class="block-header custom-sm block-header-default" role="tab"
     [ngClass]="[step.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
 
     <div class="input-group cursor-pointer" (click)="focusOnStep()">
@@ -15,14 +15,21 @@
       </div>
       <!-- END DRAG CONTROL -->
 
+      <!-- EXPAND / COLLAPSE CONTENT -->
+      <button type="button" name="toggleControls" class="btn-block-option step-color"
+        (click)="showActionList = !showActionList">
+        <i class="fa fa-fw" [ngClass]="showActionList ? 'fa-angle-down' : 'fa-angle-right'"></i>
+      </button>
+      <!-- END  EXPAND / COLLAPSE CONTENT -->
+
       <!-- STEP INDEX -->
       <div class="input-group-prepend">
-        <span name="stepIndex" class="input-group-text cursor-default"> {{stepIndex}} </span>
+        <span name="stepIndex" class="input-group-text cursor-default custom-transparent"> {{stepIndex}} </span>
       </div>
       <!-- END STEP INDEX -->
 
       <!-- STEP DESCRIPTION -->
-      <h3 class="input-group-text">{{step.description}}</h3>
+      <h3 class="input-group-text custom-transparent">{{step.description}}</h3>
       <!-- END STEP DESCRIPTION -->
 
     </div>
@@ -53,6 +60,14 @@
         <i class="fa fa-fw fa fa-arrow-down"></i>
       </button>
       <!-- END FORCE EXEC ICON -->
+
+      <!-- EXPAND / COLLAPSE CONTROLS -->
+      <button type="button" *ngIf="showActionList" name="toggleControls" class="btn-block-option"
+        (click)="showControls = !showControls" [ngbPopover]="showControls ? 'Hide the controls' : 'Show the controls'"
+        triggers="mouseenter:mouseleave">
+        <i class="fa fa-fw" [ngClass]="showControls ? 'fa-minus' : 'fa-plus'"></i>
+      </button>
+      <!-- END  EXPAND / COLLAPSE CONTROLS -->
 
       <!-- LOCKED STEP ICON -->
       <button name="stepLocked" *ngIf="libraryState() == 'locked'" type="button"
@@ -92,28 +107,20 @@
   <div *ngIf="showActionList" [id]="'step'+stepIndex+'toggle'" role="tabpanel"
     [attr.aria-labelledby]="'step'+stepIndex">
 
-    <!-- EXPAND / COLLAPSE BUTTON -->
-    <div class="block-content block-content-full block-content-sm bg-body-light font-size-sm text-right">
-      <button type="button" name="toggleActionsList" class="btn btn-sm btn-secondary mr-1"
-        (click)="showControls = !showControls">
-        <i class="si fa-fw mr-1" [ngClass]="showControls ? 'si-arrow-down' : 'si-arrow-right'"></i>
-        <span *ngIf="showControls == true">Collapse</span>
-        <span *ngIf="showControls == false">Expand</span>
-        All
-      </button>
-    </div>
-    <!-- END EXPAND / COLLAPSE BUTTON -->
-
     <!-- ACTION LIST -->
     <div *ngIf="step.actions.length > 0" cdkDropList [cdkDropListData]="step.actions"
       (cdkDropListDropped)="dropAction($event)" class="actionList">
       <div *ngFor="let action of step.actions" class="actionDrag" cdkDrag cdkDragLockAxis="y">
         <app-action [action]="action" [readonly]="stepIsReadOnly" [showContent]="showControls"
           [parentStepIndex]="stepIndex" (actionAdded)="addAction($event)" [testcase]="testcase">
-          <button *ngIf="!stepIsReadOnly" slot="drag-action" type="button" name="dragAction" class="btn-block-option"
-            cdkDragHandle>
+
+          <!-- ACTION DRAG CONTROL -->
+          <button *ngIf="!stepIsReadOnly" slot="drag-action" type="button" name="dragAction"
+            class="btn-block-option ml-1 drag-cursor" cdkDragHandle>
             <i class="fa fa-ellipsis-v"></i>
           </button>
+          <!-- END ACTION DRAG CONTROL -->
+
         </app-action>
       </div>
     </div>
@@ -123,7 +130,7 @@
     <div *ngIf="step.actions.length == 0" class="push mt-2">
       <div class="col-md-12 text-center">
         <p>The step is empty <i class="far fa-frown-open"></i></p>
-        <button type="button" class="btn btn-outline-primary mr-3" (click)="addAction(1)">
+        <button type="button" class="btn btn-sm btn-primary mr-3" (click)="addAction(1)">
           <i class="fa fa-fw fa-plus mr-1"></i>Action
         </button>
       </div>

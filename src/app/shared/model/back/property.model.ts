@@ -77,10 +77,29 @@ export class PropertyValue {
 }
 
 /**
+ * @class Test Case Properties V2
+ * @classdesc temporary fields of properties grouped by name
+*/
+export class TestCasePropertiesV2 {
+
+    /** @description inherited properties of the test case */
+    inheritedProperties: Array<PropertyGroup>;
+
+    /** @description properties specified for the test case */
+    testCaseProperties: Array<PropertyGroup>;
+
+    constructor() {
+        this.inheritedProperties = [];
+        this.testCaseProperties = [];
+    }
+
+}
+
+/**
  * @class Property Group
  * @classdesc a property group is a group of property values by name
- * */
-export class ProperyGroup {
+*/
+export class PropertyGroup {
     /** name of the property values */
     property: string;
 

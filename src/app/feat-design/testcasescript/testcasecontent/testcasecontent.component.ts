@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TestCase } from 'src/app/shared/model/back/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { Invariant } from 'src/app/shared/model/invariants.model';
-import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { Observable, Subscription } from 'rxjs';
+import { TestCasePropertiesV2 } from 'src/app/shared/model/back/property.model';
 
 @Component({
   selector: 'app-testcasecontent',
@@ -12,37 +10,32 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class TcScriptComponent implements OnInit {
 
-  // full testcase object with step content
+  /** full testcase object with step content */
   @Input('testcase') testcase: TestCase;
 
-  // list of countries
-  private inv_countriesList: Array<Invariant>;
-
-  // event received from parent to trigger the saveScript function
-  // TODO : remove
-  @Input() saveScriptEvent: Observable<void>;
-
-  // list of tabs
+  /** list of tabs */
   private tabs: string[] = ['Script', 'Properties'];
-  // currently active tab
+
+  /** currently active tab */
   private selectedTab: string;
 
-  private oldVersion = false; // TODO : to remove and keep a version
-
   constructor(
-    private testService: TestcaseService,
-    private invariantsService: InvariantsService
+    private testcaseService: TestcaseService
   ) { }
 
   ngOnInit() {
     this.selectedTab = this.tabs[0];
+    this.createPropertiesV2();
+    // save the current step attribute : corresponds to the initial index
+    this.testcaseService.SaveCurrentStepIndex(this.testcase.steps);
   }
 
-  // send the new script to the API for saving
-  saveTestCase() {
-    // send the testcase to the data service
-    // this.testService.saveTestCase(this.testcase);
-    console.log('SAVE SCRIPT');
-    // TODO : complete the testservice function
+  /**
+   * temporaty function that build the properties V2 field
+   */
+  createPropertiesV2() {
+    this.testcase.propertiesV2 = new TestCasePropertiesV2();
+    this.testcase.propertiesV2.testCaseProperties = this.testcaseService.groupPropertiesByName(this.testcase.properties.testCaseProperties);
+    this.testcase.propertiesV2.inheritedProperties = this.testcaseService.groupPropertiesByName(this.testcase.properties.inheritedProperties);
   }
 }

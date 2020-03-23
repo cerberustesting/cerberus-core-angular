@@ -1,5 +1,4 @@
 <div *ngIf="propertyGroups" class="push">
-
     <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center push">
 
         <!-- TITLE -->
@@ -21,11 +20,11 @@
         <!-- END ADD PROPERTY BUTTON -->
     </div>
 
+    <!-- TABLE -->
     <div *ngIf="propertyGroups.length !== 0">
 
+        <!-- TABLE HEADER -->
         <div class="block block-bordered mb-0">
-
-            <!-- TABLE HEADER -->
             <div class="block-header block-header-default pt-2 pb-2" style="background-color:#e7eaf2;">
                 <div class="row full-width">
                     <div class="col-3">
@@ -44,9 +43,8 @@
                     </div>
                 </div>
             </div>
-            <!-- END TABLE HEADER -->
-
         </div>
+        <!-- END TABLE HEADER -->
 
         <!-- LIST OF PROPERTY GROUP -->
         <app-propertygroup *ngFor="let propertygroup of propertyGroups" [propertygroup]="propertygroup"
@@ -55,12 +53,14 @@
         <!-- END LIST OF PROPERTY GROUP -->
 
     </div>
+    <!-- END TABLE -->
 
+    <!-- NO PROPERTY MESSAGE-->
     <div *ngIf="propertyGroups.length === 0">
         <p class="font-w600">
-            No property defined
-            <i class="far fa-frown"></i>
+            No property defined <i class="far fa-frown"></i>
         </p>
     </div>
+    <!-- END NO PROPERTY MESSAGE-->
 
 </div>

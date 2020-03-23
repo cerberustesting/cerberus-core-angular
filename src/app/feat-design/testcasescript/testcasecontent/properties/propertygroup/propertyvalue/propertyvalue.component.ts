@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/property.model';
-import { TestCase } from 'src/app/shared/model/back/testcase.model';
+import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/testcase/property.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
 import crossReference_PropertyTypeValue from 'src/assets/data/cross_references/propertytype_value.json';

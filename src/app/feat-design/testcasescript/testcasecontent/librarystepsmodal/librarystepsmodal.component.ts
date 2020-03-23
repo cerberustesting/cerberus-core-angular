@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { Step } from 'src/app/shared/model/back/testcase.model';
+import { Step } from 'src/app/shared/model/back/testcase/step.model';
 import { UserService } from 'src/app/core/services/api/user.service';
-import { IUser } from 'src/app/shared/model/user.model';
+import { User } from 'src/app/shared/model/back/user/user.model';
 
 @Component({
   selector: 'app-librarystepsmodal',
@@ -14,7 +14,7 @@ import { IUser } from 'src/app/shared/model/user.model';
 export class LibraryStepsModalComponent implements OnInit {
 
   librarySteps: Step[];
-  user: IUser;
+  user: User;
   userSystem: string[];
 
   constructor(
@@ -34,8 +34,8 @@ export class LibraryStepsModalComponent implements OnInit {
     this.userService.getUser();
 
     this.testService.observableLibraryStepList.subscribe(response => {
-       this.librarySteps = response;
-      });
+      this.librarySteps = response;
+    });
     this.testService.getLibraryStepList(this.user.defaultSystem);
 
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../utils/notification.service';
 import { NotificationStyle } from '../utils/notification.model';
@@ -90,6 +90,7 @@ export class InvariantsService {
         this.observableTceStatusList.next(this.tcestatusList);
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
+
   getPriorities() {
     this.http.get<Invariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=priority')
       .subscribe(response => {

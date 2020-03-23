@@ -1,4 +1,4 @@
-import { Column, COLUMN_TYPE, FILTER_MODE } from 'src/app/shared/model/column.model';
+import { Column, COLUMN_TYPE, FILTER_MODE } from 'src/app/shared/model/front/column.model';
 
 export const TestCasesColumnsData: Column[] = [
     {

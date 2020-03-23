@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserPreferencesService } from '../services/utils/userpreferences.service';
-import { IUser } from 'src/app/shared/model/user.model';
+import { User } from 'src/app/shared/model/back/user/user.model';
 import { UserService } from '../services/api/user.service';
 import { MenuItem } from 'src/app/shared/model/front/menu.model';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class SidebarComponent implements OnInit {
 
   // user information
-  private user: IUser;
+  private user: User;
 
   public nightMode: boolean;
 

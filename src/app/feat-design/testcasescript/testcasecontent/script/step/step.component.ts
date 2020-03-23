@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Step, Action, TestCase } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { SettingsService } from '../../settings/settings.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
+import { Action } from 'src/app/shared/model/back/testcase/action.model';
+import { Step } from 'src/app/shared/model/back/testcase/step.model';
 
 @Component({
   selector: 'app-step',

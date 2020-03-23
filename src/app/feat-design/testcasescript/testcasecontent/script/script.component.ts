@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { TestCase, Step } from 'src/app/shared/model/back/testcase.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { LibraryStepsModalComponent } from '../librarystepsmodal/librarystepsmodal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Step } from 'src/app/shared/model/back/testcase/step.model';
 
 @Component({
   selector: 'app-script',

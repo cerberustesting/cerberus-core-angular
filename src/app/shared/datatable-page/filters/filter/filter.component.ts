@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
+import { Column, FILTER_MODE } from 'src/app/shared/model/front/column.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { FilterService } from 'src/app/core/services/api/filter.service';

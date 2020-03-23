@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { TestCase } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 
 @Component({
   selector: 'app-audit-tab',

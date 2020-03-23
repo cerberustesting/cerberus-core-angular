@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Label } from 'src/app/shared/model/back/label.model';
+import { Label } from 'src/app/shared/model/back/testcase/label.model';
 
 export class LabelNode {
   nodes: Array<LabelNode>;

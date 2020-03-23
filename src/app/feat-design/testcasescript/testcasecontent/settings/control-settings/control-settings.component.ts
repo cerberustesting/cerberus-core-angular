@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { Control } from 'src/app/shared/model/back/testcase.model';
+import { Control } from 'src/app/shared/model/back/testcase/control.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 
 @Component({

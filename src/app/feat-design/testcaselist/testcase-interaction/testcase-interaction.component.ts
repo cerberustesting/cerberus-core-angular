@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { TestCase } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { TestFolder } from 'src/app/shared/model/back/test.model';
+import { TestFolder } from 'src/app/shared/model/back/testfolder/test.model';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { TestService } from 'src/app/core/services/api/test/test.service';
 
 @Component({

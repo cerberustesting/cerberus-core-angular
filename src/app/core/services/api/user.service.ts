@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { IUser } from 'src/app/shared/model/user.model';
+import { User } from 'src/app/shared/model/back/user/user.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -12,17 +12,17 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   // user object
-  public user: IUser;
+  public user: User;
 
   // observable for the user
-  public observableUser = new BehaviorSubject<IUser>(this.user);
+  public observableUser = new BehaviorSubject<User>(this.user);
 
   /**
    * fetch the user information in Cerberus DB.
    * Authentication has been done with Keycloak when calling it.
    */
   getUser() {
-    this.http.get<IUser>(environment.cerberus_api_url + '/ReadMyUser')
+    this.http.get<User>(environment.cerberus_api_url + '/ReadMyUser')
       .subscribe(response => {
         this.user = response;
         // DIRTY : format the default system list,

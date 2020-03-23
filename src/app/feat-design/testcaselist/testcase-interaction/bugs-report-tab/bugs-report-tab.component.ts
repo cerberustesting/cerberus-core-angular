@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Bug } from 'src/app/shared/model/back/testcase.model';
+import { Component, Input } from '@angular/core';
+import { Bug } from 'src/app/shared/model/back/testcase/bug.model';
 import { FormGroup } from '@angular/forms';
 
 @Component({

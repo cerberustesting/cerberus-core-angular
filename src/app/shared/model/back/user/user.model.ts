@@ -1,4 +1,4 @@
-export interface IUser {
+export interface User {
     menu: {
         accountLink: string;
         logoutLink: string;

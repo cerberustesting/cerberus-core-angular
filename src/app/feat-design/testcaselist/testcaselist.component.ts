@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Column } from 'src/app/shared/model/column.model';
+import { Column } from 'src/app/shared/model/front/column.model';
 import { TestCasesColumnsData } from './testcaselist.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { Subject } from 'rxjs';
@@ -8,7 +8,7 @@ import { NotificationService } from 'src/app/core/services/utils/notification.se
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { TestcaseInteractionComponent } from './testcase-interaction/testcase-interaction.component';
 import { Router } from '@angular/router';
-import { TestCase } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { DatatablePageComponent } from 'src/app/shared/datatable-page/datatable-page.component';
 
 @Component({

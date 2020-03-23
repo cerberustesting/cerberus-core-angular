@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Column } from 'src/app/shared/model/column.model';
+import { Column } from 'src/app/shared/model/front/column.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { DataLibColumnsData } from './datalibrary.columnsdata';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CampainsColumnsData } from './campaigns-columns.data';
-import { Column } from 'src/app/shared/model/column.model';
+import { Column } from 'src/app/shared/model/front/column.model';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 
 @Component({

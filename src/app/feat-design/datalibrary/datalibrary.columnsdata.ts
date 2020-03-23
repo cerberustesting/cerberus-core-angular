@@ -1,4 +1,4 @@
-import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
+import { Column, FILTER_MODE } from 'src/app/shared/model/front/column.model';
 
 export const DataLibColumnsData: Column[] = [
   {

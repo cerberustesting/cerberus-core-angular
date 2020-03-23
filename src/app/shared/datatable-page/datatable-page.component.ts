@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, TemplateRef, ContentChild, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { Column } from '../model/column.model';
+import { Column } from '../model/front/column.model';
 import { FilterService } from 'src/app/core/services/api/filter.service';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { FiltersComponent } from './filters/filters.component';
-import { Invariant } from '../model/invariants.model';
+import { Invariant } from '../model/back/invariant/invariant.model';
 import { UserService } from 'src/app/core/services/api/user.service';
-import { IUser } from '../model/user.model';
+import { User } from '../model/back/user/user.model';
 
 @Component({
   selector: 'app-datatable-page',
@@ -41,7 +41,7 @@ export class DatatablePageComponent implements OnInit {
   };
 
   /** user object */
-  public user: IUser;
+  public user: User;
 
   constructor(
     private filterService: FilterService,
@@ -66,6 +66,7 @@ export class DatatablePageComponent implements OnInit {
       this.page.number = 0;
       this.search();
     });
+
     if (this.refreshResults) {
       this.refreshResults.subscribe(() => this.applyFilters());
     }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Step, Action, Control } from 'src/app/shared/model/back/testcase.model';
+import { Step } from 'src/app/shared/model/back/testcase/step.model';
 import { BehaviorSubject } from 'rxjs';
+import { Control } from 'src/app/shared/model/back/testcase/control.model';
+import { Action } from 'src/app/shared/model/back/testcase/action.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-import { Invariant } from '../invariants.model';
+import { Invariant } from '../invariant/invariant.model';
 
 /**
  * @class Property Value

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Invariant } from '../model/invariants.model';
+import { Invariant } from '../model/back/invariant/invariant.model';
 import { InvariantsService } from '../../core/services/api/invariants.service';
 import { RunParameters } from './run.parameters';
 import { RunService } from '../../core/services/api/run.service';

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestCase } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { TestCasePropertiesV2 } from 'src/app/shared/model/back/property.model';
+import { TestCasePropertiesV2 } from 'src/app/shared/model/back/testcase/property.model';
 
 @Component({
   selector: 'app-testcasecontent',

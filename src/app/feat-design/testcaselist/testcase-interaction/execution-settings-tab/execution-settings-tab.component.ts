@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';

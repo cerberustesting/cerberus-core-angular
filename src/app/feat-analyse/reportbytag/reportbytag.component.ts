@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ITag } from 'src/app/shared/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 declare function initChartJS();
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { IBuildRevisionInvariant } from 'src/app/shared/model/buildrevisioninvariant.model';
-import { Label } from 'src/app/shared/model/back/label.model';
-import { IApplication } from 'src/app/shared/model/application.model';
+import { BuildRevisionDefinition } from 'src/app/shared/model/buildrevisioninvariant.model';
+import { Label } from 'src/app/shared/model/back/testcase/label.model';
+import { Application } from 'src/app/shared/model/back/application/application.model';
 import { environment } from 'src/environments/environment';
 import { InvariantsService } from './invariants.service';
 import { UserService } from './user.service';
@@ -13,24 +13,24 @@ import { UserService } from './user.service';
 })
 export class SystemService {
 
-  private sprints: Array<IBuildRevisionInvariant> = new Array<IBuildRevisionInvariant>();
-  private revs: Array<IBuildRevisionInvariant> = new Array<IBuildRevisionInvariant>();
+  private sprints: Array<BuildRevisionDefinition> = new Array<BuildRevisionDefinition>();
+  private revs: Array<BuildRevisionDefinition> = new Array<BuildRevisionDefinition>();
   private labels: Array<Label> = new Array<Label>();
   private labelsHierarchy: Array<any>;
-  private applicationsList: Array<IApplication> = new Array<IApplication>();
-  private application: IApplication;
+  private applicationsList: Array<Application> = new Array<Application>();
+  private application: Application;
 
-  observableSprints = new BehaviorSubject<IBuildRevisionInvariant[]>(this.sprints);
-  observableRevs = new BehaviorSubject<IBuildRevisionInvariant[]>(this.revs);
+  observableSprints = new BehaviorSubject<BuildRevisionDefinition[]>(this.sprints);
+  observableRevs = new BehaviorSubject<BuildRevisionDefinition[]>(this.revs);
   observableLabelsList = new BehaviorSubject<Label[]>(this.labels);
-  observableApplicationList = new BehaviorSubject<IApplication[]>(this.applicationsList);
-  observableApplication = new BehaviorSubject<IApplication>(this.application);
+  observableApplicationList = new BehaviorSubject<Application[]>(this.applicationsList);
+  observableApplication = new BehaviorSubject<Application>(this.application);
   observableLabelsHierarchyList = new BehaviorSubject<any>(this.labelsHierarchy);
 
   constructor(private http: HttpClient, private invariantsService: InvariantsService, private userService: UserService) { }
 
   getSprintsFromSystem(system: string) {
-    this.http.get<IBuildRevisionInvariant[]>(environment.cerberus_api_url + '/ReadBuildRevisionInvariant?system=' + system + '&level=1')
+    this.http.get<BuildRevisionDefinition[]>(environment.cerberus_api_url + '/ReadBuildRevisionInvariant?system=' + system + '&level=1')
       .subscribe(response => {
         // @ts-ignore
         this.sprints = response.contentTable;
@@ -39,7 +39,7 @@ export class SystemService {
   }
 
   getRevFromSystem(system: string) {
-    this.http.get<IBuildRevisionInvariant[]>(environment.cerberus_api_url + '/ReadBuildRevisionInvariant?system=' + system + '&level=2')
+    this.http.get<BuildRevisionDefinition[]>(environment.cerberus_api_url + '/ReadBuildRevisionInvariant?system=' + system + '&level=2')
       .subscribe(response => {
         this.revs = response;
         // @ts-ignore
@@ -91,7 +91,7 @@ export class SystemService {
     this.applicationsList = [];
     // for each selected system, gather the application list
     for (const system of this.userService.user.defaultSystem) {
-      this.http.get<IApplication[]>(environment.cerberus_api_url + '/ReadApplication?system=' + system)
+      this.http.get<Application[]>(environment.cerberus_api_url + '/ReadApplication?system=' + system)
         .subscribe(response => {
           // @ts-ignore
           this.applicationsList = this.applicationsList.concat(response.contentTable);
@@ -103,7 +103,7 @@ export class SystemService {
   }
 
   getApplication(application: string) {
-    this.http.get<IApplication>(environment.cerberus_api_url + '/ReadApplication?application=' + application)
+    this.http.get<Application>(environment.cerberus_api_url + '/ReadApplication?application=' + application)
       .subscribe(response => {
         this.application = response;
         // @ts-ignore

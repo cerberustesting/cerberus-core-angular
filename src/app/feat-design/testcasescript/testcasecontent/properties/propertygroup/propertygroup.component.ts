@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestCase } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { PropertyGroup, PropertyValue } from 'src/app/shared/model/back/property.model';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { PropertyGroup, PropertyValue } from 'src/app/shared/model/back/testcase/property.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 
 @Component({
   selector: 'app-propertygroup',

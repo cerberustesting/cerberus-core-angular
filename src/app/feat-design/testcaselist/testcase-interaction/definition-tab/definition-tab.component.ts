@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IApplication } from 'src/app/shared/model/application.model';
+import { Application } from 'src/app/shared/model/back/application/application.model';
 import { SystemService } from 'src/app/core/services/api/system.service';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -17,7 +17,7 @@ export class DefinitionTabComponent implements OnInit {
   @Input('definition') definition: FormGroup;
 
   /** list of available applications */
-  public applications: Array<IApplication>;
+  public applications: Array<Application>;
 
   // public invariants
   public statusList: Array<Invariant>;

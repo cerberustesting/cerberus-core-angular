@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { TestFolder } from 'src/app/shared/model/back/test.model';
-import { TestCase, Step, Action, Control } from 'src/app/shared/model/back/testcase.model';
+import { BehaviorSubject } from 'rxjs';
+import { TestFolder } from 'src/app/shared/model/back/testfolder/test.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { TrueindexPipe } from 'src/app/shared/pipes/trueindex.pipe';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from '../../utils/notification.service';
 import { tap } from 'rxjs/operators';
 import { NotificationStyle } from '../../utils/notification.model';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { TestService } from '../test/test.service';
 import { GlobalService } from '../../utils/global.service';
 import { LabelService } from '../label/label.service';
@@ -16,7 +16,10 @@ import { LabelService } from '../label/label.service';
 // mocks
 import single_testcase_full_mock from 'src/assets/data/mock/readTC_single_full.json';
 import single_testcase_mock from 'src/assets/data/mock/readTC_single.json';
-import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/property.model';
+import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/testcase/property.model';
+import { Control } from 'src/app/shared/model/back/testcase/control.model';
+import { Action } from 'src/app/shared/model/back/testcase/action.model';
+import { Step } from 'src/app/shared/model/back/testcase/step.model';
 
 @Injectable({
   providedIn: 'root'

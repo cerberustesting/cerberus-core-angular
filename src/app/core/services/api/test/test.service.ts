@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { TestFolder } from 'src/app/shared/model/back/test.model';
+import { TestFolder } from 'src/app/shared/model/back/testfolder/test.model';
 import { environment } from 'src/environments/environment';
 import { GlobalService } from '../../utils/global.service';
 

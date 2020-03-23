@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { TestCase } from 'src/app/shared/model/back/testcase.model';
-import { TestFolder } from 'src/app/shared/model/back/test.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
+import { TestFolder } from 'src/app/shared/model/back/testfolder/test.model';
 import { TestService } from 'src/app/core/services/api/test/test.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SettingsService } from '../testcasecontent/settings/settings.service';

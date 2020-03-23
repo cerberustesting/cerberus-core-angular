@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Column } from 'src/app/shared/model/column.model';
+import { Column } from 'src/app/shared/model/front/column.model';
 import { InvariantsService } from './invariants.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { TestCase } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { UserService } from './user.service';
 import tcs from 'src/assets/data/mock/readTCs.json';
 
@@ -55,6 +55,7 @@ export class FilterService {
   * @params pageInformation : information on the current page
   * @params globalSearch : quick search keyword
  */
+  // TODO : pass the systems as an input
   generateQueryStringParameters(
     columnList: Array<Column>,
     pageInformation: { size: number, sort: any, number: number, totalCount: number },
@@ -134,15 +135,18 @@ export class FilterService {
    * @params queryParameters : url-encoded filters
   */
   getContentForTable(servlet: string, queryParameters: string, callback): void {
-    this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
-      .subscribe((response) => {
-        if (response) {
-          if (response.iTotalRecords > 0) {
-            // sends the mocked values
-            callback(tcs.contentTable, 3);
-          }
-        }
-      });
+    // return mocked results
+    callback(tcs.contentTable, 3);
+    // this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
+    //   .subscribe((response) => {
+    //     if (response) {
+    //       if (response.iTotalRecords > 0) {
+    //         // sends the mocked values
+    //         console.log("callback sent")
+    //         callback(tcs.contentTable, 3);
+    //       }
+    //     }
+    //   });
   }
 
   // return the options list of possible values for a column

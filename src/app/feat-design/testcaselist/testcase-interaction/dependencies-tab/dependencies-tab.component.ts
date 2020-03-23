@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestFolder } from 'src/app/shared/model/back/test.model';
+import { TestFolder } from 'src/app/shared/model/back/testfolder/test.model';
 import { TestService } from 'src/app/core/services/api/test/test.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
-import { TestCase, TestCaseDependency } from 'src/app/shared/model/back/testcase.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
+import { TestCaseDependency } from 'src/app/shared/model/back/testcase/dependency.model';
 
 @Component({
   selector: 'app-dependencies-tab',

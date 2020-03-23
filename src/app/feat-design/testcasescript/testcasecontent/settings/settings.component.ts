@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Step, Action, Control } from 'src/app/shared/model/back/testcase.model';
+import { Step } from 'src/app/shared/model/back/testcase/step.model';
 import { SettingsService } from './settings.service';
+import { Control } from 'src/app/shared/model/back/testcase/control.model';
+import { Action } from 'src/app/shared/model/back/testcase/action.model';
 
 @Component({
   selector: 'app-settings',

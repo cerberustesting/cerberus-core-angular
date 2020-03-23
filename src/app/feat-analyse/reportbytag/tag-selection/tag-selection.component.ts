@@ -3,7 +3,7 @@ import { ReportingService } from 'src/app/core/services/api/reporting.service';
 import { ITag } from 'src/app/shared/model/reporting.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 
 @Component({
   selector: 'app-tag-selection',

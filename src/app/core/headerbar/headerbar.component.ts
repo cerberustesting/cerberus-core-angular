@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { KeycloakService } from 'src/app/core/services/auth/keycloak.service';
 import { UserService } from '../services/api/user.service';
-import { IUser } from 'src/app/shared/model/user.model';
+import { User } from 'src/app/shared/model/back/user/user.model';
 import { SidecontentService } from '../services/api/sidecontent.service';
 import { NotificationService } from '../services/utils/notification.service';
 import { HeaderTitleService } from '../services/utils/header-title.service';
@@ -21,7 +21,7 @@ export class HeaderbarComponent implements OnInit {
   private selectedSystemsList: Array<string> = [];
 
   // user data from API
-  public user: IUser;
+  public user: User;
 
   // user data from Keycloak
   public userFullName: string; // full user displayed name

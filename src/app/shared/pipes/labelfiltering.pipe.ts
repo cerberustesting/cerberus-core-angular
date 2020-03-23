@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Label } from '../model/back/label.model';
+import { Label } from '../model/back/testcase/label.model';
 
 @Pipe({
   name: 'labelfiltering',

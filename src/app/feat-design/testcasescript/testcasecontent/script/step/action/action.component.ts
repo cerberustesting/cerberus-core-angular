@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { Action, TestCase, Control } from 'src/app/shared/model/back/testcase.model';
-import { Invariant } from 'src/app/shared/model/invariants.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
+import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SettingsService } from '../../../settings/settings.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DraganddropService } from '../../../draganddrop.service';
+import { Control } from 'src/app/shared/model/back/testcase/control.model';
+import { Action } from 'src/app/shared/model/back/testcase/action.model';
 
 @Component({
   selector: 'app-action',

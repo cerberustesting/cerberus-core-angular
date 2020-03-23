@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, TemplateRef } from '@angular/core';
-import { Column, FILTER_MODE } from 'src/app/shared/model/column.model';
+import { Column, FILTER_MODE } from 'src/app/shared/model/front/column.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

@@ -26,8 +26,15 @@ export class TcScriptComponent implements OnInit {
   ngOnInit() {
     this.selectedTab = this.tabs[0];
     this.createPropertiesV2();
-    // save the current step attribute : corresponds to the initial index
-    this.testcaseService.SaveCurrentStepIndex(this.testcase.steps);
+    // for each step, save sort value to step
+    this.testcaseService.saveCurrentStepIndex(this.testcase.steps);
+    // for each action, save sort value to sequence
+    this.testcase.steps.forEach(step => {
+      this.testcaseService.saveCurrentActionIndex(step.actions);
+      step.actions.forEach(action => {
+        this.testcaseService.saveCurrentControlIndex(action.controls);
+      });
+    });
   }
 
   /**

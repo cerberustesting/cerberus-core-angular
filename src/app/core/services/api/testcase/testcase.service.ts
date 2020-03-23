@@ -352,12 +352,11 @@ export class TestcaseService {
   }
 
   /**
-   * set all the 'step' attribute with the current index (sort), must be called once when the test case is fetched
+   * set all the 'step' attributes with the current index (sort), must be called once when the test case is fetched
    * @param steps list of steps to process
    */
-  SaveCurrentStepIndex(steps: Step[]): void {
+  saveCurrentStepIndex(steps: Step[]): void {
     steps.forEach((step) => {
-      // save it in the step attribute
       step.step = step.sort;
     });
   }
@@ -372,14 +371,34 @@ export class TestcaseService {
     });
   }
 
+  /**
+  * set all the 'sequence' attributes with the current index (sort), must be called once when the test case is fetched
+  * @param actions list of actions to process
+  */
+  saveCurrentActionIndex(actions: Action[]): void {
+    actions.forEach((action) => {
+      action.sequence = action.sort;
+    });
+  }
+
   /** refresh the sort attribute of each control (usefull for drag and drop)
   * @param controls list of control to reorder
   */
   refreshControlSort(controls: Array<Control>): void {
     controls.forEach((control, index) => {
       const newIndex = this.trueindexPipe.transform(index);
-      // console.log("control #"+newIndex+' descripton: '+control.description);
       control.sort = newIndex;
+    });
+  }
+
+  /**
+  * set all the 'controlSequence' attributes with the current index (sort), must be called once when the test case is fetched
+  * @param controls list of controls to process
+  */
+  saveCurrentControlIndex(controls: Control[]): void {
+    controls.forEach((control) => {
+      // add the sort -1 because i don't know
+      control.sort = control.controlSequence - 1;
     });
   }
 
@@ -402,7 +421,9 @@ export class TestcaseService {
       newStep.toDelete = step.toDelete || false;
       newStep.test = step.test;
       newStep.testcase = step.testCase;
-      newStep.step = step.step;
+      if (step.step) {
+        newStep.step = step.step;
+      }
       newStep.sort = step.sort;
       newStep.description = step.description;
       newStep.useStep = step.useStep;
@@ -425,8 +446,11 @@ export class TestcaseService {
         newAction.test = action.test;
         newAction.testcase = action.testCase;
         newAction.step = action.step;
-        newAction.sequence = action.sequence;
-        newAction.sort = action.sequence;
+        // add the sequence only if it defined
+        if (action.sequence) {
+          newAction.sequence = action.sequence;
+        }
+        newAction.sort = action.sort;
         newAction.description = action.description;
         newAction.action = action.action;
         // mapping ????
@@ -449,7 +473,9 @@ export class TestcaseService {
           newControl.test = control.test;
           newControl.testCase = control.testCase;
           newControl.step = control.step;
-          newControl.sequence = control.sequence;
+          if (control.sequence) {
+            newControl.sequence = control.sequence;
+          }
           newControl.control = control.control;
           newControl.sort = control.sort;
           newControl.description = control.description;

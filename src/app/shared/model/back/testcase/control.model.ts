@@ -49,10 +49,10 @@ export class Control {
     /** @description control index in its action */
     sort: number;
 
-    /** @description ? */
+    /** @description position of the parent action */
     sequence: number;
 
-    /** @description ? */
+    /** @description previous position of the control */
     controlSequence: number;
 
     /** @description index of parent step */
@@ -61,10 +61,10 @@ export class Control {
     /** @description flag for deletion */
     toDelete: boolean;
 
-    constructor(test: string, testCase: string, sort: number) {
+    constructor(sort: number, stepIndex: number, actionIndex: number) {
         this.objType = 'control';
-        this.test = test;
-        this.testCase = testCase;
+        this.test = '';
+        this.testCase = '';
         this.conditionOper = 'always';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
@@ -77,9 +77,8 @@ export class Control {
         this.fatal = 'N';
         this.screenshotFilename = '';
         this.sort = sort;
-        this.sequence = null;
-        this.controlSequence = null;
-        this.step = null;
+        this.sequence = actionIndex;
+        this.step = stepIndex;
         this.toDelete = false;
     }
 }

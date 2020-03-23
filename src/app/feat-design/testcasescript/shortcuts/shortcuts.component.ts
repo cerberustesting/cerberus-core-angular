@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,6 +6,7 @@ import { TestcaseInteractionComponent } from '../../testcaselist/testcase-intera
 import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 
 @Component({
   selector: 'app-shortcuts',
@@ -19,6 +20,10 @@ export class ShortcutsComponent {
 
   /** currently selected test case id */
   @Input('selectedTestCase') selectedTestCase: string;
+
+  // TODO: we could only use this property as an @Input
+  /** full test case object */
+  @Input('testcase') testcase: TestCase;
 
   constructor(
     private notificationService: NotificationService,
@@ -62,7 +67,6 @@ export class ShortcutsComponent {
   * @param test the test folder to edit, information from selection
   * @param testcase the test case id to edit, information from selection
   */
-
   tagTestCaseHeader(test: string, testcase: string): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: test,
@@ -106,6 +110,13 @@ export class ShortcutsComponent {
         }
       );
     };
+  }
+
+  /**
+   * send the current test case object to the API
+   */
+  saveScript() {
+    this.testcaseService.saveTestCase(this.testcase);
   }
 
 }

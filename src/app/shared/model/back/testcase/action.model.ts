@@ -9,10 +9,10 @@ export class Action {
     /** @description ? (seems to always be action) */
     objType: string;
 
-    /** @description test of the action */
+    /** @description test of the action (only relevant with libray steps)*/
     test: string;
 
-    /** @description test of the action */
+    /** @description test of the action (only relevant with libray steps)*/
     testCase: string;
 
     /** @description action condition operator */
@@ -42,10 +42,10 @@ export class Action {
     /** @description action description */
     description: string;
 
-    /** @description chronological position of the action */
+    /** @description position (index) of the action */
     sort: number;
 
-    /** @description ? */
+    /** @description previous position of the action */
     sequence: number;
 
     /** @description index of the step for this action */
@@ -63,21 +63,22 @@ export class Action {
     /** @description list of controls */
     controls: Array<Control>;
 
-    constructor(test: string, testcase: string, sort: number) {
+    constructor(sort: number, stepIndex: number) {
         this.objType = 'action';
         this.forceExeStatus = '';
-        this.test = test;
-        this.testCase = testcase;
+        this.test = '';
+        this.testCase = '';
         this.conditionOper = 'always';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
+        this.conditionVal3 = '';
         this.action = 'doNothing';
         this.value1 = '';
         this.value2 = '';
+        this.value3 = '';
         this.description = '';
         this.sort = sort;
-        this.sequence = null;
-        this.step = null;
+        this.step = stepIndex;
         this.forceExeStatus = '';
         this.screenshotFilename = '';
         this.toDelete = false;

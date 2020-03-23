@@ -102,7 +102,6 @@ export class Step {
         this.description = '';
         this.actions = new Array<Action>();
         this.sort = sort;
-        // this.step = sort;
         this.dateCreated = '';
         this.dateModif = '';
         this.usrModif = '';

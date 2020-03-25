@@ -17,7 +17,7 @@
         <div *ngIf="column.filterMode==='DROPDOWN'" class="form-check form-check-inline" style="min-width: 50%;">
           <ng-select class="custom custom-icon custom-sm" [items]="dataList" [selectableGroup]="true"
             [multiple]="column.multiple" [closeOnSelect]="!column.multiple" [bindValue]="id" [bindLabel]="label"
-            [(ngModel)]='column.sSearch' [clearable]="true">
+            [(ngModel)]='column.sSearch' [clearable]="true" [placeholder]="column.placeholder">
 
             <ng-template ng-multi-label-tmp let-items="items" let-clear="clear" let-search="searchTerm">
 

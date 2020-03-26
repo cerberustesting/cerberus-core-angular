@@ -63,7 +63,7 @@ export class TestcaselistComponent implements OnInit {
     // get the first row from the table content
     const firstRowInTable = this.datatablepageComponent.getFirstRow();
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
-      testcaseheader: firstRowInTable.header,
+      testcaseheader: firstRowInTable,
       mode: INTERACTION_MODE.CREATE,
       exit: () => {
         this.refreshResults();

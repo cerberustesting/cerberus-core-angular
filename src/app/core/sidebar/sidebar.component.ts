@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserPreferencesService } from '../services/utils/userpreferences.service';
 import { User } from 'src/app/shared/model/back/user/user.model';
 import { UserService } from '../services/api/user.service';

@@ -402,7 +402,7 @@ export class TestcaseService {
     });
   }
 
-  saveTestCase(testcase: TestCase) {
+  saveTestCase(testcase: TestCase, callback: (success: boolean) => void) {
     // declare the object to be send to /UpdateTestCaseWithDependencies
     let requestPayload: any;
     // instantiate it
@@ -525,7 +525,6 @@ export class TestcaseService {
         requestPayload.propArr.push(newPropValue);
       });
     });
-    console.log(requestPayload.propArr);
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -535,7 +534,12 @@ export class TestcaseService {
 
     this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCaseWithDependencies', requestPayload, httpOptions)
       .subscribe(rep => {
-        console.log(rep);
+        if (rep) {
+          if (rep.messageType === 'OK') {
+            this.notificationService.createANotification('Test case script successfully saved', NotificationStyle.Success);
+            callback(true);
+          }
+        }
       });
   }
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -24,6 +24,9 @@ export class ShortcutsComponent {
   // TODO: we could only use this property as an @Input
   /** full test case object */
   @Input('testcase') testcase: TestCase;
+
+  /** event to send to the parent component to refresh the test case object after saving */
+  @Output() sendRefreshEvent = new EventEmitter<TestCase>();
 
   constructor(
     private notificationService: NotificationService,
@@ -116,7 +119,11 @@ export class ShortcutsComponent {
    * send the current test case object to the API
    */
   saveScript() {
-    this.testcaseService.saveTestCase(this.testcase);
+    this.testcaseService.saveTestCase(this.testcase, ((success: boolean) => {
+      if (success === true) {
+        this.sendRefreshEvent.emit(this.testcase);
+      }
+    }));
   }
 
 }

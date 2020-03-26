@@ -65,7 +65,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
       if (this.activatedRoute.snapshot.paramMap.has('testcase')) {
         this.selectedTestCase = decodeURIComponent(this.activatedRoute.snapshot.paramMap.get('testcase'));
         // if a test folder and a test case id are defined in the URL, get the corresponding test case object
-        this.refreshTestCase();
+        this.refreshTestCase(this.selectedTest, this.selectedTestCase);
       } else {
         this.selectedTestCase = null;
       }
@@ -119,13 +119,13 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     // if the selected case id is null, don't update the route (it will be done by receiveTest method)
     if (this.selectedTestCase !== null) {
       this.router.navigate(['/design/testcasescript', this.selectedTest, this.selectedTestCase]);
-      this.refreshTestCase();
+      this.refreshTestCase(this.selectedTest, this.selectedTestCase);
     }
   }
 
   /** send a new GET query to the API, resolve the promise by getting the test case object */
-  refreshTestCase(): void {
-    this.testcaseService.getTestCase(this.selectedTest, this.selectedTestCase, (testcase: TestCase) => {
+  refreshTestCase(testfolder: string, testcaseid: string): void {
+    this.testcaseService.getTestCase(testfolder, testcaseid, (testcase: TestCase) => {
       this.testcase = testcase;
       // refresh the labels list for the testcase system
       this.systemService.getLabelsFromSystem(this.testcase.system);

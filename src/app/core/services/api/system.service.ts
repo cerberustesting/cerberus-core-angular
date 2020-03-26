@@ -48,21 +48,23 @@ export class SystemService {
       });
   }
 
-  getLabelsFromSystem(system: string) {
-    this.http.get<Label[]>(environment.cerberus_api_url + '/ReadLabel?system=' + system)
-      .subscribe(response => {
-        this.labels = response;
-        // @ts-ignore
-        this.labels = this.labels.contentTable;
-        for (const index in this.labels) {
-          if (index) {
-            // DIRTY: delete the display property in JSON object
-            // @ts-ignore
-            delete this.labels[index].display;
-          }
+  getLabelsFromSystem(system?: string) {
+    let url = environment.cerberus_api_url + '/ReadLabel';
+    // if the system argument is defined, filter add it accordingly to the url
+    if (system) { url += '?system = ' + system; }
+    this.http.get<Label[]>(url).subscribe(response => {
+      this.labels = response;
+      // @ts-ignore
+      this.labels = this.labels.contentTable;
+      for (const index in this.labels) {
+        if (index) {
+          // DIRTY: delete the display property in JSON object
+          // @ts-ignore
+          delete this.labels[index].display;
         }
-        this.observableLabelsList.next(this.labels);
-      });
+      }
+      this.observableLabelsList.next(this.labels);
+    });
   }
 
   getLabelsHierarchyFromSystem(system: string, test: string, testCase: string, ) {

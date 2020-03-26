@@ -1,6 +1,6 @@
 <div *ngIf="user" class="page">
     <app-filters (globalSearchContentChange)="applyFilters($event)" [page]="page" [columns]="columns"
-        [selectedRows]="selectedRows" [servlet]="servlet" [filterTemplate]="filterTemplate"
+         [servlet]="servlet" [filterTemplate]="filterTemplate"
         [massActionTemplate]="massActionTemplate">
     </app-filters>
 

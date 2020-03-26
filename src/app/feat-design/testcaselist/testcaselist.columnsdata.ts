@@ -51,6 +51,7 @@ export const TestCasesColumnsData: Column[] = [
         apiName: 'lab.label',
         contentName: 'labels',
         type: COLUMN_TYPE.LABEL,
+        filterMode: FILTER_MODE.DROPDOWN,
         active: true,
         defaultActive: true,
         sortable: false,
@@ -127,8 +128,9 @@ export const TestCasesColumnsData: Column[] = [
         active: false,
         filterDisplayed: false,
         type: COLUMN_TYPE.BOOLEAN,
+        filterMode: FILTER_MODE.DROPDOWN,
         multiple: false,
-        placeholder: 'Select Gloabl Activation',
+        placeholder: 'Select Global Activation',
         sSearch: [],
         defaultActive: false
     },
@@ -143,7 +145,8 @@ export const TestCasesColumnsData: Column[] = [
         sSearch: [],
         sortable: false,
         defaultActive: false,
-        filterable: false
+        filterable: false,
+        multiple: true
     },
     {
         displayName: 'QA Activation',
@@ -153,6 +156,7 @@ export const TestCasesColumnsData: Column[] = [
         filterDisplayed: false,
         type: COLUMN_TYPE.BOOLEAN,
         filterMode: FILTER_MODE.DROPDOWN,
+        multiple: false,
         defaultActive: false,
         filterable: true
     },
@@ -164,6 +168,7 @@ export const TestCasesColumnsData: Column[] = [
         filterDisplayed: false,
         type: COLUMN_TYPE.BOOLEAN,
         filterMode: FILTER_MODE.DROPDOWN,
+        multiple: false,
         defaultActive: false,
         filterable: true
     },
@@ -175,6 +180,7 @@ export const TestCasesColumnsData: Column[] = [
         filterDisplayed: false,
         type: COLUMN_TYPE.BOOLEAN,
         filterMode: FILTER_MODE.DROPDOWN,
+        multiple: false,
         defaultActive: false,
         filterable: true
     },
@@ -216,7 +222,8 @@ export const TestCasesColumnsData: Column[] = [
         placeholder: 'Select User',
         sSearch: [],
         defaultActive: false,
-        type: COLUMN_TYPE.LONGTEXT
+        type: COLUMN_TYPE.LONGTEXT,
+        filterMode: FILTER_MODE.DROPDOWN
     },
     {
         displayName: 'TestCase Version',

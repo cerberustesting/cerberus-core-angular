@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, TemplateRef } from '@angular/core';
-import { Column, FILTER_MODE } from 'src/app/shared/model/front/column.model';
+import { Column } from 'src/app/shared/model/front/column.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -9,13 +9,19 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class FiltersComponent implements OnInit {
 
-  // modal template used to be able to call the openModal method from outside (without the template ref)
+  /** modal template used to be able to call the openModal method from outside (without the template ref) */
   @ViewChild('content', { static: false }) private filtersModalTemplate: TemplateRef<any>;
 
-  @Input('columns') columns: Array<Column>; // list of all available columns to be filtered on
-  @Input('page') page: any; // information about pagination
-  @Input('servlet') servlet: string; // endpoint to pass to the filters
-  @Input('selectedRows') selectedRows: any; // selected rows in the table
+  /** list of all available columns to be filtered on */
+  @Input('columns') columns: Array<Column>;
+
+  /** information about pagination */
+  @Input('page') page: any;
+
+  /** endpoint (to fetch the options list) sent to the filters */
+  @Input('servlet') servlet: string;
+
+
 
   // angular templates declaration
   @Input() filterTemplate: any; // TODO : type TemplateRef
@@ -91,13 +97,5 @@ export class FiltersComponent implements OnInit {
     // reset its values
     column.sSearch = [];
   }
-
-  // OBSOLETE
-  // applyPage(): void {
-  //   const a = document.getElementsByClassName('datatable-body')[0];
-  //   a.scroll(0, 0);
-  //   a.scrollBy(0, (this.page.number - 1) * this.page.size * 50 + 50);
-  //   this.pageApply.emit(this.page.number);
-  // }
 
 }

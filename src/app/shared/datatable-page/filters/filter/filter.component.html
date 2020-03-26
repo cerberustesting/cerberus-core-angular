@@ -1,20 +1,34 @@
 <div *ngIf="column.filterDisplayed" class="block block-rounded block-bordered">
   <div class="block-header block-header-default">
-    <h3 class="block-title">
-      <div class="form-group mb-0">
-        <div class="form-check form-check-inline">
-          <small>{{column.displayName}}</small>
-        </div>
 
-        <!-- TEXT SEARCH FIELD -->
-        <div *ngIf="column.filterMode==='SEARCH_FIELD'" class="form-check form-check-inline" style="min-width: 50%;">
+    <!-- LEFT SECTION-->
+    <div class="input-group">
+
+      <!-- COLUMN NAME-->
+      <div class="input-group-prepend">
+        <h3 class="block-title">
+          <div class="form-group mb-0">
+            <div class="form-check form-check-inline">
+              <small>{{column.displayName}}</small>
+            </div>
+          </div>
+        </h3>
+      </div>
+      <!-- END COLUMN NAME-->
+
+      <!-- SEARCH TEXT FILED -->
+      <div *ngIf="column.filterMode==='SEARCH_FIELD'" class="input-group-prepend" style="width: 70%">
+        <div class="form-check form-check-inline full-width">
           <input type="text" class="form-control form-control-sm" [(ngModel)]="column.sSearch"
             [placeholder]="column.placeholder">
         </div>
-        <!-- END TEXT SEARCH FIELD -->
+      </div>
+      <!-- END SEARCH TEXT FILED -->
+
+      <div *ngIf="column.filterMode==='DROPDOWN'" class="input-group-prepend" style="min-width: 50%">
 
         <!-- DROPDOWN FIELD -->
-        <div *ngIf="column.filterMode==='DROPDOWN'" class="form-check form-check-inline" style="min-width: 50%;">
+        <div *ngIf="column.multiple === true" class="form-check form-check-inline" style="min-width: 50%;">
           <ng-select class="custom custom-icon custom-sm" [items]="dataList" [selectableGroup]="true"
             [multiple]="column.multiple" [closeOnSelect]="!column.multiple" [bindValue]="id" [bindLabel]="label"
             [(ngModel)]='column.sSearch' [clearable]="true" [placeholder]="column.placeholder">
@@ -47,14 +61,39 @@
         </div>
         <!-- END DROPDOWN FIELD -->
 
+        <!-- CHOICES BUTTON -->
+        <div *ngIf="column.multiple === false && dataList">
+          <div *ngFor="let filterValue of dataList"
+            class="custom-control block custom-block custom-control-info custom-sm custom-control-inline mb-0">
+            <input type="checkbox" class="custom-control-input" [id]="column.contentName + '_' + filterValue"
+              [name]="column.contentName + '_' + filterValue" (click)=setUniqueFilterValue(filterValue)
+              [checked]="isFilterValueSelected(filterValue)">
+            <label class="custom-control-label" [for]="column.contentName + '_' + filterValue">
+              <span class="d-block text-center">
+                {{ filterValue }}
+              </span>
+            </label>
+          </div>
+        </div>
+        <!-- END CHOICES BUTTON -->
+
       </div>
-    </h3>
+      <!-- END SELECT, TEXT OR  CHOICES -->
+
+    </div>
+    <!-- END LEFT SECTION-->
+
+    <!-- RIGHT SECTION-->
     <div class="block-options">
       <button type="button" class="btn-block-option" (click)="removeFilter()">
-        <i class="si si-close"></i>
+        <i class="fa fa-times"></i>
       </button>
     </div>
+    <!-- END RIGHT SECTION-->
+
   </div>
+
+  <!-- CONTENT SECTION -->
   <div *ngIf="column.filterMode==='DROPDOWN' && column.multiple === true && column.sSearch.length > 0"
     class="block-content row">
 
@@ -64,7 +103,6 @@
         {{filterValue}}
       </span>
     </span>
-
     <span *ngIf="column.type === 'label'">
       <span *ngFor="let label of column.sSearch" class="badge badge-pill badge-primary push mr-1"
         [ngStyle]="{'background-color': label.color}">
@@ -74,4 +112,6 @@
     <!-- END SELECTED VALUES LIST -->
 
   </div>
+  <!-- END CONTENT SECTION -->
+
 </div>

@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Column, FILTER_MODE } from 'src/app/shared/model/front/column.model';
-import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { FilterService } from 'src/app/core/services/api/filter.service';
 
@@ -11,12 +10,16 @@ import { FilterService } from 'src/app/core/services/api/filter.service';
 })
 export class FilterComponent implements OnInit {
 
-  @Input() column: Column; // information about the column that the filter is based on
-  @Input() servlet: string; // endpoint to get the options list (for dropdown only)
-  public dataList: any; // list of options list for dropdown typed field
+  /** column object that the filter is based on */
+  @Input() column: Column;
+
+  /** endpoint to fetch the options list (for dropdown only) */
+  @Input() servlet: string;
+
+  /** list of options list for dropdown typed field */
+  public dataList: any;
 
   constructor(
-    private testService: TestcaseService,
     private systemService: SystemService,
     private filterService: FilterService
   ) { }
@@ -24,7 +27,6 @@ export class FilterComponent implements OnInit {
   ngOnInit() {
 
     // set by default to DROPDOWN type filter
-    // TODO: check columns data files and remove it
     if (!this.column.filterMode) {
       console.error('No filter type defined for filter: "' + this.column.displayName + '" : please open an issue on github');
       this.column.filterMode = FILTER_MODE.DROPDOWN;
@@ -36,7 +38,9 @@ export class FilterComponent implements OnInit {
       this.systemService.getLabelsFromSystem('');
       this.systemService.observableLabelsList.subscribe(response => {
         if (response) {
-          if (response.length > 0) { this.dataList = response; }
+          if (response.length > 0) {
+            this.dataList = response;
+          }
         } else {
           this.dataList = null;
         }
@@ -45,7 +49,10 @@ export class FilterComponent implements OnInit {
       this.filterService.getOptionsListForColumnsFiltering(this.servlet, this.column.apiName).subscribe(response => {
         if (response) {
           // @ts-ignore
-          if (response.distinctValues.length > 0) { this.dataList = response.distinctValues; }
+          if (response.distinctValues.length > 0) {
+            // @ts-ignore
+            this.dataList = response.distinctValues;
+          }
         } else {
           this.dataList = null;
         }
@@ -53,15 +60,24 @@ export class FilterComponent implements OnInit {
     }
   }
 
-  // clear all filter values
+  /** empty the filter value(s) for this column */
   clearFilterValues() {
     this.column.sSearch = [];
   }
 
-  // remove the filter :
-  // destroy the component
+  /** remove the filter from the filter selection and empty the previous value(s) */
   removeFilter() {
     this.column.filterDisplayed = false;
+    this.clearFilterValues();
   }
 
+  /** set a unique value for the filter values */
+  setUniqueFilterValue(filtervalue: string) {
+    this.column.sSearch = [];
+    this.column.sSearch.push(filtervalue);
+  }
+
+  isFilterValueSelected(filtervalue: string) {
+    return this.column.sSearch.includes(filtervalue);
+  }
 }

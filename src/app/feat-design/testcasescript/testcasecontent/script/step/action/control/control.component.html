@@ -3,7 +3,7 @@
   [ngClass]="[control.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
 
   <!-- HEADER -->
-  <div class="block-header custom-sm ml-6" (mouseenter)="showControlAddButtons = true"
+  <div class="block-header custom-sm ml-5" (mouseenter)="showControlAddButtons = true"
     (mouseleave)="showControlAddButtons = false">
 
     <div class="input-group cursor-pointer" (click)="focusOnControl()">
@@ -30,10 +30,10 @@
       <!-- END CONTROL ICON -->
 
       <!-- CONTROL DESCRIPTION -->
-      <h3 [id]="'step'+ parentStepIndex +'action'+ parentActionIndex +'control' + control.sort + 'description'"
-        class="input-group-text custom-transparent">
-        {{control.description}}
-      </h3>
+      <div class="input-group-prepend" style="width:80%">
+        <input type="text" name="controlDescription" class="form-control form-control-sm full-height no-background"
+          placeholder="No control description" [(ngModel)]="control.description">
+      </div>
       <!-- END CONTROL DESCRIPTION -->
 
     </div>

@@ -372,6 +372,15 @@ ensure the element take all the screen width
 }
 
 /*
+"full-height" class for any element
+
+ensure the element take all the screen width
+*/
+.full-height {
+  height: 100% !important;
+}
+
+/*
 disable the maximum width limit for the page header
 */
 #page-container > #main-container .content {

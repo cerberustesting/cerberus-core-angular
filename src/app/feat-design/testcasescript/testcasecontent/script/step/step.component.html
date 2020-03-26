@@ -29,7 +29,10 @@
       <!-- END STEP INDEX -->
 
       <!-- STEP DESCRIPTION -->
-      <h3 class="input-group-text custom-transparent">{{step.description}}</h3>
+      <div class="input-group-prepend" style="width:80%">
+        <input type="text" name="description" class="form-control form-control-sm full-height no-background"
+          placeholder="No step description" [(ngModel)]="step.description">
+      </div>
       <!-- END STEP DESCRIPTION -->
 
     </div>

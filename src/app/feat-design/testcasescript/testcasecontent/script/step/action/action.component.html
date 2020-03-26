@@ -2,12 +2,12 @@
   [cdkDropListConnectedTo]="DragAndDropControlIDList" (cdkDropListDropped)="dropControl($event)"
   (cdkDropListEntered)="controlEntered()" (cdkDropListExited)="controlExited()">
 
-  <div class="block block-bordered action mb-0" *ngIf="action" [id]="'step'+parentStepIndex+'action'+action.sort">
+  <div class="block block-bordered action mb-0 " *ngIf="action" [id]="'step'+parentStepIndex+'action'+action.sort"
+    [ngClass]="[action.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
 
     <!-- HEADER -->
-    <div class="block-header custom-sm" (mouseenter)="showActionAddButtons = true"
-      (mouseleave)="showActionAddButtons = false"
-      [ngClass]="[action.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
+    <div class="block-header custom-sm ml-3" (mouseenter)="showActionAddButtons = true"
+      (mouseleave)="showActionAddButtons = false">
 
       <div class="input-group cursor-pointer" (click)="focusOnAction()">
 
@@ -40,10 +40,10 @@
         <!-- END ACTION ICON -->
 
         <!-- ACTION DESCRIPTION -->
-        <h3 [id]="'step'+parentStepIndex+'action'+action.sort+'description'"
-          class="input-group-text custom-transparent">
-          {{action.description}}
-        </h3>
+        <div class="input-group-prepend" style="width:80%">
+          <input type="text" name="actionDescription" class="form-control form-control-sm full-height no-background"
+            placeholder="No action description" [(ngModel)]="action.description">
+        </div>
         <!-- END ACTION DESCRIPTION -->
 
       </div>

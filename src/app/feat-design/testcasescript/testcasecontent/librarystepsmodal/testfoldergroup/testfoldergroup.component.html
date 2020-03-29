@@ -1,0 +1,46 @@
+<div class="block block-bordered mb-1">
+    <div class="block-header custom-sm block-header-default" role="tab">
+        <div class="input-group">
+
+            <!-- EXPAND / COLLAPSE CONTENT -->
+            <button type="button" name="toggleSteps" class="btn-block-option" (click)="showSteps = !showSteps">
+                <i class="fa fa-fw" [ngClass]="showSteps ? 'fa-angle-down' : 'fa-angle-right'"></i>
+            </button>
+            <!-- END  EXPAND / COLLAPSE CONTENT -->
+
+            <!-- TEST FOLDER NAME -->
+            <div class="input-group-prepend" style="width:80%;">
+                <input type="text" name="description" class="form-control form-control-sm full-height no-background"
+                    [(ngModel)]="testfoldergroup.test" disabled>
+            </div>
+            <!-- END TEST FOLDER NAME -->
+
+        </div>
+
+    </div>
+
+    <!-- TEST FOLDER CONTENT -->
+    <div *ngIf="showSteps" role="tabpanel" class="ml-5">
+
+        <!-- STEPS LIST -->
+        <div *ngFor="let step of testfoldergroup.steps; let stepIndex = index"
+            class="block-header custom-sm block-header-default" role="tab">
+
+            <div class="input-group">
+                <div class="custom-control custom-checkbox custom-control-primary">
+                    <input type="checkbox" class="custom-control-input" [id]="'test'+testFolderIndex+'step'+stepIndex"
+                        name="checkStep" [checked]="isStepSelected(step)" (change)="toggleStep(step)">
+                    <label class="custom-control-label" [for]="'test'+testFolderIndex+'step'+stepIndex"
+                        style="font-size: .875rem; font-weight: 400;">
+                        {{step.description}}
+                    </label>
+                </div>
+            </div>
+
+        </div>
+        <!-- END ACTION LIST -->
+
+    </div>
+    <!-- END TEST FOLDER CONTENT -->
+
+</div>

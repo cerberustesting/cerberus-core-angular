@@ -12,6 +12,9 @@ export class Step {
     /** @description test folder of this step */
     test: string;
 
+    /** @description description of the test folder of this step */
+    tcdesc?: string;
+
     /** @description test case id of this step */
     testCase: string;
 

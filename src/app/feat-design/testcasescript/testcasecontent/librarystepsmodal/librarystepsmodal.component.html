@@ -1,14 +1,61 @@
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+    <h4 class="modal-title" id="modal-basic-title">Add Library Step(s)</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <ul>
-      <li *ngFor='let step of librarySteps'>{{step.description}}</li>
-    </ul>
+
+  <div class="modal-body" *ngIf="librarySteps">
+
+    <div class="row" *ngIf="librarySteps.length !== 0">
+
+      <div class="col-md-6">
+        <app-testfoldergroup *ngFor="let testfoldergroup of stepsByTest; let index = index"
+          [testfoldergroup]="testfoldergroup" [selectedSteps]="selectedSteps" [testFolderIndex]="index">
+        </app-testfoldergroup>
+      </div>
+
+      <div class="col-md-6">
+        <div class="block block-bordered">
+          <div class="block-header custom-sm" style="padding-left: 1.25rem;">
+            <h3 class="block-title">Selected steps</h3>
+          </div>
+          <div class="block-content">
+
+            <div *ngFor="let step of selectedSteps; let index = index"
+              class="block-header custom-sm block-header-default mb-2" role="tab">
+
+              <div class="input-group">
+
+                <div class="input-group-prepend">
+                  <span class="badge badge-primary ml-2 mt-1 mb-1">{{index+1}}</span>
+                </div>
+
+                <div class="input-group-prepend" style="width:85%">
+                  <input type="text" name="description" class="form-control form-control-sm full-height no-background"
+                    [(ngModel)]="step.description" disabled>
+                </div>
+
+                <div class="block-options">
+                  <button type="button" class="btn-block-option" (click)="unselectStep(step)">
+                    <i class="fa fa-fw fa-times"></i>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p *ngIf="librarySteps.length === 0">
+      There is no library steps for the system you selected: {{user.defaultSystem}}
+    </p>
+
   </div>
+
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="addStepsAndClose()">Save</button>
   </div>

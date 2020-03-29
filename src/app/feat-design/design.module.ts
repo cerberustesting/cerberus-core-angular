@@ -7,6 +7,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DesignRoutingModule } from './design-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
+// External
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
+// Pipes
+import { FilterPipeModule } from 'ngx-filter-pipe';
+
 // Components
 import { TestcaselistComponent } from './testcaselist/testcaselist.component';
 import { LabelsComponent } from './labels/labels.component';
@@ -29,15 +38,6 @@ import { TestcaseInteractionComponent } from './testcaselist/testcase-interactio
 import { LabelsTabComponent } from './testcaselist/testcase-interaction/labels-tab/labels-tab.component';
 import { LabelNodeComponent } from './testcaselist/testcase-interaction/labels-tab/label-node/label-node.component';
 import { PropertiesComponent } from './testcasescript/testcasecontent/properties/properties.component';
-
-// Pipes
-import { FilterPipeModule } from 'ngx-filter-pipe';
-
-// External
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PropertygroupComponent } from './testcasescript/testcasecontent/properties/propertygroup/propertygroup.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { BugsReportTabComponent } from './testcaselist/testcase-interaction/bugs-report-tab/bugs-report-tab.component';
@@ -49,6 +49,7 @@ import { ShortcutsComponent } from './testcasescript/shortcuts/shortcuts.compone
 import { ControlSettingsComponent } from './testcasescript/testcasecontent/settings/control-settings/control-settings.component';
 import { ActionSettingsComponent } from './testcasescript/testcasecontent/settings/action-settings/action-settings.component';
 import { StepSettingsComponent } from './testcasescript/testcasecontent/settings/step-settings/step-settings.component';
+import { TestfoldergroupComponent } from './testcasescript/testcasecontent/librarystepsmodal/testfoldergroup/testfoldergroup.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { StepSettingsComponent } from './testcasescript/testcasecontent/settings
     ControlSettingsComponent,
     ActionSettingsComponent,
     StepSettingsComponent,
+    TestfoldergroupComponent,
   ],
   imports: [
     CommonModule,

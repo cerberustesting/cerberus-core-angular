@@ -21,7 +21,7 @@ export class ScriptComponent implements OnInit {
   ngOnInit() { }
 
   openLibraryStepsModal() {
-    this.modalService.open(LibraryStepsModalComponent);
+    this.modalService.open(LibraryStepsModalComponent, { size: 'xl' });
   }
 
   dropStep(event: CdkDragDrop<Step[]>) {

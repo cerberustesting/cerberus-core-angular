@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -11,14 +11,16 @@ import { Step } from 'src/app/shared/model/back/testcase/step.model';
   templateUrl: './script.component.html',
   styleUrls: ['./script.component.scss']
 })
-export class ScriptComponent implements OnInit {
+export class ScriptComponent {
 
+  /** @description full test case object */
   @Input('testcase') testcase: TestCase;
 
-  constructor(private testService: TestcaseService, private modalService: NgbModal) {
+  constructor(
+    private testService: TestcaseService,
+    private modalService: NgbModal
+  ) {
   }
-
-  ngOnInit() { }
 
   openLibraryStepsModal() {
     this.modalService.open(LibraryStepsModalComponent, { size: 'xl' });

@@ -113,4 +113,5 @@ export class LibraryStepsModalComponent implements OnInit {
   drop(event: CdkDragDrop<Step[]>): void {
     moveItemInArray(this.selectedSteps, event.previousIndex, event.currentIndex);
   }
+
 }

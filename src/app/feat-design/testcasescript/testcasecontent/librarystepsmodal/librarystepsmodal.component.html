@@ -11,8 +11,8 @@
 <div class="modal-body" *ngIf="librarySteps">
 
   <!-- NO STEPS AVAILABLE MESSAGE -->
-  <p *ngIf="librarySteps.length === 0">
-    There is no library steps for the system you selected: {{user.defaultSystem}}
+  <p class="text-center" *ngIf="librarySteps.length === 0">
+    There is no library step for the system you selected: {{user.defaultSystem[0]}}
   </p>
   <!-- END NO STEPS AVAILABLE MESSAGE -->
 

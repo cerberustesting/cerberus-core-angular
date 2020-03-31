@@ -130,32 +130,22 @@ export class TestcaseService {
       });
   }
 
-  // A TERMINER : response
+  /**
+   * return the list of library steps for a system (or without)
+   * @param callback return the results
+   * @param system invariant value
+  */
   getLibraryStepList(callback: (stepsList: Step[]) => void, system?: string, ) {
     // if the system is defined
     if (system) {
       this.http.get<Step[]>(environment.cerberus_api_url + '/GetStepInLibrary?system=' + system)
-        .subscribe(response => {
+        .toPromise()
+        .then((response: any) => {
           if (response) {
-            let res: Step[];
-            // @ts-ignore
-            res = response.testCaseStepList;
-            if (res.length > 0) {
-              // return the list of steps
-              callback(res);
-            } else {
-              // return an empty array anyway
-              callback(res);
-              // display a notification
-              this.notificationService.createANotification('There are no Library step for the system : ' + system, NotificationStyle.Warning);
-            }
+            callback(response.testCaseStepList);
           }
         });
-    } else {
-      // the system is not defined (the user might not have selected any system)
-      this.notificationService.createANotification('You didn\'t select any system', NotificationStyle.Warning);
     }
-
   }
 
   // return the "highest" test case ID for a test used for the interaction

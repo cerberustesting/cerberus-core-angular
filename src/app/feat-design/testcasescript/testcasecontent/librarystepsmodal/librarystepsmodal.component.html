@@ -1,61 +1,113 @@
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add Library Step(s)</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+<!-- MODAL HEADER -->
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Add Library Step(s)</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- END MODAL HEADER -->
 
-  <div class="modal-body" *ngIf="librarySteps">
+<!-- MODAL BODY -->
+<div class="modal-body" *ngIf="librarySteps">
 
-    <div class="row" *ngIf="librarySteps.length !== 0">
+  <!-- NO STEPS AVAILABLE MESSAGE -->
+  <p *ngIf="librarySteps.length === 0">
+    There is no library steps for the system you selected: {{user.defaultSystem}}
+  </p>
+  <!-- END NO STEPS AVAILABLE MESSAGE -->
 
-      <div class="col-md-6">
-        <app-testfoldergroup *ngFor="let testfoldergroup of stepsByTest; let index = index"
-          [testfoldergroup]="testfoldergroup" [selectedSteps]="selectedSteps" [testFolderIndex]="index">
-        </app-testfoldergroup>
-      </div>
+  <!-- MODAL CONTENT-->
+  <div class="row" *ngIf="librarySteps.length !== 0">
 
-      <div class="col-md-6">
-        <div class="block block-bordered">
-          <div class="block-header custom-sm" style="padding-left: 1.25rem;">
-            <h3 class="block-title">Selected steps</h3>
-          </div>
-          <div class="block-content">
+    <!-- INFORMATION & SEARCH BANNER -->
+    <div class="col-12">
+      <div class="block-header block-header-rtl custom-sm mb-3 pl-0">
 
-            <div *ngFor="let step of selectedSteps; let index = index"
-              class="block-header custom-sm block-header-default mb-2" role="tab">
+        <div class="block-title font-size-sm font-w600">
+          <i class="fa fa-info-circle mr-1"></i> Showing steps from system : {{user.defaultSystem[0]}}
+        </div>
 
-              <div class="input-group">
-
-                <div class="input-group-prepend">
-                  <span class="badge badge-primary ml-2 mt-1 mb-1">{{index+1}}</span>
-                </div>
-
-                <div class="input-group-prepend" style="width:85%">
-                  <input type="text" name="description" class="form-control form-control-sm full-height no-background"
-                    [(ngModel)]="step.description" disabled>
-                </div>
-
-                <div class="block-options">
-                  <button type="button" class="btn-block-option" (click)="unselectStep(step)">
-                    <i class="fa fa-fw fa-times"></i>
-                  </button>
-                </div>
-
+        <div class="block-options">
+          <div class="form-check-inline mr-0">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text input-group-text-alt">
+                  <i class="fa fa-search"></i>
+                </span>
               </div>
+              <input class="form-control form-control-sm form-control-alt search-field" id="quickSearch"
+                style="min-width: 20rem;" placeholder="Quick Search" type="text">
             </div>
           </div>
         </div>
+
       </div>
-
     </div>
+    <!-- END INFORMATION & SEARCH BANNER -->
 
-    <p *ngIf="librarySteps.length === 0">
-      There is no library steps for the system you selected: {{user.defaultSystem}}
-    </p>
+    <!-- LIST OF AVAILABLE STEPS BY TEST FOLDER -->
+    <div class="col-md-6">
+      <app-testfoldergroup *ngFor="let testfoldergroup of stepsByTest; let index = index"
+        [testfoldergroup]="testfoldergroup" [selectedSteps]="selectedSteps" [testFolderIndex]="index">
+      </app-testfoldergroup>
+    </div>
+    <!-- END LIST OF AVAILABLE STEPS BY TEST FOLDER -->
+
+    <!-- LIST OF SELECTED STEPS -->
+    <div class="col-md-6">
+
+      <div class="block block-rounded block-bordered">
+        <div class="block-header custom-sm">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <input type="text" name="description" class="form-control form-control-sm full-height no-background"
+                value="Selection" disabled>
+            </div>
+          </div>
+        </div>
+
+        <div cdkDropList (cdkDropListDropped)="drop($event)" class="block-content selected-steps pb-2">
+          <div *ngFor="let step of selectedSteps; let index = index" class="selected-step" cdkDrag cdkDragLockAxis="y">
+
+            <!-- SELECTED STEP -->
+            <div class="block block-rounded block-bordered mb-1">
+              <div class="block-header custom-sm">
+                <div class="flex-fill text-muted font-size-sm font-w600 drag-cursor" cdkDragHandle>
+                  {{step.description}} ({{step.test}})
+                </div>
+                <div class="block-options">
+                  <button type="button" class="btn-block-option btn-sm" (click)="unselectStep(step)">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- END SELECTED STEP -->
+
+          </div>
+
+          <!-- NO SELECTION MESSAGE -->
+          <div *ngIf="selectedSteps.length === 0" class="text-center">
+            <p>
+              <i class="fa fa-search mr-2"></i>
+              No step selected
+            </p>
+          </div>
+          <!-- END NO SELECTION MESSAGE -->
+
+        </div>
+      </div>
+    </div>
+    <!-- END LIST OF SELECTED STEPS -->
 
   </div>
+  <!-- END MODAL CONTENT-->
 
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="addStepsAndClose()">Save</button>
-  </div>
+</div>
+<!-- END MODAL BODY -->
+
+<!-- MODAL FOOTER -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="addStepsAndClose()">Add</button>
+</div>
+<!-- END MODAL FOOTER -->

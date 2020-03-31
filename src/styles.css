@@ -110,7 +110,7 @@ ng-select.custom-sm {
 }
 
 /*
-"custom-sm" class for <div> 
+"custom-sm" class for <div class="input-group"> 
 
 apply the correct height to the field according 
 to the bootstrap *-sm class 
@@ -233,12 +233,12 @@ for .custom-control-inline, add padding left & right
 
 reduce the padding 
 */
-div.block-header.custom-sm {
-  padding: 0.1rem;
+div.block.custom-sm .block-header {
+  padding: 0.1rem 0.875rem;
 }
 
-div.block.custom-sm {
-  padding: 0.1rem;
+div.block-header.custom-sm {
+  padding: 0.1rem 0.875rem;
 }
 
 /*
@@ -333,6 +333,25 @@ set the move cursor for an element on hover
 */
 .drag-cursor {
   cursor: move !important;
+}
+
+/*
+"font-sm" class for any element
+
+set the font-size to the smallest size possible 
+*/
+.font-sm {
+  font-size: 0.875rem !important;
+}
+
+/*
+"search-field" class for 
+
+modify the quickSearch fields background color to melt with the icon
+*/
+input.search-field {
+  border-color: #e7eaf3 !important;
+  background-color: #e7eaf3 !important;
 }
 
 .input-group-text.custom-transparent {

@@ -1,4 +1,4 @@
-<div class="block block-bordered mb-1">
+<div class="block block-rounded block-bordered mb-1">
     <div class="block-header custom-sm block-header-default" role="tab">
         <div class="input-group">
 
@@ -11,12 +11,11 @@
             <!-- TEST FOLDER NAME -->
             <div class="input-group-prepend" style="width:80%;">
                 <input type="text" name="description" class="form-control form-control-sm full-height no-background"
-                    [(ngModel)]="testfoldergroup.test" disabled>
+                    [value]="testfoldergroup.test" disabled>
             </div>
             <!-- END TEST FOLDER NAME -->
 
         </div>
-
     </div>
 
     <!-- TEST FOLDER CONTENT -->
@@ -38,7 +37,7 @@
             </div>
 
         </div>
-        <!-- END ACTION LIST -->
+        <!-- END STEPS LIST -->
 
     </div>
     <!-- END TEST FOLDER CONTENT -->

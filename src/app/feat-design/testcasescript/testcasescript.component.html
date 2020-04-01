@@ -10,8 +10,7 @@
       <!-- END TEST CASE SELECTOR COMPONENT -->
 
       <!-- SHORTCUTS BUTTON -->
-      <app-shortcuts [selectedTest]='selectedTest' [selectedTestCase]='selectedTestCase' [testcase]="testcase"
-        (sendRefreshEvent)="refreshTestCase($event.test, $event.testCase)">
+      <app-shortcuts [testcase]="testcase" (sendRefreshEvent)="refreshTestCase($event.test, $event.testCase)">
       </app-shortcuts>
       <!-- END SHORTCUTS BUTTON -->
 

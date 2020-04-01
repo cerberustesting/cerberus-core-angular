@@ -1,8 +1,8 @@
-<div *ngIf="selectedTestCase" class="btn-group btn-group-sm" role="group" aria-label="testCaseShortcuts">
+<div *ngIf="testcase" class="btn-group btn-group-sm" role="group" aria-label="testCaseShortcuts">
 
     <!-- GO TO BUG REPORT BUTTON -->
     <button type="button" class="btn btn-primary" id="bug-button"
-        (click)="bugsTestCaseHeader(selectedTest, selectedTestCase)" ngbPopover="Go to Bug Report" placement="bottom"
+        (click)="bugsTestCaseHeader(testcase.test, testcase.testCase)" ngbPopover="Go to Bug Report" placement="bottom"
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-bug"></i>
     </button>
@@ -10,7 +10,7 @@
 
     <!-- GO TO LABELS BUTTON -->
     <button type="button" class="btn btn-primary" id="labels-button"
-        (click)="tagTestCaseHeader(selectedTest,selectedTestCase)" ngbPopover="Go to Labels" placement="bottom"
+        (click)="tagTestCaseHeader(testcase.test,testcase.testCase)" ngbPopover="Go to Labels" placement="bottom"
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-tag"></i>
     </button>
@@ -18,7 +18,7 @@
 
     <!-- GO TO SETTINGS BUTTON -->
     <button type="button" class="btn btn-primary" id="settings-button"
-        (click)="settingTestCaseHeader(selectedTest,selectedTestCase)" ngbPopover="Go to Settings" placement="bottom"
+        (click)="settingTestCaseHeader(testcase.test,testcase.testCase)" ngbPopover="Go to Settings" placement="bottom"
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-cog"></i>
     </button>
@@ -33,7 +33,7 @@
 
     <!-- GO TO DUPLICATE REPORT BUTTON -->
     <button type="button" class="btn btn-primary" id="duplicate-button"
-        (click)="duplicateTestCaseHeader(selectedTest, selectedTestCase)" ngbPopover="Duplicate Test Case"
+        (click)="duplicateTestCaseHeader(testcase.test, testcase.testCase)" ngbPopover="Duplicate Test Case"
         placement="bottom" triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-copy"></i>
     </button>
@@ -41,7 +41,7 @@
 
     <!-- GO TO DELETE REPORT BUTTON -->
     <button type="button" class="btn btn-primary" id="delete-button"
-        (click)="deleteTestCase(selectedTest, selectedTestCase)" ngbPopover="Delete the Test Case" placement="left"
+        (click)="deleteTestCase(testcase.test, testcase.testCase)" ngbPopover="Delete the Test Case" placement="left"
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-trash"></i>
     </button>

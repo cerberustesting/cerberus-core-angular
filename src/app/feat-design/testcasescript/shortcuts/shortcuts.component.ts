@@ -15,13 +15,6 @@ import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 })
 export class ShortcutsComponent {
 
-  /** currently selected test folder */
-  @Input('selectedTest') selectedTest: string;
-
-  /** currently selected test case id */
-  @Input('selectedTestCase') selectedTestCase: string;
-
-  // TODO: we could only use this property as an @Input
   /** full test case object */
   @Input('testcase') testcase: TestCase;
 

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { Step } from 'src/app/shared/model/back/testcase/step.model';
 import { UserService } from 'src/app/core/services/api/user.service';
 import { User } from 'src/app/shared/model/back/user/user.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 
 /**
  * @class Steps By Test
@@ -43,6 +44,12 @@ export class LibraryStepsModalComponent implements OnInit {
 
   /** user information */
   private user: User;
+
+  /** full test case object */
+  @Input() testcase: TestCase;
+
+  // TODO : output to send the testcasecontent component that new library steps have been added and it needs to refresh the step sort
+  @Output() stepsAddedEvent: EventEmitter<Step[]> = new EventEmitter();
 
   constructor(
     config: NgbModalConfig,
@@ -90,20 +97,28 @@ export class LibraryStepsModalComponent implements OnInit {
   }
 
   /**
-  * remove a step from the list of selected steps
-  * @param step object to remove
-  */
-  unselectStep(step: Step): void {
-    const index = this.selectedSteps.findIndex(s => s.test === step.test && s.description === step.description);
-    this.selectedSteps.splice(index, 1);
-  }
-
-  /**
-  * add the steps to the test case script and close the modal
-  * @param step object to remove
+  * add the step(s) to the test case script and close the modal
   */
   addStepsAndClose(): void {
-    this.activeModal.close('Save click');
+    console.log(this.selectedSteps);
+    if (this.selectedSteps.length > 0) {
+      this.selectedSteps.forEach(step => {
+        step.useStep = 'Y';
+        step.useStepTest = step.test;
+        step.useStepTestCase = step.testCase;
+        step.useStepStep = step.useStepStep;
+        step.inLibrary = 'N';
+        step.actions = [];
+        // remove the 'step' attributes of the fetched steps since it not used for saving
+        step.useStepStep = step.step;
+        step.step = undefined;
+        step.test = undefined;
+        step.testCase = undefined;
+        this.testcase.steps.push(step);
+      });
+      this.stepsAddedEvent.emit(this.selectedSteps);
+      this.activeModal.close('Save click');
+    }
   }
 
   /**

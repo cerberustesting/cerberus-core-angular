@@ -1,0 +1,14 @@
+<!-- SELECTED STEP -->
+<div class="block block-rounded block-bordered mb-1">
+    <div class="block-header custom-sm">
+        <div class="flex-fill text-muted font-size-sm font-w600 drag-cursor">
+            {{step.description}} ({{step.test}})
+        </div>
+        <div class="block-options">
+            <button type="button" class="btn-block-option btn-sm" (click)="unselectStep(step)">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- END SELECTED STEP -->

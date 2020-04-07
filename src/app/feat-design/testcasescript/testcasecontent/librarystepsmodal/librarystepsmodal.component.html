@@ -45,15 +45,19 @@
     </div>
     <!-- END INFORMATION & SEARCH BANNER -->
 
-    <!-- LIST OF AVAILABLE STEPS BY TEST FOLDER -->
+    <!-- LEFT SECTION -->
     <div class="col-md-6">
+
+      <!-- LIST OF AVAILABLE STEPS BY TEST FOLDER -->
       <app-testfoldergroup *ngFor="let testfoldergroup of stepsByTest; let index = index"
         [testfoldergroup]="testfoldergroup" [selectedSteps]="selectedSteps" [testFolderIndex]="index">
       </app-testfoldergroup>
-    </div>
-    <!-- END LIST OF AVAILABLE STEPS BY TEST FOLDER -->
+      <!-- END LIST OF AVAILABLE STEPS BY TEST FOLDER -->
 
-    <!-- LIST OF SELECTED STEPS -->
+    </div>
+    <!-- END LEFT SECTION -->
+
+    <!-- RIGHT SECTION -->
     <div class="col-md-6">
 
       <div class="block block-rounded block-bordered">
@@ -66,39 +70,30 @@
           </div>
         </div>
 
-        <div cdkDropList (cdkDropListDropped)="drop($event)" class="block-content selected-steps pb-2">
+        <!-- NO SELECTION MESSAGE -->
+        <div *ngIf="selectedSteps.length === 0" class="text-center">
+          <p>
+            <i class="fa fa-search mr-2"></i>
+            No step selected
+          </p>
+        </div>
+        <!-- END NO SELECTION MESSAGE -->
+
+        <!-- LIST OF SELECTED STEPS -->
+        <div *ngIf="selectedSteps.length > 0" cdkDropList (cdkDropListDropped)="drop($event)"
+          class="block-content selected-steps pb-2">
           <div *ngFor="let step of selectedSteps; let index = index" class="selected-step" cdkDrag cdkDragLockAxis="y">
 
-            <!-- SELECTED STEP -->
-            <div class="block block-rounded block-bordered mb-1">
-              <div class="block-header custom-sm">
-                <div class="flex-fill text-muted font-size-sm font-w600 drag-cursor" cdkDragHandle>
-                  {{step.description}} ({{step.test}})
-                </div>
-                <div class="block-options">
-                  <button type="button" class="btn-block-option btn-sm" (click)="unselectStep(step)">
-                    <i class="fa fa-times"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- END SELECTED STEP -->
+            <app-selectedstep [step]="step" [selectedsteps]="selectedSteps">
+            </app-selectedstep>
 
           </div>
-
-          <!-- NO SELECTION MESSAGE -->
-          <div *ngIf="selectedSteps.length === 0" class="text-center">
-            <p>
-              <i class="fa fa-search mr-2"></i>
-              No step selected
-            </p>
-          </div>
-          <!-- END NO SELECTION MESSAGE -->
-
         </div>
       </div>
+      <!-- END LIST OF SELECTED STEPS -->
+
     </div>
-    <!-- END LIST OF SELECTED STEPS -->
+    <!-- END RIGHT SECTION -->
 
   </div>
   <!-- END MODAL CONTENT-->

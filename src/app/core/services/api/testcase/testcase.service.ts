@@ -148,6 +148,28 @@ export class TestcaseService {
     }
   }
 
+  /**
+   * return a step object
+   * @param test name of the tets folder
+   * @param testcase test case id
+   * @param stepindex index of the step of that test case to fetch
+   */
+  getStep(test: string, testcase: string, stepindex: number, callback: (step: Step) => void) {
+    this.http.get<Step>(environment.cerberus_api_url + '/ReadTestCaseStep?test=' + encodeURIComponent(test) + '&testcase=' + encodeURIComponent(testcase) + '&step=' + stepindex)
+      .toPromise()
+      .then((response: any) => {
+        if (response) {
+          // DIRTY : waiting for : https://github.com/cerberustesting/cerberus-source/issues/2122
+          response.step.actions = [];
+          response.tcsActionList.forEach(action => {
+            action.controlList = response.tcsActionControlList.filter(control => control.sequence === action.sequence);
+            response.step.actions.push(action);
+          });
+          callback(response.step);
+        }
+      });
+  }
+
   // return the "highest" test case ID for a test used for the interaction
   getLatestTestCaseId(testcaselist: Array<TestCase>, test: string): string {
     // create an array with only the testCase ID
@@ -417,8 +439,12 @@ export class TestcaseService {
       let newStep: any;
       newStep = {};
       newStep.toDelete = step.toDelete || false;
-      newStep.test = step.test;
-      newStep.testcase = step.testCase;
+      if (step.test) {
+        newStep.test = step.test;
+      }
+      if (step.testCase) {
+        newStep.testcase = step.testCase;
+      }
       if (step.step) {
         newStep.step = step.step;
       }

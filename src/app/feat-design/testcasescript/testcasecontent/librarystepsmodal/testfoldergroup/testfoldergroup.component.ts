@@ -28,11 +28,19 @@ export class TestfoldergroupComponent {
   */
   toggleStep(step: Step): void {
     if (!this.isStepSelected(step)) {
-      this.selectedSteps.push(step);
+      this.selectAStep(step);
     } else {
       const index = this.selectedSteps.findIndex(s => s.test === step.test && s.description === step.description);
       this.selectedSteps.splice(index, 1);
     }
+  }
+
+  selectAStep(step: Step): void {
+    this.selectedSteps.push(step);
+    // TODO : fetch the information of the step to add
+    // add a function in the testcase service
+    // when the response is set, add it to the testcase
+    // https://qa.cerberus-testing.org/ReadTestCaseStep?test=GUI+%3A+Data&testcase=0000A&step=1
   }
 
   /**

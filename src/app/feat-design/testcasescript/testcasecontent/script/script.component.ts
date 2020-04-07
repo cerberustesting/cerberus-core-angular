@@ -17,18 +17,24 @@ export class ScriptComponent {
   @Input('testcase') testcase: TestCase;
 
   constructor(
-    private testService: TestcaseService,
+    private testcaseService: TestcaseService,
     private modalService: NgbModal
   ) {
   }
 
   openLibraryStepsModal() {
-    this.modalService.open(LibraryStepsModalComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(LibraryStepsModalComponent, { size: 'xl' });
+    // bind the testcase object to the modal
+    modalRef.componentInstance.testcase = this.testcase;
+    // subscribe to the event the modal will send if a step is added
+    modalRef.componentInstance.stepsAddedEvent.subscribe((response) => {
+      this.testcaseService.refreshStepSort(this.testcase.steps);
+    });
   }
 
   dropStep(event: CdkDragDrop<Step[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    this.testService.refreshStepSort(this.testcase.steps);
+    this.testcaseService.refreshStepSort(this.testcase.steps);
   }
 
   addAStep() {

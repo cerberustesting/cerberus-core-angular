@@ -25,7 +25,7 @@ export class TestfoldergroupComponent {
   /**
    * add or remove a step to the select steps list
    * @param step step object to add
-  */
+   */
   toggleStep(step: Step): void {
     if (!this.isStepSelected(step)) {
       this.selectAStep(step);
@@ -35,18 +35,18 @@ export class TestfoldergroupComponent {
     }
   }
 
+  /**
+   * add a step to the selection
+   * @param step step object to select
+   */
   selectAStep(step: Step): void {
     this.selectedSteps.push(step);
-    // TODO : fetch the information of the step to add
-    // add a function in the testcase service
-    // when the response is set, add it to the testcase
-    // https://qa.cerberus-testing.org/ReadTestCaseStep?test=GUI+%3A+Data&testcase=0000A&step=1
   }
 
   /**
    * return true if a step is already in the selected steps list
    * @param step step object to add
-  */
+   */
   isStepSelected(step: Step): boolean {
     const res = this.selectedSteps.findIndex(s => s.test === step.test && s.description === step.description);
     if (res !== -1) { return true; } else { return false; }

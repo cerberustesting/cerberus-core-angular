@@ -35,8 +35,8 @@
                   <i class="fa fa-search"></i>
                 </span>
               </div>
-              <input class="form-control form-control-sm form-control-alt search-field" id="quickSearch"
-                style="min-width: 20rem;" placeholder="Quick Search" type="text">
+              <input type="text" class="form-control form-control-sm form-control-alt search-field" id="quickSearch"
+                style="min-width: 20rem;" placeholder="Quick Search" (keyup)="filterSteps($event)">
             </div>
           </div>
         </div>

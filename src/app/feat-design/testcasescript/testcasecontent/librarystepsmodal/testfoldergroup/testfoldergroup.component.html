@@ -31,7 +31,7 @@
                         name="checkStep" [checked]="isStepSelected(step)" (change)="toggleStep(step)">
                     <label class="custom-control-label" [for]="'test'+testFolderIndex+'step'+stepIndex"
                         style="font-size: .875rem; font-weight: 400;">
-                        {{step.description}}
+                        <strong>{{step.description}}</strong> ({{step.testCase}})
                     </label>
                 </div>
             </div>

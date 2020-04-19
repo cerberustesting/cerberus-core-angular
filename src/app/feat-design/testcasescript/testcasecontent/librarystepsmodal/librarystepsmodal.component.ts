@@ -33,6 +33,9 @@ export class StepsByTest {
 })
 export class LibraryStepsModalComponent implements OnInit {
 
+  /** reference list of all the library steps grouped by test available for the user system */
+  private initialStepsByTest: StepsByTest[];
+
   /** list of all the library RAW steps available for the user system */
   public librarySteps: Step[];
 
@@ -73,12 +76,59 @@ export class LibraryStepsModalComponent implements OnInit {
         (steps: Step[]) => {
           this.librarySteps = steps;
           this.stepsByTest = this.groupStepsByTest();
+          // save the step groups in another variable as a reference
+          this.initialStepsByTest = this.stepsByTest;
         }, this.user.defaultSystem[0]);
     });
   }
 
   /**
-  * return all the steps group by test folder names
+   * update the list of available library steps filtered on a keyword
+   * @param event keyup event
+   */
+  filterSteps(event: any): void {
+    const keyword = event.target.value;
+    // if there is a keyword
+    if (keyword !== '') {
+      const res = new Array<StepsByTest>();
+      this.initialStepsByTest.forEach(stepgroup => {
+        const filterResult = this.keywordMatchStep(keyword, stepgroup.steps);
+        if (filterResult.length > 0) {
+          const newStepGroup = new StepsByTest(stepgroup.test);
+          newStepGroup.steps = filterResult;
+          res.push(newStepGroup);
+        }
+      });
+      this.stepsByTest = res;
+    } else {
+      // if no keyword is passed, reset the step group list
+      this.stepsByTest = this.groupStepsByTest();
+    }
+  }
+
+  /**
+   * return the list of step that match a keyword
+   * @param keyword to filter on
+   * @param steps list of steps to filter
+   */
+  keywordMatchStep(keyword: string, steps: Step[]): Step[] {
+    keyword = keyword.toLowerCase();
+    const res: Step[] = new Array<Step>();
+    steps.forEach(step => {
+      if (
+        step.description.toLowerCase().includes(keyword) ||
+        step.testCase.toLowerCase().includes(keyword) ||
+        step.tcdesc.toLowerCase().includes(keyword) ||
+        step.test.toLowerCase().includes(keyword)
+      ) {
+        res.push(step);
+      }
+    });
+    return res;
+  }
+
+  /**
+  * return all the steps grouped by test folder names
   */
   groupStepsByTest(): StepsByTest[] {
     const testFolderNames: string[] = [];
@@ -100,19 +150,19 @@ export class LibraryStepsModalComponent implements OnInit {
   * add the step(s) to the test case script and close the modal
   */
   addStepsAndClose(): void {
-    console.log(this.selectedSteps);
     if (this.selectedSteps.length > 0) {
       this.selectedSteps.forEach(step => {
+        // add the correct test folder & test case id
+        step.test = this.testcase.test;
+        step.testCase = this.testcase.testCase;
         step.useStep = true;
-        step.useStepTest = step.test;
-        step.useStepTestCase = step.testCase;
-        step.useStepStepId = step.useStepStepId;
         step.inLibrary = false;
-        step.actions = [];
-        // remove the 'step' attributes of the fetched steps since it not used for saving
+        // remove the stepId attribute since it's a new step
         step.stepId = undefined;
-        step.test = undefined;
-        step.testCase = undefined;
+        // @ts-ignore
+        step.step = undefined;
+        step.tcdesc = undefined;
+        step.sort = undefined;
         this.testcase.steps.push(step);
       });
       this.stepsAddedEvent.emit(this.selectedSteps);

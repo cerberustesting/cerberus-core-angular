@@ -165,8 +165,10 @@ export class TestcaseService {
         if (response) {
           // DIRTY : waiting for : https://github.com/cerberustesting/cerberus-source/issues/2122
           response.step.actions = [];
+          response.step.forceExecution = response.step.forceExe;
+          response.step.stepId = response.step.step;
           response.tcsActionList.forEach(action => {
-            action.controlList = response.tcsActionControlList.filter(control => control.sequence === action.sequence);
+            action.controls = response.tcsActionControlList.filter(control => control.sequence === action.sequence);
             response.step.actions.push(action);
           });
           callback(response.step);

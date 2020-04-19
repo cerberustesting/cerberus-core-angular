@@ -20,12 +20,13 @@ export class SelectedstepComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.testCaseService.getStep(this.step.test, this.step.testCase, this.step.stepId, (step: Step) => {
       // add the missing information to this component step
       this.step.toDelete = false;
       this.step.useStepTest = step.test;
       this.step.useStepTestCase = step.testCase;
-      this.step.inLibrary = step.inLibrary;
+      this.step.useStepStepId = step.stepId;
       this.step.loop = step.loop;
       this.step.conditionOper = step.conditionOper;
       this.step.conditionVal1 = step.conditionVal1;
@@ -33,6 +34,7 @@ export class SelectedstepComponent implements OnInit {
       this.step.conditionVal3 = step.conditionVal3;
       this.step.forceExecution = step.forceExecution;
       this.step.actions = step.actions;
+      console.log(this.step);
     });
   }
 

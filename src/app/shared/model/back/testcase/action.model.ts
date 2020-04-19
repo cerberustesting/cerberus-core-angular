@@ -6,9 +6,6 @@ import { Control } from './control.model';
  */
 export class Action {
 
-    /** @description ? (seems to always be action) */
-    objType: string;
-
     /** @description test of the action (only relevant with libray steps)*/
     test: string;
 
@@ -45,14 +42,14 @@ export class Action {
     /** @description position (index) of the action */
     sort: number;
 
-    /** @description previous position of the action */
-    sequence: number;
+    /** @description unique id of the action */
+    actionId: number;
 
-    /** @description index of the step for this action */
-    step: number;
+    /** @description step id of this action */
+    stepId: number;
 
     /** @description boolean to force the execution of the step */
-    forceExeStatus: string;
+    fatal: boolean;
 
     /** @description location of the screenshot (only relevant in execution) */
     screenshotFilename: string;
@@ -63,25 +60,23 @@ export class Action {
     /** @description list of controls */
     controls: Array<Control>;
 
-    constructor(sort: number, stepIndex: number) {
-        this.objType = 'action';
-        this.forceExeStatus = '';
-        this.test = '';
-        this.testCase = '';
+    constructor(testfolder: string, testcaseid: string, sort: number, stepId: number) {
+        this.toDelete = false;
+        this.test = testfolder;
+        this.testCase = testcaseid;
+        this.stepId = stepId;
+        this.sort = sort;
+        this.description = '';
+        this.action = 'doNothing';
+        this.fatal = true;
         this.conditionOper = 'always';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
         this.conditionVal3 = '';
-        this.action = 'doNothing';
         this.value1 = '';
         this.value2 = '';
         this.value3 = '';
-        this.description = '';
-        this.sort = sort;
-        this.step = stepIndex;
-        this.forceExeStatus = '';
         this.screenshotFilename = '';
-        this.toDelete = false;
         this.controls = new Array<Control>();
     }
 }

@@ -79,8 +79,8 @@
             <div class="block-header custom-sm block-header-default">
                 <div class="custom-control custom-switch custom-control-inline ml-1">
                     <input type="checkbox" class="custom-control-input" id="activeStepforceExecution"
-                        name="activeStepforceExecution" [checked]="step.forceExe == 'Y'"
-                        (change)="step.forceExe = $event.target.checked ? 'Y' : 'N'" [disabled]="readonly">
+                        name="activeStepforceExecution" [checked]="step.forceExecution"
+                        (change)="step.forceExecution = !step.forceExecution" [disabled]="readonly">
                     <label class="custom-control-label" for="activeStepforceExecution">
                         Force Execution
                     </label>

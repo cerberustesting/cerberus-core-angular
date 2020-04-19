@@ -1,4 +1,4 @@
-<div *ngIf="control" [id]="'step'+ parentStepIndex +'action'+ parentActionIndex +'control' + control.sort"
+<div *ngIf="control" [id]="'step'+ parentStep.sort +'action'+ parentAction.sort +'control' + control.sort"
   class="block block-bordered control mb-0"
   [ngClass]="[control.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
 
@@ -42,7 +42,7 @@
     <div *ngIf="showControlAddButtons && !readonly" class="block-options">
 
       <button type="button" name="addActionFromControl" class="btn btn-sm btn-primary mr-1"
-        (click)="addAction(parentActionIndex+1)"> A<i class="fa fa-fw fa-plus"></i>
+        (click)="addAction(parentAction.sort+1)"> A<i class="fa fa-fw fa-plus"></i>
       </button>
 
       <button type="button" name="addControlFromControl" class="btn btn-sm btn-success mr-1"
@@ -64,8 +64,8 @@
       <!-- END CONDITION ICON -->
 
       <!-- FATAL ICON -->
-      <button *ngIf="control.fatal == 'Y'" type="button" name="fatal" class="btn-block-option info_block_options"
-        ngbPopover="This control is fatal" triggers="mouseenter:mouseleave">
+      <button *ngIf="control.fatal" type="button" name="fatal" class="btn-block-option info_block_options"
+        ngbPopover="If the control fails, the execution stops" triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-exclamation"></i>
       </button>
       <!-- END FATAL ICON -->

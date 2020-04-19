@@ -212,33 +212,33 @@
                     "conditionOper": "always",
                     "conditionVal1": "",
                     "usrModif": "",
-                    "inLibrary": "N",
+                    "inLibrary": false,
                     "useStepTest": "",
                     "description": "S1",
                     "sort": 1,
                     "usrCreated": "",
-                    "forceExe": "N",
+                    "forceExecution": false,
                     "dateCreated": "",
                     "initialStep": 0,
                     "loop": "onceIfConditionTrue",
-                    "step": 1,
+                    "stepId": 1,
                     "dateModif": "Jan 1, 1970 1:01:01 AM",
-                    "useStepStep": 0,
+                    "useStepStepId": 0,
                     "objType": "step",
                     "actions": [],
-                    "useStep": "N",
+                    "useStep": false,
                     "testCase": "0002A"
                 },
                 {
                     "useStepTestCase": "0017B",
                     "conditionOper": "always",
                     "description": "Execute action keypress",
-                    "forceExe": "N",
+                    "forceExecution": false,
                     "dateCreated": "",
                     "loop": "onceIfConditionTrue",
-                    "useStepStep": 2,
+                    "useStepStepId": 2,
                     "objType": "step",
-                    "useStep": "Y",
+                    "useStep": true,
                     "conditionVal3": "",
                     "isStepInUseByOtherTestCase": false,
                     "conditionVal2": "",
@@ -246,17 +246,17 @@
                     "test": "benoit",
                     "conditionVal1": "",
                     "usrModif": "",
-                    "inLibrary": "N",
+                    "inLibrary": false,
                     "useStepTest": "ENGINE : Action",
                     "sort": 2,
                     "usrCreated": "",
                     "initialStep": 0,
-                    "step": 2,
+                    "stepId": 2,
                     "dateModif": "Jan 1, 1970 1:01:01 AM",
                     "actions": [
                         {
                             "conditionVal3": "",
-                            "forceExeStatus": "",
+                            "fatal": true,
                             "conditionVal2": "",
                             "controls": [],
                             "test": "ENGINE : Action",
@@ -268,15 +268,15 @@
                             "value3": "",
                             "description": "click search icon",
                             "sort": 1,
-                            "sequence": 4,
+                            "actionId": 4,
                             "action": "click",
-                            "step": 2,
+                            "stepId": 2,
                             "objType": "action",
                             "testCase": "0017B"
                         },
                         {
                             "conditionVal3": "",
-                            "forceExeStatus": "",
+                            "fatal": true,
                             "conditionVal2": "",
                             "controls": [],
                             "test": "ENGINE : Action",
@@ -296,7 +296,7 @@
                         },
                         {
                             "conditionVal3": "",
-                            "forceExeStatus": "",
+                            "fatal": true,
                             "conditionVal2": "",
                             "controls": [],
                             "test": "ENGINE : Action",
@@ -316,7 +316,7 @@
                         },
                         {
                             "conditionVal3": "",
-                            "forceExeStatus": "",
+                            "fatal": true,
                             "conditionVal2": "",
                             "controls": [],
                             "test": "ENGINE : Action",
@@ -336,7 +336,7 @@
                         },
                         {
                             "conditionVal3": "",
-                            "forceExeStatus": "",
+                            "fatal": true,
                             "conditionVal2": "",
                             "controls": [],
                             "test": "ENGINE : Action",
@@ -356,7 +356,7 @@
                         },
                         {
                             "conditionVal3": "",
-                            "forceExeStatus": "",
+                            "fatal": true,
                             "conditionVal2": "",
                             "controls": [],
                             "test": "ENGINE : Action",
@@ -376,7 +376,7 @@
                         },
                         {
                             "conditionVal3": "",
-                            "forceExeStatus": "",
+                            "fatal": true,
                             "conditionVal2": "",
                             "controls": [
                                 {
@@ -392,7 +392,7 @@
                                     "description": "verify we are on PLP",
                                     "control": "verifyElementPresent",
                                     "sort": 1,
-                                    "fatal": "Y",
+                                    "fatal": true,
                                     "sequence": 11,
                                     "controlSequence": 1,
                                     "step": 2,
@@ -420,242 +420,8 @@
                 }
             ],
             "properties": {
-                "inheritedProperties": [
-                    {
-                        "value2": "",
-                        "value1": "executeScript(\"mobile: performEditorAction\", {'action': 'search'});",
-                        "nature": "STATIC",
-                        "length": "0",
-                        "description": "",
-                        "rowLimit": 0,
-                        "countries": [
-                            {
-                                "description": "Belgium",
-                                "grp1": "800",
-                                "value": "BE",
-                                "grp2": "fr-be",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Switzerland",
-                                "grp1": "500",
-                                "value": "CH",
-                                "grp2": "fr-ch",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Spain",
-                                "grp1": "900",
-                                "value": "ES",
-                                "grp2": "es",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "France",
-                                "grp1": "350",
-                                "value": "FR",
-                                "grp2": "fr",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Portugal",
-                                "grp1": "200",
-                                "value": "PT",
-                                "grp2": "pt-pt",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Transversal Country used for Transversal Applications.",
-                                "grp1": "RBX",
-                                "value": "RX",
-                                "grp2": "en-gb",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Great Britan",
-                                "grp1": "300",
-                                "value": "UK",
-                                "grp2": "en-gb",
-                                "grp3": ""
-                            }
-                        ],
-                        "type": "getFromGroovy",
-                        "database": "",
-                        "fromTest": "ENGINE : Action",
-                        "property": "TEMP",
-                        "rank": 1,
-                        "fromTestCase": "0017B",
-                        "cacheExpire": 0,
-                        "retryNb": 0,
-                        "retryPeriod": 0
-                    }
-                ],
-                "testCaseProperties": [
-                    {
-                        "value2": "",
-                        "value1": "",
-                        "nature": "STATIC",
-                        "length": "0",
-                        "description": "",
-                        "rowLimit": 0,
-                        "countries": [
-                            {
-                                "description": "",
-                                "grp1": "",
-                                "value": "atale",
-                                "grp2": "",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Belgium",
-                                "grp1": "800",
-                                "value": "BE",
-                                "grp2": "fr-be",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Switzerland",
-                                "grp1": "500",
-                                "value": "CH",
-                                "grp2": "fr-ch",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Spain",
-                                "grp1": "900",
-                                "value": "ES",
-                                "grp2": "es",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "France",
-                                "grp1": "350",
-                                "value": "FR",
-                                "grp2": "fr",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Portugal",
-                                "grp1": "200",
-                                "value": "PT",
-                                "grp2": "pt-pt",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Transversal Country used for Transversal Applications.",
-                                "grp1": "RBX",
-                                "value": "RX",
-                                "grp2": "en-gb",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "",
-                                "grp1": "",
-                                "value": "tf1",
-                                "grp2": "",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Great Britan",
-                                "grp1": "300",
-                                "value": "UK",
-                                "grp2": "en-gb",
-                                "grp3": ""
-                            }
-                        ],
-                        "type": "text",
-                        "database": "",
-                        "fromTest": "benoit",
-                        "property": "prop1",
-                        "rank": 1,
-                        "fromTestCase": "0002A",
-                        "cacheExpire": 0,
-                        "retryNb": 0,
-                        "retryPeriod": 0
-                    },
-                    {
-                        "value2": "",
-                        "value1": "",
-                        "nature": "STATIC",
-                        "length": "0",
-                        "description": "",
-                        "rowLimit": 0,
-                        "countries": [
-                            {
-                                "description": "",
-                                "grp1": "",
-                                "value": "atale",
-                                "grp2": "",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Belgium",
-                                "grp1": "800",
-                                "value": "BE",
-                                "grp2": "fr-be",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Switzerland",
-                                "grp1": "500",
-                                "value": "CH",
-                                "grp2": "fr-ch",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Spain",
-                                "grp1": "900",
-                                "value": "ES",
-                                "grp2": "es",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "France",
-                                "grp1": "350",
-                                "value": "FR",
-                                "grp2": "fr",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Portugal",
-                                "grp1": "200",
-                                "value": "PT",
-                                "grp2": "pt-pt",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Transversal Country used for Transversal Applications.",
-                                "grp1": "RBX",
-                                "value": "RX",
-                                "grp2": "en-gb",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "",
-                                "grp1": "",
-                                "value": "tf1",
-                                "grp2": "",
-                                "grp3": ""
-                            },
-                            {
-                                "description": "Great Britan",
-                                "grp1": "300",
-                                "value": "UK",
-                                "grp2": "en-gb",
-                                "grp3": ""
-                            }
-                        ],
-                        "type": "text",
-                        "database": "",
-                        "fromTest": "benoit",
-                        "property": "prop2",
-                        "rank": 1,
-                        "fromTestCase": "0002A",
-                        "cacheExpire": 0,
-                        "retryNb": 0,
-                        "retryPeriod": 0
-                    }
-                ]
+                "inheritedProperties": [],
+                "testCaseProperties": []
             }
         }
     ],

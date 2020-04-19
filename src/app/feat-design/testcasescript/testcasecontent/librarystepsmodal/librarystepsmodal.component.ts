@@ -103,15 +103,14 @@ export class LibraryStepsModalComponent implements OnInit {
     console.log(this.selectedSteps);
     if (this.selectedSteps.length > 0) {
       this.selectedSteps.forEach(step => {
-        step.useStep = 'Y';
+        step.useStep = true;
         step.useStepTest = step.test;
         step.useStepTestCase = step.testCase;
-        step.useStepStep = step.useStepStep;
-        step.inLibrary = 'N';
+        step.useStepStepId = step.useStepStepId;
+        step.inLibrary = false;
         step.actions = [];
         // remove the 'step' attributes of the fetched steps since it not used for saving
-        step.useStepStep = step.step;
-        step.step = undefined;
+        step.stepId = undefined;
         step.test = undefined;
         step.testCase = undefined;
         this.testcase.steps.push(step);

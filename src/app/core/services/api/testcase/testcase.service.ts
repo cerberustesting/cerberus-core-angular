@@ -142,6 +142,10 @@ export class TestcaseService {
         .toPromise()
         .then((response: any) => {
           if (response) {
+            // DIRTY : add the new attribute 'stepId' : waiting for https://github.com/cerberustesting/cerberus-source/issues/2124
+            response.testCaseStepList.forEach(step => {
+              step.stepId = step.step;
+            });
             callback(response.testCaseStepList);
           }
         });
@@ -152,10 +156,10 @@ export class TestcaseService {
    * return a step object
    * @param test name of the tets folder
    * @param testcase test case id
-   * @param stepindex index of the step of that test case to fetch
+   * @param stepId unique id of the step of that test case to fetch
    */
-  getStep(test: string, testcase: string, stepindex: number, callback: (step: Step) => void) {
-    this.http.get<Step>(environment.cerberus_api_url + '/ReadTestCaseStep?test=' + encodeURIComponent(test) + '&testcase=' + encodeURIComponent(testcase) + '&step=' + stepindex)
+  getStep(test: string, testcase: string, stepId: number, callback: (step: Step) => void) {
+    this.http.get<Step>(environment.cerberus_api_url + '/ReadTestCaseStep?test=' + encodeURIComponent(test) + '&testcase=' + encodeURIComponent(testcase) + '&step=' + stepId)
       .toPromise()
       .then((response: any) => {
         if (response) {
@@ -371,16 +375,6 @@ export class TestcaseService {
     });
   }
 
-  /**
-   * set all the 'step' attributes with the current index (sort), must be called once when the test case is fetched
-   * @param steps list of steps to process
-   */
-  saveCurrentStepIndex(steps: Step[]): void {
-    steps.forEach((step) => {
-      step.step = step.sort;
-    });
-  }
-
   /** refresh the sort attribute of each actions (usefull for drag and drop)
    * @param actions list of actions to reorder
    */
@@ -391,16 +385,6 @@ export class TestcaseService {
     });
   }
 
-  /**
-  * set all the 'sequence' attributes with the current index (sort), must be called once when the test case is fetched
-  * @param actions list of actions to process
-  */
-  saveCurrentActionIndex(actions: Action[]): void {
-    actions.forEach((action) => {
-      action.sequence = action.sort;
-    });
-  }
-
   /** refresh the sort attribute of each control (usefull for drag and drop)
   * @param controls list of control to reorder
   */
@@ -408,17 +392,6 @@ export class TestcaseService {
     controls.forEach((control, index) => {
       const newIndex = this.trueindexPipe.transform(index);
       control.sort = newIndex;
-    });
-  }
-
-  /**
-  * set all the 'controlSequence' attributes with the current index (sort), must be called once when the test case is fetched
-  * @param controls list of controls to process
-  */
-  saveCurrentControlIndex(controls: Control[]): void {
-    controls.forEach((control) => {
-      // add the sort -1 because i don't know
-      control.sort = control.controlSequence - 1;
     });
   }
 
@@ -435,60 +408,54 @@ export class TestcaseService {
     // fill the step array
     requestPayload.stepArray = [];
     testcase.steps.forEach(step => {
-      // create a new step object (because the mapping is different)
+      // create a new 'step' object (to pass only the necessary fields)
       let newStep: any;
       newStep = {};
       newStep.toDelete = step.toDelete || false;
-      if (step.test) {
-        newStep.test = step.test;
-      }
-      if (step.testCase) {
-        newStep.testcase = step.testCase;
-      }
-      if (step.step) {
-        newStep.step = step.step;
-      }
+      // test folder and test case id are only needed for existing steps
+      if (step.test) { newStep.test = step.test; }
+      if (step.testCase) { newStep.testcase = step.testCase; }
+      // unique step id only necessary for existing step
+      if (step.stepId) { newStep.step = step.stepId; }
       newStep.sort = step.sort;
       newStep.description = step.description;
       newStep.useStep = step.useStep;
       newStep.useStepTest = step.useStepTest;
       newStep.useStepTestCase = step.useStepTestCase;
-      newStep.useStepStep = step.useStepStep;
+      newStep.useStepStepId = step.useStepStepId;
       newStep.inLibrary = step.inLibrary;
       newStep.loop = step.loop;
       newStep.conditionOper = step.conditionOper;
       newStep.conditionVal1 = step.conditionVal1;
       newStep.conditionVal2 = step.conditionVal2;
       newStep.conditionVal3 = step.conditionVal3;
-      newStep.forceExe = step.forceExe;
+      newStep.forceExecution = step.forceExecution;
       newStep.actionArr = [];
       step.actions.forEach(action => {
         // create a new action object (because the mapping is different)
         let newAction: any;
         newAction = {};
         newAction.toDelete = action.toDelete || false;
+        // test folder and test case id are empty for new action
         newAction.test = action.test;
         newAction.testcase = action.testCase;
-        newAction.step = action.step;
+        newAction.step = action.stepId;
         // add the sequence only if it defined
-        if (action.sequence) {
-          newAction.sequence = action.sequence;
-        }
+        if (action.actionId) { newAction.sequence = action.actionId; }
         newAction.sort = action.sort;
         newAction.description = action.description;
         newAction.action = action.action;
-        // mapping ????
+        // wrong mapping object = value 1
         newAction.object = action.value1;
-        // mapping ????
+        // wrong mapping property = value 2
         newAction.property = action.value2;
         newAction.value3 = action.value3;
-        newAction.forceExeStatus = action.forceExeStatus;
+        newAction.forceExeStatus = action.fatal;
         newAction.conditionOper = action.conditionOper;
         newAction.conditionVal1 = action.conditionVal1;
         newAction.conditionVal2 = action.conditionVal2;
         newAction.conditionVal3 = action.conditionVal3;
         newAction.screenshotFileName = action.screenshotFilename;
-        newAction.controlArr = [];
         action.controls.forEach(control => {
           // create a new control object (because the mapping is different)
           let newControl: any;
@@ -496,16 +463,12 @@ export class TestcaseService {
           newControl.toDelete = control.toDelete || false;
           newControl.test = control.test;
           newControl.testCase = control.testCase;
-          newControl.step = control.step;
-          if (control.sequence) {
-            newControl.sequence = control.sequence;
-          }
+          newControl.step = control.stepId;
+          if (control.actionId) { newControl.actionId = control.actionId; }
+          if (control.controlId) { newControl.controlId = control.controlId; }
           newControl.control = control.control;
           newControl.sort = control.sort;
           newControl.description = control.description;
-          newControl.objType = control.objType;
-          // mapping ????
-          newControl.controlSequence = control.controlSequence;
           newControl.value1 = control.value1;
           newControl.value2 = control.value2;
           newControl.value3 = control.value3;

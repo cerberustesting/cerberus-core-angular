@@ -119,4 +119,8 @@ export class ShortcutsComponent {
     }));
   }
 
+  debug() {
+    console.log(this.testcase);
+  }
+
 }

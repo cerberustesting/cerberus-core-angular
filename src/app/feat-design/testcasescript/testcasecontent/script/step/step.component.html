@@ -1,4 +1,4 @@
-<div [id]="'step'+stepIndex" class="block block-rounded block-bordered mb-2"
+<div [id]="'step'+step.sort" class="block block-rounded block-bordered mb-2"
   [ngClass]="[step.toDelete ? 'toDelete_border' : '',  isFocused ? 'focused_border' : '']">
 
   <!-- HEADER -->
@@ -24,7 +24,7 @@
 
       <!-- STEP INDEX -->
       <div class="input-group-prepend">
-        <span name="stepIndex" class="input-group-text cursor-default custom-transparent"> {{stepIndex}} </span>
+        <span name="stepIndex" class="input-group-text cursor-default custom-transparent"> {{step.sort}} </span>
       </div>
       <!-- END STEP INDEX -->
 
@@ -58,8 +58,9 @@
       <!-- END CONDITION ICON -->
 
       <!-- FORCE EXEC ICON -->
-      <button name="forceExe" *ngIf="step.forceExe == 'Y'" type="button" class="btn-block-option info_block_options"
-        ngbPopover="This step execution is forced" triggers="mouseenter:mouseleave">
+      <button name="forceExecution" *ngIf="step.forceExecution" type="button"
+        class="btn-block-option info_block_options" ngbPopover="This step execution is forced"
+        triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa fa-arrow-down"></i>
       </button>
       <!-- END FORCE EXEC ICON -->
@@ -101,6 +102,12 @@
       </button>
       <!-- END DELETE ACTION -->
 
+      <!-- DEBUG BUTTON -->
+      <!-- <button type="button" name="debug" class="btn-block-option" (click)="debug()">
+        <i class="fa fa-fw fa-bug"></i>
+      </button> -->
+      <!-- END DEBUG ACTION -->
+
     </div>
     <!-- END ACTIONS & ICONS -->
   </div>
@@ -114,8 +121,8 @@
     <div *ngIf="step.actions.length > 0" cdkDropList [cdkDropListData]="step.actions"
       (cdkDropListDropped)="dropAction($event)" class="actionList">
       <div *ngFor="let action of step.actions" class="actionDrag" cdkDrag cdkDragLockAxis="y">
-        <app-action [action]="action" [readonly]="stepIsReadOnly" [showContent]="showControls"
-          [parentStepIndex]="stepIndex" (actionAdded)="addAction($event)" [testcase]="testcase">
+        <app-action [action]="action" [readonly]="stepIsReadOnly" [showContent]="showControls" [parentStep]="step"
+          (actionAdded)="addAction($event)" [testcase]="testcase">
 
           <!-- ACTION DRAG CONTROL -->
           <button *ngIf="!stepIsReadOnly" slot="drag-action" type="button" name="dragAction"

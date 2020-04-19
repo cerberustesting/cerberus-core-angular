@@ -4,9 +4,6 @@
  */
 export class Control {
 
-    /** @description ? */
-    objType: string;
-
     /** @description test folder of the control */
     test: string;
 
@@ -41,44 +38,45 @@ export class Control {
     value3: string;
 
     /** @description is the control fatal? */
-    fatal: string;
+    fatal: boolean;
 
     /** @description name of the screenshot file (only in execution) */
     screenshotFilename: string;
 
-    /** @description control index in its action */
+    /** @description position of the control in the action */
     sort: number;
 
-    /** @description position of the parent action */
-    sequence: number;
+    /** @description index of the parent step */
+    stepId: number;
 
-    /** @description previous position of the control */
-    controlSequence: number;
+    /** @description id of the parent action */
+    actionId: number;
 
-    /** @description index of parent step */
-    step: number;
+    /** @description unique id of the control.
+     * * used with test folder and test case id to uniquely identify the control executions
+    */
+    controlId: number;
 
     /** @description flag for deletion */
     toDelete: boolean;
 
-    constructor(sort: number, stepIndex: number, actionIndex: number) {
-        this.objType = 'control';
-        this.test = '';
-        this.testCase = '';
+    constructor(testfolder: string, testcaseid: string, sort: number, stepId: number, actionId: number) {
+        this.toDelete = false;
+        this.test = testfolder;
+        this.testCase = testcaseid;
+        this.stepId = stepId;
+        this.actionId = actionId;
+        this.control = 'Unknown';
+        this.sort = sort;
+        this.description = '';
         this.conditionOper = 'always';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
         this.conditionVal3 = '';
-        this.description = '';
-        this.control = 'Unknown';
         this.value1 = '';
         this.value2 = '';
         this.value3 = '';
-        this.fatal = 'N';
+        this.fatal = false;
         this.screenshotFilename = '';
-        this.sort = sort;
-        this.sequence = actionIndex;
-        this.step = stepIndex;
-        this.toDelete = false;
     }
 }

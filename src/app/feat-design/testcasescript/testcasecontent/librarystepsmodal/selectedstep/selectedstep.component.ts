@@ -20,10 +20,9 @@ export class SelectedstepComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.testCaseService.getStep(this.step.test, this.step.testCase, this.step.step, (step: Step) => {
+    this.testCaseService.getStep(this.step.test, this.step.testCase, this.step.stepId, (step: Step) => {
+      // add the missing information to this component step
       this.step.toDelete = false;
-      this.step.useStep = 'Y';
       this.step.useStepTest = step.test;
       this.step.useStepTestCase = step.testCase;
       this.step.inLibrary = step.inLibrary;
@@ -32,10 +31,8 @@ export class SelectedstepComponent implements OnInit {
       this.step.conditionVal1 = step.conditionVal1;
       this.step.conditionVal2 = step.conditionVal2;
       this.step.conditionVal3 = step.conditionVal3;
-      this.step.forceExe = step.forceExe;
+      this.step.forceExecution = step.forceExecution;
       this.step.actions = step.actions;
-      // add the missing information to that step
-      console.log(this.step);
     });
   }
 
@@ -44,7 +41,7 @@ export class SelectedstepComponent implements OnInit {
   * @param step object to remove
   */
   unselectStep(step: Step): void {
-    const index = this.selectedSteps.findIndex(s => s.test === step.test && s.description === step.description);
+    const index = this.selectedSteps.findIndex(s => s.test === step.test && s.stepId === step.stepId);
     this.selectedSteps.splice(index, 1);
   }
 

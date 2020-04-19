@@ -16,10 +16,6 @@ export class StepComponent implements OnInit {
   /** step object */
   @Input('step') step: Step;
 
-  /** step index in the array of steps */
-  // TODO: to remove
-  @Input('stepIndex') stepIndex: number;
-
   /** full testcase object */
   @Input('testcase') testcase: TestCase;
 
@@ -65,11 +61,11 @@ export class StepComponent implements OnInit {
   }
 
   /** add an action in the step
-   * @param index position of the desired step
+   * @param index position of the desired action (in the step)
    */
   addAction(index: number) {
     // create the new action object (with default values)
-    const newAction = new Action(index, this.step.sort);
+    const newAction = new Action(this.testcase.test, this.testcase.testCase, index, this.step.stepId);
     // insert the action at the correct index
     this.step.actions.splice(index, 0, newAction);
     // reorder the sort attributes
@@ -86,12 +82,12 @@ export class StepComponent implements OnInit {
 
   /** return a state used by the view to display an icon depedending on the combination of useStep and inLibrary */
   libraryState(): string {
-    if (this.step.useStep === 'Y' && this.step.inLibrary === 'N') {
+    if (this.step.useStep === true && this.step.inLibrary === false) {
       this.stepIsReadOnly = true;
       return 'locked';
-    } else if (this.step.useStep === 'N' && this.step.inLibrary === 'Y') {
+    } else if (this.step.useStep === false && this.step.inLibrary === true) {
       return 'reference';
-    } else if (this.step.useStep === 'N' && this.step.inLibrary === 'N') {
+    } else if (this.step.useStep === false && this.step.inLibrary === false) {
       return 'clear';
     } else {
       console.log('WARN: ERROR on libraryState() call, please report this issue on github');
@@ -104,6 +100,11 @@ export class StepComponent implements OnInit {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     // reorder the sort attributes
     this.testService.refreshActionsSort(this.step.actions);
+  }
+
+  // debug function
+  debug() {
+    console.log(this.step);
   }
 
 }

@@ -112,16 +112,16 @@
         <div class="block block-rounded block-bordered">
             <div class="block-header custom-sm block-header-default">
                 <div class="custom-control custom-switch custom-control-inline ml-1">
-                    <input type="checkbox" class="custom-control-input" id="currentActionforceExeStatus"
-                        name="currentActionforceExeStatus" [checked]="action.forceExeStatus == 'PE'"
-                        (change)="action.forceExeStatus = $event.target.checked ? 'PE' : ''" [disabled]="readonly">
-                    <label class="custom-control-label" for="currentActionforceExeStatus">
-                        Force Execution
+                    <input type="checkbox" class="custom-control-input" id="currentActionFatal"
+                        name="currentActionFatal" [checked]="action.fatal" (change)="action.fatal = !action.fatal"
+                        [disabled]="readonly">
+                    <label class="custom-control-label" for="currentActionFatal">
+                        Fatal
                     </label>
                 </div>
                 <div class="block-options">
                     <button type="button" class="btn-block-option">
-                        <i class="fa fa-fw fa-arrow-down"></i>
+                        <i class="fa fa-fw fa-exclamation"></i>
                     </button>
                 </div>
             </div>

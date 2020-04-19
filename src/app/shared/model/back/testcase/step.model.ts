@@ -6,17 +6,17 @@ import { Action } from './action.model';
  */
 export class Step {
 
-    /** @description ? */
-    objType: string;
-
     /** @description test folder of this step */
     test: string;
 
-    /** @description description of the test folder of this step */
-    tcdesc?: string;
-
     /** @description test case id of this step */
     testCase: string;
+
+    /** @description description of the test folder of this step (currently used only with library steps modal) */
+    tcdesc?: string;
+
+    /** @description step description */
+    description: string;
 
     /** @description condition operator */
     conditionOper: string;
@@ -31,15 +31,18 @@ export class Step {
     conditionVal3: string;
 
     /** @description boolean to force the execution of the step */
-    forceExe: string;
+    forceExecution: boolean;
 
     /** @description loop operator */
     loop: string;
 
-    /** @description is the step a use step? (boolean) */
-    useStep: string;
+    /** @description is the step used imported from another test case */
+    useStep: boolean;
 
-    /** @description is the step used in another test case? (boolean) */
+    /** @description is the step the reference */
+    inLibrary: boolean;
+
+    /** @description is the step used in another test case? */
     isStepInUseByOtherTestCase: boolean;
 
     /** @description test folder of the use step */
@@ -48,66 +51,38 @@ export class Step {
     /** @description test case id of the use step */
     useStepTestCase: string;
 
-    /** @description is the step in library? */
-    inLibrary: string;
+    /** @description unique id of the reference step (relevant only if useStep = true) */
+    useStepStepId: number;
 
-    /** @description ? */
-    initialStep: number;
+    /** @description index of the library step that reference this step (relevant only if useStep = true) */
+    useStepStepSort: number;
 
-    /** @description ? */
-    useStepStep: number;
-
-    /** @description step description */
-    description: string;
-
-    /** @description list of actions */
-    actions: Array<Action>;
-
-    /** @description ? */
+    /** @description index of the step */
     sort: number;
 
-    /** @description ? */
-    step: number;
+    /** @description unique id of the step */
+    stepId: number;
 
     /** @description should the step be deleted? */
     toDelete: boolean;
 
-    /** @description audit field: user who last modified the step*/
-    usrModif: string;
+    /** @description list of actions */
+    actions: Array<Action>;
 
-    /** @description audit field: user who created the step */
-    usrCreated: string;
-
-    /** @description audit field: date of the step creation */
-    dateCreated: string;
-
-    /** @description audit field: date of the step last modification */
-    dateModif: string;
-
-    constructor(test: string, testCase: string, sort: number) {
-        this.objType = 'step';
-        this.test = test;
-        this.testCase = testCase;
+    constructor(testfolder: string, testcaseid: string, sort: number) {
+        this.toDelete = false;
+        this.test = testfolder;
+        this.testCase = testcaseid;
+        this.sort = sort;
+        this.description = '';
+        this.useStep = false;
+        this.inLibrary = false;
+        this.loop = 'onceIfConditionTrue';
         this.conditionOper = 'always';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
         this.conditionVal3 = '';
-        this.forceExe = 'N';
-        this.loop = 'onceIfConditionTrue';
-        this.useStep = 'N';
-        this.isStepInUseByOtherTestCase = false;
-        this.useStepTest = '';
-        this.useStepTestCase = '';
-        this.inLibrary = 'N';
-        this.initialStep = 0;
-        this.useStepStep = -1;
-        this.toDelete = false;
-        this.description = '';
+        this.forceExecution = false;
         this.actions = new Array<Action>();
-        this.sort = sort;
-        this.dateCreated = '';
-        this.dateModif = '';
-        this.usrModif = '';
-        this.usrCreated = '';
     }
 }

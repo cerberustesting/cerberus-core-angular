@@ -1,8 +1,8 @@
 <div [id]="DragAndAdropAreaId" class="controlList" cdkDropList [cdkDropListData]="action.controls"
   [cdkDropListConnectedTo]="DragAndDropControlIDList" (cdkDropListDropped)="dropControl($event)"
-  (cdkDropListEntered)="controlEntered()" (cdkDropListExited)="controlExited()">
+  (cdkDropListEntered)="controlEntered()">
 
-  <div class="block block-bordered action mb-0 " *ngIf="action" [id]="'step'+parentStepIndex+'action'+action.sort"
+  <div class="block block-bordered action mb-0 " *ngIf="action" [id]="'step'+parentStep.sort+'action'+action.sort"
     [ngClass]="[action.toDelete ? 'toDelete' : '',  isFocused ? 'focused' : '']">
 
     <!-- HEADER -->
@@ -75,10 +75,9 @@
         <!-- END CONDITION ICON -->
 
         <!-- FORCE ICON -->
-        <button type="button" name="forceExeStatus" *ngIf="action.forceExeStatus == 'PE'"
-          class="btn-block-option info_block_options" ngbPopover="This action execution is forced"
-          triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw fa fa-arrow-down"></i>
+        <button type="button" name="fatal" *ngIf="action.fatal" class="btn-block-option info_block_options"
+          ngbPopover="If the action fails, the execution stops" triggers="mouseenter:mouseleave">
+          <i class="fa fa-fw fa fa-exclamation"></i>
         </button>
         <!-- END FORCE ICON -->
 
@@ -100,8 +99,8 @@
   <!-- CONTROL LIST -->
   <div *ngIf="showControlList">
     <div *ngFor="let control of action.controls" class="controlDrag" cdkDrag cdkDragLockAxis="y">
-      <app-control [control]="control" [readonly]="readonly" [parentStepIndex]="parentStepIndex"
-        [parentActionIndex]="action.sort" (controlAdded)="addControl($event)"
+      <app-control [control]="control" [readonly]="readonly" [parentStep]="parentStep"
+        [parentAction]="action" [testcase]="testcase" (controlAdded)="addControl($event)"
         (actionAddedFromControl)="addAction($event)">
 
         <!-- CONTROL DRAG CONTROL -->

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Control } from 'src/app/shared/model/back/testcase/control.model';
 import { CrossreferenceService, ICrossReference } from 'src/app/core/services/utils/crossreference.service';
-import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
-import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { SettingsService } from '../../../../settings/settings.service';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
+import { Step } from 'src/app/shared/model/back/testcase/step.model';
+import { Action } from 'src/app/shared/model/back/testcase/action.model';
 
 @Component({
   selector: 'app-control',
@@ -20,10 +20,13 @@ export class ControlComponent implements OnInit {
   @Input('readonly') readonly: boolean;
 
   /** parent step index */
-  @Input('parentStepIndex') parentStepIndex: number;
+  @Input('parentStep') parentStep: Step;
 
   /** parent step index */
-  @Input('parentActionIndex') parentActionIndex: number;
+  @Input('parentAction') parentAction: Action;
+
+  /** full testcase object */
+  @Input('testcase') testcase: TestCase;
 
   // the component doens't have access to any List (Action or Step)
   // so it will call the corresponding add() method from Step component (for Action List) or Action component (for Control List)
@@ -40,24 +43,14 @@ export class ControlComponent implements OnInit {
   private crossReference_ActionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ActionValue;
   private crossReference_ConditionValue: Array<ICrossReference> = this.CrossReferenceService.crossReference_ConditionValue;
 
-  // private invariants
-  private inv_condition_oper: Array<Invariant>;
-  private inv_control: Array<Invariant>;
-
   constructor(
-    private InvariantService: InvariantsService,
     private CrossReferenceService: CrossreferenceService,
-    private testService: TestcaseService,
     private settingsService: SettingsService
   ) { }
 
   ngOnInit() {
     // by default, the add action/control buttons aren't showed
     this.showControlAddButtons = false;
-
-    // get invariants list
-    this.InvariantService.observableConditionOperList.subscribe(response => { this.inv_condition_oper = response; });
-    this.InvariantService.observableControlsList.subscribe(response => { this.inv_control = response; });
 
     this.settingsService.observableControl.subscribe(r => {
       if (this.control === r) {
@@ -68,19 +61,28 @@ export class ControlComponent implements OnInit {
     });
   }
 
-  /** send the desired position for the new Control to the Action component */
-  addControl(destinationIndex: number): void {
-    this.controlAdded.emit(destinationIndex);
+  /**
+  * send the desired position for the new Control to the Action component
+  * @param index index of the new control (sort)
+  */
+  addControl(index: number): void {
+    this.controlAdded.emit(index);
   }
 
-  /** send the desired position for the new Action to the Action component */
-  addAction(destinationIndex: number) {
-    this.actionAddedFromControl.emit(destinationIndex);
+  /**
+   * send the desired position for the new Action to the Action component
+   * @param index index of the new action (sort)
+   */
+  addAction(index: number) {
+    this.actionAddedFromControl.emit(index);
   }
 
-  /** sends the control to the setting comp to display its information */
+  /**
+   * sends the control to the setting comp to display its information
+   */
   focusOnControl(): void {
-    this.settingsService.editControlSettings(this.control, this.readonly, this.parentStepIndex, this.parentActionIndex);
+    // send the control object, and the two indexes (step, action) to the settings service
+    this.settingsService.editControlSettings(this.control, this.readonly, this.parentStep.sort, this.parentAction.sort);
   }
 
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }

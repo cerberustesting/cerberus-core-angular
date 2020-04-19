@@ -113,8 +113,8 @@
             <div class="block-header block-header-default custom-sm">
                 <div class="custom-control custom-switch custom-control-inline ml-1">
                     <input type="checkbox" class="custom-control-input" id="activeControlFatal"
-                        name="activeControlFatal" [checked]="control.fatal == 'Y'"
-                        (change)="control.fatal = $event.target.checked ? 'Y' : 'N'" [disabled]="readonly">
+                        name="activeControlFatal" [checked]="control.fatal" (change)="control.fatal = !control.fatal"
+                        [disabled]="readonly">
                     <label class="custom-control-label" for="activeControlFatal">Fatal</label>
                 </div>
                 <div class="block-options">

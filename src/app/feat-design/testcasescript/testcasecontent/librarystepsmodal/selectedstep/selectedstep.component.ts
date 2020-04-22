@@ -34,7 +34,6 @@ export class SelectedstepComponent implements OnInit {
       this.step.conditionVal3 = step.conditionVal3;
       this.step.forceExecution = step.forceExecution;
       this.step.actions = step.actions;
-      console.log(this.step);
     });
   }
 

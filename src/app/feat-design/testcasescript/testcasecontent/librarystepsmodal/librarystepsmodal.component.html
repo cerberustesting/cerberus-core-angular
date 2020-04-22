@@ -1,7 +1,7 @@
 <!-- MODAL HEADER -->
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Add Library Step(s)</h4>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+  <h4 class="modal-title" id="modal-basic-title">Add Library Steps</h4>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal('dismiss')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -10,55 +10,64 @@
 <!-- MODAL BODY -->
 <div class="modal-body" *ngIf="librarySteps">
 
-  <!-- NO STEPS AVAILABLE MESSAGE -->
-  <p class="text-center" *ngIf="librarySteps.length === 0">
-    There is no library step for the system you selected: {{user.defaultSystem[0]}}
-  </p>
-  <!-- END NO STEPS AVAILABLE MESSAGE -->
+  <!--TOP BANNER -->
+  <div class="row mb-4">
 
-  <!-- MODAL CONTENT-->
-  <div class="row" *ngIf="librarySteps.length !== 0">
+    <!-- SYSTEM SELECTION -->
+    <div [ngClass]="librarySteps.length !== 0 ? 'col-md-6' : 'col-md-12'">
 
-    <!-- INFORMATION & SEARCH BANNER -->
-    <div class="col-12">
-      <div class="block-header block-header-rtl custom-sm mb-3 pl-0">
-
-        <div class="block-title font-size-sm font-w600">
-          <i class="fa fa-info-circle mr-1"></i> Showing steps from system : {{user.defaultSystem[0]}}
+      <div *ngIf="user.defaultSystem" id="systemForLibrarySteps" class="input-group custom-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text input-group-text-alt custom-sm-font">System</span>
         </div>
+        <ng-select [items]="user.system" class="custom-sm custom-width-1" [ngModel]='user.defaultSystem[0]'
+          [clearable]="false" [multiple]="false" (change)="refreshLibrayStepsList($event)">
+        </ng-select>
 
-        <div class="block-options">
-          <div class="form-check-inline mr-0">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text input-group-text-alt">
-                  <i class="fa fa-search"></i>
-                </span>
-              </div>
-              <input type="text" class="form-control form-control-sm form-control-alt search-field" id="quickSearch"
-                style="min-width: 20rem;" placeholder="Quick Search" (keyup)="filterSteps($event)">
-            </div>
-          </div>
+        <!-- NO STEPS AVAILABLE MESSAGE -->
+        <div class="input-group-append" *ngIf="librarySteps.length === 0">
+          <span class="input-group-text custom-sm-font no-background">
+            <i class="fa fa-fw fa-info-circle mr-1"></i>
+            No library step for this system </span>
         </div>
+        <!-- END NO STEPS AVAILABLE MESSAGE -->
 
       </div>
     </div>
-    <!-- END INFORMATION & SEARCH BANNER -->
+    <!-- END SYSTEM SELECTION -->
 
-    <!-- LEFT SECTION -->
-    <div class="col-md-6">
+  </div>
+  <!-- END TOP BANNER -->
 
-      <!-- LIST OF AVAILABLE STEPS BY TEST FOLDER -->
+  <!-- MODAL CONTENT-->
+  <div class="row">
+
+    <!-- LIST OF AVAILABLE STEPS BY TEST FOLDER -->
+    <div class="col-md-6" *ngIf="librarySteps.length !== 0">
+
+      <!-- FILTERING FIELD-->
+      <div class="form-check-inline mr-0 mb-2 full-width">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text input-group-text-alt">
+              <i class="fa fa-search"></i>
+            </span>
+          </div>
+          <input type="text" class="form-control form-control-sm form-control-alt search-field" id="quickSearch"
+            style="min-width: 20rem;" placeholder="Quick Search" (keyup)="filterSteps($event)">
+        </div>
+      </div>
+      <!-- END FILTERING FIELD-->
+
       <app-testfoldergroup *ngFor="let testfoldergroup of stepsByTest; let index = index"
         [testfoldergroup]="testfoldergroup" [selectedSteps]="selectedSteps" [testFolderIndex]="index">
       </app-testfoldergroup>
-      <!-- END LIST OF AVAILABLE STEPS BY TEST FOLDER -->
 
     </div>
-    <!-- END LEFT SECTION -->
+    <!-- END LIST OF AVAILABLE STEPS BY TEST FOLDER -->
 
-    <!-- RIGHT SECTION -->
-    <div class="col-md-6">
+    <!-- SELECTED STEPS -->
+    <div [ngClass]="librarySteps.length !== 0 ? 'col-md-6' : 'col-md-12'">
 
       <div class="block block-rounded block-bordered">
         <div class="block-header custom-sm">
@@ -83,17 +92,14 @@
         <div *ngIf="selectedSteps.length > 0" cdkDropList (cdkDropListDropped)="drop($event)"
           class="block-content selected-steps pb-2">
           <div *ngFor="let step of selectedSteps; let index = index" class="selected-step" cdkDrag cdkDragLockAxis="y">
-
             <app-selectedstep [step]="step" [selectedsteps]="selectedSteps">
             </app-selectedstep>
-
           </div>
         </div>
       </div>
-      <!-- END LIST OF SELECTED STEPS -->
 
     </div>
-    <!-- END RIGHT SECTION -->
+    <!-- END LIST OF SELECTED STEPS -->
 
   </div>
   <!-- END MODAL CONTENT-->
@@ -103,6 +109,9 @@
 
 <!-- MODAL FOOTER -->
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="addStepsAndClose()">Add</button>
+  <button *ngIf="selectedSteps.length !== 0" type="button" class="btn btn-primary btn-sm"
+    (click)="addStepsAndClose()">Add</button>
+  <button *ngIf="selectedSteps.length === 0" type="button" class="btn btn-secondary btn-sm"
+    (click)="closeModal('close')">Close</button>
 </div>
 <!-- END MODAL FOOTER -->

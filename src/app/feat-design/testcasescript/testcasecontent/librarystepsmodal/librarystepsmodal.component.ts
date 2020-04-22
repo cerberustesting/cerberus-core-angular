@@ -43,7 +43,7 @@ export class LibraryStepsModalComponent implements OnInit {
   private stepsByTest: StepsByTest[];
 
   /** list of selected steps */
-  private selectedSteps: Step[];
+  public selectedSteps: Step[];
 
   /** user information */
   private user: User;
@@ -71,14 +71,7 @@ export class LibraryStepsModalComponent implements OnInit {
     // subscribe to the user changes
     this.userService.observableUser.subscribe(response => {
       this.user = response;
-      // get the steps lists (depending on the user system) filtering on the first system
-      this.testcaseService.getLibraryStepList(
-        (steps: Step[]) => {
-          this.librarySteps = steps;
-          this.stepsByTest = this.groupStepsByTest();
-          // save the step groups in another variable as a reference
-          this.initialStepsByTest = this.stepsByTest;
-        }, this.user.defaultSystem[0]);
+      this.refreshLibrayStepsList(this.user.defaultSystem[0]);
     });
   }
 
@@ -166,8 +159,16 @@ export class LibraryStepsModalComponent implements OnInit {
         this.testcase.steps.push(step);
       });
       this.stepsAddedEvent.emit(this.selectedSteps);
-      this.activeModal.close('Save click');
+      this.closeModal('save');
     }
+  }
+
+  /**
+   * close the modal
+   * @param reason reason of closure ('save', 'close', 'dismiss')
+   */
+  closeModal(reason: string): void {
+    this.activeModal.close(reason);
   }
 
   /**
@@ -176,6 +177,21 @@ export class LibraryStepsModalComponent implements OnInit {
   */
   drop(event: CdkDragDrop<Step[]>): void {
     moveItemInArray(this.selectedSteps, event.previousIndex, event.currentIndex);
+  }
+
+  /**
+   * fetch the corresponding list of libray steps for a system
+   * @param system name of the system to fetch the steps from
+   */
+  refreshLibrayStepsList(system: string): void {
+    // get the steps lists (depending on the user system) filtering on the first system
+    this.testcaseService.getLibraryStepList(
+      (steps: Step[]) => {
+        this.librarySteps = steps;
+        this.stepsByTest = this.groupStepsByTest();
+        // save the step groups in another variable as a reference
+        this.initialStepsByTest = this.stepsByTest;
+      }, system);
   }
 
 }

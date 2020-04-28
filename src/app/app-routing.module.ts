@@ -4,7 +4,7 @@ import { PagenotfoundComponent } from './core/pagenotfound/pagenotfound.componen
 
 const appRoutes: Route[] = [
   // HOME ROUTING
-  { path: '', redirectTo: '/analyse/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/analyse/home', pathMatch: 'full' },
   {
     path: 'design',
     loadChildren: () => import('./feat-design/design.module').then(m => m.DesignModule)

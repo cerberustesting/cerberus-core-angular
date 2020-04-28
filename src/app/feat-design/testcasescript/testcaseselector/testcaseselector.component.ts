@@ -80,7 +80,7 @@ export class TestCaseSelectorComponent implements OnInit, OnDestroy {
           // if the selected test case id isn't null, it has been passed in URL
           if (this.selectedTestCase != null && this.selectedTest != null) {
             if (!this.testcaseService.selectedTestCaseExist(this.selectedTestCase, this.testcasesList)) {
-              console.error('the selected test case doesn\'t exist');
+              console.log('the selected test case doesn\'t exist');
               this.notificationService.createANotification('The selected test case doesn\t exist', NotificationStyle.Error, true, 5000);
               this.selectedTestCase = null;
             }
@@ -88,8 +88,8 @@ export class TestCaseSelectorComponent implements OnInit, OnDestroy {
         } else {
           // if no test case id have been found for the selected test folder
           if (this.selectedTest != null) {
-            console.warn('there is no corresponding test case for this test');
-            this.notificationService.createANotification('There is no corresponding test case for this test', NotificationStyle.Warning, true, 5000);
+            console.log('there is no corresponding test case for this test');
+            // this.notificationService.createANotification('There is no corresponding test case for this test', NotificationStyle.Warning, true, 5000);
           }
         }
       }

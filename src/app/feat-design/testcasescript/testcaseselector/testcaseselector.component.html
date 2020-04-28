@@ -17,11 +17,16 @@
           {{item.test}} : {{item.description}}
         </ng-template>
       </ng-select>
+      <div *ngIf="testcasesList.length === 0" class="input-group-append">
+        <span class="input-group-text input-group-text-alt custom-sm-font no-background">
+          <i class="fa fa-question-circle mr-2" style="color: #ffb119;"></i>No testcase found
+        </span>
+      </div>
     </div>
     <!-- END TEST FOLDER SELECTION -->
 
     <!-- TEST CASE ID SELECTION -->
-    <div *ngIf="selectedTest" id="TestID" class="input-group custom-sm">
+    <div *ngIf="selectedTest && testcasesList.length !== 0" id="TestID" class="input-group custom-sm">
       <div class="input-group-prepend">
         <span class="input-group-text input-group-text-alt custom-sm-font">
           Test Case ID
@@ -40,10 +45,6 @@
       </ng-select>
     </div>
     <!-- END TEST CASE ID SELECTION -->
-
-    <div *ngIf="testcasesList">
-      <p *ngIf="testcasesList.length === 0">no testcase found bro</p>
-    </div>
 
   </div>
 </div>

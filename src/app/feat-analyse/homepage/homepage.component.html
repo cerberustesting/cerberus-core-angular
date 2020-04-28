@@ -1,0 +1,64 @@
+<div class="content">
+
+  <!-- WELCOME TITLE-->
+  <h2 id="welcome" class="content-heading text-center animated slideInDown">Welcome to Cerberus</h2>
+  <!-- END WELCOME TITLE-->
+
+  <!-- LIST OF TABS -->
+  <div class="row justify-content-md-center">
+    <div *ngFor="let tab of tabs" class="col-6 col-md-4 col-xl-2" (click)="toggleTab(tab)">
+      <a class="block block-rounded block-bordered block-link-shadow text-center link-cursor"
+        [ngClass]="currentTab === tab ? 'selected' : ''" style="opacity: 0;" [id]="tab.id">
+        <div class="block-content">
+          <p class="my-2">
+            <i class="fa-2x text-muted" [ngClass]="tab.icon"></i>
+          </p>
+          <p class="font-w600">{{tab.name}}</p>
+        </div>
+      </a>
+    </div>
+  </div>
+  <!-- END LIST OF TABS -->
+
+  <!-- CHANGELOG TAB -->
+  <div *ngIf="currentTab">
+
+    <div class="row justify-content-md-center link-cursor">
+      <div class="col-md-12">
+        <app-changelog *ngIf="currentTab.id === 'changelog'"></app-changelog>
+      </div>
+    </div>
+
+  </div>
+  <!-- END CHANGELOG TAB -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="block">
+        <div class="block-header block-header-default text-center">
+          <h3 class="block-title">Campaign <small>activity</small></h3>
+        </div>
+        <div class="row block-content">
+          <div class="col-md-3">
+            <a class="block block-rounded block-link-shadow bg-success" href="javascript:void(0)">
+              <div class="block-content block-content-full d-flex align-items-center justify-content-between">
+                <div class="mr-3">
+                  <p class="text-white font-size-h3 font-w300 mb-0">Latest Launch</p>
+                  <p class="text-white-75 mb-0">2019-01-01 (1 day ago)</p>
+                </div>
+                <div>
+                  <i class="si fa-2x si-reload text-success-light"></i>
+                </div>
+
+              </div>
+            </a>
+          </div>
+          <div class="col-md-9">
+            <app-executionsperweek></app-executionsperweek>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

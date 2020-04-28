@@ -1,5 +1,14 @@
 <div id="activeStepSettings" class="row">
 
+    <!-- UNLINK BUTTON -->
+    <div *ngIf="readonly" class="col-md-12 text-center">
+        <button type="button" class="btn btn-rounded btn-alt-danger mr-1 mb-3"
+            ngbPopover="This step's content is from another test case" triggers="mouseenter:mouseleave">
+            <i class="fa fa-fw fa-unlink mr-1"></i> Unlink
+        </button>
+    </div>
+    <!-- END UNLNK BUTTON -->
+
     <!-- STEP DESCRIPTION -->
     <div class="col-md-12">
         <div class="form-group">
@@ -74,22 +83,15 @@
     <!-- END CONDITION VALUE 2 -->
 
     <!-- FORCE EXECUTION SWITCH -->
-    <div class="col-md-6">
-        <div class="block block-rounded block-bordered">
-            <div class="block-header custom-sm block-header-default">
-                <div class="custom-control custom-switch custom-control-inline ml-1">
-                    <input type="checkbox" class="custom-control-input" id="activeStepforceExecution"
-                        name="activeStepforceExecution" [checked]="step.forceExecution"
-                        (change)="step.forceExecution = !step.forceExecution" [disabled]="readonly">
-                    <label class="custom-control-label" for="activeStepforceExecution">
-                        Force Execution
-                    </label>
-                </div>
-                <div class="block-options">
-                    <button type="button" class="btn-block-option">
-                        <i class="fa fa-fw fa-arrow-down"></i>
-                    </button>
-                </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="custom-control custom-switch custom-control-inline ml-1">
+                <input type="checkbox" class="custom-control-input" id="activeStepforceExecution"
+                    name="activeStepforceExecution" [checked]="step.forceExecution"
+                    (change)="step.forceExecution = !step.forceExecution" [disabled]="readonly">
+                <label class="custom-control-label" for="activeStepforceExecution">
+                    Force Execution
+                </label>
             </div>
         </div>
     </div>

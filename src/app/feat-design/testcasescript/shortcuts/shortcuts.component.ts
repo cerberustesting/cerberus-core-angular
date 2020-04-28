@@ -3,7 +3,7 @@ import { NotificationService } from 'src/app/core/services/utils/notification.se
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TestcaseInteractionComponent } from '../../testcaselist/testcase-interaction/testcase-interaction.component';
-import { CustomModalComponent } from 'src/app/shared/custom-modal/custom-modal.component';
+import { CustomModalComponent, ModalType } from 'src/app/shared/custom-modal/custom-modal.component';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
@@ -96,8 +96,10 @@ export class ShortcutsComponent {
   deleteTestCase(test: string, testcase: string): void {
     const modalRef = this.modalService.open(CustomModalComponent);
     modalRef.componentInstance.title = 'Delete Test Case';
-    modalRef.componentInstance.text = 'Do you want to delete Test Case ' + test + '" - "' + testcase + '" ?';
-    modalRef.componentInstance.fct = () => {
+    modalRef.componentInstance.subtitle = 'Do you want to delete Test Case ' + test + ' - ' + testcase + '" ?';
+    modalRef.componentInstance.subtitle2 = 'This action cannot be undone';
+    modalRef.componentInstance.modalType = ModalType.Confirm;
+    modalRef.componentInstance.confirmFunction = () => {
       this.testcaseService.deleteTestCase(
         test,
         testcase,
@@ -112,10 +114,8 @@ export class ShortcutsComponent {
    * send the current test case object to the API
    */
   saveScript() {
-    this.testcaseService.saveTestCase(this.testcase, ((success: boolean) => {
-      if (success === true) {
-        this.sendRefreshEvent.emit(this.testcase);
-      }
+    this.testcaseService.saveTestCase(this.testcase, ((resp: any) => {
+      this.sendRefreshEvent.emit(this.testcase);
     }));
   }
 

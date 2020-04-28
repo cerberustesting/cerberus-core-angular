@@ -32,7 +32,8 @@
       <!-- CONTROL DESCRIPTION -->
       <div class="input-group-prepend" style="width:80%">
         <input type="text" name="controlDescription" class="form-control form-control-sm full-height no-background"
-          placeholder="No control description" [(ngModel)]="control.description">
+          placeholder="No control description" [(ngModel)]="control.description"
+          [disabled]="readonly ? 'true' : 'false'">
       </div>
       <!-- END CONTROL DESCRIPTION -->
 

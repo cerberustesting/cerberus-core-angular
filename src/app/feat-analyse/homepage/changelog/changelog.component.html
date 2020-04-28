@@ -1,0 +1,166 @@
+<div class="row">
+
+    <div class="block block-transparent">
+        <div class="block-header">
+            <h3 class="block-title">Changelog <small>version 4.7 (last updated on 01/01/1990</small></h3>
+        </div>
+        <div class="block-content">
+
+            <div class="col-12 js-appear-enabled animated fadeIn">
+                <a class="block block-rounded block-link-shadow">
+                    <div class="block-content block-content-full ribbon ribbon-dark ribbon-modern">
+                        <div class="ribbon-box"><i class="fa fa-bug mr-2"></i>Bug Fixes</div>
+                        <div class="py-3 ">
+                            <ul>
+                                <li>Fixed some issue when selecting a new step from library. (The selection of library
+                                    steps was
+                                    not
+                                    taken from the test case system but from the 1st system from gui header combo)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-12 js-appear-enabled animated fadeIn" data-toggle="appear">
+                <a class="block block-rounded block-link-shadow" href="javascript:void(0)">
+                    <div class="block-content block-content-full ribbon ribbon-dark ribbon-modern">
+                        <div class="ribbon-box"><i class="fa fa-gift mr-2"></i>New Features</div>
+                        <div class="py-3 ">
+                            <ul>
+                                <li> GUI
+                                    <ul>
+                                        <li>New Report page over Time (in reporting menu). That page display http stats
+                                            history
+                                            of an execution.</li>
+                                        <li>New bar graph on homepage that display the execution history over the last 3
+                                            months.
+                                        </li>
+                                        <li>
+                                            Inside ReportByTag page, rows that are in QUEUED state but with a previous
+                                            execution
+                                            are
+                                            now also displayed by default.
+                                        </li>
+
+                                        <li>
+                                            On RunTest page, TestCase filters are now hidden by default (that speedup
+                                            the page
+                                            loading
+                                            for new users).
+                                        </li>
+
+                                        <li>We can now add an environment at application level without being forced to
+                                            create it
+                                            before (it will be created automatically).
+                                        </li>
+
+                                        <li>Control layout improvement on test case script page.</li>
+
+
+                                        <li>Secure next Fire Time of scheduled campaign in 'Monitoring Page' is in the
+                                            future.
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>ENGINE
+
+                                    <ul>
+                                        <li>Added decode on topic, header and hosts for KAFKA SEARCH service #2119</li>
+
+                                        <li> Better message when Kafka topic is not found.</li>
+
+                                        <li> Service responses that have no Content-Type header defined and start by [
+                                            are now
+                                            also
+                                            considered as JSON</li>
+
+                                        <li> Support for OpenApp action for IOS.</li>
+
+                                        <li> new action 'waitNetworkTrafficIdle' in order to wait until the nb or
+                                            request on
+                                            application side settle.</li>
+                                    </ul>
+                                </li>
+
+                                <li>ADMINISTRATION
+                                    <ul>
+                                        <li> ManageV001 API now also clean Quartz scheduled entries when scope=instance
+                                            and
+                                            action=stop.</li>
+
+                                        <li> ManageV001 API now also stop any executions requested directly calling
+                                            RunTestCase
+                                            servlets.</li>
+
+                                        <li> Campaign Scheduler definition is now immediately reloaded.</li>
+                                    </ul>
+                                </li>
+
+                                <li>NETWORKTRAFFIC
+                                    <ul>
+                                        <li> Support cerberus-executor 1.1 new feature of timeout of proxy session (with
+                                            new
+                                            parameter 'cerberus_executorproxy_timeoutms') but also filtering out the
+                                            response
+                                            content of
+                                            every
+                                            http request. That optimize a lot the size of har produced.
+                                        </li>
+
+                                        <li> setNetworkTrafficContent action now take a new parameter in order to get
+                                            the
+                                            response content (by default it not longer take it).</li>
+
+                                        <li> http calls stats are now saved into database in order to allow building of
+                                            graph of
+                                            performance over time.</li>
+
+                                        <li> Domain is automatically guess from application url when empty (Domain is
+                                            used
+                                            in
+                                            order to qualify the http requests as internal requests).</li>
+
+                                        <li> New parameter : 'cerberus_networkstatsave_active' in order to activate the
+                                            automatic saving of network stat at the end of each execution.</li>
+
+                                        <li> Implemented idle detection mechanism in order to secure collected http
+                                            stats
+                                            are
+                                            complete vs async http calls. parameters
+                                            'cerberus_networkstatsave_idleperiod_ms'
+                                            and
+                                            'cerberus_networkstatsave_idlemaxloop_nb' can be used to tune the behavior.
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-12 js-appear-enabled animated fadeIn">
+                <a class="block block-rounded block-link-shadow">
+                    <div class="block-content block-content-full ribbon ribbon-dark ribbon-modern">
+                        <div class="ribbon-box"><i class="fa fa-exclamation-triangle mr-2"></i>Before Upgrade</div>
+                        <div class="py-3 ">
+                            <ul>
+                                <li>
+                                    Removed deprecated tables 'testcaseexecutionwwwdet', 'testcaseexecutionwwwsum' and
+                                    'project'.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>

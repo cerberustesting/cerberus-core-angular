@@ -268,7 +268,8 @@ export class TestcaseService {
           .then((result: any) => {
             // Success
             // callback(result.contentTable);
-            callback(single_testcase_full_mock.contentTable[0]);
+            const mock = single_testcase_full_mock.contentTable[0];
+            callback(mock);
             resolve();
           },
             err => {
@@ -397,7 +398,7 @@ export class TestcaseService {
     });
   }
 
-  saveTestCase(testcase: TestCase, callback: (success: boolean) => void) {
+  saveTestCase(testcase: TestCase, callback: (response: any) => void) {
     // declare the object to be send to /UpdateTestCaseWithDependencies
     let requestPayload: any;
     // instantiate it
@@ -437,6 +438,7 @@ export class TestcaseService {
         // create a new action object (because the mapping is different)
         let newAction: any;
         newAction = {};
+        newAction.controlArr = [];
         newAction.toDelete = action.toDelete || false;
         // test folder and test case id are empty for new action
         newAction.test = action.test;
@@ -523,12 +525,8 @@ export class TestcaseService {
 
     this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCaseWithDependencies', requestPayload, httpOptions)
       .subscribe(rep => {
-        if (rep) {
-          if (rep.messageType === 'OK') {
-            this.notificationService.createANotification('Test case script successfully saved', NotificationStyle.Success);
-            callback(true);
-          }
-        }
+        this.notificationService.createANotification('Test case script successfully saved', NotificationStyle.Success);
+        callback(rep);
       });
   }
 

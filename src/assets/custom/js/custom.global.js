@@ -12,7 +12,21 @@ function blockAPI(mode, block_id) {
 }
 
 function Helpers(name) {
-    jQuery(function () { Dashmix.helpers(name); });
+    jQuery(function () {
+        Dashmix.helpers(name);
+    });
+}
+
+/**
+ * fade out an DOM element, jQuery implementation
+ * @param {*} elementId id value of the element 
+ * @param {*} delay (ms)
+ */
+function ElementFadeIn(elementId, delay) {
+    console.log("ElementFadeIn for " + elementId);
+    jQuery(function () {
+        jQuery('#' + elementId).delay(delay).fadeTo(400, 1);
+    });
 }
 
 function initChartJS() {

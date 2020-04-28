@@ -427,3 +427,12 @@ div.block-header.block-header-sm {
   padding-top: 0.35rem !important;
   padding-bottom: 0.35rem !important;
 }
+
+/*
+"op-0" class for any element 
+
+set the opacity to 0, making the element not visible (used in fade in animation)
+*/
+.op-0 {
+  opacity: 0;
+}

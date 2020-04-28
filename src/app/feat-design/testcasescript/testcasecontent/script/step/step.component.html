@@ -31,7 +31,8 @@
       <!-- STEP DESCRIPTION -->
       <div class="input-group-prepend" style="width:80%">
         <input type="text" name="description" class="form-control form-control-sm full-height no-background"
-          placeholder="No step description" [(ngModel)]="step.description">
+          placeholder="No step description" [(ngModel)]="step.description"
+          [disabled]="stepIsReadOnly ? 'true' : 'false'" [disabled]="readonly ? 'true' : 'false'">
       </div>
       <!-- END STEP DESCRIPTION -->
 

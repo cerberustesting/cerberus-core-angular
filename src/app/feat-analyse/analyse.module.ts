@@ -6,8 +6,8 @@ import { ReportbystatusComponent } from './reportbytag/graph/reportby-status/rep
 import { ReportbytagComponent } from './reportbytag/reportbytag.component';
 import { SharedModule } from '../shared/shared.module';
 import { BugreportComponent } from './reportbytag/bugreport/bugreport.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ExecutionsperweekComponent } from './dashboard/graph/executionsperweek/executionsperweek.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { ExecutionsperweekComponent } from './homepage/graph/executionsperweek/executionsperweek.component';
 import { ChartsModule } from 'ng2-charts';
 import { ReportbyTestfolderComponent } from './reportbytag/graph/reportby-testfolder/reportby-testfolder.component';
 import { ReportbyLabelComponent } from './reportbytag/graph/reportby-label/reportby-label.component';
@@ -18,23 +18,25 @@ import { TagSelectionComponent } from './reportbytag/tag-selection/tag-selection
 import { StatisticDurationComponent } from './reportbytag/graph/statistic-duration/statistic-duration.component';
 import { StatisticReliabilityComponent } from './reportbytag/graph/statistic-reliability/statistic-reliability.component';
 import { LabelProgressComponent } from './reportbytag/graph/reportby-label/label-progress/label-progress.component';
+import { ChangelogComponent } from './homepage/changelog/changelog.component';
 
 @NgModule({
   declarations: [
-      ReportbystatusComponent,
-      ReportbytagComponent,
-      BugreportComponent,
-      DashboardComponent,
-      ExecutionsperweekComponent,
-      ReportbyTestfolderComponent,
-      ReportbyLabelComponent,
-      ReportbyOtherComponent,
-      ReportlistComponent,
-      TagDetailComponent,
-      TagSelectionComponent,
-      StatisticDurationComponent,
-      StatisticReliabilityComponent,
-      LabelProgressComponent
+    ReportbystatusComponent,
+    ReportbytagComponent,
+    BugreportComponent,
+    HomepageComponent,
+    ExecutionsperweekComponent,
+    ReportbyTestfolderComponent,
+    ReportbyLabelComponent,
+    ReportbyOtherComponent,
+    ReportlistComponent,
+    TagDetailComponent,
+    TagSelectionComponent,
+    StatisticDurationComponent,
+    StatisticReliabilityComponent,
+    LabelProgressComponent,
+    ChangelogComponent
   ],
   imports: [
     CommonModule,

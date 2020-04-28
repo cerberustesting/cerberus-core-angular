@@ -118,7 +118,7 @@ export class SidebarComponent implements OnInit {
         submenu: [
           {
             name: 'Test',
-            icon_class: 'si-grid',
+            icon_class: 'si-chemistry',
             expanded: false,
             authorized: true,
             id: 'testMenu',
@@ -273,42 +273,42 @@ export class SidebarComponent implements OnInit {
             submenu: [
               {
                 name: 'Environment',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'Integration Status',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'Build Revision',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'Build Content',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'Project',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'Batch',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
@@ -317,7 +317,7 @@ export class SidebarComponent implements OnInit {
           },
           {
             name: 'Administration',
-            link: '/dashboard',
+            link: '/home',
             icon_class: 'si-settings',
             expanded: false,
             authorized: true,
@@ -325,42 +325,42 @@ export class SidebarComponent implements OnInit {
             submenu: [
               {
                 name: 'User Management',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'Logs',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'Parameters',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'Invariants',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'DB Maintenance',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'
               },
               {
                 name: 'Monitoring',
-                link: '/dashboard',
+                link: '/home',
                 expanded: false,
                 authorized: true,
                 id: 'applicationObjectsMenu'

@@ -25,9 +25,9 @@ export class HomepageTab {
 })
 export class HomepageComponent implements OnInit {
 
-  private tabs: HomepageTab[];
+  public tabs: HomepageTab[];
 
-  private currentTab: HomepageTab;
+  public currentTab: HomepageTab;
 
   constructor(private headerTitleService: HeaderTitleService) {
   }

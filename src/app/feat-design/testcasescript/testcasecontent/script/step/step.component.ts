@@ -23,7 +23,7 @@ export class StepComponent implements OnInit {
   public showActionList: boolean;
 
   /** boolean to prevent the edition of the step attributes */
-  private stepIsReadOnly: boolean;
+  public stepIsReadOnly: boolean;
 
   /** boolean to display the controls of the actions */
   private showControls: boolean;

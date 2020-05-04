@@ -34,6 +34,7 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit() {
 
+    // instantiate the tabs array
     this.tabs = [
       new HomepageTab('Documentation', 'fa fa-book', 'docs'),
       new HomepageTab('What\'s new?', 'fa fa-lightbulb', 'changelog'),
@@ -41,18 +42,28 @@ export class HomepageComponent implements OnInit {
       new HomepageTab('Community Slack', 'fab fa-slack', 'slack', 'https://cerberustesting.slack.com')
     ];
 
+    // set the current to nothing
     this.currentTab = null;
 
+    // launch the chartJS script configuration
     initChartJS();
 
+    // set the page title
     this.headerTitleService.setTitle('Home', 'Home');
 
-    ElementFadeIn('docs', 500);
-    ElementFadeIn('changelog', 1000);
-    ElementFadeIn('github', 1500);
-    ElementFadeIn('slack', 2000);
+    // fade all sections in
+    let counter = 0;
+    this.tabs.forEach(tab => {
+      counter += 500;
+      ElementFadeIn(tab.id, counter);
+    });
+
   }
 
+  /**
+   * toggle the current tab
+   * @param tab tab to be toggled
+   */
   toggleTab(tab: HomepageTab) {
     if (tab.link) {
       // open the link in a new tab

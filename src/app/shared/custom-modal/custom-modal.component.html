@@ -4,7 +4,8 @@
 
             <!-- ICON SECTION -->
             <div id="icon" class="col-12 push op-0">
-                <!-- <i class="si fa-4x si-close" style="color: #f27474;"></i> -->
+                <i *ngIf="modalType === 'error'" class="si fa-4x si-close  animated rubberBand"
+                    style="color: #f27474;"></i>
                 <i *ngIf="modalType === 'confirm'" class="si fa-4x si-question animated rubberBand"
                     style="color: #f8bb86;"></i>
             </div>
@@ -13,20 +14,36 @@
             <!-- CONTENT SECTION -->
             <div id="content" class="col-12 op-0">
                 <h2 class="font-w300 text-gray-darker">{{title}}</h2>
-                <p>{{subtitle}}</p>
-                <p>{{subtitle2}}</p>
+                <p *ngIf="subtitle">{{subtitle}}</p>
+                <p *ngIf="subtitle2">{{subtitle2}}</p>
+
+                <div class="push" *ngIf="itemsList">
+                    <div *ngFor="let step of itemsList" class="block-header custom-sm block-header-default">
+                        <h3 class="block-title">{{step.test}}
+                            <small class="ml-1">{{step.testCase}} (position {{step.sort}})</small>
+                        </h3>
+                    </div>
+                </div>
+
             </div>
             <!-- END CONTENT SECTION -->
 
             <!-- ACTION BUTTONS -->
             <div id="actions" class="col-12 push op-0">
 
-                <button type="button" class="btn btn-danger m-1" style="display: inline-block;" (click)="confirm()">
+                <button *ngIf="modalType === 'confirm'" type="button" class="btn btn-danger m-1"
+                    style="display: inline-block;" (click)="confirm()">
                     Yes
                 </button>
 
-                <button type="button" class="btn btn-secondary m-1" style="display: inline-block;" (click)="close()">
+                <button *ngIf="modalType === 'confirm'" type="button" class="btn btn-secondary m-1"
+                    style="display: inline-block;" (click)="close()">
                     No
+                </button>
+
+                <button *ngIf="modalType === 'error'" type="button" class="btn btn-secondary m-1"
+                    style="display: inline-block;" (click)="close()">
+                    Ok
                 </button>
             </div>
             <!-- END ACTION BUTTONS -->

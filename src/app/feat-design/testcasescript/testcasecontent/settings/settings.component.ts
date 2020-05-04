@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Step } from 'src/app/shared/model/back/testcase/step.model';
 import { SettingsService } from './settings.service';
 import { Control } from 'src/app/shared/model/back/testcase/control.model';
 import { Action } from 'src/app/shared/model/back/testcase/action.model';
+import { StepSettingsComponent } from './step-settings/step-settings.component';
 
 @Component({
   selector: 'app-settings',
@@ -10,6 +11,8 @@ import { Action } from 'src/app/shared/model/back/testcase/action.model';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
+
+  @ViewChild(StepSettingsComponent, { static: false }) stepComp: StepSettingsComponent;
 
   step: Step;
   action: Action;

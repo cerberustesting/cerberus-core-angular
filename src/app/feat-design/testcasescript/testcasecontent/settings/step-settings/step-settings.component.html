@@ -2,12 +2,23 @@
 
     <!-- UNLINK BUTTON -->
     <div *ngIf="readonly" class="col-md-12 text-center">
-        <button type="button" class="btn btn-rounded btn-alt-danger mr-1 mb-3"
+        <button type="button" class="btn btn-rounded btn-alt-danger mr-1 mb-3" (click)="unlinkStep()"
             ngbPopover="This step's content is from another test case" triggers="mouseenter:mouseleave">
-            <i class="fa fa-fw fa-unlink mr-1"></i> Unlink
+            <i class="fa fa-fw fa-unlink mr-2"></i>Unlink
         </button>
     </div>
     <!-- END UNLNK BUTTON -->
+
+    <!-- REMOVE FROM LIBRARY BUTTON -->
+    <div *ngIf="step.inLibrary" class="col-md-12 text-center">
+        <button type="button" class="btn btn-rounded btn-alt-danger mr-1 mb-3" (click)="removeStepFromLibrary()"
+            ngbPopover="This step is in Library" triggers="mouseenter:mouseleave">
+            <i class="fa fa-fw fa-eject mr-2"></i>
+            Remove from Library
+            <span class="nav-main-link-badge badge badge-pill badge-secondary">{{ listOfUseSteps.length }}</span>
+        </button>
+    </div>
+    <!-- END REMOVE FROM LIBRARY BUTTON -->
 
     <!-- STEP DESCRIPTION -->
     <div class="col-md-12">

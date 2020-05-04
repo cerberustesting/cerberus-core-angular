@@ -43,14 +43,17 @@ export class TestCaseSelectorComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // empty the testcase object (to avoid old values to be displayed when getting back on the page)
     this.testcase = undefined;
-    this.selectedTest = null;
-    this.selectedTestCase = null;
+    this.selectedTest = undefined;
+    this.selectedTestCase = undefined;
   }
 
   ngOnInit() {
 
     // refresh the test folders list
     this.testService.refreshTestFolders();
+
+    // instantiate the test case array
+    this.testcasesList = new Array<TestCase>();
 
     // subscription to test folder list
     this.testService.observableTestsList.subscribe(response => {

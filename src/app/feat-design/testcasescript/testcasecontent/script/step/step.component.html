@@ -67,7 +67,7 @@
       <!-- END FORCE EXEC ICON -->
 
       <!-- EXPAND / COLLAPSE CONTROLS -->
-      <button type="button" *ngIf="showActionList" name="toggleControls" class="btn-block-option"
+      <button type="button" *ngIf="showActionList && hasControls()" name="toggleControls" class="btn-block-option"
         (click)="showControls = !showControls" [ngbPopover]="showControls ? 'Hide the controls' : 'Show the controls'"
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw" [ngClass]="showControls ? 'fa-minus' : 'fa-plus'"></i>

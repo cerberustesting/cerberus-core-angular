@@ -12,14 +12,16 @@ import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { TestService } from '../test/test.service';
 import { GlobalService } from '../../utils/global.service';
 import { LabelService } from '../label/label.service';
-
-// mocks
-import single_testcase_full_mock from 'src/assets/data/mock/readTC_single_full.json';
-import single_testcase_mock from 'src/assets/data/mock/readTC_single.json';
 import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/testcase/property.model';
 import { Control } from 'src/app/shared/model/back/testcase/control.model';
 import { Action } from 'src/app/shared/model/back/testcase/action.model';
 import { Step } from 'src/app/shared/model/back/testcase/step.model';
+
+// mocks
+import single_testcase_full_mock from 'src/assets/data/mock/readTC_single_full.json';
+import single_testcase_mock from 'src/assets/data/mock/readTC_single.json';
+import list_usesteps_mock from 'src/assets/data/mock/readUseStepsForLibrary.json';
+
 
 @Injectable({
   providedIn: 'root'
@@ -321,6 +323,33 @@ export class TestcaseService {
         const maxTestCase = response.maxTestCase;
         this.observableMaxTestCaseID.next(maxTestCase);
       });
+  }
+
+  /**
+   * return the list of use step spread over testcases for a specific testcase step
+   * @param test test folder name
+   * @param testcase testcase id
+   * @param stepId unique step id
+   * @param callback function called with the results
+   */
+  getUseStepForALibraryStep(test: string, testcase: string, stepId: number, callback): Promise<Step[]> {
+    const promise = new Promise<Step[]>((resolve, reject) => {
+      this.http
+        .get<Step[]>(environment.cerberus_api_url + '/ReadTestCaseStep?test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testcase) + '&step=' + stepId + '&getUses=true')
+        .toPromise()
+        .then((result: any) => {
+          // Success
+          // callback(result.contentTable);
+          callback(list_usesteps_mock.step);
+          resolve();
+        },
+          err => {
+            // Error
+            reject(err);
+          }
+        );
+    });
+    return promise;
   }
 
   /**

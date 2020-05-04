@@ -108,20 +108,14 @@
     </div>
 
     <!-- FATAL SWITCH -->
-    <div class="col-md-6">
-        <div class="block block-rounded block-bordered">
-            <div class="block-header block-header-default custom-sm">
-                <div class="custom-control custom-switch custom-control-inline ml-1">
-                    <input type="checkbox" class="custom-control-input" id="activeControlFatal"
-                        name="activeControlFatal" [checked]="control.fatal" (change)="control.fatal = !control.fatal"
-                        [disabled]="readonly">
-                    <label class="custom-control-label" for="activeControlFatal">Fatal</label>
-                </div>
-                <div class="block-options">
-                    <button type="button" class="btn-block-option">
-                        <i class="fa fa-fw fa-exclamation"></i>
-                    </button>
-                </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="custom-control custom-switch custom-control-inline ml-1">
+                <input type="checkbox" class="custom-control-input" id="activeControlFatal" name="activeControlFatal"
+                    [checked]="control.fatal" (change)="control.fatal = !control.fatal" [disabled]="readonly">
+                <label class="custom-control-label" for="activeControlFatal">
+                    Fatal
+                </label>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ declare function ElementFadeIn(elementId, delay);
 
 export enum ModalType {
   Confirm = 'confirm',
+  Error = 'error'
 }
 
 @Component({
@@ -21,6 +22,9 @@ export class CustomModalComponent implements OnInit {
 
   /** additionnal subtitle of the text  */
   @Input() subtitle2: string;
+
+  /** list of items to display */
+  @Input() itemsList: any[];
 
   /** type of the modal that results in different template */
   @Input() modalType: ModalType;
@@ -51,6 +55,8 @@ export class CustomModalComponent implements OnInit {
   close() {
     if (this.modalType === ModalType.Confirm) {
       this.activeModal.close('cancel');
+    } else if (this.modalType === ModalType.Error) {
+      this.activeModal.close('confirm');
     }
   }
 

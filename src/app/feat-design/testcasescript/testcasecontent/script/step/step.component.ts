@@ -82,16 +82,14 @@ export class StepComponent implements OnInit {
 
   /** return a state used by the view to display an icon depedending on the combination of useStep and inLibrary */
   libraryState(): string {
-    if (this.step.useStep === true && this.step.inLibrary === false) {
+    if (this.step.useStep === true) {
       this.stepIsReadOnly = true;
       return 'locked';
-    } else if (this.step.useStep === false && this.step.inLibrary === true) {
+    } else if (this.step.inLibrary === true) {
       return 'reference';
-    } else if (this.step.useStep === false && this.step.inLibrary === false) {
-      return 'clear';
     } else {
-      console.log('WARN: ERROR on libraryState() call, please report this issue on github');
-      return null;
+      this.stepIsReadOnly = false;
+      return 'clear';
     }
   }
 
@@ -102,9 +100,27 @@ export class StepComponent implements OnInit {
     this.testService.refreshActionsSort(this.step.actions);
   }
 
+  /**
+   * return true if any of the step actions has a control, false if no control is found
+   */
+  hasControls(): boolean {
+    let res: boolean;
+    this.step.actions.forEach(action => {
+      if (action.controls.length > 0) {
+        res = true;
+        return true;
+      }
+    });
+    if (res !== true) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   // debug function
   debug() {
-    console.log(this.step);
+    console.log(this.hasControls());
   }
 
 }

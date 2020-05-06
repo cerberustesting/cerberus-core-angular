@@ -1,10 +1,10 @@
 <div id="activeStepSettings" class="row">
 
     <!-- UNLINK BUTTON -->
-    <div *ngIf="readonly" class="col-md-12 text-center">
+    <div *ngIf="step.readonly" class="col-md-12 text-center">
         <button type="button" class="btn btn-rounded btn-alt-danger mr-1 mb-3" (click)="unlinkStep()"
             ngbPopover="This step's content is from another test case" triggers="mouseenter:mouseleave">
-            <i class="fa fa-fw fa-unlink mr-2"></i>Unlink
+            <i class="fa fa-fw fa-unlock mr-2"></i>Unlink
         </button>
     </div>
     <!-- END UNLNK BUTTON -->
@@ -20,12 +20,21 @@
     </div>
     <!-- END REMOVE FROM LIBRARY BUTTON -->
 
+    <!-- ADD TO LIBRARY BUTTON -->
+    <div *ngIf="step.inLibrary === false && step.useStep === false" class="col-md-12 text-center">
+        <button type="button" class="btn btn-rounded btn-alt-primary mr-1 mb-3" (click)="addToLibrary()">
+            <i class="fa fa-fw fa-share mr-2"></i>
+            Add this step to Library
+        </button>
+    </div>
+    <!-- END ADD TO LIBRARY BUTTON -->
+
     <!-- STEP DESCRIPTION -->
     <div class="col-md-12">
         <div class="form-group">
             <label for="description"><i class="fa fa-info mr-2"></i>Description</label>
             <input type="text" [(ngModel)]="step.description" class="form-control form-control-sm" name="description"
-                placeholder="Step Description" [disabled]="readonly"
+                placeholder="Step Description" [disabled]="step.readonly"
                 [ngClass]="step.description == '' ? 'has-warning':''">
             <div *ngIf="step.description == ''" class="warning-feedback">
                 You should consider giving a description
@@ -39,7 +48,7 @@
         <div class="form-group">
             <label for="activeStepLoop"><i class="fa fa-redo mr-2"></i>Loop</label>
             <select class="form-control form-control-sm br-tp-0" id="activeStepLoop" name="activeStepLoop"
-                [(ngModel)]="step.loop" [disabled]="readonly">
+                [(ngModel)]="step.loop" [disabled]="step.readonly">
                 <option *ngFor='let steploop of stepLoopOperators' [ngValue]='steploop.value'>{{steploop.value}}
                 </option>
             </select>
@@ -52,7 +61,7 @@
         <div class="form-group">
             <label for="activeStepCondition"><i class="fa fa-question mr-2"></i>Condition</label>
             <select class="form-control form-control-sm br-tp-0" id="activeStepCondition" name="activeStepCondition"
-                [(ngModel)]="step.conditionOper" [disabled]="readonly">
+                [(ngModel)]="step.conditionOper" [disabled]="step.readonly">
                 <option *ngFor='let condition of conditionsOperators' [ngValue]='condition.value'>
                     {{condition.value}}
                 </option>
@@ -71,7 +80,7 @@
                     </span>
                 </div>
                 <input type="text" class="form-control form-control-sm" id="activeStepParameter1"
-                    name="activeStepParameter1" [(ngModel)]="step.conditionVal1" [readonly]="readonly">
+                    name="activeStepParameter1" [(ngModel)]="step.conditionVal1" [readonly]="step.readonly">
             </div>
         </div>
     </div>
@@ -87,7 +96,7 @@
                     </span>
                 </div>
                 <input type="text" class="form-control form-control-sm" id="activeStepParameter2"
-                    name="activeStepParameter2" [(ngModel)]="step.conditionVal2" [readonly]="readonly">
+                    name="activeStepParameter2" [(ngModel)]="step.conditionVal2" [readonly]="step.readonly">
             </div>
         </div>
     </div>
@@ -99,7 +108,7 @@
             <div class="custom-control custom-switch custom-control-inline ml-1">
                 <input type="checkbox" class="custom-control-input" id="activeStepforceExecution"
                     name="activeStepforceExecution" [checked]="step.forceExecution"
-                    (change)="step.forceExecution = !step.forceExecution" [disabled]="readonly">
+                    (change)="step.forceExecution = !step.forceExecution" [disabled]="step.readonly">
                 <label class="custom-control-label" for="activeStepforceExecution">
                     Force Execution
                 </label>

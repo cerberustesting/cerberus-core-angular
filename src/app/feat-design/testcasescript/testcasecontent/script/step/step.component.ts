@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { SettingsService } from '../../settings/settings.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -11,7 +11,7 @@ import { Step } from 'src/app/shared/model/back/testcase/step.model';
   templateUrl: './step.component.html',
   styleUrls: ['./step.component.scss']
 })
-export class StepComponent implements OnInit {
+export class StepComponent implements OnInit, OnChanges {
 
   /** step object */
   @Input('step') step: Step;
@@ -33,8 +33,17 @@ export class StepComponent implements OnInit {
 
   constructor(
     private settingsService: SettingsService,
-    private testService: TestcaseService
+    private testcaseService: TestcaseService
   ) { }
+
+  /**
+   * catch any changes in the inputted step
+   * @param changes simple changes
+   */
+  ngOnChanges(changes: SimpleChanges) {
+    // refresh the library state
+    this.libraryState();
+  }
 
   ngOnInit() {
     // by default, the step is not focused when loaded
@@ -69,35 +78,42 @@ export class StepComponent implements OnInit {
     // insert the action at the correct index
     this.step.actions.splice(index, 0, newAction);
     // reorder the sort attributes
-    this.testService.refreshActionsSort(this.step.actions);
+    this.testcaseService.refreshActionsSort(this.step.actions);
   }
 
-  /** sends the step to the setting comp to display its information */
+  /**
+   * sends the step to the setting comp to display its information
+   */
   focusOnStep(): void {
     // send the step to the settings service and thus, to the settings component
-    this.settingsService.editStepSettings(this.step, this.stepIsReadOnly);
+    this.settingsService.editStepSettings(this.step);
     // TODO : handle this differently
     //    this.showActionList = !this.showActionList;
   }
 
-  /** return a state used by the view to display an icon depedending on the combination of useStep and inLibrary */
+  /**
+   * return a state used by the view to display an icon depedending on the combination of useStep and inLibrary
+   */
   libraryState(): string {
     if (this.step.useStep === true) {
-      this.stepIsReadOnly = true;
+      this.step.readonly = true;
       return 'locked';
     } else if (this.step.inLibrary === true) {
+      this.step.readonly = false;
       return 'reference';
     } else {
-      this.stepIsReadOnly = false;
+      this.step.readonly = false;
       return 'clear';
     }
   }
 
-  /** on the drop of an action somewhere in the actions list */
+  /**
+   * on the drop of an action somewhere in the actions list
+   */
   dropAction(event: CdkDragDrop<Action[]>) {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     // reorder the sort attributes
-    this.testService.refreshActionsSort(this.step.actions);
+    this.testcaseService.refreshActionsSort(this.step.actions);
   }
 
   /**
@@ -118,7 +134,6 @@ export class StepComponent implements OnInit {
     }
   }
 
-  // debug function
   debug() {
     console.log(this.hasControls());
   }

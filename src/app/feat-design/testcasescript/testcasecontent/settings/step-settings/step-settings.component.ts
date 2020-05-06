@@ -6,6 +6,7 @@ import { ICrossReference, CrossreferenceService } from 'src/app/core/services/ut
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomModalComponent, ModalType } from 'src/app/shared/custom-modal/custom-modal.component';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 
 @Component({
   selector: 'app-step-settings',
@@ -17,8 +18,8 @@ export class StepSettingsComponent implements OnInit, OnChanges {
   /** step object */
   @Input('step') step: Step;
 
-  /** readonly mode to disabled all fields */
-  @Input('readonly') readonly: boolean;
+  /** full testcase object */
+  @Input('testcase') testcase: TestCase;
 
   /** list of condition operators (private invariants) */
   public conditionsOperators: Array<Invariant>;
@@ -69,15 +70,18 @@ export class StepSettingsComponent implements OnInit, OnChanges {
     const modalRef = this.modalService.open(CustomModalComponent);
     modalRef.componentInstance.title = 'Unlink Step?';
     modalRef.componentInstance.subtitle = 'Do you want to unlink this step?';
-    modalRef.componentInstance.subtitle2 = 'This action cannot be undone';
+    modalRef.componentInstance.subtitle2 = 'Your test case will be saved right away';
     modalRef.componentInstance.modalType = ModalType.Confirm;
     modalRef.componentInstance.confirmFunction = () => {
       this.step.useStep = false;
-      this.readonly = false;
+      this.step.readonly = false;
       this.step.useStepTest = undefined;
       this.step.useStepTestCase = undefined;
       this.step.useStepStepId = undefined;
       this.step.useStepStepSort = undefined;
+      this.testcaseService.saveTestCase(this.testcase, (response: any) => {
+        console.log(response);
+      });
     };
   }
 
@@ -95,7 +99,14 @@ export class StepSettingsComponent implements OnInit, OnChanges {
     } else {
       this.step.inLibrary = false;
     }
+  }
 
+  /**
+   * add the current step to the library
+   */
+  addToLibrary(): void {
+    this.step.useStep = false;
+    this.step.inLibrary = true;
   }
 
   /**

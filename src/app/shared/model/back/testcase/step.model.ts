@@ -66,6 +66,9 @@ export class Step {
     /** @description should the step be deleted? */
     toDelete: boolean;
 
+    /** @description (custom) can the step be edited? */
+    readonly: boolean;
+
     /** @description list of actions */
     actions: Array<Action>;
 

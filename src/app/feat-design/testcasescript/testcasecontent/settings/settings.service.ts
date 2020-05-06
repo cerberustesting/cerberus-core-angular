@@ -27,11 +27,10 @@ export class SettingsService {
     this.readOnlyMode = false;
   }
 
-  editStepSettings(step: Step, ro: boolean): void {
+  editStepSettings(step: Step): void {
     this.selectedStep = step;
     this.selectedAction = null;
     this.selectedControl = null;
-    this.readOnlyMode = ro;
     this.parentStepIndex = null;
     this.parentActionIndex = null;
     this.refreshVariable();

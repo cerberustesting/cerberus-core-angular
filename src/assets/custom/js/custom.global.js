@@ -23,7 +23,6 @@ function Helpers(name) {
  * @param {*} delay (ms)
  */
 function ElementFadeIn(elementId, delay) {
-    console.log("ElementFadeIn for " + elementId);
     jQuery(function () {
         jQuery('#' + elementId).delay(delay).fadeTo(400, 1);
     });

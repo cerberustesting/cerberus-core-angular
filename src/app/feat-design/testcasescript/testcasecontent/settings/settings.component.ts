@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Step } from 'src/app/shared/model/back/testcase/step.model';
 import { SettingsService } from './settings.service';
 import { Control } from 'src/app/shared/model/back/testcase/control.model';
 import { Action } from 'src/app/shared/model/back/testcase/action.model';
-import { StepSettingsComponent } from './step-settings/step-settings.component';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 
 @Component({
   selector: 'app-settings',
@@ -12,13 +12,21 @@ import { StepSettingsComponent } from './step-settings/step-settings.component';
 })
 export class SettingsComponent implements OnInit {
 
-  @ViewChild(StepSettingsComponent, { static: false }) stepComp: StepSettingsComponent;
+  /** full testcase object */
+  @Input('testcase') testcase: TestCase;
 
+  // currently selected object
   step: Step;
   action: Action;
   control: Control;
+
+  // read onyl status of the current object
   private readonly: boolean;
+
+  // only relevant for action & control
   private parentStepIndex: number;
+
+  // only relevant for control
   private parentActionIndex: number;
 
   constructor(

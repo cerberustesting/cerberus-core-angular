@@ -1,4 +1,4 @@
-<div [id]="'step'+step.sort" class="block block-rounded block-bordered mb-2"
+<div *ngIf="step" [id]="'step'+step.sort" class="block block-rounded block-bordered mb-2"
   [ngClass]="[step.toDelete ? 'toDelete_border' : '',  isFocused ? 'focused_border' : '']">
 
   <!-- HEADER -->
@@ -32,7 +32,7 @@
       <div class="input-group-prepend" style="width:80%">
         <input type="text" name="description" class="form-control form-control-sm full-height no-background"
           placeholder="No step description" [(ngModel)]="step.description"
-          [disabled]="stepIsReadOnly ? 'true' : 'false'" [disabled]="readonly ? 'true' : 'false'">
+          [disabled]="step.readonly ? 'true' : 'false'">
       </div>
       <!-- END STEP DESCRIPTION -->
 
@@ -122,11 +122,11 @@
     <div *ngIf="step.actions.length > 0" cdkDropList [cdkDropListData]="step.actions"
       (cdkDropListDropped)="dropAction($event)" class="actionList">
       <div *ngFor="let action of step.actions" class="actionDrag" cdkDrag cdkDragLockAxis="y">
-        <app-action [action]="action" [readonly]="stepIsReadOnly" [showContent]="showControls" [parentStep]="step"
+        <app-action [action]="action" [readonly]="step.readonly" [showContent]="showControls" [parentStep]="step"
           (actionAdded)="addAction($event)" [testcase]="testcase">
 
           <!-- ACTION DRAG CONTROL -->
-          <button *ngIf="!stepIsReadOnly" slot="drag-action" type="button" name="dragAction"
+          <button *ngIf="!step.readonly" slot="drag-action" type="button" name="dragAction"
             class="btn-block-option ml-1 drag-cursor" cdkDragHandle>
             <i class="fa fa-ellipsis-v"></i>
           </button>

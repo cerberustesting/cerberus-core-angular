@@ -26,11 +26,11 @@ export class ExecutionSettingsTabComponent implements OnInit {
   public countries: Array<Invariant>;
 
   // available sprints and revs list
-  private sprints: Array<any>; // TODO: add type
-  private revs: Array<any>; // TODO: add type
+  private builds: Array<any>; // TODO: add type
+  private minors: Array<any>; // TODO: add type
 
   /** conditions list (private invariant) */
-  public conditionOpers: Array<Invariant>;
+  public conditionOperators: Array<Invariant>;
 
   /** cross references array to display the correct input fields according to the selected condition */
   private crossReference_ConditionValue: Array<ICrossReference> = this.crossReferenceService.crossReference_ConditionValue;
@@ -44,9 +44,9 @@ export class ExecutionSettingsTabComponent implements OnInit {
 
   ngOnInit() {
     /** subscribe to the invariants and build revision lists */
-    this.systemService.observableSprints.subscribe(rep => { this.sprints = rep; });
-    this.systemService.observableRevs.subscribe(rep => this.revs = rep);
-    this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionOpers = rep);
+    this.systemService.observableSprints.subscribe(rep => { this.builds = rep; });
+    this.systemService.observableRevs.subscribe(rep => this.minors = rep);
+    this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionOperators = rep);
     this.invariantsService.observableCountriesList.subscribe(rep => this.countries = rep);
   }
 
@@ -67,7 +67,7 @@ export class ExecutionSettingsTabComponent implements OnInit {
 
   /** return true if sprints and revs are defined (false instead) */
   sprintsAndRevAreDefined(): boolean {
-    return this.sprints.length > 0 && this.revs.length > 0;
+    return this.builds.length > 0 && this.minors.length > 0;
   }
 
   /** return true if a condition oper has a cross reference */

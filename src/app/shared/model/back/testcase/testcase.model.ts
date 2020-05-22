@@ -46,7 +46,7 @@ export class TestCase {
     status: string;
 
     /** @description type name of the test case (private invariant) */
-    group: string;
+    type: string;
 
     /** @description criticity of the test case (used for CI score calculation) */
     priority: number;
@@ -55,40 +55,40 @@ export class TestCase {
     behaviorOrValueExpected: string;
 
     /** @description global activation of the test case */
-    tcActive: string;
+    isActive: string;
 
     /** @description QA activation of the test case */
-    activeQA: string;
+    isActiveQA: string;
 
     /** @description UAT activation of the test case */
-    activeUAT: string;
+    isActiveUAT: string;
 
     /** @description PROD activation of the test case */
-    activePROD: string;
+    isActivePROD: string;
 
     /** @description list of selected countries for this test case */
     countries: Array<Invariant>;
 
     /** @description earliest build (major version) that defines the activation of the test case */
-    fromBuild: string;
+    fromMajor: string;
 
     /** @description latest build (major version) that defines the activation of the test case */
-    toBuild: string;
+    toMajor: string;
+
+    /** @description target build (major revision) that defines the activation of the test case */
+    targetMajor: string;
 
     /** @description earliest (minor revision) revision that defines the activation of the test case */
-    fromRev: string;
+    fromMinor: string;
 
     /** @description latest (minor revision) revision that defines the activation of the test case */
-    toRev: string;
+    toMinor: string;
 
     /** @description target (minor revision) revision that defines the activation of the test case */
-    targetBuild: string;
-
-    /** @description target (minor revision) revision that defines the activation of the test case */
-    targetRev: string;
+    targetMinor: string;
 
     /** @description test case activation condition */
-    conditionOper: string;
+    conditionOperator: string;
 
     /** @description test case activation condition first value */
     conditionVal1: string;
@@ -154,7 +154,7 @@ export class TestCase {
         test: string,
         testcase: string,
         application: string,
-        group: string,
+        type: string,
         priority: number,
         status: string,
         countries: Array<any>,
@@ -165,22 +165,22 @@ export class TestCase {
         this.description = '';
         this.application = application;
         this.system = system;
-        this.group = group;
+        this.type = type;
         this.priority = priority;
         this.status = status;
         this.behaviorOrValueExpected = '';
-        this.tcActive = 'Y';
-        this.activeQA = 'Y';
-        this.activeUAT = 'Y';
-        this.activePROD = 'N';
+        this.isActive = 'Y';
+        this.isActiveQA = 'Y';
+        this.isActiveUAT = 'Y';
+        this.isActivePROD = 'N';
         this.countries = countries;
-        this.fromBuild = '';
-        this.fromRev = '';
-        this.toBuild = '';
-        this.toRev = '';
-        this.targetBuild = '';
-        this.targetRev = '';
-        this.conditionOper = '';
+        this.fromMajor = '';
+        this.fromMinor = '';
+        this.toMajor = '';
+        this.toMinor = '';
+        this.targetMajor = '';
+        this.targetMinor = '';
+        this.conditionOperator = '';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
         this.conditionVal3 = '';

@@ -106,8 +106,8 @@ The field type depends on the column.type attribute (refer to column model 4 mor
 
                     <!-- BOOLEAN COLUMN TYPE -->
                     <div *ngIf="column.type==='boolean'">
-                        <i class="fa fa-check" *ngIf="value==='Y'"></i>
-                        <i class="fa fa-times" *ngIf="value==='N'"></i>
+                        <i class="fa fa-check" *ngIf="value === true"></i>
+                        <i class="fa fa-times" *ngIf="value === false"></i>
                     </div>
                     <!-- END BOOLEAN COLUMN TYPE -->
 

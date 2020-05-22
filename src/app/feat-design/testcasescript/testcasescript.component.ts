@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
@@ -80,13 +80,13 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     this.InvariantService.getTcStatus();
     this.InvariantService.getOriginsList();
     this.InvariantService.getPriorities();
-    this.InvariantService.getGroupList();
+    this.InvariantService.getTestCaseTypesList();
     this.InvariantService.getOriginsList();
     this.InvariantService.getPropertyDatabaseList();
 
     // refresh the private invariants : loaded once (excluded from any refresh)
     // TODO : use promise instead of observables
-    this.InvariantService.getStepConditionOperList();
+    this.InvariantService.getConditionOperatorsList();
     this.InvariantService.getStepLoopList();
     this.InvariantService.getActionList();
     this.InvariantService.getControlsList();

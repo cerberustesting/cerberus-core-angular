@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { UserService } from './user.service';
-import tcs from 'src/assets/data/mock/readTCs.json';
+import tcs from 'src/assets/data/mock/testcases.json';
 
 const httpOptions = {
   headers: new HttpHeaders({

@@ -18,8 +18,8 @@ import { Action } from 'src/app/shared/model/back/testcase/action.model';
 import { Step } from 'src/app/shared/model/back/testcase/step.model';
 
 // mocks
-import single_testcase_full_mock from 'src/assets/data/mock/readTC_single_full.json';
-import single_testcase_mock from 'src/assets/data/mock/readTC_single.json';
+import single_testcase_full_mock from 'src/assets/data/mock/testcase_full.json';
+import single_testcase_mock from 'src/assets/data/mock/testcase_lite.json';
 import list_usesteps_mock from 'src/assets/data/mock/readUseStepsForLibrary.json';
 
 

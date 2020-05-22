@@ -20,6 +20,16 @@
         "value2": null
     },
     {
+        "reference": "ifElementVisible",
+        "value1": "Element",
+        "value2": null
+    },
+    {
+        "reference": "ifElementNotVisible",
+        "value1": "Element",
+        "value2": null
+    },
+    {
         "reference": "ifElementNotPresent",
         "value1": "Element",
         "value2": null

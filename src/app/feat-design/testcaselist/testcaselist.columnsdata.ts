@@ -121,9 +121,9 @@ export const TestCasesColumnsData: Column[] = [
         defaultActive: false
     },
     {
-        displayName: 'Global Activation',
+        displayName: 'Active',
         apiName: 'tec.tcactive',
-        contentName: 'tcActive',
+        contentName: 'isActive',
         filterable: true,
         active: false,
         filterDisplayed: false,
@@ -133,6 +133,42 @@ export const TestCasesColumnsData: Column[] = [
         placeholder: 'Select Global Activation',
         sSearch: [],
         defaultActive: false
+    },
+    {
+        displayName: 'QA Active',
+        apiName: 'tec.isActiveQA',
+        contentName: 'isActiveQA',
+        active: false,
+        filterDisplayed: false,
+        type: COLUMN_TYPE.BOOLEAN,
+        filterMode: FILTER_MODE.DROPDOWN,
+        multiple: false,
+        defaultActive: false,
+        filterable: true
+    },
+    {
+        displayName: 'UAT Activation',
+        apiName: 'tec.isActiveUAT',
+        contentName: 'isActiveUAT',
+        active: false,
+        filterDisplayed: false,
+        type: COLUMN_TYPE.BOOLEAN,
+        filterMode: FILTER_MODE.DROPDOWN,
+        multiple: false,
+        defaultActive: false,
+        filterable: true
+    },
+    {
+        displayName: 'PROD Activation',
+        apiName: 'tec.isActivePROD',
+        contentName: 'isActivePROD',
+        active: false,
+        filterDisplayed: false,
+        type: COLUMN_TYPE.BOOLEAN,
+        filterMode: FILTER_MODE.DROPDOWN,
+        multiple: false,
+        defaultActive: false,
+        filterable: true
     },
     {
         displayName: 'Countries',
@@ -149,45 +185,9 @@ export const TestCasesColumnsData: Column[] = [
         multiple: true
     },
     {
-        displayName: 'QA Activation',
-        apiName: 'tec.tcactive',
-        contentName: 'activePROD',
-        active: false,
-        filterDisplayed: false,
-        type: COLUMN_TYPE.BOOLEAN,
-        filterMode: FILTER_MODE.DROPDOWN,
-        multiple: false,
-        defaultActive: false,
-        filterable: true
-    },
-    {
-        displayName: 'UAT Activation',
-        apiName: 'tec.tcactive',
-        contentName: 'activeQA',
-        active: false,
-        filterDisplayed: false,
-        type: COLUMN_TYPE.BOOLEAN,
-        filterMode: FILTER_MODE.DROPDOWN,
-        multiple: false,
-        defaultActive: false,
-        filterable: true
-    },
-    {
-        displayName: 'PROD Activation',
-        apiName: 'tec.tcactive',
-        contentName: 'activeUAT',
-        active: false,
-        filterDisplayed: false,
-        type: COLUMN_TYPE.BOOLEAN,
-        filterMode: FILTER_MODE.DROPDOWN,
-        multiple: false,
-        defaultActive: false,
-        filterable: true
-    },
-    {
         displayName: 'Type',
-        apiName: 'tec.group',
-        contentName: 'group',
+        apiName: 'tec.type',
+        contentName: 'type',
         filterable: true,
         active: false,
         multiple: true,
@@ -196,6 +196,19 @@ export const TestCasesColumnsData: Column[] = [
         filterDisplayed: false,
         defaultActive: false,
         type: COLUMN_TYPE.LONGTEXT
+    },
+    {
+        displayName: 'Version',
+        apiName: 'tec.version',
+        contentName: 'version',
+        filterDisplayed: false,
+        active: false,
+        multiple: true,
+        placeholder: 'Select TestCase Version',
+        sSearch: [],
+        defaultActive: false,
+        type: COLUMN_TYPE.LONGTEXT,
+        filterable: false
     },
     {
         displayName: 'Date Created',
@@ -224,19 +237,6 @@ export const TestCasesColumnsData: Column[] = [
         defaultActive: false,
         type: COLUMN_TYPE.LONGTEXT,
         filterMode: FILTER_MODE.DROPDOWN
-    },
-    {
-        displayName: 'TestCase Version',
-        apiName: 'tec.testCaseVersion',
-        contentName: 'testCaseVersion',
-        filterDisplayed: false,
-        active: false,
-        multiple: true,
-        placeholder: 'Select TestCase Version',
-        sSearch: [],
-        defaultActive: false,
-        type: COLUMN_TYPE.LONGTEXT,
-        filterable: false
     },
     {
         displayName: 'Date Modification',

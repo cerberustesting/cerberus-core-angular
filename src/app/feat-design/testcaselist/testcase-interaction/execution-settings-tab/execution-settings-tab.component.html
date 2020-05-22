@@ -9,9 +9,9 @@
 
             <!-- GLOBAL ACTIVATION -->
             <div class="custom-control custom-switch custom-control-inline">
-                <input type="checkbox" class="custom-control-input" id="globalActivation" name="globalActivation"
-                    formControlName="active" [ngClass]="settings.get('active').value ? 'selected' : 'notselected'">
-                <label class="custom-control-label" for="globalActivation">
+                <input type="checkbox" class="custom-control-input" id="isActive" name="isActive"
+                    formControlName="isActive" [ngClass]="settings.get('isActive').value ? 'selected' : 'notselected'">
+                <label class="custom-control-label" for="isActive">
                     Global
                     <i class="fa fa-info-circle ml-0 info popover-custom-width-1" placement="bottom"
                         ngbPopover="This field define if the test is active or not. A test case that is not active cannot be executed."
@@ -22,9 +22,10 @@
 
             <!-- QA ACTIVATION -->
             <div class="custom-control custom-switch custom-control-inline">
-                <input type="checkbox" id="activeQA" class="custom-control-input" name="activeQA"
-                    formControlName="activeQA" [ngClass]="settings.get('activeQA').value ? 'selected' : 'notselected'">
-                <label class="custom-control-label" for="activeQA">
+                <input type="checkbox" id="isActiveQA" class="custom-control-input" name="isActiveQA"
+                    formControlName="isActiveQA"
+                    [ngClass]="settings.get('isActiveQA').value ? 'selected' : 'notselected'">
+                <label class="custom-control-label" for="isActiveQA">
                     QA
                     <i class="fa fa-info-circle ml-0 info popover-custom-width-1" placement="bottom"
                         ngbPopover="This field define if the test is active or in the QA environment group."
@@ -35,10 +36,10 @@
 
             <!-- UAT ACTIVATION -->
             <div class="custom-control custom-switch custom-control-inline">
-                <input type="checkbox" id="activeUAT" class="custom-control-input" name="activeUAT"
-                    formControlName="activeUAT"
-                    [ngClass]="settings.get('activeUAT').value ? 'selected' : 'notselected'">
-                <label class="custom-control-label" for="activeUAT">
+                <input type="checkbox" id="isActiveUAT" class="custom-control-input" name="isActiveUAT"
+                    formControlName="isActiveUAT"
+                    [ngClass]="settings.get('isActiveUAT').value ? 'selected' : 'notselected'">
+                <label class="custom-control-label" for="isActiveUAT">
                     UAT
                     <i class="fa fa-info-circle ml-0 info popover-custom-width-1" placement="bottom"
                         ngbPopover="This field define if the test is active or in the UAT environment group."
@@ -49,10 +50,10 @@
 
             <!-- PROD ACTIVATION -->
             <div class="custom-control custom-switch custom-control-inline">
-                <input type="checkbox" id="activePROD" class="custom-control-input" name="activePROD"
-                    formControlName="activePROD"
-                    [ngClass]="settings.get('activePROD').value ? 'selected' : 'notselected'">
-                <label class="custom-control-label" for="activePROD">
+                <input type="checkbox" id="isActivePROD" class="custom-control-input" name="isActivePROD"
+                    formControlName="isActivePROD"
+                    [ngClass]="settings.get('isActivePROD').value ? 'selected' : 'notselected'">
+                <label class="custom-control-label" for="isActivePROD">
                     PROD
                     <i class="fa fa-info-circle ml-0 info popover-custom-width-1" placement="bottom"
                         ngbPopover="This field define if the test is active or in the PROD environment group."
@@ -97,73 +98,73 @@
 
                 <!-- FROM SPRINT -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="fromSprint" class="fw-400">From Sprint</label>
-                    <select *ngIf="sprints.length > 0" class="form-control form-control-sm" formControlName="fromSprint"
-                        name="fromSprint">
-                        <option *ngFor="let sprint of sprints" [value]="sprint.versionName" [id]="sprint.versionName">
-                            {{ sprint.versionName }}
+                    <label for="fromMajor" class="fw-400">From Major</label>
+                    <select *ngIf="builds.length > 0" class="form-control form-control-sm" formControlName="fromMajor"
+                        name="fromMajor">
+                        <option *ngFor="let build of builds" [value]="build.versionName" [id]="build.versionName">
+                            {{ build.versionName }}
                         </option>
                     </select>
                 </div>
                 <!-- END FROM SPRINT -->
 
-                <!-- TO SPRINT -->
-                <div class="form-group custom-form-group-sm">
-                    <label for="example-select" class="fw-400">To Sprint</label>
-                    <select class="form-control form-control-sm" formControlName="toSprint" name="toSprint">
-                        <option *ngFor="let sprint of sprints" [value]="sprint.versionName" [id]="sprint.versionName">
-                            {{ sprint.versionName }}
-                        </option>
-                    </select>
-                </div>
-                <!-- END TO SPRINT -->
-
-            </div>
-
-            <div class="col-4">
-
                 <!-- FROM REV -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="fromRev" class="fw-400">From Rev</label>
-                    <select class="form-control form-control-sm" formControlName="fromRev" name="fromRev">
-                        <option *ngFor="let rev of revs" [value]="rev.versionName" [id]="rev.versionName">
-                            {{ rev.versionName }}
+                    <label for="fromMinor" class="fw-400">From Minor</label>
+                    <select class="form-control form-control-sm" formControlName="fromMinor" name="fromMinor">
+                        <option *ngFor="let minor of minors" [value]="minor.versionName" [id]="minor.versionName">
+                            {{ minor.versionName }}
                         </option>
                     </select>
                 </div>
                 <!-- END FROM REV -->
 
-                <!-- TO REV -->
-                <div class="form-group custom-form-group-sm">
-                    <label for="toRev" class="fw-400">To Rev</label>
-                    <select class="form-control form-control-sm" formControlName="toRev" name="toRev">
-                        <option *ngFor="let rev of revs" [value]="rev.versionName" [id]="rev.versionName">
-                            {{ rev.versionName }}
-                        </option>
-                    </select>
-                </div>
-                <!-- END TO REV -->
             </div>
 
             <div class="col-4">
 
-                <!-- TARGET SPRINT -->
+                <!-- TO MAJOR -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="targetSprint" class="fw-400">Target Sprint</label>
-                    <select class="form-control form-control-sm" formControlName="targetSprint" name="targetSprint">
-                        <option *ngFor="let sprint of sprints" [value]="sprint.versionName" [id]="sprint.versionName">
-                            {{ sprint.versionName }}
+                    <label for="example-select" class="fw-400">To Major</label>
+                    <select class="form-control form-control-sm" formControlName="toMajor" name="toMajor">
+                        <option *ngFor="let build of builds" [value]="build.versionName" [id]="build.versionName">
+                            {{ build.versionName }}
                         </option>
                     </select>
                 </div>
-                <!-- END TARGET SPRINT -->
+                <!-- END TO MAJOR -->
+
+                <!-- TO MINOR -->
+                <div class="form-group custom-form-group-sm">
+                    <label for="toMinor" class="fw-400">To Minor</label>
+                    <select class="form-control form-control-sm" formControlName="toMinor" name="toMinor">
+                        <option *ngFor="let minor of minors" [value]="minor.versionName" [id]="minor.versionName">
+                            {{ minor.versionName }}
+                        </option>
+                    </select>
+                </div>
+                <!-- END TO MINOR -->
+            </div>
+
+            <div class="col-4">
+
+                <!-- TARGET MAJOR -->
+                <div class="form-group custom-form-group-sm">
+                    <label for="targetMajor" class="fw-400">Target Major</label>
+                    <select class="form-control form-control-sm" formControlName="targetMajor" name="targetMajor">
+                        <option *ngFor="let build of builds" [value]="build.versionName" [id]="build.versionName">
+                            {{ build.versionName }}
+                        </option>
+                    </select>
+                </div>
+                <!-- END TARGET MAJOR -->
 
                 <!-- TARGET REV -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="targetRev" class="fw-400">Target Sprint</label>
-                    <select class="form-control form-control-sm" formControlName="targetRev" name="targetRev">
-                        <option *ngFor="let rev of revs" [value]="rev.versionName" [id]="rev.versionName">
-                            {{ rev.versionName }}
+                    <label for="targetMinor" class="fw-400">Target Minor</label>
+                    <select class="form-control form-control-sm" formControlName="targetMinor" name="targetMinor">
+                        <option *ngFor="let minor of minors" [value]="minor.versionName" [id]="minor.versionName">
+                            {{ minor.versionName }}
                         </option>
                     </select>
                 </div>
@@ -183,8 +184,8 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="example-select" class="fw-400">Condition</label>
-                    <select class="form-control form-control-sm" formControlName="conditionOper">
-                        <option *ngFor="let condition of conditionOpers" [value]="condition.value"
+                    <select class="form-control form-control-sm" formControlName="conditionOperator">
+                        <option *ngFor="let condition of conditionOperators" [value]="condition.value"
                             [id]="condition.value">
                             {{ condition.value }}
                         </option>
@@ -194,10 +195,11 @@
             <!-- END CONDITION OPER  -->
 
             <!-- CONDITION VAL 1 -->
-            <div class="col-4" *ngIf="hasConditionCrossReference(settings.get('conditionOper').value)">
-                <div class="form-group" *ngIf="findConditionCrossReference(settings.get('conditionOper').value).value1">
+            <div class="col-4" *ngIf="hasConditionCrossReference(settings.get('conditionOperator').value)">
+                <div class="form-group"
+                    *ngIf="findConditionCrossReference(settings.get('conditionOperator').value).value1">
                     <label for="ConditionValue1" class="fw-400">
-                        {{ findConditionCrossReference(settings.get('conditionOper').value).value1 }}
+                        {{ findConditionCrossReference(settings.get('conditionOperator').value).value1 }}
                     </label>
                     <input type="text" class="form-control form-control-sm" name="ConditionValue1"
                         formControlName="conditionVal1">
@@ -206,10 +208,11 @@
             <!-- END CONDITION VAL 1 -->
 
             <!-- CONDITION VAL 2 -->
-            <div class="col-4" *ngIf="hasConditionCrossReference(settings.get('conditionOper').value)">
-                <div class="form-group" *ngIf="findConditionCrossReference(settings.get('conditionOper').value).value2">
+            <div class="col-4" *ngIf="hasConditionCrossReference(settings.get('conditionOperator').value)">
+                <div class="form-group"
+                    *ngIf="findConditionCrossReference(settings.get('conditionOperator').value).value2">
                     <label for="ConditionValue2" class="fw-400">
-                        {{ findConditionCrossReference(settings.get('conditionOper').value).value2 }}
+                        {{ findConditionCrossReference(settings.get('conditionOperator').value).value2 }}
                     </label>
                     <input type="text" class="form-control form-control-sm" name="ConditionValue2"
                         formControlName="conditionVal2">

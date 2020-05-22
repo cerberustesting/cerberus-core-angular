@@ -13,8 +13,8 @@ export class InvariantsService {
 
   // private invariants
   stepLoopList: Array<Invariant>;
-  conditionOperList: Array<Invariant>;
-  groupsList: Array<Invariant>;
+  conditionOperatorList: Array<Invariant>;
+  typesList: Array<Invariant>;
   actionsList: Array<Invariant>;
   controlsList: Array<Invariant>;
   tcestatusList: Array<Invariant>;
@@ -38,8 +38,8 @@ export class InvariantsService {
   observableSystems = new BehaviorSubject<Invariant[]>(this.systemsList);
   observablePriorities = new BehaviorSubject<Invariant[]>(this.prioritiesList);
   observableOriginsList = new BehaviorSubject<Invariant[]>(this.originsList);
-  observableGroupsList = new BehaviorSubject<Invariant[]>(this.groupsList);
-  observableConditionOperList = new BehaviorSubject<Invariant[]>(this.conditionOperList);
+  observableGroupsList = new BehaviorSubject<Invariant[]>(this.typesList);
+  observableConditionOperList = new BehaviorSubject<Invariant[]>(this.conditionOperatorList);
   observableStepLoopList = new BehaviorSubject<Invariant[]>(this.stepLoopList);
   observableActionsList = new BehaviorSubject<Invariant[]>(this.actionsList);
   observableControlsList = new BehaviorSubject<Invariant[]>(this.controlsList);
@@ -113,19 +113,19 @@ export class InvariantsService {
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
-  getGroupList() {
-    this.http.get<Invariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=group')
+  getTestCaseTypesList() {
+    this.http.get<Invariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=testcase_type')
       .subscribe(response => {
-        this.groupsList = response;
-        this.observableGroupsList.next(this.groupsList);
+        this.typesList = response;
+        this.observableGroupsList.next(this.typesList);
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
-  getStepConditionOperList() {
-    this.http.get<Invariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=stepconditionOper')
+  getConditionOperatorsList() {
+    this.http.get<Invariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=stepconditionOperator')
       .subscribe(response => {
-        this.conditionOperList = response;
-        this.observableConditionOperList.next(this.conditionOperList);
+        this.conditionOperatorList = response;
+        this.observableConditionOperList.next(this.conditionOperatorList);
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 
@@ -191,13 +191,13 @@ export class InvariantsService {
     this.getControlsList();
     this.getCountriesList();
     this.getEnvironments();
-    this.getGroupList();
+    this.getTestCaseTypesList();
     this.getOriginsList();
     this.getPriorities();
     this.getPropertyDatabaseList();
     this.getPropertyNatureList();
     this.getPropertyTypeList();
-    this.getStepConditionOperList();
+    this.getConditionOperatorsList();
     this.getStepLoopList();
     this.getSystems();
     this.getTcStatus();

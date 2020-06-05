@@ -1,72 +1,94 @@
-<div *ngIf="getSelection()" class="btn-group btn-group-sm" data-toggle="buttons" role="group"
-  aria-label="Icons Text group">
+<div class="btn-toolbar">
 
-  <!-- EDIT SINGLE RAW BUTTON -->
-  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
-    ngbPopover="Edit Testcase Header" triggers="mouseenter:mouseleave" placement="top" (click)="editTestCaseHeader()">
-    <i class="fa fa-fw fa-pen"></i>
-  </button>
-  <!-- END EDIT SINGLE RAW BUTTON -->
+  <div *ngIf="getSelection()" class="btn-group btn-group-sm mr-3" role="group">
 
-  <!-- EDIT SCRIPT BUTTON -->
-  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary" ngbPopover="Edit Script"
-    triggers="mouseenter:mouseleave" placement="top" (click)="redirectToScript(getSelection()[0])">
-    <i class="fa fa-fw fa-list-ol"></i>
-  </button>
-  <!-- END EDIT SCRIPT BUTTON -->
+    <!-- EDIT SINGLE RAW BUTTON -->
+    <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
+      ngbPopover="Edit Testcase Header" triggers="mouseenter:mouseleave" placement="top" (click)="editTestCaseHeader()">
+      <i class="fa fa-fw fa-pen"></i>
+    </button>
+    <!-- END EDIT SINGLE RAW BUTTON -->
 
-  <!-- DUPLICATE BUTTON -->
-  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
-    ngbPopover="Duplicate Testcase" triggers="mouseenter:mouseleave" placement="top"
-    (click)="duplicateTestCaseHeader()">
-    <i class="fa fa-fw fa-copy"></i>
-  </button>
-  <!-- END DUPLICATE BUTTON -->
+    <!-- EDIT SCRIPT BUTTON -->
+    <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary" ngbPopover="Edit Script"
+      triggers="mouseenter:mouseleave" placement="top" (click)="redirectToScript(getSelection()[0])">
+      <i class="fa fa-fw fa-list-ol"></i>
+    </button>
+    <!-- END EDIT SCRIPT BUTTON -->
 
-  <!-- RUN BUTTON -->
-  <button type="button" class="btn btn-outline-secondary" ngbPopover="Run Testcase(s)" triggers="mouseenter:mouseleave"
-    placement="top" (click)="runTestCases(getSelection())">
-    <i class="fa fa-fw fa-play"></i>
-  </button>
-  <!-- END RUN BUTTON -->
+    <!-- DUPLICATE BUTTON -->
+    <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
+      ngbPopover="Duplicate Testcase" triggers="mouseenter:mouseleave" placement="top"
+      (click)="duplicateTestCaseHeader()">
+      <i class="fa fa-fw fa-copy"></i>
+    </button>
+    <!-- END DUPLICATE BUTTON -->
 
-  <!-- DELETE BUTTON -->
-  <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
-    ngbPopover="Delete Testcase" triggers="mouseenter:mouseleave" placement="top" (click)="deleteTestCase(getSelection()[0])">
-    <i class="fa fa-fw fa-trash"></i>
-  </button>
-  <!-- END DELETE BUTTON -->
+    <!-- RUN BUTTON -->
+    <button type="button" class="btn btn-outline-secondary" ngbPopover="Run Testcase(s)"
+      triggers="mouseenter:mouseleave" placement="top" (click)="runTestCases(getSelection())">
+      <i class="fa fa-fw fa-play"></i>
+    </button>
+    <!-- END RUN BUTTON -->
 
-  <!-- MASS UPDATE STATUS BUTTON -->
-  <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary" ngbPopover="Update Status"
-    triggers="mouseenter:mouseleave" placement="top">
-    <i class="fa fa-fw fa-check-circle"></i>
-  </button>
-  <!-- END MASS UPDATE STATUS BUTTON -->
+    <!-- DELETE BUTTON -->
+    <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
+      ngbPopover="Delete Testcase" triggers="mouseenter:mouseleave" placement="top"
+      (click)="deleteTestCase(getSelection()[0])">
+      <i class="fa fa-fw fa-trash"></i>
+    </button>
+    <!-- END DELETE BUTTON -->
 
-  <!-- MASS UPDATE APPLICATION BUTTON -->
-  <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
-    ngbPopover="Update Applications" triggers="mouseenter:mouseleave" placement="top">
-    <i class="fa fa-fw fa-cube"></i>
-  </button>
-  <!-- END MASS UPDATE APPLICATION BUTTON -->
+    <!-- MASS UPDATE STATUS BUTTON -->
+    <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
+      ngbPopover="Mass Update: Status" triggers="mouseenter:mouseleave" placement="top"
+      (click)="toggleMassActionField(MassActionField.Status)"
+      [ngClass]="currentMassAction === MassActionField.Status ? 'active' : ''">
+      <i class="fa fa-fw fa-check-circle"></i>
+    </button>
+    <!-- END MASS UPDATE STATUS BUTTON -->
 
-  <!-- MASS UPDATE PRIORITY BUTTON -->
-  <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
-    ngbPopover="Update Priorities" triggers="mouseenter:mouseleave" placement="top">
-    <i class="fa fa-fw fa-exclamation"></i>
-  </button>
-  <!-- END MASS UPDATE PRIORITY BUTTON -->
+    <!-- MASS UPDATE APPLICATION BUTTON -->
+    <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
+      ngbPopover="Mass Update: Applications" triggers="mouseenter:mouseleave" placement="top"
+      (click)="toggleMassActionField(MassActionField.Application)"
+      [ngClass]="currentMassAction === MassActionField.Application ? 'active' : ''">
+      <i class="fa fa-fw fa-cube"></i>
+    </button>
+    <!-- END MASS UPDATE APPLICATION BUTTON -->
 
-  <!-- MASS UPDATE LABELS BUTTON -->
-  <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary" ngbPopover="Update Labels"
-    triggers="mouseenter:mouseleave" placement="top">
-    <i class="fa fa-fw fa-tag"></i>
-  </button>
-  <!-- END MASS UPDATE LABELS BUTTON -->
+    <!-- MASS UPDATE PRIORITY BUTTON -->
+    <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
+      ngbPopover="Mass Update: Priorities" triggers="mouseenter:mouseleave" placement="top"
+      (click)="toggleMassActionField(MassActionField.Priority)"
+      [ngClass]="currentMassAction === MassActionField.Priority ? 'active' : ''">
+      <i class="fa fa-fw fa-exclamation"></i>
+    </button>
+    <!-- END MASS UPDATE PRIORITY BUTTON -->
 
-  <!-- <button type="button" class="btn btn-outline-secondary" (click)="debug()">
-    <i class="fa fa-fw fa-bug"></i>
-  </button> -->
+    <!-- MASS UPDATE PRIORITY BUTTON -->
+    <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
+      ngbPopover="Mass Update: Executor" triggers="mouseenter:mouseleave" placement="top"
+      (click)="toggleMassActionField(MassActionField.Executor)"
+      [ngClass]="currentMassAction === MassActionField.Executor ? 'active' : ''">
+      <i class="fa fa-fw fa-user"></i>
+    </button>
+    <!-- END MASS UPDATE PRIORITY BUTTON -->
+
+    <!-- MASS UPDATE LABELS BUTTON -->
+    <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
+      ngbPopover="Mass Update: Labels" triggers="mouseenter:mouseleave" placement="top"
+      (click)="toggleMassActionField(MassActionField.Labels)" [ngClass]="currentMassAction === MassActionField.Labels ? 'active' : ''">
+      <i class="fa fa-fw fa-tag"></i>
+    </button>
+    <!-- END MASS UPDATE LABELS BUTTON -->
+
+  </div>
+
+  <!-- MASS UPDATE FIELD -->
+  <app-massactions *ngIf="currentMassAction && currentMassAction !== MassActionField.Labels" [field]="currentMassAction"
+    [selection]="getSelection()">
+  </app-massactions>
+  <!-- END MASS UPDATE FIELD -->
 
 </div>

@@ -51,6 +51,7 @@ import { ActionSettingsComponent } from './testcasescript/testcasecontent/settin
 import { StepSettingsComponent } from './testcasescript/testcasecontent/settings/step-settings/step-settings.component';
 import { TestfoldergroupComponent } from './testcasescript/testcasecontent/librarystepsmodal/testfoldergroup/testfoldergroup.component';
 import { SelectedstepComponent } from './testcasescript/testcasecontent/librarystepsmodal/selectedstep/selectedstep.component';
+import { MassactionsComponent } from './testcaselist/actions/massactions/massactions.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { SelectedstepComponent } from './testcasescript/testcasecontent/librarys
     StepSettingsComponent,
     TestfoldergroupComponent,
     SelectedstepComponent,
+    MassactionsComponent,
   ],
   imports: [
     CommonModule,

@@ -21,6 +21,8 @@ import { Step } from 'src/app/shared/model/back/testcase/step.model';
 import single_testcase_full_mock from 'src/assets/data/mock/testcase_full.json';
 import single_testcase_mock from 'src/assets/data/mock/testcase_lite.json';
 import list_usesteps_mock from 'src/assets/data/mock/readUseStepsForLibrary.json';
+import { MassActionField } from 'src/app/feat-design/testcaselist/actions/massactions/massactions.model';
+
 
 
 @Injectable({
@@ -587,6 +589,53 @@ export class TestcaseService {
     });
     // return the property groups
     return propertiesValuesByName;
+  }
+
+  /**
+   * update a single attribute of a list of test case(s)
+   * @param testcaseslist selection of test case(s) to update
+   * @param fieldName name of the attribute to update
+   * @param newValue new value to set
+   * @param callback function upon completion
+   */
+  testCaseMassUpdate(testcaseslist: TestCase[], fieldName: MassActionField, newValue: string, callback: (response: any) => void) {
+    // instantiate the parameters object
+    let FormData: string;
+    FormData = '';
+    // add the corresponding field type with its new value
+    switch (fieldName) {
+      case MassActionField.Status: {
+        FormData += 'massStatus=' + encodeURIComponent(newValue);
+        break;
+      }
+      case MassActionField.Priority: {
+        FormData += 'massPriority=' + encodeURIComponent(newValue);
+        break;
+      }
+      case MassActionField.Application: {
+        FormData += 'massApplication=' + encodeURIComponent(newValue);
+        break;
+      }
+      case MassActionField.Executor: {
+        FormData += 'massExecutor=' + encodeURIComponent(newValue);
+        break;
+      }
+    }
+    // add the list of test case(s)
+    testcaseslist.forEach(testcase => {
+      FormData += '&test=' + testcase.test + '&testcase=' + testcase.testCase;
+    });
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      })
+    };
+
+    this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCaseMass', FormData, httpOptions)
+      .subscribe(rep => {
+        callback(rep);
+      });
   }
 
 }

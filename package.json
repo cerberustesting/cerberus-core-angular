@@ -51,7 +51,7 @@
     "hammerjs": "^2.0.8",
     "highlightjs": "^9.10.0",
     "ion-rangeslider": "^2.3.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
     "jquery-bootstrap-wizard": "^1.4.2",
     "jquery-countdown": "^2.2.0",
     "jquery-scroll-lock": "^3.1.3",
@@ -87,7 +87,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.802.0",
+    "@angular-devkit/build-angular": "^0.901.7",
     "@angular/cli": "^8.2.0",
     "@angular/compiler-cli": "^8.2.0",
     "@angular/language-service": "^8.2.0",

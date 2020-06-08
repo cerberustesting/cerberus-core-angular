@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, Output, TemplateRef, ContentChild, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, ContentChild, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { Column } from '../model/front/column.model';
 import { FilterService } from 'src/app/core/services/api/filter.service';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { DatatableFilterTmpDirective, DatatableMassActionTmpDirective, DatatableEndLineActionDirective } from './directives/datatable.directive';
 import { Observable } from 'rxjs';
 import { FiltersComponent } from './filters/filters.component';
-import { Invariant } from '../model/back/invariant/invariant.model';
 import { UserService } from 'src/app/core/services/api/user.service';
 import { User } from '../model/back/user/user.model';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 
 @Component({
   selector: 'app-datatable-page',
@@ -46,6 +46,7 @@ export class DatatablePageComponent implements OnInit {
   constructor(
     private filterService: FilterService,
     private invariantsService: InvariantsService,
+    private testCaseService: TestcaseService,
     private userService: UserService) {
     this.user = null;
   }
@@ -60,8 +61,8 @@ export class DatatablePageComponent implements OnInit {
     };
 
     this.userService.observableUser.subscribe(rep => {
-      this.user = rep;
       this.cache = {};
+      this.user = rep;
       this.rows = [];
       this.page.number = 0;
       this.search();
@@ -70,6 +71,12 @@ export class DatatablePageComponent implements OnInit {
     if (this.refreshResults) {
       this.refreshResults.subscribe(() => this.applyFilters());
     }
+
+    // subscribe to the refresh datatable content event
+    this.filterService.refreshContentEvent.subscribe(rep => {
+      // refresh the table content when the event is fired (from any component)
+      this.applyFilters();
+    });
   }
 
   /** return the first row of the displayed result in the datatable */
@@ -118,7 +125,7 @@ export class DatatablePageComponent implements OnInit {
   /**
    * applyFilters
    * * update rows with new filters
-   * * reset cache, rows, page number and scroll
+   * * reset rows, cache, page number and scroll
    * @param globalSearch content of global search field
    */
   applyFilters(globalSearch?: string): void {

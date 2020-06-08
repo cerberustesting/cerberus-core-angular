@@ -6,6 +6,7 @@ import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.ser
 import { MassActionField, MassActionType } from './massactions.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
+import { FilterService } from 'src/app/core/services/api/filter.service';
 
 @Component({
   selector: 'app-massactions',
@@ -29,8 +30,8 @@ export class MassactionsComponent implements OnInit, OnChanges {
   /** list of item (or text value) used as a new value for the mass action */
   public selectedItem: any;
 
-  /** event to trigger the refresh of the table after completion of the mass action */
-  @Output() refreshTableEvent: EventEmitter<void> = new EventEmitter();
+  /** event to reset the current mass action field in the parent component */
+  @Output() resetCurrentMassAction: EventEmitter<string> = new EventEmitter();
 
   /** instance of the Mass Actions types enumeration */
   public MassActionType: typeof MassActionType = MassActionType;
@@ -38,6 +39,7 @@ export class MassactionsComponent implements OnInit, OnChanges {
   constructor(
     private invariantService: InvariantsService,
     private systemService: SystemService,
+    private filterService: FilterService,
     private testcaseService: TestcaseService,
     private notificationService: NotificationService
   ) { }
@@ -96,6 +98,9 @@ export class MassactionsComponent implements OnInit, OnChanges {
       } else {
         this.notificationService.createANotification(rep.message, NotificationStyle.Error);
       }
+      this.filterService.refreshTableContent();
+      // reset the field name to destroy the component
+      this.resetCurrentMassAction.emit(this.fieldName);
     });
   }
 

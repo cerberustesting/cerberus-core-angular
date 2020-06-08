@@ -632,6 +632,7 @@ export class TestcaseService {
       })
     };
 
+    // post the form data
     this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCaseMass', FormData, httpOptions)
       .subscribe(rep => {
         callback(rep);

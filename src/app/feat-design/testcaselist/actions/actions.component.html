@@ -78,7 +78,8 @@
     <!-- MASS UPDATE LABELS BUTTON -->
     <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
       ngbPopover="Mass Update: Labels" triggers="mouseenter:mouseleave" placement="top"
-      (click)="toggleMassActionField(MassActionField.Labels)" [ngClass]="currentMassAction === MassActionField.Labels ? 'active' : ''">
+      (click)="toggleMassActionField(MassActionField.Labels)"
+      [ngClass]="currentMassAction === MassActionField.Labels ? 'active' : ''">
       <i class="fa fa-fw fa-tag"></i>
     </button>
     <!-- END MASS UPDATE LABELS BUTTON -->
@@ -87,7 +88,7 @@
 
   <!-- MASS UPDATE FIELD -->
   <app-massactions *ngIf="currentMassAction && currentMassAction !== MassActionField.Labels" [field]="currentMassAction"
-    [selection]="getSelection()">
+    [selection]="getSelection()" (resetCurrentMassAction)="toggleMassActionField(currentMassAction)">
   </app-massactions>
   <!-- END MASS UPDATE FIELD -->
 

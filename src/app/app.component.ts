@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
     // subscribe to nightMode changes
     this.userPreferencesService.observableNightMode.subscribe(r => { this.nightMode = r; });
     this.keycloakAuth = this.keycloakService.getKeycloakAuth();
-    this.userService.getUser();
+    this.userService.refreshUser();
     this.invariantsService.loadInvariants();
     console.log('cerberus-front application version is : ' + environment.version);
   }

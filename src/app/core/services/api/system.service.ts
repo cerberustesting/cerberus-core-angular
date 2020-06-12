@@ -67,13 +67,25 @@ export class SystemService {
     });
   }
 
-  getLabelsHierarchyFromSystem(system: string, test: string, testCase: string, ) {
-    this.http.get<any>(environment.cerberus_api_url + '/ReadLabel?system=' + system + '&withHierarchy=true&isSelectable=Y&testSelect=' +
-      encodeURIComponent(test) + '&testCaseSelect=' + encodeURIComponent(testCase))
+  /**
+   * return a labels hierarchy for a single system
+   * @param system name of the system to filter on
+   * @param callback function returning the result
+   * @param test name of the test folder to filter on
+   * @param testCase id of the test case to filter on
+   */
+  getLabelsHierarchyFromSystem(system: string, callback: (labels: any) => void, test?: string, testCase?: string): void {
+    // build the url according to the arguments
+    let url = environment.cerberus_api_url + '/ReadLabel?system=' + system + '&withHierarchy=true&isSelectable=Y';
+    if (test && testCase) {
+      url += '&testSelect=' + encodeURIComponent(test) + '&testCaseSelect=' + encodeURIComponent(testCase);
+    }
+    // HTTP get to this url
+    this.http.get<any>(url)
       .subscribe(response => {
         // @ts-ignore
         this.labelsHierarchy = response.labelHierarchy;
-        this.observableLabelsHierarchyList.next(this.labelsHierarchy);
+        callback(this.labelsHierarchy);
       });
   }
 
@@ -89,19 +101,41 @@ export class SystemService {
    * refresh the list of application
    * WARNING : need the user variable to be defined to access his allowed systems
    */
-  getApplicationList() {
-    this.applicationsList = [];
-    // for each selected system, gather the application list
-    for (const system of this.userService.user.defaultSystem) {
-      this.http.get<Application[]>(environment.cerberus_api_url + '/ReadApplication?system=' + system)
-        .subscribe(response => {
-          // @ts-ignore
-          this.applicationsList = this.applicationsList.concat(response.contentTable);
-          // @ts-ignore
-          this.observableApplicationList.next(this.applicationsList);
-        });
-    }
 
+  /**
+   * returns a list of applications
+   * @param callback function to get the result
+   * @param systemName (optional) system name to filter on
+   * @param userSystems (optional) current system of the user
+   * @param fetchAll (optional) flag to set if no system filtering shoud be done
+   */
+  getApplicationList(callback: (applications: Application[]) => void, systemName?: string, userSystems?: string[], fetchAll?: boolean) {
+    // create the url
+    let url = environment.cerberus_api_url + '/ReadApplication';
+    // if the fetch all argument is provided
+    if (fetchAll) {
+      // use the url as is.
+    } else if (systemName) {
+      // if a system name is provided, use it to filter the applications
+      url += '?system=' + systemName;
+    } else if (userSystems) {
+      // use the user's system(s) otherwise
+      url += '?';
+      // build the url adding all systems
+      userSystems.forEach((system, index) => {
+        if (index !== 0) {
+          url += '&';
+        }
+        url += 'system=' + system;
+      });
+    }
+    // if the fetch all flag
+    this.http.get<Application[]>(url)
+      .subscribe(response => {
+        // return the content
+        // @ts-ignore
+        callback(response.contentTable);
+      });
   }
 
   getApplication(application: string) {

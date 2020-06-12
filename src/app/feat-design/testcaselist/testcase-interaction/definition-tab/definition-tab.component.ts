@@ -5,6 +5,7 @@ import { SystemService } from 'src/app/core/services/api/system.service';
 import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 
 @Component({
   selector: 'app-definition-tab',
@@ -15,6 +16,9 @@ export class DefinitionTabComponent implements OnInit {
 
   /** form section for definition tab fields */
   @Input('definition') definition: FormGroup;
+
+  /** test case (header) object */
+  @Input('testcaseheader') testcaseheader: TestCase;
 
   /** list of available applications */
   public applications: Array<Application>;
@@ -31,14 +35,18 @@ export class DefinitionTabComponent implements OnInit {
 
   constructor(
     private systemService: SystemService,
-    private invariantsService: InvariantsService) { }
+    private invariantsService: InvariantsService
+  ) { }
 
   ngOnInit() {
     // subscribe to invariants list
-    this.systemService.observableApplicationList.subscribe(rep => this.applications = rep);
     this.invariantsService.observablePriorities.subscribe(rep => this.priorities = rep);
     this.invariantsService.observableGroupsList.subscribe(rep => this.types = rep);
     this.invariantsService.observableTcStatus.subscribe(rep => this.statusList = rep);
+    // fetch the list of applications for all the systems
+    this.systemService.getApplicationList((applications => {
+      this.applications = applications;
+    }), undefined, undefined, undefined);
   }
 
   getFromSystem() {

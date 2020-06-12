@@ -1,3 +1,8 @@
+<!-- SYSTEM INFORMATION -->
+<p *ngIf="mode === LabelHierarchyMode.MassUpdate">Showing labels for system: {{system}}</p>
+<!-- END SYSTEM INFORMATION -->
+
+<!-- LABEL TYPES TABS -->
 <div class="row text-center push">
     <div class="col-4">
         <button type="button" class="btn btn-sm mr-1" id="stickers" (click)="labelType = 'stickers'"
@@ -18,25 +23,31 @@
         </button>
     </div>
 </div>
+<!-- END LABEL TYPES TABS -->
 
+<!-- LABELS LIST -->
 <div *ngIf="labelsList" class="scrollable">
 
     <div *ngIf="labelType == 'stickers'">
         <div *ngFor="let labelNode of labelsList.stickers">
             <app-label-node [node]="labelNode" [labelslist]="selectedLabelsList"></app-label-node>
         </div>
+        <div *ngIf="labelsList.stickers.length === 0">No label found for this system</div>
     </div>
 
     <div *ngIf="labelType == 'requirements'">
         <div *ngFor="let labelNode of labelsList.requirements">
             <app-label-node [node]="labelNode" [labelslist]="selectedLabelsList"></app-label-node>
         </div>
+        <div *ngIf="labelsList.requirements.length === 0">No label found for this system</div>
     </div>
 
     <div *ngIf="labelType == 'batteries'">
         <div *ngFor="let labelNode of labelsList.batteries">
             <app-label-node [node]="labelNode" [labelslist]="selectedLabelsList"></app-label-node>
         </div>
+        <div *ngIf="labelsList.batteries.length === 0">No label found for this system</div>
     </div>
 
 </div>
+<!-- END LABELS LIST -->

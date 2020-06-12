@@ -35,8 +35,7 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     private testService: TestService,
     private InvariantService: InvariantsService,
     private systemService: SystemService,
-    private headerTitleService: HeaderTitleService,
-    private userService: UserService
+    private headerTitleService: HeaderTitleService
   ) { }
 
   ngOnDestroy() {
@@ -52,12 +51,6 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
 
     // set the testcase object to its inital state (null)
     this.testcase = undefined;
-
-    // update the applications list as soon as the user is defined (need its current system)
-    // TODO : move this function up in the comp tree
-    this.userService.observableUser.subscribe(rep => {
-      if (rep) { this.systemService.getApplicationList(); }
-    });
 
     // check the URL and decode the potential test folder and test case id
     if (this.activatedRoute.snapshot.paramMap.has('test')) {

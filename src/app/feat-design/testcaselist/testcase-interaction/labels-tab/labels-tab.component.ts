@@ -9,7 +9,17 @@ export class LabelHierarchy {
   batteries: Array<LabelNode>;
 }
 
-// label object that is sent to UpdateTestCase servlet
+/**
+ * type of usage of this component depending on the context
+ */
+export enum LabelHierarchyMode {
+  MassUpdate = 'massupdate',
+  TestCaseHeader = 'tcHeader'
+}
+
+/**
+ * label object that is sent to UpdateTestCase servlet
+ */
 export class SelectedLabel {
   labelId: number;
   toDelete: boolean;
@@ -27,6 +37,9 @@ export class SelectedLabel {
 })
 export class LabelsTabComponent implements OnInit {
 
+  /** type of usage for the label hierarchy (edit test case header or mass update) */
+  @Input('mode') mode: LabelHierarchyMode;
+
   // test and testcase used to get the available labels list
   @Input('test') test: string;
   @Input('testcase') testcase: string;
@@ -39,7 +52,12 @@ export class LabelsTabComponent implements OnInit {
 
   // label hierarchy (selected & available to selection)
   public labelsList: any;
+
+  // current label type selected (tabs)
   public labelType: string;
+
+  /** instance of the Label Hierarchy Mode enumeration */
+  public LabelHierarchyMode: typeof LabelHierarchyMode = LabelHierarchyMode;
 
   constructor(
     private systemService: SystemService) {
@@ -47,14 +65,19 @@ export class LabelsTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.systemService.getLabelsHierarchyFromSystem(this.system, this.test, this.testcase);
-    this.systemService.observableLabelsHierarchyList.subscribe(r => {
-      this.labelsList = r;
-    });
+    if (this.mode === LabelHierarchyMode.TestCaseHeader) {
+      this.systemService.getLabelsHierarchyFromSystem(this.system, (labels: any) => {
+        this.labelsList = labels;
+      }, this.test, this.testcase);
+    } else if (this.mode === LabelHierarchyMode.MassUpdate) {
+      this.systemService.getLabelsHierarchyFromSystem(this.system, (labels: any) => {
+        this.labelsList = labels;
+        console.log(this.labelsList);
+      });
+    }
+
     // default tab
     this.labelType = 'stickers';
   }
-
-  // TODO : maybe refresh the labels hierarchy at every component
 
 }

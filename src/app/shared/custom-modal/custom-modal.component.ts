@@ -2,9 +2,20 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 declare function ElementFadeIn(elementId, delay);
 
+/**
+ * type of modal (used for the view)
+ */
 export enum ModalType {
   Confirm = 'confirm',
   Error = 'error'
+}
+
+/**
+ * type of items in the list of items for this modal
+ */
+export enum CustomModalItemsType {
+  Step = 'step',
+  TestCaseDifferences = 'tcdiff'
 }
 
 @Component({
@@ -26,11 +37,17 @@ export class CustomModalComponent implements OnInit {
   /** list of items to display */
   @Input() itemsList: any[];
 
+  /** type of the items in the itemsList variable */
+  @Input() itemsType: CustomModalItemsType;
+
   /** type of the modal that results in different template */
   @Input() modalType: ModalType;
 
   /** in confirm modal type, callback function when the user confirm his choice */
   @Input() confirmFunction: (n: void) => void;
+
+  /** instance of the Items Type enumeration */
+  public ItemsType: typeof CustomModalItemsType = CustomModalItemsType;
 
   constructor(public activeModal: NgbActiveModal) { }
 
@@ -44,7 +61,7 @@ export class CustomModalComponent implements OnInit {
   /**
    * confirm the action to be done
    */
-  confirm() {
+  confirm(): void {
     this.confirmFunction();
     this.activeModal.close('confirm');
   }
@@ -52,7 +69,7 @@ export class CustomModalComponent implements OnInit {
   /**
    * close the modal with 'cancel' reason
    */
-  close() {
+  close(): void {
     if (this.modalType === ModalType.Confirm) {
       this.activeModal.close('cancel');
     } else if (this.modalType === ModalType.Error) {

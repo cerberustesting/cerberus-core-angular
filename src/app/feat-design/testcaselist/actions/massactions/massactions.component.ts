@@ -7,6 +7,7 @@ import { MassActionField, MassActionType } from './massactions.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { FilterService } from 'src/app/core/services/api/filter.service';
+import { Application } from 'src/app/shared/model/back/application/application.model';
 
 @Component({
   selector: 'app-massactions',
@@ -56,7 +57,6 @@ export class MassactionsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.refreshItemsList();
     this.selectedItem = undefined;
-    this.systemService.getApplicationList();
   }
 
   /**
@@ -76,7 +76,10 @@ export class MassactionsComponent implements OnInit, OnChanges {
         break;
       }
       case MassActionField.Application: {
-        this.systemService.observableApplicationList.subscribe(response => this.itemsList = response);
+        // fetch all the applications
+        this.systemService.getApplicationList((applications: Application[]) => {
+          this.itemsList = applications;
+        }, undefined, undefined, true);
         this.fieldType = MassActionType.Applications;
         break;
       }

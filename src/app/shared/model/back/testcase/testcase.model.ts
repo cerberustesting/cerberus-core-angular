@@ -52,7 +52,7 @@ export class TestCase {
     priority: number;
 
     /** @description detailed description of the test case */
-    behaviorOrValueExpected: string;
+    detailedDescription: string;
 
     /** @description global activation of the test case */
     isActive: string;
@@ -168,7 +168,7 @@ export class TestCase {
         this.type = type;
         this.priority = priority;
         this.status = status;
-        this.behaviorOrValueExpected = '';
+        this.detailedDescription = '';
         this.isActive = 'Y';
         this.isActiveQA = 'Y';
         this.isActiveUAT = 'Y';

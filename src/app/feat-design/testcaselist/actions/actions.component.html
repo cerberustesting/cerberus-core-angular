@@ -77,8 +77,7 @@
 
     <!-- MASS UPDATE LABELS BUTTON -->
     <button *ngIf="getSelection().length > 1" type="button" class="btn btn-outline-secondary"
-      ngbPopover="Mass Update: Labels" triggers="mouseenter:mouseleave" placement="top"
-      (click)="toggleMassActionField(MassActionField.Labels)"
+      ngbPopover="Mass Update: Labels" triggers="mouseenter:mouseleave" placement="top" (click)="massUpdateLabels()"
       [ngClass]="currentMassAction === MassActionField.Labels ? 'active' : ''">
       <i class="fa fa-fw fa-tag"></i>
     </button>

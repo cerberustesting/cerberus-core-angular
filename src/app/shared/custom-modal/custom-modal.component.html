@@ -17,11 +17,17 @@
                 <p *ngIf="subtitle">{{subtitle}}</p>
                 <p *ngIf="subtitle2">{{subtitle2}}</p>
 
-                <div class="push" *ngIf="itemsList">
+                <div class="push" *ngIf="itemsList && itemsType === ItemsType.Step">
                     <div *ngFor="let step of itemsList" class="block-header custom-sm block-header-default">
                         <h3 class="block-title">{{step.test}}
                             <small class="ml-1">{{step.testCase}} (position {{step.sort}})</small>
                         </h3>
+                    </div>
+                </div>
+                <p>The following fields have been modified:</p>
+                <div class="push" *ngIf="itemsList && itemsType === ItemsType.TestCaseDifferences">
+                    <div *ngFor="let field of itemsList" class="block-header custom-sm block-header-default">
+                        <h3 class="block-title">{{field}}</h3>
                     </div>
                 </div>
 

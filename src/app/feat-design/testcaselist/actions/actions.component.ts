@@ -6,6 +6,9 @@ import { NotificationService } from 'src/app/core/services/utils/notification.se
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { MassActionField } from './massactions/massactions.model';
+import { LabelsTabComponent, LabelHierarchyMode } from '../testcase-interaction/labels-tab/labels-tab.component';
+import { UserService } from 'src/app/core/services/api/user.service';
+import { User } from 'src/app/shared/model/back/user/user.model';
 
 @Component({
   selector: 'app-actions',
@@ -28,14 +31,33 @@ export class ActionsComponent implements OnInit {
   /** instance of the Mass Actions fields enumeration */
   public MassActionField: typeof MassActionField = MassActionField;
 
+  /** user information */
+  private user: User;
+
   constructor(
     private sideContentService: SidecontentService,
     private notificationService: NotificationService,
-    private testService: TestcaseService
+    private testService: TestcaseService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
+    // reset the current Mass Action (useful for display)
     this.currentMassAction = null;
+    // get the user information
+    this.userService.observableUser.subscribe(response => { this.user = response; });
+  }
+
+  /**
+   * open the side content with label selection component for mass update
+   */
+  massUpdateLabels() {
+    this.sideContentService.addComponentToSideBlock(LabelsTabComponent, {
+      mode: LabelHierarchyMode.MassUpdate,
+      system: this.user.defaultSystem[0],
+      selectedLabelsList: []
+    });
+    this.sideContentService.openSideBlock();
   }
 
   /**
@@ -53,8 +75,9 @@ export class ActionsComponent implements OnInit {
     }
   }
 
-  // return the selected rows to the view
-  // returns undefined if the array is empty
+  /**
+   * return the selected rows to the view, undefined if the array is empty
+   */
   getSelection(): Array<TestCase> {
     if (this.selectedRows) {
       if (this.selectedRows.length > 0) {
@@ -67,10 +90,10 @@ export class ActionsComponent implements OnInit {
     }
   }
 
-  /** editTestCaseHeader
- * * Open side content in edition mode for the selected testcase (must be one)
- * * sends only the test folder and test case id to the component
- */
+  /**
+    * Open side content in edition mode for the selected testcase (must be one)
+    * sends only the test folder and test case id to the component
+   */
   editTestCaseHeader(): void {
     // execute only if one test case is selected
     if (this.getSelection().length === 1) {
@@ -101,7 +124,9 @@ export class ActionsComponent implements OnInit {
     }
   }
 
-  // delete the test case (mass deletion isn't possible)
+  /**
+   * delete the test case (mass deletion isn't possible)
+  */
   deleteTestCase(testcaseheader: TestCase) {
     let notifStyle = NotificationStyle.Info;
     this.testService.deleteTestCase(testcaseheader.test, testcaseheader.testCase, (message, status) => {

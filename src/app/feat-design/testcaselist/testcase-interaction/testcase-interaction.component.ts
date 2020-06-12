@@ -10,6 +10,9 @@ import { NotificationStyle } from 'src/app/core/services/utils/notification.mode
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { TestService } from 'src/app/core/services/api/test/test.service';
+import { LabelHierarchyMode } from './labels-tab/labels-tab.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CustomModalComponent, ModalType, CustomModalItemsType } from 'src/app/shared/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-testcase-interaction',
@@ -49,6 +52,9 @@ export class TestcaseInteractionComponent implements OnInit {
   /** list of available countries to select */
   public countries: Array<Invariant>;
 
+  /** instance of the Label Hierarchy Mode enumeration */
+  public LabelHierarchyMode: typeof LabelHierarchyMode = LabelHierarchyMode;
+
   // ???
   exit: (n: void) => void;
 
@@ -59,7 +65,8 @@ export class TestcaseInteractionComponent implements OnInit {
     private testcaseService: TestcaseService,
     private testService: TestService,
     private notificationService: NotificationService,
-    private sidecontentService: SidecontentService) {
+    private sidecontentService: SidecontentService,
+    private NgbModalService: NgbModal) {
     this.selectedTab = null;
     // list of tabs
     this.tabs = ['Definition', 'Settings', 'Labels', 'Bugs', 'Dependencies', 'Audit'];
@@ -80,8 +87,6 @@ export class TestcaseInteractionComponent implements OnInit {
     if (this.selectedTab === null) {
       this.selectedTab = this.tabs[0];
     }
-
-    this.refreshOthers();
 
     // creation mode
     if (this.mode === INTERACTION_MODE.CREATE) {
@@ -110,7 +115,7 @@ export class TestcaseInteractionComponent implements OnInit {
         console.error('test case header object not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
       }
     } else {
-      // edit, delete or duplicate mode
+      // edit or duplicate mode
       // test folder name and test case id are expected
       if (this.test && this.testcase) {
         // get the test case object from API
@@ -132,15 +137,6 @@ export class TestcaseInteractionComponent implements OnInit {
     }
   }
 
-  /** transform 'Y' or 'N' string to boolean */
-  toBoolean(raw: string): boolean {
-    if (raw === 'Y') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   /** transform boolean to 'Y' or 'N' string  */
   toCerberusString(raw: boolean): string {
     if (raw === true) {
@@ -150,11 +146,10 @@ export class TestcaseInteractionComponent implements OnInit {
     }
   }
 
-  /** set the form values with the testcaseheader one
-   * we're converting 'Y' and 'N' field to boolean since it is mandatory for fromControlName
+  /**
+   * set the form values with the testcaseheader one
   */
-  setFormValues() {
-
+  setFormValues(): void {
     // countries, labels, bugs and dependencies are handled appart from the form
     this.testcaseHeaderForm = this.formBuilder.group({
       originalTest: this.testcaseheader.test,
@@ -167,7 +162,7 @@ export class TestcaseInteractionComponent implements OnInit {
         status: new FormControl(this.testcaseheader.status),
         type: new FormControl(this.testcaseheader.type),
         priority: new FormControl(this.testcaseheader.priority),
-        behaviorOrValueExpected: new FormControl(this.testcaseheader.behaviorOrValueExpected)
+        detailedDescription: new FormControl(this.testcaseheader.detailedDescription)
       }),
       settings: this.formBuilder.group({
         isActive: new FormControl(this.testcaseheader.isActive),
@@ -216,12 +211,6 @@ export class TestcaseInteractionComponent implements OnInit {
   refreshData(testcaseheader: TestCase) {
     this.systemService.getSprintsFromSystem(testcaseheader.system);
     this.systemService.getRevFromSystem(testcaseheader.system);
-    this.systemService.getLabelsHierarchyFromSystem(testcaseheader.system, testcaseheader.test, testcaseheader.testCase);
-  }
-
-  /** refresh data */
-  refreshOthers() {
-    this.systemService.getApplicationList();
   }
 
   // submit the new tc object to the API
@@ -343,7 +332,43 @@ export class TestcaseInteractionComponent implements OnInit {
   }
 
   // cancel the current interaction and close the side content
-  closeSideContent() {
+  closeSideContent(): void {
     this.sidecontentService.closeSideBlock();
+  }
+
+  /**
+   * return the list of fields that have been changed during the edition
+   */
+  getTestCaseDifferences(): string[] {
+    const differentFields = new Array<string>();
+    if (this.testcaseheader.test !== this.testcaseHeaderForm.get('test').value) { differentFields.push('test'); }
+    if (this.testcaseheader.testCase !== this.testcaseHeaderForm.get('testCase').value) { differentFields.push('testcase'); }
+    if (this.testcaseheader.description !== this.testcaseHeaderForm.get('definition.description').value) { differentFields.push('description'); }
+    if (this.testcaseheader.application !== this.testcaseHeaderForm.get('definition.application').value) { differentFields.push('application'); }
+    if (this.testcaseheader.status !== this.testcaseHeaderForm.get('definition.status').value) { differentFields.push('status'); }
+    if (this.testcaseheader.type !== this.testcaseHeaderForm.get('definition.type').value) { differentFields.push('type'); }
+    if (this.testcaseheader.priority !== this.testcaseHeaderForm.get('definition.priority').value) { differentFields.push('priority'); }
+    if (this.testcaseheader.detailedDescription !== this.testcaseHeaderForm.get('definition.detailedDescription').value) { differentFields.push('detailedDescription'); }
+    console.log(differentFields);
+    return differentFields;
+  }
+
+  /**
+   * function mandatory since this component is displayed in the side content
+   * return true if this component can be removed without warning, false elsewhere
+   */
+  sideContentInterruption(): boolean {
+    if (this.getTestCaseDifferences().length === 0) {
+      return true;
+    } else {
+      // TODO : check the other fields
+      const modalRef = this.NgbModalService.open(CustomModalComponent);
+      modalRef.componentInstance.title = 'Are you sure ?';
+      modalRef.componentInstance.subtitle = 'You\'re about to lost your changes in the side content';
+      modalRef.componentInstance.itemsList = this.getTestCaseDifferences();
+      modalRef.componentInstance.modalType = ModalType.Confirm;
+      modalRef.componentInstance.itemsType = CustomModalItemsType.TestCaseDifferences;
+      return false;
+    }
   }
 }

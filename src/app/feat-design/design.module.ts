@@ -107,7 +107,8 @@ import { MassactionsComponent } from './testcaselist/actions/massactions/massact
     DatalibInteractionComponent,
     DatalibTclistComponent,
     TestcaseInteractionComponent,
-    LibraryStepsModalComponent
+    LibraryStepsModalComponent,
+    LabelsTabComponent
   ],
   exports: [SharedModule]
 })

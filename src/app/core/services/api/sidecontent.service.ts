@@ -1,6 +1,8 @@
 import { ComponentFactoryResolver, Injectable, Output, EventEmitter } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
+/**
+ * Interaction mode types
+ */
 export enum INTERACTION_MODE {
   EDIT = 'EDIT',
   DUPLICATE = 'DUPLICATE',
@@ -12,39 +14,93 @@ export enum INTERACTION_MODE {
 })
 export class SidecontentService {
 
-  /** SIDE CONTENT SAVE BUTTON TITLE */
+  /** current component active in the side component */
+  private currentComponent: any;
+
+  /** save button title (view) */
   saveButtonTitle: string;
-  observableSaveButtonTitle = new BehaviorSubject<string>(this.saveButtonTitle);
+
+  /** is the side content expanded or collapsed? */
+  isOpen = false;
 
   rootViewContainer: any;
-  isOpen = false;
+
   @Output() change: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private factoryResolver: ComponentFactoryResolver) {
+  constructor(private factoryResolver: ComponentFactoryResolver, ) {
     this.factoryResolver = factoryResolver;
+    this.currentComponent = undefined;
   }
+
   setRootViewContainerRef(viewContainerRef) {
     this.rootViewContainer = viewContainerRef;
   }
+
+  /**
+   * open the side content area with a speci
+   * @param component component reference (not instance) to render
+   * @param parameters variable to set to this component
+   */
   addComponentToSideBlock(component: any, parameters?: {}) {
+
     const factory = this.factoryResolver.resolveComponentFactory(component);
     const _component = factory.create(this.rootViewContainer.parentInjector);
-    if (parameters) {
-      for (const parameter in parameters) {
-        if (parameter) {
-          _component.instance[parameter] = parameters[parameter];
+
+    // if a component is already in use in the side content
+    if (this.currentComponent) {
+      // if the side content interruption function is defined for the already in use component
+      // @ts-ignore
+      if (this.currentComponent.instance.sideContentInterruption) {
+        // @ts-ignore
+        if (this.currentComponent.instance.sideContentInterruption() === true) {
+
+          // add the variable to provide to the injected component
+          if (parameters) {
+            for (const parameter in parameters) {
+              if (parameter) {
+                _component.instance[parameter] = parameters[parameter];
+              }
+            }
+          }
+
+          // remove the previous component and insert the new one
+          this.rootViewContainer.remove(0);
+          this.rootViewContainer.insert(_component.hostView);
+
+          // assign this component as the current one
+          this.currentComponent = _component;
         }
       }
+    } else {
+
+      // add the variable to provide to the injected component
+      if (parameters) {
+        for (const parameter in parameters) {
+          if (parameter) {
+            _component.instance[parameter] = parameters[parameter];
+          }
+        }
+      }
+
+      // remove the previous component and insert the new one
+      this.rootViewContainer.remove(0);
+      this.rootViewContainer.insert(_component.hostView);
+
+      // assign this component as the current one
+      this.currentComponent = _component;
     }
-    this.rootViewContainer.remove(0);
-    this.rootViewContainer.insert(_component.hostView);
+
+
   }
+
   openSideBlock() {
     this.isOpen = true;
     this.change.emit(this.isOpen);
   }
+
   closeSideBlock() {
     this.isOpen = false;
+    this.currentComponent = undefined;
     this.change.emit(this.isOpen);
   }
 
@@ -53,7 +109,7 @@ export class SidecontentService {
   getsaveButtonTitle(mode: INTERACTION_MODE): string {
     switch (mode) {
       case 'EDIT': {
-        return 'Edit';
+        return 'Save';
       }
       case 'CREATE': {
         return 'Create';

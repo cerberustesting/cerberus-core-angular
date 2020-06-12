@@ -18,10 +18,10 @@ export class UserService {
   public observableUser = new BehaviorSubject<User>(this.user);
 
   /**
-   * fetch the user information in Cerberus DB.
+   * refresh the user information and populate the observable
    * Authentication has been done with Keycloak when calling it.
    */
-  getUser() {
+  refreshUser(): void {
     this.http.get<User>(environment.cerberus_api_url + '/ReadMyUser')
       .subscribe(response => {
         this.user = response;

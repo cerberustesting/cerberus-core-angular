@@ -82,7 +82,8 @@
                         <!-- DEFINITION TAB -->
                         <div *ngIf="selectedTab == tabs[0]" class="tab-pane active show" id="definitionTab"
                             role="tabpanel">
-                            <app-definition-tab [definition]="testcaseHeaderForm.get('definition')">
+                            <app-definition-tab [definition]="testcaseHeaderForm.get('definition')"
+                                [testcaseheader]="testcaseheader">
                             </app-definition-tab>
                         </div>
                         <!-- END TAB -->
@@ -99,7 +100,7 @@
                         <!-- LABELS TAB -->
                         <div *ngIf="selectedTab == tabs[2]" class="tab-pane active show" id="labelsTab" role="tabpanel">
                             <app-labels-tab [test]="test" [testcase]="testcase" [system]="testcaseheader.system"
-                                [selectedlabels]="testcaseheader.labels">
+                                [selectedlabels]="testcaseheader.labels" [mode]="LabelHierarchyMode.TestCaseHeader">
                             </app-labels-tab>
 
                         </div>

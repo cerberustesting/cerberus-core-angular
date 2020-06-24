@@ -52,6 +52,7 @@ import { StepSettingsComponent } from './testcasescript/testcasecontent/settings
 import { TestfoldergroupComponent } from './testcasescript/testcasecontent/librarystepsmodal/testfoldergroup/testfoldergroup.component';
 import { SelectedstepComponent } from './testcasescript/testcasecontent/librarystepsmodal/selectedstep/selectedstep.component';
 import { MassactionsComponent } from './testcaselist/actions/massactions/massactions.component';
+import { MassupdateLabelsComponent } from './testcaselist/actions/massactions/massupdate-labels/massupdate-labels.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { MassactionsComponent } from './testcaselist/actions/massactions/massact
     TestfoldergroupComponent,
     SelectedstepComponent,
     MassactionsComponent,
+    MassupdateLabelsComponent,
   ],
   imports: [
     CommonModule,
@@ -108,7 +110,7 @@ import { MassactionsComponent } from './testcaselist/actions/massactions/massact
     DatalibTclistComponent,
     TestcaseInteractionComponent,
     LibraryStepsModalComponent,
-    LabelsTabComponent
+    MassupdateLabelsComponent
   ],
   exports: [SharedModule]
 })

@@ -1,0 +1,22 @@
+<div class="block">
+    <div class="block-header block-header-default">
+
+        <!-- SIDE CONTENT TITLE -->
+        <h3 class="block-title">
+            <span id="massUpdateLabelsTitle">Labels Mass Update</span>
+        </h3>
+        <!-- END SIDE CONTENT TITLE -->
+
+        <!-- SAVE / CLOSE BUTTON -->
+        <div class="block-options">
+            <button type="submit" id="submitInteraction" class="btn btn-sm btn-primary mr-1">Update</button>
+            <button type="button" class="btn btn-sm btn-secondary" (click)="closeSideContent()">Close</button>
+        </div>
+        <!-- END SAVE / CLOSE BUTTON -->
+
+    </div>
+    <div class="block-content">
+        <app-labels-tab [mode]="LabelHierarchyMode.MassUpdate" [system]="system" [selectedlabels]="selectedLabelsList">
+        </app-labels-tab>
+    </div>
+</div>

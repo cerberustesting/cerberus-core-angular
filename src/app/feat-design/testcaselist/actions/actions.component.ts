@@ -6,9 +6,10 @@ import { NotificationService } from 'src/app/core/services/utils/notification.se
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { MassActionField } from './massactions/massactions.model';
-import { LabelsTabComponent, LabelHierarchyMode } from '../testcase-interaction/labels-tab/labels-tab.component';
+import { LabelHierarchyMode } from '../testcase-interaction/labels-tab/labels-tab.component';
 import { UserService } from 'src/app/core/services/api/user.service';
 import { User } from 'src/app/shared/model/back/user/user.model';
+import { MassupdateLabelsComponent } from './massactions/massupdate-labels/massupdate-labels.component';
 
 @Component({
   selector: 'app-actions',
@@ -52,7 +53,7 @@ export class ActionsComponent implements OnInit {
    * open the side content with label selection component for mass update
    */
   massUpdateLabels() {
-    this.sideContentService.addComponentToSideBlock(LabelsTabComponent, {
+    this.sideContentService.addComponentToSideBlock(MassupdateLabelsComponent, {
       mode: LabelHierarchyMode.MassUpdate,
       system: this.user.defaultSystem[0],
       selectedLabelsList: []

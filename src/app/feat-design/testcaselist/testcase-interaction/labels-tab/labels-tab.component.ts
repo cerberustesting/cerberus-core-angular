@@ -72,7 +72,6 @@ export class LabelsTabComponent implements OnInit {
     } else if (this.mode === LabelHierarchyMode.MassUpdate) {
       this.systemService.getLabelsHierarchyFromSystem(this.system, (labels: any) => {
         this.labelsList = labels;
-        console.log(this.labelsList);
       });
     }
 

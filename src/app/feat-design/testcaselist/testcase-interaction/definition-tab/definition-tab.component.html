@@ -3,7 +3,7 @@
     <!-- SHORT DESCRIPTION -->
     <div class="col-md-12">
         <div class="form-group">
-            <label for="description">Description</label>
+            <label for="description" class="font-sm">Description</label>
             <input type="text" class="form-control form-control-sm" id="description" name="description"
                 placeholder="Test Case Short Description" formControlName="description">
         </div>
@@ -13,7 +13,7 @@
     <!-- APPLICATION -->
     <div class="col-md-6">
         <div class="form-group">
-            <label for="application">Application</label>
+            <label for="application" class="font-sm">Application</label>
             <ng-select name="Application" class="custom-sm" id="application" [items]="applications"
                 bindLabel="application" bindValue="application" formControlName="application" (change)="getFromSystem()"
                 placeholder="You must define an application">
@@ -25,7 +25,7 @@
     <!-- STATUS -->
     <div class="col-md-6">
         <div class="form-group">
-            <label for="Status">Status</label>
+            <label for="Status" class="font-sm">Status</label>
             <select class="form-control form-control-sm" id="status" formControlName="status">
                 <option *ngFor="let status of statusList" [value]="status.value">
                     {{ status.value }}
@@ -38,7 +38,7 @@
     <!-- TYPE -->
     <div class="col-md-6">
         <div class="form-group">
-            <label for="Type">Type</label>
+            <label for="Type" class="font-sm">Type</label>
             <select class="form-control form-control-sm" id="type" formControlName="type">
                 <option *ngFor="let type of types" [value]="type.value">
                     {{ type.value }}
@@ -51,7 +51,7 @@
     <!-- PRIORITY -->
     <div class="col-md-6">
         <div class="form-group">
-            <label for="Priority">Priority</label>
+            <label for="Priority" class="font-sm">Priority</label>
             <select class="form-control form-control-sm" id="priority" formControlName="priority">
                 <option *ngFor="let priority of priorities" [value]="priority.value">
                     {{ priority.value }}
@@ -64,8 +64,13 @@
     <!-- FULL DESCRIPTION -->
     <div class="col-md-12">
         <div class="form-group">
-            <label for="FullDescription">Detailed Description</label>
-            <ckeditor name="FullDescription" [editor]="Editor" formControlName="detailedDescription">
+            <label for="FullDescription" class="font-sm">Detailed Description
+                <i class="fa" [ngClass]="showDetailedDescription ? 'fa-eye-slash' : 'fa-eye'"
+                    (click)="showDetailedDescription = !showDetailedDescription">
+                </i>
+            </label>
+            <ckeditor *ngIf="showDetailedDescription" name="FullDescription" [editor]="Editor"
+                formControlName="detailedDescription">
             </ckeditor>
         </div>
     </div>

@@ -5,13 +5,13 @@
         <div id="sideContent_globalActivation" class="form-group">
 
             <!-- ENVIRONMENT ACTIVATION -->
-            <label class="d-block">Environment Activation</label>
+            <label class="d-block font-sm">Environment Activation</label>
 
             <!-- GLOBAL ACTIVATION -->
             <div class="custom-control custom-switch custom-control-inline">
                 <input type="checkbox" class="custom-control-input" id="isActive" name="isActive"
                     formControlName="isActive" [ngClass]="settings.get('isActive').value ? 'selected' : 'notselected'">
-                <label class="custom-control-label" for="isActive">
+                <label class="custom-control-label font-sm" for="isActive">
                     Global
                     <i class="fa fa-info-circle ml-0 info popover-custom-width-1" placement="bottom"
                         ngbPopover="This field define if the test is active or not. A test case that is not active cannot be executed."
@@ -25,7 +25,7 @@
                 <input type="checkbox" id="isActiveQA" class="custom-control-input" name="isActiveQA"
                     formControlName="isActiveQA"
                     [ngClass]="settings.get('isActiveQA').value ? 'selected' : 'notselected'">
-                <label class="custom-control-label" for="isActiveQA">
+                <label class="custom-control-label font-sm" for="isActiveQA">
                     QA
                     <i class="fa fa-info-circle ml-0 info popover-custom-width-1" placement="bottom"
                         ngbPopover="This field define if the test is active or in the QA environment group."
@@ -39,7 +39,7 @@
                 <input type="checkbox" id="isActiveUAT" class="custom-control-input" name="isActiveUAT"
                     formControlName="isActiveUAT"
                     [ngClass]="settings.get('isActiveUAT').value ? 'selected' : 'notselected'">
-                <label class="custom-control-label" for="isActiveUAT">
+                <label class="custom-control-label font-sm" for="isActiveUAT">
                     UAT
                     <i class="fa fa-info-circle ml-0 info popover-custom-width-1" placement="bottom"
                         ngbPopover="This field define if the test is active or in the UAT environment group."
@@ -53,7 +53,7 @@
                 <input type="checkbox" id="isActivePROD" class="custom-control-input" name="isActivePROD"
                     formControlName="isActivePROD"
                     [ngClass]="settings.get('isActivePROD').value ? 'selected' : 'notselected'">
-                <label class="custom-control-label" for="isActivePROD">
+                <label class="custom-control-label font-sm" for="isActivePROD">
                     PROD
                     <i class="fa fa-info-circle ml-0 info popover-custom-width-1" placement="bottom"
                         ngbPopover="This field define if the test is active or in the PROD environment group."
@@ -67,7 +67,7 @@
 
         <!-- COUNTRY ACTIVATION -->
         <div class="form-group">
-            <label class="d-block">Country Activation</label>
+            <label class="d-block font-sm">Country Activation</label>
             <div *ngFor="let country of countries"
                 class="custom-control block custom-block custom-control-info custom-sm custom-control-inline">
                 <input type="checkbox" class="custom-control-input" [id]="country.value" [name]="country.value"
@@ -83,7 +83,12 @@
 
         <!-- VERSION ACTIVATION -->
         <div class="form-group mb-0">
-            <label class="d-block">Version Activation</label>
+            <label class="d-block font-sm">Version Activation
+                <i class="fa" [ngClass]="showVersionActivation ? 'fa-eye-slash' : 'fa-eye'"
+                    (click)="showVersionActivation = !showVersionActivation">
+                </i>
+            </label>
+
             <div *ngIf="!sprintsAndRevAreDefined()">
                 <p>
                     <i class="fa fa-fw fa-times mr-1"></i>
@@ -91,14 +96,15 @@
                     <!-- for the system {{testcaseheader.system}} -->
                 </p>
             </div>
+
         </div>
 
-        <div *ngIf="sprintsAndRevAreDefined()" class="row">
+        <div *ngIf="sprintsAndRevAreDefined() && showVersionActivation" class="row">
             <div class="col-4">
 
                 <!-- FROM SPRINT -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="fromMajor" class="fw-400">From Major</label>
+                    <label for="fromMajor" class="fw-400 font-sm">From Major</label>
                     <select *ngIf="builds.length > 0" class="form-control form-control-sm" formControlName="fromMajor"
                         name="fromMajor">
                         <option *ngFor="let build of builds" [value]="build.versionName" [id]="build.versionName">
@@ -110,7 +116,7 @@
 
                 <!-- FROM REV -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="fromMinor" class="fw-400">From Minor</label>
+                    <label for="fromMinor" class="fw-400 font-sm">From Minor</label>
                     <select class="form-control form-control-sm" formControlName="fromMinor" name="fromMinor">
                         <option *ngFor="let minor of minors" [value]="minor.versionName" [id]="minor.versionName">
                             {{ minor.versionName }}
@@ -125,7 +131,7 @@
 
                 <!-- TO MAJOR -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="example-select" class="fw-400">To Major</label>
+                    <label for="example-select" class="fw-400 font-sm">To Major</label>
                     <select class="form-control form-control-sm" formControlName="toMajor" name="toMajor">
                         <option *ngFor="let build of builds" [value]="build.versionName" [id]="build.versionName">
                             {{ build.versionName }}
@@ -136,7 +142,7 @@
 
                 <!-- TO MINOR -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="toMinor" class="fw-400">To Minor</label>
+                    <label for="toMinor" class="fw-400 font-sm">To Minor</label>
                     <select class="form-control form-control-sm" formControlName="toMinor" name="toMinor">
                         <option *ngFor="let minor of minors" [value]="minor.versionName" [id]="minor.versionName">
                             {{ minor.versionName }}
@@ -150,7 +156,7 @@
 
                 <!-- TARGET MAJOR -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="targetMajor" class="fw-400">Target Major</label>
+                    <label for="targetMajor" class="fw-400 font-sm">Target Major</label>
                     <select class="form-control form-control-sm" formControlName="targetMajor" name="targetMajor">
                         <option *ngFor="let build of builds" [value]="build.versionName" [id]="build.versionName">
                             {{ build.versionName }}
@@ -161,7 +167,7 @@
 
                 <!-- TARGET REV -->
                 <div class="form-group custom-form-group-sm">
-                    <label for="targetMinor" class="fw-400">Target Minor</label>
+                    <label for="targetMinor" class="fw-400 font-sm">Target Minor</label>
                     <select class="form-control form-control-sm" formControlName="targetMinor" name="targetMinor">
                         <option *ngFor="let minor of minors" [value]="minor.versionName" [id]="minor.versionName">
                             {{ minor.versionName }}
@@ -176,14 +182,19 @@
 
         <!-- CONDITION ACTIVATION -->
         <div class="form-group mb-0">
-            <label class="d-block">Condition Activation</label>
+            <label class="d-block font-sm">Condition Activation
+                <i class="fa" [ngClass]="showConditionActivation ? 'fa-eye-slash' : 'fa-eye'"
+                    (click)="showConditionActivation = !showConditionActivation">
+                </i>
+            </label>
         </div>
-        <div class="row">
+
+        <div class="row" *ngIf="showConditionActivation">
 
             <!-- CONDITION OPER -->
             <div class="col-4">
                 <div class="form-group">
-                    <label for="example-select" class="fw-400">Condition</label>
+                    <label for="example-select" class="fw-400 font-sm">Condition</label>
                     <select class="form-control form-control-sm" formControlName="conditionOperator">
                         <option *ngFor="let condition of conditionOperators" [value]="condition.value"
                             [id]="condition.value">
@@ -225,15 +236,19 @@
 
         <!-- ROBOT CONSTRAINTS -->
         <div class="form-group mb-0">
-            <label class="d-block">Robot Constraints</label>
+            <label class="d-block font-sm">Robot Constraints
+                <i class="fa" [ngClass]="showRobotConstraints ? 'fa-eye-slash' : 'fa-eye'"
+                    (click)="showRobotConstraints = !showRobotConstraints">
+                </i>
+            </label>
         </div>
 
-        <div class="row">
+        <div class="row" *ngIf="showRobotConstraints">
 
             <!-- USER AGENT -->
             <div class="col-6">
                 <div class="form-group">
-                    <label for="userAgent" class="fw-400">User Agent</label>
+                    <label for="userAgent" class="fw-400 font-sm">User Agent</label>
                     <input type="text" class="form-control form-control-sm" name="userAgent"
                         formControlName="userAgent">
                 </div>
@@ -243,7 +258,7 @@
             <!-- SCREEN SIZE -->
             <div class="col-6">
                 <div class="form-group">
-                    <label for="screenSize" class="fw-400">Screen Size</label>
+                    <label for="screenSize" class="fw-400 font-sm">Screen Size</label>
                     <input type="text" class="form-control form-control-sm" name="screenSize"
                         formControlName="screenSize">
                 </div>

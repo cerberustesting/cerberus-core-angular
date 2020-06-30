@@ -10,9 +10,6 @@ import { SidecontentService } from 'src/app/core/services/api/sidecontent.servic
 })
 export class MassupdateLabelsComponent implements OnInit {
 
-  /** mode to pass */
-  @Input() mode: LabelHierarchyMode.MassUpdate;
-
   /** currently selected system */
   @Input() system: string;
 
@@ -29,8 +26,7 @@ export class MassupdateLabelsComponent implements OnInit {
     this.selectedLabelsList = new Array<Label>();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   /**
    * close the side block through the side content service

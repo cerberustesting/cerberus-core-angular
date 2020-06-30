@@ -33,6 +33,9 @@ export class DefinitionTabComponent implements OnInit {
   /** detailled description value Editor object */
   public Editor = ClassicEditor;
 
+  /** boolean to handle the display of the detailed description */
+  public showDetailedDescription: boolean;
+
   constructor(
     private systemService: SystemService,
     private invariantsService: InvariantsService
@@ -47,6 +50,8 @@ export class DefinitionTabComponent implements OnInit {
     this.systemService.getApplicationList((applications => {
       this.applications = applications;
     }), undefined, undefined, undefined);
+    // set the default display of the detailed description to false
+    this.showDetailedDescription = false;
   }
 
   getFromSystem() {

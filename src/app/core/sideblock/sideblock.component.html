@@ -1,5 +1,6 @@
 <!-- <i class="fa fa-times-circle close-icon" (click)="close()"></i> -->
 <span class="hide-icon">
-        <i class="fa" [ngClass]="hidden ? 'fa-arrow-circle-left' : 'fa-arrow-circle-right'" (click)="hide()"></i>
+        <i class="fa" [ngClass]="hidden ? 'fa-arrow-circle-left' : 'fa-arrow-circle-right'" (click)="toggleHidden()">
+        </i>
 </span>
 <ng-template #dynamic></ng-template>

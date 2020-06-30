@@ -77,6 +77,12 @@ export class LabelsTabComponent implements OnInit {
 
     // default tab
     this.labelType = 'stickers';
+
+    console.log(this.selectedLabelsList);
+  }
+
+  numberOfSelectedLabel(labeltype: string): number {
+    return this.selectedLabelsList.filter(label => label.type === labeltype).length;
   }
 
 }

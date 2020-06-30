@@ -22,6 +22,15 @@ export class ExecutionSettingsTabComponent implements OnInit {
   /** system of the test case */
   @Input('system') system: string;
 
+  /** boolean to handle the display of the version activation section */
+  public showVersionActivation: boolean;
+
+  /** boolean to handle the display of the version activation section */
+  public showConditionActivation: boolean;
+
+  /** boolean to handle the display of the version activation section */
+  public showRobotConstraints: boolean;
+
   /** list of available countries to select */
   public countries: Array<Invariant>;
 
@@ -48,6 +57,10 @@ export class ExecutionSettingsTabComponent implements OnInit {
     this.systemService.observableRevs.subscribe(rep => this.minors = rep);
     this.invariantsService.observableConditionOperList.subscribe(rep => this.conditionOperators = rep);
     this.invariantsService.observableCountriesList.subscribe(rep => this.countries = rep);
+    // set the default display of "advanced" sections
+    this.showVersionActivation = false;
+    this.showConditionActivation = false;
+    this.showRobotConstraints = false;
   }
 
   /** call the same method in test case service */

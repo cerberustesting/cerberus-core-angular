@@ -8,10 +8,7 @@ import { SidecontentService } from '../services/api/sidecontent.service';
 })
 export class SideblockComponent implements OnInit {
 
-  // TODO : comment these Decorators
-  @HostBinding('class.is-open')
-  isOpen = false;
-  title = '';
+  @HostBinding('class.is-open') isOpen = false;
 
   @HostBinding('class.is-hidden') hidden = false;
 
@@ -20,12 +17,20 @@ export class SideblockComponent implements OnInit {
   constructor(private sideContentService: SidecontentService) { }
 
   ngOnInit() {
+    // set the root view container
     this.sideContentService.setRootViewContainerRef(this.viewContainerRef);
+
+    // subscribe to the is open flag linked with CSS (see @HostBinding)
     this.sideContentService.change.subscribe(isOpen => {
       this.isOpen = isOpen;
     });
   }
-  hide() {
+
+  /**
+   * toggle the hidden attribute to update the view
+   */
+  toggleHidden(): void {
     this.hidden = !this.hidden;
   }
+
 }

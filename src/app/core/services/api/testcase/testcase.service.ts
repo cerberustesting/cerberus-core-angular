@@ -139,7 +139,7 @@ export class TestcaseService {
    * @param callback return the results
    * @param system invariant value
   */
-  getLibraryStepList(callback: (stepsList: Step[]) => void, system?: string, ) {
+  getLibraryStepList(callback: (stepsList: Step[]) => void, system?: string) {
     // if the system is defined
     if (system) {
       this.http.get<Step[]>(environment.cerberus_api_url + '/GetStepInLibrary?system=' + system)
@@ -147,10 +147,10 @@ export class TestcaseService {
         .then((response: any) => {
           if (response) {
             // DIRTY : add the new attribute 'stepId' : waiting for https://github.com/cerberustesting/cerberus-source/issues/2124
-            response.testCaseStepList.forEach(step => {
+            response.testCaseSteps.forEach(step => {
               step.stepId = step.step;
             });
-            callback(response.testCaseStepList);
+            callback(response.testCaseSteps);
           }
         });
     }

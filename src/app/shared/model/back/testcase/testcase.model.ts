@@ -23,7 +23,6 @@ export class TestCaseProperties {
     }
 }
 
-
 /**
  * @class TestCase
  * @classdesc test case object
@@ -124,7 +123,7 @@ export class TestCase {
     executor: string;
 
     /** @description version of the test case (increase at every test case header save) */
-    testCaseVersion: number;
+    version: number;
 
     /** @description audit field: user who created the test case */
     usrCreated: string;
@@ -192,7 +191,7 @@ export class TestCase {
         this.dependencies = [];
         this.implementer = '';
         this.executor = '';
-        this.testCaseVersion = 0;
+        this.version = 0;
         this.dateCreated = '';
         this.usrCreated = '';
         this.dateModif = '';

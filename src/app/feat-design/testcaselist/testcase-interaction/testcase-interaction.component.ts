@@ -349,25 +349,29 @@ export class TestcaseInteractionComponent implements OnInit {
     if (this.testcaseheader.type !== this.testcaseHeaderForm.get('definition.type').value) { differentFields.push('type'); }
     if (this.testcaseheader.priority !== this.testcaseHeaderForm.get('definition.priority').value) { differentFields.push('priority'); }
     if (this.testcaseheader.detailedDescription !== this.testcaseHeaderForm.get('definition.detailedDescription').value) { differentFields.push('detailedDescription'); }
-    console.log(differentFields);
+    // TODO : check the other fields
     return differentFields;
   }
 
   /**
    * function mandatory since this component is displayed in the side content
-   * return true if this component can be removed without warning, false elsewhere
+   * return true if this component can be removed without warning, false otherwise
    */
-  sideContentInterruption(): boolean {
+  sideContentInterruption(newComponent: any, parameters: {}): boolean {
     if (this.getTestCaseDifferences().length === 0) {
       return true;
     } else {
-      // TODO : check the other fields
+      // open a confirmation modal
       const modalRef = this.NgbModalService.open(CustomModalComponent);
       modalRef.componentInstance.title = 'Are you sure ?';
       modalRef.componentInstance.subtitle = 'You\'re about to lost your changes in the side content';
       modalRef.componentInstance.itemsList = this.getTestCaseDifferences();
       modalRef.componentInstance.modalType = ModalType.Confirm;
       modalRef.componentInstance.itemsType = CustomModalItemsType.TestCaseDifferences;
+      modalRef.componentInstance.confirmFunction = function () {
+        // open the new component to open
+        this.sideContentService.addComponentToSideBlock(newComponent, parameters, true);
+      };
       return false;
     }
   }

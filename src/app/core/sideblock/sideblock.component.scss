@@ -4,7 +4,7 @@
     right: 0;
     height: 100vh;
     z-index: 100000;
-    width: 40%;
+    width: 50%;
     background-color: #fff;
 
     .close-icon {
@@ -26,11 +26,12 @@
 :host {
         margin-top: 70px;
         border: 1px solid #dadeec;
-        width:40%;
+        width: 50%;
         position: absolute;
         background-color: #ffffff;
         z-index:1000;
-        right: -50%;
+        // move to the right the sideblock to close it
+        right: -60%;
         top:0;
         bottom: 0;
         transition: 1s;
@@ -76,7 +77,8 @@
     right: 0;
 }
 
+// move right the sideblock to hide it
 :host.is-hidden {
-  right: -38%;
+  right: -48%;
 }
 

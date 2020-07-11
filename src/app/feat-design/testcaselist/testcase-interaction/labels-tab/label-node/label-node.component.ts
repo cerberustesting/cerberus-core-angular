@@ -20,8 +20,9 @@ export class LabelNodeComponent implements OnInit {
 
   /** label node from the test case hierarchy */
   @Input('node') node: LabelNode;
+
   /** list of currently selected labels for the test case */
-  @Input('labelslist') selectedLabelsList: Array<any>;
+  @Input('labelslist') selectedLabelsList: Array<Label>;
 
   /** boolean that handle the display of the children nodes */
   public showChildren: boolean;
@@ -40,7 +41,7 @@ export class LabelNodeComponent implements OnInit {
   }
 
   /** return true if the label is selected for the testcase */
-  isTheNodeSelected(labelname: string): boolean {
+  isTheLabelSelected(labelname: string): boolean {
     const res = this.selectedLabelsList.find(label => label.label === labelname);
     if (res !== undefined) {
       return true;
@@ -49,9 +50,32 @@ export class LabelNodeComponent implements OnInit {
     }
   }
 
-  /** add the label to the testcase selection */
-  toggleLabel(label: Label): void {
-    this.selectedLabelsList.push(label);
+  /**
+   * add or remove a label on the selected labels list
+   * @param labelnode node in the hierarchy to toggle
+   */
+  toggleLabel(labelnode: LabelNode): void {
+    // if the label is not already selected
+    if (!this.isTheLabelSelected(labelnode.label.label)) {
+      // add the label to the selected labels list
+      // DIRTY: remap the object since the id isn't present at a label level...
+      this.selectedLabelsList.push(this.formatLabel(labelnode.label, labelnode.id));
+    } else {
+      // remove the label from the selected labels list
+      const index = this.selectedLabelsList.findIndex(label => label.label === labelnode.label.label);
+      this.selectedLabelsList.splice(index, 1);
+    }
+  }
+
+  /**
+   * DIRTY : return a correct label (with it id)
+   * @param label object from the hierarchy
+   * @param id id to add (found in the upper level)
+   */
+  formatLabel(label: Label, id: number): Label {
+    const newLabel: Label = label;
+    newLabel.id = id;
+    return newLabel;
   }
 
 }

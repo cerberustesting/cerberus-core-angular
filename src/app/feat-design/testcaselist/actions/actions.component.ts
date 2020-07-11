@@ -56,7 +56,8 @@ export class ActionsComponent implements OnInit {
     this.sideContentService.addComponentToSideBlock(MassupdateLabelsComponent, {
       mode: LabelHierarchyMode.MassUpdate,
       system: this.user.defaultSystem[0],
-      selectedLabelsList: []
+      selectedLabelsList: [],
+      selectedTestCases: this.getSelection()
     });
     this.sideContentService.openSideBlock();
   }

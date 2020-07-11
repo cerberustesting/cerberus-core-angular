@@ -11,7 +11,6 @@ import { NotificationStyle } from '../../utils/notification.model';
 import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { TestService } from '../test/test.service';
 import { GlobalService } from '../../utils/global.service';
-import { LabelService } from '../label/label.service';
 import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/testcase/property.model';
 import { Control } from 'src/app/shared/model/back/testcase/control.model';
 import { Action } from 'src/app/shared/model/back/testcase/action.model';
@@ -62,8 +61,7 @@ export class TestcaseService {
     private trueindexPipe: TrueindexPipe,
     private notificationService: NotificationService,
     private testService: TestService,
-    private globalService: GlobalService,
-    private labelService: LabelService
+    private globalService: GlobalService
   ) { }
 
   /**

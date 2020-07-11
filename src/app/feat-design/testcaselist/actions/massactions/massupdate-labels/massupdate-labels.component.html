@@ -9,9 +9,11 @@
 
         <!-- UPDATE / CLOSE BUTTON -->
         <div class="block-options">
-            <button type="button" id="addLabels" class="btn btn-sm btn-primary mr-1">Add</button>
-            <button type="button" id="removeLabels" class="btn btn-sm btn-danger mr-1">Remove</button>
-            <button type="button" id="cancelMassUpdateLabels" class="btn btn-sm btn-secondary"
+            <button type="button" id="addLabels" class="btn btn-sm btn-primary mr-1"
+                (click)="massUpdateLabels(selectedLabelsList, CRUD.Update)">Add</button>
+            <button type="button" id="removeLabels" class="btn btn-sm btn-danger mr-1"
+                (click)="massUpdateLabels(selectedLabelsList, CRUD.Delete)">Remove</button>
+            <button type=" button" id="cancelMassUpdateLabels" class="btn btn-sm btn-secondary"
                 (click)="closeSideContent()">
                 Close
             </button>

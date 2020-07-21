@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { UserService } from './user.service';
 import tcs from 'src/assets/data/mock/testcases.json';
+import tfs from 'src/assets/data/mock/testfolders.json';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -143,7 +144,12 @@ export class FilterService {
   */
   getContentForTable(servlet: string, queryParameters: string, callback): void {
     // return mocked results
-    callback(tcs.contentTable, 3);
+    if (servlet === '/ReadTestCase') {
+      callback(tcs.contentTable, 61);
+    } else {
+      callback(tfs.contentTable, 61);
+    }
+
     // this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
     //   .subscribe((response) => {
     //     if (response) {

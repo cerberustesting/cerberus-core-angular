@@ -64,7 +64,8 @@ export enum COLUMN_TYPE {
     LABEL = 'label',
     LONGTEXT = 'longtext',
     LIST = 'list',
-    COUNTRIES = 'countries'
+    COUNTRIES = 'countries',
+    CERBERUS_BOOLEAN = 'cerberusboolean'
 }
 
 /**

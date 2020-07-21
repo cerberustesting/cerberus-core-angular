@@ -1,0 +1,31 @@
+<app-datatable-page [pageSort]="defaultPageSort" [columns]="columns" [servlet]="servlet" [selectedRows]="selectedRows"
+    [selection]="true" [refreshResults]="refreshResultsEvent.asObservable()">
+
+    <!--START Template for create button-->
+    <ng-template cerberusDatatableFilter>
+        <button type="button" class="btn btn-sm btn-info" (click)="createTestFolder()" id="createTestFolderButton">
+            <i class="fa fa-fw fa-plus download mr-2"></i>Test
+        </button>
+    </ng-template>
+    <!--END Template for create button-->
+
+    <!-- START Template for end rows buttons -->
+    <ng-template cerberusDatatableEndLineAction let-row="row">
+        <div class="datatable-row-menu">
+            <div class="datatable-actions-section">
+                <div class="btn-group btn-group-sm" data-toggle="buttons" role="group">
+                    <button type="button" class="btn btn-outline-secondary" (click)="editTestFolder(row)">
+                        <i class="fa fa-fw fa-pen"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">
+                        <i class="fa fa-fw fa-list-ol"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">
+                        <i class="fa fa-fw fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</app-datatable-page>

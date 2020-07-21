@@ -6,6 +6,11 @@ import { environment } from 'src/environments/environment';
 import { NotificationService } from '../utils/notification.service';
 import { NotificationStyle } from '../utils/notification.model';
 
+export enum InvariantName {
+  userGroup = 'USERGROUP',
+  action = 'ACTION'
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +23,7 @@ export class InvariantsService {
   actionsList: Array<Invariant>;
   controlsList: Array<Invariant>;
   tcestatusList: Array<Invariant>;
+  USERGROUP_list: Array<Invariant>;
 
   // public invariants
   countriesList: Array<Invariant>;
@@ -49,7 +55,9 @@ export class InvariantsService {
   observablePropertyDatabaseList = new BehaviorSubject<Invariant[]>(this.propertyDatabaseList);
   observableAppService = new BehaviorSubject<any[]>(this.propertyDatabaseList);
 
-  constructor(private http: HttpClient, private Notification: NotificationService) { }
+  constructor(private http: HttpClient, private Notification: NotificationService) {
+    this.USERGROUP_list = undefined;
+  }
 
   getCountriesList() {
     this.http.get<Invariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=country')
@@ -184,6 +192,46 @@ export class InvariantsService {
         this.observableAppService.next(this.appService);
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
+
+  // new method to implement
+  getInvariants(callback: (invariants: Invariant[]) => void, invariantName: InvariantName, forceRefresh?: boolean): void {
+    // if the force refresh flag is passed
+    if (forceRefresh) {
+      // fetch from API the invariants list
+      this.fetchInvariants(invariantName, (invariants) => {
+        // save the value in the service cache
+        this[invariantName + '_list'] = invariants;
+        console.log(this.USERGROUP_list);
+        // callback the value
+        callback(this[invariantName + '_list']);
+      });
+    } else {
+      // if there is already a list of invarariants in cache
+      if (this[invariantName + '_list']) {
+        // callback with the value in cache
+        callback(this[invariantName + '_list']);
+      } else {
+        // if the cache is empty, fetch the list from the API
+        this.fetchInvariants(invariantName, (invariants) => {
+          // TODO: dynamic
+          // save the value in the service cache
+          this[invariantName + '_list'] = invariants;
+          // callback the value
+          callback(this[invariantName + '_list']);
+        });
+      }
+    }
+  }
+
+  fetchInvariants(invariantName: InvariantName, callback: (invariants: Invariant[]) => void) {
+    const url = environment.cerberus_api_url + '/FindInvariantByID?idName=' + invariantName;
+    this.http.get<Array<Invariant>>(url)
+      .toPromise()
+      .then((result: any) => {
+        callback(result);
+      });
+  }
+
 
   loadInvariants() {
     this.getActionList();

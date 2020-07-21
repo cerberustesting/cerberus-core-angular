@@ -24,4 +24,14 @@ export class TestFolder {
 
         /** @description audit field : the last user who edited the test */
         usrModif: string;
+
+        constructor() {
+                this.test = '';
+                this.active = 'Y';
+                this.description = '';
+                this.dateCreated = null;
+                this.usrCreated = null;
+                this.dateModif = null;
+                this.usrModif = null;
+        }
 }

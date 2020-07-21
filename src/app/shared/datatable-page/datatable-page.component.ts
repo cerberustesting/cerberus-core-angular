@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, ContentChild, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, ContentChild, ViewChild } from '@angular/core';
 import { Column } from '../model/front/column.model';
 import { FilterService } from 'src/app/core/services/api/filter.service';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';

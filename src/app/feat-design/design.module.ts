@@ -53,6 +53,8 @@ import { TestfoldergroupComponent } from './testcasescript/testcasecontent/libra
 import { SelectedstepComponent } from './testcasescript/testcasecontent/librarystepsmodal/selectedstep/selectedstep.component';
 import { MassactionsComponent } from './testcaselist/actions/massactions/massactions.component';
 import { MassupdateLabelsComponent } from './testcaselist/actions/massactions/massupdate-labels/massupdate-labels.component';
+import { TestfoldersComponent } from './testfolders/testfolders.component';
+import { TestfolderInteractionComponent } from './testfolders/testfolder-interaction/testfolder-interaction.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { MassupdateLabelsComponent } from './testcaselist/actions/massactions/ma
     SelectedstepComponent,
     MassactionsComponent,
     MassupdateLabelsComponent,
+    TestfoldersComponent,
+    TestfolderInteractionComponent,
   ],
   imports: [
     CommonModule,
@@ -109,6 +113,7 @@ import { MassupdateLabelsComponent } from './testcaselist/actions/massactions/ma
     DatalibInteractionComponent,
     DatalibTclistComponent,
     TestcaseInteractionComponent,
+    TestfolderInteractionComponent,
     LibraryStepsModalComponent,
     MassupdateLabelsComponent
   ],

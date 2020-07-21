@@ -32,7 +32,7 @@ export const TestCasesColumnsData: Column[] = [
         type: COLUMN_TYPE.LONGTEXT
     },
     {
-        displayName: 'TestCase ID',
+        displayName: 'ID',
         apiName: 'tec.testCase',
         contentName: 'testCase',
         flexGrow: 75,

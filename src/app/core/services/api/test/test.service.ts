@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TestFolder } from 'src/app/shared/model/back/testfolder/test.model';
 import { environment } from 'src/environments/environment';
 import { GlobalService } from '../../utils/global.service';
+import { Callbacks } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -55,11 +56,26 @@ export class TestService {
 
   /**
    * update the content of a test folder
-   * @param testfoldername the initial name of the test folder
+   * @param initialtestoldername the initial name of the test folder
    * @param testfolder the test folder object to update
    */
-  updateTestFolder(testfoldername: string, testfolder: TestFolder): void {
-    // TODO
+  updateTestFolder(initialtestoldername: string, testfolder: TestFolder, callback): void {
+
+    // set the url to post
+    const url = environment.cerberus_api_url + '/UpdateTest';
+
+    // build the data to post
+    let formData = '';
+    formData += 'originalTest=' + initialtestoldername;
+    formData += '&test=' + testfolder.test;
+    formData += '&Active=' + testfolder.active;
+    formData += '&Description=' + testfolder.description;
+
+    console.log(formData);
+
+    this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
+      callback(response);
+    });
   }
 
   /**

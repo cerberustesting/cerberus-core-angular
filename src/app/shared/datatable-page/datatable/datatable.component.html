@@ -111,6 +111,13 @@ The field type depends on the column.type attribute (refer to column model 4 mor
                     </div>
                     <!-- END BOOLEAN COLUMN TYPE -->
 
+                    <!-- CERBERUS BOOLEAN COLUMN TYPE -->
+                    <div *ngIf="column.type==='cerberusboolean'">
+                        <i class="fa fa-check" *ngIf="value === 'Y'"></i>
+                        <i class="fa fa-times" *ngIf="value === 'N'"></i>
+                    </div>
+                    <!-- END CERBERUS BOOLEAN COLUMN TYPE -->
+
                     <!-- SCRIPT COLUMN TYPE -->
                     <div *ngIf="column.type==='script'">
                         <code>{{value}}</code>

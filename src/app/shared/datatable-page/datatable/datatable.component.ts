@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter, ComponentFactoryResolver } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Column } from '../../model/front/column.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';

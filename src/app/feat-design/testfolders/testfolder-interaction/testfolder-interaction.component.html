@@ -1,0 +1,137 @@
+<form *ngIf="testFolderForm" [formGroup]="testFolderForm" (ngSubmit)="onSubmit(testFolderForm.value)">
+    <div class="block no-shadow">
+
+        <!--  SIDE CONTENT HEADER -->
+        <div class="block-header block-header-default">
+
+            <!-- SIDE CONTENT TITLE -->
+            <h3 class="block-title" [ngSwitch]="mode">
+                <span id="createTestFolderTitle" *ngSwitchCase="'CREATE'">Create Test Folder</span>
+                <span id="editTestFolderTitle" *ngSwitchCase="'EDIT'">Edit Test Folder</span>
+            </h3>
+            <!-- END SIDE CONTENT TITLE -->
+
+            <!-- SAVE / CLOSE BUTTON -->
+            <div class="block-options">
+                <button type="submit" id="submitInteraction" class="btn btn-sm btn-primary mr-1">
+                    {{saveButtonTitle}}
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" (click)="closeSideContent()">Close</button>
+            </div>
+            <!-- END SAVE / CLOSE BUTTON -->
+
+        </div>
+        <!--  END SIDE CONTENT HEADER -->
+
+        <!-- SIDE CONTENT CONTENT -->
+        <div class="block-content">
+            <div class="row">
+
+                <!-- TEST FOLDER NAME -->
+                <div id="sideContent_TestFolder" class="col-md-12">
+                    <div class="form-group">
+                        <label for="TestFolderName" class="font-sm">
+                            Test Folder Name
+                            <i class="fa fa-info-circle ml-0 info" placement="bottom"
+                                ngbPopover="Name of the test folder (unique)" triggers="mouseenter:mouseleave"></i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" name="TestFolderName"
+                            placeholder="Test Folder Name" formControlName="test">
+                    </div>
+                </div>
+                <!-- END TEST FOLDER NAME SECTION -->
+
+                <!-- TEST FOLDER DESCRIPTION SECTION -->
+                <div id="sideContent_TestDescription" class="col-md-12">
+                    <div class="form-group">
+                        <label for="TestCase" class="font-sm">
+                            Description
+                            <i class="fa fa-info-circle ml-0 info" placement="bottom"
+                                ngbPopover="A short description for the test folder"
+                                triggers="mouseenter:mouseleave"></i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" name="TestCase"
+                            placeholder="Test Folder Description" formControlName="description">
+                    </div>
+                </div>
+                <!-- END TEST FOLDER DESCRIPTION SECTION -->
+
+                <!-- CREATION SECTION -->
+                <div class="col-md-12">
+                    <div id="sideContent_creation" class="form-group mb-0">
+                        <label class="d-block" class="font-sm">Creation</label>
+                    </div>
+                </div>
+                <!-- END CREATION SECTION -->
+
+                <!-- DATE CREATED -->
+                <div class="form-group col-md-6">
+                    <div class="input-group custom-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Date</span>
+                        </div>
+                        <span class="form-control text-center form-control-sm" id="createdDate" type="text">
+                            <i class="fa fa-calendar-day mr-1"></i>
+                            {{testfolder.dateCreated}}
+                        </span>
+                    </div>
+                </div>
+                <!-- END DATE CREATED-->
+
+                <!-- USER CREATED -->
+                <div class="form-group col-md-6">
+                    <div class="input-group custom-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Issuer</span>
+                        </div>
+                        <span class="form-control text-center form-control-sm" id="createdUsr" type="text">
+                            <i class="fa fa-user-edit mr-1"></i>
+                            {{testfolder.usrCreated}}
+                        </span>
+                    </div>
+                </div>
+                <!-- END USER CREATED -->
+
+                <!-- LAST UPDATE SECTION -->
+                <div class="col-md-12">
+                    <div id="sideContent_creation" class="form-group mb-0">
+                        <label class="d-block" class="font-sm">Last Update</label>
+                    </div>
+                </div>
+                <!-- END LAST UPDATE SECTION -->
+
+                <!-- LAST UPDATE DATE -->
+                <div class="form-group col-md-6">
+                    <div class="input-group custom-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Date</span>
+                        </div>
+                        <span class="form-control text-center form-control-sm" id="dateModif" type="text">
+                            <i class="fa fa-calendar-day mr-1"></i>
+                            {{testfolder.dateModif}}
+                        </span>
+                    </div>
+                </div>
+                <!-- END LAST UPDATE DATE -->
+
+                <!-- LAST UPDATE USER -->
+                <div class="form-group col-md-6">
+                    <div class="input-group custom-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Issuer</span>
+                        </div>
+                        <span class="form-control text-center form-control-sm" id="usrModif" type="text">
+                            <i class="fa fa-user-edit mr-1"></i>
+                            {{testfolder.usrModif}}
+                        </span>
+                    </div>
+                </div>
+                <!-- END LAST UPDATE USER -->
+
+            </div>
+
+        </div>
+        <!-- END SIDE CONTENT CONTENT -->
+
+    </div>
+</form>

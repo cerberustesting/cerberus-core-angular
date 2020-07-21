@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/model/back/user/user.model';
 import { UserService } from '../services/api/user.service';
 import { MenuItem } from 'src/app/shared/model/front/menu.model';
 import { Router } from '@angular/router';
+import { UserGroup } from 'src/app/shared/model/front/utils.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -124,18 +125,25 @@ export class SidebarComponent implements OnInit {
             id: 'testMenu',
             submenu: [
               {
+                name: 'Test Folders',
+                expanded: false,
+                id: 'testFoldersMenu',
+                link: '/design/testfolders',
+                authorized: this.userService.isUserAuthorizedForGroup(this.user, UserGroup.TestRO)
+              },
+              {
                 name: 'Test Case List',
                 expanded: false,
                 id: 'tcListMenu',
                 link: '/design/testcaseslist',
-                authorized: this.user.group.includes('TestRO')
+                authorized: this.userService.isUserAuthorizedForGroup(this.user, UserGroup.TestRO)
               },
               {
                 name: 'Test Case Edition',
                 expanded: false,
                 id: 'tcEditionMenu',
                 link: '/design/testcasescript',
-                authorized: this.user.group.includes('Test')
+                authorized: this.userService.isUserAuthorizedForGroup(this.user, UserGroup.Test)
               }
             ]
           },
@@ -143,7 +151,7 @@ export class SidebarComponent implements OnInit {
             name: 'Data',
             icon_class: 'si-layers',
             expanded: false,
-            authorized: true,
+            authorized: this.userService.isUserAuthorizedForGroup(this.user, UserGroup.TestDataManager),
             id: 'dataMenu',
             submenu: [
               {

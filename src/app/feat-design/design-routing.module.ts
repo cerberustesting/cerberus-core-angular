@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TestcaselistComponent } from './testcaselist/testcaselist.component';
-import { TestcasescriptComponent} from './testcasescript/testcasescript.component';
+import { TestcasescriptComponent } from './testcasescript/testcasescript.component';
 import { DatalibraryComponent } from './datalibrary/datalibrary.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
+import { TestfoldersComponent } from './testfolders/testfolders.component';
 
 const designRoutes: Routes = [
   {
@@ -21,6 +22,10 @@ const designRoutes: Routes = [
   {
     path: 'testcasescript',
     component: TestcasescriptComponent
+  },
+  {
+    path: 'testfolders',
+    component: TestfoldersComponent
   },
   {
     path: 'datalibrary',

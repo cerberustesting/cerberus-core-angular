@@ -1,0 +1,619 @@
+{
+    "iTotalRecords": 61,
+    "hasPermissions": true,
+    "messageType": "OK",
+    "contentTable": [
+        {
+            "dateCreated": "Oct 25, 2019 9:57:02 PM",
+            "hasPermissions": true,
+            "test": "benoit",
+            "usrModif": "test",
+            "description": "TestDemoDescription_245232",
+            "active": "Y",
+            "dateModif": "Jul 16, 2020 4:32:42 AM",
+            "usrCreated": "test"
+        },
+        {
+            "dateCreated": "Apr 13, 2018 11:48:48 AM",
+            "hasPermissions": true,
+            "test": "DataSet : CerberusSpecificTestCase",
+            "usrModif": "",
+            "description": "Specific Data for Regression tests ",
+            "active": "Y",
+            "dateModif": "Jun 1, 2018 1:59:35 PM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Aug 6, 2019 4:43:28 PM",
+            "hasPermissions": true,
+            "test": "Decathlon",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "cvannouque"
+        },
+        {
+            "dateCreated": "Aug 21, 2019 9:50:19 AM",
+            "hasPermissions": true,
+            "test": "Empty Test Folder",
+            "usrModif": "",
+            "description": "Please keep this folder empty",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "cvannouque"
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:12:48 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : Action",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:13:05 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : ActionApps",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:14:26 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : ActionSikuli",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:14:34 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : ActionWeb",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Jan 2, 2019 4:28:13 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : Campaign",
+            "usrModif": "",
+            "description": "Test for campaign",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "cdelage"
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:14:42 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : Condition",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:14:49 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : Control",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Apr 12, 2018 3:18:43 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : PreExec",
+            "usrModif": "",
+            "description": "Pre Execution Engine",
+            "active": "Y",
+            "dateModif": "Jun 1, 2018 1:58:13 PM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:15:01 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : Property",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:15:16 PM",
+            "hasPermissions": true,
+            "test": "ENGINE : Transversal",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Jun 19, 2012 9:56:06 AM",
+            "hasPermissions": true,
+            "test": "Examples",
+            "usrModif": "",
+            "description": "Example Tests",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:09:13 PM",
+            "hasPermissions": true,
+            "test": "GUI : Administration",
+            "usrModif": "",
+            "description": "Function related to administration",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:09:56 PM",
+            "hasPermissions": true,
+            "test": "GUI : Application",
+            "usrModif": "",
+            "description": "Function related to the applications management ",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:10:14 PM",
+            "hasPermissions": true,
+            "test": "GUI : Data",
+            "usrModif": "",
+            "description": "Function related to datas management",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:11:44 PM",
+            "hasPermissions": true,
+            "test": "GUI : Execution",
+            "usrModif": "",
+            "description": "Function related to test cases executions",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Apr 19, 2018 11:29:37 AM",
+            "hasPermissions": true,
+            "test": "GUI : Help Section",
+            "usrModif": "",
+            "description": "Regression test on documentation and interactive tutorials",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 17, 2017 2:12:06 PM",
+            "hasPermissions": true,
+            "test": "GUI : Integration",
+            "usrModif": "",
+            "description": "Function related to integration",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Apr 17, 2018 9:20:37 AM",
+            "hasPermissions": true,
+            "test": "GUI : Reporting",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 10, 2017 10:48:53 PM",
+            "hasPermissions": true,
+            "test": "GUI : Test Management",
+            "usrModif": "",
+            "description": "Function related to Test management. CRUD on Test, Testcase, Label, Campaign",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Feb 10, 2017 10:50:38 PM",
+            "hasPermissions": true,
+            "test": "GUI : Transversal",
+            "usrModif": "",
+            "description": "Function tranversal. Such as login, menu, system and language selection",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Jan 29, 2020 8:21:55 AM",
+            "hasPermissions": true,
+            "test": "ILEVIA",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "r-loic"
+        },
+        {
+            "dateCreated": "Jan 9, 2018 3:42:27 PM",
+            "hasPermissions": true,
+            "test": "iOS",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Apr 20, 2018 3:53:10 PM",
+            "hasPermissions": true,
+            "test": "La Routine",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Jun 19, 2012 9:56:06 AM",
+            "hasPermissions": true,
+            "test": "Performance Monitor",
+            "usrModif": "",
+            "description": "Performance Monitor Tests",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "May 31, 2018 9:33:34 PM",
+            "hasPermissions": true,
+            "test": "Post Testing",
+            "usrModif": "",
+            "description": "Post Tests",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Jan 1, 1970 1:01:01 AM",
+            "hasPermissions": true,
+            "test": "Pre Testing",
+            "usrModif": "",
+            "description": "Preliminary Tests",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": ""
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:08:59 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245082",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser1"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:29:34 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245223",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser2"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:35:00 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245241",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser5"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:34:57 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245242",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser2"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:36:14 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245244",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser3"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:37:46 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245247",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser3"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:38:46 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245248",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser1"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:39:39 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245249",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser3"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:40:35 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245250",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser1"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:41:39 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245255",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser2"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:42:01 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245256",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser4"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:42:55 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245257",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser4"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:43:51 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245258",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser3"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:44:43 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245259",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser5"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:45:32 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245260",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser1"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:46:25 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245261",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser5"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:47:34 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245263",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser2"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:47:33 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245264",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser5"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:48:19 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245265",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testfunctu"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:51:59 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245272",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser1"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:52:50 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245273",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser1"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:53:20 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245274",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser5"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:58:02 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245282",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser5"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 4:59:20 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245284",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser2"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 5:05:22 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245299",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser5"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 5:05:19 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245300",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser3"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 5:06:04 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245301",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser4"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 5:06:11 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245302",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser2"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 5:07:04 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245303",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser1"
+        },
+        {
+            "dateCreated": "Jul 16, 2020 5:11:52 AM",
+            "hasPermissions": true,
+            "test": "TestDemo_245304",
+            "usrModif": "",
+            "description": "",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "testuser5"
+        },
+        {
+            "dateCreated": "Jun 20, 2018 3:29:27 PM",
+            "hasPermissions": true,
+            "test": "Twitter",
+            "usrModif": "",
+            "description": "Retweet contest",
+            "active": "Y",
+            "dateModif": "Jan 1, 1970 1:01:01 AM",
+            "usrCreated": "qducoulombier"
+        }
+    ],
+    "iTotalDisplayRecords": 61,
+    "message": "Test - SELECT was finished with success!"
+}

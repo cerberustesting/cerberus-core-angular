@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/app/shared/model/back/user/user.model';
 import { BehaviorSubject } from 'rxjs';
+import { UserGroup } from 'src/app/shared/model/front/utils.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,15 @@ export class UserService {
       this.user.defaultSystem = newSystemsList;
       this.observableUser.next(this.user);
     }
+  }
+
+  /**
+   * return true is a user is authorized for a group
+   * @param user user object
+   * @param group name of the group to check
+   */
+  isUserAuthorizedForGroup(user: User, group: UserGroup): boolean {
+    return user.group.includes(group);
   }
 
   /**

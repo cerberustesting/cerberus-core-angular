@@ -436,3 +436,33 @@ set the opacity to 0, making the element not visible (used in fade in animation)
 .op-0 {
   opacity: 0;
 }
+
+/*
+"datatable-" classes for datatable dependant element
+
+format the end of row buttons (actions)
+*/
+div.datatable-row-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+div.datatable-row-menu:hover {
+  opacity: 1;
+}
+.datatable-actions-section {
+  padding: 5px;
+  padding-right: 30px;
+  margin-top: 8px;
+}
+
+.datatable-actions-section > div > button {
+  width: 25px !important;
+  height: 25px !important;
+  display: inline-block !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}

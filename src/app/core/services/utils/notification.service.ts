@@ -26,7 +26,14 @@ export class NotificationService {
   // snack bar configuration object
   private snackBarConfiguration: MatSnackBarConfig<any>;
 
-  createANotification(message: string, style: NotificationStyle, dismissable?: boolean, duration?: number) {
+  /**
+   * display a notification to the up right section of the screen
+   * @param message text to display in the notification
+   * @param style color template to use
+   * @param dismissable allow the user to dismiss the notification
+   * @param duration for which the notification is displayed
+   */
+  createANotification(message: string, style: NotificationStyle, dismissable?: boolean, duration?: number): void {
     // check parameters and assign default values if necessary
     if (typeof dismissable === 'undefined') { dismissable = defaultDismissable; }
     if (!duration) { duration = defaultDuration; }
@@ -51,8 +58,27 @@ export class NotificationService {
     this.snackBar.openFromComponent(NotificationsComponent, this.snackBarConfiguration);
   }
 
-  resetDefaultClasses() {
+  /**
+   * set the default css class list to the notification comp
+   */
+  resetDefaultClasses(): void {
     // place here the css class to be added in any case
     this.defaultClasses = ['alert', 'mt-headerbar'];
   }
+
+  /**
+   * create a notification according to the usual Cerberus API response body
+   * @param messagetype defining the status of the call (OK, WARNING...)
+   * @param message message from the API
+   */
+  cerberusAPINotification(messagetype: string, message: string): void {
+    if (messagetype === 'OK') {
+      this.createANotification(message, NotificationStyle.Success);
+    } else if (messagetype === 'WARNING') {
+      this.createANotification(message, NotificationStyle.Warning);
+    } else {
+      this.createANotification(message, NotificationStyle.Error);
+    }
+  }
+
 }

@@ -49,13 +49,13 @@ export class TestfoldersComponent implements OnInit {
     this.refreshResultsEvent.next();
   }
 
-    /**
-   * open the side content in creation mode,
-   * get the first row in the table to use as a template for the new test case
-   */
+  /**
+  * open the side content in creation mode
+  */
   createTestFolder(): void {
     this.sideContentService.addComponentToSideBlock(TestfolderInteractionComponent, {
       mode: INTERACTION_MODE.CREATE,
+      testfolder: new TestFolder(),
       exit: () => {
         this.refreshResults();
       }
@@ -63,9 +63,9 @@ export class TestfoldersComponent implements OnInit {
     this.sideContentService.openSideBlock();
   }
 
-      /**
-   * open the side content in creation mode,
-   * get the first row in the table to use as a template for the new test case
+  /**
+   * open the side content in edition mode with the test folder object to edit
+   * @param testfolder object to edit
    */
   editTestFolder(testfolder: TestFolder): void {
     this.sideContentService.addComponentToSideBlock(TestfolderInteractionComponent, {
@@ -78,4 +78,8 @@ export class TestfoldersComponent implements OnInit {
     this.sideContentService.openSideBlock();
   }
 
+  // TODO
+  deleteTestFolder(testfolder: TestFolder): void {
+    console.log('TODO..');
+  }
 }

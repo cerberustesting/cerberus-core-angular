@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { InvariantsService } from 'src/app/core/services/api/invariants.service';
-import { SystemService } from 'src/app/core/services/api/system.service';
-import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { TestFolder } from 'src/app/shared/model/back/testfolder/test.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
@@ -18,10 +15,10 @@ import { CustomModalComponent, ModalType, CustomModalItemsType } from 'src/app/s
 })
 export class TestfolderInteractionComponent implements OnInit {
 
-  // mode to interact with the test case header
+  // mode to interact with the test case header (mandatory)
   private mode: INTERACTION_MODE;
 
-  // testcase header object (can be refreshed by test and test folder variables)
+  // test folder object (mandatory)
   private testfolder: TestFolder;
 
   // inital name of the test folder object when the component is created
@@ -33,8 +30,11 @@ export class TestfolderInteractionComponent implements OnInit {
   // title for save button (different according to the mode)
   private saveButtonTitle: string;
 
-  // tests folder list used for Test & Test case folder section
+  // tests folder list used to compare with the test folder one (check existence)
   private testfolders: Array<TestFolder>;
+
+  /** instance of the interaction mode fields enumeration */
+  public InteractionMode: typeof INTERACTION_MODE = INTERACTION_MODE;
 
   // ???
   exit: (n: void) => void;
@@ -55,31 +55,15 @@ export class TestfolderInteractionComponent implements OnInit {
     // set the correct title for the save button (depending on the mode)
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
 
+    // test folder object sanitizing
+    if (this.testfolder && this.mode) {
+      this.setFormValues();
+    } else {
+      console.error('error with compononent initialization, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
+    }
+
     // save the initial name of the test folder
     this.initialTestFolderName = this.testfolder.test;
-
-    // creation mode
-    if (this.mode === INTERACTION_MODE.CREATE) {
-
-      // set a new the test folder
-      this.testfolder = new TestFolder();
-
-    } else if (this.mode === INTERACTION_MODE.EDIT) {
-
-      this.setFormValues();
-
-    } else {
-      console.error('test folder and test case not found, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
-    }
-  }
-
-  /** transform boolean to 'Y' or 'N' string  */
-  toCerberusString(raw: boolean): string {
-    if (raw === true) {
-      return 'Y';
-    } else {
-      return 'N';
-    }
   }
 
   /**
@@ -111,48 +95,52 @@ export class TestfolderInteractionComponent implements OnInit {
 
     // trigger the correct API endpoint
     if (this.mode === INTERACTION_MODE.CREATE) {
-      // this.testService.createTestCase(queryString).subscribe(rep => this.refreshTable());
-    } else {
-      this.testService.updateTestFolder(this.initialTestFolderName, values, (response: any) => {
-        console.log(response);
+      this.testService.createTestFolder(values, (response: any) => {
+        this.notificationService.cerberusAPINotification(response.messageType, response.message);
+        this.closeSideContent();
       });
-
+    } else if (this.mode === INTERACTION_MODE.EDIT) {
+      this.testService.updateTestFolder(this.initialTestFolderName, values, (response: any) => {
+        this.notificationService.cerberusAPINotification(response.messageType, response.message);
+        this.closeSideContent();
+      });
     }
   }
 
-  // ??
-  refreshTable(): void {
-    this.sidecontentService.closeSideBlock();
-    this.exit();
-  }
-
-  // cancel the current interaction and close the side content
+  /**
+   * close the sidecontent through the service
+   */
   closeSideContent(): void {
     this.sidecontentService.closeSideBlock();
+    this.exit();
   }
 
   /**
    * return the list of fields that have been changed during the edition
    */
-  getTestCaseDifferences(): string[] {
+  getTestFolderDifferences(): string[] {
     const differentFields = new Array<string>();
     if (this.testfolder.test !== this.testFolderForm.get('test').value) { differentFields.push('test'); }
+    if (this.testfolder.active !== this.testFolderForm.get('active').value) { differentFields.push('active'); }
+    if (this.testfolder.description !== this.testFolderForm.get('description').value) { differentFields.push('description'); }
     return differentFields;
   }
 
   /**
    * function mandatory since this component is displayed in the side content
    * return true if this component can be removed without warning, false otherwise
+   * @param newComponent new component to replace the test folder one with
+   * @param parameters parameters attached with the compononent change request
    */
   sideContentInterruption(newComponent: any, parameters: {}): boolean {
-    if (this.getTestCaseDifferences().length === 0) {
+    if (this.getTestFolderDifferences().length === 0) {
       return true;
     } else {
       // open a confirmation modal
       const modalRef = this.NgbModalService.open(CustomModalComponent);
       modalRef.componentInstance.title = 'Are you sure ?';
       modalRef.componentInstance.subtitle = 'You\'re about to lost your changes in the side content';
-      modalRef.componentInstance.itemsList = this.getTestCaseDifferences();
+      modalRef.componentInstance.itemsList = this.getTestFolderDifferences();
       modalRef.componentInstance.modalType = ModalType.Confirm;
       modalRef.componentInstance.itemsType = CustomModalItemsType.TestCaseDifferences;
       modalRef.componentInstance.confirmFunction = function () {

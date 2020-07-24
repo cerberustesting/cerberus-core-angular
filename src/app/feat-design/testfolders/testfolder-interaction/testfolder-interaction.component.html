@@ -56,77 +56,91 @@
                 </div>
                 <!-- END TEST FOLDER DESCRIPTION SECTION -->
 
-                <!-- CREATION SECTION -->
-                <div class="col-md-12">
-                    <div id="sideContent_creation" class="form-group mb-0">
-                        <label class="d-block" class="font-sm">Creation</label>
+                <!-- TEST FOLDER ACTIVE SECTION -->
+                <div id="sideContent_TestActive" class="col-md-12">
+                    <div class="custom-control custom-switch custom-control-primary mb-1">
+                        <input type="checkbox" class="custom-control-input" id="testFolderActive"
+                            name="testFolderActive" formControlName="active">
+                        <label class="custom-control-label" for="testFolderActive">Active</label>
                     </div>
                 </div>
-                <!-- END CREATION SECTION -->
+                <!-- END TEST FOLDER ACTIVE SECTION -->
 
-                <!-- DATE CREATED -->
-                <div class="form-group col-md-6">
-                    <div class="input-group custom-sm">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Date</span>
+                <div *ngIf="mode === InteractionMode.EDIT" class="row ml-1 mr-1">
+
+                    <!-- CREATION SECTION -->
+                    <div class="col-md-12">
+                        <div id="sideContent_creation" class="form-group mb-0">
+                            <label class="d-block" class="font-sm">Creation</label>
                         </div>
-                        <span class="form-control text-center form-control-sm" id="createdDate" type="text">
-                            <i class="fa fa-calendar-day mr-1"></i>
-                            {{testfolder.dateCreated}}
-                        </span>
                     </div>
-                </div>
-                <!-- END DATE CREATED-->
+                    <!-- END CREATION SECTION -->
 
-                <!-- USER CREATED -->
-                <div class="form-group col-md-6">
-                    <div class="input-group custom-sm">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Issuer</span>
+                    <!-- DATE CREATED -->
+                    <div class="form-group col-md-6">
+                        <div class="input-group custom-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Date</span>
+                            </div>
+                            <span class="form-control text-center form-control-sm" id="createdDate" type="text">
+                                <i class="fa fa-calendar-day mr-1"></i>
+                                {{testfolder.dateCreated}}
+                            </span>
                         </div>
-                        <span class="form-control text-center form-control-sm" id="createdUsr" type="text">
-                            <i class="fa fa-user-edit mr-1"></i>
-                            {{testfolder.usrCreated}}
-                        </span>
                     </div>
-                </div>
-                <!-- END USER CREATED -->
+                    <!-- END DATE CREATED-->
 
-                <!-- LAST UPDATE SECTION -->
-                <div class="col-md-12">
-                    <div id="sideContent_creation" class="form-group mb-0">
-                        <label class="d-block" class="font-sm">Last Update</label>
-                    </div>
-                </div>
-                <!-- END LAST UPDATE SECTION -->
-
-                <!-- LAST UPDATE DATE -->
-                <div class="form-group col-md-6">
-                    <div class="input-group custom-sm">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Date</span>
+                    <!-- USER CREATED -->
+                    <div class="form-group col-md-6">
+                        <div class="input-group custom-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Issuer</span>
+                            </div>
+                            <span class="form-control text-center form-control-sm" id="createdUsr" type="text">
+                                <i class="fa fa-user-edit mr-1"></i>
+                                {{testfolder.usrCreated}}
+                            </span>
                         </div>
-                        <span class="form-control text-center form-control-sm" id="dateModif" type="text">
-                            <i class="fa fa-calendar-day mr-1"></i>
-                            {{testfolder.dateModif}}
-                        </span>
                     </div>
-                </div>
-                <!-- END LAST UPDATE DATE -->
+                    <!-- END USER CREATED -->
 
-                <!-- LAST UPDATE USER -->
-                <div class="form-group col-md-6">
-                    <div class="input-group custom-sm">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Issuer</span>
+                    <!-- LAST UPDATE SECTION -->
+                    <div class="col-md-12">
+                        <div id="sideContent_creation" class="form-group mb-0">
+                            <label class="d-block" class="font-sm">Last Update</label>
                         </div>
-                        <span class="form-control text-center form-control-sm" id="usrModif" type="text">
-                            <i class="fa fa-user-edit mr-1"></i>
-                            {{testfolder.usrModif}}
-                        </span>
                     </div>
+                    <!-- END LAST UPDATE SECTION -->
+
+                    <!-- LAST UPDATE DATE -->
+                    <div class="form-group col-md-6">
+                        <div class="input-group custom-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Date</span>
+                            </div>
+                            <span class="form-control text-center form-control-sm" id="dateModif" type="text">
+                                <i class="fa fa-calendar-day mr-1"></i>
+                                {{testfolder.dateModif}}
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END LAST UPDATE DATE -->
+
+                    <!-- LAST UPDATE USER -->
+                    <div class="form-group col-md-6">
+                        <div class="input-group custom-sm">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Issuer</span>
+                            </div>
+                            <span class="form-control text-center form-control-sm" id="usrModif" type="text">
+                                <i class="fa fa-user-edit mr-1"></i>
+                                {{testfolder.usrModif}}
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END LAST UPDATE USER -->
+
                 </div>
-                <!-- END LAST UPDATE USER -->
 
             </div>
 

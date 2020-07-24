@@ -8,6 +8,7 @@ import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { UserService } from './user.service';
 import tcs from 'src/assets/data/mock/testcases.json';
 import tfs from 'src/assets/data/mock/testfolders.json';
+import { GlobalService } from '../utils/global.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -51,7 +52,7 @@ export class FilterService {
   refreshContentEvent = new EventEmitter<void>(null);
 
   constructor(
-    private invariantService: InvariantsService,
+    private globalService: GlobalService,
     private http: HttpClient,
     private userService: UserService) {
     this.activeFiltersList = new Array<ActiveFilter>();
@@ -145,21 +146,22 @@ export class FilterService {
   getContentForTable(servlet: string, queryParameters: string, callback): void {
     // return mocked results
     if (servlet === '/ReadTestCase') {
-      callback(tcs.contentTable, 61);
-    } else {
-      callback(tfs.contentTable, 61);
+      // return the mock data for test cases list
+      callback(tcs.contentTable, tcs.iTotalRecords);
+    } else if (servlet === '/ReadTest') {
+      // callback(tfs.contentTable, 61);
+      this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
+        .subscribe((response) => {
+          if (response) {
+            if (response.iTotalRecords > 0) {
+              // formatting test folders, waiting for: https://github.com/cerberustesting/cerberus-source/issues/2104
+              callback(this.globalService.formatTestFolderList(response.contentTable), response.iTotalRecords);
+            }
+          }
+        });
     }
 
-    // this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
-    //   .subscribe((response) => {
-    //     if (response) {
-    //       if (response.iTotalRecords > 0) {
-    //         // sends the mocked values
-    //         console.log("callback sent")
-    //         callback(tcs.contentTable, 3);
-    //       }
-    //     }
-    //   });
+
   }
 
   // return the options list of possible values for a column

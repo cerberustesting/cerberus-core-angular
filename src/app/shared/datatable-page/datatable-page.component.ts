@@ -107,6 +107,7 @@ export class DatatablePageComponent implements OnInit {
           // update the table content
           // this command is triggering the table update
           this.rows = rows;
+          console.log('datatable updated');
           // this.rows = [...this.rows];
         });
     }

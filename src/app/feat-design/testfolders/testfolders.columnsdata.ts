@@ -43,7 +43,7 @@ export const TestFoldersColumnsData: Column[] = [
         placeholder: 'Is the Test Active?',
         sSearch: [],
         filterMode: FILTER_MODE.DROPDOWN,
-        type: COLUMN_TYPE.CERBERUS_BOOLEAN
+        type: COLUMN_TYPE.BOOLEAN
     },
     {
         displayName: 'Creation Date',

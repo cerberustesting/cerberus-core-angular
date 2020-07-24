@@ -94,13 +94,7 @@ export class MassactionsComponent implements OnInit, OnChanges {
    */
   massUpdate(): void {
     this.testcaseService.testCaseMassUpdate(this.selection, this.fieldName, this.selectedItem, (rep) => {
-      if (rep.messageType === 'OK') {
-        this.notificationService.createANotification(rep.message, NotificationStyle.Success);
-      } else if (rep.messageType === 'WARNING') {
-        this.notificationService.createANotification(rep.message, NotificationStyle.Warning);
-      } else {
-        this.notificationService.createANotification(rep.message, NotificationStyle.Error);
-      }
+      this.notificationService.cerberusAPINotification(rep.messageType, rep.message);
       this.filterService.refreshTableContent();
       // reset the field name to destroy the component
       this.resetCurrentMassAction.emit(this.fieldName);

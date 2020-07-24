@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { TestFolder } from 'src/app/shared/model/back/testfolder/test.model';
 import { environment } from 'src/environments/environment';
 import { GlobalService } from '../../utils/global.service';
-import { Callbacks } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -50,8 +49,34 @@ export class TestService {
     this.http.get<Array<TestFolder>>(url)
       .toPromise()
       .then((result: any) => {
-        callback(result.contentTable);
+        const formattedTestFolders = new Array<TestFolder>();
+        result.contentTable.forEach(rawTestFolder => {
+          formattedTestFolders.push(this.globalService.formatTestFolder(rawTestFolder));
+        });
+        console.log(formattedTestFolders);
+        callback(formattedTestFolders);
       });
+  }
+
+  /**
+   * create a new test folder
+   * @param testfolder the test folder object to create
+   */
+  createTestFolder(testfolder: TestFolder, callback: (response: any) => void): void {
+
+    // set the url to post
+    const url = environment.cerberus_api_url + '/CreateTest';
+
+    // build the data to post
+    let formData = '';
+    formData += 'test=' + testfolder.test;
+    // DIRTY : waiting on https://github.com/cerberustesting/cerberus-source/issues/2104
+    formData += '&Active=' + this.globalService.toCerberusString(testfolder.active);
+    formData += '&Description=' + testfolder.description;
+
+    this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
+      callback(response);
+    });
   }
 
   /**
@@ -59,7 +84,7 @@ export class TestService {
    * @param initialtestoldername the initial name of the test folder
    * @param testfolder the test folder object to update
    */
-  updateTestFolder(initialtestoldername: string, testfolder: TestFolder, callback): void {
+  updateTestFolder(initialtestoldername: string, testfolder: TestFolder, callback: (response: any) => void): void {
 
     // set the url to post
     const url = environment.cerberus_api_url + '/UpdateTest';
@@ -68,10 +93,9 @@ export class TestService {
     let formData = '';
     formData += 'originalTest=' + initialtestoldername;
     formData += '&test=' + testfolder.test;
-    formData += '&Active=' + testfolder.active;
+    // DIRTY : waiting on https://github.com/cerberustesting/cerberus-source/issues/2104
+    formData += '&Active=' + this.globalService.toCerberusString(testfolder.active);
     formData += '&Description=' + testfolder.description;
-
-    console.log(formData);
 
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
       callback(response);

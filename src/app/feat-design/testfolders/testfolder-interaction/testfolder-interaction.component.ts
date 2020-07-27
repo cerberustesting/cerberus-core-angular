@@ -88,7 +88,7 @@ export class TestfolderInteractionComponent implements OnInit {
   onSubmit(values: any): void {
 
     // if no test folder name id is set
-    if (!values.test) {
+    if (!values.test || values.test === '') {
       this.notificationService.createANotification('Please specify the Test Folder Name', NotificationStyle.Warning);
       return;
     }

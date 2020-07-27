@@ -7,6 +7,10 @@ import { DatatablePageComponent } from 'src/app/shared/datatable-page/datatable-
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
 import { TestfolderInteractionComponent } from './testfolder-interaction/testfolder-interaction.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CustomModalComponent, ModalType } from 'src/app/shared/custom-modal/custom-modal.component';
+import { TestService } from 'src/app/core/services/api/test/test.service';
+import { NotificationService } from 'src/app/core/services/utils/notification.service';
 
 @Component({
   selector: 'app-testfolders',
@@ -34,7 +38,10 @@ export class TestfoldersComponent implements OnInit {
 
   constructor(
     private headerTitleService: HeaderTitleService,
-    private sideContentService: SidecontentService
+    private sideContentService: SidecontentService,
+    private modalService: NgbModal,
+    private testService: TestService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -78,8 +85,26 @@ export class TestfoldersComponent implements OnInit {
     this.sideContentService.openSideBlock();
   }
 
-  // TODO
+  /**
+   * open a modal to confirm the deletion of a test folder
+   * @param testfolder object to delete
+   */
   deleteTestFolder(testfolder: TestFolder): void {
-    console.log('TODO..');
+
+    // create and open the modal object
+    const modalRef = this.modalService.open(CustomModalComponent);
+    modalRef.componentInstance.title = 'Delete Test Folder';
+    modalRef.componentInstance.subtitle = 'Are you sure to delete ' + testfolder.test + '?';
+    modalRef.componentInstance.subtitle2 = 'All corresponding test cases will be deleted as well';
+    modalRef.componentInstance.modalType = ModalType.Confirm;
+    modalRef.componentInstance.confirmFunction = () => {
+      this.testService.deleteTestFolder(
+        testfolder.test,
+        (response) => {
+          this.notificationService.cerberusAPINotification(response.messageType, response.message);
+          this.refreshResults();
+        }
+      );
+    };
   }
 }

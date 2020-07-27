@@ -161,7 +161,6 @@ export class FilterService {
         });
     }
 
-
   }
 
   // return the options list of possible values for a column

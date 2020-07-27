@@ -106,8 +106,17 @@ export class TestService {
    * remove a test folder
    * @param testfoldername the name of the test folder to remove
    */
-  deleteTestFolder(testfoldername: string): void {
-    // TODO
+  deleteTestFolder(testfoldername: string, callback: (response: any) => void): void {
+
+    // set the url to post
+    const url = environment.cerberus_api_url + '/DeleteTest';
+
+    // build the data to post
+    const formData = 'test=' + testfoldername;
+
+    this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
+      callback(response);
+    });
   }
 
   /**

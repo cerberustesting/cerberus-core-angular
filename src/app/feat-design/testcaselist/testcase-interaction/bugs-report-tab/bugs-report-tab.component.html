@@ -9,73 +9,75 @@
     <!-- END COMMENT -->
 
 </div>
+<div class="scrollable">
+    <table *ngIf="bugs.length > 0" class="table table-hover table-borderless table-vcenter font-size-sm">
 
-<table *ngIf="bugs.length > 0" class="table table-hover table-borderless table-vcenter font-size-sm">
+        <!-- BUGS TABLE HEADER -->
+        <thead>
+            <tr class="text-uppercase">
+                <th class="font-w700">Bug ID</th>
+                <th class="font-w700">Active</th>
+                <th class="d-none d-sm-table-cell font-w700 text-left" style="width: 200px;">Description</th>
+                <th class="font-w700 text-center" style="width: 120px;"></th>
+            </tr>
+        </thead>
+        <!-- END BUGS TABLE HEADER -->
 
-    <!-- BUGS TABLE HEADER -->
-    <thead>
-        <tr class="text-uppercase">
-            <th class="font-w700">Bug ID</th>
-            <th class="font-w700">Active</th>
-            <th class="d-none d-sm-table-cell font-w700 text-left" style="width: 200px;">Description</th>
-            <th class="font-w700 text-center" style="width: 120px;"></th>
-        </tr>
-    </thead>
-    <!-- END BUGS TABLE HEADER -->
+        <tbody>
 
-    <tbody>
+            <!-- BUGS ENTRY LIST-->
+            <tr [id]="'bugSection_'+bug.id" *ngFor="let bug of bugs">
 
-        <!-- BUGS ENTRY LIST-->
-        <tr [id]="'bugSection_'+bug.id" *ngFor="let bug of bugs">
+                <!-- BUG ID-->
+                <td>
+                    <input type="text" [(ngModel)]="bug.id" class="form-control form-control-sm font-w600">
+                </td>
+                <!-- END BUG ID-->
 
-            <!-- BUG ID-->
-            <td>
-                <input type="text" [(ngModel)]="bug.id" class="form-control form-control-sm font-w600">
-            </td>
-            <!-- END BUG ID-->
+                <!-- BUG ACTIVATION -->
+                <td>
+                    <div class="custom-control custom-switch custom-control-primary text-center">
+                        <input type="checkbox" class="custom-control-input" [id]="'bug_'+bug.id" [name]="'bug_'+bug.id"
+                            [(ngModel)]="bug.act">
+                        <label class="custom-control-label" [for]="'bug_'+bug.id"></label>
+                    </div>
+                </td>
+                <!-- END BUG ACTIVATION -->
 
-            <!-- BUG ACTIVATION -->
-            <td>
-                <div class="custom-control custom-switch custom-control-primary text-center">
-                    <input type="checkbox" class="custom-control-input" [id]="'bug_'+bug.id" [name]="'bug_'+bug.id"
-                        [(ngModel)]="bug.act">
-                    <label class="custom-control-label" [for]="'bug_'+bug.id"></label>
-                </div>
-            </td>
-            <!-- END BUG ACTIVATION -->
+                <!-- BUG DESCRIPTION -->
+                <td class="d-none d-sm-table-cell">
+                    <input type="text" [(ngModel)]="bug.desc" class="form-control form-control-sm font-w600"
+                        placeholder="no description">
+                </td>
+                <!-- END BUG DESCRIPTION -->
 
-            <!-- BUG DESCRIPTION -->
-            <td class="d-none d-sm-table-cell">
-                <input type="text" [(ngModel)]="bug.desc" class="form-control form-control-sm font-w600"
-                    placeholder="no description">
-            </td>
-            <!-- END BUG DESCRIPTION -->
+                <!-- RIGHT INFO BUTTONS -->
+                <td class="text-center">
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Small Horizontal Primary">
+                        <button type="button" class="btn btn-alt-light popover-custom-width-1"
+                            [ngbPopover]="'Creation : '+bug.dateCreated" triggers="mouseenter:mouseleave"
+                            placement="left">
+                            <i class="fa fa-fw fa-calendar-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-alt-light popover-custom-width-1"
+                            [ngbPopover]="'Closure : '+bug.dateClosed" triggers="mouseenter:mouseleave"
+                            placement="left">
+                            <i class="fa fa-fw fa-calendar-check"></i>
+                        </button>
+                        <button type="button" class="btn btn-alt-light" ngbPopover="Go to bug"
+                            triggers="mouseenter:mouseleave" placement="left" [disabled]="isBugIdEmpty(bug)">
+                            <i class="fa fa-fw fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                </td>
+                <!-- END RIGHT INFO BUTTONS -->
 
-            <!-- RIGHT INFO BUTTONS -->
-            <td class="text-center">
-                <div class="btn-group btn-group-sm" role="group" aria-label="Small Horizontal Primary">
-                    <button type="button" class="btn btn-alt-light popover-custom-width-1"
-                        [ngbPopover]="'Creation : '+bug.dateCreated" triggers="mouseenter:mouseleave" placement="left">
-                        <i class="fa fa-fw fa-calendar-plus"></i>
-                    </button>
-                    <button type="button" class="btn btn-alt-light popover-custom-width-1"
-                        [ngbPopover]="'Closure : '+bug.dateClosed" triggers="mouseenter:mouseleave" placement="left">
-                        <i class="fa fa-fw fa-calendar-check"></i>
-                    </button>
-                    <button type="button" class="btn btn-alt-light" ngbPopover="Go to bug"
-                        triggers="mouseenter:mouseleave" placement="left" [disabled]="isBugIdEmpty(bug)">
-                        <i class="fa fa-fw fa-external-link-alt"></i>
-                    </button>
-                </div>
-            </td>
-            <!-- END RIGHT INFO BUTTONS -->
+            </tr>
+            <!-- END BUGS ENTRY LIST-->
 
-        </tr>
-        <!-- END BUGS ENTRY LIST-->
-
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</div>
 <!-- NO BUG DEFINED MESSAGE-->
 <div *ngIf="bugs.length === 0" class="text-center push">
     <p>
@@ -85,7 +87,7 @@
 <!-- END NO BUG DEFINED MESSAGE-->
 
 <!-- NEW BUG BUTTON-->
-<div class="text-center push">
+<div class="text-center push mt-3">
     <button type="button" class="btn btn-alt-primary btn-sm" (click)="addBug()">
         <i class="fa fa-fw fa-plus opacity-50 mr-1"></i> Bug
     </button>

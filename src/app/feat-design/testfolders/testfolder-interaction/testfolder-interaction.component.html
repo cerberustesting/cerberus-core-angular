@@ -1,5 +1,5 @@
 <form *ngIf="testFolderForm" [formGroup]="testFolderForm" (ngSubmit)="onSubmit(testFolderForm.value)">
-    <div class="block no-shadow">
+    <div id="testFolderInteraction" class="block no-shadow">
 
         <!--  SIDE CONTENT HEADER -->
         <div class="block-header block-header-default">
@@ -13,10 +13,12 @@
 
             <!-- SAVE / CLOSE BUTTON -->
             <div class="block-options">
-                <button type="submit" id="submitInteraction" class="btn btn-sm btn-primary mr-1">
+                <button type="submit" id="submitInteraction" class="btn btn-sm btn-primary mr-1"
+                    [disabled]="testFolderNameExists(testFolderForm.get('test').value) ? 'true' : ''">
                     {{saveButtonTitle}}
                 </button>
-                <button type="button" class="btn btn-sm btn-secondary" (click)="closeSideContent()">Close</button>
+                <button type="button" id="closeInteraction" class="btn btn-sm btn-secondary"
+                    (click)="closeSideContent()">Close</button>
             </div>
             <!-- END SAVE / CLOSE BUTTON -->
 
@@ -28,53 +30,59 @@
             <div class="row">
 
                 <!-- TEST FOLDER NAME -->
-                <div id="sideContent_TestFolder" class="col-md-12">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <label for="TestFolderName" class="font-sm">
+                        <label id="testFolderLabel" for="testFolderNameInput" class="font-sm">
                             Test Folder Name
                             <i class="fa fa-info-circle ml-0 info" placement="bottom"
                                 ngbPopover="Name of the test folder (unique)" triggers="mouseenter:mouseleave"></i>
                         </label>
-                        <input type="text" class="form-control form-control-sm" name="TestFolderName"
-                            placeholder="Test Folder Name" formControlName="test">
+                        <input id="testFolderNameInput" type="text" class="form-control form-control-sm"
+                            name="TestFolderName" placeholder="Test Folder Name" formControlName="test"
+                            [ngClass]="testFolderNameExists(testFolderForm.get('test').value) ? 'is-invalid' : ''">
+                        <div *ngIf="testFolderNameExists(testFolderForm.get('test').value)"
+                            id="testFolderNameAlreadyInUseFeeback" class="invalid-feedback">
+                            test folder name already in use</div>
                     </div>
                 </div>
-                <!-- END TEST FOLDER NAME SECTION -->
+                <!-- END TEST FOLDER NAME -->
 
-                <!-- TEST FOLDER DESCRIPTION SECTION -->
-                <div id="sideContent_TestDescription" class="col-md-12">
+                <!-- TEST FOLDER DESCRIPTION  -->
+                <div class="col-md-12">
                     <div class="form-group">
-                        <label for="TestCase" class="font-sm">
+                        <label id="testFolderDescriptionLabel" for="testFolderDescriptionInput" class="font-sm">
                             Description
                             <i class="fa fa-info-circle ml-0 info" placement="bottom"
                                 ngbPopover="A short description for the test folder"
                                 triggers="mouseenter:mouseleave"></i>
                         </label>
-                        <input type="text" class="form-control form-control-sm" name="TestCase"
-                            placeholder="Test Folder Description" formControlName="description">
+                        <input type="text" id="testFolderDescriptionInput" class="form-control form-control-sm"
+                            name="TestFolderDescription" placeholder="Test Folder Description"
+                            formControlName="description">
                     </div>
                 </div>
-                <!-- END TEST FOLDER DESCRIPTION SECTION -->
+                <!-- END TEST FOLDER DESCRIPTION -->
 
-                <!-- TEST FOLDER ACTIVE SECTION -->
-                <div id="sideContent_TestActive" class="col-md-12">
+                <!-- TEST FOLDER ACTIVE -->
+                <div class="col-md-12">
                     <div class="custom-control custom-switch custom-control-primary mb-1">
-                        <input type="checkbox" class="custom-control-input" id="testFolderActive"
-                            name="testFolderActive" formControlName="active">
+                        <input type="checkbox" id="testFolderActive" class="custom-control-input"
+                            name="TestFolderActive" formControlName="active">
                         <label class="custom-control-label" for="testFolderActive">Active</label>
                     </div>
                 </div>
-                <!-- END TEST FOLDER ACTIVE SECTION -->
+                <!-- END TEST FOLDER ACTIVE -->
 
+                <!-- TRACEABILITY -->
                 <div *ngIf="mode === InteractionMode.EDIT" class="row ml-1 mr-1">
 
-                    <!-- CREATION SECTION -->
+                    <!-- CREATION LABEL -->
                     <div class="col-md-12">
-                        <div id="sideContent_creation" class="form-group mb-0">
+                        <div id="createdLabel" class="form-group mb-0">
                             <label class="d-block" class="font-sm">Creation</label>
                         </div>
                     </div>
-                    <!-- END CREATION SECTION -->
+                    <!-- END CREATION LABEL -->
 
                     <!-- DATE CREATED -->
                     <div class="form-group col-md-6">
@@ -96,7 +104,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Issuer</span>
                             </div>
-                            <span class="form-control text-center form-control-sm" id="createdUsr" type="text">
+                            <span class="form-control text-center form-control-sm" id="createdUser" type="text">
                                 <i class="fa fa-user-edit mr-1"></i>
                                 {{testfolder.usrCreated}}
                             </span>
@@ -104,13 +112,13 @@
                     </div>
                     <!-- END USER CREATED -->
 
-                    <!-- LAST UPDATE SECTION -->
+                    <!-- LAST UPDATE TITLE -->
                     <div class="col-md-12">
-                        <div id="sideContent_creation" class="form-group mb-0">
+                        <div id="lastUpdatedLabel" class="form-group mb-0">
                             <label class="d-block" class="font-sm">Last Update</label>
                         </div>
                     </div>
-                    <!-- END LAST UPDATE SECTION -->
+                    <!-- END LAST UPDATE TITLE -->
 
                     <!-- LAST UPDATE DATE -->
                     <div class="form-group col-md-6">
@@ -132,7 +140,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Issuer</span>
                             </div>
-                            <span class="form-control text-center form-control-sm" id="usrModif" type="text">
+                            <span class="form-control text-center form-control-sm" id="userModif" type="text">
                                 <i class="fa fa-user-edit mr-1"></i>
                                 {{testfolder.usrModif}}
                             </span>
@@ -141,9 +149,9 @@
                     <!-- END LAST UPDATE USER -->
 
                 </div>
+                <!-- END TRACEABILITY -->
 
             </div>
-
         </div>
         <!-- END SIDE CONTENT CONTENT -->
 

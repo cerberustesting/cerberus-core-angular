@@ -150,4 +150,16 @@ export class TestfolderInteractionComponent implements OnInit {
       return false;
     }
   }
+
+  /**
+   * return true if the test folder name is already used by another folder
+   * @param testfoldername name to check
+   */
+  testFolderNameExists(testfoldername: string): boolean {
+    if (this.testfolders.find(testfolder => testfolder.test === testfoldername) && testfoldername !== this.testfolder.test) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

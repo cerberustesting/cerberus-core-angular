@@ -28,7 +28,8 @@ export const TestFoldersColumnsData: Column[] = [
         placeholder: 'Type Folder Description',
         sSearch: [],
         filterMode: FILTER_MODE.SEARCH_FIELD,
-        type: COLUMN_TYPE.LONGTEXT
+        type: COLUMN_TYPE.LONGTEXT,
+        sortable: false
     },
     {
         displayName: 'Active',

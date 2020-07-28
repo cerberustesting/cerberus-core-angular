@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { MassActionField, MassActionType } from './massactions.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
-import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { FilterService } from 'src/app/core/services/api/filter.service';
 import { Application } from 'src/app/shared/model/back/application/application.model';
 
@@ -14,7 +13,7 @@ import { Application } from 'src/app/shared/model/back/application/application.m
   templateUrl: './massactions.component.html',
   styleUrls: ['./massactions.component.scss']
 })
-export class MassactionsComponent implements OnInit, OnChanges {
+export class MassactionsComponent implements OnInit, OnChanges, OnDestroy {
 
   /** name of the field to perform the mass action on */
   @Input('field') fieldName: MassActionField;
@@ -57,6 +56,10 @@ export class MassactionsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.refreshItemsList();
     this.selectedItem = undefined;
+  }
+
+  ngOnDestroy() {
+    this.fieldName = undefined;
   }
 
   /**

@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit, DoCheck } from '@angular/core';
 import { SidecontentService, INTERACTION_MODE } from '../../../core/services/api/sidecontent.service';
 import { TestcaseInteractionComponent } from '../testcase-interaction/testcase-interaction.component';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
@@ -16,7 +16,7 @@ import { MassupdateLabelsComponent } from './massactions/massupdate-labels/massu
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.scss']
 })
-export class ActionsComponent implements OnInit {
+export class ActionsComponent implements OnInit, DoCheck {
 
   // the array with all the selected rows
   // the object type depends on the table (ex: test case)
@@ -47,6 +47,19 @@ export class ActionsComponent implements OnInit {
     this.currentMassAction = null;
     // get the user information
     this.userService.observableUser.subscribe(response => { this.user = response; });
+  }
+
+  /**
+   * catch any changes.
+   * NB: using DoCheck since OnChanges doesn't catch changes on array content
+   */
+  ngDoCheck() {
+    // reset the current mass action if the selection falls below 2 items
+    if (this.getSelection()) {
+      if (this.getSelection().length <= 1) {
+        this.currentMassAction = null;
+      }
+    }
   }
 
   /**
@@ -146,10 +159,6 @@ export class ActionsComponent implements OnInit {
   // to use its redirect function
   redirectToScript(row: TestCase) {
     this.redirectToScriptButtonClicked.emit(row);
-  }
-
-  debug() {
-    console.log(this.selectedRows);
   }
 
   runTestCases(selectedRows) {

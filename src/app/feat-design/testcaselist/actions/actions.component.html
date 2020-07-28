@@ -1,6 +1,6 @@
-<div class="btn-toolbar">
+<div *ngIf="getSelection()" class="btn-toolbar">
 
-  <div *ngIf="getSelection()" class="btn-group btn-group-sm mr-3" role="group">
+  <div class="btn-group btn-group-sm mr-3" role="group">
 
     <!-- EDIT SINGLE RAW BUTTON -->
     <button *ngIf="getSelection().length == 1" type="button" class="btn btn-outline-secondary"
@@ -86,8 +86,10 @@
   </div>
 
   <!-- MASS UPDATE FIELD -->
-  <app-massactions *ngIf="currentMassAction && currentMassAction !== MassActionField.Labels" [field]="currentMassAction"
-    [selection]="getSelection()" (resetCurrentMassAction)="toggleMassActionField(currentMassAction)">
+  <app-massactions
+    *ngIf="getSelection().length > 1 && currentMassAction && currentMassAction !== MassActionField.Labels"
+    [field]="currentMassAction" [selection]="getSelection()"
+    (resetCurrentMassAction)="toggleMassActionField(currentMassAction)">
   </app-massactions>
   <!-- END MASS UPDATE FIELD -->
 

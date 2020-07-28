@@ -11,7 +11,8 @@
 
     <!--START Template for mass action buttons-->
     <ng-template cerberusDatatableMassAction>
-        <app-actions [selectedRows]="selectedRows" (redirectToScriptButtonClicked)="redirectToTestCaseScript($event)">
+        <app-actions *ngIf="selectedRows.length > 0" [selectedRows]="selectedRows"
+            (redirectToScriptButtonClicked)="redirectToTestCaseScript($event)">
         </app-actions>
     </ng-template>
     <!--END Template for mass action buttons-->

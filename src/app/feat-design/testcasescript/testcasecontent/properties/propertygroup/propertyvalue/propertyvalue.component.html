@@ -79,7 +79,7 @@
             <div class="form-group">
                 <label for="propertyValueDescription">Description</label>
                 <input type="text" class="form-control form-control-sm" name="description"
-                    placeholder="giving a description is never a bad idea" [(ngModel)]="propertyvalue.description"
+                    placeholder="property value description" [(ngModel)]="propertyvalue.description"
                     [disabled]="areFieldsEnabled()">
             </div>
         </div>
@@ -97,6 +97,20 @@
                 </select>
             </div>
             <!-- END TYPE -->
+
+            <!-- DATALIB -->
+            <div class="form-group" *ngIf="propertyvalue.type === 'getFromDataLib' && dataLibraries.length > 0">
+                <label for="dataLibrarySelected">Data Library</label>
+                <select class="form-control form-control-sm" name="dataLibrarySelected"
+                    [(ngModel)]="propertyvalue.value2" [disabled]="areFieldsEnabled()">
+                    <option *ngFor="let datalib of dataLibraries" [ngValue]="datalib.name">
+                        {{datalib.name}} 
+                        ( {{datalib.environment}} {{datalib.country}}) 
+                        - {{datalib.description}}
+                    </option>
+                </select>
+            </div>
+            <!-- END DATALIB -->
 
             <!-- DB FIELD -->
             <div *ngIf="propertyvalue.type=='getFromSql'" class="form-group">
@@ -125,7 +139,8 @@
             <!-- VALUE EDITOR -->
             <div class="form-group">
                 <label for="example-textarea-input">Value</label>
-                <ngx-monaco-editor class="form-control" [options]="editorOptions" [(ngModel)]="propertyvalue.value1">
+                <ngx-monaco-editor (keyup)="debug($event)" class="form-control" [options]="editorOptions"
+                    [(ngModel)]="propertyvalue.value1">
                 </ngx-monaco-editor>
             </div>
             <!-- END VALUE EDITOR -->

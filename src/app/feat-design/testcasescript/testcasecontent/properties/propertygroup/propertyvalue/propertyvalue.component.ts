@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/testcase/property.model';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
-import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
 import { CrossreferenceService } from 'src/app/core/services/utils/crossreference.service';
 import crossReference_PropertyTypeValue from 'src/assets/data/cross_references/propertytype_value.json';
+import { DataLibrary } from 'src/app/shared/model/back/datalibrary/datalibrary.model';
+import { DatalibraryService } from 'src/app/core/services/api/datalibrary/datalibrary.service';
 
 @Component({
   selector: 'app-propertyvalue',
@@ -44,11 +45,17 @@ export class PropertyvalueComponent implements OnInit {
   /** boolean to handle the display of advanced section */
   private showAdvancedSettings: boolean;
 
+  /** list of data libraries that match the search term but doesn't corresponds to an existing set of data lib */
+  private associatedDataLibraries: DataLibrary[];
+
+  /** list of data libraries that match the search term and corresponds to an existing set of data lib */
+  private dataLibraries: DataLibrary[];
+
   constructor(
-    private testService: TestcaseService,
     private notificationService: NotificationService,
     private invariantService: InvariantsService,
-    private crossReferenceService: CrossreferenceService
+    private crossReferenceService: CrossreferenceService,
+    private dataLibraryService: DatalibraryService
   ) { }
 
   ngOnInit() {
@@ -73,6 +80,13 @@ export class PropertyvalueComponent implements OnInit {
 
     // by default, advanced settings aren't shown
     this.showAdvancedSettings = false;
+
+    this.dataLibraries = [];
+    this.associatedDataLibraries = [];
+  }
+
+  debug(event: any) {
+    this.refreshDataLibrary(event.target.value);
   }
 
   /** return true if the country is selected in the property value
@@ -84,6 +98,25 @@ export class PropertyvalueComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  /**
+   * refresh the datalibraries lists (association and match)
+   * @param name to search for
+   */
+  refreshDataLibrary(name: string): void {
+    if (this.propertyvalue.type === 'getFromDataLib') {
+      // fetch the associated data libs
+      this.dataLibraryService.getDataLibraries(name, 15, true, (datalibraries) => {
+        this.associatedDataLibraries = datalibraries;
+      });
+      // fetch the matched data libs
+      this.dataLibraryService.getDataLibraries(name, 15, false, (datalibraries) => {
+        this.dataLibraries = datalibraries;
+        this.propertyvalue.value2 = this.dataLibraries[0].name;
+      });
+    }
+
   }
 
   /**
@@ -115,8 +148,10 @@ export class PropertyvalueComponent implements OnInit {
     this.propertyvalue.countries.splice(index, 1);
   }
 
-  // fired when a country badge is clicked
-  // add the country, removes it or do nothing accordingly
+  /**
+   * fired when a country badge is clicked, add the country, removes it or do nothing accordingly
+   * @param country invariant to toggle
+   */
   toggleCountry(country: Invariant): void {
     if (this.inherited === false) {
       if (this.isACountrySelectedInPropertyGroup(country.value)) {
@@ -173,6 +208,7 @@ export class PropertyvalueComponent implements OnInit {
       // @ts-ignore
       this.editorOptions = this.crossReferenceService.findCrossReference(newType, this.crossReferenceService.crossReference_PropertyTypeLanguage);
     }
+    this.refreshDataLibrary(this.propertyvalue.value1);
   }
 
   // return a boolean to handle the "disable" attribute for fields

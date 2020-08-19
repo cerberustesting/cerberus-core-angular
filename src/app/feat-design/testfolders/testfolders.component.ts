@@ -46,7 +46,7 @@ export class TestfoldersComponent implements OnInit {
 
   ngOnInit() {
     this.servlet = '/ReadTest';
-    this.headerTitleService.setTitle('Testcase List', 'tcList');
+    this.headerTitleService.setTitle('Test Folders List', 'tcFolders');
   }
 
   /**

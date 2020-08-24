@@ -31,7 +31,7 @@ export class TestfolderInteractionComponent implements OnInit {
   private saveButtonTitle: string;
 
   // tests folder list used to compare with the test folder one (check existence)
-  private testfolders: Array<TestFolder>;
+  public testfolders: Array<TestFolder>;
 
   /** instance of the interaction mode fields enumeration */
   public InteractionMode: typeof INTERACTION_MODE = INTERACTION_MODE;

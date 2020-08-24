@@ -1,4 +1,4 @@
-<form *ngIf="testFolderForm" [formGroup]="testFolderForm" (ngSubmit)="onSubmit(testFolderForm.value)">
+<form *ngIf="testFolderForm && testfolders" [formGroup]="testFolderForm" (ngSubmit)="onSubmit(testFolderForm.value)">
     <div id="testFolderInteraction" class="block no-shadow">
 
         <!--  SIDE CONTENT HEADER -->

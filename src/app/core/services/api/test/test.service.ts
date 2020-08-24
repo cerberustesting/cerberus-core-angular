@@ -53,7 +53,6 @@ export class TestService {
         result.contentTable.forEach(rawTestFolder => {
           formattedTestFolders.push(this.globalService.formatTestFolder(rawTestFolder));
         });
-        console.log(formattedTestFolders);
         callback(formattedTestFolders);
       });
   }

@@ -21,8 +21,6 @@ export class FiltersComponent implements OnInit {
   /** endpoint (to fetch the options list) sent to the filters */
   @Input('servlet') servlet: string;
 
-
-
   // angular templates declaration
   @Input() filterTemplate: any; // TODO : type TemplateRef
   @Input() massActionTemplate: any; // TODO : type TemplateRef
@@ -75,18 +73,22 @@ export class FiltersComponent implements OnInit {
     this.columns.forEach(c => c.active = c.defaultActive);
   }
 
-  // send the quick search content (string)
-  // to the parent component to refresh the table content
+  /**
+   * send the quick search keyword to the parent component
+   */
   sendGlobalSearchContent(): void {
     this.globalSearchContentChange.emit(this.globalSearch);
   }
 
-  // process the current global search value
-  // is triggered at every keypress on the input
+  /**
+   * pre processing on the quick search keyword
+   *  * only send the value if it reach the min length
+   *  * adds a slight wait to send the search term
+   */
   keypressOnGlobalSearch(): void {
-    // send it only if it has more than 2 caracters
+    // send it only if it has more than 2 caracters, after 800ms
     if (this.globalSearch.length > 2) {
-      setTimeout(() => this.sendGlobalSearchContent(), 500);
+      setTimeout(() => this.sendGlobalSearchContent(), 800);
     }
   }
 

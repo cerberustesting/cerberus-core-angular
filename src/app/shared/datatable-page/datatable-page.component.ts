@@ -95,6 +95,7 @@ export class DatatablePageComponent implements OnInit {
    * @param globalSearch content of the gloabl search field (default: '')
    */
   search(globalSearch?: string): void {
+    // override the quick search value if one is passed
     this.globalSearch = (globalSearch) ? globalSearch : '';
     if (this.servlet && !this.cache[this.page.number] && this.page.size > 0) {
       this.cache[this.page.number] = true;
@@ -120,7 +121,7 @@ export class DatatablePageComponent implements OnInit {
    */
   pageUpdate(newPage: number): void { // When selecting a new page
     this.page.number = newPage;
-    this.search();
+    this.search(this.globalSearch);
   }
 
   /**
@@ -129,14 +130,23 @@ export class DatatablePageComponent implements OnInit {
    * * reset rows, cache, page number and scroll
    * @param globalSearch content of global search field
    */
-  applyFilters(globalSearch?: string): void {
+  applyFilters(): void {
     const a = document.getElementsByClassName('datatable-body')[0];
     a.scroll(0, 0);
     a.scrollBy(0, 0); // scroll to the table top
     this.cache = {};
     this.rows = [];
     this.page.number = 0;
-    this.search(globalSearch);
+    this.search(this.globalSearch);
+  }
+
+  /**
+   * update the value of the quick search term (nullable)
+   * @param term value to update to
+   */
+  updateGlobalSearch(term: string): void {
+    this.globalSearch = term;
+    this.applyFilters();
   }
 
 }

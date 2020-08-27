@@ -12,15 +12,16 @@ export class Notification {
     style: string;
     dismissable: boolean;
     duration: number;
+    id: string;
 
-    constructor(message: string, style: NotificationStyle, dismissable: boolean, duration: number) {
+    constructor(message: string, style: NotificationStyle, dismissable: boolean, duration: number, id: string) {
         this.message = message;
         this.style = style;
         this.dismissable = dismissable;
         this.duration = duration;
+        this.id = id;
     }
 }
-
 
 // NOTIFICATION STYLE ENUM
 export enum NotificationStyle {
@@ -28,4 +29,4 @@ export enum NotificationStyle {
     Success = 'alert-success',
     Warning = 'alert-warning',
     Error = 'alert-danger',
-  }
+}

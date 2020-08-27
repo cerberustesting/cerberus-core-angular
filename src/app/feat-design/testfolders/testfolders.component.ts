@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomModalComponent, ModalType } from 'src/app/shared/custom-modal/custom-modal.component';
 import { TestService } from 'src/app/core/services/api/test/test.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
+import { NotificationID } from 'src/app/shared/notifications/notifications.data';
 
 @Component({
   selector: 'app-testfolders',
@@ -101,7 +102,7 @@ export class TestfoldersComponent implements OnInit {
       this.testService.deleteTestFolder(
         testfolder.test,
         (response) => {
-          this.notificationService.cerberusAPINotification(response.messageType, response.message);
+          this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.testFolderInteraction);
           this.refreshResults();
         }
       );

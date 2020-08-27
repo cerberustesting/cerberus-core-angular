@@ -7,6 +7,7 @@ import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/
 import { TestService } from 'src/app/core/services/api/test/test.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomModalComponent, ModalType, CustomModalItemsType } from 'src/app/shared/custom-modal/custom-modal.component';
+import { NotificationID } from 'src/app/shared/notifications/notifications.data';
 
 @Component({
   selector: 'app-testfolder-interaction',
@@ -96,12 +97,12 @@ export class TestfolderInteractionComponent implements OnInit {
     // trigger the correct API endpoint
     if (this.mode === INTERACTION_MODE.CREATE) {
       this.testService.createTestFolder(values, (response: any) => {
-        this.notificationService.cerberusAPINotification(response.messageType, response.message);
+        this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.testFolderInteraction);
         this.closeSideContent();
       });
     } else if (this.mode === INTERACTION_MODE.EDIT) {
       this.testService.updateTestFolder(this.initialTestFolderName, values, (response: any) => {
-        this.notificationService.cerberusAPINotification(response.messageType, response.message);
+        this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.testFolderInteraction);
         this.closeSideContent();
       });
     }

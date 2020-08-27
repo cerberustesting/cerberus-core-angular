@@ -63,7 +63,7 @@ export class TestCaseSelectorComponent implements OnInit, OnDestroy {
         if (this.selectedTest != null) {
           if (!this.testService.testExists(this.selectedTest, this.testsList)) {
             console.error('the selected test doesn\'t exist');
-            this.notificationService.createANotification('The selected test doesn\'t exist', NotificationStyle.Error, true, 5000);
+            this.notificationService.createANotification('The selected test doesn\'t exist', NotificationStyle.Error, undefined, true, 5000);
             this.selectedTest = null;
           } else {
             // refresh the test case id list to choose from
@@ -84,7 +84,7 @@ export class TestCaseSelectorComponent implements OnInit, OnDestroy {
           if (this.selectedTestCase != null && this.selectedTest != null) {
             if (!this.testcaseService.selectedTestCaseExist(this.selectedTestCase, this.testcasesList)) {
               console.log('the selected test case doesn\'t exist');
-              this.notificationService.createANotification('The selected test case doesn\t exist', NotificationStyle.Error, true, 5000);
+              this.notificationService.createANotification('The selected test case doesn\t exist', NotificationStyle.Error, undefined, true, 5000);
               this.selectedTestCase = null;
             }
           }

@@ -162,7 +162,7 @@ export class ActionsComponent implements OnInit, DoCheck {
   }
 
   runTestCases(selectedRows) {
-    this.notificationService.createANotification('This feature hasn\'t been implemented', NotificationStyle.Info, true);
+    this.notificationService.createANotification('This feature hasn\'t been implemented', NotificationStyle.Info, undefined, true);
     // work in progress
     // this.sideContentService.addComponentToSideBlock(RunComponent, { testCases: selectedRows });
     // this.sideContentService.openSideBlock();

@@ -1,8 +1,11 @@
-<button *ngIf="data.dismissable === true" type="button" class="close" aria-label="Close" (click)="dismissSnackbar()">
-    <span aria-hidden="true">×</span>
-</button>
-<h3 class="alert-heading font-size-h4 my-2">
-    <i class="fa fa-fw" [ngClass]="findCrossReferenceForStyle(data.style).icon"></i>
-    {{findCrossReferenceForStyle(data.style).title}}
-</h3>
-<p class="mb-0">{{data.message}}</p>
+<div [id]="data.id">
+    <button *ngIf="data.dismissable === true" type="button" class="close" aria-label="Close"
+        (click)="dismissSnackbar()">
+        <span aria-hidden="true">×</span>
+    </button>
+    <h3 class="alert-heading font-size-h4 my-2">
+        <i class="fa fa-fw" [ngClass]="findCrossReferenceForStyle(data.style).icon"></i>
+        {{findCrossReferenceForStyle(data.style).title}}
+    </h3>
+    <p class="mb-0">{{data.message}}</p>
+</div>

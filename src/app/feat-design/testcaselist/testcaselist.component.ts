@@ -120,6 +120,6 @@ export class TestcaselistComponent implements OnInit {
 
   // TODO
   runSingleTestCase(): void {
-    this.notificationService.createANotification('This feature hasn\'t been implemented', NotificationStyle.Info, true);
+    this.notificationService.createANotification('This feature hasn\'t been implemented', NotificationStyle.Info, undefined, true);
   }
 }

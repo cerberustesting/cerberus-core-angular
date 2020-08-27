@@ -76,7 +76,7 @@ export class DatatableComponent implements OnInit {
       // send the event to open the filters modal
       this.columnAddedForFiltering.emit();
     } else {
-      this.notificationService.createANotification('The filter is already active and accessible on the filters section.', NotificationStyle.Info, true, 2500);
+      this.notificationService.createANotification('The filter is already active and accessible on the filters section.', NotificationStyle.Info, undefined, true, 2500);
     }
   }
 

@@ -27,19 +27,20 @@ export class NotificationService {
   private snackBarConfiguration: MatSnackBarConfig<any>;
 
   /**
-   * display a notification to the up right section of the screen
+   * display a notification to the up right section of the screen (removing any other one currently displayed)
    * @param message text to display in the notification
    * @param style color template to use
+   * @param id HTML id to identify which snack bar is displayed
    * @param dismissable allow the user to dismiss the notification
    * @param duration for which the notification is displayed
    */
-  createANotification(message: string, style: NotificationStyle, dismissable?: boolean, duration?: number): void {
+  createANotification(message: string, style: NotificationStyle, id?: string, dismissable?: boolean, duration?: number): void {
     // check parameters and assign default values if necessary
     if (typeof dismissable === 'undefined') { dismissable = defaultDismissable; }
     if (!duration) { duration = defaultDuration; }
 
     // pass data to the notification component via configuration
-    this.snackBarConfiguration.data = new Notification(message, style, dismissable, duration);
+    this.snackBarConfiguration.data = new Notification(message, style, dismissable, duration, id);
 
     // CSS class management
     this.resetDefaultClasses();
@@ -53,6 +54,9 @@ export class NotificationService {
 
     // set the duration in the snackbar configuration
     this.snackBarConfiguration.duration = this.snackBarConfiguration.data.duration;
+
+    // pass the id to the notification component
+    if (id) { this.snackBarConfiguration.data.id = id; }
 
     // open the notification component with the updated configuration
     this.snackBar.openFromComponent(NotificationsComponent, this.snackBarConfiguration);
@@ -70,14 +74,15 @@ export class NotificationService {
    * create a notification according to the usual Cerberus API response body
    * @param messagetype defining the status of the call (OK, WARNING...)
    * @param message message from the API
+   * @param base_id HTML base id for the noticiation (will be suffixed according to the API response)
    */
-  cerberusAPINotification(messagetype: string, message: string): void {
+  cerberusAPINotification(messagetype: string, message: string, base_id: string): void {
     if (messagetype === 'OK') {
-      this.createANotification(message, NotificationStyle.Success);
+      this.createANotification(message, NotificationStyle.Success, base_id + '_success');
     } else if (messagetype === 'WARNING') {
-      this.createANotification(message, NotificationStyle.Warning);
+      this.createANotification(message, NotificationStyle.Warning, base_id + '_warning');
     } else {
-      this.createANotification(message, NotificationStyle.Error);
+      this.createANotification(message, NotificationStyle.Error, base_id + '_error');
     }
   }
 

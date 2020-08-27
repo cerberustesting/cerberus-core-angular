@@ -7,6 +7,7 @@ import { MassActionField, MassActionType } from './massactions.model';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { FilterService } from 'src/app/core/services/api/filter.service';
 import { Application } from 'src/app/shared/model/back/application/application.model';
+import { NotificationID } from 'src/app/shared/notifications/notifications.data';
 
 @Component({
   selector: 'app-massactions',
@@ -97,7 +98,7 @@ export class MassactionsComponent implements OnInit, OnChanges, OnDestroy {
    */
   massUpdate(): void {
     this.testcaseService.testCaseMassUpdate(this.selection, this.fieldName, this.selectedItem, (rep) => {
-      this.notificationService.cerberusAPINotification(rep.messageType, rep.message);
+      this.notificationService.cerberusAPINotification(rep.messageType, rep.message, NotificationID.massUpdate);
       this.filterService.refreshTableContent();
       // reset the field name to destroy the component
       this.resetCurrentMassAction.emit(this.fieldName);

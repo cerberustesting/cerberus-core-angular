@@ -83,6 +83,7 @@ export class PropertyvalueComponent implements OnInit {
 
     this.dataLibraries = [];
     this.associatedDataLibraries = [];
+    this.refreshDataLibrary(this.propertyvalue.value1);
   }
 
   debug(event: any) {
@@ -168,6 +169,14 @@ export class PropertyvalueComponent implements OnInit {
         this.addCountryToSelection(country);
       }
     }
+  }
+
+  /**
+   * TO DO
+   * @param identifier
+   */
+  editDataLibrary(identifier: string) {
+    // TODO
   }
 
   // send the property value to the parent component to be added to the list

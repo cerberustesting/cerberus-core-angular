@@ -453,7 +453,7 @@
                     {
                         "dataBase": "",
                         "value2": "",
-                        "value1": "",
+                        "value1": "CERBERUS_USER",
                         "nature": "STATIC",
                         "length": "0",
                         "description": "",
@@ -572,7 +572,7 @@
                                 "value": "UK"
                             }
                         ],
-                        "type": "text",
+                        "type": "getFromDataLib",
                         "fromTest": "benoit",
                         "property": "test",
                         "rank": 1,

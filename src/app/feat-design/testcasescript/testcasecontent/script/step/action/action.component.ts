@@ -154,4 +154,15 @@ export class ActionComponent implements OnInit {
     }
   }
 
+  getDescriptionWidthClass(): string {
+    if (!this.readonly) {
+      if (this.showActionAddButtons) {
+        return 'desc-collapsed-width';
+      } else {
+        return 'desc-full-width';
+      }
+    }
+    return 'desc-full-width';
+  }
+
 }

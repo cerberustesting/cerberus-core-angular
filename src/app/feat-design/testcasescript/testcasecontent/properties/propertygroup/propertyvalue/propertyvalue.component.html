@@ -86,7 +86,7 @@
         <!-- END DESCRIPTION FIELD -->
 
         <!-- LEFT SECTION -->
-        <div class="col-md-2">
+        <div class="col-md-3">
 
             <!-- TYPE -->
             <div class="form-group">
@@ -98,19 +98,26 @@
             </div>
             <!-- END TYPE -->
 
-            <!-- DATALIB -->
+            <!-- DATALIB EDITION FIELD -->
             <div class="form-group" *ngIf="propertyvalue.type === 'getFromDataLib' && dataLibraries.length > 0">
                 <label for="dataLibrarySelected">Data Library</label>
-                <select class="form-control form-control-sm" name="dataLibrarySelected"
-                    [(ngModel)]="propertyvalue.value2" [disabled]="areFieldsEnabled()">
-                    <option *ngFor="let datalib of dataLibraries" [ngValue]="datalib.name">
-                        {{datalib.name}} 
-                        ( {{datalib.environment}} {{datalib.country}}) 
-                        - {{datalib.description}}
-                    </option>
-                </select>
+                <div class="input-group">
+                    <select *ngIf="dataLibraries.length > 1" class="form-control form-control-sm"
+                        name="dataLibrarySelected" [disabled]="areFieldsEnabled()">
+                        <option *ngFor="let datalib of dataLibraries" [ngValue]="datalib.name">
+                            {{datalib.name}} - {{datalib.description === '' ? 'no description' : datalib.description}}
+                        </option>
+                    </select>
+                    <input *ngIf="dataLibraries.length === 1" type="text" class="form-control form-control-sm"
+                        [value]="dataLibraries[0].name" disabled>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-sm btn-alt-dark" (click)="editDataLibrary()">
+                            edit
+                        </button>
+                    </div>
+                </div>
             </div>
-            <!-- END DATALIB -->
+            <!-- END DATALIB EDITION FIELD - -->
 
             <!-- DB FIELD -->
             <div *ngIf="propertyvalue.type=='getFromSql'" class="form-group">
@@ -134,7 +141,7 @@
         <!-- END LEFT SECTION -->
 
         <!-- RIGHT SECTION -->
-        <div class="col-10">
+        <div class="col-9">
 
             <!-- VALUE EDITOR -->
             <div class="form-group">

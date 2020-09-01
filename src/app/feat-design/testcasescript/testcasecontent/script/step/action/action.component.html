@@ -40,7 +40,7 @@
         <!-- END ACTION ICON -->
 
         <!-- ACTION DESCRIPTION -->
-        <div class="input-group-prepend" style="width:80%">
+        <div class="input-group-prepend" [ngClass]="getDescriptionWidthClass()">
           <input type="text" name="actionDescription" class="form-control form-control-sm full-height no-background"
             placeholder="No action description" [(ngModel)]="action.description">
         </div>
@@ -49,7 +49,8 @@
       </div>
 
       <!-- ADD ACTION OR CONTROLS BUTTONS -->
-      <div *ngIf="showActionAddButtons && !readonly" class="block-options">
+      <!-- *ngIf="showActionAddButtons && !readonly" -->
+      <div class="block-options" *ngIf="showActionAddButtons && !readonly">
 
         <button type="button" name="addActionFromAction" class="btn btn-sm btn-primary mr-1"
           (click)="addAction(action.sort)"> A<i class="fa fa-fw fa-plus"></i>
@@ -99,9 +100,8 @@
   <!-- CONTROL LIST -->
   <div *ngIf="showControlList">
     <div *ngFor="let control of action.controls" class="controlDrag" cdkDrag cdkDragLockAxis="y">
-      <app-control [control]="control" [readonly]="readonly" [parentStep]="parentStep"
-        [parentAction]="action" [testcase]="testcase" (controlAdded)="addControl($event)"
-        (actionAddedFromControl)="addAction($event)">
+      <app-control [control]="control" [readonly]="readonly" [parentStep]="parentStep" [parentAction]="action"
+        [testcase]="testcase" (controlAdded)="addControl($event)" (actionAddedFromControl)="addAction($event)">
 
         <!-- CONTROL DRAG CONTROL -->
         <button *ngIf="!readonly" type="button" name="dragControl" class="btn-block-option control-color"

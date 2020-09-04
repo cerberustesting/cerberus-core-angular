@@ -32,7 +32,8 @@ The field type depends on the column.type attribute (refer to column model 4 mor
                         <span class="datatable-header-cell-label draggable"
                             (click)="sort(index)">{{ column.displayName }}</span>
 
-                        <i *ngIf="column.filterable" class="fa fa-filter btn filter-btn"
+                        <i *ngIf="column.filterable" [id]="'filter'+column.contentName"
+                            class="fa fa-filter btn filter-btn"
                             [ngClass]="(column.filterDisplayed) ? 'filterActive' : ''" (click)="addFilter(column)"></i>
                     </span>
                 </ng-template>

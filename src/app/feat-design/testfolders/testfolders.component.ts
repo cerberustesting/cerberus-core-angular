@@ -98,6 +98,7 @@ export class TestfoldersComponent implements OnInit {
     modalRef.componentInstance.subtitle = 'Are you sure to delete ' + testfolder.test + '?';
     modalRef.componentInstance.subtitle2 = 'All corresponding test cases will be deleted as well';
     modalRef.componentInstance.modalType = ModalType.Confirm;
+    modalRef.componentInstance.modalId = 'deleteTestFolder_modal';
     modalRef.componentInstance.confirmFunction = () => {
       this.testService.deleteTestFolder(
         testfolder.test,

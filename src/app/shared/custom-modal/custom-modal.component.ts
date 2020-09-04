@@ -25,6 +25,9 @@ export enum CustomModalItemsType {
 })
 export class CustomModalComponent implements OnInit {
 
+  /** HTML id to identify the modal */
+  @Input() modalId: string;
+
   /** first heading of the modal */
   @Input() title: string;
 

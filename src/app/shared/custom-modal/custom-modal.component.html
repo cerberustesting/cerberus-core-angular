@@ -1,4 +1,4 @@
-<div class="block block-rounded mb-0">
+<div [id]="modalId" class="block block-rounded mb-0">
     <div class="block-content text-center pt-5">
         <div class="row">
 
@@ -36,19 +36,19 @@
             <!-- END CONTENT SECTION -->
 
             <!-- ACTION BUTTONS -->
-            <div id="actions" class="col-12 push op-0">
+            <div class="col-12 push op-0">
 
-                <button *ngIf="modalType === 'confirm'" type="button" class="btn btn-danger m-1"
+                <button id="confirmModal" *ngIf="modalType === 'confirm'" type="button" class="btn btn-danger m-1"
                     style="display: inline-block;" (click)="confirm()">
                     Yes
                 </button>
 
-                <button *ngIf="modalType === 'confirm'" type="button" class="btn btn-secondary m-1"
+                <button id="dismissModal" *ngIf="modalType === 'confirm'" type="button" class="btn btn-secondary m-1"
                     style="display: inline-block;" (click)="close()">
                     No
                 </button>
 
-                <button *ngIf="modalType === 'error'" type="button" class="btn btn-secondary m-1"
+                <button id="closeModal" *ngIf="modalType === 'error'" type="button" class="btn btn-secondary m-1"
                     style="display: inline-block;" (click)="close()">
                     Ok
                 </button>

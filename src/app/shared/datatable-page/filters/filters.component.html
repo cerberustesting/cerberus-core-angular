@@ -79,13 +79,13 @@
             <!-- FILTERS MODAL-->
             <ng-template #content let-modal>
 
-                <div class="block  block-rounded no-shadow">
+                <div id="filtersModal" class="block block-rounded no-shadow">
                     <div class="block-header block-header-default">
                         <h3 class="block-title"><i class="fa fa-filter fa-fw mr-1"></i>Filters</h3>
                         <div class="block-options">
                             <!-- FILTER SELECTION -->
                             <div class="dropdown dropright mr-4 mb-3">
-                                <button type="button" class="btn btn-sm btn-primary" id="filtersSelect"
+                                <button id="filterModalAddFilter" type="button" class="btn btn-sm btn-primary"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-fw fa-plus mr-1"></i>
                                     Add a Filter
@@ -104,7 +104,8 @@
                                 </div>
                             </div>
                             <!-- END FILTER SELECTION -->
-                            <button type="button" class="btn-block-option mr-2" (click)="modal.close('Update click')">
+                            <button type="button" id="filterModalApply" class="btn-block-option mr-2"
+                                (click)="modal.close('Update click')">
                                 <i class="fa fa-check mr-1"></i> Apply
                             </button>
                         </div>

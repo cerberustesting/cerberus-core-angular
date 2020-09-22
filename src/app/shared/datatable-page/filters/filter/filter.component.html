@@ -1,4 +1,4 @@
-<div *ngIf="column.filterDisplayed" class="block block-rounded block-bordered">
+<div [id]="'filter_'+column.contentName" *ngIf="column.filterDisplayed" class="block block-rounded block-bordered">
   <div class="block-header block-header-default">
 
     <!-- LEFT SECTION-->
@@ -85,7 +85,8 @@
 
     <!-- RIGHT SECTION-->
     <div class="block-options">
-      <button type="button" class="btn-block-option" (click)="removeFilter()">
+      <button [id]="'filter_'+column.contentName+'_remove'" type="button" class="btn-block-option"
+        (click)="removeFilter()">
         <i class="fa fa-times"></i>
       </button>
     </div>
@@ -95,7 +96,7 @@
 
   <!-- CONTENT SECTION -->
   <div *ngIf="column.filterMode==='DROPDOWN' && column.multiple === true && column.sSearch.length > 0"
-    class="block-content row">
+    class="block-content row" [id]="'filter_'+column.contentName+'_values'">
 
     <!-- SELECTED VALUES LIST -->
     <span *ngIf="column.type !== 'label'">

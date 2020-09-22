@@ -41,7 +41,7 @@ export class FilterService {
 
   // TODO: function to reset the variables (when browsing another page)
 
-  private activeFiltersList: Array<ActiveFilter>;
+  private activeFiltersList: Array<ActiveFilter> = [];
 
   observableActiveFiltersList = new BehaviorSubject<ActiveFilter[]>(this.activeFiltersList);
 

@@ -61,7 +61,7 @@
         <div class="form-group">
             <label for="activeStepCondition"><i class="fa fa-question mr-2"></i>Condition</label>
             <select class="form-control form-control-sm br-tp-0" id="activeStepCondition" name="activeStepCondition"
-                [(ngModel)]="step.conditionOper" [disabled]="step.readonly">
+                [(ngModel)]="step.conditionOperator" [disabled]="step.readonly">
                 <option *ngFor='let condition of conditionsOperators' [ngValue]='condition.value'>
                     {{condition.value}}
                 </option>
@@ -71,12 +71,12 @@
     <!-- END CONDITION OPERATOR-->
 
     <!-- CONDITION VALUE 1 -->
-    <div *ngIf="findConditionCrossReference(step.conditionOper).value1" class="col-md-12">
+    <div *ngIf="findConditionCrossReference(step.conditionOperator).value1" class="col-md-12">
         <div class="form-group">
             <div class="input-group custom-sm">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
-                        {{ findConditionCrossReference(step.conditionOper).value1 }}
+                        {{ findConditionCrossReference(step.conditionOperator).value1 }}
                     </span>
                 </div>
                 <input type="text" class="form-control form-control-sm" id="activeStepParameter1"
@@ -87,12 +87,12 @@
     <!-- END CONDITION VALUE 1 -->
 
     <!-- CONDITION VALUE 2 -->
-    <div class="col-md-12" *ngIf="findConditionCrossReference(step.conditionOper).value2">
+    <div class="col-md-12" *ngIf="findConditionCrossReference(step.conditionOperator).value2">
         <div class="form-group">
             <div class="input-group custom-sm">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
-                        {{ findConditionCrossReference(step.conditionOper).value2 }}
+                        {{ findConditionCrossReference(step.conditionOperator).value2 }}
                     </span>
                 </div>
                 <input type="text" class="form-control form-control-sm" id="activeStepParameter2"

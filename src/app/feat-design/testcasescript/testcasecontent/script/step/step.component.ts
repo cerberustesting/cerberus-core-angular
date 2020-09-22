@@ -74,7 +74,7 @@ export class StepComponent implements OnInit, OnChanges {
    */
   addAction(index: number) {
     // create the new action object (with default values)
-    const newAction = new Action(this.testcase.test, this.testcase.testCase, index, this.step.stepId);
+    const newAction = new Action(this.testcase.test, this.testcase.testcase, index, this.step.stepId);
     // insert the action at the correct index
     this.step.actions.splice(index, 0, newAction);
     // reorder the sort attributes

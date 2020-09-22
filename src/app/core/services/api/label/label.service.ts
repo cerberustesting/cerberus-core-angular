@@ -50,7 +50,7 @@ export class LabelService {
     // build the formData with duplicate keys https://github.com/cerberustesting/cerberus-source/issues/2146
     let formData = '';
     testcases.forEach(tc => {
-      formData += '&test=' + tc.test + '&testcase=' + tc.testCase;
+      formData += '&test=' + tc.test + '&testcase=' + tc.testcase;
     });
     labels.forEach(label => {
       formData += '&labelid=' + label.id;

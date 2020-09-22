@@ -9,20 +9,12 @@ import { NotificationService } from '../../utils/notification.service';
 import { tap } from 'rxjs/operators';
 import { NotificationStyle } from '../../utils/notification.model';
 import { Invariant } from 'src/app/shared/model/back/invariant/invariant.model';
-import { TestService } from '../test/test.service';
 import { GlobalService } from '../../utils/global.service';
 import { PropertyValue, PropertyGroup } from 'src/app/shared/model/back/testcase/property.model';
 import { Control } from 'src/app/shared/model/back/testcase/control.model';
 import { Action } from 'src/app/shared/model/back/testcase/action.model';
 import { Step } from 'src/app/shared/model/back/testcase/step.model';
-
-// mocks
-import single_testcase_full_mock from 'src/assets/data/mock/testcase_full.json';
-import single_testcase_mock from 'src/assets/data/mock/testcase_lite.json';
-import list_usesteps_mock from 'src/assets/data/mock/readUseStepsForLibrary.json';
 import { MassActionField } from 'src/app/feat-design/testcaselist/actions/massactions/massactions.model';
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -30,13 +22,13 @@ import { MassActionField } from 'src/app/feat-design/testcaselist/actions/massac
 export class TestcaseService {
 
   // list of test folders
-  testsList: Array<TestFolder>;
+  testsList: Array<TestFolder> = [];
 
   // list of testcase object corresponding to the previous test folders list
-  testcasesList: Array<TestCase>;
+  testcasesList: Array<TestCase> = [];
 
   // list of testcase id corresponding to a test folder used for dependencies management
-  testCasesList4Dependencies: Array<TestCase>;
+  testCasesList4Dependencies: Array<TestCase> = [];
 
   // full testcase object
   testcase: TestCase = null;
@@ -60,7 +52,6 @@ export class TestcaseService {
     private http: HttpClient,
     private trueindexPipe: TrueindexPipe,
     private notificationService: NotificationService,
-    private testService: TestService,
     private globalService: GlobalService
   ) { }
 
@@ -184,7 +175,7 @@ export class TestcaseService {
     const testCasesList = new Array<string>();
     // @ts-ignore
     testcaselist.forEach(tc => {
-      testCasesList.push(tc.testCase);
+      testCasesList.push(tc.testcase);
     });
     // get only the testcases with the correct syntax (e.g. 0001A)
     const testCasesWithCorrectSyntaxList: Array<string> = testCasesList.filter(tc => this.isATestCaseIdIsIncremental(tc) === true);
@@ -226,13 +217,8 @@ export class TestcaseService {
     return this.http.post<any>(environment.cerberus_api_url + '/UpdateTestCase', queryString, environment.httpOptions)
       .pipe(tap(
         data => {
-          if (data.messageType === 'OK') {
-            this.notificationService.createANotification('Testcase updated', NotificationStyle.Success);
-          } else {
-            this.notificationService.createANotification(data.message, NotificationStyle.Warning);
-          }
-        },
-        error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
+          this.notificationService.cerberusAPINotification(data.messageType, data.message, '_updateTestCaseHeader');
+        }
       ));
   }
 
@@ -268,10 +254,7 @@ export class TestcaseService {
           .get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withSteps=true')
           .toPromise()
           .then((result: any) => {
-            // Success
-            // callback(result.contentTable);
-            const mock = single_testcase_full_mock.contentTable[0];
-            callback(mock);
+            callback(result.contentTable[0]);
             resolve();
           },
             err => {
@@ -298,8 +281,7 @@ export class TestcaseService {
         .toPromise()
         .then((result: any) => {
           // Success
-          // callback(result.contentTable);
-          callback(single_testcase_mock.contentTable[0]);
+          callback(result.contentTable[0]);
           resolve();
         },
           err => {
@@ -338,9 +320,8 @@ export class TestcaseService {
         .get<Step[]>(environment.cerberus_api_url + '/ReadTestCaseStep?test=' + encodeURIComponent(test) + '&testCase=' + encodeURIComponent(testcase) + '&step=' + stepId + '&getUses=true')
         .toPromise()
         .then((result: any) => {
-          // Success
-          // callback(result.contentTable);
-          callback(list_usesteps_mock.step);
+          callback(result.contentTable);
+          // callback(list_usesteps_mock.step);
           resolve();
         },
           err => {
@@ -358,7 +339,7 @@ export class TestcaseService {
    * @param testcases list of test cases to use
    */
   selectedTestCaseExist(testcaseid: string, testcases: Array<TestCase>): boolean {
-    return testcases.filter(tc => tc.testCase === testcaseid).length > 0;
+    return testcases.filter(tc => tc.testcase === testcaseid).length > 0;
   }
 
   /**
@@ -369,32 +350,6 @@ export class TestcaseService {
   isCountryDefinedForTestCase(countries: Invariant[], country: string): boolean {
     const res = countries.find(invariant => invariant.value === country);
     if (res) { return true; } else { return false; }
-  }
-
-  /**
-   * send test case object to the API
-   * @param testcaseheader test case object
-   * @param originalTest initial value of test folder
-   * @param originalTestCase initial value of test case id
-   */
-  saveTestCaseHeader(testcaseheader: TestCase, originalTest: string, originalTestCase: string): void {
-    let data: TestCase;
-    data = testcaseheader;
-    // add the original test and testcase to the data to send
-    // @ts-ignore
-    data.originalTest = originalTest;
-    // @ts-ignore
-    data.originalTestCase = originalTestCase;
-    /*
-    // use of URLSearchParams() and body.toString to match the old school API
-    let body = new URLSearchParams();
-    for (var key in data) {
-      body.set(key, data[key]);
-    }
-    this.http.post('http://localhost:8080/Cerberus-3.8-SNAPSHOT/UpdateTestCase', body.toString(), httpOptions)
-      .subscribe((response) => {
-        con
-    */
   }
 
   /** refresh the sort attribute of each steps (usefull for drag and drop)
@@ -434,9 +389,9 @@ export class TestcaseService {
     requestPayload = {};
     // pass the test and test case information
     requestPayload.informationInitialTest = testcase.test;
-    requestPayload.informationInitialTestCase = testcase.testCase;
+    requestPayload.informationInitialTestCase = testcase.testcase;
     requestPayload.informationTest = testcase.test;
-    requestPayload.informationTestCase = testcase.testCase;
+    requestPayload.informationTestCase = testcase.testcase;
     // fill the step array
     requestPayload.stepArray = [];
     testcase.steps.forEach(step => {
@@ -457,7 +412,7 @@ export class TestcaseService {
       newStep.useStepStepId = step.useStepStepId;
       newStep.inLibrary = step.inLibrary;
       newStep.loop = step.loop;
-      newStep.conditionOper = step.conditionOper;
+      newStep.conditionOperator = step.conditionOperator;
       newStep.conditionVal1 = step.conditionVal1;
       newStep.conditionVal2 = step.conditionVal2;
       newStep.conditionVal3 = step.conditionVal3;
@@ -621,7 +576,7 @@ export class TestcaseService {
     }
     // add the list of test case(s)
     testcaseslist.forEach(testcase => {
-      FormData += '&test=' + testcase.test + '&testcase=' + testcase.testCase;
+      FormData += '&test=' + testcase.test + '&testcase=' + testcase.testcase;
     });
 
     const httpOptions = {

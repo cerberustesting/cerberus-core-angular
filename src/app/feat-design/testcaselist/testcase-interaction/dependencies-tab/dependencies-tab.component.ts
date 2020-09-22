@@ -66,8 +66,8 @@ export class DependenciesTabComponent implements OnInit {
 
   /** add a dependency to the test case (if it's not already present) */
   addADependency(): void {
-    if (!this.isADependencySelected(this.selectedTestFolderName, this.selectedTestCase.testCase)) {
-      const newDependency = new TestCaseDependency(this.selectedTestFolderName, this.selectedTestCase.testCase);
+    if (!this.isADependencySelected(this.selectedTestFolderName, this.selectedTestCase.testcase)) {
+      const newDependency = new TestCaseDependency(this.selectedTestFolderName, this.selectedTestCase.testcase);
       this.dependencies.push(newDependency);
     } else {
       this.notificationService.createANotification('This dependency is already selected', NotificationStyle.Error);

@@ -33,8 +33,8 @@ export const TestCasesColumnsData: Column[] = [
     },
     {
         displayName: 'ID',
-        apiName: 'tec.testCase',
-        contentName: 'testCase',
+        apiName: 'tec.testcase',
+        contentName: 'testcase',
         flexGrow: 75,
         active: true,
         defaultActive: true,

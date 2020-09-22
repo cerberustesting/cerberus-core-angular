@@ -1,13 +1,10 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Column } from 'src/app/shared/model/front/column.model';
-import { InvariantsService } from './invariants.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { TestCase } from 'src/app/shared/model/back/testcase/testcase.model';
 import { UserService } from './user.service';
-import tcs from 'src/assets/data/mock/testcases.json';
-import tfs from 'src/assets/data/mock/testfolders.json';
 import { GlobalService } from '../utils/global.service';
 
 const httpOptions = {
@@ -144,22 +141,18 @@ export class FilterService {
    * @params queryParameters : url-encoded filters
   */
   getContentForTable(servlet: string, queryParameters: string, callback): void {
-    // return mocked results
-    if (servlet === '/ReadTestCase') {
-      // return the mock data for test cases list
-      callback(tcs.contentTable, tcs.iTotalRecords);
-    } else if (servlet === '/ReadTest') {
-      // callback(tfs.contentTable, 61);
-      this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
-        .subscribe((response) => {
-          if (response) {
-            if (response.iTotalRecords > 0) {
-              // formatting test folders, waiting for: https://github.com/cerberustesting/cerberus-source/issues/2104
-              callback(this.globalService.formatTestFolderList(response.contentTable), response.iTotalRecords);
-            }
+    this.http.post<any>(environment.cerberus_api_url + servlet, queryParameters, httpOptions)
+      .subscribe((response) => {
+        if (response) {
+          if (servlet === '/ReadTest') {
+            // formatting test folders, waiting for: https://github.com/cerberustesting/cerberus-source/issues/2104
+            callback(this.globalService.formatTestFolderList(response.contentTable), response.iTotalRecords);
+          } else {
+            callback(response.contentTable, response.iTotalRecords);
           }
-        });
-    }
+        }
+      });
+
 
   }
 

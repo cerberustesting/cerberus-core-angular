@@ -95,7 +95,7 @@ export class TestcaseInteractionComponent implements OnInit {
         // create a new test case header object
         const newTestCaseHeader = new TestCase(
           this.testcaseheader.test,
-          this.testcaseheader.testCase,
+          this.testcaseheader.testcase,
           this.testcaseheader.application,
           this.testcaseheader.type,
           this.testcaseheader.priority,
@@ -153,9 +153,9 @@ export class TestcaseInteractionComponent implements OnInit {
     // countries, labels, bugs and dependencies are handled appart from the form
     this.testcaseHeaderForm = this.formBuilder.group({
       originalTest: this.testcaseheader.test,
-      originalTestCase: this.testcaseheader.testCase,
+      originalTestCase: this.testcaseheader.testcase,
       test: new FormControl(this.testcaseheader.test),
-      testCase: new FormControl(this.testcaseheader.testCase),
+      testcase: new FormControl(this.testcaseheader.testcase),
       definition: this.formBuilder.group({
         description: new FormControl(this.testcaseheader.description),
         application: new FormControl(this.testcaseheader.application),
@@ -215,7 +215,6 @@ export class TestcaseInteractionComponent implements OnInit {
 
   // submit the new tc object to the API
   onSubmit(values: any): void {
-
     // "values" variables corresponds to the form values
 
     // if no application is set
@@ -231,7 +230,7 @@ export class TestcaseInteractionComponent implements OnInit {
     }
 
     // if no test case id is set
-    if (!values.testCase) {
+    if (!values.testcase) {
       this.notificationService.createANotification('Please specify the Test Case ID', NotificationStyle.Warning);
       return;
     }
@@ -242,24 +241,22 @@ export class TestcaseInteractionComponent implements OnInit {
     // add (& encode) all the items from the form group (one to one relationship)
     // list of values to consider as a sub form
     const formGroupsList = ['definition', 'settings', 'bugsReport', 'audit'];
-    // list of key to convert from boolean to string
-    const CerberusStringList = ['active', 'activeQA', 'activeUAT', 'activePROD'];
-    for (const key in values) {
+    for (const key_level1 in values) {
       // if the current node is a form group
-      if (formGroupsList.includes(key)) {
+      if (formGroupsList.includes(key_level1)) {
         // loop in it
-        for (const key2 in values[key]) {
-          if (key2) {
-            if (CerberusStringList.includes(key2)) {
-              // convert the correct key in Y or N string (from boolean)
-              queryString += encodeURIComponent(key2) + '=' + encodeURIComponent(this.toCerberusString(values[key][key2]) || '') + '&';
-            } else {
-              queryString += encodeURIComponent(key2) + '=' + encodeURIComponent(values[key][key2] || '') + '&';
-            }
-
+        for (const key_level2 in values[key_level1]) {
+          if (values[key_level1][key_level2] === null || values[key_level1][key_level2] === undefined) {
+            queryString += encodeURIComponent(key_level2) + '=&';
+          } else {
+            queryString += encodeURIComponent(key_level2) + '=' + encodeURIComponent(values[key_level1][key_level2]) + '&';
           }
         }
-      } else { queryString += encodeURIComponent(key) + '=' + encodeURIComponent(values[key] || '') + '&'; }
+      } else if (key_level1 === 'testcase') {
+        // DIRTY : exception for 'testcase' still not mapped in /UpdateTestCase
+        // waiting on : https://github.com/cerberustesting/cerberus-source/issues/2178
+        queryString += encodeURIComponent('testCase') + '=' + encodeURIComponent(values[key_level1]) + '&';
+      } else { queryString += encodeURIComponent(key_level1) + '=' + encodeURIComponent(values[key_level1] || '') + '&'; }
     }
 
     // add all the countries
@@ -268,11 +265,11 @@ export class TestcaseInteractionComponent implements OnInit {
     this.countries.forEach(country => {
       const formattedCountry = {
         country: country.value,
-        toDelete: this.testcaseService.isCountryDefinedForTestCase(this.testcaseheader.countries, country.value)
+        toDelete: !this.testcaseService.isCountryDefinedForTestCase(this.testcaseheader.countries, country.value)
       };
       countriesQS.push(formattedCountry);
     });
-    queryString += 'countryList=' + encodeURIComponent(JSON.stringify(countriesQS)) + '&';
+    queryString += 'countries=' + encodeURIComponent(JSON.stringify(countriesQS)) + '&';
 
     // add all the labels
     // format is [{"labedId":"2","toDelete":false},{"labedId":"PT","toDelete":false}...]
@@ -285,7 +282,7 @@ export class TestcaseInteractionComponent implements OnInit {
       };
       labelsQS.push(formattedLabel);
     });
-    queryString += 'labelList=' + encodeURIComponent(JSON.stringify(labelsQS)) + '&';
+    queryString += 'labels=' + encodeURIComponent(JSON.stringify(labelsQS)) + '&';
 
     // add all the dependencies
     // format is [{"id":"15","test":"benoit","testcase":"0001A","description":"","active":true}]
@@ -300,7 +297,7 @@ export class TestcaseInteractionComponent implements OnInit {
       };
       dependenciesQS.push(formattedDependency);
     });
-    queryString += 'testcaseDependency=' + encodeURIComponent(JSON.stringify(dependenciesQS)) + '&';
+    queryString += 'dependencies=' + encodeURIComponent(JSON.stringify(dependenciesQS)) + '&';
 
     // add all the bugs
     // format is [{"id":"BUGID1","desc":"klnkjn","act":true,"dateCreated":"2020-03-05T20:56:09.036Z","dateClosed":"1970-01-01T00:00:00.000Z"},
@@ -315,7 +312,7 @@ export class TestcaseInteractionComponent implements OnInit {
       };
       bugsQS.push(formattedBug);
     });
-    queryString += 'bugId=' + encodeURIComponent(JSON.stringify(bugsQS)) + '&';
+    queryString += 'bugs=' + encodeURIComponent(JSON.stringify(bugsQS));
 
     // trigger the correct API endpoint
     if (this.mode === INTERACTION_MODE.CREATE) {
@@ -342,7 +339,7 @@ export class TestcaseInteractionComponent implements OnInit {
   getTestCaseDifferences(): string[] {
     const differentFields = new Array<string>();
     if (this.testcaseheader.test !== this.testcaseHeaderForm.get('test').value) { differentFields.push('test'); }
-    if (this.testcaseheader.testCase !== this.testcaseHeaderForm.get('testCase').value) { differentFields.push('testcase'); }
+    if (this.testcaseheader.testcase !== this.testcaseHeaderForm.get('testCase').value) { differentFields.push('testcase'); }
     if (this.testcaseheader.description !== this.testcaseHeaderForm.get('definition.description').value) { differentFields.push('description'); }
     if (this.testcaseheader.application !== this.testcaseHeaderForm.get('definition.application').value) { differentFields.push('application'); }
     if (this.testcaseheader.status !== this.testcaseHeaderForm.get('definition.status').value) { differentFields.push('status'); }

@@ -6,8 +6,6 @@ import { InvariantsService } from 'src/app/core/services/api/invariants.service'
 import { SystemService } from 'src/app/core/services/api/system.service';
 import { HeaderTitleService } from 'src/app/core/services/utils/header-title.service';
 import { Subject } from 'rxjs';
-import { TestService } from 'src/app/core/services/api/test/test.service';
-import { UserService } from 'src/app/core/services/api/user.service';
 
 @Component({
   selector: 'app-testcasescript',
@@ -32,7 +30,6 @@ export class TestcasescriptComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private testcaseService: TestcaseService,
-    private testService: TestService,
     private InvariantService: InvariantsService,
     private systemService: SystemService,
     private headerTitleService: HeaderTitleService

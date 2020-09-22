@@ -144,7 +144,7 @@ export class ActionsComponent implements OnInit, DoCheck {
   */
   deleteTestCase(testcaseheader: TestCase) {
     let notifStyle = NotificationStyle.Info;
-    this.testService.deleteTestCase(testcaseheader.test, testcaseheader.testCase, (message, status) => {
+    this.testService.deleteTestCase(testcaseheader.test, testcaseheader.testcase, (message, status) => {
       switch (status) {
         case 'OK': { notifStyle = NotificationStyle.Success; break; }
         case 'KO': { notifStyle = NotificationStyle.Error; break; }

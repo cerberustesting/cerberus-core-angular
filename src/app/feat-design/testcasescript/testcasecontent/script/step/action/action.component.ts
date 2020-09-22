@@ -93,7 +93,7 @@ export class ActionComponent implements OnInit {
   */
   addControl(index: number): void {
     // create the new control object (with default values)
-    const newControl = new Control(this.testcase.test, this.testcase.testCase, index, this.parentStep.stepId, this.action.actionId);
+    const newControl = new Control(this.testcase.test, this.testcase.testcase, index, this.parentStep.stepId, this.action.actionId);
     // insert the control at the correct index
     this.action.controls.splice(index, 0, newControl);
     // reorder the sort attributes

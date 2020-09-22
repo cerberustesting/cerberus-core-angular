@@ -19,7 +19,7 @@ export class Step {
     description: string;
 
     /** @description condition operator */
-    conditionOper: string;
+    conditionOperator: string;
 
     /** @description condition value 1 */
     conditionVal1: string;
@@ -81,7 +81,7 @@ export class Step {
         this.useStep = false;
         this.inLibrary = false;
         this.loop = 'onceIfConditionTrue';
-        this.conditionOper = 'always';
+        this.conditionOperator = 'always';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
         this.conditionVal3 = '';

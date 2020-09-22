@@ -38,7 +38,7 @@ export class ScriptComponent {
   }
 
   addAStep() {
-    const newStep = new Step(this.testcase.testCase, this.testcase.test, this.testcase.steps.length + 1);
+    const newStep = new Step(this.testcase.testcase, this.testcase.test, this.testcase.steps.length + 1);
     this.testcase.steps.push(newStep);
     // useless to refresh the step sort here since we can only add at the end.
     // if later modification (e.g. adding a step after any step), please consider

@@ -81,8 +81,10 @@ export class NotificationService {
       this.createANotification(message, NotificationStyle.Success, base_id + '_success');
     } else if (messagetype === 'WARNING') {
       this.createANotification(message, NotificationStyle.Warning, base_id + '_warning');
+      console.warn(message);
     } else {
       this.createANotification(message, NotificationStyle.Error, base_id + '_error');
+      console.error(message);
     }
   }
 

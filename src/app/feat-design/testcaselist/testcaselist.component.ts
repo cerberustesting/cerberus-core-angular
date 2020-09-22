@@ -81,7 +81,7 @@ export class TestcaselistComponent implements OnInit {
   editTestCaseHeader(testcase: TestCase): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: testcase.test,
-      testcase: testcase.testCase,
+      testcase: testcase.testcase,
       mode: INTERACTION_MODE.EDIT,
       exit: () => {
         this.refreshResults();
@@ -99,7 +99,7 @@ export class TestcaselistComponent implements OnInit {
   duplicateTestCaseHeader(testcase: TestCase): void {
     this.sideContentService.addComponentToSideBlock(TestcaseInteractionComponent, {
       test: testcase.test,
-      testcase: testcase.testCase,
+      testcase: testcase.testcase,
       mode: INTERACTION_MODE.DUPLICATE,
       exit: () => {
         this.refreshResults();
@@ -114,7 +114,7 @@ export class TestcaselistComponent implements OnInit {
   */
   redirectToTestCaseScript(testcase: TestCase) {
     const test = encodeURIComponent(testcase.test);
-    const testcaseid = encodeURIComponent(testcase.testCase);
+    const testcaseid = encodeURIComponent(testcase.testcase);
     this.router.navigate(['/design/testcasescript/' + test + '/' + testcaseid]);
   }
 

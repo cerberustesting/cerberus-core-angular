@@ -28,7 +28,7 @@ export class SelectedstepComponent implements OnInit {
       this.step.useStepTestCase = step.testCase;
       this.step.useStepStepId = step.stepId;
       this.step.loop = step.loop;
-      this.step.conditionOper = step.conditionOper;
+      this.step.conditionOperator = step.conditionOperator;
       this.step.conditionVal1 = step.conditionVal1;
       this.step.conditionVal2 = step.conditionVal2;
       this.step.conditionVal3 = step.conditionVal3;

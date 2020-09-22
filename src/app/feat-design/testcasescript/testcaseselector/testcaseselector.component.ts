@@ -122,7 +122,7 @@ export class TestCaseSelectorComponent implements OnInit, OnDestroy {
   // search function for test case id select
   customSearchFn(term: string, item: TestCase) {
     term = term.toLocaleLowerCase();
-    return item.testCase.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1 || item.status.toLocaleLowerCase() === term;
+    return item.testcase.toLocaleLowerCase().indexOf(term) > -1 || item.description.toLocaleLowerCase().indexOf(term) > -1 || item.status.toLocaleLowerCase() === term;
   }
 
 }

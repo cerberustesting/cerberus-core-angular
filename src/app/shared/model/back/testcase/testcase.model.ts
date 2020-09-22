@@ -33,7 +33,7 @@ export class TestCase {
     test: string;
 
     /** @description id of the test case */
-    testCase: string;
+    testcase: string;
 
     /** @description brief description of the test case */
     description: string;
@@ -160,7 +160,7 @@ export class TestCase {
         system: string
     ) {
         this.test = test;
-        this.testCase = testcase;
+        this.testcase = testcase;
         this.description = '';
         this.application = application;
         this.system = system;

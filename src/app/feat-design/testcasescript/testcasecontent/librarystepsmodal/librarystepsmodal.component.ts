@@ -110,7 +110,7 @@ export class LibraryStepsModalComponent implements OnInit {
     steps.forEach(step => {
       if (
         step.description.toLowerCase().includes(keyword) ||
-        step.testCase.toLowerCase().includes(keyword) ||
+        step.testcase.toLowerCase().includes(keyword) ||
         step.tcdesc.toLowerCase().includes(keyword) ||
         step.test.toLowerCase().includes(keyword)
       ) {
@@ -147,13 +147,11 @@ export class LibraryStepsModalComponent implements OnInit {
       this.selectedSteps.forEach(step => {
         // add the correct test folder & test case id
         step.test = this.testcase.test;
-        step.testCase = this.testcase.testcase;
-        step.useStep = true;
-        step.inLibrary = false;
+        step.testcase = this.testcase.testcase;
+        step.isUsedStep = true;
+        step.isLibraryStep = false;
         // remove the stepId attribute since it's a new step
         step.stepId = undefined;
-        // @ts-ignore
-        step.step = undefined;
         step.tcdesc = undefined;
         step.sort = undefined;
         this.testcase.steps.push(step);

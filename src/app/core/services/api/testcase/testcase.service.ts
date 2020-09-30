@@ -158,7 +158,7 @@ export class TestcaseService {
         if (response) {
           // DIRTY : waiting for : https://github.com/cerberustesting/cerberus-source/issues/2122
           response.step.actions = [];
-          response.step.forceExecution = response.step.forceExe;
+          response.step.isExecutionForced = response.step.isExecutionForced;
           response.step.stepId = response.step.step;
           response.tcsActionList.forEach(action => {
             action.controls = response.tcsActionControlList.filter(control => control.sequence === action.sequence);
@@ -254,7 +254,12 @@ export class TestcaseService {
           .get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withSteps=true')
           .toPromise()
           .then((result: any) => {
-            callback(result.contentTable[0]);
+            const tc = result.contentTable[0];
+            // format the steps to match the target model
+            tc.steps.forEach(step => {
+              step = this.formatStep(step);
+            });
+            callback(tc);
             resolve();
           },
             err => {
@@ -265,6 +270,21 @@ export class TestcaseService {
       });
       return promise;
     }
+  }
+
+  /**
+   * format the input step to the current model (dirty)
+   * @param step object to transform
+   */
+  formatStep(step: Step): Step {
+    const formattedStep = step;
+    // @ts-ignore
+    formattedStep.isExecutionForced = this.globalService.toCerberusBoolean(step.isExecutionForced);
+    // @ts-ignore
+    formattedStep.isUsedStep = this.globalService.toCerberusBoolean(step.isUsedStep);
+    // @ts-ignore
+    formattedStep.isLibraryStep = this.globalService.toCerberusBoolean(step.isLibraryStep);
+    return formattedStep;
   }
 
   /**
@@ -401,22 +421,22 @@ export class TestcaseService {
       newStep.toDelete = step.toDelete || false;
       // test folder and test case id are only needed for existing steps
       if (step.test) { newStep.test = step.test; }
-      if (step.testCase) { newStep.testcase = step.testCase; }
+      if (step.testcase) { newStep.testcase = step.testcase; }
       // unique step id only necessary for existing step
       if (step.stepId) { newStep.step = step.stepId; }
       newStep.sort = step.sort;
       newStep.description = step.description;
-      newStep.useStep = step.useStep;
-      newStep.useStepTest = step.useStepTest;
-      newStep.useStepTestCase = step.useStepTestCase;
-      newStep.useStepStepId = step.useStepStepId;
-      newStep.inLibrary = step.inLibrary;
+      newStep.isUsedStep = step.isUsedStep;
+      newStep.libraryStepTest = step.libraryStepTest;
+      newStep.libraryStepTestCase = step.libraryStepTestCase;
+      newStep.libraryStepStepId = step.libraryStepStepId;
+      newStep.isLibraryStep = step.isLibraryStep;
       newStep.loop = step.loop;
       newStep.conditionOperator = step.conditionOperator;
       newStep.conditionVal1 = step.conditionVal1;
       newStep.conditionVal2 = step.conditionVal2;
       newStep.conditionVal3 = step.conditionVal3;
-      newStep.forceExecution = step.forceExecution;
+      newStep.isExecutionForced = step.isExecutionForced;
       newStep.actionArr = [];
       step.actions.forEach(action => {
         // create a new action object (because the mapping is different)

@@ -21,18 +21,18 @@ export class SelectedstepComponent implements OnInit {
 
   ngOnInit() {
 
-    this.testCaseService.getStep(this.step.test, this.step.testCase, this.step.stepId, (step: Step) => {
+    this.testCaseService.getStep(this.step.test, this.step.testcase, this.step.stepId, (step: Step) => {
       // add the missing information to this component step
       this.step.toDelete = false;
-      this.step.useStepTest = step.test;
-      this.step.useStepTestCase = step.testCase;
-      this.step.useStepStepId = step.stepId;
+      this.step.libraryStepTest = step.test;
+      this.step.libraryStepTestCase = step.testcase;
+      this.step.libraryStepStepId = step.stepId;
       this.step.loop = step.loop;
       this.step.conditionOperator = step.conditionOperator;
       this.step.conditionVal1 = step.conditionVal1;
       this.step.conditionVal2 = step.conditionVal2;
       this.step.conditionVal3 = step.conditionVal3;
-      this.step.forceExecution = step.forceExecution;
+      this.step.isExecutionForced = step.isExecutionForced;
       this.step.actions = step.actions;
     });
   }

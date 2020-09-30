@@ -95,10 +95,10 @@ export class StepComponent implements OnInit, OnChanges {
    * return a state used by the view to display an icon depedending on the combination of useStep and inLibrary
    */
   libraryState(): string {
-    if (this.step.useStep === true) {
+    if (this.step.isUsedStep === true) {
       this.step.readonly = true;
       return 'locked';
-    } else if (this.step.inLibrary === true) {
+    } else if (this.step.isLibraryStep === true) {
       this.step.readonly = false;
       return 'reference';
     } else {

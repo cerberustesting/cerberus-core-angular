@@ -50,16 +50,16 @@
       <!-- END LOOP ICON -->
 
       <!-- CONDITION ICON -->
-      <button name="conditionOper" *ngIf="step.conditionOper != 'always'" type="button"
+      <button name="conditionOperator" *ngIf="step.conditionOperator != 'always'" type="button"
         class="btn-block-option info_block_options"
-        [ngbPopover]="step.conditionOper == 'never' ? 'This step is disabled' : 'This step execution is conditioned'"
+        [ngbPopover]="step.conditionOperator == 'never' ? 'This step is disabled' : 'This step execution is conditioned'"
         triggers="mouseenter:mouseleave">
-        <i class="fa fa-fw" [ngClass]="step.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
+        <i class="fa fa-fw" [ngClass]="step.conditionOperator == 'never' ? 'fa-times' : 'fa-question' "></i>
       </button>
       <!-- END CONDITION ICON -->
 
       <!-- FORCE EXEC ICON -->
-      <button name="forceExecution" *ngIf="step.forceExecution" type="button"
+      <button name="isExecutionForced" *ngIf="step.isExecutionForced" type="button"
         class="btn-block-option info_block_options" ngbPopover="This step execution is forced"
         triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa fa-arrow-down"></i>

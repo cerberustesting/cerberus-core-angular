@@ -76,7 +76,7 @@ export class DependenciesTabComponent implements OnInit {
 
   /** return true if there is already a dependency selected for the test case */
   isADependencySelected(test: string, testcase: string): boolean {
-    const res = this.dependencies.find(dependency => dependency.test === test && dependency.testCase === testcase);
+    const res = this.dependencies.find(dependency => dependency.dependencyTest === test && dependency.dependencyTestCase === testcase);
     if (res === undefined) {
       return false;
     } else {
@@ -86,7 +86,7 @@ export class DependenciesTabComponent implements OnInit {
 
   /** remove the dependency from the test case */
   removeDependency(dependency: TestCaseDependency): void {
-    const index = this.dependencies.findIndex(dep => dep.test === dependency.test && dep.testCase === dependency.testCase);
+    const index = this.dependencies.findIndex(dep => dep.dependencyTest === dependency.dependencyTest && dep.dependencyTestCase === dependency.dependencyTestCase);
     this.dependencies.splice(index, 1);
   }
 

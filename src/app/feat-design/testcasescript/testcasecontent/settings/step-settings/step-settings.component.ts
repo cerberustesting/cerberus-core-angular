@@ -56,8 +56,8 @@ export class StepSettingsComponent implements OnInit, OnChanges {
    * necessary since the component isn't destroyed if the user switch from step to step
    */
   refreshStepContent() {
-    if (this.step.inLibrary === true) {
-      this.testcaseService.getUseStepForALibraryStep(this.step.test, this.step.testCase, this.step.stepId, (stepList: Step[]) => {
+    if (this.step.isLibraryStep === true) {
+      this.testcaseService.getUseStepForALibraryStep(this.step.test, this.step.testcase, this.step.stepId, (stepList: Step[]) => {
         this.listOfUseSteps = stepList;
       });
     }
@@ -73,11 +73,11 @@ export class StepSettingsComponent implements OnInit, OnChanges {
     modalRef.componentInstance.subtitle2 = 'Your test case will be saved right away';
     modalRef.componentInstance.modalType = ModalType.Confirm;
     modalRef.componentInstance.confirmFunction = () => {
-      this.step.useStep = false;
+      this.step.isUsedStep = false;
       this.step.readonly = false;
-      this.step.useStepTest = undefined;
-      this.step.useStepTestCase = undefined;
-      this.step.useStepStepId = undefined;
+      this.step.libraryStepTest = undefined;
+      this.step.libraryStepTestCase = undefined;
+      this.step.libraryStepStepId = undefined;
       this.step.useStepStepSort = undefined;
       this.testcaseService.saveTestCase(this.testcase, (response: any) => {
         console.log(response);
@@ -97,7 +97,7 @@ export class StepSettingsComponent implements OnInit, OnChanges {
       modalRef.componentInstance.itemsList = this.listOfUseSteps;
       modalRef.componentInstance.modalType = ModalType.Error;
     } else {
-      this.step.inLibrary = false;
+      this.step.isLibraryStep = false;
     }
   }
 
@@ -105,8 +105,8 @@ export class StepSettingsComponent implements OnInit, OnChanges {
    * add the current step to the library
    */
   addToLibrary(): void {
-    this.step.useStep = false;
-    this.step.inLibrary = true;
+    this.step.isUsedStep = false;
+    this.step.isLibraryStep = true;
   }
 
   /**
@@ -125,4 +125,10 @@ export class StepSettingsComponent implements OnInit, OnChanges {
     return this.CrossReferenceService.findCrossReference(condition, this.CrossReferenceService.crossReference_ConditionValue);
   }
 
+  /**
+   * toggle the step forced execution attribute
+   */
+  toggleForceExecution() {
+    this.step.isExecutionForced = !this.step.isExecutionForced;
+  }
 }

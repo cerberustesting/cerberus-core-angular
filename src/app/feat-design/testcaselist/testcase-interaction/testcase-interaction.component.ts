@@ -290,9 +290,9 @@ export class TestcaseInteractionComponent implements OnInit {
     this.testcaseheader.dependencies.forEach(dependency => {
       const formattedDependency = {
         id: dependency.id,
-        test: dependency.test,
-        testcase: dependency.testCase,
-        description: dependency.description,
+        test: dependency.dependencyTest,
+        testcase: dependency.dependencyTestCase,
+        description: dependency.dependencyDescription,
         active: dependency.active
       };
       dependenciesQS.push(formattedDependency);

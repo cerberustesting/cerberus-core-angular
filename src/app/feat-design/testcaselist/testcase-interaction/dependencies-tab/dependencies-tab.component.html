@@ -16,10 +16,10 @@
     <div *ngIf="selectedTestFolderName !== null" class="col-md-6">
         <div class="form-group">
             <label for="test" class="font-sm">Test Case</label>
-            <ng-select name="testcase" class="custom-sm" [items]="testCasesList" bindLabel="testCase"
+            <ng-select name="testcase" class="custom-sm" [items]="testCasesList" bindLabel="testcase"
                 placeholder="Select a Test Case" [(ngModel)]="selectedTestCase" [ngModelOptions]="{standalone: true}">
                 <ng-template ng-option-tmp let-item="item">
-                    {{item.testCase}} : {{item.description}}
+                    {{item.testcase}} : {{item.description}}
                 </ng-template>
             </ng-select>
         </div>
@@ -59,8 +59,8 @@
 
                     <!-- DEPENDENCY TEST CASE -->
                     <td>
-                        <span name="dependencyTestCase" class="font-w600">{{dependency.test}}
-                            ({{dependency.testCase}})</span>
+                        <span name="dependencyTestCase" class="font-w600">{{dependency.dependencyTest}}
+                            ({{dependency.dependencyTestCase}})</span>
                     </td>
                     <!-- END DEPENDENCY TEST CASE -->
 
@@ -76,14 +76,14 @@
 
                     <!-- DEPENDENCY DESCRIPTION -->
                     <td>
-                        <input type="text" [(ngModel)]="dependency.description"
+                        <input type="text" [(ngModel)]="dependency.dependencyDescription"
                             class="form-control form-control-sm font-w600" placeholder="no description">
                     </td>
                     <!-- END DEPENDENCY DESCRIPTION -->
 
                     <!-- ACTION BUTTON -->
                     <td class="text-center">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Small Horizontal Primary">
+                        <div class="btn-group btn-group-sm" role="group">
                             <button type="button" class="btn btn-alt-light" ngbPopover="Remove"
                                 triggers="mouseenter:mouseleave" placement="left"
                                 (click)="removeDependency(dependency)">

@@ -7,17 +7,17 @@ export class TestCaseDependency {
     /** dependency id */
     id: number;
 
+    /** is the relationship active */
+    active: boolean;
+
     /** test folder of the assigned test case */
-    test: string;
+    dependencyTest: string;
 
     /** test case id of the assigned test case */
-    testCase: string;
-
-    /** is the relationship active */
-    active: string;
+    dependencyTestCase: string;
 
     /** description of the relationship */
-    description: string;
+    dependencyDescription: string;
 
     /** event of the relationship */
     event: string;
@@ -26,10 +26,11 @@ export class TestCaseDependency {
     type: string;
 
     constructor(test: string, testCase: string) {
-        this.test = test;
-        this.testCase = testCase;
-        this.description = '';
-        this.active = 'Y';
+        this.id = 0;
+        this.dependencyTest = test;
+        this.dependencyTestCase = testCase;
+        this.dependencyDescription = '';
+        this.active = true;
         this.type = 'TCEXEEND';
         this.event = '';
     }

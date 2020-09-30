@@ -10,7 +10,7 @@ export class Step {
     test: string;
 
     /** @description test case id of this step */
-    testCase: string;
+    testcase: string;
 
     /** @description description of the test folder of this step (currently used only with library steps modal) */
     tcdesc?: string;
@@ -31,28 +31,28 @@ export class Step {
     conditionVal3: string;
 
     /** @description boolean to force the execution of the step */
-    forceExecution: boolean;
+    isExecutionForced: boolean;
 
     /** @description loop operator */
     loop: string;
 
     /** @description is the step used imported from another test case */
-    useStep: boolean;
+    isUsedStep: boolean;
 
     /** @description is the step the reference */
-    inLibrary: boolean;
+    isLibraryStep: boolean;
 
     /** @description is the step used in another test case? */
     isStepInUseByOtherTestCase: boolean;
 
     /** @description test folder of the use step */
-    useStepTest: string;
+    libraryStepTest: string;
 
     /** @description test case id of the use step */
-    useStepTestCase: string;
+    libraryStepTestCase: string;
 
     /** @description unique id of the reference step (relevant only if useStep = true) */
-    useStepStepId: number;
+    libraryStepStepId: number;
 
     /** @description index of the library step that reference this step (relevant only if useStep = true) */
     useStepStepSort: number;
@@ -64,10 +64,10 @@ export class Step {
     stepId: number;
 
     /** @description should the step be deleted? */
-    toDelete: boolean;
+    toDelete?: boolean;
 
     /** @description (custom) can the step be edited? */
-    readonly: boolean;
+    readonly?: boolean;
 
     /** @description list of actions */
     actions: Array<Action>;
@@ -75,17 +75,17 @@ export class Step {
     constructor(testfolder: string, testcaseid: string, sort: number) {
         this.toDelete = false;
         this.test = testfolder;
-        this.testCase = testcaseid;
+        this.testcase = testcaseid;
         this.sort = sort;
         this.description = '';
-        this.useStep = false;
-        this.inLibrary = false;
+        this.isUsedStep = false;
+        this.isLibraryStep = false;
         this.loop = 'onceIfConditionTrue';
         this.conditionOperator = 'always';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
         this.conditionVal3 = '';
-        this.forceExecution = false;
+        this.isExecutionForced = false;
         this.actions = new Array<Action>();
     }
 }

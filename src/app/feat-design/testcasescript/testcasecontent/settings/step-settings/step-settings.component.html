@@ -10,7 +10,7 @@
     <!-- END UNLNK BUTTON -->
 
     <!-- REMOVE FROM LIBRARY BUTTON -->
-    <div *ngIf="step.inLibrary" class="col-md-12 text-center">
+    <div *ngIf="step.isLibraryStep" class="col-md-12 text-center">
         <button type="button" class="btn btn-rounded btn-alt-danger mr-1 mb-3" (click)="removeStepFromLibrary()"
             ngbPopover="This step is in Library" triggers="mouseenter:mouseleave">
             <i class="fa fa-fw fa-eject mr-2"></i>
@@ -21,7 +21,7 @@
     <!-- END REMOVE FROM LIBRARY BUTTON -->
 
     <!-- ADD TO LIBRARY BUTTON -->
-    <div *ngIf="step.inLibrary === false && step.useStep === false" class="col-md-12 text-center">
+    <div *ngIf="step.isLibraryStep === false && step.isUsedStep === false" class="col-md-12 text-center">
         <button type="button" class="btn btn-rounded btn-alt-primary mr-1 mb-3" (click)="addToLibrary()">
             <i class="fa fa-fw fa-share mr-2"></i>
             Add this step to Library
@@ -107,8 +107,8 @@
         <div class="form-group">
             <div class="custom-control custom-switch custom-control-inline ml-1">
                 <input type="checkbox" class="custom-control-input" id="activeStepforceExecution"
-                    name="activeStepforceExecution" [checked]="step.forceExecution"
-                    (change)="step.forceExecution = !step.forceExecution" [disabled]="step.readonly">
+                    name="activeStepforceExecution" [checked]="step.isExecutionForced" (change)="toggleForceExecution()"
+                    [disabled]="step.readonly">
                 <label class="custom-control-label" for="activeStepforceExecution">
                     Force Execution
                 </label>

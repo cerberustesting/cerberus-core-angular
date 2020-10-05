@@ -100,13 +100,14 @@
 
     <!-- SELECTED VALUES LIST -->
     <span *ngIf="column.type !== 'label'">
-      <span *ngFor="let filterValue of column.sSearch" class="badge badge-pill badge-primary push mr-1">
+      <span *ngFor="let filterValue of column.sSearch" [attr.name]="'filter_value_'+column.contentName"
+        class="badge badge-pill badge-primary push mr-1">
         {{filterValue}}
       </span>
     </span>
     <span *ngIf="column.type === 'label'">
-      <span *ngFor="let label of column.sSearch" class="badge badge-pill badge-primary push mr-1"
-        [ngStyle]="{'background-color': label.color}">
+      <span *ngFor="let label of column.sSearch" [attr.name]="'filter_value_'+column.contentName"
+        class="badge badge-pill badge-primary push mr-1" [ngStyle]="{'background-color': label.color}">
         {{label.label}}
       </span>
     </span>

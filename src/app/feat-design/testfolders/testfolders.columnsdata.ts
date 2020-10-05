@@ -34,7 +34,7 @@ export const TestFoldersColumnsData: Column[] = [
     {
         displayName: 'Active',
         apiName: 'active',
-        contentName: 'active',
+        contentName: 'isActive',
         active: true,
         flexGrow: 100,
         defaultActive: true,

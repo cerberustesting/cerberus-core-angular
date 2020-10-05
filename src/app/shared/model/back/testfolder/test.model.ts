@@ -11,7 +11,7 @@ export class TestFolder {
         description: string;
 
         /** @description active toggle of the test folder */
-        active: boolean;
+        isActive: boolean;
 
         /** @description audit field : creation date of the test */
         dateCreated: string;
@@ -27,7 +27,7 @@ export class TestFolder {
 
         constructor() {
                 this.test = '';
-                this.active = true;
+                this.isActive = true;
                 this.description = '';
                 this.dateCreated = null;
                 this.usrCreated = null;

@@ -11,10 +11,10 @@ import { GlobalService } from '../../utils/global.service';
 export class TestService {
 
   /** list of test folders */
-  public testsList: Array<TestFolder>;
+  public testFoldersList: Array<TestFolder> = null;
 
   /** observable for the test folders list */
-  public observableTestsList = new BehaviorSubject<TestFolder[]>(this.testsList);
+  public observableTestsList = new BehaviorSubject<TestFolder[]>(this.testFoldersList);
 
   constructor(
     private http: HttpClient,
@@ -33,8 +33,8 @@ export class TestService {
       .subscribe(response => {
         if (response) {
           // @ts-ignore
-          this.testsList = response.contentTable;
-          this.observableTestsList.next(this.testsList);
+          this.testFoldersList = response.contentTable;
+          this.observableTestsList.next(this.testFoldersList);
         }
       });
   }
@@ -68,10 +68,7 @@ export class TestService {
 
     // build the data to post
     let formData = '';
-    formData += 'test=' + testfolder.test;
-    // DIRTY : waiting on https://github.com/cerberustesting/cerberus-source/issues/2104
-    formData += '&Active=' + this.globalService.toCerberusString(testfolder.active);
-    formData += '&Description=' + testfolder.description;
+    formData = this.convertTestFolder_2QS(testfolder);
 
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
       callback(response);
@@ -90,11 +87,8 @@ export class TestService {
 
     // build the data to post
     let formData = '';
+    formData = this.convertTestFolder_2QS(testfolder);
     formData += 'originalTest=' + initialtestoldername;
-    formData += '&test=' + testfolder.test;
-    // DIRTY : waiting on https://github.com/cerberustesting/cerberus-source/issues/2104
-    formData += '&Active=' + this.globalService.toCerberusString(testfolder.active);
-    formData += '&Description=' + testfolder.description;
 
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
       callback(response);
@@ -126,6 +120,19 @@ export class TestService {
   testExists(testfoldername: string, testfolderslist: Array<TestFolder>): boolean {
     const search = testfolderslist.find(t => t.test === testfoldername);
     if (search) { return true; } else { return false; }
+  }
+
+  /**
+   * convert a test folder object to a form data (string) to send to the API
+   * DIRTY : waiting on https://github.com/cerberustesting/cerberus-source/issues/2184
+   * @param testfolder correctly formateed object
+   */
+  convertTestFolder_2QS(testfolder: TestFolder): string {
+    let querystring = '';
+    querystring += 'test=' + testfolder.test;
+    querystring += '&Active=' + testfolder.isActive;
+    querystring += '&Description=' + testfolder.description;
+    return querystring;
   }
 
 }

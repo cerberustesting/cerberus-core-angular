@@ -74,7 +74,7 @@ export class TestfolderInteractionComponent implements OnInit {
     this.testFolderForm = this.formBuilder.group({
       test: this.testfolder.test,
       description: this.testfolder.description,
-      active: this.testfolder.active,
+      isActive: this.testfolder.isActive,
       userCreated: this.testfolder.usrCreated,
       dateCreated: this.testfolder.dateCreated,
       userModified: this.testfolder.usrModif,
@@ -122,7 +122,7 @@ export class TestfolderInteractionComponent implements OnInit {
   getTestFolderDifferences(): string[] {
     const differentFields = new Array<string>();
     if (this.testfolder.test !== this.testFolderForm.get('test').value) { differentFields.push('test'); }
-    if (this.testfolder.active !== this.testFolderForm.get('active').value) { differentFields.push('active'); }
+    if (this.testfolder.isActive !== this.testFolderForm.get('active').value) { differentFields.push('active'); }
     if (this.testfolder.description !== this.testFolderForm.get('description').value) { differentFields.push('description'); }
     return differentFields;
   }

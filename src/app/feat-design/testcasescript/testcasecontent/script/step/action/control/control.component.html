@@ -30,7 +30,7 @@
       <!-- END CONTROL ICON -->
 
       <!-- CONTROL DESCRIPTION -->
-      <div class="input-group-prepend" style="width:80%">
+      <div class="input-group-prepend" [ngClass]="getDescriptionWidthClass()">
         <input type="text" name="controlDescription" class="form-control form-control-sm full-height no-background"
           placeholder="No control description" [(ngModel)]="control.description"
           [disabled]="readonly ? 'true' : 'false'">
@@ -56,16 +56,16 @@
     <div class="block-options">
 
       <!-- CONDITION ICON -->
-      <button *ngIf="control.conditionOper != 'always'" type="button" name="conditionOper"
+      <button *ngIf="control.conditionOperator != 'always'" type="button" name="conditionOperator"
         class="btn-block-option info_block_options"
-        [ngbPopover]="control.conditionOper == 'never' ? 'This control is disabled' : 'This control execution is conditioned'"
+        [ngbPopover]="control.conditionOperator == 'never' ? 'This control is disabled' : 'This control execution is conditioned'"
         triggers="mouseenter:mouseleave">
-        <i class="fa fa-fw" [ngClass]="control.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
+        <i class="fa fa-fw" [ngClass]="control.conditionOperator == 'never' ? 'fa-times' : 'fa-question' "></i>
       </button>
       <!-- END CONDITION ICON -->
 
       <!-- FATAL ICON -->
-      <button *ngIf="control.fatal" type="button" name="fatal" class="btn-block-option info_block_options"
+      <button *ngIf="control.isFatal" type="button" name="isFatal" class="btn-block-option info_block_options"
         ngbPopover="If the control fails, the execution stops" triggers="mouseenter:mouseleave">
         <i class="fa fa-fw fa-exclamation"></i>
       </button>

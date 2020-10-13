@@ -8,10 +8,10 @@ export class Control {
     test: string;
 
     /** @description test case id of the control */
-    testCase: string;
+    testcase: string;
 
     /** @description condition operator */
-    conditionOper: string;
+    conditionOperator: string;
 
     /** @description condition value 1 */
     conditionVal1: string;
@@ -38,7 +38,7 @@ export class Control {
     value3: string;
 
     /** @description is the control fatal? */
-    fatal: boolean;
+    isFatal: boolean;
 
     /** @description name of the screenshot file (only in execution) */
     screenshotFilename: string;
@@ -52,31 +52,29 @@ export class Control {
     /** @description id of the parent action */
     actionId: number;
 
-    /** @description unique id of the control.
-     * * used with test folder and test case id to uniquely identify the control executions
-    */
+    /** @description unique id of the control */
     controlId: number;
 
     /** @description flag for deletion */
-    toDelete: boolean;
+    toDelete?: boolean;
 
     constructor(testfolder: string, testcaseid: string, sort: number, stepId: number, actionId: number) {
         this.toDelete = false;
         this.test = testfolder;
-        this.testCase = testcaseid;
+        this.testcase = testcaseid;
         this.stepId = stepId;
         this.actionId = actionId;
         this.control = 'Unknown';
         this.sort = sort;
         this.description = '';
-        this.conditionOper = 'always';
+        this.conditionOperator = 'always';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
         this.conditionVal3 = '';
         this.value1 = '';
         this.value2 = '';
         this.value3 = '';
-        this.fatal = false;
+        this.isFatal = false;
         this.screenshotFilename = '';
     }
 }

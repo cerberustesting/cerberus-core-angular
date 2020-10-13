@@ -70,7 +70,7 @@
         <div class="form-group">
             <label for="activeActionCondition"><i class="fa fa-question mr-2"></i>Condition</label>
             <select class="form-control form-control-sm br-tp-0" id="activeActionCondition" name="activeActionCondition"
-                [(ngModel)]="action.conditionOper" [disabled]="readonly">
+                [(ngModel)]="action.conditionOperator" [disabled]="readonly">
                 <option *ngFor='let condition of conditionsOperators' [ngValue]='condition.value'>
                     {{condition.value}}
                 </option>
@@ -80,11 +80,12 @@
     <!-- END CONDITION OPERATOR -->
 
     <!-- CONDITION VALUE 1 -->
-    <div class="col-md-12" *ngIf="findConditionCrossReference(action.conditionOper).value1">
+    <div class="col-md-12" *ngIf="findConditionCrossReference(action.conditionOperator).value1">
         <div class="form-group">
             <div class="input-group custom-sm">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">{{ findConditionCrossReference(action.conditionOper).value1 }}</span>
+                    <span
+                        class="input-group-text">{{ findConditionCrossReference(action.conditionOperator).value1 }}</span>
                 </div>
                 <input type="text" id="activeActionConditionValue1" class="form-control form-control-sm"
                     name="activeActionConditionValue1" [(ngModel)]="action.conditionVal1" [readonly]="readonly">
@@ -94,11 +95,12 @@
     <!-- END CONDITION VALUE 1 -->
 
     <!-- CONDITION VALUE 2 -->
-    <div class="col-md-12" *ngIf="findConditionCrossReference(action.conditionOper).value2">
+    <div class="col-md-12" *ngIf="findConditionCrossReference(action.conditionOperator).value2">
         <div class="form-group">
             <div class="input-group custom-sm">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">{{ findConditionCrossReference(action.conditionOper).value2 }}</span>
+                    <span
+                        class="input-group-text">{{ findConditionCrossReference(action.conditionOperator).value2 }}</span>
                 </div>
                 <input type="text" id="activeActionConditionValue2" class="form-control form-control-sm"
                     name="activeActionConditionValue2" [(ngModel)]="action.conditionVal2" [readonly]="readonly">
@@ -112,7 +114,7 @@
         <div class="form-group">
             <div class="custom-control custom-switch custom-control-inline ml-1">
                 <input type="checkbox" class="custom-control-input" id="currentActionFatal" name="currentActionFatal"
-                    [checked]="action.fatal" (change)="action.fatal = !action.fatal" [disabled]="readonly">
+                    [checked]="action.isFatal" (change)="action.isFatal = !action.isFatal" [disabled]="readonly">
                 <label class="custom-control-label" for="currentActionFatal">
                     Fatal
                 </label>

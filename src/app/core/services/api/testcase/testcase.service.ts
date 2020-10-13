@@ -157,14 +157,13 @@ export class TestcaseService {
       .then((response: any) => {
         if (response) {
           // DIRTY : waiting for : https://github.com/cerberustesting/cerberus-source/issues/2122
-          response.step.actions = [];
-          response.step.isExecutionForced = response.step.isExecutionForced;
-          response.step.stepId = response.step.step;
-          response.tcsActionList.forEach(action => {
-            action.controls = response.tcsActionControlList.filter(control => control.sequence === action.sequence);
-            response.step.actions.push(action);
+          const rawStep = response.step;
+          rawStep.actions = response.tcsActions;
+          rawStep.actions.forEach(action => {
+            action.controls = response.tcsActionControls.filter(control => control.actionId === action.actionId);
           });
-          callback(response.step);
+          const formattedStep = this.formatStep(rawStep);
+          callback(formattedStep);
         }
       });
   }
@@ -258,6 +257,12 @@ export class TestcaseService {
             // format the steps to match the target model
             tc.steps.forEach(step => {
               step = this.formatStep(step);
+              // step.actions.forEach(action => {
+              //   action = this.formatAction(action);
+              //   action.controls.forEach(control => {
+              //     control = this.formatControl(control);
+              //   });
+              // });
             });
             callback(tc);
             resolve();
@@ -284,7 +289,41 @@ export class TestcaseService {
     formattedStep.isUsedStep = this.globalService.toCerberusBoolean(step.isUsedStep);
     // @ts-ignore
     formattedStep.isLibraryStep = this.globalService.toCerberusBoolean(step.isLibraryStep);
+    // format
+    formattedStep.actions.forEach(action => {
+      action.controls.forEach(control => {
+        control = this.formatControl(control);
+      });
+      action = this.formatAction(action);
+    });
     return formattedStep;
+  }
+
+  /**
+ * format the input step to the current model (dirty)
+ * @param action object to transform
+ */
+  formatAction(action: Action): Action {
+    const formattedAction = action;
+    // @ts-ignore
+    if (action.isFatal === 'PE') {
+      formattedAction.isFatal = true;
+    } else {
+      formattedAction.isFatal = false;
+    }
+    return formattedAction;
+  }
+
+  /**
+ * format the input step to the current model (dirty)
+ * @param control object to transform
+ */
+  formatControl(control: Control): Control {
+    const formattedControl = control;
+    // @ts-ignore
+    formattedControl.isFatal = this.globalService.toCerberusBoolean(control.isFatal);
+
+    return formattedControl;
   }
 
   /**
@@ -446,7 +485,7 @@ export class TestcaseService {
         newAction.toDelete = action.toDelete || false;
         // test folder and test case id are empty for new action
         newAction.test = action.test;
-        newAction.testcase = action.testCase;
+        newAction.testcase = action.testcase;
         newAction.step = action.stepId;
         // add the sequence only if it defined
         if (action.actionId) { newAction.sequence = action.actionId; }
@@ -458,8 +497,8 @@ export class TestcaseService {
         // wrong mapping property = value 2
         newAction.property = action.value2;
         newAction.value3 = action.value3;
-        newAction.forceExeStatus = action.fatal;
-        newAction.conditionOper = action.conditionOper;
+        newAction.forceExeStatus = action.isFatal;
+        newAction.conditionOper = action.conditionOperator;
         newAction.conditionVal1 = action.conditionVal1;
         newAction.conditionVal2 = action.conditionVal2;
         newAction.conditionVal3 = action.conditionVal3;
@@ -470,7 +509,7 @@ export class TestcaseService {
           newControl = {};
           newControl.toDelete = control.toDelete || false;
           newControl.test = control.test;
-          newControl.testCase = control.testCase;
+          newControl.testCase = control.testcase;
           newControl.step = control.stepId;
           if (control.actionId) { newControl.actionId = control.actionId; }
           if (control.controlId) { newControl.controlId = control.controlId; }
@@ -480,8 +519,8 @@ export class TestcaseService {
           newControl.value1 = control.value1;
           newControl.value2 = control.value2;
           newControl.value3 = control.value3;
-          newControl.fatal = control.fatal;
-          newControl.conditionOper = control.conditionOper;
+          newControl.fatal = control.isFatal;
+          newControl.conditionOper = control.conditionOperator;
           newControl.conditionVal1 = control.conditionVal1;
           newControl.conditionVal2 = control.conditionVal2;
           newControl.conditionVal3 = control.conditionVal3;

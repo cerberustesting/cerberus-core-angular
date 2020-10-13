@@ -10,10 +10,10 @@ export class Action {
     test: string;
 
     /** @description test of the action (only relevant with libray steps)*/
-    testCase: string;
+    testcase: string;
 
     /** @description action condition operator */
-    conditionOper: string;
+    conditionOperator: string;
 
     /** @description action condition value 1 */
     conditionVal1: string;
@@ -42,34 +42,34 @@ export class Action {
     /** @description position (index) of the action */
     sort: number;
 
+    /** @description boolean to force the execution of the step */
+    isFatal: boolean;
+
     /** @description unique id of the action */
     actionId: number;
 
     /** @description step id of this action */
     stepId: number;
 
-    /** @description boolean to force the execution of the step */
-    fatal: boolean;
-
     /** @description location of the screenshot (only relevant in execution) */
     screenshotFilename: string;
-
-    /** @description deletion flag for the action */
-    toDelete: boolean;
 
     /** @description list of controls */
     controls: Array<Control>;
 
+    /** @description deletion flag for the action */
+    toDelete?: boolean;
+
     constructor(testfolder: string, testcaseid: string, sort: number, stepId: number) {
         this.toDelete = false;
         this.test = testfolder;
-        this.testCase = testcaseid;
+        this.testcase = testcaseid;
         this.stepId = stepId;
         this.sort = sort;
         this.description = '';
         this.action = 'doNothing';
-        this.fatal = true;
-        this.conditionOper = 'always';
+        this.isFatal = true;
+        this.conditionOperator = 'always';
         this.conditionVal1 = '';
         this.conditionVal2 = '';
         this.conditionVal3 = '';

@@ -49,6 +49,7 @@ export class ControlComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     // by default, the add action/control buttons aren't showed
     this.showControlAddButtons = false;
 
@@ -88,4 +89,14 @@ export class ControlComponent implements OnInit {
   hasControlCrossReference(control: string): boolean { return this.CrossReferenceService.hasCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
   findControlCrossReference(control: string): ICrossReference { return this.CrossReferenceService.findCrossReference(control, this.CrossReferenceService.crossReference_ControlValue); }
 
+  getDescriptionWidthClass(): string {
+    if (!this.readonly) {
+      if (this.showControlAddButtons) {
+        return 'desc-collapsed-width';
+      } else {
+        return 'desc-full-width';
+      }
+    }
+    return 'desc-full-width';
+  }
 }

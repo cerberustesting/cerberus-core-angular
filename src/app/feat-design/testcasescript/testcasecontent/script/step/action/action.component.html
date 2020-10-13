@@ -49,8 +49,7 @@
       </div>
 
       <!-- ADD ACTION OR CONTROLS BUTTONS -->
-      <!-- *ngIf="showActionAddButtons && !readonly" -->
-      <div class="block-options" *ngIf="showActionAddButtons && !readonly">
+      <div *ngIf="showActionAddButtons && !readonly" class="block-options">
 
         <button type="button" name="addActionFromAction" class="btn btn-sm btn-primary mr-1"
           (click)="addAction(action.sort)"> A<i class="fa fa-fw fa-plus"></i>
@@ -67,16 +66,16 @@
       <div class="block-options">
 
         <!-- CONDITION ICON -->
-        <button type="button" name="conditionOper" *ngIf="action.conditionOper != 'always'"
+        <button type="button" name="conditionOperator" *ngIf="action.conditionOperator != 'always'"
           class="btn-block-option info_block_options"
-          [ngbPopover]="action.conditionOper == 'never' ? 'This action is disabled' : 'This action execution is conditioned'"
+          [ngbPopover]="action.conditionOperator == 'never' ? 'This action is disabled' : 'This action execution is conditioned'"
           triggers="mouseenter:mouseleave">
-          <i class="fa fa-fw" [ngClass]="action.conditionOper == 'never' ? 'fa-times' : 'fa-question' "></i>
+          <i class="fa fa-fw" [ngClass]="action.conditionOperator == 'never' ? 'fa-times' : 'fa-question' "></i>
         </button>
         <!-- END CONDITION ICON -->
 
         <!-- FORCE ICON -->
-        <button type="button" name="fatal" *ngIf="action.fatal" class="btn-block-option info_block_options"
+        <button type="button" name="fatal" *ngIf="action.isFatal" class="btn-block-option info_block_options"
           ngbPopover="If the action fails, the execution stops" triggers="mouseenter:mouseleave">
           <i class="fa fa-fw fa fa-exclamation"></i>
         </button>

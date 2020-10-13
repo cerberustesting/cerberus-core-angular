@@ -2,7 +2,7 @@
 
     <!-- UNLINK BUTTON -->
     <div *ngIf="step.readonly" class="col-md-12 text-center">
-        <button type="button" class="btn btn-rounded btn-alt-danger mr-1 mb-3" (click)="unlinkStep()"
+        <button type="button" class="btn btn-sm btn-rounded btn-alt-danger mr-1 mb-3" (click)="unlinkStep()"
             ngbPopover="This step's content is from another test case" triggers="mouseenter:mouseleave">
             <i class="fa fa-fw fa-unlock mr-2"></i>Unlink
         </button>
@@ -11,7 +11,7 @@
 
     <!-- REMOVE FROM LIBRARY BUTTON -->
     <div *ngIf="step.isLibraryStep" class="col-md-12 text-center">
-        <button type="button" class="btn btn-rounded btn-alt-danger mr-1 mb-3" (click)="removeStepFromLibrary()"
+        <button type="button" class="btn btn-sm btn-rounded btn-alt-danger mr-1 mb-3" (click)="removeStepFromLibrary()"
             ngbPopover="This step is in Library" triggers="mouseenter:mouseleave">
             <i class="fa fa-fw fa-eject mr-2"></i>
             Remove from Library
@@ -22,7 +22,7 @@
 
     <!-- ADD TO LIBRARY BUTTON -->
     <div *ngIf="step.isLibraryStep === false && step.isUsedStep === false" class="col-md-12 text-center">
-        <button type="button" class="btn btn-rounded btn-alt-primary mr-1 mb-3" (click)="addToLibrary()">
+        <button type="button" class="btn btn-sm btn-rounded btn-alt-primary mr-1 mb-3" (click)="addToLibrary()">
             <i class="fa fa-fw fa-share mr-2"></i>
             Add this step to Library
         </button>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
 import { Step } from 'src/app/shared/model/back/testcase/step.model';
 
 @Component({
@@ -20,7 +21,7 @@ export class TestfoldergroupComponent {
   /** boolean to handle the display of the steps content */
   public showSteps: boolean;
 
-  constructor() { }
+  constructor(private testcaseService: TestcaseService) { }
 
   /**
    * add or remove a step to the select steps list
@@ -37,10 +38,14 @@ export class TestfoldergroupComponent {
 
   /**
    * add a step to the selection
-   * @param step step object to select
+   * @param rawStep step object to select
    */
-  selectAStep(step: Step): void {
-    this.selectedSteps.push(step);
+  selectAStep(rawStep: Step): void {
+    // @ts-ignore
+    this.testcaseService.getStep(rawStep.test, rawStep.testCase, rawStep.stepId, (step: Step) => {
+      this.selectedSteps.push(this.testcaseService.formatStep(step));
+    });
+
   }
 
   /**

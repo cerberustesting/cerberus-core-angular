@@ -90,13 +90,13 @@ export class TestCase {
     conditionOperator: string;
 
     /** @description test case activation condition first value */
-    conditionVal1: string;
+    conditionValue1: string;
 
     /** @description test case activation condition second value */
-    conditionVal2: string;
+    conditionValue2: string;
 
     /** @description test case activation condition third value */
-    conditionVal3: string;
+    conditionValue3: string;
 
     /** @description specific user-agent for the test case */
     userAgent: string;
@@ -180,9 +180,9 @@ export class TestCase {
         this.targetMajor = '';
         this.targetMinor = '';
         this.conditionOperator = '';
-        this.conditionVal1 = '';
-        this.conditionVal2 = '';
-        this.conditionVal3 = '';
+        this.conditionValue1 = '';
+        this.conditionValue2 = '';
+        this.conditionValue3 = '';
         this.userAgent = '';
         this.screenSize = '';
         this.labels = [];

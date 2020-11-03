@@ -16,13 +16,13 @@ export class Action {
     conditionOperator: string;
 
     /** @description action condition value 1 */
-    conditionVal1: string;
+    conditionValue1: string;
 
     /** @description action condition value 2 */
-    conditionVal2: string;
+    conditionValue2: string;
 
     /** @description action condition value 3 */
-    conditionVal3: string;
+    conditionValue3: string;
 
     /** @description action type */
     action: string;
@@ -70,9 +70,9 @@ export class Action {
         this.action = 'doNothing';
         this.isFatal = true;
         this.conditionOperator = 'always';
-        this.conditionVal1 = '';
-        this.conditionVal2 = '';
-        this.conditionVal3 = '';
+        this.conditionValue1 = '';
+        this.conditionValue2 = '';
+        this.conditionValue3 = '';
         this.value1 = '';
         this.value2 = '';
         this.value3 = '';

@@ -253,17 +253,9 @@ export class TestcaseService {
           .get<TestCase>(environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&testCase=' + testcase + '&withSteps=true')
           .toPromise()
           .then((result: any) => {
-            const tc = result.contentTable[0];
-            // format the steps to match the target model
-            tc.steps.forEach(step => {
-              step = this.formatStep(step);
-              // step.actions.forEach(action => {
-              //   action = this.formatAction(action);
-              //   action.controls.forEach(control => {
-              //     control = this.formatControl(control);
-              //   });
-              // });
-            });
+            let tc = result.contentTable[0];
+            // format the test case to match the targeted model
+            tc = this.formatTestCase(tc);
             callback(tc);
             resolve();
           },
@@ -278,18 +270,33 @@ export class TestcaseService {
   }
 
   /**
+ * format the input test case to the current model (dirty)
+ * @param testcase object to transform
+ */
+  formatTestCase(testcase: any): TestCase {
+    const formattedTestCase = testcase;
+    formattedTestCase.conditionValue1 = testcase.conditionVal1;
+    formattedTestCase.conditionValue2 = testcase.conditionVal2;
+    formattedTestCase.conditionValue3 = testcase.conditionVal3;
+    formattedTestCase.steps.forEach(step => {
+      step = this.formatStep(step);
+    });
+    return testcase;
+  }
+
+  /**
    * format the input step to the current model (dirty)
    * @param step object to transform
    */
-  formatStep(step: Step): Step {
+  formatStep(step: any): Step {
     const formattedStep = step;
-    // @ts-ignore
     formattedStep.isExecutionForced = this.globalService.toCerberusBoolean(step.isExecutionForced);
-    // @ts-ignore
-    formattedStep.isUsedStep = this.globalService.toCerberusBoolean(step.isUsedStep);
-    // @ts-ignore
+    formattedStep.isUsingLibraryStep = this.globalService.toCerberusBoolean(step.isUsedStep);
     formattedStep.isLibraryStep = this.globalService.toCerberusBoolean(step.isLibraryStep);
-    // format
+    formattedStep.conditionValue1 = formattedStep.conditionVal1;
+    formattedStep.conditionValue2 = formattedStep.conditionVal2;
+    formattedStep.conditionValue3 = formattedStep.conditionVal3;
+    // format its actions and steps
     formattedStep.actions.forEach(action => {
       action.controls.forEach(control => {
         control = this.formatControl(control);
@@ -303,9 +310,11 @@ export class TestcaseService {
  * format the input step to the current model (dirty)
  * @param action object to transform
  */
-  formatAction(action: Action): Action {
+  formatAction(action: any): Action {
     const formattedAction = action;
-    // @ts-ignore
+    formattedAction.conditionValue1 = action.conditionVal1;
+    formattedAction.conditionValue2 = action.conditionVal2;
+    formattedAction.conditionValue3 = action.conditionVal3;
     if (action.isFatal === 'PE') {
       formattedAction.isFatal = true;
     } else {
@@ -318,11 +327,12 @@ export class TestcaseService {
  * format the input step to the current model (dirty)
  * @param control object to transform
  */
-  formatControl(control: Control): Control {
+  formatControl(control: any): Control {
     const formattedControl = control;
-    // @ts-ignore
+    formattedControl.conditionValue1 = control.conditionVal1;
+    formattedControl.conditionValue2 = control.conditionVal2;
+    formattedControl.conditionValue3 = control.conditionVal3;
     formattedControl.isFatal = this.globalService.toCerberusBoolean(control.isFatal);
-
     return formattedControl;
   }
 
@@ -465,16 +475,16 @@ export class TestcaseService {
       if (step.stepId) { newStep.step = step.stepId; }
       newStep.sort = step.sort;
       newStep.description = step.description;
-      newStep.isUsedStep = step.isUsedStep;
+      newStep.isUsedStep = step.isUsingLibraryStep;
       newStep.libraryStepTest = step.libraryStepTest;
-      newStep.libraryStepTestCase = step.libraryStepTestCase;
+      newStep.libraryStepTestCase = step.libraryStepTestcase;
       newStep.libraryStepStepId = step.libraryStepStepId;
       newStep.isLibraryStep = step.isLibraryStep;
       newStep.loop = step.loop;
       newStep.conditionOperator = step.conditionOperator;
-      newStep.conditionVal1 = step.conditionVal1;
-      newStep.conditionVal2 = step.conditionVal2;
-      newStep.conditionVal3 = step.conditionVal3;
+      newStep.conditionVal1 = step.conditionValue1;
+      newStep.conditionVal2 = step.conditionValue2;
+      newStep.conditionVal3 = step.conditionValue3;
       newStep.isExecutionForced = step.isExecutionForced;
       newStep.actionArr = [];
       step.actions.forEach(action => {
@@ -499,9 +509,9 @@ export class TestcaseService {
         newAction.value3 = action.value3;
         newAction.forceExeStatus = action.isFatal;
         newAction.conditionOper = action.conditionOperator;
-        newAction.conditionVal1 = action.conditionVal1;
-        newAction.conditionVal2 = action.conditionVal2;
-        newAction.conditionVal3 = action.conditionVal3;
+        newAction.conditionVal1 = action.conditionValue1;
+        newAction.conditionVal2 = action.conditionValue2;
+        newAction.conditionVal3 = action.conditionValue3;
         newAction.screenshotFileName = action.screenshotFilename;
         action.controls.forEach(control => {
           // create a new control object (because the mapping is different)
@@ -521,9 +531,9 @@ export class TestcaseService {
           newControl.value3 = control.value3;
           newControl.fatal = control.isFatal;
           newControl.conditionOper = control.conditionOperator;
-          newControl.conditionVal1 = control.conditionVal1;
-          newControl.conditionVal2 = control.conditionVal2;
-          newControl.conditionVal3 = control.conditionVal3;
+          newControl.conditionVal1 = control.conditionValue1;
+          newControl.conditionVal2 = control.conditionValue2;
+          newControl.conditionVal3 = control.conditionValue3;
           newControl.screenshotFileName = control.screenshotFilename;
           newAction.controlArr.push(newControl);
         });

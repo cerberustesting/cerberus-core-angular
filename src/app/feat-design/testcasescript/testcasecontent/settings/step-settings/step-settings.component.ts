@@ -73,12 +73,11 @@ export class StepSettingsComponent implements OnInit, OnChanges {
     modalRef.componentInstance.subtitle2 = 'Your test case will be saved right away';
     modalRef.componentInstance.modalType = ModalType.Confirm;
     modalRef.componentInstance.confirmFunction = () => {
-      this.step.isUsedStep = false;
+      this.step.isUsingLibraryStep = false;
       this.step.readonly = false;
       this.step.libraryStepTest = undefined;
-      this.step.libraryStepTestCase = undefined;
+      this.step.libraryStepTestcase = undefined;
       this.step.libraryStepStepId = undefined;
-      this.step.useStepStepSort = undefined;
       this.testcaseService.saveTestCase(this.testcase, (response: any) => {
         console.log(response);
       });
@@ -105,7 +104,7 @@ export class StepSettingsComponent implements OnInit, OnChanges {
    * add the current step to the library
    */
   addToLibrary(): void {
-    this.step.isUsedStep = false;
+    this.step.isUsingLibraryStep = false;
     this.step.isLibraryStep = true;
   }
 

@@ -30,22 +30,22 @@ export class Label {
     description: string;
 
     /** @description id of the optional parent label id */
-    parentLabelID: number;
+    parentLabelId: number;
 
     /** @description system assigned for the label */
     system: string;
 
     /** @description label long description */
-    longDesc: string;
+    longDescription: string;
 
     /** @description requirement type (public invariant) */
-    reqType: string;
+    requirementType: string;
 
     /** @description requirement criticity (public invariant) */
-    reqCriticity: string;
+    requirementCriticity: string;
 
     /** @description requirement status (public invariant) */
-    reqStatus: string;
+    requirementStatus: string;
 
     /** @description audit field : label creation date */
     dateCreated: string;
@@ -64,12 +64,12 @@ export class Label {
         this.type = LabelType.sticker;
         this.color = '#2980b9';
         this.description = '';
-        this.parentLabelID = null;
+        this.parentLabelId = null;
         this.system = '';
-        this.longDesc = '';
-        this.reqType = '';
-        this.reqStatus = '';
-        this.reqStatus = '';
+        this.longDescription = '';
+        this.requirementType = '';
+        this.requirementStatus = '';
+        this.requirementStatus = '';
     }
 }
 

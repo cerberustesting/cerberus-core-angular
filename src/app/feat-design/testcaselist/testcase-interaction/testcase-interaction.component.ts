@@ -176,9 +176,9 @@ export class TestcaseInteractionComponent implements OnInit {
         targetMinor: new FormControl(this.testcaseheader.targetMinor),
         targetMajor: new FormControl(this.testcaseheader.targetMajor),
         conditionOperator: new FormControl(this.testcaseheader.conditionOperator),
-        conditionVal1: new FormControl(this.testcaseheader.conditionVal1),
-        conditionVal2: new FormControl(this.testcaseheader.conditionVal2),
-        conditionVal3: new FormControl(this.testcaseheader.conditionVal3),
+        conditionVal1: new FormControl(this.testcaseheader.conditionValue1),
+        conditionVal2: new FormControl(this.testcaseheader.conditionValue2),
+        conditionVal3: new FormControl(this.testcaseheader.conditionValue3),
         userAgent: new FormControl(this.testcaseheader.userAgent),
         screenSize: new FormControl(this.testcaseheader.screenSize)
       }),
@@ -203,7 +203,7 @@ export class TestcaseInteractionComponent implements OnInit {
       // find the last unused test case id
       this.newTestCase = this.testcaseService.getLatestTestCaseId(tcList, newTest);
       // edit the test case form value
-      this.testcaseHeaderForm.controls['testCase'].setValue(this.newTestCase);
+      this.testcaseHeaderForm.controls['testcase'].setValue(this.newTestCase);
     }, newTest);
   }
 

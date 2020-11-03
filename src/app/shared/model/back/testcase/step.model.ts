@@ -22,13 +22,13 @@ export class Step {
     conditionOperator: string;
 
     /** @description condition value 1 */
-    conditionVal1: string;
+    conditionValue1: string;
 
     /** @description condition value 2 */
-    conditionVal2: string;
+    conditionValue2: string;
 
     /** @description condition value 3 */
-    conditionVal3: string;
+    conditionValue3: string;
 
     /** @description boolean to force the execution of the step */
     isExecutionForced: boolean;
@@ -37,7 +37,7 @@ export class Step {
     loop: string;
 
     /** @description is the step used imported from another test case */
-    isUsedStep: boolean;
+    isUsingLibraryStep: boolean;
 
     /** @description is the step the reference */
     isLibraryStep: boolean;
@@ -49,13 +49,10 @@ export class Step {
     libraryStepTest: string;
 
     /** @description test case id of the use step */
-    libraryStepTestCase: string;
+    libraryStepTestcase: string;
 
     /** @description unique id of the reference step (relevant only if useStep = true) */
     libraryStepStepId: number;
-
-    /** @description index of the library step that reference this step (relevant only if useStep = true) */
-    useStepStepSort: number;
 
     /** @description index of the step */
     sort: number;
@@ -78,13 +75,13 @@ export class Step {
         this.testcase = testcaseid;
         this.sort = sort;
         this.description = '';
-        this.isUsedStep = false;
+        this.isUsingLibraryStep = false;
         this.isLibraryStep = false;
         this.loop = 'onceIfConditionTrue';
         this.conditionOperator = 'always';
-        this.conditionVal1 = '';
-        this.conditionVal2 = '';
-        this.conditionVal3 = '';
+        this.conditionValue1 = '';
+        this.conditionValue2 = '';
+        this.conditionValue3 = '';
         this.isExecutionForced = false;
         this.actions = new Array<Action>();
     }

@@ -25,13 +25,13 @@ export class SelectedstepComponent implements OnInit {
       // add the missing information to this component step
       this.step.toDelete = false;
       this.step.libraryStepTest = step.test;
-      this.step.libraryStepTestCase = step.testcase;
+      this.step.libraryStepTestcase = step.testcase;
       this.step.libraryStepStepId = step.stepId;
       this.step.loop = step.loop;
       this.step.conditionOperator = step.conditionOperator;
-      this.step.conditionVal1 = step.conditionVal1;
-      this.step.conditionVal2 = step.conditionVal2;
-      this.step.conditionVal3 = step.conditionVal3;
+      this.step.conditionValue1 = step.conditionValue1;
+      this.step.conditionValue2 = step.conditionValue2;
+      this.step.conditionValue3 = step.conditionValue3;
       this.step.isExecutionForced = step.isExecutionForced;
       this.step.actions = step.actions;
     });

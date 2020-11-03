@@ -148,7 +148,7 @@ export class LibraryStepsModalComponent implements OnInit {
         // add the correct test folder & test case id
         step.test = this.testcase.test;
         step.testcase = this.testcase.testcase;
-        step.isUsedStep = true;
+        step.isUsingLibraryStep = true;
         step.isLibraryStep = false;
         // remove the stepId attribute since it's a new step
         step.stepId = undefined;

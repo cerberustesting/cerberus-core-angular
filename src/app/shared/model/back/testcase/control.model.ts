@@ -14,13 +14,13 @@ export class Control {
     conditionOperator: string;
 
     /** @description condition value 1 */
-    conditionVal1: string;
+    conditionValue1: string;
 
     /** @description condition value 2 */
-    conditionVal2: string;
+    conditionValue2: string;
 
     /** @description condition value 3 */
-    conditionVal3: string;
+    conditionValue3: string;
 
     /** @description description od the control */
     description: string;
@@ -68,9 +68,9 @@ export class Control {
         this.sort = sort;
         this.description = '';
         this.conditionOperator = 'always';
-        this.conditionVal1 = '';
-        this.conditionVal2 = '';
-        this.conditionVal3 = '';
+        this.conditionValue1 = '';
+        this.conditionValue2 = '';
+        this.conditionValue3 = '';
         this.value1 = '';
         this.value2 = '';
         this.value3 = '';

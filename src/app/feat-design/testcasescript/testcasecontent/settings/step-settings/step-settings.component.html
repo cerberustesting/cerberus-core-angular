@@ -21,7 +21,7 @@
     <!-- END REMOVE FROM LIBRARY BUTTON -->
 
     <!-- ADD TO LIBRARY BUTTON -->
-    <div *ngIf="step.isLibraryStep === false && step.isUsedStep === false" class="col-md-12 text-center">
+    <div *ngIf="step.isLibraryStep === false && step.isUsingLibraryStep === false" class="col-md-12 text-center">
         <button type="button" class="btn btn-sm btn-rounded btn-alt-primary mr-1 mb-3" (click)="addToLibrary()">
             <i class="fa fa-fw fa-share mr-2"></i>
             Add this step to Library

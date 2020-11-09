@@ -74,5 +74,6 @@ export enum COLUMN_TYPE {
  */
 export enum FILTER_MODE {
     DROPDOWN = 'DROPDOWN',
-    SEARCH_FIELD = 'SEARCH_FIELD'
+    SEARCH_FIELD = 'SEARCH_FIELD',
+    SWITCH = 'SWITCH'
 }

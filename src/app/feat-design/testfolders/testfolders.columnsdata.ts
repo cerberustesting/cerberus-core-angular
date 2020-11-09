@@ -33,7 +33,7 @@ export const TestFoldersColumnsData: Column[] = [
     },
     {
         displayName: 'Active',
-        apiName: 'active',
+        apiName: 'isActive',
         contentName: 'isActive',
         active: true,
         flexGrow: 100,
@@ -43,7 +43,7 @@ export const TestFoldersColumnsData: Column[] = [
         multiple: true,
         placeholder: 'Is the Test Active?',
         sSearch: [],
-        filterMode: FILTER_MODE.DROPDOWN,
+        filterMode: FILTER_MODE.SWITCH,
         type: COLUMN_TYPE.BOOLEAN
     },
     {

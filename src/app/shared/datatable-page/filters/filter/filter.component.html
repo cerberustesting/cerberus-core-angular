@@ -80,6 +80,19 @@
       </div>
       <!-- END SELECT, TEXT OR  CHOICES -->
 
+      <div *ngIf="column.filterMode==='SWITCH'" class="input-group-prepend" style="min-width: 50%">
+        <div class="form-check form-check-inline full-width">
+
+          <div class="custom-control custom-switch custom-control-primary">
+            <input id="filter_active" type="checkbox" class="custom-control-input" name="filter_active"
+              [(ngModel)]="column.sSearch[0]" (change)="debug()">
+            <label class="custom-control-label" for="filter_active">column.sSearch:
+              {{column.sSearch}}</label>
+          </div>
+
+        </div>
+      </div>
+
     </div>
     <!-- END LEFT SECTION-->
 

@@ -88,7 +88,7 @@ export class TestService {
     // build the data to post
     let formData = '';
     formData = this.convertTestFolder_2QS(testfolder);
-    formData += 'originalTest=' + initialtestoldername;
+    formData += '&originalTest=' + initialtestoldername;
 
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
       callback(response);

@@ -64,7 +64,7 @@
                                 </button>
                             </div>
                             <a *ngFor="let column of columns" class="dropdown-item link-cursor"
-                                (click)="toggleColumn(column)">
+                                (click)="toggleColumn(column)" [id]="'column_'+column.contentName">
                                 <i *ngIf="column.active" class="fa fa-check-circle text-primary-dark"></i>
                                 <span *ngIf="!column.active" class="ml-1">{{column.displayName}}</span>
                                 <span *ngIf="column.active" class="text-primary-dark ml-1">{{column.displayName}}</span>

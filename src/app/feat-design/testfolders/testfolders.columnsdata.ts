@@ -44,7 +44,8 @@ export const TestFoldersColumnsData: Column[] = [
         placeholder: 'Is the Test Active?',
         sSearch: [],
         filterMode: FILTER_MODE.SWITCH,
-        type: COLUMN_TYPE.BOOLEAN
+        type: COLUMN_TYPE.BOOLEAN,
+        sortable: false
     },
     {
         displayName: 'Creation Date',

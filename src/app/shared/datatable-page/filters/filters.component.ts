@@ -86,10 +86,8 @@ export class FiltersComponent implements OnInit {
    *  * adds a slight wait to send the search term
    */
   keypressOnGlobalSearch(): void {
-    // send it only if it has more than 2 caracters, after 800ms
-    if (this.globalSearch.length > 2) {
-      setTimeout(() => this.sendGlobalSearchContent(), 800);
-    }
+    // send it after 800ms
+    setTimeout(() => this.sendGlobalSearchContent(), 800);
   }
 
   // enable a filter with no value

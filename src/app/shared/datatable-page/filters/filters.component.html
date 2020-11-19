@@ -54,11 +54,11 @@
                                 {{ getActiveColumns().length }}
                             </span>
                         </button>
-                        <div class="dropdown-menu filtersDropdown" aria-labelledby="dropdown-default-primary"
+                        <div id="columnsList" class="dropdown-menu filtersDropdown" aria-labelledby="dropdown-default-primary"
                             x-placement="bottom-start"
                             style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                             <div class="ml-1 mr-1 mb-1">
-                                <button type="button" class="col-12 btn btn-sm btn-secondary mr-2 pt-1 pb-1"
+                                <button id="resetColumns" type="button" class="col-12 btn btn-sm btn-secondary mr-2 pt-1 pb-1"
                                     (click)="resetDefaultColumns()">
                                     <i class="fa fa-fw fa-redo-alt mr-1"></i>Reset
                                 </button>

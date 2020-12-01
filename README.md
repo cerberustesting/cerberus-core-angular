@@ -1,6 +1,8 @@
 # cerberus-angular
 Brand new Cerberus front-end implementation
 
+[![Test Status](https://prod.cerberus-testing.org/ResultCIV003?campaign=FrontRegression&outputformat=svg&t=180131)](https://prod.cerberus-testing.org/)
+
 # get started
 
 - `npm install`

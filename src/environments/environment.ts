@@ -13,7 +13,7 @@ const keycloakConfig: any = {
 };
 
 // CERBERUS API ENDPOINT
-const API_endpoint = 'https://qa.cerberus-testing.org';
+const API_endpoint = 'https://qa.cerberus-testing.com';
 
 // HTTP HEADERS FOR API QUERY
 const httpOptions = {

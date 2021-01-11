@@ -16,7 +16,7 @@ const httpOptions = {
 };
 
 // CERBERUS API ENDPOINT
-const API_endpoint = 'https://qa.cerberus-testing.org';
+const API_endpoint = 'https://qa.cerberus-testing.com';
 
 export const environment = {
   production: true,

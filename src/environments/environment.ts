@@ -8,8 +8,8 @@ import { HttpHeaders } from '@angular/common/http';
 // KEYCLOAK INFORMATION
 const keycloakConfig: any = {
   url: 'https://auth.cerberus-testing.org/auth',
-  realm: 'CerberusQA',
-  clientId: 'cerberus-angular'
+  realm: 'R-qa',
+  clientId: 'Cerberus-angular'
 };
 
 // CERBERUS API ENDPOINT

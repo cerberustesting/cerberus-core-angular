@@ -199,12 +199,10 @@ export class TestcaseInteractionComponent implements OnInit {
     // get the new selected test folder (from the form)
     const newTest = this.testcaseHeaderForm.get('test').value;
     // fetch the test cases list for that test folder
-    this.testcaseService.getTestCases((tcList: TestCase[]) => {
-      // find the last unused test case id
-      this.newTestCase = this.testcaseService.getLatestTestCaseId(tcList, newTest);
-      // edit the test case form value
-      this.testcaseHeaderForm.controls['testcase'].setValue(this.newTestCase);
-    }, newTest);
+    this.testcaseService.getMaxTestCase(newTest, (nextAvailableTC: string) => {
+      // set the test case form value as the next available one for the new test
+      this.testcaseHeaderForm.controls['testcase'].setValue(nextAvailableTC);
+    });
   }
 
   /** refresh data that depends on a testcaseheader  */

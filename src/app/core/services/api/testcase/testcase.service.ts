@@ -33,9 +33,6 @@ export class TestcaseService {
   // full testcase object
   testcase: TestCase = null;
 
-  // max id that can be used for a test folder
-  maxTestCase: number = null;
-
   // list of library steps
   libraryStepList: Array<Step> = new Array<Step>();
 
@@ -44,7 +41,6 @@ export class TestcaseService {
   observableTestCasesList = new BehaviorSubject<TestCase[]>(this.testcasesList);
   observableTestDataLib = new BehaviorSubject<any[]>(this.testcasesList);
   observableTestCase = new BehaviorSubject<TestCase>(this.testcase);
-  observableMaxTestCaseID = new BehaviorSubject<number>(this.maxTestCase);
   observableLibraryStepList = new BehaviorSubject<Step[]>(this.libraryStepList);
   observableTestCasesList4Dependencies = new BehaviorSubject<TestCase[]>(this.testCasesList4Dependencies);
 
@@ -166,32 +162,6 @@ export class TestcaseService {
           callback(formattedStep);
         }
       });
-  }
-
-  // return the "highest" test case ID for a test used for the interaction
-  getLatestTestCaseId(testcaselist: Array<TestCase>, test: string): string {
-    // create an array with only the testCase ID
-    const testCasesList = new Array<string>();
-    // @ts-ignore
-    testcaselist.forEach(tc => {
-      testCasesList.push(tc.testcase);
-    });
-    // get only the testcases with the correct syntax (e.g. 0001A)
-    const testCasesWithCorrectSyntaxList: Array<string> = testCasesList.filter(tc => this.isATestCaseIdIsIncremental(tc) === true);
-    // get only the numbers of the previous list
-    const testCaseIndexList = new Array<number>();
-    testCasesWithCorrectSyntaxList.forEach(tc => {
-      testCaseIndexList.push(Number(tc.substr(0, tc.length - 1)));
-    });
-    const maxIndex = Math.max(...testCaseIndexList) + 1;
-    // get the lenth of the maxindex (e.g. 22 => 2)
-    const maxIndexLength = String(maxIndex).length;
-    switch (maxIndexLength) {
-      case 1: { return '000' + maxIndex + 'A'; }
-      case 2: { return '00' + maxIndex + 'A'; }
-      case 3: { return '0' + maxIndex + 'A'; }
-      case 4: { return maxIndex + 'A'; }
-    }
   }
 
   // return true if the testcase ID is in the incremental format
@@ -366,13 +336,12 @@ export class TestcaseService {
    * get the latest incremental ID for a test folder
    * @param test test folder name
   */
-  getMaxTestCase(test: string): void {
+  getMaxTestCase(test: string, callback: (nextAvailableTestcaseId: string) => void): void {
     const url = environment.cerberus_api_url + '/ReadTestCase?test=' + test + '&getMaxTC=true';
     this.http.get<any[]>(url)
       .subscribe(response => {
         // @ts-ignore
-        const maxTestCase = response.maxTestCase;
-        this.observableMaxTestCaseID.next(maxTestCase);
+        callback(response.nextAvailableTestcaseId);
       });
   }
 

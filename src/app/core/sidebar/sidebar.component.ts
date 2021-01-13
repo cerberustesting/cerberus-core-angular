@@ -132,9 +132,9 @@ export class SidebarComponent implements OnInit {
                 authorized: this.userService.isUserAuthorizedForGroup(this.user, UserGroup.TestRO)
               },
               {
-                name: 'Test Case List',
+                name: 'Test Cases List',
                 expanded: false,
-                id: 'tcListMenu',
+                id: 'testCasesListMenu',
                 link: '/design/testcaseslist',
                 authorized: this.userService.isUserAuthorizedForGroup(this.user, UserGroup.TestRO)
               },

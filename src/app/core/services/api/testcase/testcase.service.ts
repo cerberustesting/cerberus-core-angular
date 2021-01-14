@@ -196,12 +196,12 @@ export class TestcaseService {
       .pipe(tap(
         data => {
           if (data.messageType === 'OK') {
-            this.notificationService.createANotification('Testcase created', NotificationStyle.Success);
+            this.notificationService.createANotification('Testcase created', NotificationStyle.Success, 'notification_testCaseCreated');
           } else {
-            this.notificationService.createANotification(data.message, NotificationStyle.Warning);
+            this.notificationService.createANotification(data.message, NotificationStyle.Warning, 'notification_testCaseCreationWarning');
           }
         },
-        error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error)
+        error => this.notificationService.createANotification('Error : ' + error.status, NotificationStyle.Error, 'notification_testCaseCreationError')
       ));
   }
 

@@ -67,8 +67,7 @@ export class TestService {
     const url = environment.cerberus_api_url + '/CreateTest';
 
     // build the data to post
-    let formData = '';
-    formData = this.convertTestFolder_2QS(testfolder);
+    let formData = this.globalService.toQueryString(testfolder, ['test', 'isActive', 'description']);
 
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
       callback(response);
@@ -86,8 +85,7 @@ export class TestService {
     const url = environment.cerberus_api_url + '/UpdateTest';
 
     // build the data to post
-    let formData = '';
-    formData = this.convertTestFolder_2QS(testfolder);
+    let formData = this.globalService.toQueryString(testfolder, ['test', 'isActive', 'description']);
     formData += '&originalTest=' + initialtestoldername;
 
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
@@ -120,19 +118,6 @@ export class TestService {
   testExists(testfoldername: string, testfolderslist: Array<TestFolder>): boolean {
     const search = testfolderslist.find(t => t.test === testfoldername);
     if (search) { return true; } else { return false; }
-  }
-
-  /**
-   * convert a test folder object to a form data (string) to send to the API
-   * DIRTY : waiting on https://github.com/cerberustesting/cerberus-source/issues/2184
-   * @param testfolder correctly formateed object
-   */
-  convertTestFolder_2QS(testfolder: TestFolder): string {
-    let querystring = '';
-    querystring += 'test=' + testfolder.test;
-    querystring += '&Active=' + testfolder.isActive;
-    querystring += '&Description=' + testfolder.description;
-    return querystring;
   }
 
 }

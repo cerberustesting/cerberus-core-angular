@@ -66,4 +66,20 @@ export class GlobalService {
     });
     return res;
   }
+
+  /**
+   * reduce an object to a limited number of properties and returns a string interpretation of the object in query string fashion
+   * @param object source object
+   * @param fieldsToKeep list of fields to keep
+   * @returns query string ('key1=value1&key2=value2...')
+   */
+  toQueryString(object: any, fieldsToKeep: string[]): string {
+    let newObject = {};
+    for (const key in object) {
+      if (fieldsToKeep.includes(key)) {
+        newObject[key] = object[key];
+      }
+    }
+    return Object.keys(newObject).map(key => key + '=' + newObject[key]).join('&');
+  }
 }

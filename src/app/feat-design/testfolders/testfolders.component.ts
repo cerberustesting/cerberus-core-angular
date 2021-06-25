@@ -101,7 +101,7 @@ export class TestfoldersComponent implements OnInit {
     modalRef.componentInstance.modalId = 'deleteTestFolder_modal';
     modalRef.componentInstance.confirmFunction = () => {
       this.testService.deleteTestFolder(
-        testfolder.test,
+        testfolder,
         (response) => {
           this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.testFolderInteraction);
           this.refreshResults();

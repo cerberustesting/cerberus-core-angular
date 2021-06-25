@@ -22,7 +22,7 @@ export class TestService {
   ) { }
 
   /**
-   * refresh the test folders list
+   * refresh the test folders list (of the test service)
    * @param system (optional) name of a system to filter on
    */
   refreshTestFolders(system?: string): void {
@@ -95,15 +95,15 @@ export class TestService {
 
   /**
    * remove a test folder
-   * @param testfoldername the name of the test folder to remove
+   * @param testfolder the name of the test folder to remove
    */
-  deleteTestFolder(testfoldername: string, callback: (response: any) => void): void {
+  deleteTestFolder(testfolder: TestFolder, callback: (response: any) => void): void {
 
     // set the url to post
     const url = environment.cerberus_api_url + '/DeleteTest';
 
     // build the data to post
-    const formData = 'test=' + testfoldername;
+    let formData = this.globalService.toQueryString(testfolder, ['test']);
 
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
       callback(response);

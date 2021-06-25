@@ -30,16 +30,13 @@ export interface Column {
     /** @description is filtering on this column is allowed? */
     filterable: boolean;
 
-    /** @description type of filter for this column (dropdown choice, keyword filter)
-     * must be specified if filterable = true
-     */
+    /** @description type of filter for this column (dropdown choice, keyword filter) must be specified if filterable = true */
     filterMode?: FILTER_MODE;
 
     /** @description is the filter for this column is currently displayed? */
     filterDisplayed?: boolean;
 
-    /** @description is multiple items selection allowed for filtering on this column?
-     * (only relevant if filter mode is  DROPDOWN) */
+    /** @description is multiple items selection allowed for filtering on this column? (only relevant if filter mode is  DROPDOWN) */
     multiple?: boolean;
 
     /** @description value(s) to filer with, can be a string or a string[] */

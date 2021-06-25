@@ -47,10 +47,10 @@ export class FilterComponent implements OnInit {
       });
     } else if (this.column.filterMode === FILTER_MODE.SWITCH) {
       // if the filter mode is switch, the sSearch will only take one value (true, false)
-      // clear any inconsistency
-      this.clearFilterValues();
-      // assign the default filter value (true = switch on)
-      this.column.sSearch[0] = true;
+      // assign the default value (true) if nothing is set already
+      if (this.column.sSearch.length === 0) {
+        this.column.sSearch[0] = true;
+      }
     } else {
       this.filterService.getOptionsListForColumnsFiltering(this.servlet, this.column.apiName).subscribe(response => {
         if (response) {

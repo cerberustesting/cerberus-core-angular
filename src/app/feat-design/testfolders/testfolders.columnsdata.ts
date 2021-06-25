@@ -40,12 +40,11 @@ export const TestFoldersColumnsData: Column[] = [
         defaultActive: true,
         filterable: true,
         filterDisplayed: false,
-        multiple: true,
         placeholder: 'Is the Test Active?',
         sSearch: [],
         filterMode: FILTER_MODE.SWITCH,
         type: COLUMN_TYPE.BOOLEAN,
-        sortable: false
+        sortable: true
     },
     {
         displayName: 'Creation Date',

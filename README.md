@@ -5,8 +5,37 @@ Brand new Cerberus front-end implementation
 
 # get started
 
+## dev environment
+
+Current codebase is being developed with the following tools:
+
+- node 14.16.1 (`node -v`)
+- npm 6.14.12 (`npm -v`)
+- Angular 8.2.0 (`ng version`)
+- Typescript 3.5.3 (`tsc -v`)
+
+For Linux and macOS, you can use [nvm](https://github.com/nvm-sh/nvm) to install and use different versions of node through the command line (npm is included in node). For Windows, you can use [nvm-windows](https://github.com/coreybutler/nvm-windows).
+
+To install Angular 8.2.0, run:
+
+- `npm install -g @angular/cli@8.2.0`
+- `npm install -g @angular-devkit/build-angular@0.803.24`
+- `npm install -g @angular/compiler-cli@8.2.0`
+- `npm install -g @angular/language-service@8.2.0`
+- `npm install -g @angular/compiler@8.2.0`
+
+To install Typescript 3.5.3, run:
+
+-`npm install -g typescript@3.5.3`
+
+## run
+
+After your dev environment is all set up (see previous section), just do:
+
 - `npm install`
 - `ng serve`
+
+If after running `ng serve` you get the error "You seem to not be depending on "@angular/core" and/or "rxjs". This is an error.", run `npm link` and try again.
 
 # installation guide
 

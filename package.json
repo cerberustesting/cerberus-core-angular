@@ -1,6 +1,6 @@
 {
   "name": "cerberus-front",
-  "version": "0.1-SNAPSHOT",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",

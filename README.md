@@ -77,7 +77,14 @@ The application is configured by default to work with `cerberus-angular` keycloa
 - Web Origins : add "+"
 
 # developer guide
-As soon as you have access to the repository, please make sure before any push :
+
+## application architecture
+
+Configurations by environment are here: [src/environments](src/environments)
+
+## contributing
+
+Contributions to the source code are welcome. Before submitting your contribution, please make sure that:
 - `ng lint` returns no error
 - `ng build --prod` runs flawlessly
 

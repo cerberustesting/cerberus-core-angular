@@ -74,7 +74,7 @@ export class GlobalService {
    * @returns query string ('key1=value1&key2=value2...')
    */
   toQueryString(object: any, fieldsToKeep: string[]): string {
-    let newObject = {};
+    const newObject = {};
     for (const key in object) {
       if (fieldsToKeep.includes(key)) {
         newObject[key] = object[key];

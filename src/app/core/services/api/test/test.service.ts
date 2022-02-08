@@ -67,7 +67,7 @@ export class TestService {
     const url = environment.cerberus_api_url + '/CreateTest';
 
     // build the data to post
-    let formData = this.globalService.toQueryString(testfolder, ['test', 'isActive', 'description']);
+    const formData = this.globalService.toQueryString(testfolder, ['test', 'isActive', 'description']);
 
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
       callback(response);
@@ -103,7 +103,7 @@ export class TestService {
     const url = environment.cerberus_api_url + '/DeleteTest';
 
     // build the data to post
-    let formData = this.globalService.toQueryString(testfolder, ['test']);
+    const formData = this.globalService.toQueryString(testfolder, ['test']);
 
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
       callback(response);

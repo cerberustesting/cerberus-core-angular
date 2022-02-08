@@ -3,10 +3,13 @@ import { HttpHeaders } from '@angular/common/http';
 
 // KEYCLOAK INFORMATION
 const keycloakConfig: any = {
-  url: 'https://auth.cerberus-testing.org/auth',
-  realm: 'R-qa',
-  clientId: 'Cerberus-angular'
+  url: '{deployRep.keycloakConfig.url}',
+  realm: '{deployRep.keycloakConfig.realm}',
+  clientId: '{deployRep.keycloakConfig.clientId}'
 };
+
+// CERBERUS API ENDPOINT
+const API_endpoint = '{deployRep.apiEndpoint}';
 
 // HTTP HEADERS FOR API QUERY
 const httpOptions = {
@@ -14,9 +17,6 @@ const httpOptions = {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
   })
 };
-
-// CERBERUS API ENDPOINT
-const API_endpoint = 'https://qa.cerberus-testing.com';
 
 export const environment = {
   production: true,

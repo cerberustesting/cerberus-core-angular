@@ -1,0 +1,170 @@
+import { Component, OnInit } from '@angular/core';
+import { Service } from 'src/app/shared/model/back/servicelibrary/servicelibrary.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { NotificationService } from 'src/app/core/services/utils/notification.service';
+import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
+import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
+import { ServiceLibraryService } from 'src/app/core/services/api/servicelibrary/servicelibrary.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CustomModalComponent, ModalType, CustomModalItemsType } from 'src/app/shared/custom-modal/custom-modal.component';
+import { NotificationID } from 'src/app/shared/notifications/notifications.data';
+
+@Component({
+  selector: 'app-service-interaction',
+  templateUrl: './service-interaction.component.html',
+  styleUrls: ['./service-interaction.component.scss']
+})
+export class ServiceInteractionComponent implements OnInit {
+
+  // mode to interact with the test case header (mandatory)
+  private mode: INTERACTION_MODE;
+
+  // service object (mandatory)
+  private service: Service;
+
+  // inital name of the service object when the component is created
+  private initialServiceName: string;
+
+  // form that is submitted to the API
+  public serviceForm: FormGroup;
+
+  // title for save button (different according to the mode)
+  private saveButtonTitle: string;
+
+  // service list used to compare with the service one (check existence)
+  public services: Array<Service>;
+
+  /** instance of the interaction mode fields enumeration */
+  public InteractionMode: typeof INTERACTION_MODE = INTERACTION_MODE;
+
+  // ???
+  exit: (n: void) => void;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private serviceLibraryService: ServiceLibraryService,
+    private notificationService: NotificationService,
+    private sidecontentService: SidecontentService,
+    private NgbModalService: NgbModal) {
+    this.service = undefined;
+  }
+
+  ngOnInit() {
+    // refresh the service libraries list (done only once)
+    this.serviceLibraryService.getServices((services: Service[]) => { this.services = services; });
+
+    // set the correct title for the save button (depending on the mode)
+    this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
+
+    // service object sanitizing
+    if (this.service && this.mode) {
+      this.setFormValues();
+    } else {
+      console.error('error with compononent initialization, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
+    }
+
+    // save the initial name of the service
+    this.initialServiceName = this.service.service;
+  }
+
+  /**
+   * set the form values with the testcaseheader one
+  */
+  setFormValues(): void {
+    this.serviceForm = this.formBuilder.group({
+      service: this.service.service,
+      application: this.service.application,
+      type: this.service.type,
+      servicePath: this.service.servicePath,
+      description: this.service.description,
+      userCreated: this.service.usrCreated,
+      dateCreated: this.service.dateCreated,
+      userModified: this.service.usrModif,
+      dateModified: this.service.dateModif
+      // TODO
+    });
+  }
+
+  /**
+   * send the form value to the API
+   * @param values form values
+   */
+  onSubmit(values: any): void {
+
+    // if no service name id is set
+    if (!values.service || values.service === '') {
+      this.notificationService.createANotification('Please specify the Service Name', NotificationStyle.Warning);
+      return;
+    } // TODO see the ones who are mandatory?
+
+    // trigger the correct API endpoint
+    if (this.mode === INTERACTION_MODE.CREATE) {
+      this.serviceLibraryService.createService(values, (response: any) => {
+        this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.serviceInteraction);
+        this.closeSideContent();
+      });
+    } else if (this.mode === INTERACTION_MODE.EDIT) {
+      this.serviceLibraryService.updateService(this.initialServiceName, values, (response: any) => {
+        this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.serviceInteraction);
+        this.closeSideContent();
+      });
+    }
+  }
+
+  /**
+   * close the sidecontent through the service
+   */
+  closeSideContent(): void {
+    this.sidecontentService.closeSideBlock();
+    this.exit();
+  }
+
+  /**
+   * return the list of fields that have been changed during the edition
+   */
+  getServiceDifferences(): string[] {
+    const differentFields = new Array<string>();
+    if (this.service.service !== this.serviceForm.get('service').value) { differentFields.push('service'); }
+    if (this.service.type !== this.serviceForm.get('type').value) { differentFields.push('type'); }
+    if (this.service.description !== this.serviceForm.get('description').value) { differentFields.push('description'); }
+    return differentFields;
+    // TODO
+  }
+
+  /**
+   * function mandatory since this component is displayed in the side content
+   * return true if this component can be removed without warning, false otherwise
+   * @param newComponent new component to replace the service one with
+   * @param parameters parameters attached with the compononent change request
+   */
+  sideContentInterruption(newComponent: any, parameters: {}): boolean {
+    if (this.getServiceDifferences().length === 0) {
+      return true;
+    } else {
+      // open a confirmation modal
+      const modalRef = this.NgbModalService.open(CustomModalComponent);
+      modalRef.componentInstance.title = 'Are you sure ?';
+      modalRef.componentInstance.subtitle = 'You\'re about to lost your changes in the side content';
+      modalRef.componentInstance.itemsList = this.getServiceDifferences();
+      modalRef.componentInstance.modalType = ModalType.Confirm;
+      modalRef.componentInstance.itemsType = CustomModalItemsType.TestCaseDifferences;
+      modalRef.componentInstance.confirmFunction = function () {
+        // open the new component to open
+        this.sideContentService.addComponentToSideBlock(newComponent, parameters, true);
+      };
+      return false;
+    }
+  }
+
+  /**
+   * return true if the service name is already used by another folder
+   * @param service name to check
+   */
+  serviceNameExists(servicename: string): boolean {
+    if (this.services.find(service => service.service === servicename) && servicename !== this.service.service) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}

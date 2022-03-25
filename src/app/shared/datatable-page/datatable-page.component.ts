@@ -17,6 +17,7 @@ import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.ser
 export class DatatablePageComponent implements OnInit {
   @Input() pageSort: any;
   @Input() columns: Array<Column>;
+  @Input() isFilteredBySystems: boolean;
   @Input() massAction: boolean;
   @Input() servlet: string;
   @Input() selection: boolean;
@@ -99,7 +100,7 @@ export class DatatablePageComponent implements OnInit {
     this.globalSearch = (globalSearch) ? globalSearch : '';
     if (this.servlet && !this.cache[this.page.number] && this.page.size > 0) {
       this.cache[this.page.number] = true;
-      this.filterService.getContentForTable(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch),
+      this.filterService.getContentForTable(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch, this.isFilteredBySystems),
         (list: Array<any>, length: number) => {
           this.page.totalCount = length;
           const start = this.page.number * this.page.size;

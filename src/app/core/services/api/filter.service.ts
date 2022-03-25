@@ -65,7 +65,8 @@ export class FilterService {
   generateQueryStringParameters(
     columnList: Array<Column>,
     pageInformation: { size: number, sort: any, number: number, totalCount: number },
-    globalSearch: string
+    globalSearch: string,
+    isFilteredBySystems?: boolean
   ): string {
     let queryParameter = '';
     const formData = {};
@@ -95,21 +96,8 @@ export class FilterService {
         if (columnListWithActiveFilter[column].type === 'label') {
           formData['sSearch_' + column] = (columnListWithActiveFilter[column].sSearch) ? columnListWithActiveFilter[column].sSearch.map(a => a.label).join(',') : ''; // value(s) to filter (only label)
         } else if (columnListWithActiveFilter[column].contentName === 'system') {
+          const systemByService = this.getSystemInRawFormat();
           const systemByFilter = ((columnListWithActiveFilter[column].sSearch.length !== 0) ? columnListWithActiveFilter[column].sSearch.join(',') : '');
-          let systemByService;
-          if (this.userService.user.defaultSystem) {
-            const systemByFilterRaw = new Array<String>();
-            if (this.userService.user.defaultSystem.length !== 0) {
-              this.userService.user.defaultSystem.forEach(system => {
-                systemByFilterRaw.push(system);
-              });
-              systemByService = ',' + systemByFilterRaw.join(',');
-            } else {
-              systemByService = ''; // prevent sending 'undefined' if no system are selected
-            }
-          } else {
-            systemByService = '';
-          }
           formData['sSearch_' + column] = systemByFilter + ((systemByFilter !== '' && systemByService !== '') ? ',' : '') + systemByService; // value(s) to filter
         } else {
           if (columnListWithActiveFilter[column].filterMode === 'SEARCH_FIELD') {
@@ -126,6 +114,10 @@ export class FilterService {
         // ? 'bSortable_'
       }
       formData['sLike'] = columnListWithActiveFilter.filter(c => c.filterMode === 'SEARCH_FIELD').map(column => column.apiName).join(','); // databaseName of like filters
+    }
+
+    if(isFilteredBySystems){
+      formData['system'] = this.getSystemInRawFormat();
     }
 
     // encode the whole formData content
@@ -170,4 +162,20 @@ export class FilterService {
     this.refreshContentEvent.emit(null);
   }
 
+  // get user default systems
+  private getSystemInRawFormat() {
+
+    let defaultSystem = this.userService.user.defaultSystem;
+
+    if (defaultSystem && defaultSystem.length !== 0) {
+      let systemByFilterRaw = new Array<String>();
+      this.userService.user.defaultSystem.forEach(system => {
+        systemByFilterRaw.push(system);
+      });
+      return systemByFilterRaw.join(',');
+    }
+    return '';
+  }
+
 }
+

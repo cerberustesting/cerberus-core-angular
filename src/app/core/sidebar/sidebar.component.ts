@@ -264,6 +264,13 @@ export class SidebarComponent implements OnInit {
                 id: 'applicationObjectsMenu'
               },
               {
+                name: 'Service Library',
+                link: '/configure/servicelibrary',
+                expanded: false,
+                authorized: true,
+                id: 'serviceLibraryMenu'
+              },
+              {
                 name: 'Deployment Type',
                 link: '/deployment',
                 expanded: false,

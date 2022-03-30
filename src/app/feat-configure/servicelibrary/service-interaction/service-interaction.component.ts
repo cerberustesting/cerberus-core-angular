@@ -8,6 +8,8 @@ import { ServiceLibraryService } from 'src/app/core/services/api/servicelibrary/
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomModalComponent, ModalType, CustomModalItemsType } from 'src/app/shared/custom-modal/custom-modal.component';
 import { NotificationID } from 'src/app/shared/notifications/notifications.data';
+import { Application } from 'src/app/shared/model/back/application/application.model';
+import { SystemService } from 'src/app/core/services/api/system.service';
 
 @Component({
   selector: 'app-service-interaction',
@@ -34,6 +36,9 @@ export class ServiceInteractionComponent implements OnInit {
   // service list used to compare with the service one (check existence)
   public services: Array<Service>;
 
+  // service list used for applications select
+  public applications: Array<Application>;
+
   /** instance of the interaction mode fields enumeration */
   public InteractionMode: typeof INTERACTION_MODE = INTERACTION_MODE;
 
@@ -42,7 +47,8 @@ export class ServiceInteractionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private serviceLibraryService: ServiceLibraryService,
+    private serviceLibraryService: ServiceLibraryService,    
+    private systemService: SystemService,
     private notificationService: NotificationService,
     private sidecontentService: SidecontentService,
     private NgbModalService: NgbModal) {
@@ -51,7 +57,9 @@ export class ServiceInteractionComponent implements OnInit {
 
   ngOnInit() {
     // refresh the service libraries list (done only once)
+    // TODO
     this.serviceLibraryService.getServices((services: Service[]) => { this.services = services; });
+    this.systemService.getApplicationList(applications => {this.applications = applications;});
 
     // set the correct title for the save button (depending on the mode)
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
@@ -61,11 +69,144 @@ export class ServiceInteractionComponent implements OnInit {
       this.setFormValues();
     } else {
       console.error('error with compononent initialization, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
+      return;
     }
 
     // save the initial name of the service
     this.initialServiceName = this.service.service;
+    
+    switch (this.mode) {
+      case INTERACTION_MODE.CREATE:
+        this.prepareForCreateMode();
+        break;
+    
+      default:
+        break;
+    }
   }
+  prepareForCreateMode() {
+
+    /*
+    // Prepare all Events handler of the modal.
+    prepareAppServiceModal();
+
+    $('#editSoapLibraryButton').attr('class', '');
+    $('#editSoapLibraryButton').attr('hidden', 'hidden');
+    $('#duplicateSoapLibraryButton').attr('class', '');
+    $('#duplicateSoapLibraryButton').attr('hidden', 'hidden');
+    $('#addSoapLibraryButton').attr('class', 'btn btn-primary');
+    $('#addSoapLibraryButton').removeProp('hidden');
+
+    feedAppServiceModal(service, "editSoapLibraryModal", "ADD");
+    listennerForInputTypeFile('#editSoapLibraryModal')
+    pasteListennerForClipboardPicture('#editSoapLibraryModal');
+    $('#service').val("");
+    */
+  }
+  prepareAppServiceModal(){
+/*
+    $("#editSoapLibraryModal #method").change(function () {
+        if ($("#editSoapLibraryModal #type").val() == "FTP") {
+            if ($(this).val() == "GET") {
+                $("#editSoapLibraryModal #srvRequest textarea").hide();
+            } else {
+                $("#editSoapLibraryModal #srvRequest").parent().parent().find("label").html("File Content");
+                $("#editSoapLibraryModal #srvRequest textarea").show();
+            }
+        } else {
+            $("#editSoapLibraryModal #srvRequest textarea").show();
+            $("#editSoapLibraryModal #srvRequest").parent().parent().find("label").html("Service Request");
+        }
+    });
+*/
+  }
+  refreshDisplayOnTypeChange(newValue) {
+/*
+    if (newValue === "SOAP") {
+        // If SOAP service, no need to feed the method.
+        $('#serviceFtpFileDiv').hide();
+        $("label[name='screenshotfilenameField']").hide();
+        $("label[name='operationField']").parent().show();
+        $("label[name='attachementurlField']").parent().show();
+        $('#editSoapLibraryModal #method').prop("disabled", true);
+        $('#editSoapLibraryModal #addContent').prop("disabled", true);
+        $('#editSoapLibraryModal #addHeader').prop("disabled", false);
+        $("label[name='kafkaTopicField']").parent().hide();
+        $("label[name='kafkaKeyField']").parent().hide();
+        $("label[name='kafkaFilterPathField']").parent().hide();
+        $("label[name='kafkaFilterValueField']").parent().hide();
+        $("label[name='isFollowRedirField']").parent().hide();
+        $('#editSoapLibraryModal #tab3Text').text("Request Detail");
+    } else if (newValue === "FTP") {
+        $('#editSoapLibraryModal #method').prop("disabled", false);
+        $('#editSoapLibraryModal #method option[value="DELETE"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="PUT"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="PATCH"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="GET"]').css("display", "block");
+        $('#editSoapLibraryModal #method option[value="POST"]').css("display", "block");
+        $('#editSoapLibraryModal #method option[value="SEARCH"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="PRODUCE"]').css("display", "none");
+        $('#editSoapLibraryModal #addContent').prop("disabled", true);
+        $('#editSoapLibraryModal #addHeader').prop("disabled", true);
+        $('.upload-drop-zone').show();
+        $("label[name='screenshotfilenameField']").show();
+        $("label[name='operationField']").parent().hide();
+        $("label[name='attachementurlField']").parent().hide();
+        $("label[name='kafkaTopicField']").parent().hide();
+        $("label[name='kafkaKeyField']").parent().hide();
+        $("label[name='kafkaFilterPathField']").parent().hide();
+        $("label[name='kafkaFilterValueField']").parent().hide();
+        $("label[name='isFollowRedirField']").parent().hide();
+        $('#editSoapLibraryModal #tab3Text').text("Request Detail");
+    } else if (newValue === "KAFKA") {
+        $('#editSoapLibraryModal #method').prop("disabled", false);
+        $('#editSoapLibraryModal #method option[value="DELETE"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="PUT"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="PATCH"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="GET"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="POST"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="SEARCH"]').css("display", "block");
+        $('#editSoapLibraryModal #method option[value="PRODUCE"]').css("display", "block");
+        $('#editSoapLibraryModal #addContent').prop("disabled", false);
+        $('#editSoapLibraryModal #addHeader').prop("disabled", false);
+        $('.upload-drop-zone').hide();
+        $("label[name='screenshotfilenameField']").hide();
+        $("label[name='operationField']").parent().hide();
+//        $("input[name='operation']").hide();
+        $("label[name='attachementurlField']").parent().hide();
+//        $("input[name='attachementurl']").hide();
+        $("label[name='kafkaTopicField']").parent().show();
+        $("label[name='kafkaKeyField']").parent().show();
+        $("label[name='kafkaFilterPathField']").parent().show();
+        $("label[name='kafkaFilterValueField']").parent().show();
+        $("label[name='isFollowRedirField']").parent().hide();
+        $('#editSoapLibraryModal #tab3Text').text("KAFKA Props");
+    } else { // REST
+        $('#editSoapLibraryModal #method').prop("disabled", false);
+        $('#editSoapLibraryModal #method option[value="DELETE"]').css("display", "block");
+        $('#editSoapLibraryModal #method option[value="PUT"]').css("display", "block");
+        $('#editSoapLibraryModal #method option[value="PATCH"]').css("display", "block");
+        $('#editSoapLibraryModal #method option[value="GET"]').css("display", "block");
+        $('#editSoapLibraryModal #method option[value="POST"]').css("display", "block");
+        $('#editSoapLibraryModal #method option[value="SEARCH"]').css("display", "none");
+        $('#editSoapLibraryModal #method option[value="PRODUCE"]').css("display", "none");
+        $('#editSoapLibraryModal #addContent').prop("disabled", false);
+        $('#editSoapLibraryModal #addHeader').prop("disabled", false);
+        $('.upload-drop-zone').hide();
+        $("label[name='screenshotfilenameField']").hide();
+        $("label[name='operationField']").parent().hide();
+//        $("input[name='operation']").hide();
+        $("label[name='attachementurlField']").parent().hide();
+//        $("input[name='attachementurl']").hide();
+        $("label[name='kafkaTopicField']").parent().hide();
+        $("label[name='kafkaKeyField']").parent().hide();
+        $("label[name='kafkaFilterPathField']").parent().hide();
+        $("label[name='kafkaFilterValueField']").parent().hide();
+        $("label[name='isFollowRedirField']").parent().show();
+        $('#editSoapLibraryModal #tab3Text').text("Request Detail");
+    }
+    */
+}
 
   /**
    * set the form values with the testcaseheader one
@@ -75,13 +216,20 @@ export class ServiceInteractionComponent implements OnInit {
       service: this.service.service,
       application: this.service.application,
       type: this.service.type,
+      method: this.service.method,
       servicePath: this.service.servicePath,
       description: this.service.description,
-      userCreated: this.service.usrCreated,
-      dateCreated: this.service.dateCreated,
-      userModified: this.service.usrModif,
-      dateModified: this.service.dateModif
-      // TODO
+      operation: this.service.operation,
+      kafkaTopic: this.service.kafkaTopic,
+      kafkaFilterPath: this.service.kafkaFilterPath,
+      kafkaFilterValue: this.service.kafkaFilterValue,
+      kafkaKey: this.service.kafkaKey,
+      isFollowRedir: this.service.isFollowRedir,
+      group: this.service.group,
+      attachmentURL: this.service.attachementurl,
+      contentList: this.service.contentList,
+      headerList: this.service.headerList,
+      srvRequest: this.service.srvRequest
     });
   }
 

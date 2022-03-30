@@ -12,6 +12,7 @@ import { CustomModalComponent, ModalType } from 'src/app/shared/custom-modal/cus
 import { ServiceLibraryService } from 'src/app/core/services/api/servicelibrary/servicelibrary.service';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationID } from 'src/app/shared/notifications/notifications.data';
+import { UserService } from 'src/app/core/services/api/user.service';
 
 @Component({
   selector: 'app-servicelibrary',
@@ -34,6 +35,9 @@ export class ServiceLibraryComponent implements OnInit {
   /** the observable to refresh the table */
   public refreshResultsEvent: Subject<void> = new Subject<void>();
 
+  /** the observable to refresh the table */
+  public userSystems: Array<string>;
+
   /** child datatable component */
   @ViewChild(DatatablePageComponent, { static: false }) private datatablepageComponent: DatatablePageComponent;
 
@@ -42,12 +46,20 @@ export class ServiceLibraryComponent implements OnInit {
     private sideContentService: SidecontentService,
     private modalService: NgbModal,
     private serviceLibraryService: ServiceLibraryService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
     this.servlet = '/ReadAppService';
     this.headerTitleService.setTitle('Service Library', 'serviceLibrary');
+
+    // get the user systems when available
+    this.userService.observableUser.subscribe(rep => {
+      if(rep && rep.defaultSystem){        
+        this.userSystems = rep.defaultSystem;
+      }
+    });
   }
 
   /**
@@ -61,6 +73,7 @@ export class ServiceLibraryComponent implements OnInit {
   * open the side content in creation mode
   */
    createService(): void {
+    
     this.sideContentService.addComponentToSideBlock(ServiceInteractionComponent, {
       mode: INTERACTION_MODE.CREATE,
       service: new Service(),
@@ -98,8 +111,7 @@ export class ServiceLibraryComponent implements OnInit {
     // create and open the modal object
     const modalRef = this.modalService.open(CustomModalComponent);
     modalRef.componentInstance.title = 'Delete Service';
-    modalRef.componentInstance.subtitle = 'Are you sure to delete ' + service.service + '?';
-    modalRef.componentInstance.subtitle2 = 'All corresponding test cases will be deleted as well';
+    modalRef.componentInstance.subtitle = 'Are you sure you want to delete ' + service.service + '?';
     modalRef.componentInstance.modalType = ModalType.Confirm;
     modalRef.componentInstance.modalId = 'deleteService_modal';
     modalRef.componentInstance.confirmFunction = () => {

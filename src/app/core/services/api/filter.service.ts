@@ -66,8 +66,9 @@ export class FilterService {
     columnList: Array<Column>,
     pageInformation: { size: number, sort: any, number: number, totalCount: number },
     globalSearch: string,
-    isFilteredBySystems?: boolean
+    userSystems?: string[]
   ): string {
+    
     let queryParameter = '';
     const formData = {};
     const columnListWithActiveFilter = columnList.filter(e => e.sSearch)
@@ -96,7 +97,7 @@ export class FilterService {
         if (columnListWithActiveFilter[column].type === 'label') {
           formData['sSearch_' + column] = (columnListWithActiveFilter[column].sSearch) ? columnListWithActiveFilter[column].sSearch.map(a => a.label).join(',') : ''; // value(s) to filter (only label)
         } else if (columnListWithActiveFilter[column].contentName === 'system') {
-          const systemByService = this.getSystemInRawFormat();
+          const systemByService = this.getSystemInRawFormat(userSystems);
           const systemByFilter = ((columnListWithActiveFilter[column].sSearch.length !== 0) ? columnListWithActiveFilter[column].sSearch.join(',') : '');
           formData['sSearch_' + column] = systemByFilter + ((systemByFilter !== '' && systemByService !== '') ? ',' : '') + systemByService; // value(s) to filter
         } else {
@@ -116,8 +117,8 @@ export class FilterService {
       formData['sLike'] = columnListWithActiveFilter.filter(c => c.filterMode === 'SEARCH_FIELD').map(column => column.apiName).join(','); // databaseName of like filters
     }
 
-    if(isFilteredBySystems){
-      formData['system'] = this.getSystemInRawFormat();
+    if(userSystems){
+      formData['system'] = this.getSystemInRawFormat(userSystems);
     }
 
     // encode the whole formData content
@@ -163,13 +164,11 @@ export class FilterService {
   }
 
   // get user default systems
-  private getSystemInRawFormat() {
+  private getSystemInRawFormat(userSystems: string[]) {
 
-    let defaultSystem = this.userService.user.defaultSystem;
-
-    if (defaultSystem && defaultSystem.length !== 0) {
+    if (userSystems && userSystems.length !== 0) {
       let systemByFilterRaw = new Array<String>();
-      this.userService.user.defaultSystem.forEach(system => {
+      userSystems.forEach(system => {
         systemByFilterRaw.push(system);
       });
       return systemByFilterRaw.join(',');

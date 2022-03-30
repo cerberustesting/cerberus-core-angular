@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 // Components
 import { ServiceLibraryComponent } from './servicelibrary/servicelibrary.component';
 import { ServiceInteractionComponent } from './servicelibrary/service-interaction/service-interaction.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ServiceInteractionComponent } from './servicelibrary/service-interactio
     ConfigureRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
   entryComponents: [
     ServiceInteractionComponent,

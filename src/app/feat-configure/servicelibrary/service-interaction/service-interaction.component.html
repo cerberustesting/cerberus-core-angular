@@ -1,3 +1,327 @@
 <form *ngIf="serviceForm && services" [formGroup]="serviceForm" (ngSubmit)="onSubmit(serviceForm.value)">
+    <div id="serviceInteraction" class="block no-shadow">
 
+        <!--  SIDE CONTENT HEADER -->
+        <div class="block-header block-header-default">
+
+            <!-- SIDE CONTENT TITLE -->
+            <h3 class="block-title" [ngSwitch]="mode">
+                <span id="createServiceTitle" *ngSwitchCase="'CREATE'">Create Service</span>
+                <span id="editServiceTitle" *ngSwitchCase="'EDIT'">Edit Service</span>
+            </h3>
+            <!-- END SIDE CONTENT TITLE -->
+
+            <!-- SAVE / CLOSE BUTTON -->
+            <div class="block-options">
+                <button type="submit" id="submitInteraction" class="btn btn-sm btn-primary mr-1"
+                    [disabled]="serviceNameExists(serviceForm.get('service').value) ? 'true' : ''">
+                    {{saveButtonTitle}}
+                </button>
+                <button type="button" id="closeInteraction" class="btn btn-sm btn-secondary"
+                    (click)="closeSideContent()">Close</button>
+            </div>
+            <!-- END SAVE / CLOSE BUTTON -->
+
+        </div>
+        <!--  END SIDE CONTENT HEADER -->
+
+        <!-- SIDE CONTENT CONTENT -->
+        <div class="block-content">
+            <div class="row">
+
+                <!-- SERVICE NAME -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label id="serviceLabel" for="serviceName" class="form-label">
+                            Service Name
+                            <i class="fa fa-info-circle ml-0 info" placement="bottom" ngbPopover="Name of the service (unique)" triggers="mouseenter:mouseleave"></i>
+                        </label>
+                        <input id="serviceName" type="text" class="form-control form-control-sm" name="ServiceName" placeholder="Service Name" formControlName="service"
+                            [readonly]="mode === InteractionMode.EDIT"
+                            [ngClass]="serviceNameExists(serviceForm.get('service').value) ? 'is-invalid' : ''" />
+
+                        <div *ngIf="serviceNameExists(serviceForm.get('service').value)" id="serviceNameAlreadyInUseFeeback" class="invalid-feedback">
+                            service name already in use
+                        </div>
+                    </div>
+                </div>
+                <!-- END SERVICE NAME -->
+
+                <!-- SERVICE TYPE -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label id="serviceTypeLabel" for="serviceType" class="form-label">
+                            Type
+                        </label>
+                        <select id="serviceType" name="ServiceType" formControlName="type" class="form-select form-control"
+                        (change)="refreshDisplayOnTypeChange($event.target.value)">
+                            <option value="SOAP">SOAP Service</option>
+                            <option value="REST">REST Service</option>
+                            <option value="FTP">FTP Service</option>
+                            <option value="KAFKA">KAFKA Service</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- END SERVICE TYPE -->
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <ngb-tabset [destroyOnHide]="false">
+
+                            <!-- TAB DEFINITION -->
+                            <ngb-tab title="Definition">                            
+                                <ng-template ngbTabContent>
+                                    <div class="col-md-12 mt-4">    
+                                        <!-- APPLICATION -->
+                                        <div class="form-group">
+                                            <label id="serviceTypeLabel" for="serviceApplication" class="form-label">
+                                                Application
+                                            </label>
+                                            <select id="serviceApplication" name="ServiceApplication" formControlName="application" class="form-select form-control">
+                                                <option *ngFor="let app of applications" value= {{app.application}}>
+                                                    {{app.application}} - {{ app.description }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!-- END APPLICATION -->
+    
+                                        <!-- SERVICE METHOD -->
+                                        <div class="form-group">
+                                            <label id="serviceMethodLabel" for="serviceMethod" class="form-label">
+                                                Method
+                                            </label>
+                                            <select id="serviceMethod" name="ServiceMethod" formControlName="method" class="form-select form-control">
+                                                <option value="GET">GET - GET http method</option>
+                                                <option value="POST">POST - POST http method</option>
+                                                <option value="DELETE">DELETE - DELETE http method</option>
+                                                <option value="PUT">PUT - PUT http method</option>
+                                                <option value="PATCH">PATCH - PATCH http method</option>
+                                                <option value="PRODUCE">PRODUCE - Produce a Kafka event</option>
+                                                <option value="SEARCH">SEARCH - Search in a Kafka stream</option>
+                                            </select>
+                                        </div>
+                                        <!-- END SERVICE METHOD -->
+    
+                                        <!-- SERVICE PATH -->                                
+                                        <div class="form-group">
+                                            <label id="servicePathLabel" for="servicePath" class="form-label">
+                                                Service Path
+                                                <i class="fa fa-info-circle ml-0 info" placement="bottom" ngbPopover='This field is used to set the location of your service. You can put a URL as following: http://myservice.fr/users/1 ftp://username:password@host:port/myFile.txt. You can also put a relative path as following: /users/1 /myFile.txt' triggers="mouseenter:mouseleave"></i>
+                                            </label>
+                                            <input id="servicePath" type="text" class="form-control form-control-sm" name="ServicePath" placeholder="Service Path" formControlName="servicePath" />
+                                        </div>
+                                        <!-- END SERVICE PATH -->    
+    
+                                        <!-- SERVICE OPERATION -->                                
+                                        <div class="form-group">
+                                            <label id="serviceOperationLabel" for="serviceOperation" class="form-label">
+                                                Operation
+                                            </label>
+                                            <input id="serviceOperation" type="text" class="form-control form-control-sm" name="ServiceOperation" placeholder="Service Operation" formControlName="operation" />
+                                        </div>
+                                        <!-- END SERVICE OPERATION -->
+    
+                                        <!-- FOLLOW REDIRECT -->
+                                        <div class="form-group custom-control custom-switch custom-control-primary">
+                                            <input id="serviceFollowRedirect" type="checkbox" class="custom-control-input" name="ServiceFollowRedirect" formControlName="isFollowRedir" value="1">
+                                            <label id="serviceFollowRedirectLabel" class="custom-control-label" for="serviceFollowRedirect">Follow Redirect</label>
+                                        </div>
+                                        <!-- END FOLLOW REDIRECT -->
+    
+                                        <!-- GROUP -->
+                                        <div class="form-group">
+                                            <label id="serviceGroupLabel" for="serviceGroup" class="form-label">
+                                                Group
+                                                <i class="fa fa-info-circle ml-0 info" placement="bottom" ngbPopover='This field is used to set the location of your service. you can put a URL as following : http://myservice.fr/users/1  ftp://username:password@host:port/myFile.txt  you can also put a relative path as following :  /users/1  /myFile.txt ' triggers="mouseenter:mouseleave"></i>
+                                            </label>
+                                            <input id="serviceGroup" type="text" class="form-control form-control-sm" name="ServiceGroup" placeholder="Service Group" formControlName="group" />
+                                        </div>
+                                        <!-- END GROUP -->
+    
+                                        <!-- SERVICE DESCRIPTION  -->
+                                        <div class="form-group">
+                                            <label id="serviceDescriptionLabel" for="serviceDescription" class="form-label">
+                                                Description
+                                                <i class="fa fa-info-circle ml-0 info" placement="bottom" ngbPopover="A short description for the service" triggers="mouseenter:mouseleave"></i>
+                                            </label>
+                                            <textarea id="serviceDescription" class="form-control form-control-sm" name="ServiceDescription" placeholder="Service Description" formControlName="description">{{service.description}}</textarea>
+                                        </div>
+                                        <!-- END SERVICE DESCRIPTION -->
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <!-- END TAB DEFINITION -->
+
+                            <!-- TAB REQUEST -->
+                            <ngb-tab title="Request">                            
+                                <ng-template ngbTabContent>                                                                      
+                                    <div class="col-md-12 mt-4">                                 
+                                        <!-- SERVICE ATTACHMENT URL  -->
+                                        <div class="form-group" id="serviceAttachmentURLDiv">
+                                            <label id="serviceAttachmentURLLabel" for="serviceAttachmentURL" class="form-label">
+                                                Attachment URL
+                                            </label>
+                                            <input id="serviceAttachmentURL" class="form-control form-control-sm" name="ServiceAttachmentURL" placeholder="URL" formControlName="attachmentURL">
+                                        </div>
+                                        <!-- END SERVICE ATTACHMENT URL -->                                   
+                                        <!-- SERVICE KAFKA KEY  -->
+                                        <div class="form-group" id="serviceKafkaKeyDiv">
+                                            <label id="serviceKafkaKeyLabel" for="serviceKafkaKey" class="form-label">
+                                                Kafka Key
+                                            </label>
+                                            <input id="serviceKafkaKey" class="form-control form-control-sm" name="ServiceKafkaKey" placeholder="Key" formControlName="kafkaKey">
+                                        </div>
+                                        <!-- END KAFKA KEY -->                              
+                                        <!-- SERVICE FTP FILE  -->
+                                        <div class="form-group" id="serviceFtpFileDiv">
+                                            <label id="serviceFTPFileLabel" for="serviceFTPFile" class="form-label">
+                                                FTP File
+                                            </label>
+                                            <input id="serviceFTPFile" class="form-control form-control-sm" name="ServiceFTPFile" placeholder="Upload File">
+                                        </div>
+                                        <!-- END FTP FILE -->                        
+                                        <!-- SERVICE REQUEST  -->
+                                        <div class="form-group">
+                                            <label id="serviceRequestLabel" for="serviceRequest" class="form-label">
+                                                Request
+                                            </label>
+                                            <textarea id="serviceRequest" class="form-control form-control-sm" name="ServiceRequest" placeholder="Service Request">{{service.srvRequest}}</textarea>
+                                        </div>
+                                        <!-- END SERVICE REQUEST -->
+                                    </div>                                                                    
+                                    <div class="col-md-12 mt-2">                                 
+                                        <!-- SERVICE REQUEST DETAILS  -->
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-hover nomarginbottom" id="ContentTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;"></th>
+                                                        <th class="text-center" id="contentActiveHeader" name="contentActiveHeader">Active</th>
+                                                        <th style="width: 5%;" class="text-center" id="contentSortHeader" name="contentSortHeader">Sort</th>
+                                                        <th class="text-center" id="contentKeyHeader" name="contentKeyHeader">Key</th>
+                                                        <th class="text-center" id="contentValueHeader" name="contentValueHeader">Value</th>
+                                                        <th class="text-center" id="contentDescriptionHeader" name="contentDescriptionHeader">Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="contentTableBody">
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn btn-default mt2" id="addContent">Add Content</button>
+                                        </div>
+                                        <!-- END SERVICE REQUEST DETAILS -->
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <!-- END TAB REQUEST -->
+
+                            <!-- TAB HEADER -->
+                            <ngb-tab title="Header">                            
+                                <ng-template ngbTabContent>
+                                    <div class="col-md-12 mt-4">                                 
+                                        <!-- SERVICE REQUEST HEADER  -->
+                                        <div class="form-group">                                            
+                                            <table class="table table-bordered table-hover nomarginbottom" id="HeaderTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;"></th>
+                                                        <th class="text-center" id="headerActiveHeader" name="headerActiveHeader">Active</th>
+                                                        <th style="width: 5%;" class="text-center" id="headerSortHeader" name="headerSortHeader">Sort</th>
+                                                        <th class="text-center" id="headerKeyHeader" name="headerKeyHeader">Key</th>
+                                                        <th class="text-center" id="headerValueHeader" name="headerValueHeader">Value</th>
+                                                        <th class="text-center" id="headerDescriptionHeader" name="headerDescriptionHeader">Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="headerTableBody">
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn btn-default mt-2" id="addHeader">Add Header</button>
+                                        </div>
+                                        <!-- END SERVICE REQUEST HEADER -->
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <!-- END TAB HEADER -->
+
+                            <!-- TAB TRACEABILITY -->
+                            <ngb-tab *ngIf="mode === InteractionMode.EDIT" title="Traceability">                            
+                                <ng-template ngbTabContent>                                    
+                                    <div class="col-md-12 mt-4">  
+                                      
+                                        <!-- CREATION -->
+                                        <label class="d-block" class="form-label">Creation</label>
+                                        
+                                        <!-- DATE CREATED -->
+                                        <div class="row form-group">                                            
+                                            <div class="col-lg-6 col-md-12 mb-2">
+                                                <div class="input-group custom-sm">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Date</span>
+                                                    </div>
+                                                    <span class="form-control text-left form-control-sm" id="dateCreated" type="text">
+                                                        <i class="fa fa-calendar-day mr-1"></i>
+                                                        {{service.DateCreated | date:'MMM d, yyyy'}}
+                                                    </span>
+                                                </div>     
+                                            </div>
+                                            <!-- END DATE CREATED -->
+                                            <!-- USER CREATED -->
+                                            <div class="col-lg-6 col-md-1 mb-2">
+                                                <div class="input-group custom-sm">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Issuer</span>
+                                                    </div>
+                                                    <span class="form-control text-left form-control-sm" id="userCreated" type="text">
+                                                        <i class="fa fa-user-edit mr-1"></i>
+                                                        {{service.UsrCreated}}
+                                                    </span>
+                                                </div>     
+                                            </div>
+                                            <!-- END USER CREATED -->
+                                        </div>
+                                        <!-- END CREATION -->
+
+                                        <!-- LAST UPDATE -->
+                                        <label class="d-block" class="form-label">Last Update</label>
+                                        
+                                        <!-- LAST UPDATE DATE -->
+                                        <div class="row form-group">                                            
+                                            <div class="col-lg-6 col-md-12 mb-2">
+                                                <div class="input-group custom-sm">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Date</span>
+                                                    </div>
+                                                    <span class="form-control text-left form-control-sm" id="dateModif" type="text">
+                                                        <i class="fa fa-calendar-day mr-1"></i>
+                                                        {{service.DateModif | date:'MMM d, yyyy'}}
+                                                    </span>
+                                                </div>     
+                                            </div>
+                                            <!-- END LAST UPDATE DATE -->
+                                            <!-- LAST UPDATE USER -->
+                                            <div class="col-lg-6 col-md-1 mb-2">
+                                                <div class="input-group custom-sm">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Issuer</span>
+                                                    </div>
+                                                    <span class="form-control text-left form-control-sm" id="userModif" type="text">
+                                                        <i class="fa fa-user-edit mr-1"></i>
+                                                        {{service.UsrModif}}
+                                                    </span>
+                                                </div>     
+                                            </div>
+                                            <!-- END LAST UPDATE USER -->
+                                        </div>
+                                        <!-- END LAST UPDATE -->
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                            <!-- END TAB TRACEABILITY -->
+
+                        </ngb-tabset> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END SIDE CONTENT CONTENT -->
+    </div>
 </form>

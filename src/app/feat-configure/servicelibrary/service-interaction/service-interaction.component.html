@@ -40,7 +40,7 @@
                             [readonly]="mode === InteractionMode.EDIT"
                             [ngClass]="serviceNameExists(serviceForm.get('service').value) ? 'is-invalid' : ''" />
 
-                        <div *ngIf="serviceNameExists(serviceForm.get('service').value)" id="serviceNameAlreadyInUseFeeback" class="invalid-feedback">
+                        <div *ngIf="serviceNameExists(serviceForm.get('service').value)" id="serviceNameAlreadyInUseFeedback" class="invalid-feedback">
                             service name already in use
                         </div>
                     </div>
@@ -53,8 +53,7 @@
                         <label id="serviceTypeLabel" for="serviceType" class="form-label">
                             Type
                         </label>
-                        <select id="serviceType" name="ServiceType" formControlName="type" class="form-select form-control"
-                        (change)="refreshDisplayOnTypeChange($event.target.value)">
+                        <select id="serviceType" name="ServiceType" formControlName="type" class="form-select form-control">
                             <option value="SOAP">SOAP Service</option>
                             <option value="REST">REST Service</option>
                             <option value="FTP">FTP Service</option>
@@ -113,7 +112,7 @@
                                         <!-- END SERVICE PATH -->    
     
                                         <!-- SERVICE OPERATION -->                                
-                                        <div class="form-group">
+                                        <div *ngIf="isSOAPType()" class="form-group">
                                             <label id="serviceOperationLabel" for="serviceOperation" class="form-label">
                                                 Operation
                                             </label>
@@ -121,8 +120,35 @@
                                         </div>
                                         <!-- END SERVICE OPERATION -->
     
+                                        <!-- SERVICE KAFKA TOPIC -->                                
+                                        <div *ngIf="isKAFKAType()" class="form-group">
+                                            <label id="kafkaTopicLabel" for="kafkaTopic" class="form-label">
+                                                Kafka Topic
+                                            </label>
+                                            <input id="kafkaTopic" type="text" class="form-control form-control-sm" name="kafkaTopic" placeholder="Kafka Topic" formControlName="kafkaTopic" />
+                                        </div>
+                                        <!-- END SERVICE KAFKA TOPIC -->
+    
+                                        <!-- SERVICE KAFKA FILTER PATH -->                                
+                                        <div *ngIf="isKAFKAType()" class="form-group">
+                                            <label id="kafkaFilterPathLabel" for="kafkaFilterPath" class="form-label">
+                                                Kafka Filter Path
+                                            </label>
+                                            <input id="kafkaFilterPath" type="text" class="form-control form-control-sm" name="kafkaFilterPath" placeholder="Kafka Filter Path" formControlName="kafkaFilterPath" />
+                                        </div>
+                                        <!-- END SERVICE KAFKA FILTER PATH -->
+    
+                                        <!-- SERVICE KAFKA FILTER VALUE -->                                
+                                        <div *ngIf="isKAFKAType()" class="form-group">
+                                            <label id="kafkaFilterPathLabel" for="kafkaFilterValue" class="form-label">
+                                                Kafka Filter Value
+                                            </label>
+                                            <input id="kafkaFilterValue" type="text" class="form-control form-control-sm" name="kafkaFilterValue" placeholder="Kafka Filter Value" formControlName="kafkaFilterValue" />
+                                        </div>
+                                        <!-- END SERVICE KAFKA FILTER VALUE -->
+    
                                         <!-- FOLLOW REDIRECT -->
-                                        <div class="form-group custom-control custom-switch custom-control-primary">
+                                        <div *ngIf="isRESTType()" class="form-group custom-control custom-switch custom-control-primary">
                                             <input id="serviceFollowRedirect" type="checkbox" class="custom-control-input" name="ServiceFollowRedirect" formControlName="isFollowRedir" value="1">
                                             <label id="serviceFollowRedirectLabel" class="custom-control-label" for="serviceFollowRedirect">Follow Redirect</label>
                                         </div>
@@ -132,7 +158,6 @@
                                         <div class="form-group">
                                             <label id="serviceGroupLabel" for="serviceGroup" class="form-label">
                                                 Group
-                                                <i class="fa fa-info-circle ml-0 info" placement="bottom" ngbPopover='This field is used to set the location of your service. you can put a URL as following : http://myservice.fr/users/1  ftp://username:password@host:port/myFile.txt  you can also put a relative path as following :  /users/1  /myFile.txt ' triggers="mouseenter:mouseleave"></i>
                                             </label>
                                             <input id="serviceGroup" type="text" class="form-control form-control-sm" name="ServiceGroup" placeholder="Service Group" formControlName="group" />
                                         </div>
@@ -142,7 +167,6 @@
                                         <div class="form-group">
                                             <label id="serviceDescriptionLabel" for="serviceDescription" class="form-label">
                                                 Description
-                                                <i class="fa fa-info-circle ml-0 info" placement="bottom" ngbPopover="A short description for the service" triggers="mouseenter:mouseleave"></i>
                                             </label>
                                             <textarea id="serviceDescription" class="form-control form-control-sm" name="ServiceDescription" placeholder="Service Description" formControlName="description">{{service.description}}</textarea>
                                         </div>
@@ -157,7 +181,7 @@
                                 <ng-template ngbTabContent>                                                                      
                                     <div class="col-md-12 mt-4">                                 
                                         <!-- SERVICE ATTACHMENT URL  -->
-                                        <div class="form-group" id="serviceAttachmentURLDiv">
+                                        <div *ngIf="isSOAPType()" class="form-group">
                                             <label id="serviceAttachmentURLLabel" for="serviceAttachmentURL" class="form-label">
                                                 Attachment URL
                                             </label>
@@ -165,7 +189,7 @@
                                         </div>
                                         <!-- END SERVICE ATTACHMENT URL -->                                   
                                         <!-- SERVICE KAFKA KEY  -->
-                                        <div class="form-group" id="serviceKafkaKeyDiv">
+                                        <div *ngIf="isKAFKAType()" class="form-group">
                                             <label id="serviceKafkaKeyLabel" for="serviceKafkaKey" class="form-label">
                                                 Kafka Key
                                             </label>
@@ -173,7 +197,7 @@
                                         </div>
                                         <!-- END KAFKA KEY -->                              
                                         <!-- SERVICE FTP FILE  -->
-                                        <div class="form-group" id="serviceFtpFileDiv">
+                                        <div *ngIf="isFTPType()" class="form-group">
                                             <label id="serviceFTPFileLabel" for="serviceFTPFile" class="form-label">
                                                 FTP File
                                             </label>
@@ -181,18 +205,27 @@
                                         </div>
                                         <!-- END FTP FILE -->                        
                                         <!-- SERVICE REQUEST  -->
-                                        <div class="form-group">
+                                        <div class="form-group" *ngIf="showServiceRequest()" >
                                             <label id="serviceRequestLabel" for="serviceRequest" class="form-label">
-                                                Request
+                                                {{ (isFTPType() && !isGETMethod()) ? 'File Content' : 'Request'}}
                                             </label>
-                                            <textarea id="serviceRequest" class="form-control form-control-sm" name="ServiceRequest" placeholder="Service Request">{{service.srvRequest}}</textarea>
+                                            <textarea id="serviceRequest" class="form-control form-control-sm" name="ServiceRequest" placeholder="Service Request">
+                                                {{service.srvRequest}}
+                                            </textarea>
                                         </div>
                                         <!-- END SERVICE REQUEST -->
-                                    </div>                                                                    
-                                    <div class="col-md-12 mt-2">                                 
+                                    </div>           
+                                </ng-template>
+                            </ngb-tab>
+                            <!-- END TAB REQUEST -->
+
+                            <!-- TAB REQUEST DETAIL -->
+                            <ngb-tab [title]="isKAFKAType() ? 'KAFKA Props':'Request Detail' ">                            
+                                <ng-template ngbTabContent>                                                                     
+                                    <div class="col-md-12 mt-4">                                 
                                         <!-- SERVICE REQUEST DETAILS  -->
                                         <div class="form-group">
-                                            <table class="table table-bordered table-hover nomarginbottom" id="ContentTable">
+                                            <table class="table table-bordered table-hover" id="ContentTable">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 5%;"></th>
@@ -206,13 +239,13 @@
                                                 <tbody id="contentTableBody">
                                                 </tbody>
                                             </table>
-                                            <button type="button" class="btn btn-default mt2" id="addContent">Add Content</button>
+                                            <button type="button" class="btn btn-secondary mt-2" id="addContent">Add Content</button>
                                         </div>
                                         <!-- END SERVICE REQUEST DETAILS -->
                                     </div>
                                 </ng-template>
                             </ngb-tab>
-                            <!-- END TAB REQUEST -->
+                            <!-- END TAB REQUEST DETAIL -->
 
                             <!-- TAB HEADER -->
                             <ngb-tab title="Header">                            
@@ -220,7 +253,7 @@
                                     <div class="col-md-12 mt-4">                                 
                                         <!-- SERVICE REQUEST HEADER  -->
                                         <div class="form-group">                                            
-                                            <table class="table table-bordered table-hover nomarginbottom" id="HeaderTable">
+                                            <table class="table table-bordered table-hover" id="HeaderTable">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 5%;"></th>
@@ -234,7 +267,7 @@
                                                 <tbody id="headerTableBody">
                                                 </tbody>
                                             </table>
-                                            <button type="button" class="btn btn-default mt-2" id="addHeader">Add Header</button>
+                                            <button type="button" class="btn btn-secondary mt-2" id="addHeader">Add Header</button>
                                         </div>
                                         <!-- END SERVICE REQUEST HEADER -->
                                     </div>

@@ -86,130 +86,44 @@ export class ServiceInteractionComponent implements OnInit {
   }
   prepareForCreateMode() {
 
-    /*
-    // Prepare all Events handler of the modal.
-    prepareAppServiceModal();
-
-    $('#editSoapLibraryButton').attr('class', '');
-    $('#editSoapLibraryButton').attr('hidden', 'hidden');
-    $('#duplicateSoapLibraryButton').attr('class', '');
-    $('#duplicateSoapLibraryButton').attr('hidden', 'hidden');
-    $('#addSoapLibraryButton').attr('class', 'btn btn-primary');
-    $('#addSoapLibraryButton').removeProp('hidden');
+        /*
 
     feedAppServiceModal(service, "editSoapLibraryModal", "ADD");
     listennerForInputTypeFile('#editSoapLibraryModal')
     pasteListennerForClipboardPicture('#editSoapLibraryModal');
-    $('#service').val("");
-    */
+    $('#service').val("");*/
+    
   }
-  prepareAppServiceModal(){
-/*
-    $("#editSoapLibraryModal #method").change(function () {
-        if ($("#editSoapLibraryModal #type").val() == "FTP") {
-            if ($(this).val() == "GET") {
-                $("#editSoapLibraryModal #srvRequest textarea").hide();
-            } else {
-                $("#editSoapLibraryModal #srvRequest").parent().parent().find("label").html("File Content");
-                $("#editSoapLibraryModal #srvRequest textarea").show();
-            }
-        } else {
-            $("#editSoapLibraryModal #srvRequest textarea").show();
-            $("#editSoapLibraryModal #srvRequest").parent().parent().find("label").html("Service Request");
-        }
-    });
-*/
-  }
-  refreshDisplayOnTypeChange(newValue) {
-/*
-    if (newValue === "SOAP") {
-        // If SOAP service, no need to feed the method.
-        $('#serviceFtpFileDiv').hide();
-        $("label[name='screenshotfilenameField']").hide();
-        $("label[name='operationField']").parent().show();
-        $("label[name='attachementurlField']").parent().show();
-        $('#editSoapLibraryModal #method').prop("disabled", true);
-        $('#editSoapLibraryModal #addContent').prop("disabled", true);
-        $('#editSoapLibraryModal #addHeader').prop("disabled", false);
-        $("label[name='kafkaTopicField']").parent().hide();
-        $("label[name='kafkaKeyField']").parent().hide();
-        $("label[name='kafkaFilterPathField']").parent().hide();
-        $("label[name='kafkaFilterValueField']").parent().hide();
-        $("label[name='isFollowRedirField']").parent().hide();
-        $('#editSoapLibraryModal #tab3Text').text("Request Detail");
-    } else if (newValue === "FTP") {
-        $('#editSoapLibraryModal #method').prop("disabled", false);
-        $('#editSoapLibraryModal #method option[value="DELETE"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="PUT"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="PATCH"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="GET"]').css("display", "block");
-        $('#editSoapLibraryModal #method option[value="POST"]').css("display", "block");
-        $('#editSoapLibraryModal #method option[value="SEARCH"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="PRODUCE"]').css("display", "none");
-        $('#editSoapLibraryModal #addContent').prop("disabled", true);
-        $('#editSoapLibraryModal #addHeader').prop("disabled", true);
-        $('.upload-drop-zone').show();
-        $("label[name='screenshotfilenameField']").show();
-        $("label[name='operationField']").parent().hide();
-        $("label[name='attachementurlField']").parent().hide();
-        $("label[name='kafkaTopicField']").parent().hide();
-        $("label[name='kafkaKeyField']").parent().hide();
-        $("label[name='kafkaFilterPathField']").parent().hide();
-        $("label[name='kafkaFilterValueField']").parent().hide();
-        $("label[name='isFollowRedirField']").parent().hide();
-        $('#editSoapLibraryModal #tab3Text').text("Request Detail");
-    } else if (newValue === "KAFKA") {
-        $('#editSoapLibraryModal #method').prop("disabled", false);
-        $('#editSoapLibraryModal #method option[value="DELETE"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="PUT"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="PATCH"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="GET"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="POST"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="SEARCH"]').css("display", "block");
-        $('#editSoapLibraryModal #method option[value="PRODUCE"]').css("display", "block");
-        $('#editSoapLibraryModal #addContent').prop("disabled", false);
-        $('#editSoapLibraryModal #addHeader').prop("disabled", false);
-        $('.upload-drop-zone').hide();
-        $("label[name='screenshotfilenameField']").hide();
-        $("label[name='operationField']").parent().hide();
-//        $("input[name='operation']").hide();
-        $("label[name='attachementurlField']").parent().hide();
-//        $("input[name='attachementurl']").hide();
-        $("label[name='kafkaTopicField']").parent().show();
-        $("label[name='kafkaKeyField']").parent().show();
-        $("label[name='kafkaFilterPathField']").parent().show();
-        $("label[name='kafkaFilterValueField']").parent().show();
-        $("label[name='isFollowRedirField']").parent().hide();
-        $('#editSoapLibraryModal #tab3Text').text("KAFKA Props");
-    } else { // REST
-        $('#editSoapLibraryModal #method').prop("disabled", false);
-        $('#editSoapLibraryModal #method option[value="DELETE"]').css("display", "block");
-        $('#editSoapLibraryModal #method option[value="PUT"]').css("display", "block");
-        $('#editSoapLibraryModal #method option[value="PATCH"]').css("display", "block");
-        $('#editSoapLibraryModal #method option[value="GET"]').css("display", "block");
-        $('#editSoapLibraryModal #method option[value="POST"]').css("display", "block");
-        $('#editSoapLibraryModal #method option[value="SEARCH"]').css("display", "none");
-        $('#editSoapLibraryModal #method option[value="PRODUCE"]').css("display", "none");
-        $('#editSoapLibraryModal #addContent').prop("disabled", false);
-        $('#editSoapLibraryModal #addHeader').prop("disabled", false);
-        $('.upload-drop-zone').hide();
-        $("label[name='screenshotfilenameField']").hide();
-        $("label[name='operationField']").parent().hide();
-//        $("input[name='operation']").hide();
-        $("label[name='attachementurlField']").parent().hide();
-//        $("input[name='attachementurl']").hide();
-        $("label[name='kafkaTopicField']").parent().hide();
-        $("label[name='kafkaKeyField']").parent().hide();
-        $("label[name='kafkaFilterPathField']").parent().hide();
-        $("label[name='kafkaFilterValueField']").parent().hide();
-        $("label[name='isFollowRedirField']").parent().show();
-        $('#editSoapLibraryModal #tab3Text').text("Request Detail");
+
+  showServiceRequest():boolean {
+    if (this.isGETMethod() && this.isFTPType()) {
+      return false;
     }
-    */
-}
+    return true;
+  }
+
+  isGETMethod():boolean {
+    return this.serviceForm.get('method').value === "GET";
+  }
+
+  isSOAPType():boolean {
+    return this.serviceForm.get('type').value === "SOAP";
+  }
+
+  isFTPType():boolean {
+    return this.serviceForm.get('type').value === "FTP";
+  }
+
+  isKAFKAType():boolean {
+    return this.serviceForm.get('type').value === "KAFKA";
+  }
+
+  isRESTType():boolean {
+    return this.serviceForm.get('type').value === "REST"
+  }
 
   /**
-   * set the form values with the testcaseheader one
+   * set the form values
   */
   setFormValues(): void {
     this.serviceForm = this.formBuilder.group({

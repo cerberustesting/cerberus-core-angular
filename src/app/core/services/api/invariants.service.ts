@@ -36,6 +36,8 @@ export class InvariantsService {
   systemsList: Array<any>;
   environmentsList: Array<Invariant>;
   appService: Array<any>;
+  serviceTypeList: Array<Invariant>;
+  serviceMethodList: Array<Invariant>;
 
   // observables
   observableCountriesList = new BehaviorSubject<Invariant[]>(this.countriesList);
@@ -54,6 +56,8 @@ export class InvariantsService {
   observablePropertyNatureList = new BehaviorSubject<Invariant[]>(this.propertyNatureList);
   observablePropertyDatabaseList = new BehaviorSubject<Invariant[]>(this.propertyDatabaseList);
   observableAppService = new BehaviorSubject<any[]>(this.propertyDatabaseList);
+  observableServiceTypeList = new BehaviorSubject<Invariant[]>(this.serviceTypeList);
+  observableServiceMethodList = new BehaviorSubject<any[]>(this.serviceMethodList);
 
   constructor(private http: HttpClient, private Notification: NotificationService) {
     this.USERGROUP_list = undefined;
@@ -190,6 +194,22 @@ export class InvariantsService {
       .subscribe(response => {
         this.appService = response.contentTable;
         this.observableAppService.next(this.appService);
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
+  }  
+
+  getServiceTypeList(): void {
+    this.http.get<Invariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=SRVTYPE')
+      .subscribe(response => {
+        this.serviceTypeList = response;
+        this.observableServiceTypeList.next(this.serviceTypeList);
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
+  }  
+
+  getServiceMethodList(): void {
+    this.http.get<Invariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=SRVMETHOD')
+      .subscribe(response => {
+        this.serviceMethodList = response;
+        this.observableServiceMethodList.next(this.serviceMethodList);
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 

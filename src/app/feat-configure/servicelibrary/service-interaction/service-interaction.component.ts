@@ -10,6 +10,8 @@ import { CustomModalComponent, ModalType, CustomModalItemsType } from 'src/app/s
 import { NotificationID } from 'src/app/shared/notifications/notifications.data';
 import { Application } from 'src/app/shared/model/back/application/application.model';
 import { SystemService } from 'src/app/core/services/api/system.service';
+import { UserService } from 'src/app/core/services/api/user.service';
+import { InvariantsService, InvariantName } from 'src/app/core/services/api/invariants.service';
 
 @Component({
   selector: 'app-service-interaction',
@@ -51,15 +53,18 @@ export class ServiceInteractionComponent implements OnInit {
     private systemService: SystemService,
     private notificationService: NotificationService,
     private sidecontentService: SidecontentService,
-    private NgbModalService: NgbModal) {
+    private NgbModalService: NgbModal,
+    private userService: UserService,
+    private invariantsService: InvariantsService) {
     this.service = undefined;
   }
 
   ngOnInit() {
-    // refresh the service libraries list (done only once)
-    // TODO
-    this.serviceLibraryService.getServices((services: Service[]) => { this.services = services; });
-    this.systemService.getApplicationList(applications => {this.applications = applications;});
+
+    let name : InvariantName;
+    name = InvariantName.action;
+
+    this.getEntitiesData();
 
     // set the correct title for the save button (depending on the mode)
     this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
@@ -68,7 +73,7 @@ export class ServiceInteractionComponent implements OnInit {
     if (this.service && this.mode) {
       this.setFormValues();
     } else {
-      console.error('error with compononent initialization, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
+      console.error('error with component initialization, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
       return;
     }
 
@@ -84,6 +89,21 @@ export class ServiceInteractionComponent implements OnInit {
         break;
     }
   }
+  getEntitiesData() {
+    // refresh the service libraries list (done only once)   
+    this.serviceLibraryService.getServices((services: Service[]) => { this.services = services; });
+
+    // get other data
+    this.systemService.getApplicationList(applications => {this.applications = applications;}, undefined, undefined);// TODO  this.userService.user.defaultSystem
+
+    // get service types and methods invariants, only if doesn't exist yet
+    if(!this.invariantsService.serviceTypeList){
+      this.invariantsService.getServiceTypeList();
+    }
+    if(!this.invariantsService.serviceMethodList){
+      this.invariantsService.getServiceMethodList();
+    }
+  }
   prepareForCreateMode() {
 
         /*
@@ -97,6 +117,16 @@ export class ServiceInteractionComponent implements OnInit {
 
   showServiceRequest():boolean {
     if (this.isGETMethod() && this.isFTPType()) {
+      return false;
+    }
+    return true;
+  }
+
+  showMethod(methodValue : string):boolean {
+    if (this.isFTPType() && methodValue != "GET" && methodValue != "POST") {
+      return false;
+    }
+    if (this.isKAFKAType() && methodValue != "SEARCH" && methodValue != "PRODUCE") {
       return false;
     }
     return true;
@@ -126,6 +156,14 @@ export class ServiceInteractionComponent implements OnInit {
    * set the form values
   */
   setFormValues(): void {
+
+    // default values on create mode
+    if (this.mode === INTERACTION_MODE.CREATE) {
+      this.service.type = "REST";
+      this.service.method = "GET";
+      this.service.isFollowRedir = true;
+    }
+
     this.serviceForm = this.formBuilder.group({
       service: this.service.service,
       application: this.service.application,
@@ -153,11 +191,11 @@ export class ServiceInteractionComponent implements OnInit {
    */
   onSubmit(values: any): void {
 
-    // if no service name id is set
+    // if no service name is set
     if (!values.service || values.service === '') {
       this.notificationService.createANotification('Please specify the Service Name', NotificationStyle.Warning);
       return;
-    } // TODO see the ones who are mandatory?
+    } 
 
     // trigger the correct API endpoint
     if (this.mode === INTERACTION_MODE.CREATE) {

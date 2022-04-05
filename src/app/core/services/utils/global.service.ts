@@ -82,4 +82,17 @@ export class GlobalService {
     }
     return Object.keys(newObject).map(key => key + '=' + newObject[key]).join('&');
   }
+
+  /**
+   * transform object into formdata
+   * @param object source object
+   * @returns formdata object
+   */
+  toFormData(object: any): FormData {
+    const formData = new FormData();
+    for (const key in object) {
+      formData.append(key, encodeURIComponent(object[key]));
+    }
+    return formData;
+  }
 }

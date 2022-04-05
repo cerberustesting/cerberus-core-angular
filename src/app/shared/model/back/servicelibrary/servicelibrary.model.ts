@@ -19,7 +19,7 @@ export class Service {
         /** @description service path of the service */
         servicePath: string;
         
-        /** @description operation of the service */// TODO where is this filled?
+        /** @description operation of the service */
         operation: string;
 
         /** @description kafka topic of the service */
@@ -35,7 +35,7 @@ export class Service {
         kafkaKey: string;
 
         /** @description follow redirect option of the service */
-        isFollowRedir: boolean;
+        isFollowRedir: number;
 
         /** @description group of the service */
         group: string;
@@ -47,10 +47,10 @@ export class Service {
         attachementurl: string;
 
         /** @description request detail list of the service */
-        contentList: JSON;
+        contentList: Array<String>;
 
         /** @description header details list of the service */
-        headerList: JSON;
+        headerList: Array<String>;
 
         /** @description request of the service */
         srvRequest: string;
@@ -69,5 +69,21 @@ export class Service {
         
         constructor() {
                 this.service = '';
+                this.application = '';
+                this.servicePath = '';
+                this.description = '';
+                this.operation = '';
+                this.kafkaTopic = '';
+                this.kafkaFilterPath = '';
+                this.kafkaFilterValue = '';
+                this.kafkaKey = '';
+                this.group = '';
+                this.attachementurl = '';
+                this.contentList = [];
+                this.headerList = [];
+                this.srvRequest = '';
+                this.type = "REST";
+                this.method = "GET";
+                this.isFollowRedir = 1;
         }
 }

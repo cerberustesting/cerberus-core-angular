@@ -57,15 +57,32 @@ export class ServiceLibraryService {
    * create a service
    * @param service the service object to create
    */
-  createService(service: Service, callback: (response: any) => void): void {
+   createService(service: Service, callback: (response: any) => void): void {
 
     // set the url to post
     const url = environment.cerberus_api_url + '/CreateAppService';
 
     // build the data to post
-    const formData = this.globalService.toQueryString(service, ['service', 'type', 'description']); // TODO
+    let formData = this.globalService.toFormData(service); // TODO
+    formData.set("contentList", JSON.stringify(service.contentList));
+    formData.set("headerList", JSON.stringify(service.headerList));
+    // formData.append("srvRequest", encodeURIComponent(editor.getSession().getDocument().getValue()));
 
-    this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
+    /*
+    if (file.prop("files").length != 0) {
+        formData.append("file", file.prop("files")[0]);
+    }
+
+    if (isEmpty(formData.get("isFollowRedir"))) {
+        formData.append("isFollowRedir", 0);
+    }
+    */
+
+
+    //formData = new FormData();
+    //formData.append("service", service.service);
+
+    this.http.post<any>(url, formData).subscribe(response => {
       callback(response);
     });
   }

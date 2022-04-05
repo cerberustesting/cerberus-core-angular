@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Service } from 'src/app/shared/model/back/servicelibrary/servicelibrary.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
 import { NotificationStyle } from 'src/app/core/services/utils/notification.model';
 import { SidecontentService, INTERACTION_MODE } from 'src/app/core/services/api/sidecontent.service';
@@ -35,16 +35,12 @@ export class ServiceInteractionComponent implements OnInit {
   // title for save button (different according to the mode)
   private saveButtonTitle: string;
 
-  // service list used to compare with the service one (check existence)
-  public services: Array<Service>;
-
   // service list used for applications select
   public applications: Array<Application>;
 
   /** instance of the interaction mode fields enumeration */
   public InteractionMode: typeof INTERACTION_MODE = INTERACTION_MODE;
 
-  // ???
   exit: (n: void) => void;
 
   constructor(
@@ -52,7 +48,7 @@ export class ServiceInteractionComponent implements OnInit {
     private serviceLibraryService: ServiceLibraryService,    
     private systemService: SystemService,
     private notificationService: NotificationService,
-    private sidecontentService: SidecontentService,
+    private sideContentService: SidecontentService,
     private NgbModalService: NgbModal,
     private userService: UserService,
     private invariantsService: InvariantsService) {
@@ -61,13 +57,10 @@ export class ServiceInteractionComponent implements OnInit {
 
   ngOnInit() {
 
-    let name : InvariantName;
-    name = InvariantName.action;
-
     this.getEntitiesData();
 
     // set the correct title for the save button (depending on the mode)
-    this.saveButtonTitle = this.sidecontentService.getsaveButtonTitle(this.mode);
+    this.saveButtonTitle = this.sideContentService.getsaveButtonTitle(this.mode);
 
     // service object sanitizing
     if (this.service && this.mode) {
@@ -90,9 +83,6 @@ export class ServiceInteractionComponent implements OnInit {
     }
   }
   getEntitiesData() {
-    // refresh the service libraries list (done only once)   
-    this.serviceLibraryService.getServices((services: Service[]) => { this.services = services; });
-
     // get other data
     this.systemService.getApplicationList(applications => {this.applications = applications;}, undefined, undefined);// TODO  this.userService.user.defaultSystem
 
@@ -102,6 +92,9 @@ export class ServiceInteractionComponent implements OnInit {
     }
     if(!this.invariantsService.serviceMethodList){
       this.invariantsService.getServiceMethodList();
+    }
+    if(!this.invariantsService.serviceContentActList){
+      this.invariantsService.getServiceContentActList();
     }
   }
   prepareForCreateMode() {
@@ -156,14 +149,6 @@ export class ServiceInteractionComponent implements OnInit {
    * set the form values
   */
   setFormValues(): void {
-
-    // default values on create mode
-    if (this.mode === INTERACTION_MODE.CREATE) {
-      this.service.type = "REST";
-      this.service.method = "GET";
-      this.service.isFollowRedir = true;
-    }
-
     this.serviceForm = this.formBuilder.group({
       service: this.service.service,
       application: this.service.application,
@@ -179,10 +164,48 @@ export class ServiceInteractionComponent implements OnInit {
       isFollowRedir: this.service.isFollowRedir,
       group: this.service.group,
       attachmentURL: this.service.attachementurl,
-      contentList: this.service.contentList,
-      headerList: this.service.headerList,
+      contentList: this.formBuilder.array(this.service.contentList),
+      headerList: this.formBuilder.array(this.service.headerList),
       srvRequest: this.service.srvRequest
     });
+  }
+
+  get contentList() {
+    return this.serviceForm.get('contentList') as FormArray;
+  }
+
+  get headerList() {
+    return this.serviceForm.get('headerList') as FormArray;
+  }
+  /**
+   * add row on content list
+   */
+  addContent(): void {
+    this.contentList.push( 
+      this.formBuilder.group({
+        active: "Y",
+        sort: 10,
+        key: "",
+        value: "",
+        description: "",
+        toDelete: false
+      })
+    );
+  }
+  /**
+   * add row on header list
+   */
+  addHeader(): void {
+    this.headerList.push( 
+      this.formBuilder.group({
+        active: "Y",
+        sort: 10,
+        key: "",
+        value: "",
+        description: "",
+        toDelete: false
+      })
+    );
   }
 
   /**
@@ -200,13 +223,23 @@ export class ServiceInteractionComponent implements OnInit {
     // trigger the correct API endpoint
     if (this.mode === INTERACTION_MODE.CREATE) {
       this.serviceLibraryService.createService(values, (response: any) => {
+        if(!response){
+          return;
+        }
         this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.serviceInteraction);
-        this.closeSideContent();
+        if(response.messageType === 'OK'){
+          this.closeSideContent();
+        }        
       });
     } else if (this.mode === INTERACTION_MODE.EDIT) {
       this.serviceLibraryService.updateService(this.initialServiceName, values, (response: any) => {
+        if(!response){
+          return;
+        }
         this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.serviceInteraction);
-        this.closeSideContent();
+        if(response.messageType === 'OK'){
+          this.closeSideContent();
+        }        
       });
     }
   }
@@ -215,20 +248,8 @@ export class ServiceInteractionComponent implements OnInit {
    * close the sidecontent through the service
    */
   closeSideContent(): void {
-    this.sidecontentService.closeSideBlock();
+    this.sideContentService.closeSideBlock();
     this.exit();
-  }
-
-  /**
-   * return the list of fields that have been changed during the edition
-   */
-  getServiceDifferences(): string[] {
-    const differentFields = new Array<string>();
-    if (this.service.service !== this.serviceForm.get('service').value) { differentFields.push('service'); }
-    if (this.service.type !== this.serviceForm.get('type').value) { differentFields.push('type'); }
-    if (this.service.description !== this.serviceForm.get('description').value) { differentFields.push('description'); }
-    return differentFields;
-    // TODO
   }
 
   /**
@@ -238,33 +259,18 @@ export class ServiceInteractionComponent implements OnInit {
    * @param parameters parameters attached with the compononent change request
    */
   sideContentInterruption(newComponent: any, parameters: {}): boolean {
-    if (this.getServiceDifferences().length === 0) {
-      return true;
-    } else {
-      // open a confirmation modal
-      const modalRef = this.NgbModalService.open(CustomModalComponent);
-      modalRef.componentInstance.title = 'Are you sure ?';
-      modalRef.componentInstance.subtitle = 'You\'re about to lost your changes in the side content';
-      modalRef.componentInstance.itemsList = this.getServiceDifferences();
-      modalRef.componentInstance.modalType = ModalType.Confirm;
-      modalRef.componentInstance.itemsType = CustomModalItemsType.TestCaseDifferences;
-      modalRef.componentInstance.confirmFunction = function () {
-        // open the new component to open
-        this.sideContentService.addComponentToSideBlock(newComponent, parameters, true);
-      };
-      return false;
-    }
-  }
 
-  /**
-   * return true if the service name is already used by another folder
-   * @param service name to check
-   */
-  serviceNameExists(servicename: string): boolean {
-    if (this.services.find(service => service.service === servicename) && servicename !== this.service.service) {
-      return true;
-    } else {
-      return false;
-    }
+    const sideContentService = this.sideContentService;
+    // open a confirmation modal
+    const modalRef = this.NgbModalService.open(CustomModalComponent);
+    modalRef.componentInstance.title = 'Are you sure?';
+    modalRef.componentInstance.subtitle = 'Your current side panel content will be replaced and unsaved changes will be lost. Do you want to proceed?';
+    modalRef.componentInstance.modalType = ModalType.Confirm;
+    modalRef.componentInstance.itemsType = CustomModalItemsType.Step;
+    modalRef.componentInstance.confirmFunction = function () {
+      sideContentService.addComponentToSideBlock(newComponent, parameters, true);
+    };
+     
+    return false;        
   }
 }

@@ -38,6 +38,7 @@ export class InvariantsService {
   appService: Array<any>;
   serviceTypeList: Array<Invariant>;
   serviceMethodList: Array<Invariant>;
+  serviceContentActList: Array<Invariant>;
 
   // observables
   observableCountriesList = new BehaviorSubject<Invariant[]>(this.countriesList);
@@ -58,6 +59,7 @@ export class InvariantsService {
   observableAppService = new BehaviorSubject<any[]>(this.propertyDatabaseList);
   observableServiceTypeList = new BehaviorSubject<Invariant[]>(this.serviceTypeList);
   observableServiceMethodList = new BehaviorSubject<any[]>(this.serviceMethodList);
+  observableServiceContentActList = new BehaviorSubject<any[]>(this.serviceContentActList);
 
   constructor(private http: HttpClient, private Notification: NotificationService) {
     this.USERGROUP_list = undefined;
@@ -210,6 +212,14 @@ export class InvariantsService {
       .subscribe(response => {
         this.serviceMethodList = response;
         this.observableServiceMethodList.next(this.serviceMethodList);
+      }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
+  }
+
+  getServiceContentActList(): void {
+    this.http.get<Invariant[]>(environment.cerberus_api_url + '/FindInvariantByID?idName=APPSERVICECONTENTACT')
+      .subscribe(response => {
+        this.serviceContentActList = response;
+        this.observableServiceContentActList.next(this.serviceContentActList);
       }, (err) => this.Notification.createANotification(err, NotificationStyle.Error));
   }
 

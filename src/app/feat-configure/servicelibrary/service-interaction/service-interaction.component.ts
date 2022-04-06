@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Service } from 'src/app/shared/model/back/servicelibrary/servicelibrary.model';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/core/services/utils/notification.service';
@@ -41,6 +41,8 @@ export class ServiceInteractionComponent implements OnInit {
   /** instance of the interaction mode fields enumeration */
   public InteractionMode: typeof INTERACTION_MODE = INTERACTION_MODE;
 
+  private dragAreaClass: string;
+
   exit: (n: void) => void;
 
   constructor(
@@ -81,7 +83,13 @@ export class ServiceInteractionComponent implements OnInit {
       default:
         break;
     }
+
+    this.dragAreaClass = "dragarea";
   }
+
+  /**
+   * get invariants and applications
+  */
   getEntitiesData() {
     // get other data
     this.systemService.getApplicationList(applications => {this.applications = applications;}, undefined, undefined);// TODO  this.userService.user.defaultSystem
@@ -95,6 +103,60 @@ export class ServiceInteractionComponent implements OnInit {
     }
     if(!this.invariantsService.serviceContentActList){
       this.invariantsService.getServiceContentActList();
+    }
+  }
+
+  /**
+   * handle file upload on FTP type
+   * @param event form input upload event
+   */
+  onFileChange(event: any) {
+    let files: FileList = event.target.files;
+    this.saveFiles(files);
+  }
+  
+  /**
+   * HostListener events handle functions
+   * @param event dragable area event
+   */
+  @HostListener("dragover", ["$event"]) onDragOver(event: any) {
+    this.dragAreaClass = "droparea";
+    event.preventDefault();
+  }
+
+  @HostListener("dragenter", ["$event"]) onDragEnter(event: any) {
+    this.dragAreaClass = "droparea";
+    event.preventDefault();
+  }
+
+  @HostListener("dragend", ["$event"]) onDragEnd(event: any) {
+    this.dragAreaClass = "dragarea";
+    event.preventDefault();
+  }
+
+  @HostListener("dragleave", ["$event"]) onDragLeave(event: any) {
+    this.dragAreaClass = "dragarea";
+    event.preventDefault();
+  }
+  
+  @HostListener("drop", ["$event"]) onDrop(event: any) {
+    this.dragAreaClass = "dragarea";
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer.files) {
+      let files: FileList = event.dataTransfer.files;
+      this.saveFiles(files);
+    }
+  }
+  
+  /**
+   * handle file upload on FTP type
+   * @param event form input upload event
+   */
+  saveFiles(files: FileList) {
+    if (files.length == 1){
+      this.serviceForm.get('file').setValue(files[0]);
+      this.serviceForm.get('fileName').setValue(files[0].name);
     }
   }
   prepareForCreateMode() {
@@ -163,10 +225,12 @@ export class ServiceInteractionComponent implements OnInit {
       kafkaKey: this.service.kafkaKey,
       isFollowRedir: this.service.isFollowRedir,
       group: this.service.group,
-      attachmentURL: this.service.attachementurl,
+      attachementurl: this.service.attachementurl,
       contentList: this.formBuilder.array(this.service.contentList),
       headerList: this.formBuilder.array(this.service.headerList),
-      srvRequest: this.service.srvRequest
+      srvRequest: this.service.srvRequest,
+      file: this.service.file,
+      fileName: this.service.fileName
     });
   }
 

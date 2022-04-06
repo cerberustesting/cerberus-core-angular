@@ -67,20 +67,10 @@ export class ServiceLibraryService {
     formData.set("contentList", JSON.stringify(service.contentList));
     formData.set("headerList", JSON.stringify(service.headerList));
     // formData.append("srvRequest", encodeURIComponent(editor.getSession().getDocument().getValue()));
-
-    /*
-    if (file.prop("files").length != 0) {
-        formData.append("file", file.prop("files")[0]);
+  
+    if (service.file && service.file.size > 0) {
+        formData.append("file", service.file);
     }
-
-    if (isEmpty(formData.get("isFollowRedir"))) {
-        formData.append("isFollowRedir", 0);
-    }
-    */
-
-
-    //formData = new FormData();
-    //formData.append("service", service.service);
 
     this.http.post<any>(url, formData).subscribe(response => {
       callback(response);

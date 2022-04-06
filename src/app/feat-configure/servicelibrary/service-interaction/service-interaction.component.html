@@ -180,7 +180,7 @@
                                                 <label id="serviceAttachmentURLLabel" for="serviceAttachmentURL" class="form-label">
                                                     Attachment URL
                                                 </label>
-                                                <input id="serviceAttachmentURL" class="form-control" name="ServiceAttachmentURL" placeholder="URL" formControlName="attachmentURL">
+                                                <input id="serviceAttachmentURL" class="form-control" name="ServiceAttachmentURL" placeholder="URL" formControlName="attachementurl">
                                             </div>
                                             <!-- END SERVICE ATTACHMENT URL -->                                   
                                             <!-- SERVICE KAFKA KEY  -->
@@ -196,7 +196,23 @@
                                                 <label id="serviceFTPFileLabel" for="serviceFTPFile" class="form-label">
                                                     FTP File
                                                 </label>
-                                                <input id="serviceFTPFile" class="form-control" name="ServiceFTPFile" placeholder="Upload File">
+
+                                                <div  draggable="true" ngClass="{{dragAreaClass}}" >
+                                                    <div *ngIf="!serviceForm.get('file').value && !serviceForm.get('fileName').value">                                                        
+                                                        <i class="fa fa-upload  fa-3x"></i>
+                                                        <h3 class="mt-2 mb-2">Drag a file here</h3> 
+                                                        <p class="mt-2 mb-2">or</p>
+                                                    </div>
+                                                    <div *ngIf="serviceForm.get('fileName').value">                                                        
+                                                        <i class="fa fa-file fa-3x"></i>
+                                                        <h4 class="mt-2 mb-2">{{ serviceForm.get('fileName').value }}</h4> 
+                                                    </div>
+                                                    <a href="javascript:void(0)" class="btn btn-primary" (click)="ServiceFTPFile.click()">
+                                                        Browse File
+                                                    </a>
+                                                    <input name="ServiceFTPFile" type="file" #ServiceFTPFile [multiple]="false"
+                                                         (change)="onFileChange($event)" style="display:none" />
+                                                </div>                              
                                             </div>
                                             <!-- END FTP FILE -->                        
                                             <!-- SERVICE REQUEST  -->
@@ -205,7 +221,7 @@
                                                     {{ (isFTPType() && !isGETMethod()) ? 'File Content' : 'Service Request'}}
                                                 </label>
                                                 <textarea id="serviceRequest" class="form-control" name="ServiceRequest"
-                                                placeholder="Service Request">{{service.srvRequest}}</textarea>
+                                                placeholder="Service Request" formControlName="srvRequest">{{service.srvRequest}}</textarea>
                                             </div>
                                             <!-- END SERVICE REQUEST -->
                                         </div> 

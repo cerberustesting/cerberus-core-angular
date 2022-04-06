@@ -46,6 +46,12 @@ export class Service {
         /** @description attatchment URL of the service */
         attachementurl: string;
 
+        /** @description FTP file of the service */
+        file: File;
+
+        /** @description FTP file name of the service */
+        fileName: string;
+
         /** @description request detail list of the service */
         contentList: Array<String>;
 
@@ -85,5 +91,6 @@ export class Service {
                 this.type = "REST";
                 this.method = "GET";
                 this.isFollowRedir = 1;
+                this.fileName = "";
         }
 }

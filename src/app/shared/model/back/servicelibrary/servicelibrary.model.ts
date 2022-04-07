@@ -44,7 +44,7 @@ export class Service {
         description: string;
 
         /** @description attatchment URL of the service */
-        attachementurl: string;
+        attachementURL: string;
 
         /** @description FTP file of the service */
         file: File;
@@ -62,16 +62,16 @@ export class Service {
         serviceRequest: string;
 
         /** @description audit field : creation date of the service */
-        dateCreated: string;
+        DateCreated: string;
 
         /** @description audit field : user who created the service */
-        usrCreated: string;
+        UsrCreated: string;
 
         /** @description audit field : last modification date of the service */
-        dateModif: string;
+        DateModif: string;
 
         /** @description audit field : the last user who edited the service */
-        usrModif: string;
+        UsrModif: string;
         
         constructor() {
                 this.service = '';
@@ -84,7 +84,7 @@ export class Service {
                 this.kafkaFilterValue = '';
                 this.kafkaKey = '';
                 this.group = '';
-                this.attachementurl = '';
+                this.attachementURL = '';
                 this.contentList = [];
                 this.headerList = [];
                 this.serviceRequest = '';
@@ -93,4 +93,5 @@ export class Service {
                 this.isFollowRedir = 1;
                 this.fileName = "";
         }
+
 }

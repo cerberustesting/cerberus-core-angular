@@ -77,7 +77,7 @@ export class ServiceLibraryService {
     let formData = this.globalService.toFormData(service);
     formData.set("contentList", JSON.stringify(service.contentList));
     formData.set("headerList", JSON.stringify(service.headerList));
-    // formData.append("serviceRequest", encodeURIComponent(editor.getSession().getDocument().getValue()));
+    // formData.append("srvRequest", encodeURIComponent(editor.getSession().getDocument().getValue()));
 
     if (service.file && service.file.size > 0) {
         formData.append("file", service.file);
@@ -90,19 +90,23 @@ export class ServiceLibraryService {
 
   /**
    * update the content of a service
-   * @param initialtestoldername the initial name of the service
-   * @param service the service  object to update
+   * @param service the service object to update
    */
-  updateService(initialtestoldername: string, service: Service, callback: (response: any) => void): void {
+  updateService(service: Service, callback: (response: any) => void): void {
 
     // set the url to post
     const url = environment.cerberus_api_url + '/UpdateAppService';
 
     // build the data to post
-    let formData = this.globalService.toQueryString(service, ['service', 'type', 'description']); // TODO
-    formData += '&originalTest=' + initialtestoldername;
+    let formData = this.globalService.toFormData(service);
+    formData.set("contentList", JSON.stringify(service.contentList));
+    formData.set("headerList", JSON.stringify(service.headerList));
 
-    this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
+    if (service.file && service.file.size > 0) {
+        formData.append("file", service.file);
+    }
+
+    this.http.post<any>(url, formData).subscribe(response => {
       callback(response);
     });
   }

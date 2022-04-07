@@ -159,7 +159,7 @@ export class ServiceInteractionComponent implements OnInit {
     this.dragAreaClass = "drag-area";
     event.preventDefault();
     event.stopPropagation();
-    if (event.dataTransfer.files) {
+    if (event.dataTransfer.files && this.hasPermissions) {
       let files: FileList = event.dataTransfer.files;
       this.saveFiles(files);
     }
@@ -239,12 +239,12 @@ export class ServiceInteractionComponent implements OnInit {
       kafkaFilterPath: this.service.kafkaFilterPath,
       kafkaFilterValue: this.service.kafkaFilterValue,
       kafkaKey: this.service.kafkaKey,
-      isFollowRedir: this.service.isFollowRedir,
+      isFollowRedir: this.service.isFollowRedir ? 1 : 0,
       group: this.service.group,
-      attachementurl: this.service.attachementurl,
+      attachementurl: this.service.attachementURL,
       contentList: this.formBuilder.array([]),
       headerList: this.formBuilder.array([]),
-      serviceRequest: this.service.serviceRequest,
+      srvRequest: this.service.serviceRequest,
       file: this.service.file,
       fileName: this.service.fileName
     });
@@ -310,6 +310,11 @@ export class ServiceInteractionComponent implements OnInit {
    */
   onSubmit(values: any): void {
 
+    if (!this.hasPermissions) {
+      this.notificationService.createANotification("You have no permissions", NotificationStyle.Error);
+      return;
+    } 
+    
     // if no service name is set
     if (!values.service || values.service === '') {
       this.notificationService.createANotification('Please specify the Service Name', NotificationStyle.Warning);
@@ -319,24 +324,25 @@ export class ServiceInteractionComponent implements OnInit {
     // trigger the correct API endpoint
     if (this.mode === INTERACTION_MODE.CREATE) {
       this.serviceLibraryService.createService(values, (response: any) => {
-        if(!response){
-          return;
-        }
-        this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.serviceInteraction);
-        if(response.messageType === 'OK'){
-          this.closeSideContent();
-        }        
+        this.handleAPIResponse(response);       
       });
     } else if (this.mode === INTERACTION_MODE.EDIT) {
-      this.serviceLibraryService.updateService(this.initialServiceName, values, (response: any) => {
-        if(!response){
-          return;
-        }
-        this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.serviceInteraction);
-        if(response.messageType === 'OK'){
-          this.closeSideContent();
-        }        
+      this.serviceLibraryService.updateService(values, (response: any) => {
+        this.handleAPIResponse(response);        
       });
+    }
+  }
+
+  /**
+   * handle API response for Create and Edit
+   */
+  handleAPIResponse(response: any) {
+    if(!response){
+      return;
+    }
+    this.notificationService.cerberusAPINotification(response.messageType, response.message, NotificationID.serviceInteraction);
+    if(response.messageType === 'OK'){
+      this.closeSideContent();
     }
   }
 

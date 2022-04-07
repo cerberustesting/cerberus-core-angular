@@ -59,7 +59,7 @@ export class Service {
         headerList: Array<String>;
 
         /** @description request of the service */
-        srvRequest: string;
+        serviceRequest: string;
 
         /** @description audit field : creation date of the service */
         dateCreated: string;
@@ -87,7 +87,7 @@ export class Service {
                 this.attachementurl = '';
                 this.contentList = [];
                 this.headerList = [];
-                this.srvRequest = '';
+                this.serviceRequest = '';
                 this.type = "REST";
                 this.method = "GET";
                 this.isFollowRedir = 1;

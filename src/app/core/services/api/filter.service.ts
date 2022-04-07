@@ -61,7 +61,6 @@ export class FilterService {
   * @params pageInformation : information on the current page
   * @params globalSearch : quick search keyword
  */
-  // TODO : pass the systems as an input
   generateQueryStringParameters(
     columnList: Array<Column>,
     pageInformation: { size: number, sort: any, number: number, totalCount: number },

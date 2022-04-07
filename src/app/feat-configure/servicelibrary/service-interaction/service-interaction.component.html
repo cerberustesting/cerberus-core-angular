@@ -97,7 +97,20 @@
                                         <div class="form-group col-12 col-xl-6">
                                             <label id="servicePathLabel" for="servicePath" class="form-label">
                                                 Service Path
-                                                <i class="fa fa-info-circle ml-0 info" placement="bottom" ngbPopover='This field is used to set the location of your service. You can put a URL as following: http://myservice.fr/users/1 ftp://username:password@host:port/myFile.txt. You can also put a relative path as following: /users/1 /myFile.txt' triggers="mouseenter:mouseleave"></i>
+                                                <ng-template #servicePathTooltip>
+                                                    <div>
+                                                        This field is used to set the location of your service. you can put a <b>URL</b> as following : 
+                                                        <code class="doc-crbvvoca"> http://myservice.fr/users/1 </code> 
+                                                        <br><br> 
+                                                        <code class="doc-crbvvoca"> ftp://username:password@host:port/myFile.txt </code>
+                                                        <br><br>  
+                                                        You can also put a <b>relative path</b> as following : <br> 
+                                                        <code class="doc-crbvvoca"> /users/1 </code>
+                                                        <br> 
+                                                        <code class="doc-crbvvoca"> /myFile.txt </code>
+                                                    </div>
+                                                </ng-template>
+                                                <i class="fa fa-info-circle ml-0 info" placement="bottom" [ngbPopover]="servicePathTooltip" triggers="mouseenter:mouseleave"></i>
                                             </label>
                                             <input id="servicePath" type="text" class="form-control" name="ServicePath" placeholder="Service Path" formControlName="servicePath" />
                                         </div>
@@ -220,8 +233,8 @@
                                                 <label id="serviceRequestLabel" for="serviceRequest" class="form-label">
                                                     {{ (isFTPType() && !isGETMethod()) ? 'File Content' : 'Service Request'}}
                                                 </label>
-                                                <textarea id="serviceRequest" class="form-control" name="ServiceRequest"
-                                                placeholder="Service Request" formControlName="srvRequest">{{service.srvRequest}}</textarea>
+                                                <textarea id="serviceRequest" class="form-control code-editor" name="ServiceRequest" 
+                                                    formControlName="serviceRequest">{{service.serviceRequest}}</textarea>
                                             </div>
                                             <!-- END SERVICE REQUEST -->
                                         </div> 

@@ -1,5 +1,5 @@
 <app-datatable-page [pageSort]="defaultPageSort" [columns]="columns" [servlet]="servlet" [selectedRows]="selectedRows"
-    [selection]="true" [refreshResults]="refreshResultsEvent.asObservable()" [userSystems]="userSystems">
+    [selection]="false" [refreshResults]="refreshResultsEvent.asObservable()" [userSystems]="userSystems">
 
     <!--START Template for create button -->
     <ng-template cerberusDatatableFilter>
@@ -16,6 +16,9 @@
                 <div class="btn-group btn-group-sm" data-toggle="buttons" role="group">
                     <button id="editService" type="button" class="btn btn-outline-secondary" (click)="editService(row)">
                         <i class="fa fa-fw fa-pen"></i>
+                    </button>
+                    <button id="duplicateService" type="button" class="btn btn-outline-secondary" (click)="editService(row)">
+                        <i class="fa fa-fw fa-copy"></i>
                     </button>
                     <button id="deleteService" type="button" class="btn btn-outline-secondary" (click)="deleteService(row)">
                         <i class="fa fa-fw fa-trash"></i>

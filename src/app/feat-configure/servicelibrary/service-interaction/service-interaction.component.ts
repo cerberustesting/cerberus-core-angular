@@ -41,7 +41,11 @@ export class ServiceInteractionComponent implements OnInit {
   /** instance of the interaction mode fields enumeration */
   public InteractionMode: typeof INTERACTION_MODE = INTERACTION_MODE;
 
+  // ftp drag and drop area class, to suit possible events
   private dragAreaClass: string;
+
+  // ftp drag and drop area class, to suit possible events
+  private hasPermissions: boolean;
 
   exit: (n: void) => void;
 
@@ -55,6 +59,7 @@ export class ServiceInteractionComponent implements OnInit {
     private userService: UserService,
     private invariantsService: InvariantsService) {
     this.service = undefined;
+    this.hasPermissions = true;
   }
 
   ngOnInit() {
@@ -65,32 +70,28 @@ export class ServiceInteractionComponent implements OnInit {
     this.saveButtonTitle = this.sideContentService.getsaveButtonTitle(this.mode);
 
     // service object sanitizing
-    if (this.service && this.mode) {
-      this.setFormValues();
-    } else {
+    if (!this.service || !this.mode) {
       console.error('error with component initialization, please open an issue in github : https://github.com/cerberustesting/cerberus-angular/issues/new?assignees=&labels=bug&template=bug_report.md');
       return;
-    }
+    }        
 
     // save the initial name of the service
     this.initialServiceName = this.service.service;
     
-    switch (this.mode) {
-      case INTERACTION_MODE.CREATE:
-        this.prepareForCreateMode();
-        break;
-    
-      default:
-        break;
+    // prepare the form on create, on edit is only after getting entities
+    if(this.mode === INTERACTION_MODE.CREATE){
+      this.setFormValues();
     }
 
-    this.dragAreaClass = "dragarea";
+    this.dragAreaClass = "drag-area";
   }
 
   /**
    * get invariants and applications
   */
-  getEntitiesData() {
+  getEntitiesData() {    
+    var _this = this;
+
     // get other data
     this.systemService.getApplicationList(applications => {this.applications = applications;}, undefined, undefined);// TODO  this.userService.user.defaultSystem
 
@@ -104,6 +105,21 @@ export class ServiceInteractionComponent implements OnInit {
     if(!this.invariantsService.serviceContentActList){
       this.invariantsService.getServiceContentActList();
     }
+
+    // get service complete data
+    if(this.mode === INTERACTION_MODE.EDIT){
+
+      this.hasPermissions = false;
+
+      this.serviceLibraryService.getService(this.service.service, (response: any) => {
+        if(response){
+          this.service = response;
+          this.hasPermissions = response.hasPermissions;
+          _this.setFormValues();
+        }        
+      });
+    }
+
   }
 
   /**
@@ -120,27 +136,27 @@ export class ServiceInteractionComponent implements OnInit {
    * @param event dragable area event
    */
   @HostListener("dragover", ["$event"]) onDragOver(event: any) {
-    this.dragAreaClass = "droparea";
+    this.dragAreaClass = "drop-area";
     event.preventDefault();
   }
 
   @HostListener("dragenter", ["$event"]) onDragEnter(event: any) {
-    this.dragAreaClass = "droparea";
+    this.dragAreaClass = "drop-area";
     event.preventDefault();
   }
 
   @HostListener("dragend", ["$event"]) onDragEnd(event: any) {
-    this.dragAreaClass = "dragarea";
+    this.dragAreaClass = "drag-area";
     event.preventDefault();
   }
 
   @HostListener("dragleave", ["$event"]) onDragLeave(event: any) {
-    this.dragAreaClass = "dragarea";
+    this.dragAreaClass = "drag-area";
     event.preventDefault();
   }
   
   @HostListener("drop", ["$event"]) onDrop(event: any) {
-    this.dragAreaClass = "dragarea";
+    this.dragAreaClass = "drag-area";
     event.preventDefault();
     event.stopPropagation();
     if (event.dataTransfer.files) {
@@ -226,12 +242,28 @@ export class ServiceInteractionComponent implements OnInit {
       isFollowRedir: this.service.isFollowRedir,
       group: this.service.group,
       attachementurl: this.service.attachementurl,
-      contentList: this.formBuilder.array(this.service.contentList),
-      headerList: this.formBuilder.array(this.service.headerList),
-      srvRequest: this.service.srvRequest,
+      contentList: this.formBuilder.array([]),
+      headerList: this.formBuilder.array([]),
+      serviceRequest: this.service.serviceRequest,
       file: this.service.file,
       fileName: this.service.fileName
     });
+
+
+    if (this.mode === INTERACTION_MODE.EDIT) {
+      for (let index = 0; index < this.service.contentList.length; index++) {
+        const element = this.service.contentList[index];
+        this.contentList.push( 
+          this.formBuilder.group(element)
+        );
+      }
+      for (let index = 0; index < this.service.headerList.length; index++) {
+        const element = this.service.headerList[index];
+        this.headerList.push( 
+          this.formBuilder.group(element)
+        );
+      }
+    }
   }
 
   get contentList() {

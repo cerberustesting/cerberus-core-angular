@@ -52,6 +52,17 @@ export class ServiceLibraryService {
         callback(result.contentTable);
       });
   }
+  /**
+   * get the service from the API
+   * @param callback function to use to process the result
+  */
+  getService(serviceName: string, callback: (service: Service) => void): void {
+    let url = environment.cerberus_api_url + '/ReadAppService';
+    this.http.post<any>(url, "service="+encodeURIComponent(serviceName), environment.httpOptions)
+    .subscribe(response => {
+      callback(response.contentTable);
+    });
+  }
 
   /**
    * create a service
@@ -63,11 +74,11 @@ export class ServiceLibraryService {
     const url = environment.cerberus_api_url + '/CreateAppService';
 
     // build the data to post
-    let formData = this.globalService.toFormData(service); // TODO
+    let formData = this.globalService.toFormData(service);
     formData.set("contentList", JSON.stringify(service.contentList));
     formData.set("headerList", JSON.stringify(service.headerList));
-    // formData.append("srvRequest", encodeURIComponent(editor.getSession().getDocument().getValue()));
-  
+    // formData.append("serviceRequest", encodeURIComponent(editor.getSession().getDocument().getValue()));
+
     if (service.file && service.file.size > 0) {
         formData.append("file", service.file);
     }
@@ -111,16 +122,6 @@ export class ServiceLibraryService {
     this.http.post<any>(url, formData, environment.httpOptions).subscribe(response => {
       callback(response);
     });
-  }
-
-  /**
-   * return true if the service is found in the service libraries list
-   * @param servicename service  name to search for
-   * @param servicelist list of service libraries to search in
-   */
-  serviceExists(servicename: string, servicelist: Array<Service>): boolean {
-    const search = servicelist.find(t => t.service === servicename);
-    if (search) { return true; } else { return false; }
   }
 
 }

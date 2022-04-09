@@ -66,7 +66,7 @@
     "latest": "^0.2.0",
     "lodash.template": "^4.5.0",
     "magnific-popup": "^1.1.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "nestable2": "^1.6.0",
     "ng2-charts": "^2.3.0",
     "ngx-filter-pipe": "^2.1.2",

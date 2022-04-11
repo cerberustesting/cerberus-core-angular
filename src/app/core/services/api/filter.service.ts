@@ -138,9 +138,9 @@ export class FilterService {
         if (response) {
           if (servlet === '/ReadTest') {
             // formatting test folders, waiting for: https://github.com/cerberustesting/cerberus-source/issues/2104
-            callback(this.globalService.formatTestFolderList(response.contentTable), response.iTotalRecords);
+            callback(this.globalService.formatTestFolderList(response.contentTable), response.iTotalRecords, response.hasPermissions);
           } else {
-            callback(response.contentTable, response.iTotalRecords);
+            callback(response.contentTable, response.iTotalRecords, response.hasPermissions);
           }
         }
       });

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, ContentChild, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, ContentChild, ViewChild, Output, EventEmitter as EventEmitterAngularCore } from '@angular/core';
 import { Column } from '../model/front/column.model';
 import { FilterService } from 'src/app/core/services/api/filter.service';
 import { InvariantsService } from 'src/app/core/services/api/invariants.service';
@@ -8,6 +8,7 @@ import { FiltersComponent } from './filters/filters.component';
 import { UserService } from 'src/app/core/services/api/user.service';
 import { User } from '../model/back/user/user.model';
 import { TestcaseService } from 'src/app/core/services/api/testcase/testcase.service';
+import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-datatable-page',
@@ -23,6 +24,7 @@ export class DatatablePageComponent implements OnInit {
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
   @Input() refreshResults: Observable<void>;
+  @Output() hasPermissions = new EventEmitterAngularCore<boolean>();
 
   @ContentChild(DatatableFilterTmpDirective, { read: TemplateRef, static: true }) filterTemplate: TemplateRef<any>;
   @ContentChild(DatatableMassActionTmpDirective, { read: TemplateRef, static: true }) massActionTemplate: TemplateRef<any>;
@@ -101,7 +103,7 @@ export class DatatablePageComponent implements OnInit {
     if (this.servlet && !this.cache[this.page.number] && this.page.size > 0) {
       this.cache[this.page.number] = true;
       this.filterService.getContentForTable(this.servlet, this.filterService.generateQueryStringParameters(this.columns, this.page, this.globalSearch, this.userSystems),
-        (list: Array<any>, length: number) => {
+        (list: Array<any>, length: number, hasPermissions: boolean) => {
           this.page.totalCount = length;
           const start = this.page.number * this.page.size;
           const rows = [...this.rows];
@@ -110,7 +112,8 @@ export class DatatablePageComponent implements OnInit {
           // this command is triggering the table update
           this.rows = rows;
           console.log('datatable updated');
-          // this.rows = [...this.rows];
+          // this.rows = [...this.rows];     
+          this.hasPermissions.emit(hasPermissions);
         });
     }
   }

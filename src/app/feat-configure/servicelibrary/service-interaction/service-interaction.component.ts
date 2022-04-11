@@ -42,10 +42,10 @@ export class ServiceInteractionComponent implements OnInit {
   public InteractionMode: typeof INTERACTION_MODE = INTERACTION_MODE;
 
   // ftp drag and drop area class, to suit possible events
-  private dragAreaClass: string;
+  public dragAreaClass: string;
 
-  // ftp drag and drop area class, to suit possible events
-  private hasPermissions: boolean;
+  // permissions to edit
+  public hasPermissions: boolean;
 
   exit: (n: void) => void;
 
@@ -253,12 +253,14 @@ export class ServiceInteractionComponent implements OnInit {
     if (this.mode === INTERACTION_MODE.EDIT) {
       for (let index = 0; index < this.service.contentList.length; index++) {
         const element = this.service.contentList[index];
+        element['toDelete'] = false;
         this.contentList.push( 
           this.formBuilder.group(element)
         );
       }
       for (let index = 0; index < this.service.headerList.length; index++) {
         const element = this.service.headerList[index];
+        element['toDelete'] = false;
         this.headerList.push( 
           this.formBuilder.group(element)
         );

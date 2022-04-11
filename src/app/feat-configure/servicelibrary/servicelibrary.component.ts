@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output } from '@angular/core';
 import { Column } from 'src/app/shared/model/front/column.model';
 import { ServiceLibraryColumnsData } from 'src/app/feat-configure/servicelibrary/servicelibrary.columnsdata';
 import { Service } from 'src/app/shared/model/back/servicelibrary/servicelibrary.model';
@@ -37,6 +37,9 @@ export class ServiceLibraryComponent implements OnInit {
 
   /** the observable to refresh the table */
   public userSystems: Array<string>;
+  
+  /**  permissions to delete */
+  public hasPermissions: boolean;
 
   /** child datatable component */
   @ViewChild(DatatablePageComponent, { static: false }) private datatablepageComponent: DatatablePageComponent;

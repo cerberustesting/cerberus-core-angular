@@ -107,14 +107,14 @@ export class ServiceInteractionComponent implements OnInit {
     }
 
     // get service complete data
-    if(this.mode === INTERACTION_MODE.EDIT){
+    if(this.mode === INTERACTION_MODE.EDIT || this.mode === INTERACTION_MODE.DUPLICATE){
 
       this.hasPermissions = false;
 
       this.serviceLibraryService.getService(this.service.service, (response: any) => {
         if(response){
-          this.service = response;
-          this.hasPermissions = response.hasPermissions;
+          _this.service = response;
+          _this.hasPermissions = (_this.mode === INTERACTION_MODE.DUPLICATE) ? true : response.hasPermissions;
           _this.setFormValues();
         }        
       });
@@ -175,17 +175,7 @@ export class ServiceInteractionComponent implements OnInit {
       this.serviceForm.get('fileName').setValue(files[0].name);
     }
   }
-  prepareForCreateMode() {
-
-        /*
-
-    feedAppServiceModal(service, "editSoapLibraryModal", "ADD");
-    listennerForInputTypeFile('#editSoapLibraryModal')
-    pasteListennerForClipboardPicture('#editSoapLibraryModal');
-    $('#service').val("");*/
-    
-  }
-
+  
   showServiceRequest():boolean {
     if (this.isGETMethod() && this.isFTPType()) {
       return false;
@@ -250,7 +240,7 @@ export class ServiceInteractionComponent implements OnInit {
     });
 
 
-    if (this.mode === INTERACTION_MODE.EDIT) {
+    if (this.mode === INTERACTION_MODE.EDIT || this.mode === INTERACTION_MODE.DUPLICATE) {
       for (let index = 0; index < this.service.contentList.length; index++) {
         const element = this.service.contentList[index];
         element['toDelete'] = false;
@@ -317,14 +307,14 @@ export class ServiceInteractionComponent implements OnInit {
       return;
     } 
     
-    // if no service name is set
+    // required fields
     if (!values.service || values.service === '') {
       this.notificationService.createANotification('Please specify the Service Name', NotificationStyle.Warning);
       return;
     } 
 
     // trigger the correct API endpoint
-    if (this.mode === INTERACTION_MODE.CREATE) {
+    if (this.mode === INTERACTION_MODE.CREATE || this.mode === INTERACTION_MODE.DUPLICATE) {
       this.serviceLibraryService.createService(values, (response: any) => {
         this.handleAPIResponse(response);       
       });
@@ -336,7 +326,19 @@ export class ServiceInteractionComponent implements OnInit {
   }
 
   /**
-   * handle API response for Create and Edit
+   * check on the duplicated service if the name
+   * is not changed yet
+   * it will show an error, because it already exists
+   */
+  serviceNameAlreadyExists(): boolean {
+    if(this.mode === INTERACTION_MODE.DUPLICATE && this.serviceForm.get('service').value == this.service.service){
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * handle API response for Create, Duplicate and Edit
    */
   handleAPIResponse(response: any) {
     if(!response){

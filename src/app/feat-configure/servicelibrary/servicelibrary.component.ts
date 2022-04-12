@@ -106,6 +106,23 @@ export class ServiceLibraryComponent implements OnInit {
   }
 
   /**
+   * open the side content in creation mode with a copy of the service object
+   * @param service object to duplicate
+   */
+  duplicateService(service: Service): void {
+    
+    this.sideContentService.addComponentToSideBlock(ServiceInteractionComponent, {
+      mode: INTERACTION_MODE.DUPLICATE,
+      service: service,
+      exit: () => {
+        this.refreshResults();
+      }
+    });
+    this.sideContentService.openSideBlock();
+    
+  }
+
+  /**
    * open a modal to confirm the deletion of a service
    * @param service object to delete
    */

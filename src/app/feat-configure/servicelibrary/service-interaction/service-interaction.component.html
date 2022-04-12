@@ -8,6 +8,7 @@
             <h3 class="block-title" [ngSwitch]="mode">
                 <span id="createServiceTitle" *ngSwitchCase="'CREATE'">Create Service</span>
                 <span id="editServiceTitle" *ngSwitchCase="'EDIT'">Edit Service</span>
+                <span id="duplicateServiceTitle" *ngSwitchCase="'DUPLICATE'">Duplicate Service</span>
             </h3>
             <!-- END SIDE CONTENT TITLE -->
 
@@ -38,7 +39,12 @@
                         </label>
                         <input id="serviceName" type="text" class="form-control" name="ServiceName"
                             placeholder="Service Name" formControlName="service"
-                            [readonly]="mode === InteractionMode.EDIT || !hasPermissions" />
+                            [readonly]="mode === InteractionMode.EDIT || !hasPermissions"
+                            [ngClass]="serviceNameAlreadyExists() ? 'is-invalid' : ''" />
+                        <div *ngIf="serviceNameAlreadyExists()"
+                            id="serviceNameAlreadyAlreadyExistsFeeback" class="invalid-feedback">
+                            Service name already exists
+                        </div>
                     </div>
                 </div>
                 <!-- END SERVICE NAME -->
@@ -286,7 +292,7 @@
                             <!-- END TAB REQUEST -->
 
                             <!-- TAB REQUEST DETAIL -->
-                            <ngb-tab [title]="isKAFKAType() ? 'KAFKA Props':'Request Detail' ">
+                            <ngb-tab  *ngIf="!isSOAPType()" [title]="isKAFKAType() ? 'KAFKA Props':'Request Detail' ">
                                 <ng-template ngbTabContent>
                                     <div class="row pt-3">
                                         <div class="col-md-12">

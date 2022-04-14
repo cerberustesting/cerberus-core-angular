@@ -35,11 +35,14 @@ export class ServiceLibraryComponent implements OnInit {
   /** the observable to refresh the table */
   public refreshResultsEvent: Subject<void> = new Subject<void>();
 
-  /** the observable to refresh the table */
+  /** user systems */
   public userSystems: Array<string>;
   
   /**  permissions to delete */
   public hasPermissions: boolean;
+
+  /** user preferences table name */
+  public preferencesTableName = 'DataTables_soapLibrarysTable_/AppServiceList.jsp';
 
   /** child datatable component */
   @ViewChild(DatatablePageComponent, { static: false }) private datatablepageComponent: DatatablePageComponent;

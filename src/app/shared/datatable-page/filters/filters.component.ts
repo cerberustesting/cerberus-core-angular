@@ -21,17 +21,30 @@ export class FiltersComponent implements OnInit {
   /** endpoint (to fetch the options list) sent to the filters */
   @Input('servlet') servlet: string;
 
+  /** preferences for columns filters and search */
+  @Input() userHasPreferencesSetted: boolean;
+
+  /** preferences for search */
+  @Input() initialSearch: string;
+
   // angular templates declaration
   @Input() filterTemplate: any; // TODO : type TemplateRef
   @Input() massActionTemplate: any; // TODO : type TemplateRef
 
   @Output() globalSearchContentChange = new EventEmitter<string>(); // emitter used to send the global search value to the parent component
 
+  @Output() resetPreferencesEmitter = new EventEmitter<string>(); // emitter used to send the global search value to the parent component
+
   globalSearch: string; // quick search content
 
   constructor(private modalService: NgbModal) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    if(this.initialSearch != ""){
+      this.globalSearch = this.initialSearch;
+      this.sendGlobalSearchContent();
+    }
+  }
 
   // return the columns list that are being used as filter
   getActiveFilters(): Array<Column> {
@@ -71,6 +84,15 @@ export class FiltersComponent implements OnInit {
   // according to the columnsdata file
   resetDefaultColumns() {
     this.columns.forEach(c => c.active = c.defaultActive);
+  }
+
+  // reset all configuration
+  // according to the columnsdata file
+  resetPreferences() {
+    this.globalSearch = "";
+    this.sendGlobalSearchContent();
+    this.resetPreferencesEmitter.emit();
+    this.userHasPreferencesSetted = false;
   }
 
   /**

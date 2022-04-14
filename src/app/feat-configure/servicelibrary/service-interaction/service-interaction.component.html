@@ -253,17 +253,15 @@
                                                     FTP File
                                                 </label>
 
-                                                <div draggable="true" ngClass="{{dragAreaClass}}">
-                                                    <div
-                                                        *ngIf="!serviceForm.get('file').value && !serviceForm.get('fileName').value && hasPermissions ">
+                                                <div draggable="true" ngClass="{{dragAreaClass}}" (click)="ServiceFTPFile.click()" ><!-- (paste)="onPaste($event)" -->
+                                                    <div *ngIf="!serviceForm.get('file').value && !serviceForm.get('fileName').value && hasPermissions">
                                                         <i class="fa fa-upload  fa-3x"></i>
                                                         <h3 class="mt-2 mb-2">Drag a file here</h3>
                                                         <p class="mt-2 mb-2">or</p>
                                                     </div>
                                                     <div *ngIf="serviceForm.get('fileName').value">
                                                         <i class="fa fa-file fa-3x"></i>
-                                                        <h4 class="mt-2 mb-2">{{ serviceForm.get('fileName').value }}
-                                                        </h4>
+                                                        <h4 class="mt-2 mb-2">{{ serviceForm.get('fileName').value }}</h4>
                                                     </div>
                                                     <a href="javascript:void(0)" class="btn btn-primary"
                                                         (click)="ServiceFTPFile.click()" *ngIf="hasPermissions">
@@ -526,7 +524,7 @@
                                                         </div>
                                                         <span class="form-control text-left" id="dateModif" type="text">
                                                             <i class="fa fa-calendar-day mr-1"></i>
-                                                            {{service.DateModif | date:'MMM d, yyyy'}}
+                                                            {{(service.UsrModif != "") ? (service.DateModif | date:'MMM d, yyyy') : ''}}
                                                         </span>
                                                     </div>
                                                 </div>

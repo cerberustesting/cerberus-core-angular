@@ -1,6 +1,6 @@
 <app-datatable-page [pageSort]="defaultPageSort" [columns]="columns" [servlet]="servlet" [selectedRows]="selectedRows"
     [selection]="false" [refreshResults]="refreshResultsEvent.asObservable()" [userSystems]="userSystems"
-    (hasPermissions)="hasPermissions = $event" >
+    (hasPermissions)="hasPermissions = $event" [preferencesTableName]="preferencesTableName">
 
     <!--START Template for create button -->
     <ng-template cerberusDatatableFilter>

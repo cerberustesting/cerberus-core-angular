@@ -1,11 +1,12 @@
 <div *ngIf="user" class="page">
-    <app-filters (globalSearchContentChange)="updateGlobalSearch($event)" [page]="page" [columns]="columns"
-         [servlet]="servlet" [filterTemplate]="filterTemplate"
-        [massActionTemplate]="massActionTemplate">
+    <app-filters (globalSearchContentChange)="updateGlobalSearch($event)" (resetPreferencesEmitter)="resetPreferences()" [page]="page" [columns]="columns"
+         [servlet]="servlet" [filterTemplate]="filterTemplate" [userHasPreferencesSetted]="userHasPreferencesSetted"
+         [initialSearch]="globalSearch" [massActionTemplate]="massActionTemplate">
     </app-filters>
 
     <app-table [rows]="rows" [columns]="columns" [testcaseslist]="true" [page]="page" [selection]="selection"
         [massAction]="massAction" [selected]="selectedRows" [endLineActionTemplate]="endLineActionTemplate"
-        (pageUpdate)="pageUpdate($event)" (sort)="applyFilters()" (columnAddedForFiltering)="openFiltersModal()">
+        (pageUpdate)="pageUpdate($event)" (sort)="applyFilters($event)" (columnAddedForFiltering)="openFiltersModal()"
+        (order)="onReorder($event)" >
     </app-table>
 </div>

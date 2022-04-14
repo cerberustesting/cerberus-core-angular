@@ -156,14 +156,40 @@ export class ServiceInteractionComponent implements OnInit {
   }
   
   @HostListener("drop", ["$event"]) onDrop(event: any) {
+
+    if(this.dragAreaClass != "drop-area" || !event.dataTransfer.files || !this.hasPermissions){
+      return;
+    }
+
     this.dragAreaClass = "drag-area";
     event.preventDefault();
     event.stopPropagation();
-    if (event.dataTransfer.files && this.hasPermissions) {
-      let files: FileList = event.dataTransfer.files;
-      this.saveFiles(files);
-    }
+    let files: FileList = event.dataTransfer.files;
+    this.saveFiles(files);
   }
+  
+  /*
+  onPaste(event: any) {
+    console.log(event)
+    console.log(event.clipboardData.getData('text'))
+  }
+  */
+  @HostListener('paste',['$event']) async onEvent(event: any) {    
+    event.preventDefault();
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API
+    
+    let clipData = event.clipboardData;
+    console.log(event)
+    let data = clipData.getData('text');
+    console.log(data)
+    //if (e.clipboardData && !$(e.target).is("input")) {
+    //  var items = e.clipboardData.items;
+    //  handlePictureSend(items, idModal);
+    //}
+
+  }
+  
   
   /**
    * handle file upload on FTP type
@@ -175,6 +201,7 @@ export class ServiceInteractionComponent implements OnInit {
       this.serviceForm.get('fileName').setValue(files[0].name);
     }
   }
+  
   
   showServiceRequest():boolean {
     if (this.isGETMethod() && this.isFTPType()) {

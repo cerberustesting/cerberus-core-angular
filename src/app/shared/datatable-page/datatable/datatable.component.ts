@@ -27,6 +27,7 @@ export class DatatableComponent implements OnInit {
   @Output() pageUpdate = new EventEmitter<number>();
   @Output() sort = new EventEmitter<void>();
   @Output() columnAddedForFiltering = new EventEmitter<void>();
+  @Output() order = new EventEmitter<void>();
 
   @ViewChild('dataTable', { static: true }) table: any;
   @Input() name?: string;
@@ -87,7 +88,16 @@ export class DatatableComponent implements OnInit {
    */
   onSort(event): void {
     this.page.sort = event.sorts;
-    this.sort.emit();
+    this.sort.emit(event.sorts);
+  }
+
+  /**
+   * onReorder
+   * * emit column to reorder
+   * @param event (generate by angular)
+   */
+  onReorder(event): void {    
+    this.order.emit(event);
   }
 
   /**

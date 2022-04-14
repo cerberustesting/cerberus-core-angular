@@ -24,6 +24,7 @@ export class DatatablePageComponent implements OnInit {
   @Input() selection: boolean;
   @Input() selectedRows: Array<any>;
   @Input() refreshResults: Observable<void>;
+  @Input() preferencesTableName: string;
   @Output() hasPermissions = new EventEmitterAngularCore<boolean>();
 
   @ContentChild(DatatableFilterTmpDirective, { read: TemplateRef, static: true }) filterTemplate: TemplateRef<any>;
@@ -46,6 +47,12 @@ export class DatatablePageComponent implements OnInit {
   /** user object */
   public user: User;
 
+  /** user preferences for table columns, filters and search */
+  public userHasPreferencesSetted: boolean;
+
+  /** default Columns preferences */
+  public defaultColumns: Array<Column>;
+
   constructor(
     private filterService: FilterService,
     private invariantsService: InvariantsService,
@@ -63,12 +70,22 @@ export class DatatablePageComponent implements OnInit {
       totalCount: 0
     };
 
+    // copy columns as default, to access on reset preferences
+    this.defaultColumns = JSON.parse(JSON.stringify(this.columns));
+
     this.userService.observableUser.subscribe(rep => {
       this.cache = {};
       this.user = rep;
       this.rows = [];
       this.page.number = 0;
       this.search();
+
+      if(!this.user || !this.preferencesTableName){
+        return;
+      }
+      
+      this.loadUserPreferences();
+
     });
 
     if (this.refreshResults) {
@@ -80,6 +97,109 @@ export class DatatablePageComponent implements OnInit {
       // refresh the table content when the event is fired (from any component)
       this.applyFilters();
     });
+  }
+  
+  loadUserPreferences() {
+
+    let userPreferences = this.user.userPreferences[this.preferencesTableName];
+    if(!userPreferences){      
+      return
+    }
+    
+    for (let index = 0; index < userPreferences.columns.length; index++) {
+      const element = userPreferences.columns[index+1];
+      if(this.columns[index] && element){
+
+        if(this.columns[index].active != element.visible || element.search.search != ""){
+          this.userHasPreferencesSetted = true;
+        }
+
+        this.columns[index].active = element.visible;
+        this.columns[index].sSearch = [element.search.search];
+        this.columns[index].filterDisplayed = (element.search.search !="");        
+      }
+    }
+    //console.log(userPreferences.ColReorder)
+    //console.log(this.columns)
+    userPreferences.ColReorder.shift();// the first is the actions
+    for (let index = 0; index < userPreferences.ColReorder.length; index++) {
+      const element = userPreferences.ColReorder[index]-1;
+      //console.log(index)
+      //console.log(element)
+      if(index != element){
+        this.columns = this.switchOrder(index, element, this.columns);
+      }      
+    }
+    
+    if(userPreferences.search && userPreferences.search.search && userPreferences.search.search != "" ){
+      this.globalSearch = userPreferences.search.search;
+      this.userHasPreferencesSetted = true;
+    }
+    if(userPreferences.order && userPreferences.order.length > 0 && this.pageSort.length > 0 && this.pageSort[0].prop != userPreferences.order[0][0]){
+      this.page.sort = [{ dir: userPreferences.order[0][1], prop: this.columns[(userPreferences.order[0][0]-1)].contentName }];
+      this.userHasPreferencesSetted = true;
+    }
+  }
+
+  updateUserPreferences(parameter: string, values: any) {
+
+    let userPreferences = this.user.userPreferences[this.preferencesTableName];
+    if(!userPreferences || !parameter){      
+      return
+    }
+    
+    switch (parameter) {
+      case "columns":
+        for (let index = 0; index < userPreferences.columns.length; index++) {
+          const element = userPreferences.columns[index+1];
+          if(this.columns[index] && element){
+            element.visible = this.columns[index].active;
+            element.search.search = this.columns[index].sSearch.toString(); 
+          }
+        }
+        break;
+      case "sort":
+        // this.page.sort = [{ dir: userPreferences.order[0][1], prop: this.columns[(userPreferences.order[0][0]-1)].contentName }];
+        let colIndex = this.columns.findIndex(object => {
+          return object.contentName === this.page.sort[0]["prop"];
+        });
+        userPreferences["order"] = [[colIndex+1,this.page.sort[0]["dir"]]];
+
+        break;
+      case "order":
+        console.log(userPreferences["ColReorder"])
+        console.log(values.prevValue)
+        console.log(values.newValue)
+        userPreferences["ColReorder"][values.prevValue+1] = values.newValue+1; // +1 because of actions
+        userPreferences["ColReorder"][values.newValue+1] = values.prevValue+1; // +1 because of actions
+        
+        if(userPreferences["ColReorder"].length == this.columns){
+          userPreferences["ColReorder"].unshift(0);
+        }
+        console.log(userPreferences["ColReorder"])
+
+        userPreferences["order"] = [[this.page.sort[0]["prop"]+1,this.page.sort[0]["dir"]]];
+        break;
+      case "search":
+        userPreferences["search"]["search"] = this.globalSearch;
+        break;    
+      default:
+        break;
+    }
+    
+    console.log(userPreferences);
+    console.log(this.user.userPreferences);
+    this.userService.updateUserPreferences();
+
+  }
+
+  switchOrder(from: number, to: number, arr: any) {
+    const newArr = [...arr];
+
+    const item = newArr.splice(from, 1)[0];
+    newArr.splice(to, 0, item);
+
+    return newArr;
   }
 
   /** return the first row of the displayed result in the datatable */
@@ -134,7 +254,7 @@ export class DatatablePageComponent implements OnInit {
    * * reset rows, cache, page number and scroll
    * @param globalSearch content of global search field
    */
-  applyFilters(): void {
+  applyFilters(sort?: any): void {
     const a = document.getElementsByClassName('datatable-body')[0];
     a.scroll(0, 0);
     a.scrollBy(0, 0); // scroll to the table top
@@ -142,6 +262,15 @@ export class DatatablePageComponent implements OnInit {
     this.rows = [];
     this.page.number = 0;
     this.search(this.globalSearch);
+    console.log(sort);
+  }
+
+  /**
+   * reorder event
+   * @param globalSearch content of global search field
+   */
+  onReorder(order?: any): void {
+    this.updateUserPreferences("order", order);
   }
 
   /**
@@ -151,6 +280,15 @@ export class DatatablePageComponent implements OnInit {
   updateGlobalSearch(term: string): void {
     this.globalSearch = term;
     this.applyFilters();
+  }
+
+  /**
+   * reset all configurations based on user preferences
+   */
+  resetPreferences(): void {
+    this.columns = this.defaultColumns;    
+    this.userHasPreferencesSetted = false;
+    this.page.sort = this.pageSort;
   }
 
 }

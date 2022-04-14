@@ -12,7 +12,8 @@ The field type depends on the column.type attribute (refer to column model 4 mor
         [selected]="(selected)? selected :  ''" [selectionType]="(selection)? 'checkbox' : ''"
         [selectAllRowsOnPage]="false" [scrollbarH]="false" [scrollbarV]="true" [externalSorting]="true"
         [externalPaging]="true" (select)='onSelect($event)' [count]="page.totalCount" [offset]="page.number"
-        (activate)="onActivate($event)" (sort)="onSort($event)" (page)="onPage($event)">
+        (activate)="onActivate($event)" (sort)="onSort($event)" (reorder)="onReorder($event)" (page)="onPage($event)"
+        [sorts]="page.sort" >
 
         <!-- ROW SELECTION CHECKBOX -->
         <ngx-datatable-column *ngIf="selection" [sortable]="false" [canAutoResize]="false" [draggable]="false"

@@ -46,6 +46,7 @@ export class UserService {
 
           Object.keys(userPref).forEach(function(key) {
             let currentTable = _this.parseJSON(userPref[key]);//['DataTables_' + settings.sInstance + '_' + location.pathname];
+            /*
             if(currentTable && currentTable.hasOwnProperty("columns") ){
               let columns = _this.parseJSON(currentTable)["columns"]
               for (let i = 0; i < columns.length; i++) {
@@ -55,6 +56,7 @@ export class UserService {
                   customColumns.push(search);
               }
             }
+            */
             _this.user.userPreferences[key] = _this.parseJSON(currentTable);
           });
         }

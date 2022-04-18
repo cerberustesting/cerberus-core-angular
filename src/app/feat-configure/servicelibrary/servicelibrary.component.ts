@@ -42,7 +42,7 @@ export class ServiceLibraryComponent implements OnInit {
   public hasPermissions: boolean;
 
   /** user preferences table name */
-  public preferencesTableName = 'DataTables_soapLibrarysTable_/AppServiceList.jsp';
+  public preferencesTableName = 'serviceLibraryDatatable';
 
   /** child datatable component */
   @ViewChild(DatatablePageComponent, { static: false }) private datatablepageComponent: DatatablePageComponent;

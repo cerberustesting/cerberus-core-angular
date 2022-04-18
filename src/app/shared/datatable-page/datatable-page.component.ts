@@ -101,131 +101,72 @@ export class DatatablePageComponent implements OnInit {
   
   loadUserPreferences() {
 
-    let userPreferences = this.user.userPreferences[this.preferencesTableName];
-    console.log(userPreferences);
-    
+    let userPreferences = this.user.userPreferences[this.preferencesTableName];    
     if(!userPreferences){      
-      return
+      return;
     }
 
-    if(this.columns.length != userPreferences.columns.length){      
-      // remove the first collumn (actions)
-      userPreferences.ColReorder.shift();
-      userPreferences.columns.shift();
-      userPreferences.order[0][0] = userPreferences.order[0][0]-1;
-    }
-
-    console.log(userPreferences.ColReorder);
-    console.log(userPreferences.columns);        
-    
+    // keep columns api field name and defaults
     for (let index = 0; index < userPreferences.columns.length; index++) {
+
       const element = userPreferences.columns[index];
-      if(this.columns[index] && element){
+      const defaultColumnIndex = this.defaultColumns.findIndex(object => {
+        return object.contentName === element.contentName;
+      });
 
-        if(this.columns[index].active != element.visible || element.search.search != ""){
-          this.userHasPreferencesSetted = true;
-        }
+      if(defaultColumnIndex == -1){
+        continue;
+      } 
 
-        this.columns[index].active = element.visible;
-        this.columns[index].sSearch = [element.search.search];
-        this.columns[index].filterDisplayed = (element.search.search !="");        
+      // need a reorder
+      if(element.contentName != this.columns[index].contentName){
+        this.columns[index] = this.defaultColumns[defaultColumnIndex];
       }
+
+      this.columns[index].contentName = element.contentName;
+      this.columns[index].sSearch = element.sSearch;
+      this.columns[index].active = element.active;
+      this.columns[index].filterDisplayed = element.filterDisplayed;
     }
 
-    let columnsCopy = [...this.columns];
-
-    for (let index = 0; index < userPreferences.ColReorder.length; index++) {
-      const element = userPreferences.ColReorder[index]-1;
-      this.columns[index] = columnsCopy[element];     
-    }
-    
-    if(userPreferences.search && userPreferences.search.search && userPreferences.search.search != "" ){
-      this.globalSearch = userPreferences.search.search;
-      this.userHasPreferencesSetted = true;
-    }
-    if(userPreferences.order && userPreferences.order.length > 0 && this.pageSort.length > 0){
-      // - because of actions
-      let column = this.defaultColumns[userPreferences.order[0][0]] ? this.defaultColumns[userPreferences.order[0][0]].contentName : this.pageSort[0].prop;
-      this.page.sort = [{ dir: userPreferences.order[0][1], prop: column }];
-      this.userHasPreferencesSetted = true;
-    }
-
-    console.log(this.columns);
+    userPreferences["search"] = this.globalSearch;
+    console.log(userPreferences);
+    console.log(this.user.userPreferences);
   }
 
   updateUserPreferences(parameter: string, values?: any) {
-
+    
+    if(!parameter){  
+      return;
+    }    
+    
+    if(!this.user.userPreferences[this.preferencesTableName]){      
+      this.user.userPreferences[this.preferencesTableName] = {
+        order: [{ dir: 'asc', prop: '' }],
+        search: "",
+        columns: []
+      };
+    }
+    
     let userPreferences = this.user.userPreferences[this.preferencesTableName];
-    if(!userPreferences || !parameter){      
-      return
+    userPreferences["search"] = this.globalSearch;
+    userPreferences["order"] = this.page.sort;
+    userPreferences.columns = [];
+
+    // only store the needed columns
+    for (let index = 0; index < this.columns.length; index++) {
+      const element = this.columns[index];      
+      userPreferences.columns.push({
+        "contentName": element.contentName,
+        "sSearch": element.sSearch,
+        "active": element.active,
+        "filterDisplayed": element.filterDisplayed
+      })
     }
-
-    if(this.columns.length != userPreferences.columns.length){      
-      // remove the first collumn (actions)
-      userPreferences.ColReorder.shift();
-      userPreferences.columns.shift();
-    }
-    
-    switch (parameter) {
-      case "columns":
-        for (let index = 0; index < userPreferences.columns.length; index++) {
-          const element = userPreferences.columns[index];          
-          let colIndex = this.columns.findIndex(object => {
-            return object.contentName === this.defaultColumns[index].contentName;
-          });
-          if(this.columns[colIndex] && element){
-            element.visible = this.columns[colIndex].active;
-            element.search.search = this.columns[colIndex].sSearch ? this.columns[colIndex].sSearch.toString() : ""; 
-          }
-        }
-
-        let colIndex = this.defaultColumns.findIndex(object => {
-          return object.contentName === this.page.sort[0]["prop"];
-        });
-        userPreferences["order"] = [[colIndex,this.page.sort[0]["dir"]]];
-
-        break;
-      case "order":
-
-        console.log(userPreferences["ColReorder"])
-        console.log(values.prevValue)
-        console.log(values.newValue)
-        userPreferences["ColReorder"][values.prevValue] = values.newValue; // +1 because of actions
-        userPreferences["ColReorder"][values.newValue] = values.prevValue; // +1 because of actions
-        
-        let colIndexOrder = this.defaultColumns.findIndex(object => {
-          return object.contentName === this.page.sort[0]["prop"];
-        });
-        userPreferences["order"] = [[colIndexOrder,this.page.sort[0]["dir"]]];
-
-        break;
-      default:
-        break;
-    }
-
-    userPreferences["search"]["search"] = this.globalSearch;
-
-    // re-add the first column for actions
-    if(this.columns.length == userPreferences.columns.length){
-      userPreferences["ColReorder"].unshift(0);
-      userPreferences["order"][0][0] = userPreferences["order"][0][0]+1;
-      userPreferences["columns"].unshift({
-          "visible": true,
-          "search": {
-              "search": "",
-              "smart": true,
-              "regex": false,
-              "caseInsensitive": true
-          },
-          "width": "150px"
-      });
-    }
-    
-    
-    console.log(userPreferences["ColReorder"])
 
     console.log(userPreferences);
     console.log(this.user.userPreferences);
+
     this.userService.updateUserPreferences();
 
   }

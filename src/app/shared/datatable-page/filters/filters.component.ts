@@ -33,7 +33,9 @@ export class FiltersComponent implements OnInit {
 
   @Output() globalSearchContentChange = new EventEmitter<string>(); // emitter used to send the global search value to the parent component
 
-  @Output() resetPreferencesEmitter = new EventEmitter<string>(); // emitter used to send the global search value to the parent component
+  @Output() resetPreferencesEmitter = new EventEmitter<string>(); // emitter used to alert reset preferences to the parent component
+
+  @Output() columnChangeEmitter = new EventEmitter<string>(); // emitter used to alert that column visibility changed to the parent component
 
   globalSearch: string; // quick search content
 
@@ -78,12 +80,14 @@ export class FiltersComponent implements OnInit {
   // activation being if its displayed or not
   toggleColumn(column): void {
     column.active = !column.active;
+    this.columnChangeEmitter.emit();
   }
 
   // reset the columns default configuration
   // according to the columnsdata file
   resetDefaultColumns() {
     this.columns.forEach(c => c.active = c.defaultActive);
+    this.columnChangeEmitter.emit();
   }
 
   // reset all configuration

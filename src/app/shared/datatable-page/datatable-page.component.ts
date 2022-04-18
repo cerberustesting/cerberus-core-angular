@@ -102,12 +102,24 @@ export class DatatablePageComponent implements OnInit {
   loadUserPreferences() {
 
     let userPreferences = this.user.userPreferences[this.preferencesTableName];
+    console.log(userPreferences);
+    
     if(!userPreferences){      
       return
     }
+
+    if(this.columns.length != userPreferences.columns.length){      
+      // remove the first collumn (actions)
+      userPreferences.ColReorder.shift();
+      userPreferences.columns.shift();
+      userPreferences.order[0][0] = userPreferences.order[0][0]-1;
+    }
+
+    console.log(userPreferences.ColReorder);
+    console.log(userPreferences.columns);        
     
     for (let index = 0; index < userPreferences.columns.length; index++) {
-      const element = userPreferences.columns[index+1];
+      const element = userPreferences.columns[index];
       if(this.columns[index] && element){
 
         if(this.columns[index].active != element.visible || element.search.search != ""){
@@ -119,87 +131,103 @@ export class DatatablePageComponent implements OnInit {
         this.columns[index].filterDisplayed = (element.search.search !="");        
       }
     }
-    //console.log(userPreferences.ColReorder)
-    //console.log(this.columns)
-    userPreferences.ColReorder.shift();// the first is the actions
+
+    let columnsCopy = [...this.columns];
+
     for (let index = 0; index < userPreferences.ColReorder.length; index++) {
       const element = userPreferences.ColReorder[index]-1;
-      //console.log(index)
-      //console.log(element)
-      if(index != element){
-        this.columns = this.switchOrder(index, element, this.columns);
-      }      
+      this.columns[index] = columnsCopy[element];     
     }
     
     if(userPreferences.search && userPreferences.search.search && userPreferences.search.search != "" ){
       this.globalSearch = userPreferences.search.search;
       this.userHasPreferencesSetted = true;
     }
-    if(userPreferences.order && userPreferences.order.length > 0 && this.pageSort.length > 0 && this.pageSort[0].prop != userPreferences.order[0][0]){
-      this.page.sort = [{ dir: userPreferences.order[0][1], prop: this.columns[(userPreferences.order[0][0]-1)].contentName }];
+    if(userPreferences.order && userPreferences.order.length > 0 && this.pageSort.length > 0){
+      // - because of actions
+      let column = this.defaultColumns[userPreferences.order[0][0]] ? this.defaultColumns[userPreferences.order[0][0]].contentName : this.pageSort[0].prop;
+      this.page.sort = [{ dir: userPreferences.order[0][1], prop: column }];
       this.userHasPreferencesSetted = true;
     }
+
+    console.log(this.columns);
   }
 
-  updateUserPreferences(parameter: string, values: any) {
+  updateUserPreferences(parameter: string, values?: any) {
 
     let userPreferences = this.user.userPreferences[this.preferencesTableName];
     if(!userPreferences || !parameter){      
       return
     }
+
+    if(this.columns.length != userPreferences.columns.length){      
+      // remove the first collumn (actions)
+      userPreferences.ColReorder.shift();
+      userPreferences.columns.shift();
+    }
     
     switch (parameter) {
       case "columns":
         for (let index = 0; index < userPreferences.columns.length; index++) {
-          const element = userPreferences.columns[index+1];
-          if(this.columns[index] && element){
-            element.visible = this.columns[index].active;
-            element.search.search = this.columns[index].sSearch.toString(); 
+          const element = userPreferences.columns[index];          
+          let colIndex = this.columns.findIndex(object => {
+            return object.contentName === this.defaultColumns[index].contentName;
+          });
+          if(this.columns[colIndex] && element){
+            element.visible = this.columns[colIndex].active;
+            element.search.search = this.columns[colIndex].sSearch ? this.columns[colIndex].sSearch.toString() : ""; 
           }
         }
-        break;
-      case "sort":
-        // this.page.sort = [{ dir: userPreferences.order[0][1], prop: this.columns[(userPreferences.order[0][0]-1)].contentName }];
-        let colIndex = this.columns.findIndex(object => {
+
+        let colIndex = this.defaultColumns.findIndex(object => {
           return object.contentName === this.page.sort[0]["prop"];
         });
-        userPreferences["order"] = [[colIndex+1,this.page.sort[0]["dir"]]];
+        userPreferences["order"] = [[colIndex,this.page.sort[0]["dir"]]];
 
         break;
       case "order":
+
         console.log(userPreferences["ColReorder"])
         console.log(values.prevValue)
         console.log(values.newValue)
-        userPreferences["ColReorder"][values.prevValue+1] = values.newValue+1; // +1 because of actions
-        userPreferences["ColReorder"][values.newValue+1] = values.prevValue+1; // +1 because of actions
+        userPreferences["ColReorder"][values.prevValue] = values.newValue; // +1 because of actions
+        userPreferences["ColReorder"][values.newValue] = values.prevValue; // +1 because of actions
         
-        if(userPreferences["ColReorder"].length == this.columns){
-          userPreferences["ColReorder"].unshift(0);
-        }
-        console.log(userPreferences["ColReorder"])
+        let colIndexOrder = this.defaultColumns.findIndex(object => {
+          return object.contentName === this.page.sort[0]["prop"];
+        });
+        userPreferences["order"] = [[colIndexOrder,this.page.sort[0]["dir"]]];
 
-        userPreferences["order"] = [[this.page.sort[0]["prop"]+1,this.page.sort[0]["dir"]]];
         break;
-      case "search":
-        userPreferences["search"]["search"] = this.globalSearch;
-        break;    
       default:
         break;
     }
+
+    userPreferences["search"]["search"] = this.globalSearch;
+
+    // re-add the first column for actions
+    if(this.columns.length == userPreferences.columns.length){
+      userPreferences["ColReorder"].unshift(0);
+      userPreferences["order"][0][0] = userPreferences["order"][0][0]+1;
+      userPreferences["columns"].unshift({
+          "visible": true,
+          "search": {
+              "search": "",
+              "smart": true,
+              "regex": false,
+              "caseInsensitive": true
+          },
+          "width": "150px"
+      });
+    }
     
+    
+    console.log(userPreferences["ColReorder"])
+
     console.log(userPreferences);
     console.log(this.user.userPreferences);
     this.userService.updateUserPreferences();
 
-  }
-
-  switchOrder(from: number, to: number, arr: any) {
-    const newArr = [...arr];
-
-    const item = newArr.splice(from, 1)[0];
-    newArr.splice(to, 0, item);
-
-    return newArr;
   }
 
   /** return the first row of the displayed result in the datatable */
@@ -263,6 +291,7 @@ export class DatatablePageComponent implements OnInit {
     this.page.number = 0;
     this.search(this.globalSearch);
     console.log(sort);
+    this.updateUserPreferences("columns");
   }
 
   /**
@@ -289,6 +318,14 @@ export class DatatablePageComponent implements OnInit {
     this.columns = this.defaultColumns;    
     this.userHasPreferencesSetted = false;
     this.page.sort = this.pageSort;
+    this.globalSearch = ""
+  }
+
+  /**
+   * reset all configurations based on user preferences
+   */
+   onColumnChange(): void {
+    this.updateUserPreferences('columns');
   }
 
 }

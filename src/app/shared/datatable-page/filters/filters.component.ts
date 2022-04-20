@@ -39,13 +39,16 @@ export class FiltersComponent implements OnInit {
 
   globalSearch: string; // quick search content
 
+  defaultColumns: Array<Column>; // default and initial columns
+
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() { 
     if(this.initialSearch != ""){
       this.globalSearch = this.initialSearch;
       this.sendGlobalSearchContent();
-    }
+    }  
+    this.defaultColumns = JSON.parse(JSON.stringify(this.columns));
   }
 
   // return the columns list that are being used as filter
@@ -94,9 +97,8 @@ export class FiltersComponent implements OnInit {
   // according to the columnsdata file
   resetPreferences() {
     this.globalSearch = "";
-    this.sendGlobalSearchContent();
+    this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
     this.resetPreferencesEmitter.emit();
-    this.userHasPreferencesSetted = false;
   }
 
   /**

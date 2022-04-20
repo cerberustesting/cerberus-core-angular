@@ -101,6 +101,8 @@ export class DatatablePageComponent implements OnInit {
   
   loadUserPreferences() {
 
+    this.userHasPreferencesSetted = false;
+
     let userPreferences = this.user.userPreferences[this.preferencesTableName];    
     if(!userPreferences){      
       return;
@@ -121,7 +123,10 @@ export class DatatablePageComponent implements OnInit {
       // need a reorder
       if(element.contentName != this.columns[index].contentName){
         this.columns[index] = this.defaultColumns[defaultColumnIndex];
+        this.userHasPreferencesSetted = true;
       }
+
+      this.hasPreferencesOnColumn(element, this.columns[index]);
 
       this.columns[index].contentName = element.contentName;
       this.columns[index].sSearch = element.sSearch;
@@ -129,17 +134,59 @@ export class DatatablePageComponent implements OnInit {
       this.columns[index].filterDisplayed = element.filterDisplayed;
     }
 
-    userPreferences["search"] = this.globalSearch;
-    console.log(userPreferences);
-    console.log(this.user.userPreferences);
+    this.hasPreferencesOnSortOrSearch(userPreferences);
+
+    this.page.sort = userPreferences.order;    
+    this.search(userPreferences.search);
   }
 
-  updateUserPreferences(parameter: string, values?: any) {
-    
-    if(!parameter){  
+  /**
+   * verify if user has set up preferences for column search, visibility or filter display
+   * @param userColumn column from user preferences json
+   * @param column current column from this.columns array
+   */
+  private hasPreferencesOnColumn(userColumn: Column, column: Column) {
+    if (userColumn.sSearch && userColumn.sSearch.length > 0) {
+      this.userHasPreferencesSetted = true;
       return;
-    }    
+    }
+    if ((column.active != userColumn.active) || (column.filterDisplayed != userColumn.filterDisplayed)) {
+      this.userHasPreferencesSetted = true;
+    }
+  }
+
+  /**
+   * verify if user has set up preferences for column order or for global search
+   * @param userPreferences user preferences json
+   */
+  private hasPreferencesOnSortOrSearch(userPreferences: any) {
+
+    if(userPreferences.search != ""){
+      this.userHasPreferencesSetted = true;
+      return;
+    }
+
+    let order = userPreferences.order;
+    if(!order){
+      return;
+    }
     
+    if(order[0] && (order[0].prop != this.pageSort[0].prop || order[0].dir != this.pageSort[0].dir)){
+      this.userHasPreferencesSetted = true;
+    }
+  }
+
+  /**
+   * update user preferences when he changes something on datatable
+   * @param type order, column or other type of change
+   * @param value value of the change
+   */
+  updateUserPreferences(type?: string, value?: any) {
+        
+    if(this.user.userPreferences == ""){
+      this.user.userPreferences = {};
+    }
+
     if(!this.user.userPreferences[this.preferencesTableName]){      
       this.user.userPreferences[this.preferencesTableName] = {
         order: [{ dir: 'asc', prop: '' }],
@@ -149,9 +196,27 @@ export class DatatablePageComponent implements OnInit {
     }
     
     let userPreferences = this.user.userPreferences[this.preferencesTableName];
-    userPreferences["search"] = this.globalSearch;
-    userPreferences["order"] = this.page.sort;
+    userPreferences.search = this.globalSearch;
+    userPreferences.order = this.page.sort;
     userPreferences.columns = [];
+
+    if(type && type == "order" && value){
+
+      let activeColumns = this.columns.filter(a => a.active);
+
+      if(activeColumns.length > 0){
+
+        const newColumnIndex = this.defaultColumns.findIndex(object => {
+          return object.contentName === activeColumns[value.newValue].contentName;
+        });
+        const prevColumnIndex = this.defaultColumns.findIndex(object => {
+          return object.contentName === activeColumns[value.prevValue].contentName;
+        });
+
+        this.columns[newColumnIndex] = activeColumns[value.prevValue];
+        this.columns[prevColumnIndex] = activeColumns[value.newValue];
+      }      
+    }
 
     // only store the needed columns
     for (let index = 0; index < this.columns.length; index++) {
@@ -164,10 +229,8 @@ export class DatatablePageComponent implements OnInit {
       })
     }
 
-    console.log(userPreferences);
-    console.log(this.user.userPreferences);
-
     this.userService.updateUserPreferences();
+    this.userHasPreferencesSetted = true;
 
   }
 
@@ -176,7 +239,7 @@ export class DatatablePageComponent implements OnInit {
     return this.rows[0];
   }
 
-  // open the filters modal (in the child component)
+  /** open the filters modal (in the child component) */ 
   openFiltersModal() {
     this.filtersComponent.openFiltersModal();
   }
@@ -231,8 +294,7 @@ export class DatatablePageComponent implements OnInit {
     this.rows = [];
     this.page.number = 0;
     this.search(this.globalSearch);
-    console.log(sort);
-    this.updateUserPreferences("columns");
+    this.updateUserPreferences(); // this is being called right on loading too
   }
 
   /**
@@ -256,17 +318,17 @@ export class DatatablePageComponent implements OnInit {
    * reset all configurations based on user preferences
    */
   resetPreferences(): void {
-    this.columns = this.defaultColumns;    
-    this.userHasPreferencesSetted = false;
+    this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
     this.page.sort = this.pageSort;
-    this.globalSearch = ""
+    this.updateGlobalSearch("");    
+    this.userHasPreferencesSetted = false;
   }
 
   /**
    * reset all configurations based on user preferences
    */
    onColumnChange(): void {
-    this.updateUserPreferences('columns');
+    this.updateUserPreferences();
   }
 
 }

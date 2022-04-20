@@ -74,6 +74,18 @@
                 </div>
                 <!-- END DISPLAYED COLUMNS -->
 
+                <!-- RESET PREFERENCES -->
+                <div class="form-check-inline">
+                    <button *ngIf="userHasPreferencesSetted"
+                        id="resetColumns" type="button" placement="left" 
+                        triggers="mouseenter:mouseleave" ngbPopover="Reset table preferences to default" 
+                        class="col-12 btn btn-sm btn-secondary mr-2 pt-1 pb-1 info"
+                        (click)="resetPreferences()">
+                        <i class="fa fa-fw fa-redo-alt mr-1"></i>Reset
+                    </button>
+                </div>
+                <!-- END FILTERS -->
+
             </div>
 
             <!-- FILTERS MODAL-->

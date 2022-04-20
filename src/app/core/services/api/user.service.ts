@@ -23,39 +23,74 @@ export class UserService {
    * Authentication has been done with Keycloak when calling it.
    */
   refreshUser(): void {
+    let _this = this;
     this.http.get<User>(environment.cerberus_api_url + '/ReadMyUser')
       .subscribe(response => {
-        this.user = response;
+        _this.user = response;
         // DIRTY : format the default system list,
         // waiting for https://github.com/cerberustesting/cerberus-source/issues/2096 to be fixed
-        this.user.defaultSystem = this.formatDefaultSystemList(this.user.defaultSystem);
-        this.observableUser.next(this.user);
+        _this.user.defaultSystem = this.formatDefaultSystemList(this.user.defaultSystem);
+
+        let customColumns = [];
+
+        if (response.userPreferences) {
+          let userPref = _this.parseJSON(response.userPreferences);
+
+          // if the userPreferences format is not supported: abort
+          if(!userPref){
+            console.log("No user preferences loaded");
+            return;
+          }
+
+          _this.user.userPreferences = {}; // clean
+
+          Object.keys(userPref).forEach(function(key) {
+            let currentTable = _this.parseJSON(userPref[key]);//['DataTables_' + settings.sInstance + '_' + location.pathname];
+            /*
+            if(currentTable && currentTable.hasOwnProperty("columns") ){
+              let columns = _this.parseJSON(currentTable)["columns"]
+              for (let i = 0; i < columns.length; i++) {
+                  let currentSearch = columns[i]["search"]["search"];
+                  let search = currentSearch.substr(1, currentSearch.length - 2);
+                  search = search.split("|");
+                  customColumns.push(search);
+              }
+            }
+            */
+            _this.user.userPreferences[key] = _this.parseJSON(currentTable);
+          });
+        }
+
+        _this.observableUser.next(_this.user);
       });
+  }
+  /**
+   * handle json 
+   * @param text json or string value
+   * @returns json or null when error
+   */
+  parseJSON(text: any): JSON {
+    if (typeof text!=="string"){
+        return text;
+    }
+    try{
+        var json = JSON.parse(text);
+        return json;
+    }
+    catch (error){
+        return null;
+    }
   }
 
   /**
-   * update the user default systems list
-   * * sends the new list to the API
-   * * update the observable for all the consumers
-   * @param newSystemsList list of system name to add
+   * update user preferences automatically
+   * when something is changed on table (columns, filters or search)
    */
-  updateUserSystemList(newSystemsList: Array<string>) {
-    // persist the new systems only if the list not empy
-    if (newSystemsList.length !== 0) {
-      // store the userId (login from KC standpoint)
-      const userId = this.user.login;
-      // build the query parameters
-      let queryParameters = 'id=' + userId + '&';
-      newSystemsList.forEach(system => { queryParameters += 'MySystem=' + encodeURIComponent(system) + '&'; });
-      // remove the last '&'
-      queryParameters = queryParameters.slice(0, queryParameters.length - 1);
-      // perform the call WITHOUT refreshing any observable
-      this.http.get<Array<string>>(environment.cerberus_api_url + '/UpdateMyUserSystem?' + queryParameters)
-        .subscribe(res => { });
-      // TODO: catch HTTP errors
-      this.user.defaultSystem = newSystemsList;
-      this.observableUser.next(this.user);
-    }
+  updateUserPreferences() {
+    let preferences = JSON.stringify(this.user.userPreferences);
+    let url = environment.cerberus_api_url + '/UpdateMyUser';
+    this.http.post<any>(url, "column=userPreferences&value="+encodeURIComponent(preferences), environment.httpOptions)
+    .subscribe(response => {});
   }
 
   /**
@@ -76,6 +111,32 @@ export class UserService {
     // trim left and right, then split with the comma separator
     raw.replace('[\"', '').replace('\"]', '').split('\",\"').forEach(country => { resultArray.push(country); });
     return resultArray;
+  }
+
+  
+  /**
+   * update the user default systems list
+   * * sends the new list to the API
+   * * update the observable for all the consumers
+   * @param newSystemsList list of system name to add
+   */
+   updateUserSystemList(newSystemsList: Array<string>) {
+    // persist the new systems only if the list not empy
+    if (newSystemsList.length !== 0) {
+      // store the userId (login from KC standpoint)
+      const userId = this.user.login;
+      // build the query parameters
+      let queryParameters = 'id=' + userId + '&';
+      newSystemsList.forEach(system => { queryParameters += 'MySystem=' + encodeURIComponent(system) + '&'; });
+      // remove the last '&'
+      queryParameters = queryParameters.slice(0, queryParameters.length - 1);
+      // perform the call WITHOUT refreshing any observable
+      this.http.get<Array<string>>(environment.cerberus_api_url + '/UpdateMyUserSystem?' + queryParameters)
+        .subscribe(res => { });
+      // TODO: catch HTTP errors
+      this.user.defaultSystem = newSystemsList;
+      this.observableUser.next(this.user);
+    }
   }
 
 }

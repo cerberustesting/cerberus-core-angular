@@ -1,4 +1,5 @@
 export enum NotificationID {
     testFolderInteraction = 'testFolderInteraction',
-    massUpdate = 'massUpdate'
+    massUpdate = 'massUpdate',
+    serviceInteraction = 'serviceInteraction',
 }

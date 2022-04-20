@@ -1,0 +1,32 @@
+<app-datatable-page [pageSort]="defaultPageSort" [columns]="columns" [servlet]="servlet" [selectedRows]="selectedRows"
+    [selection]="false" [refreshResults]="refreshResultsEvent.asObservable()" [userSystems]="userSystems"
+    (hasPermissions)="hasPermissions = $event" [preferencesTableName]="preferencesTableName">
+
+    <!--START Template for create button -->
+    <ng-template cerberusDatatableFilter>
+        <button *ngIf="hasPermissions" type="button" class="btn btn-sm btn-info" (click)="createService()" id="createServiceButton">
+            <i class="fa fa-fw fa-plus download mr-1"></i>Service
+        </button>
+    </ng-template>
+    <!-- END Template for create button-->
+
+    <!-- START Template for end rows buttons -->
+    <ng-template cerberusDatatableEndLineAction let-row="row">
+        <div class="datatable-row-menu">
+            <div class="datatable-actions-section">
+                <div class="btn-group btn-group-sm" data-toggle="buttons" role="group">
+                    <button *ngIf="hasPermissions" id="editService" type="button" class="btn btn-outline-secondary" (click)="editService(row)">
+                        <i class="fa fa-fw fa-pen"></i>
+                    </button>
+                    <button *ngIf="hasPermissions" id="duplicateService" type="button" class="btn btn-outline-secondary" (click)="duplicateService(row)">
+                        <i class="fa fa-fw fa-copy"></i>
+                    </button>
+                    <button *ngIf="hasPermissions" id="deleteService" type="button" class="btn btn-outline-secondary" (click)="deleteService(row)">
+                        <i class="fa fa-fw fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</app-datatable-page>

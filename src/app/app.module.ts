@@ -10,6 +10,9 @@ import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SessionInterceptorService } from './core/services/auth/session.interceptor.service';
 import { DesignModule } from './feat-design/design.module';
+import { ConfigureModule } from './feat-configure/configure.module';
+import { AnalyseModule } from './feat-analyse/analyse.module';
+import { RunModule } from './feat-run/run.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
@@ -26,6 +29,9 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
     SharedModule,
     BrowserAnimationsModule,
     DesignModule,
+    ConfigureModule,
+    AnalyseModule,
+    RunModule,
     CKEditorModule,
     MonacoEditorModule.forRoot()
   ],

@@ -8,5 +8,6 @@ export interface User {
     defaultSystem: any;
     system: Array<string>;
     group: Array<string>;
+    userPreferences: any;
     // TODO : complete the interface
 }

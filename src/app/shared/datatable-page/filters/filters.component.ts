@@ -21,17 +21,35 @@ export class FiltersComponent implements OnInit {
   /** endpoint (to fetch the options list) sent to the filters */
   @Input('servlet') servlet: string;
 
+  /** preferences for columns filters and search */
+  @Input() userHasPreferencesSetted: boolean;
+
+  /** preferences for search */
+  @Input() initialSearch: string;
+
   // angular templates declaration
   @Input() filterTemplate: any; // TODO : type TemplateRef
   @Input() massActionTemplate: any; // TODO : type TemplateRef
 
   @Output() globalSearchContentChange = new EventEmitter<string>(); // emitter used to send the global search value to the parent component
 
+  @Output() resetPreferencesEmitter = new EventEmitter<string>(); // emitter used to alert reset preferences to the parent component
+
+  @Output() columnChangeEmitter = new EventEmitter<string>(); // emitter used to alert that column visibility changed to the parent component
+
   globalSearch: string; // quick search content
+
+  defaultColumns: Array<Column>; // default and initial columns
 
   constructor(private modalService: NgbModal) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    if(this.initialSearch != ""){
+      this.globalSearch = this.initialSearch;
+      this.sendGlobalSearchContent();
+    }  
+    this.defaultColumns = JSON.parse(JSON.stringify(this.columns));
+  }
 
   // return the columns list that are being used as filter
   getActiveFilters(): Array<Column> {
@@ -65,12 +83,22 @@ export class FiltersComponent implements OnInit {
   // activation being if its displayed or not
   toggleColumn(column): void {
     column.active = !column.active;
+    this.columnChangeEmitter.emit();
   }
 
   // reset the columns default configuration
   // according to the columnsdata file
   resetDefaultColumns() {
     this.columns.forEach(c => c.active = c.defaultActive);
+    this.columnChangeEmitter.emit();
+  }
+
+  // reset all configuration
+  // according to the columnsdata file
+  resetPreferences() {
+    this.globalSearch = "";
+    this.columns = JSON.parse(JSON.stringify(this.defaultColumns));
+    this.resetPreferencesEmitter.emit();
   }
 
   /**

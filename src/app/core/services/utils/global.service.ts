@@ -74,12 +74,25 @@ export class GlobalService {
    * @returns query string ('key1=value1&key2=value2...')
    */
   toQueryString(object: any, fieldsToKeep: string[]): string {
-    let newObject = {};
+    const newObject = {};
     for (const key in object) {
       if (fieldsToKeep.includes(key)) {
         newObject[key] = object[key];
       }
     }
     return Object.keys(newObject).map(key => key + '=' + newObject[key]).join('&');
+  }
+
+  /**
+   * transform object into formdata
+   * @param object source object
+   * @returns formdata object
+   */
+  toFormData(object: any): FormData {
+    const formData = new FormData();
+    for (const key in object) {
+      formData.append(key, encodeURIComponent(object[key]));
+    }
+    return formData;
   }
 }
